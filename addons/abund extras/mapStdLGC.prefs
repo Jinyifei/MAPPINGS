@@ -1,0 +1,40 @@
+%
+% MAPPINGS V prefs file, sets read in atoms and
+% Atomic Weights:
+% M.E. Weiser and M. Berglund
+% Atomic Weights of the Elements 2007
+% NIST, Physical Measurement
+% Laboratory http://www.nist.gov/pml/data/comp.cfm
+%
+% These data do not represent a critical evaluation by
+% the NIST Physical Measurement Laboratory.
+%
+% Rounded to 7 figures for MAPPINGS V
+%
+%  From: Local Galactic Concordance 2014
+%
+%
+MAPPINGS V Standard Atom LGC Set v5.1.20
+ 16
+  1  H      1  1.007940 1.0000E+00  1.000   2
+  2  He     2  4.002602 9.7724E-02  1.000   3
+  6  C      6  12.01070 2.6485E-04  1.000   7
+  7  N      7  14.00670 6.1944E-05  1.000   8
+  8  O      8  15.99940 5.7544E-04  1.000   9
+ 10  Ne    10  20.17970 1.2303E-04  1.000  11
+ 11  Na    11  22.98977 1.6218E-06  1.000  12
+ 12  Mg    12  24.30500 3.6308E-05  1.000  13
+ 13  Al    13  26.98154 2.6915E-06  1.000  14
+ 14  Si    14  28.08550 3.1623E-05  1.000  15
+ 16  S     16  32.06500 1.3183E-05  1.000  17
+ 17  Cl    17  35.45300 3.1623E-07  1.000  18
+ 18  Ar    18  39.94800 2.5119E-06  1.000  19
+ 20  Ca    20  40.07800 2.0893E-06  1.000  21
+ 26  Fe    26  55.84500 3.3113E-05  1.000  27
+ 28  Ni    28  58.69340 1.5849E-06  1.000  29
+%
+% misc data can be stored after this comment
+% Here species that are not often used are
+% Stored. To use them place them above and
+% update the count and column 1.
+

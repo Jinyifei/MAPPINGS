@@ -1,0 +1,30 @@
+yes   : change abund
+MV52ShockInputs/solar.txt
+no    : no more changes
+no    : offsets?
+no    : no dust
+S5    : Shock with auto precursor
+D     : Default preionisation balance
+X     : eXit with current source
+V     : define shock by velocity, iterating on preshock if neeeded
+A     : Alpha = 1/beta  0 = no field, >> 1 is field dominated
+1.0
+2.0 1.0 50.0  te ne v km/s
+F      : Use full internal diffuse radiation field
+S      : temperature and ionisation < 0.05 ending 500K
+500.0
+4      : minumum number of iterations, > 1
+v050s_
+B      : output standard plus  ionisation balances
+E      : Final downstream field.
+H      : Cooling in x-ray bands.
+K      : cooling Components by Element
+X      : exit with output options
+4      : follow 4 elements
+1 2 7 8   Output 4 ionisation balance files
+N      : Dont write the All Ions File
+3      : cooling file normalisation, 3=n^2
+A      : standardisplay
+this is an id string for a=1 50km/s shock
+xit
+

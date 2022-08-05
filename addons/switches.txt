@@ -1,0 +1,33 @@
+% *** MAPPINGS V expert switches v5.1.20
+% collision mode ( default 0 = Dere, 1 = A&R,2 = old Shull L&M )
+0
+% photoionisation calculations ( default 0 = new Verner Ferland, 1 = old )
+0
+% verner calculations ( default 0 = effective outer, 1 = strict HS)
+0
+% rr recombination mode ( default 0 = new, 1 = old, 2 = NORAD for CNO, 0 otherwise)
+0
+% dr recombination mode ( default 0 = new, 1 = old, 2 = B15 SIII only + std  3 = off )
+0
+% chargetransfer mode ( default 0 = new MV,1 = A&R85 MIII, 2 = MI ancient, 3 = off)
+0
+% chargetransfer heating switch ( 0 = off , default 1 = on )
+1
+% freefree continuum calculations ( 0 = fast, default 1 = accurate)
+1
+% photoionisaton switch ( 0 = off, default 1 = on)
+1
+% H/He Collisional Excitation switch ( default 0: ABBS02, 1: GNP89 )
+0
+% lines only cooling switch ( default 0 = off, 1 = on )
+0
+% powerlaw cooling switch ( default 0 = off, 1 = on )
+0
+% turbulent heating switch ( default 0 = off, 1 = on )
+0
+% radiation pressure switch ( default 0 = on, 1 = off )
+0
+% kappa electron mode ( default 0 = off, 1 = on )
+0
+% expertmode switch ( 0 = default)
+0

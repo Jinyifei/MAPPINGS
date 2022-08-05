@@ -1,0 +1,13 @@
+SRC= src/agnspec.f src/optxagnf.f
+
+CSRC=${SRC:.f=.c}
+
+.f.c:
+	f2c -a -A -dsrc $<
+
+all: ${CSRC}
+	gcc -o agn ${CSRC} \
+	-I/usr/local/include \
+	-L/usr/local/lib \
+	-lF77 -lI77
+	rm ${CSRC}

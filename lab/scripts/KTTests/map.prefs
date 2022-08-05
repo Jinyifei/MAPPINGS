@@ -1,0 +1,32 @@
+%
+%  MAPPINGS V prefs file, sets read in atoms and
+%  default abundances.
+%
+%  Kentucky Benchmark Nebulae Tests
+%
+%
+MAPPINGS V Lexington Test Atoms
+ 10
+ 1  H      1   1.00797  1.000E+00  1.000   2
+ 2  He     2   4.00260  8.511E-02  1.000   3
+ 3  C      6  12.01115  2.692E-04  0.708   7
+ 4  N      7  14.00670  6.761E-05  0.588   8
+ 5  O      8  15.99940  4.898E-04  0.617   8
+ 6  Ne    10  20.18300  8.511E-05  1.000   8
+ 7  Mg    12  24.31200  3.981E-05  0.083   8
+ 8  Si    14  28.08600  3.236E-05  0.155   8
+ 9  S     16  32.06400  1.318E-05  0.832   8
+10  Ar    18  39.94800  2.512E-06  1.000   8
+%
+% misc data can be stored after this comment
+% Here species that are not often used are
+% Stored. To use them place them above and
+% update the count and column 1.
+%
+ 7  Na    11  22.98980  1.738E-06  0.100  12
+ 9  Al    13  26.98150  2.818E-06  0.041  14
+12  Cl    17  35.45300  3.162E-07  0.100  18
+16  Ni    28  58.71000  1.660E-06  0.010  29
+14  Ca    20  40.08000  2.188E-06  0.003  21
+11  Fe    26  55.84700  3.162E-05  0.049  27
+16  Ni    28  58.71000  1.660E-06  0.010  29
