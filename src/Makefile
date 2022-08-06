@@ -53,10 +53,11 @@ LDR    =  ${WARN} -Ofast -flto -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
 
-UNAME = := $(shell uname)
+UNAME = $(shell uname)
 
 
-ifeq ($(UNAME), Darwin)
+
+ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
 	XSYS = Mac (wich xcrun)
 else
@@ -64,6 +65,9 @@ else
 	XSYS = Linux
 endif
 
+
+start:
+	@echo 'hello' x$(UNAME)x
 
 #
 #
