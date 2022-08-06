@@ -6,7 +6,7 @@
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51
+OUTNAME = map51b
 #
 #-------------------------------
 #---------- Directories --------
@@ -52,7 +52,14 @@ FC     = gfortran -std=legacy -march=native
 LDR    =  ${WARN} -Ofast -flto -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
-LIB    = -isysroot`xcrun --show-sdk-path`
+
+UNAME = := $(shell uname)
+ifeq ($(UNAME), Darwin)
+    LIB    = -isysroot`xcrun --show-sdk-path`
+    @echo 'Compiling for MAC-OS with Xcode :adding xcrun'
+else
+    LIB =
+endif
 #
 #
 #  GCC FORTRAN v4.5-4.8 and earlier
