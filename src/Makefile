@@ -54,12 +54,17 @@ LDR    =  ${WARN} -Ofast -flto -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
 
 UNAME = := $(shell uname)
+
+
 ifeq ($(UNAME), Darwin)
-    LIB    = -isysroot`xcrun --show-sdk-path`
-    @echo 'Compiling for MAC-OS with Xcode :adding xcrun'
+	LIB    = -isysroot`xcrun --show-sdk-path`
+	XSYS = Mac (wich xcrun)
 else
-    LIB =
+	LIB =
+	XSYS = Linux
 endif
+
+
 #
 #
 #  GCC FORTRAN v4.5-4.8 and earlier
@@ -266,6 +271,7 @@ ${EXEDIR}${OUTNAME}: ${INCS} ${OBJ}
 #
 build:
 	@echo ' Building ${OUTNAME}:'
+	@echo ' Compiling for $(XSYS)'
 	@echo ' Copying over .f files'
 	@cp ${BACKDIR}*.f ${CODDIR}
 	@echo ' Copying over include files'
