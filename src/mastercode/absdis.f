@@ -43,14 +43,6 @@ c       External Functions
 c
       real*8 feldens,fphotim,frectim2,fcolltim,fdilu
 c
-c       Internal Functions
-c
-c      real*8 acrs,eph,at,bet,se
-c
-c      acrs(eph,at,bet,se)=(at*(bet+((1.0d0-bet)/eph)))*(eph**(-se))
-c
-c    ***DERIVATION OF TOTAL CROSS SECTIONS AT EACH ENERGY BIN
-c
       if (drta.eq.0.d0) drta=1.0d16
 c
 c
@@ -59,21 +51,9 @@ c
 c
       de=feldens(dh,popul)
 c
-c      blum = 0.d0
-c      do inl = 1, infph-1
-c         cebin = cphotev(inl)
-c         blum = blum+tphot(inl)*cebin*evplk
-c      enddo
-c
       ptime=fphotim()
       rtime=frectim2(de)
       ctime=fcolltim(de)
-c
-c      write (*,*) ptime,rtime,ctime
-c      r4 = rtime/(ptime+rtime)
-c      write(*,*) 'Recombination Correction : ',r4
-c      absf = absf*r4
-c      write(*,*) 'Absorbsion Fraction : ',absf
 c
       call copypop (popt, pop)
 c
@@ -81,33 +61,29 @@ c
       xsect=0.d0
       bincount=0
       qto=0.d0
-      do inl=1,infph-1
-        xsec(inl)=0.d0
-        if (skipbin(inl)) goto 20
-        cebin=cphotev(inl)
-        nfn(inl)=tphot(inl)*cebin*evplk
-        sig=0.0d0
-        do 10 i=1,ionum
-          if (photxsec(i,inl).gt.0.d0) then
-            ie=atpho(i)
-            j=ionpho(i)
-            abio=zion(ie)*popul(j,ie)
-            if (abio.gt.1.d-12) then
-              crosec=photxsec(i,inl)
-              if (crosec.gt.0.d0) sig=sig+(abio*crosec)
-c          eph=cebin/ipotpho(i)
-c          if (eph.lt.1.0d0) goto 10
-c          crosec=acrs(eph,sigpho(i),betpho(i),spho(i))
-c          sig=sig+(abio*crosec)
-            endif
-          endif
-   10   continue
 c
-        if (sig.lt.0.d0) sig=0.d0
-        sig=(dh*fi)*sig
-        xsec(inl)=sig
-        xsect=xsect+sig
-   20   continue
+      do inl=1,infph
+      xsec(inl)=0.d0
+      enddo
+c
+      do i=1,ionum
+      ie=atpho(i)
+      j=ionpho(i)
+      abio=zion(ie)*popul(j,ie)
+      if (abio.gt.pzlimit) then
+        abio=abio*(dh*fi)
+        do inl=photbinstart(i),infph-1
+          if (skipbin(inl)) goto 20
+          if (photxsec(i,inl).gt.epsilon) then
+          crosec=photxsec(i,inl)
+          sig=(abio*crosec)
+c         sig=(dh*fi)*sig
+          xsec(inl)=xsec(inl)+sig
+          xsect=xsect+sig
+          endif
+   20     continue
+         enddo
+      endif
       enddo
 c
 c  dust
@@ -216,12 +192,6 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c*******COMPUTES THE DISTANCE : DRTA  TO OBTAIN
-c       A GIVEN TOTAL PHOTON ABSORBTION FRACTION FROM TPHOT
-c       TAUAV (MMOD='DIS','LIN') takes account of dust
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
       include 'cblocks.inc'
 c
       real*8 popul(mxion, mxelem)
@@ -234,45 +204,35 @@ c      real*8 g1, g2
 c
       real*8 abio,crosec
 c
-c       External Functions
-c
-c      real*8 fdilu
-c
-c       Internal Functions
-c
-c      real*8 acrs,eph,at,bet,se
-c
-c      acrs(eph,at,bet,se)=(at*(bet+((1.0d0-bet)/eph)))*(eph**(-se))
-c
-c    ***DERIVATION OF TOTAL CROSS SECTIONS AT EACH ENERGY BIN
-c
       if (drta.le.0.d0) drta=1.0d16
 c
       plos=0.d0
       xsect=0.d0
       bincount=0
       qto=0.d0
-      do inl=ionstartbin,infph-1
-        xsec(inl)=0.d0
-        if (skipbin(inl)) goto 20
-        cebin=cphotev(inl)
-        sig=0.0d0
-        do i=1,ionum
+c
+      do inl=1,infph
+      xsec(inl)=0.d0
+      enddo
+c
+      do i=1,ionum
+      ie=atpho(i)
+      j=ionpho(i)
+      abio=zion(ie)*popul(j,ie)
+      if (abio.gt.pzlimit) then
+        abio=abio*(dh*fi)
+        do inl=photbinstart(i),infph-1
+          if (skipbin(inl)) goto 20
           if (photxsec(i,inl).gt.epsilon) then
-            ie=atpho(i)
-            j=ionpho(i)
-            abio=zion(ie)*popul(j,ie)
-            if (abio.gt.pzlimit) then
-              crosec=photxsec(i,inl)
-              sig=sig+(abio*crosec)
-            endif
+          crosec=photxsec(i,inl)
+          sig=(abio*crosec)
+c         sig=(dh*fi)*sig
+          xsec(inl)=xsec(inl)+sig
+          xsect=xsect+sig
           endif
-        enddo
-        if (sig.lt.0.d0) sig=0.d0
-        sig=(dh*fi)*sig
-        xsec(inl)=sig
-        xsect=xsect+sig
-   20   continue
+   20     continue
+         enddo
+      endif
       enddo
 c
 c  dust
@@ -311,7 +271,7 @@ c
       endif
 c
       do inl=1,infph-1
-        if (xsec(inl).gt.0.d0) then
+        if (xsec(inl).gt.epsilon) then
           wei=xsec(inl)/xsect
           wid=widbinnu(inl)
           phots=(tphot(inl))*wid*wei
@@ -323,7 +283,7 @@ c
    30 plos=0.d0
 c
       do inl=1,infph-1
-        if (xsec(inl).gt.0.d0) then
+        if (xsec(inl).gt.epsilon) then
           wei=xsec(inl)/xsect
           wid=widbinnu(inl)
           phots=(tphot(inl))*wid*wei
@@ -334,7 +294,7 @@ c
       plos=plos/qto
 c
       iter=iter+1
-      if (plos.gt.0.d0) then
+      if (plos.gt.epsilon) then
         r2=absf/plos
         r3=dabs(1.d0-r2)
         if (r3.gt.0.01d0) then
@@ -363,7 +323,7 @@ c
         plos=0.d0
 c
         do inl=1,infph-1
-          if (xsec(inl).gt.0.d0) then
+          if (xsec(inl).gt.epsilon) then
             wei=xsec(inl)/xsect
             wid=widbinnu(inl)
             phots=(tphot(inl))*wid*wei
@@ -401,12 +361,12 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
 c
-      real*8 dh, dr
+      real*8 dh, dr, cols
       real*8 popcols(mxion, mxelem)
       real*8 sigma(infph)
       real*8 attenuate(infph)
       real*8 sig,att,pcros
-      integer*4 inl,i,ie,j,k,dtype,dstmin
+      integer*4 inl,i,atom,ion,k,dtype,dstmin
 c
       real*8 abio,crosec
 c
@@ -415,21 +375,23 @@ c
         sigma(inl)=0.0d0
       enddo
 c
-      do inl=ionstartbin,infph-1
-        sig=0.0d0
-        do i=1,ionum
-          if (photxsec(i,inl).gt.epsilon) then
-            ie=atpho(i)
-            j=ionpho(i)
-            abio=zion(ie)*popcols(j,ie)
-            if (abio.gt.pzlimit) then
-              crosec=photxsec(i,inl)
-              sig=sig+(abio*crosec)
-            endif
-          endif
-        enddo
-        if (sig.lt.0.d0) sig=0.d0
-        sigma(inl)=dh*sig*fi
+      do inl=1,infph
+         sigma(inl)=0.d0
+      enddo
+c
+      do i=1,ionum
+      atom=atpho(i)
+      ion=ionpho(i)
+      abio=zion(atom)*(dh*fi)
+      cols=popcols(ion,atom)
+      if (cols.gt.1.0d10) then
+        do inl=photbinstart(i),infph-1
+          crosec=photxsec(i,inl)
+          sig=(abio*cols*crosec)
+          sigma(inl)=sigma(inl)+sig
+   20     continue
+         enddo
+      endif
       enddo
 c
 c  dust
@@ -467,7 +429,7 @@ c
       endif
 c
       do inl=1,infph-1
-        if (sigma(inl).gt.0.d0) then
+        if (sigma(inl).gt.epsilon) then
           att=dexp(-sigma(inl))
           attenuate(inl)=dmax1(dmin1(att,1.d0),0.d0)
 c          if (attenuate(inl).lt.1.d0) write(*,*) inl, attenuate(inl)
@@ -496,21 +458,9 @@ c
       real*8 plos,qto
 c      real*8 g1, g2
       real*8 cebin,sig
-      integer*4 bincount,inl,i,ie,j,k,dtype,dstmin
+      integer*4 bincount,inl,i,atom,ion,k,dtype,dstmin
 c
       real*8 abio,crosec
-c
-c       External Functions
-c
-c      real*8 fdilu
-c
-c       Internal Functions
-c
-c      real*8 acrs,eph,at,bet,se
-c
-c      acrs(eph,at,bet,se)=(at*(bet+((1.0d0-bet)/eph)))*(eph**(-se))
-c
-c    ***DERIVATION OF TOTAL CROSS SECTIONS AT EACH ENERGY BIN
 c
       if (drta.eq.0.d0) drta=1.0d16
 c
@@ -518,27 +468,27 @@ c
       xsect=0.d0
       bincount=0
       qto=0.d0
-      do inl=ionstartbin,infph-1
-        xsec(inl)=0.d0
-        if (skipbin(inl)) goto 20
-        cebin=cphotev(inl)
-        sig=0.0d0
-        do 10 i=1,ionum
-          if (photxsec(i,inl).gt.epsilon) then
-            ie=atpho(i)
-            j=ionpho(i)
-            abio=zion(ie)*popul(j,ie)
-            if (abio.gt.1.d-12) then
-              crosec=photxsec(i,inl)
-              if (crosec.gt.0.d0) sig=sig+(abio*crosec)
-            endif
-          endif
-   10   continue
-        if (sig.lt.0.d0) sig=0.d0
-        sig=(dh*fi)*sig
-        xsec(inl)=sig
-        xsect=xsect+sig
-   20   continue
+c
+      do inl=1,infph
+         xsec(inl)=0.d0
+      enddo
+c
+      do i=1,ionum
+      atom=atpho(i)
+      ion=ionpho(i)
+      abio=zion(atom)*popul(ion,atom)
+      if (abio.gt.pzlimit) then
+        do inl=photbinstart(i),infph-1
+          if (skipbin(inl)) goto 20
+          if (photxsec(i,inl).le.epsilon) goto 20
+          crosec=photxsec(i,inl)
+          sig=(abio*crosec)
+          sig=(dh*fi)*sig
+          xsec(inl)=xsec(inl)+sig
+          xsect=xsect+sig
+   20     continue
+         enddo
+      endif
       enddo
 c
 c  dust
@@ -579,7 +529,7 @@ c
       do inl=1,infph-1
         if ( (cphotev(inl).gt.ipotev(1,1)).and.
      &       (cphotev(inl).lt.ipotev(1,2)) ) then
-        if (xsec(inl).gt.0.d0) then
+        if (xsec(inl).gt.epsilon) then
           wei=xsec(inl)/xsect
           qto=qto+wei
         endif
@@ -591,7 +541,7 @@ c
       do inl=1,infph-1
         if ( (cphotev(inl).gt.ipotev(1,1)).and.
      &       (cphotev(inl).lt.ipotev(1,2)) ) then
-        if (xsec(inl).gt.0.d0) then
+        if (xsec(inl).gt.epsilon) then
           wei=xsec(inl)/xsect
           absf=absf+(1.d0-dexp(-drta*xsec(inl)))*wei
         endif
@@ -617,21 +567,9 @@ c
       real*8 plos,qto
 c      real*8 g1, g2
       real*8 cebin,sig
-      integer*4 bincount,inl,i,ie,j,k,dtype,dstmin
+      integer*4 bincount,inl,i,atom,ion,k,dtype,dstmin
 c
       real*8 abio,crosec
-c
-c       External Functions
-c
-c      real*8 fdilu
-c
-c       Internal Functions
-c
-c      real*8 acrs,eph,at,bet,se
-c
-c      acrs(eph,at,bet,se)=(at*(bet+((1.0d0-bet)/eph)))*(eph**(-se))
-c
-c    ***DERIVATION OF TOTAL CROSS SECTIONS AT EACH ENERGY BIN
 c
       if (drta.eq.0.d0) drta=1.0d16
 c
@@ -639,27 +577,27 @@ c
       xsect=0.d0
       bincount=0
       qto=0.d0
-      do inl=ionstartbin,infph-1
-        xsec(inl)=0.d0
-        if (skipbin(inl)) goto 20
-        cebin=cphotev(inl)
-        sig=0.0d0
-        do 10 i=1,ionum
-          if (photxsec(i,inl).gt.0.d0) then
-            ie=atpho(i)
-            j=ionpho(i)
-            abio=zion(ie)*popul(j,ie)
-            if (abio.gt.pzlimit) then
-              crosec=photxsec(i,inl)
-              if (crosec.gt.0.d0) sig=sig+(abio*crosec)
-            endif
-          endif
-   10   continue
-        if (sig.lt.0.d0) sig=0.d0
-        sig=(dh*fi)*sig
-        xsec(inl)=sig
-        xsect=xsect+sig
-   20   continue
+c
+      do inl=1,infph
+         xsec(inl)=0.d0
+      enddo
+c
+      do i=1,ionum
+      atom=atpho(i)
+      ion=ionpho(i)
+      abio=zion(atom)*popul(ion,atom)
+      if (abio.gt.pzlimit) then
+        do inl=photbinstart(i),infph-1
+          if (skipbin(inl)) goto 20
+          if (photxsec(i,inl).le.epsilon) goto 20
+          crosec=photxsec(i,inl)
+          sig=(abio*crosec)
+          sig=(dh*fi)*sig
+          xsec(inl)=xsec(inl)+sig
+          xsect=xsect+sig
+   20     continue
+         enddo
+      endif
       enddo
 c
 c  dust
@@ -822,9 +760,6 @@ c        cebin=cphotev(inl)
           j=ionpho(i)
           abio=zion(ie)*(popul(j,ie)**expo)
           crosec=photxsec(i,inl)
-c          eph=cebin/ipotpho(i)
-c          if (eph.lt.1.0d0) goto 50
-c          crosec=acrs(eph,sigpho(i),betpho(i),spho(i))
           sig=sig+(abio*crosec)
           if (arad(j+1,ie).gt.0.0d0) rela(ie)=1.0d0
    40   continue

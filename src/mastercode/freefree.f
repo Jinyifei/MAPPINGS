@@ -32,7 +32,7 @@ c
 c
       real*8 zpop,abde,ffconst,invrkt
       real*8 u, gffm, g2, zn2,t12,rkt
-      real*8 phots
+      real*8 phots,lgkt
       integer*4 atom,ion,i,j,inl
       real*8 zsqd,xpf,meanq,energ,et
       real*8 ee(mxinfph)
@@ -40,8 +40,6 @@ c
 c
       real*8 freem
 c
-c      real*8 fgffspline2
-c      real*8 fgfflin,fgfflogpoly,fgfflog
       real*8 fgfflog
 c
 c     internal functions
@@ -60,7 +58,9 @@ c
       invrkt=1.d0/rkt
 c
       if (freefreemode.eq.0) then
-cc
+c
+c begin simplified free free emission
+c
         do inl=1,infph
           ffph(inl)=0.d0
         enddo
@@ -87,13 +87,20 @@ c
           endif
         enddo
 c
+c end simplified free free emission
+c
       else
+c
+c begin full free-free code
 c
         do inl=1,infph
           ffph(inl)=0.d0
           energ=cphote(inl)
           et=energ*invrkt
-          ee(inl)=dexp(-et)/energ
+          ee(inl)=0.d0
+          if (dabs(et).lt.logkhuge) then
+            ee(inl)=dexp(-et)/energ
+          endif
         enddo
 c
 c Reordered loops to maximise cache hits in fgfflog
@@ -105,11 +112,10 @@ c
           lgg2(ion)=dlog10(iphe*zn2*invrkt)
         enddo
 c
+        lgkt=dlog10(invrkt)
         do inl=1,infph-1
-          energ=cphote(inl)
-          et=energ*invrkt
-          if (dabs(et).lt.logkhuge) then
-            u=dlog10(et)
+          if (ee(inl).gt.0.d0)then
+            u=lgcphote(inl)+lgkt
             j=idnint(((u+4.d0)*10.d0))+1
             j=min(max(j,1),ngffu-1)
             do ion=2,mxion
@@ -134,6 +140,9 @@ c
             enddo
           endif
         enddo
+c
+c end full free-free code
+c
       endif
 c
       return

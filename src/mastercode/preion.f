@@ -17,7 +17,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine preion (lterm, luop, tsmax, vs, dh, def, tef, qtot,
-     & drta)
+     & drta )
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

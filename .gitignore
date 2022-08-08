@@ -8,7 +8,6 @@ project.xcworkspace
 *.neq
 *.nfn
 *.lam
-*.sou
 *.bln
 *.csv
 *.o

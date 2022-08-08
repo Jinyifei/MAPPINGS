@@ -63,11 +63,13 @@ c     set up logical unit numbers
 c
       lualsh=20
       luop=21
-      lurtsh=22
-      ludy=23
-      lusp=24
-      lupb=25
-      lucl=26
+c disable precursor output when compsh5 is called set lupt to 0
+      lupt=0
+      lurtsh=23
+      ludy=24
+      lusp=25
+      lupb=26
+      lucl=27
 c
       ieln=4
       do i=1,atypes

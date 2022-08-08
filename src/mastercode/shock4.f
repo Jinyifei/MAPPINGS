@@ -2003,13 +2003,13 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       dva=vel1-vel0
 c
       wmod='REAL'
-      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, 0.5d0, tphot)
+      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
 c
       wmod='NFNU'
-      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, 0.5d0, tphot)
+      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
 c
       wmod='LFLM'
-      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, 0.5d0, tphot)
+      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
 c
 c     dynamics
 c
