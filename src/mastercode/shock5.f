@@ -3715,7 +3715,7 @@ c
       call newfile (pfx, np, sfx, 3, fn)
       fsm=fn(1:np+8)
 c
-      luop=21
+      lupt=21
 c
 c     Name "sh5" precursor general output file
 c
@@ -3859,7 +3859,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       open (luop,file=fsm,status='NEW')
-      open (lupt,file=fpm,status='NEW')
+      if (lupt.gt.0) open (lupt,file=fpm,status='NEW')
       open (lusp,file=fsh,status='NEW')
 c
 c iel is mapid - all names exist from prefs in id order
@@ -3910,7 +3910,9 @@ c
       inquire(unit=luop, opened=unitopen)
       if (unitopen) close (luop)
       inquire(unit=lupt, opened=unitopen)
+      if (lupt.gt.0) then
       if (unitopen) close (lupt)
+      endif
       inquire(unit=lusp, opened=unitopen)
       if (unitopen) close (lusp)
 c
@@ -3952,7 +3954,7 @@ c  Open All files APPEND
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       open (luop,file=fsm,status='OLD',access='APPEND')
-      open (lupt,file=fpm,status='OLD',access='APPEND')
+      if (lupt.gt.0) open (lupt,file=fpm,status='OLD',access='APPEND')
       open (lusp,file=fsh,status='OLD',access='APPEND')
 c
       if (tsrmod.eq.'Y') then

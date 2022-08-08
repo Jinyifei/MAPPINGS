@@ -16,7 +16,55 @@ c       Version v5.1.21
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine crosssections (inl, tauso, sigmat, dustsigmat)
+      subroutine crosssections (inl, tauso, sigmat)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c tauso is the integrated optical depth back to the source
+c sigmat, and dustsigmat are the local crossections per H atom
+c for the current zone
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+c
+      real*8 tauso,sigmat
+      integer*4 i,inl,dtype,m
+      integer*4 ion,atom
+      real*8 pz,crosec,colden
+c
+      tauso=0.d0
+      sigmat=0.d0
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c
+c     ***DERIVES ABSORPTION CROSS-SECTION FOR BIN#INL
+c
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      if (inl.lt.ionstartbin) return
+c
+        do i=1,ionum
+          if (inl.ge.photbinstart(i)) then
+               atom=atpho(i)
+               ion=ionpho(i)
+               pz=zion(atom)*pop(ion,atom)
+               colden=popint(ion,atom)
+               if ((pz.gt.pzlimit).or.(colden.gt.1.0d10)) then
+               crosec=photxsec(i,inl)
+               sigmat=sigmat+(pz*crosec)
+               tauso=tauso+(colden*crosec)
+               endif
+          endif
+        enddo
+c
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine crosssectionsdust (inl, tauso, sigmat, dustsigmat)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -45,25 +93,23 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      if ((inl.lt.ionstartbin).and.(grainmode.eq.0)) return
-c
       if (inl.ge.ionstartbin) then
         do i=1,ionum
           if (inl.ge.photbinstart(i)) then
                atom=atpho(i)
                ion=ionpho(i)
                pz=zion(atom)*pop(ion,atom)
-               if (pz.gt.1.0d-20) then
+               colden=popint(ion,atom)
+               if ((pz.gt.pzlimit).or.(colden.gt.1.0d10)) then
                crosec=photxsec(i,inl)
                sigmat=sigmat+(pz*crosec)
-               colden=popint(ion,atom)
                tauso=tauso+(colden*crosec)
                endif
           endif
         enddo
       endif
 c
-      if (grainmode.eq.0) return
+      if (grainmode.le.0) return
 c
 c
 c   Dust Cross-section

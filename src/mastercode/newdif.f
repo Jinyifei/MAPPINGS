@@ -598,7 +598,10 @@ c
         sigmt=0.d0
         dustsigmat=0.d0
 c
-        call crosssections (inl, tauso, sigmt, dustsigmat)
+        if (grainmode.le.0)
+     &        call crosssections (inl, tauso, sigmt)
+        if (grainmode.gt.0)
+     &        call crosssectionsdust (inl, tauso, sigmt,dustsigmat)
 c
         sigmt=dh*sigmt
         dustsigmat=dh*dustsigmat
@@ -1212,7 +1215,10 @@ c
         sigmt=0.d0
         dustsigmat=0.d0
 c
-        call crosssections (inl, tauso, sigmt, dustsigmat)
+       if (grainmode.le.0)
+     &        call crosssections (inl, tauso, sigmt)
+        if (grainmode.gt.0)
+     &        call crosssectionsdust (inl, tauso, sigmt, dustsigmat)
 c
         sigmt=dh*sigmt
         dustsigmat=dh*dustsigmat

@@ -396,7 +396,10 @@ c
         tauso=0.d0
         sigmt=0.d0
         dustsigmat=0.d0
-        call crosssections (inl, tauso, sigmt, dustsigmat)
+        if ((grainmode.le.0).and.(inl.ge.ionstartbin))
+     &       call crosssections (inl, tauso, sigmt)
+        if ((grainmode.gt.0))
+     &       call crosssectionsdust (inl, tauso, sigmt, dustsigmat)
 c total crosssection, including dust
         sigmt=dh*sigmt
 c just the dust component
@@ -1195,7 +1198,10 @@ c
         tauso=0.d0
         sigmt=0.d0
         dustsigmat=0.d0
-        call crosssections (inl, tauso, sigmt, dustsigmat)
+        if ((grainmode.le.0).and.(inl.ge.ionstartbin))
+     &       call crosssections (inl, tauso, sigmt)
+        if ((grainmode.gt.0))
+     &       call crosssectionsdust (inl, tauso, sigmt, dustsigmat)
         tauso0_i(inl)=tauso
         sigmt=dh*sigmt
         dustsigmat=dh*dustsigmat
