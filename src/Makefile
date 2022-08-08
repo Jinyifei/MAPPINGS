@@ -49,10 +49,26 @@ WARN   =
 # if recursion is ever needed; -fmax-stack-var-size=7618560
 #
 FC     = gfortran -std=legacy -march=native
-LDR    =  ${WARN} -Ofast -ffpe-summary='none' 
+LDR    =  ${WARN} -Ofast -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
-LIB    = -isysroot`xcrun --show-sdk-path`
+
+UNAME = $(shell uname)
+
+
+
+ifeq ($(UNAME),Darwin)
+	LIB    = -isysroot`xcrun --show-sdk-path`
+	XSYS = Mac (wich xcrun)
+else
+	LIB =
+	XSYS = Linux
+endif
+
+
+start:
+	@echo 'hello' x$(UNAME)x
+
 #
 #
 #  GCC FORTRAN v4.5-4.8 and earlier
@@ -259,6 +275,7 @@ ${EXEDIR}${OUTNAME}: ${INCS} ${OBJ}
 #
 build:
 	@echo ' Building ${OUTNAME}:'
+	@echo ' Compiling for $(XSYS)'
 	@echo ' Copying over .f files'
 	@cp ${BACKDIR}*.f ${CODDIR}
 	@echo ' Copying over include files'

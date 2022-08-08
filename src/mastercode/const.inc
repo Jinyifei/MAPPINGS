@@ -442,7 +442,7 @@ c min and max number of preallocated steps
 c in S5 ionisation front flow models
 c
       parameter (minifsteps = 6)
-      parameter (mxifsteps = 1024)
+      parameter (mxifsteps = 1280)
 c
 c number of preallocated steps in S5 ionisation front flow models
 c

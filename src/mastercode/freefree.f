@@ -33,7 +33,7 @@ c
       real*8 zpop,abde,ffconst,invrkt
       real*8 u, gffm, g2, zn2,t12,rkt
       real*8 phots,lgkt
-      integer*4 atom,ion,i,j,inl,im1
+      integer*4 atom,ion,i,j,inl
       real*8 zsqd,xpf,meanq,energ,et
       real*8 ee(mxinfph)
       real*8 lgg2(mxion)
