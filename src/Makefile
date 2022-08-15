@@ -49,7 +49,8 @@ WARN   =
 # if recursion is ever needed; -fmax-stack-var-size=7618560
 #
 FC     = gfortran -std=legacy -march=native
-LDR    =  ${WARN} -Ofast -flto=16 -ffpe-summary='none'
+LDR    =  ${WARN} -Ofast -ffpe-summary='none'
+# LDR    =  ${WARN} -Ofast -flto=16 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
 
