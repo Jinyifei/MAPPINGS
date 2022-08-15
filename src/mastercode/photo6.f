@@ -422,6 +422,7 @@ c
   320    format(//' Hydrogen number density : ',$)
         write (*,320)
         read (*,*) dhn
+        tinner=1.0d4
       endif
 c
       dht=zen*dhn
@@ -1637,8 +1638,8 @@ c
 c
 c****************************************************************
 c
-c      write(*,*)'IF M=1 , CHECK CONVERGENCE FOR THE DENSITY'
-c      write(*,*)'AND IONIC POP. AT THE INNER BOUNDARY'
+c       write(*,*)'IF M=1 , CHECK CONVERGENCE FOR THE DENSITY'
+c       write(*,*)'AND IONIC POP. AT THE INNER BOUNDARY'
 c
 c****************************************************************
 c
@@ -1662,8 +1663,8 @@ c     DH0 = Hydrogen density at inner spatial step boundary
           dh0=dhn
         else
 c     Density structure (F=function)
-          dh0=frad(remp,dhn,xfac,pfac,afac,bfac,cfac,scalen,vfac,efac,
-     &     ffac)
+          dh0=frad(remp,dhn,xfac,pfac,afac,bfac,cfac,
+     &             scalen,vfac,efac,ffac)
         endif
 c
 c Derive electron density using ionic populations in POP0.
@@ -1840,7 +1841,7 @@ c
         call copypop (pop, ppre)
 c
 c********************************************************
-c      write(*,*)'END OF INNER BOUNDRY FOR M = 1'
+        write(*,*)'END OF INNER BOUNDRY FOR M = 1'
 c********************************************************
 c
 c

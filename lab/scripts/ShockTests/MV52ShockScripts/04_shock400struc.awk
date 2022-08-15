@@ -1,5 +1,5 @@
 #
-# v5.1.20
+# v5.1.21
 #
 BEGIN{line = 0;
   lineion  = 0;
@@ -33,14 +33,14 @@ BEGIN{line = 0;
 END{
 print  " MV 5.2 Shock Test 04: 400km/s Structure"
 print  " Quantity      ,   MVS5,   Model,  Diff%"
-printf(" TPre    kK    , 12.985, %7.3f, %6.1f\n", tpr    , 100*(tpr    -  1.29850e+01)/ 1.29850e+01);
-printf(" XHIPre 1E-3   ,  1.384, %7.3f, %6.1f\n", xhi    , 100*(xhi    -  1.38350e+00)/ 1.38350e+00);
-printf(" TShock  MK    ,  2.199, %7.3f, %6.1f\n", tin    , 100*(tin    -  2.19901e+00)/ 2.19901e+00);
-printf(" Mach Number   ,  23.22, %7.3f, %6.1f\n", Mach   , 100*(Mach   -  2.32200e+01)/ 2.32200e+01);
+printf(" TPre    kK    , 12.971, %7.3f, %6.1f\n", tpr    , 100*(tpr    -  1.29710e+01)/ 1.29710e+01);
+printf(" XHIPre 1E-3   ,  1.399, %7.3f, %6.1f\n", xhi    , 100*(xhi    -  1.39885e+00)/ 1.39885e+00);
+printf(" TShock  MK    ,  2.199, %7.3f, %6.1f\n", tin    , 100*(tin    -  2.19908e+00)/ 2.19908e+00);
+printf(" Mach Number   , 23.233, %7.3f, %6.1f\n", Mach   , 100*(Mach   -  2.32330e+01)/ 2.32330e+01);
 printf(" Alfven Mach   , 346.26, %7.2f, %6.1f\n", MachA  , 100*(MachA  -  3.46260e+02)/ 3.46260e+02);
-printf(" R4   E17cm    , 116.85, %7.2f, %6.1f\n", r4     , 100*(r4     -  1.16847e+02)/ 1.16847e+02);
-printf(" R3   E17cm    , 117.70, %7.2f, %6.1f\n", r3     , 100*(r3     -  1.17701e+02)/ 1.17701e+02);
+printf(" R4   E17cm    , 116.16, %7.2f, %6.1f\n", r4     , 100*(r4     -  1.16156e+02)/ 1.16156e+02);
+printf(" R3   E17cm    , 117.00, %7.2f, %6.1f\n", r3     , 100*(r3     -  1.17000e+02)/ 1.17000e+02);
 printf(" nH post       ,  3.978, %7.3f, %6.1f\n", nh     , 100*(nh     -  3.97770e+00)/ 3.97770e+00);
-printf(" nH4           , 393.43, %7.2f, %6.1f\n", n4     , 100*(n4     -  3.93430e+02)/ 3.93430e+02);
-printf(" nH3           , 445.10, %7.2f, %6.1f\n", n3     , 100*(n3     -  4.45100e+02)/ 4.45100e+02);
+printf(" nH4           , 393.31, %7.2f, %6.1f\n", n4     , 100*(n4     -  3.93310e+02)/ 3.93310e+02);
+printf(" nH3           , 445.02, %7.2f, %6.1f\n", n3     , 100*(n3     -  4.45020e+02)/ 4.45020e+02);
 }

@@ -234,6 +234,18 @@ c       fmloss_contrib=0.d0
 c
       fmloss=0.0d0
       if (nfmions.lt.1) return
+      if (t.le.mintemp) then
+         write(*,*) 'min Te in multilevel', t
+         stop
+      endif
+      if (dh.le.0.d0) then
+         write(*,*) 'LE 0.0 nH in multilevel', dh
+         stop
+      endif
+      if (de.le.0.d0) then
+         write(*,*) 'LE 0.0 ne in multilevel', de
+         stop
+      endif
 c
       f=dsqrt(1.0d0/t)
 c
@@ -576,6 +588,9 @@ c
       feloss=0.0d0
 c
       if (nfeions.lt.1) return
+      if (t.le.mintemp) return
+      if (dh.le.0.d0) return
+      if (de.le.0.d0) return
 c
       f=dsqrt(1.0d0/t)
 c

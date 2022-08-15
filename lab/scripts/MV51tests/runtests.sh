@@ -1,5 +1,5 @@
 #!/bin/tcsh
-# v5.1.20
+# v5.1.21
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 set d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`
@@ -58,17 +58,7 @@ cat timing.txt
 awk -f "$s/05_dustypah.awk" photn0005.ph6 >> "$r/MV52test_$d.txt"
 awk -f "$s/05_dustypah.awk" photn0005.ph6
 #
-# echo " MV 5.1 Test 6: 200 km/s iterative shock ..."
-# date | awk '{print " "$0}' >> timing.txt
-# echo " $HOST" > timing.txt
-# (time ./map51 < "$s/06_shock200.mv" >>map5output.txt)| awk '{print " "$1" "$2" "$3" "$4}'>> timing.txt
-# cat timing.txt >> "$r/MV52test_$d.txt"
-# cat timing.txt
-# awk -f "$s/06_shock200spec.awk" specSHv200s_0001.csv >> "$r/MV52test_$d.txt"
-# awk -f "$s/06_shock200spec.awk" specSHv200s_0001.csv
-# awk -f "$s/06_shock200struc.awk" shck_v200s_0001.sh5 >> "$r/MV52test_$d.txt"
-# awk -f "$s/06_shock200struc.awk" shck_v200s_0001.sh5
 echo " MV 5.1 Tests completed. Output in "$r/MV52test_$d.txt""
-# rm -f timing.txt map5output.txt
+rm -f timing.txt map5output.txt
 rm -f *.ph6 *.nfn *.lam v*.sou *.bln *.sh5 *.csv SH*.sou PC*.sou
 cp "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"

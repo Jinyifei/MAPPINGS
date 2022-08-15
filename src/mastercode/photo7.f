@@ -459,6 +459,7 @@ c
   370    format(//' Give hydrogen number density : ',$)
         write (*,370)
         read (*,*) dhn
+        tinner=1.d4
       endif
 c
       dht=densnum(dhn)

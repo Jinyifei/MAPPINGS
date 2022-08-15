@@ -80,9 +80,20 @@ c
 c
 c      real*8 feii_flux,feii_bri,feii_ratio,feii_bratio
 c
-      integer*4 luop,lupt,lusp,lualsh
-      integer*4 lurtsh,ludy,lucl,lupb,lulsh
-      integer*4 luionsh(mxelem)
+c unit numbers
+c
+c
+c main files, model and specs
+c
+      integer*4 luop,lusp,lupt
+c
+c common files
+c
+      integer*4 ludy,lucl,lupb,lupf
+c
+c shock only files
+c
+      integer*4 lualsh,lurtsh,lulsh,luionsh(mxelem)
 c
       integer*4 ie,jnorm,converged,useprecfile
       integer*4  count,step,np,finalit
@@ -90,25 +101,33 @@ c
       common /shock5I/ ie,jnorm,converged,
      & count,step,np,finalit,useprecfile
 c
-      common /shock5L/ luop,lupt,lusp,lualsh,
-     & lurtsh,ludy,lucl,lupb,lulsh,luionsh
+      common /shock5L/ luop,lusp,lupt,
+     & ludy,lucl,lupb,lupf,
+     & lualsh,lurtsh,lulsh,luionsh
 c
 c file names
 c
       character abundtitle*24
-      character fn*64,fsh*64,fsp*64,flsh*64
+c
+      character fn*64,fsh*64,fsp*64
+      character flsh*64
       character fionsh(mxelem)*64
       character fl*64,fd*64,fr*64,fa*64
-      character frsh*64,fash*64,fsm*64
-      character fpb*64,fcl*64,fpm*64
+c
+      character frpc*64,frsh*64,fash*64
+c
+      character fpb*64,fcl*64,fpm*64,fsm*64,fpf*64
+c
       character pfx*64,sfx*4,caller*64
       character s5pfx*64,subname*64,pollfile*64
       character cht*64,pht*64,clt*64
 c
       common /shock5C/ abundtitle,
-     & fn,fsh,fsp,fd,fr,fa,fl,fpm,
-     & fsm,frsh,fash,flsh,fionsh,
-     & fpb,fcl,pfx,sfx,caller,
+     & fn,fsh,fsp,flsh,
+     & fionsh,fl,fd,fr,fa,
+     & frsh,fash,fpb,fcl,
+     & fpm,fsm,fpf,
+     & pfx,sfx,caller,
      & s5pfx,subname,pollfile,
      & cht,pht,clt
 c
@@ -130,9 +149,9 @@ c
       integer*4 nfs,n100,nrms
       real*8 rms,invnfs
 
-      real*8 frdr
+      real*8 frdr,absf
+      real*8 predr(mxifsteps)
       real*8 fra(mxifsteps)
-      real*8 att(mxifsteps)
       real*8 x(mxifsteps),nte(mxifsteps),ne(mxifsteps)
       real*8 nh(mxifsteps),fh(mxifsteps)
       real*8 foi(mxifsteps),foii(mxifsteps),foiii(mxifsteps)
@@ -143,6 +162,6 @@ c
       real*8 src(mxinfph), attcol(mxinfph), sigcol(mxinfph)
       common /shock5PreI/ nfs, n100, nrms
       common /shock5PreR1/ src, attcol, sigcol
-      common /shock5PreR2/ rms, invnfs,att,
+      common /shock5PreR2/ rms, invnfs,
      & fra, x, nte, ne, nh, fh, foi,foii,foiii,
-     & p1, p2, popfr, popintfr, frdr
+     & p1, p2, popfr, popintfr, frdr, absf, predr

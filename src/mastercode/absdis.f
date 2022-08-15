@@ -34,7 +34,7 @@ c
       real*8 wid,wei,phots
       real*8 dh, absf, drta, rad,pcros
       real*8 plos,qto, de, g1, g2, temp
-      real*8 nfn(mxinfph),r2,r3,cebin,sig
+      real*8 r2,r3,sig
       integer*4 bincount,inl,i,ie,j,k,dtype,dstmin
 c
       real*8 ptime,rtime,ctime,abio,crosec
@@ -199,7 +199,7 @@ c
       real*8 dh, absf, drta, rad, pcros
       real*8 plos,qto
 c      real*8 g1, g2
-      real*8 r1,r2,r3,cebin,sig
+      real*8 r1,r2,r3,sig
       integer*4 bincount,inl,i,ie,j,k,dtype,dstmin
 c
       real*8 abio,crosec
@@ -456,8 +456,7 @@ c
       real*8 popul(mxion, mxelem)
       real*8 wei, dh, absf, drta, pcros
       real*8 plos,qto
-c      real*8 g1, g2
-      real*8 cebin,sig
+      real*8 sig
       integer*4 bincount,inl,i,atom,ion,k,dtype,dstmin
 c
       real*8 abio,crosec
@@ -565,8 +564,7 @@ c
       real*8 wid,wei,phots
       real*8 dh, absf, drta, pcros
       real*8 plos,qto
-c      real*8 g1, g2
-      real*8 cebin,sig
+      real*8 sig
       integer*4 bincount,inl,i,atom,ion,k,dtype,dstmin
 c
       real*8 abio,crosec

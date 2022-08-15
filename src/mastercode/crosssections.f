@@ -29,7 +29,7 @@ c
       include 'cblocks.inc'
 c
       real*8 tauso,sigmat
-      integer*4 i,inl,dtype,m
+      integer*4 i,inl
       integer*4 ion,atom
       real*8 pz,crosec,colden
 c

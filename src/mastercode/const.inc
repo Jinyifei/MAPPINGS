@@ -455,8 +455,8 @@ c
 c
 c maxmimum number of precursor iterations in S5
 c
-      parameter (minpcits = 3)
-      parameter (mxpcits  = 32)
+      parameter (minpcits = 2)
+      parameter (mxpcits  = 16)
 c
 c maximum lines to monitor radially in a P6 model
 c

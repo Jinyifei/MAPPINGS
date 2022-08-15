@@ -61,6 +61,11 @@ c
 c
 c    ***COMPUTES NEW RATES IF TEMP. OR PHOTON FIELD HAVE CHANGED
 c
+      if ((t.le.mintemp).or.(dh.le.0.d0)) then
+          write(*,*) 'Cool out of range', t, de, dh
+          stop
+      endif
+c
       jjmod='ALL'
       call allrates (t, jjmod)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

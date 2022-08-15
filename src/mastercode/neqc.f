@@ -61,19 +61,28 @@ c
 c
 c     set up logical unit numbers
 c
-      lualsh=20
-      luop=21
-c disable precursor output when compsh5 is called set lupt to 0
-      lupt=0
-      lurtsh=23
-      ludy=24
-      lusp=25
-      lupb=26
-      lucl=27
 c
+c main files, model and specs disable precursors files
+c
+      luop=20
+      lusp=21
+      lupt=0
+c
+c common files
+c
+      lucl=24
+      lupb=25
+      lupb=26
+      ludy=27
+c
+c shock only files
+c
+      lualsh=28
+      lurtsh=29
+      lulsh=30
       ieln=4
       do i=1,atypes
-        luionsh(i)=28+i
+        luionsh(i)=30+i
       enddo
 c
       fsm=' '
@@ -416,35 +425,33 @@ c
   283   format(/' Elements (Z) : ',$)
         write (*,282)
         read(*,*) ieln
-        ieln=min(max(1,ieln),atypes)
-        write (*,283)
-        read (*,*) (iel(i),i=1,ieln)
-c
-        do i=1,ieln
-           elok(i)=0
-           do idx=1,atypes
-              if (iel(i).eq.mapz(idx)) elok(i)=1
-           enddo
-        enddo
-c
-        nel=ieln
-        do i=1,ieln
-           if (elok(i).eq.0) nel=nel-1
-        enddo
-        if ((nel.lt.1).and.(tsrmod.eq.'Y')) then
-           tsrmod='N'
-        endif
-c
+        ieln=min(max(0,ieln),atypes)
+        if (ieln.le.0) tsrmod='N'
         if (tsrmod.eq.'Y') then
-           ieln=nel
+           write (*,283)
+           read (*,*) (iel(i),i=1,ieln)
            do i=1,ieln
-              iel(i)=zmap(iel(i))
+              elok(i)=0
+              do idx=1,atypes
+                 if (iel(i).eq.mapz(idx)) elok(i)=1
+              enddo
            enddo
-  285      format(/' Monitoring :',30(x,a2),/)
-           write (*,285) (elem(iel(i)),i=1,ieln)
-        else
-           write(*,'("Unable to monitor element ions")')
-        endif
+           nel=ieln
+           do i=1,ieln
+              if (elok(i).eq.0) nel=nel-1
+           enddo
+           if (nel.lt.1) tsrmod='N'
+           if (tsrmod.eq.'Y') then
+              ieln=nel
+              do i=1,ieln
+                 iel(i)=zmap(iel(i))
+              enddo
+  285         format(/' Monitoring :',30(x,a2),/)
+              write (*,285) (elem(iel(i)),i=1,ieln)
+           else
+              write(*,'("Unable to monitor element ions")')
+           endif
+         endif
       endif
 c
 c     get screen display mode
@@ -621,7 +628,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     abundances file header
 c
-c
       abundtitle=' Initial Abundances :'
       do i=1,atypes
         zi(i)=zion0(i)*deltazion(i)
@@ -740,17 +746,15 @@ c
       if (fclmod.eq.'Y') write (lucl,140) te0,vel0,rho0,pr0,bm0,te1,
      &vel1,rho1,pr1,bm1
 c
-c
       close (lusp)
-c
 c
       wdilt0=te0
       t=te0
       ve=vel0
-      dr=1.0
+      dr=1.0d0
       dv=ve*0.01d0
       rad=1.d38
-      if (wdil.eq.0.5) rad=0.d0
+      if (wdil.eq.0.5d0) rad=0.d0
 c
 c     get the electrons...
 c
@@ -759,9 +763,7 @@ c
 c     calculate the radiation field and atomic rates
 c
       call localem (t, de, dh)
-c
       call totphot2 (t, dh, rad, dr, dv, wdil, specmode)
-c
       if (photonmode.ne.0) then
         call zetaeff ( dh)
       endif
@@ -805,7 +807,7 @@ c
   190 format(10(a12,a2),30(a12,a2),33(a12,a2))
   200 format(10(a12,a2),30(a12,a2),33(1pg12.5,a2))
 c
-  210 format( '=======================================================',
+  210 format('=======================================================',
      & '=======================================================',
      & '=======================================================',
      & '=======================================================',
@@ -819,48 +821,40 @@ c
 c
       if (fclmod.eq.'Y') then
         write (lucl,180)
-c      write (lucl,560)
-c      write (lucl,570)
         if (jnorm.eq.0) then
           write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
      & 'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',
      & tab,'L/(ne.nH)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,
      & 'LHalpha',tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
         endif
         if (jnorm.eq.1) then
           write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
      &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
      &'L/(nH^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
      &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
         endif
         if (jnorm.eq.2) then
           write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
      &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
      &'L/(ne.ni)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
      &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
         endif
         if (jnorm.eq.3) then
           write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
      &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
      &'L/(n^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
      &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
         endif
         if (jnorm.eq.4) then
           write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
      &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
      &'L/(ne^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
      &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
         endif
         write (lucl,200) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,
      &'(/cm^3)',tab,'(g/cm^3)',tab,' ',tab,' ',tab,'(amu)',tab,
      &'(erg/cm^3/s)',tab,'(erg cm^3/s)',tab,('(erg cm^3/s)',tab,
      &j=1,atypes),'(erg cm^3/s)',tab,'(erg cm^3/s)',tab,'(erg cm^3/s)'
-c     &    (elem(j),tab,j=1,atypes)
         write (lucl,210)
       endif
       if (ratmod.eq.'Y') close (lurtsh)

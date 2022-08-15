@@ -1,5 +1,5 @@
 #
-# v5.1.20
+# v5.1.21
 #
 BEGIN{line = 0;
   lineion  = 0;
@@ -33,14 +33,14 @@ BEGIN{line = 0;
 END{
 print  " MV 5.2 Shock Test 05: 800km/s Structure"
 print  " Quantity      ,   MVS5,   Model,  Diff%"
-printf(" TPre    kK    , 23.446, %7.3f, %6.1f\n", tpr   , 100*(tpr    -  2.34460e+01)/ 2.34460e+01);
-printf(" XHIPre 1E-4   ,  2.913, %7.3f, %6.1f\n", xhi   , 100*(xhi    -  2.91259e-00)/ 2.91259e-00);
-printf(" TShock  MK    ,  8.752, %7.3f, %6.1f\n", tin   , 100*(tin    -  8.75150e+00)/ 8.75150e+00);
-printf(" Mach Number   , 34.520, %7.3f, %6.1f\n", Mach  , 100*(Mach   -  3.45200e+01)/ 3.45200e+01);
+printf(" TPre    kK    , 23.384, %7.3f, %6.1f\n", tpr   , 100*(tpr    -  2.33840e+01)/ 2.33840e+01);
+printf(" XHIPre 1E-4   ,  2.952, %7.3f, %6.1f\n", xhi   , 100*(xhi    -  2.95210e+00)/ 2.95210e+00);
+printf(" TShock  MK    ,  8.752, %7.3f, %6.1f\n", tin   , 100*(tin    -  8.75154e+00)/ 8.75154e+00);
+printf(" Mach Number   , 34.566, %7.3f, %6.1f\n", Mach  , 100*(Mach   -  3.45660e+01)/ 3.45660e+01);
 printf(" Alfven Mach   , 692.52, %7.2f, %6.1f\n", MachA , 100*(MachA  -  6.92520e+02)/ 6.92520e+02);
-printf(" R4   E19cm    , 27.616, %7.3f, %6.1f\n", r4    , 100*(r4     -  2.76161e+01)/ 2.76161e+01);
-printf(" R3   E19cm    , 27.633, %7.3f, %6.1f\n", r3    , 100*(r3     -  2.76332e+01)/ 2.76332e+01);
+printf(" R4   E19cm    , 27.551, %7.3f, %6.1f\n", r4    , 100*(r4     -  2.75511e+01)/ 2.75511e+01);
+printf(" R3   E19cm    , 27.576, %7.3f, %6.1f\n", r3    , 100*(r3     -  2.75759e+01)/ 2.75759e+01);
 printf(" nH post       ,  3.990, %7.3f, %6.1f\n", nh    , 100*(nh     -  3.98990e+00)/ 3.98990e+00);
-printf(" nH4           , 875.49, %7.2f, %6.1f\n", n4    , 100*(n4     -  8.75490e+02)/ 8.75490e+02);
-printf(" nH3           , 926.47, %7.2f, %6.1f\n", n3    , 100*(n3     -  9.26470e+02)/ 9.26470e+02);
+printf(" nH4           , 876.87, %7.2f, %6.1f\n", n4    , 100*(n4     -  8.76870e+02)/ 8.76870e+02);
+printf(" nH3           , 926.49, %7.2f, %6.1f\n", n3    , 100*(n3     -  9.26490e+02)/ 9.26490e+02);
 }

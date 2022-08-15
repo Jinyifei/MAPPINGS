@@ -1,5 +1,5 @@
 #
-# v5.1.20
+# v5.1.21
 #
 BEGIN{line = 0;
   lineion  = 0;
@@ -33,14 +33,14 @@ BEGIN{line = 0;
 END{
 print  " MV 5.2 Shock Test 03: 200km/s Structure"
 print  " Quantity      ,   MVS5,   Model,  Diff%"
-printf(" TPre    kK    ,  9.505, %7.3f, %6.1f\n", tpr    , 100*(tpr    -  9.50540e+00)/ 9.50540e+00);
-printf(" XHIPre 1E-3   ,  4.997, %7.3f, %6.1f\n", xhi    , 100*(xhi    -  4.99658e+00)/ 4.99658e+00);
-printf(" TShock  kK    , 568.23, %7.2f, %6.1f\n", tin    , 100*(tin    -  5.68229e+02)/ 5.68229e+02);
-printf(" Mach Number   , 13.731, %7.3f, %6.1f\n", Mach   , 100*(Mach   -  1.37310e+01)/ 1.37310e+01);
+printf(" TPre    kK    ,  9.605, %7.3f, %6.1f\n", tpr    , 100*(tpr    -  9.60500e+00)/ 9.60500e+00);
+printf(" XHIPre 1E-3   ,  5.034, %7.3f, %6.1f\n", xhi    , 100*(xhi    -  5.03434e+00)/ 5.03434e+00);
+printf(" TShock  kK    , 568.80, %7.2f, %6.1f\n", tin    , 100*(tin    -  5.68798e+02)/ 5.68798e+02);
+printf(" Mach Number   , 13.666, %7.3f, %6.1f\n", Mach   , 100*(Mach   -  1.36660e+01)/ 1.36660e+01);
 printf(" Alfven Mach   , 173.13, %7.2f, %6.1f\n", MachA  , 100*(MachA  -  1.73130e+02)/ 1.73130e+02);
-printf(" R4   E17cm    ,  7.565, %7.3f, %6.1f\n", r4     , 100*(r4     -  7.56471e+00)/ 7.56471e+00);
-printf(" R3   E17cm    ,  8.061, %7.3f, %6.1f\n", r3     , 100*(r3     -  8.06103e+00)/ 8.06103e+00);
-printf(" nH post       ,  3.937, %7.3f, %6.1f\n", nh     , 100*(nh     -  3.93680e+00)/ 3.93680e+00);
-printf(" nH4           , 163.86, %7.2f, %6.1f\n", n4     , 100*(n4     -  1.63860e+02)/ 1.63860e+02);
-printf(" nH3           , 215.49, %7.2f, %6.1f\n", n3     , 100*(n3     -  2.15490e+02)/ 2.15490e+02);
+printf(" R4   E17cm    ,  7.543, %7.3f, %6.1f\n", r4     , 100*(r4     -  7.54290e+00)/ 7.54290e+00);
+printf(" R3   E17cm    ,  8.035, %7.3f, %6.1f\n", r3     , 100*(r3     -  8.03450e+00)/ 8.03450e+00);
+printf(" nH post       ,  3.936, %7.3f, %6.1f\n", nh     , 100*(nh     -  3.93620e+00)/ 3.93620e+00);
+printf(" nH4           , 163.39, %7.2f, %6.1f\n", n4     , 100*(n4     -  1.63390e+02)/ 1.63390e+02);
+printf(" nH3           , 215.65, %7.2f, %6.1f\n", n3     , 100*(n3     -  2.15650e+02)/ 2.15650e+02);
 }
