@@ -1638,8 +1638,8 @@ c
 c
 c****************************************************************
 c
-c       write(*,*)'IF M=1 , CHECK CONVERGENCE FOR THE DENSITY'
-c       write(*,*)'AND IONIC POP. AT THE INNER BOUNDARY'
+c      write(*,*)'IF M=1 , CHECK CONVERGENCE FOR THE DENSITY'
+c      write(*,*)'AND IONIC POP. AT THE INNER BOUNDARY'
 c
 c****************************************************************
 c
@@ -1841,7 +1841,7 @@ c
         call copypop (pop, ppre)
 c
 c********************************************************
-        write(*,*)'END OF INNER BOUNDRY FOR M = 1'
+c      write(*,*)'END OF INNER BOUNDRY FOR M = 1'
 c********************************************************
 c
 c
