@@ -57,16 +57,16 @@ awk -f "$s/04_shock400spec.awk" specSHv400s_0001.csv
 awk -f "$s/04_shock400struc.awk" shck_v400s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/04_shock400struc.awk" shck_v400s_0001.sh5
 #
-echo " MV 5.2 Test 5: Alpha 1.0 800km/s iterative shock..."
-date | awk '{print " "$0}' > timing.txt
-echo " $HOST" > timing.txt
-(time ./map51 < "$s/testS5800.mv" >>map5output.txt)| awk '{print " "$1" "$2" "$3" "$4}'>> timing.txt
-cat timing.txt >> "$r/MV52Shocks_$d.txt"
-cat timing.txt
-awk -f "$s/05_shock800spec.awk" specSHv800s_0001.csv >> "$r/MV52Shocks_$d.txt"
-awk -f "$s/05_shock800spec.awk" specSHv800s_0001.csv
-awk -f "$s/05_shock800struc.awk" shck_v800s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
-awk -f "$s/05_shock800struc.awk" shck_v800s_0001.sh5
+# echo " MV 5.2 Test 5: Alpha 1.0 800km/s iterative shock..."
+# date | awk '{print " "$0}' > timing.txt
+# echo " $HOST" > timing.txt
+# (time ./map51 < "$s/testS5800.mv" >>map5output.txt)| awk '{print " "$1" "$2" "$3" "$4}'>> timing.txt
+# cat timing.txt >> "$r/MV52Shocks_$d.txt"
+# cat timing.txt
+# awk -f "$s/05_shock800spec.awk" specSHv800s_0001.csv >> "$r/MV52Shocks_$d.txt"
+# awk -f "$s/05_shock800spec.awk" specSHv800s_0001.csv
+# awk -f "$s/05_shock800struc.awk" shck_v800s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
+# awk -f "$s/05_shock800struc.awk" shck_v800s_0001.sh5
 #
 echo " MV 5.2 Test 6: B 10microG 100km/s iterative shock..."
 date | awk '{print " "$0}' > timing.txt

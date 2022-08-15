@@ -931,48 +931,38 @@ c
         write (*,360) atypes
         write (*,365)
         read (*,*) ieln
-        ieln=min(max(ieln,0),atypes)
-        if (ieln.le.0) tsrmod='N'
-        if (tsrmod.eq.'Y') then
-           write (*,366)
-           read (*,*) (iel(i),i=1,ieln)
-           do i=1,ieln
-              elok(ieln)=0
-              do idx=1,atypes
-                 if (iel(i).eq.mapz(idx)) elok(i)=1
-              enddo
+c
+        ieln=min(max(ieln,1),atypes)
+        read (*,*) (iel(i),i=1,ieln)
+c
+        do i=1,ieln
+           elok(i)=0
+           do idx=1,atypes
+              if (iel(i).eq.mapz(idx)) elok(i)=1
            enddo
-           nel=ieln
+        enddo
+c
+        if (tsrmod.eq.'Y') then
+           nel=0
            do i=1,ieln
-              if (elok(i).eq.0) nel=idx-1
+              if (elok(i).eq.1) then
+                 nel=nel+1
+                 iel(nel)=zmap(iel(i))
+              endif
            enddo
            if (nel.lt.1) tsrmod='N'
            if (tsrmod.eq.'Y') then
-               ieln=nel
-               do i=1,ieln
-                  iel(i)=zmap(iel(i))
-               enddo
-               nel=ieln
-               do i=1,ieln
-                  if (elok(i).eq.0) nel=idx-1
-               enddo
-               if (nel.lt.1) tsrmod='N'
-               if (tsrmod.eq.'Y') then
-                  ieln=nel
-                  do i=1,ieln
-                     iel(i)=zmap(iel(i))
-                  enddo
-  367             format(/' Monitoring :',30(x,a2),/)
-                  write(*,367) (elem(iel(i)),i=1,ieln)
+              ieln=nel
+  367         format(/' Monitoring :',30(x,a2),/)
+              write(*,367) (elem(iel(i)),i=1,ieln)
 c
-  370             format(/,' Record all ions file (Y/N)? : ',$)
-  375             write (*,370)
-                  read (*,10) allmod
-                  call toup(allmod(1:1),allmod)
-                  if ((allmod.ne.'Y').and.(allmod.ne.'N')) goto 375
-               endif
-            endif
-         endif
+  370         format(/,' Record all ions file (Y/N)? : ',$)
+  375         write (*,370)
+              read (*,10) allmod
+              call toup(allmod(1:1),allmod)
+              if ((allmod.ne.'Y').and.(allmod.ne.'N')) goto 375
+           endif
+        endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1021,8 +1011,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (fclmod.eq.'Y') then
         jnorm=0
-  410   format (' Cooling File Normalisation,',/
-     &  ' (0=ne.nH, 1=nH^2, 2=ne.ni, 3=n^2, 4=ne^2): ',$)
+  410  format (//' Cooling File Normalisation,',/
+     & ' (0=ne.nH, 1=nH^2, 2=ne.ni, 3=n^2, 4=ne^2): ',$)
         write (*,410)
         read (*,*) jnorm
         if (jnorm.lt.0) jnorm=0
@@ -1954,7 +1944,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Open files, main and precursor
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C     call appendprecfiles()
       call appendS5files()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2640,7 +2629,6 @@ c open all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C     call appendshockfiles()
       call appendS5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3506,7 +3494,6 @@ c     Reopen all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C     call appendshockfiles()
       call appendS5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3929,8 +3916,6 @@ c
 c line structures, shocks and precursors
 c jlin=Y
 c
-c      open (lulsh,file=flsh,status='NEW')
-c
       pfx='linSH'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='csv'
@@ -4018,7 +4003,6 @@ c
       if (tsrmod.eq.'Y') then
 c
 c B  : Ion balance files.'
-c      luionsh(i)=32+i
 c
         do i=1,ieln
           open (luionsh(i),file=fionsh(iel(i)),status='NEW')
@@ -4205,7 +4189,6 @@ c
       if (tsrmod.eq.'Y') then
 c
 c B  : Ion balance files.'
-c      luionsh(i)=32+i
 c
       do i=1,ieln
       open (luionsh(i),file=fionsh(iel(i)),status='OLD',access='APPEND')
@@ -4272,9 +4255,7 @@ c
       if (bandsmod.eq.'Y') then
 c
 c H  : Cooling in x-ray bands.'
-c      lupb=30
 c
-        write(*,*) 'app',fpb
         open (lupb,file=fpb,status='OLD',access='APPEND')
       endif
 c
@@ -4289,7 +4270,6 @@ c
 c
 c K  : Cooling, Components by Elements file.'
 c
-c      lucl=29
 c
         open (lucl,file=fcl,status='OLD',access='APPEND')
       endif
