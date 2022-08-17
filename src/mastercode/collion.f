@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -66,15 +66,15 @@ c
 c
 c     External Functions
 c
-      real*8 farint,fsplint,fcodyE1
+      real*8 farint,fsplint,fcodye1
       real*8 fkenhance
 c
       rateenhance=1.d0
 c
       do atom=1,atypes
-        do ion=1,maxion(atom)
-          col(ion,atom)=0.0d0
-        enddo
+       do ion=1,maxion(atom)
+        col(ion,atom)=0.0d0
+       enddo
       enddo
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -87,34 +87,34 @@ c
 c
 c     Dere 2007 rates, using the spline fit for y
 c
-        f=2.d0
-        ktev=telec*rkb/ev
-        do io=1,ncol
-          rate=0.d0
-          atom=atcol(io)
-          ion=ioncol(io)
-          ep=ipotcol(io)
-          invt=ep/ktev
-          if (invt.lt.maxdekt) then
-            if (usekappa) then
-              rateenhance=fkenhance(kappa,invt)
-            endif
-            t=1.d0/invt
-            ni=nsplcol(io)
-            do k=1,ni
-              xs(k)=xcol(k,io)
-              ys(k)=ycol(k,io)
-              y2s(k)=y2col(k,io)
-            enddo
-            ex1=fcodyE1(invt)
-            rate=ex1/(dsqrt(t*ep)*ep)
-            x=1.d0-(dlog(f)/dlog(t+f))
-            y=fsplint(xs,ys,y2s,ni,x)
-            rate=1.0d-6*rate*y
-            rate=rate*rateenhance
-          endif
-          col(ion,atom)=rate
-        enddo
+       f=2.d0
+       ktev=telec*rkb/ev
+       do io=1,ncol
+        rate=0.d0
+        atom=atcol(io)
+        ion=ioncol(io)
+        ep=ipotcol(io)
+        invt=ep/ktev
+        if (invt.lt.maxdekt) then
+         if (usekappa) then
+          rateenhance=fkenhance(kappa,invt)
+         endif
+         t=1.d0/invt
+         ni=nsplcol(io)
+         do k=1,ni
+          xs(k)=xcol(k,io)
+          ys(k)=ycol(k,io)
+          y2s(k)=y2col(k,io)
+         enddo
+         ex1=fcodye1(invt)
+         rate=ex1/(dsqrt(t*ep)*ep)
+         x=1.d0-(dlog(f)/dlog(t+f))
+         y=fsplint(xs,ys,y2s,ni,x)
+         rate=1.0d-6*rate*y
+         rate=rate*rateenhance
+        endif
+        col(ion,atom)=rate
+       enddo
 c
       endif
 c
@@ -122,33 +122,33 @@ c
 c
 c     Arnaud and Rothenflug rates (previous default)
 c
-        ktev=telec*rkb/ev
-        do 30 atom=1,atypes
-          do 20 ion=1,maxion(atom)-1
-            sig=0.d0
-            do 10 shell=1,nshells(ion,atom)
-              a=aar(shell,ion,atom)
-              b=bar(shell,ion,atom)
-              c=car(shell,ion,atom)
-              d=dar(shell,ion,atom)
-              x=collpot(shell,ion,atom)/ktev
-              if (x.lt.maxdekt) then
-                rateenhance=1.0d0
-                if (usekappa) then
-                  rateenhance=fkenhance(kappa,x)
-                endif
-                f1=farint(1,x)
-                f2=farint(2,x)
-                f0=a*(1.d0-x*f1)+b*(1.d0+x-x*(2.d0+x)*f1)+c*f1+d*x*f2
-                sig=sig+(dexp(-x)/x)*f0*rateenhance
-              endif
-   10       continue
-            cdi=((6.69d-7)/(ktev**1.5d0))*sig
-            cai=fautoi(telec,atom,ion)
-            col(ion,atom)=dmax1(cdi+cai,0.d0)
-   20     continue
-          col(maxion(atom),atom)=0.0d0
-   30   continue
+       ktev=telec*rkb/ev
+       do 30 atom=1,atypes
+        do 20 ion=1,maxion(atom)-1
+         sig=0.d0
+         do 10 shell=1,nshells(ion,atom)
+          a=aar(shell,ion,atom)
+          b=bar(shell,ion,atom)
+          c=car(shell,ion,atom)
+          d=dar(shell,ion,atom)
+          x=collpot(shell,ion,atom)/ktev
+          if (x.lt.maxdekt) then
+           rateenhance=1.0d0
+           if (usekappa) then
+            rateenhance=fkenhance(kappa,x)
+           endif
+           f1=farint(1,x)
+           f2=farint(2,x)
+           f0=a*(1.d0-x*f1)+b*(1.d0+x-x*(2.d0+x)*f1)+c*f1+d*x*f2
+           sig=sig+(dexp(-x)/x)*f0*rateenhance
+          endif
+   10    continue
+         cdi=((6.69d-7)/(ktev**1.5d0))*sig
+         cai=fautoi(telec,atom,ion)
+         col(ion,atom)=dmax1(cdi+cai,0.d0)
+   20   continue
+        col(maxion(atom),atom)=0.0d0
+   30  continue
 c
       endif
 c
@@ -158,38 +158,38 @@ c     Landini & Monsignori Fossi - Shull rates
 c     faster but probably less accurate.....
 c     will use A&R for H sequence.
 c
-        t=telec+1.d-1
-        f=dsqrt(t)
-        ktev=t*rkb/ev
-        do 50 atom=1,atypes
-          do 40 ion=1,maxion(atom)-1
-            is=mapz(atom)-ion+1
-            cdi=0.d0
-            if (is.gt.1) then
-              ac=acol(ion,atom)
-              tc=tcol(ion,atom)
-              cdi=ac*f/(1.d0+0.1d0*(t/tc))*dexp(-tc/t)
-            else
-              a=aar(1,ion,atom)
-              b=bar(1,ion,atom)
-              c=car(1,ion,atom)
-              d=dar(1,ion,atom)
-              x=collpot(1,ion,atom)/ktev
-              if (x.lt.maxdekt) then
-                rateenhance=1.0d0
-                if (usekappa) then
-                  rateenhance=fkenhance(kappa,x)
-                endif
-                f1=farint(1,x)
-                f2=farint(2,x)
-                f0=a*(1.d0-x*f1)+b*(1.d0+x-x*(2.d0+x)*f1)+c*f1+d*x*f2
-                sig=(dexp(-x)/x)*f0*rateenhance
-                cdi=((6.69d-7)/(ktev**1.5d0))*sig
-              endif
-            endif
-            col(ion,atom)=cdi
-   40     continue
-   50   continue
+       t=telec+1.d-1
+       f=dsqrt(t)
+       ktev=t*rkb/ev
+       do 50 atom=1,atypes
+        do 40 ion=1,maxion(atom)-1
+         is=mapz(atom)-ion+1
+         cdi=0.d0
+         if (is.gt.1) then
+          ac=acol(ion,atom)
+          tc=tcol(ion,atom)
+          cdi=ac*f/(1.d0+0.1d0*(t/tc))*dexp(-tc/t)
+         else
+          a=aar(1,ion,atom)
+          b=bar(1,ion,atom)
+          c=car(1,ion,atom)
+          d=dar(1,ion,atom)
+          x=collpot(1,ion,atom)/ktev
+          if (x.lt.maxdekt) then
+           rateenhance=1.0d0
+           if (usekappa) then
+            rateenhance=fkenhance(kappa,x)
+           endif
+           f1=farint(1,x)
+           f2=farint(2,x)
+           f0=a*(1.d0-x*f1)+b*(1.d0+x-x*(2.d0+x)*f1)+c*f1+d*x*f2
+           sig=(dexp(-x)/x)*f0*rateenhance
+           cdi=((6.69d-7)/(ktev**1.5d0))*sig
+          endif
+         endif
+         col(ion,atom)=cdi
+   40   continue
+   50  continue
 c
       endif
 c

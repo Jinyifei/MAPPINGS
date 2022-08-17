@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -27,7 +27,6 @@ c     RETURNS DATA IN COMMON BLOCK /CLINE/
 c     FSLOS (ERG.CM-3.S-1)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -48,35 +47,34 @@ c
       t2=t*0.01d0
       frkt=1.d0/(rkb*t)
       do m=1,mlines
-        atom=ielfs(m)
-        ion=ionfs(m)
-        pz=zion(atom)*pop(ion,atom)
-
-        if (pz.ge.pzlimit) then
+       atom=ielfs(m)
+       ion=ionfs(m)
+       pz=zion(atom)*pop(ion,atom)
+       if (pz.ge.pzlimit) then
 c
         fbr=0.0d0
         fsbri(m)=0.d0
 c
-          aa=e12fs(m)*frkt
-          if (aa.lt.maxdekt) then
-            ba=dexp(-aa)
-            omg=omfs(m)
-            ratekappa=1.d0
-            if (usekappa) then
-              ratekappa=fkenhance(kappa,aa)
-            endif
-            q12=(rka*f)*omg*ba/w1fs(m)*ratekappa
-            q21=(rka*f)*omg/w2fs(m)*ratekappa
-            rp=(de*q12)/(a21fs(m)+(de*q21))
-            pn2=dh*pz*(rp/(1.0d0+rp))
-            fbr=(pn2*a21fs(m))*e12fs(m)
-            coolz(atom)=coolz(atom)+fbr
-            coolzion(ion,atom)=coolzion(ion,atom)+fbr
-            fslos=fslos+fbr
-            fsbri(m)=fbr*ifpi
-          endif
-c
+        aa=e12fs(m)*frkt
+        if (aa.lt.maxdekt) then
+         ba=dexp(-aa)
+         omg=omfs(m)
+         ratekappa=1.d0
+         if (usekappa) then
+          ratekappa=fkenhance(kappa,aa)
+         endif
+         q12=(rka*f)*omg*ba/w1fs(m)*ratekappa
+         q21=(rka*f)*omg/w2fs(m)*ratekappa
+         rp=(de*q12)/(a21fs(m)+(de*q21))
+         pn2=dh*pz*(rp/(1.0d0+rp))
+         fbr=(pn2*a21fs(m))*e12fs(m)
+         coolz(atom)=coolz(atom)+fbr
+         coolzion(ion,atom)=coolzion(ion,atom)+fbr
+         fslos=fslos+fbr
+         fsbri(m)=fbr*ifpi
         endif
+c
+       endif
 c
       enddo
 c
@@ -84,7 +82,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Subroutine to calculate the transitions

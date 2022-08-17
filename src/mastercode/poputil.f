@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -24,16 +24,15 @@ c
       real*8 popin(mxion, mxelem)
       integer*4 at, ion
       do at=1,atypes
-        do ion=1,maxion(at)
-          if (popin(ion,at).gt.0.d0) then
-            write (*,'(x,a2,x,i2.2,x,i2.2,x,1pg11.4)') elem(at),mapz(at)
-     &       ,ion,popin(ion,at)
-          endif
-        enddo
+       do ion=1,maxion(at)
+        if (popin(ion,at).gt.0.d0) then
+         write (*,'(x,a2,x,i2.2,x,i2.2,x,1pg11.4)') elem(at),mapz(at),
+     &    ion,popin(ion,at)
+        endif
+       enddo
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine copypop (popin, popout)
@@ -44,11 +43,10 @@ c
       real*8 popin(mxion, mxelem), popout(mxion, mxelem)
       integer*4 at, ion
       do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(ion,at)=popin(ion,at)
+       do 10 ion=1,mxion
+   10  popout(ion,at)=popin(ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine addpop (popin, popout)
@@ -59,11 +57,10 @@ c
       real*8 popin(mxion, mxelem), popout(mxion, mxelem)
       integer*4 at, ion
       do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(ion,at)=popin(ion,at)+popout(ion,at)
+       do 10 ion=1,mxion
+   10  popout(ion,at)=popin(ion,at)+popout(ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine clearpop (popin)
@@ -74,11 +71,10 @@ c
       real*8 popin(mxion, mxelem)
       integer*4 at, ion
       do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popin(ion,at)=0.0d0
+       do 10 ion=1,mxion
+   10  popin(ion,at)=0.0d0
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine scalepop (popin, x)
@@ -89,11 +85,10 @@ c
       real*8 popin(mxion, mxelem),x
       integer*4 at, ion
       do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popin(ion,at)=popin(ion,at)*x
+       do 10 ion=1,mxion
+   10  popin(ion,at)=popin(ion,at)*x
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine copysteppop (step, popin, popout)
@@ -108,11 +103,10 @@ c
       real*8 popin(mxifsteps, mxion, mxelem), popout(mxion, mxelem)
       integer*4 step,at, ion
       do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(ion,at)=popin(step,ion,at)
+       do 10 ion=1,mxion
+   10  popout(ion,at)=popin(step,ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine copypopstep (popin, step, popout)
@@ -123,11 +117,10 @@ c
       real*8 popin(mxion, mxelem), popout(mxifsteps, mxion, mxelem)
       integer*4 step,at, ion
       do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(step,ion,at)=popin(ion,at)
+       do 10 ion=1,mxion
+   10  popout(step,ion,at)=popin(ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine averinto (wei, popw, popco, popout)
@@ -150,13 +143,12 @@ c
       weico=dmax1(0.d0,1.d0-weiw)
 c
       do 10 i=1,atypes
-        do 10 j=1,maxion(i)
-        popout(j,i)=(weiw*popw(j,i))+(weico*popco(j,i))
+       do 10 j=1,maxion(i)
+       popout(j,i)=(weiw*popw(j,i))+(weico*popco(j,i))
    10 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine difpop (popin, popfi, tre, lim, dif)
@@ -169,7 +161,6 @@ c     TRE : TRESHOLD FOR MEASURING CHANGE
 c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -189,21 +180,21 @@ c
 c
       if (thresh.le.epsilon) thresh=epsilon
       do idx=1,lim
-        do ion=1,maxion(idx)
-          if ((popin(ion,idx).ge.thresh).and.(popfi(ion,idx).ge.thresh))
-     &      then
-            p1=dlog10(popin(ion,idx))
-            p2=dlog10(popfi(ion,idx))
-            tmdif=dabs(p1-p2)
-            if (tmdif.ge.maxdif) then
-              maxdif=tmdif
-              matom=idx
-              mion=ion
-            endif
-            sum=sum+tmdif
-            num=num+1
-          endif
-        enddo
+       do ion=1,maxion(idx)
+        if ((popin(ion,idx).ge.thresh).and.(popfi(ion,idx).ge.thresh))
+     &   then
+         p1=dlog10(popin(ion,idx))
+         p2=dlog10(popfi(ion,idx))
+         tmdif=dabs(p1-p2)
+         if (tmdif.ge.maxdif) then
+          maxdif=tmdif
+          matom=idx
+          mion=ion
+         endif
+         sum=sum+tmdif
+         num=num+1
+        endif
+       enddo
       enddo
 c
       dif=sum/(num+epsilon)
@@ -215,7 +206,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine difhhe (popin, popfi, dif)
@@ -246,32 +236,31 @@ c
       maxdif=0.d0
 c
       do idx=1,lim
-        do ion=1,maxion(idx)
-          if ((popin(ion,idx).ge.thresh).and.(popfi(ion,idx).ge.thresh))
-     &      then
-            p1=dlog10(popin(ion,idx))
-            p2=dlog10(popfi(ion,idx))
-            tmdif=dabs(p1-p2)
-            if (tmdif.ge.maxdif) then
-              maxdif=tmdif
-              matom=idx
-              mion=ion
-            endif
-            sum=sum+tmdif
-            num=num+1
-          endif
-        enddo
+       do ion=1,maxion(idx)
+        if ((popin(ion,idx).ge.thresh).and.(popfi(ion,idx).ge.thresh))
+     &   then
+         p1=dlog10(popin(ion,idx))
+         p2=dlog10(popfi(ion,idx))
+         tmdif=dabs(p1-p2)
+         if (tmdif.ge.maxdif) then
+          maxdif=tmdif
+          matom=idx
+          mion=ion
+         endif
+         sum=sum+tmdif
+         num=num+1
+        endif
+       enddo
       enddo
 c
       if (num.gt.0) dif=sum/(num+epsilon)
 c
       if (expertmode.gt.0) then
-        write (*,*) 'Max HHe difference: ',elem(matom),rom(mion),'=',
-     &   maxdif
+       write (*,*) 'Max HHe difference: ',elem(matom),rom(mion),'=',
+     &  maxdif
       endif
 c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -18,7 +18,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -28,7 +28,7 @@ c
 c     1975 Ralph Sutherland, Michael Dopita, Luc Binette,
 c     Ian Evans, Stephen Mettheringham
 c     Brent Groves, David Nicholls,
-c     Jin Yie-Fei, Adam D. Thomas,
+c     Jin Yi-Fei, Adam D. Thomas,
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -76,32 +76,32 @@ c
 c
       initerr=.false.
       call mapinit (initerr)
-      if (initerr) goto 110
+      if (initerr) goto 90
 c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (photonmode.eq.0) then
-        write (*,*) ' ***********************************************'
-        write (*,*) ' *                                             *'
-        write (*,*) ' *   WARNING: PHOTON FIELD DISABLED.           *'
-        write (*,*) ' *                                             *'
-        write (*,*) ' ***********************************************'
+       write (*,*) ' ***********************************************'
+       write (*,*) ' *                                             *'
+       write (*,*) ' *   WARNING: PHOTON FIELD DISABLED.           *'
+       write (*,*) ' *                                             *'
+       write (*,*) ' ***********************************************'
       endif
-      if ((photofraction.gt.0.d0).and.(photofraction .lt.1.d0))then
-        write (*,*) ' ***********************************************'
-        write (*,*) ' *                                             *'
-        write (*,*) ' *   WARNING: PARTIAL PHOTON FIELD ENABLED.    *'
-        write (*,*) ' *                                             *'
-        write (*,*) ' ***********************************************'
+      if ((photofraction.gt.0.d0).and.(photofraction.lt.1.d0)) then
+       write (*,*) ' ***********************************************'
+       write (*,*) ' *                                             *'
+       write (*,*) ' *   WARNING: PARTIAL PHOTON FIELD ENABLED.    *'
+       write (*,*) ' *                                             *'
+       write (*,*) ' ***********************************************'
       endif
 c
       if (alphacoolmode.eq.1) then
-        write (*,*) ' ***********************************************'
-        write (*,*) ' *                                             *'
-        write (*,*) ' *   WARNING: POWERLAW COOLING ENABLED.        *'
-        write (*,*) ' *                                             *'
-        write (*,*) ' ***********************************************'
+       write (*,*) ' ***********************************************'
+       write (*,*) ' *                                             *'
+       write (*,*) ' *   WARNING: POWERLAW COOLING ENABLED.        *'
+       write (*,*) ' *                                             *'
+       write (*,*) ' ***********************************************'
 c
       endif
 c
@@ -162,26 +162,25 @@ c
       call dispabundances (6, zion, abundtitle)
       modeltype=' '
       if (usekappa) then
-        if (grainmode.eq.1) then
-          modeltype='Dust, Kappa'
-        else
-          modeltype='Kappa On'
-        endif
+       if (grainmode.eq.1) then
+        modeltype='Dust, Kappa'
+       else
+        modeltype='Kappa On'
+       endif
       else
-        if (grainmode.eq.1) then
-          modeltype='Dust Enabled'
-        else
-          modeltype=' '
-        endif
+       if (grainmode.eq.1) then
+        modeltype='Dust Enabled'
+       else
+        modeltype=' '
+       endif
       endif
-   50 continue
 c
-      write (*,60) theversion, modeltype
-      write (*,80)
+   50 write (*,60) theversion,modeltype
+      write (*,70)
    60 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & '  MAPPINGS V ',a8,': Models : ',a,/)
-   80  format(
+   70  format(
      & ' :::::::::::: Photoionisation Multizone Models ::::::::::'/
      & '    P6  :  Photoionisation, dust + Robust Integrator'/
      & '    P7  :  P6 + Experimental routines and API'//
@@ -201,9 +200,9 @@ c
      & '  E,X,Q :  Exit'/
      & ' :: ',$)
 c
-      read (*,100) ilgg
-  100 format(a)
-      call toup(ilgg(1:2),ilgg)
+      read (*,80) ilgg
+   80 format(a)
+      call toup (ilgg(1:2), ilgg)
 c
 c clear up any gobbled line feeds...
 c
@@ -228,17 +227,14 @@ c
       if (ilgg(1:2).eq.'S4') call shock4
       if (ilgg(1:2).eq.'S5') call shock5
 c
-C     if (ilgg(1:2).eq.'P4') call photo4
+c     if (ilgg(1:2).eq.'P4') call photo4
       if (ilgg(1:2).eq.'P5') call photo5
       if (ilgg(1:2).eq.'P6') call photo6
       if (ilgg(1:2).eq.'P7') call photo7
-
-      if (ilgg(1:1).eq.'E') goto 130
+      if (ilgg(1:1).eq.'E') goto 110
       if (ilgg(1:1).eq.'R') goto 30
-
       if (ilgg(1:2).eq.'CC') call coolc
       if (ilgg(1:2).eq.'NC') call neqc
-
       if (ilgg(1:2).eq.'MM') call ionemit
       if (ilgg(1:2).eq.'CD') call critdens
       if (ilgg(1:2).eq.'TE') call tempratios
@@ -250,18 +246,17 @@ c
 c
 c error message
 c
+   90 continue
+      write (*,100)
+  100 format(/,' ERROR: Failed to Initialise. Immediate Exit.',/)
   110 continue
-      write (*,120)
-  120 format(/,' ERROR: Failed to Initialise. Immediate Exit.',/)
-  130 continue
 c
-  140 format(//,
+  120 format(//,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & '  MAPPINGS V: Session Ended. ',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',//)
-      write (*,140)
+      write (*,120)
       stop
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

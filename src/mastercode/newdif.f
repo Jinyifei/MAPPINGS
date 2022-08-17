@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -98,23 +98,23 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if ((fi.gt.1.0d0).and.(fi.le.0.0d0)) then
-        write (*,10) fi
+       write (*,10) fi
    10     format(//' INCONSISTENT FILLING FACTOR IN NEWDIF: ',1pg10.3)
-        fi=1.0
+       fi=1.0
       endif
       dvdw=dabs(dvdw)
       dvup=dabs(dvup)
 c
       if ((tdw.lt.0.d0).or.(tup.lt.0.d0).or.(rad.lt.0.d0)
      &.or.(drdw.lt.0.d0).or.(drup.lt.0.d0)) then
-        write (*,20) tdw,tup,rad,drdw,drup
+       write (*,20) tdw,tup,rad,drdw,drup
    20   format(/,/,'ONE OF THE ARGUMENTS HAS A NEGATIVE VALUE IN NEWDIF'
      &         ,'****',/,5(1pg10.3))
-        tdw=dabs(tdw)
-        tup=dabs(tup)
-        rad=dabs(rad)
-        drdw=dabs(drdw)
-        drup=dabs(drup)
+       tdw=dabs(tdw)
+       tup=dabs(tup)
+       rad=dabs(rad)
+       drdw=dabs(drdw)
+       drup=dabs(drup)
       endif
 c
       if ((jmod.eq.'LODW').or.(jmod.eq.'LOUP').or.(jmod.eq.'OUTW')
@@ -125,10 +125,10 @@ c
    40 continue
 c
       if ((frdw.gt.1.d0).or.(frdw.lt.0.d0)) then
-        write (*,50) frdw
+       write (*,50) frdw
    50       format(/,/,' INCONSISTENT VALUE FOR THE ARGUMENT FRDW :'
      &             ,1pg10.3)
-        frdw=0.5d0
+       frdw=0.5d0
       endif
 c
 c     ***SET MODE AND INTERNAL DILUTION FACTORS
@@ -143,15 +143,15 @@ c
       if (jmod.eq.'DWUP') upex=1.d0
 c
       if (jmod.eq.'LOUP') then
-        dr=drup
-        drem=drup
-        dvem=dvup
-        telc=tup
+       dr=drup
+       drem=drup
+       dvem=dvup
+       telc=tup
       else
-        dr=drdw
-        drem=drdw
-        dvem=dvdw
-        telc=tdw
+       dr=drdw
+       drem=drdw
+       dvem=dvdw
+       telc=tdw
       endif
 c
 c     Plane Parallel / Finite Cylinder Default
@@ -163,18 +163,18 @@ c
 c
 c     Spherical
 c
-        rm=curad+drdw
-        wlo=(2.d0*dlog(curad))-(2.d0*dlog(rm))
-        rm=(curad+dr)-drup
-        if (rm.le.0.d0) then
-          write (*,60) drup,curad
+       rm=curad+drdw
+       wlo=(2.d0*dlog(curad))-(2.d0*dlog(rm))
+       rm=(curad+dr)-drup
+       if (rm.le.0.d0) then
+        write (*,60) drup,curad
    60       format(/,/,' DRUP IS LARGER THAN THE RADIUS OF CURVATURE :'
      &              ,2(1pg10.3))
-          stop
-        endif
-        ulo=(2.d0*dlog(curad+dr))-(2.d0*dlog(rm))
-        dildw=dexp(wlo)
-        dilup=dexp(ulo)
+        stop
+       endif
+       ulo=(2.d0*dlog(curad+dr))-(2.d0*dlog(rm))
+       dildw=dexp(wlo)
+       dilup=dexp(ulo)
 c
 c     Spherical
 c
@@ -209,43 +209,43 @@ c
       dismul=1.d0
 c
       do line=1,nxr3lines
-        xr3lines_uplin(2,line)=1.d0
-        xr3lines_dwlin(2,line)=1.d0
-        xr3lines_emilin(2,line)=1.d0
-        if (xr3lines_emilin(1,line).gt.epsilon) then
-          if (xr3lines_frac(line).gt.epsilon) then
-            atom=xr3lines_at(line)
-            ion=xr3lines_ion(line)
-            z=zion(atom)
-            p=pop(ion,atom)
-            if ((z*p.ge.pzlimit)) then
-              f=xr3lines_gf(line)
-              es=xr3lines_egij(line)
-              xr3lines_emilin(2,line)=fdismul(telc,dh,dremh,dvemh,atom,
-     &         ion,es,f)
-            endif
-          endif
+       xr3lines_uplin(2,line)=1.d0
+       xr3lines_dwlin(2,line)=1.d0
+       xr3lines_emilin(2,line)=1.d0
+       if (xr3lines_emilin(1,line).gt.epsilon) then
+        if (xr3lines_frac(line).gt.epsilon) then
+         atom=xr3lines_at(line)
+         ion=xr3lines_ion(line)
+         z=zion(atom)
+         p=pop(ion,atom)
+         if ((z*p.ge.pzlimit)) then
+          f=xr3lines_gf(line)
+          es=xr3lines_egij(line)
+          xr3lines_emilin(2,line)=fdismul(telc,dh,dremh,dvemh,atom,ion,
+     &     es,f)
+         endif
         endif
+       endif
       enddo
 c
       do line=1,nxrllines
-        xrllines_uplin(2,line)=1.d0
-        xrllines_dwlin(2,line)=1.d0
-        xrllines_emilin(2,line)=1.d0
-        if (xrllines_emilin(1,line).gt.epsilon) then
-          if (xrllines_frac(line).gt.epsilon) then
-            atom=xrllines_at(line)
-            ion=xrllines_ion(line)
-            z=zion(atom)
-            p=pop(ion,atom)
-            if ((z*p.ge.pzlimit)) then
-              f=xrllines_gf(line)
-              es=xrllines_egij(line)
-              xrllines_emilin(2,line)=fdismul(telc,dh,dremh,dvemh,atom,
-     &         ion,es,f)
-            endif
-          endif
+       xrllines_uplin(2,line)=1.d0
+       xrllines_dwlin(2,line)=1.d0
+       xrllines_emilin(2,line)=1.d0
+       if (xrllines_emilin(1,line).gt.epsilon) then
+        if (xrllines_frac(line).gt.epsilon) then
+         atom=xrllines_at(line)
+         ion=xrllines_ion(line)
+         z=zion(atom)
+         p=pop(ion,atom)
+         if ((z*p.ge.pzlimit)) then
+          f=xrllines_gf(line)
+          es=xrllines_egij(line)
+          xrllines_emilin(2,line)=fdismul(telc,dh,dremh,dvemh,atom,ion,
+     &     es,f)
+         endif
         endif
+       endif
       enddo
 c
 c     do line=1,xlines
@@ -270,9 +270,9 @@ c
       fbu=0.0d0
       fbd=0.0d0
       if (zmap(2).gt.0) then
-        fb=fbowen(telc,dvemh)
-        fbu=fbowen(tup,dvup)
-        fbd=fbowen(tdw,dvdw)
+       fb=fbowen(telc,dvemh)
+       fbu=fbowen(tup,dvup)
+       fbd=fbowen(tdw,dvdw)
       endif
       heiioiiibf=fb
 c
@@ -281,108 +281,108 @@ c
       z=zion(atom)
       p=pop(ion,atom)
       do series=1,nhseries
-        do line=1,nhlines
-          f=hydrogf(line,series)
-          hyduplin(2,line,series)=1.d0
-          hyddwlin(2,line,series)=1.d0
-          hydlin(2,line,series)=1.d0
-          j=hbin(line,series)
-          if (j.ne.0) then
-            es=lmev/hlambda(line,series)*ev
-            if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-              hydlin(2,line,series)=fdismul(telc,dh,dremh,dvemh,atom,
-     &         ion,es,f)
-            endif
-          endif
-        enddo
+       do line=1,nhlines
+        f=hydrogf(line,series)
+        hyduplin(2,line,series)=1.d0
+        hyddwlin(2,line,series)=1.d0
+        hydlin(2,line,series)=1.d0
+        j=hbin(line,series)
+        if (j.ne.0) then
+         es=lmev/hlambda(line,series)*ev
+         if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+          hydlin(2,line,series)=fdismul(telc,dh,dremh,dvemh,atom,ion,es,
+     &     f)
+         endif
+        endif
+       enddo
       enddo
       atom=2
       ion=mapz(atom)
       z=zion(atom)
       p=pop(ion,atom)
       do series=1,nheseries
-        do line=1,nhelines
-          f=hydrogf(line,series)
-          heluplin(2,line,series)=1.d0
-          heldwlin(2,line,series)=1.d0
-          hellin(2,line,series)=1.d0
-          j=hebin(line,series)
-          if (j.ne.0) then
-            es=lmev/helambda(line,series)*ev
-            if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-              hellin(2,line,series)=fdismul(telc,dh,dremh,dvemh,atom,
-     &         ion,es,f)
-            endif
-          endif
-        enddo
+       do line=1,nhelines
+        f=hydrogf(line,series)
+        heluplin(2,line,series)=1.d0
+        heldwlin(2,line,series)=1.d0
+        hellin(2,line,series)=1.d0
+        j=hebin(line,series)
+        if (j.ne.0) then
+         es=lmev/helambda(line,series)*ev
+         if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+          hellin(2,line,series)=fdismul(telc,dh,dremh,dvemh,atom,ion,es,
+     &     f)
+         endif
+        endif
+       enddo
       enddo
 c
       do atom=3,atypes
-        ion=mapz(atom)
-        z=zion(atom)
-        p=pop(ion,atom)
-        do series=1,nxhseries
-          do line=1,nxhlines
-            f=hydrogf(line,series)
-            xhyduplin(2,line,series,atom)=1.d0
-            xhyddwlin(2,line,series,atom)=1.d0
-            xhydlin(2,line,series,atom)=1.d0
-            j=xhbin(line,series,atom)
-            if (j.ne.0) then
-              es=lmev/xhlambda(line,series,atom)*ev
-              if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-                xhydlin(2,line,series,atom)=fdismul(telc,dh,dremh,dvemh,
-     &           atom,ion,es,f)
-              endif
-            endif
-          enddo
+       ion=mapz(atom)
+       z=zion(atom)
+       p=pop(ion,atom)
+       do series=1,nxhseries
+        do line=1,nxhlines
+         f=hydrogf(line,series)
+         xhyduplin(2,line,series,atom)=1.d0
+         xhyddwlin(2,line,series,atom)=1.d0
+         xhydlin(2,line,series,atom)=1.d0
+         j=xhbin(line,series,atom)
+         if (j.ne.0) then
+          es=lmev/xhlambda(line,series,atom)*ev
+          if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+           xhydlin(2,line,series,atom)=fdismul(telc,dh,dremh,dvemh,atom,
+     &      ion,es,f)
+          endif
+         endif
         enddo
+       enddo
       enddo
 c
 c     do up and down if needed
 c
       if (dwf.gt.0.d0) then
 c
-        drdwh=drdw*0.5d0
-        dvdwh=dvdw*0.5d0
+       drdwh=drdw*0.5d0
+       dvdwh=dvdw*0.5d0
 c
 c first the general resonance lines
 c
-        do line=1,nxr3lines
-          xr3lines_dwlin(2,line)=1.d0
-          if (xr3lines_dwlin(1,line).gt.epsilon) then
-            if (xr3lines_frac(line).gt.epsilon) then
-              atom=xr3lines_at(line)
-              ion=xr3lines_ion(line)
-              z=zion(atom)
-              p=pop(ion,atom)
-              if ((z*p.ge.pzlimit)) then
-                f=xr3lines_gf(line)
-                es=xr3lines_egij(line)
-                xr3lines_dwlin(2,line)=fdismul(tdw,dh,drdwh,dvdwh,atom,
-     &           ion,es,f)
-              endif
-            endif
+       do line=1,nxr3lines
+        xr3lines_dwlin(2,line)=1.d0
+        if (xr3lines_dwlin(1,line).gt.epsilon) then
+         if (xr3lines_frac(line).gt.epsilon) then
+          atom=xr3lines_at(line)
+          ion=xr3lines_ion(line)
+          z=zion(atom)
+          p=pop(ion,atom)
+          if ((z*p.ge.pzlimit)) then
+           f=xr3lines_gf(line)
+           es=xr3lines_egij(line)
+           xr3lines_dwlin(2,line)=fdismul(tdw,dh,drdwh,dvdwh,atom,ion,
+     &      es,f)
           endif
-        enddo
+         endif
+        endif
+       enddo
 c
-        do line=1,nxrllines
-          xrllines_dwlin(2,line)=1.d0
-          if (xrllines_dwlin(1,line).gt.epsilon) then
-            if (xrllines_frac(line).gt.epsilon) then
-              atom=xrllines_at(line)
-              ion=xrllines_ion(line)
-              z=zion(atom)
-              p=pop(ion,atom)
-              if ((z*p.ge.pzlimit)) then
-                f=xrllines_gf(line)
-                es=xrllines_egij(line)
-                xrllines_dwlin(2,line)=fdismul(tdw,dh,drdwh,dvdwh,atom,
-     &           ion,es,f)
-              endif
-            endif
+       do line=1,nxrllines
+        xrllines_dwlin(2,line)=1.d0
+        if (xrllines_dwlin(1,line).gt.epsilon) then
+         if (xrllines_frac(line).gt.epsilon) then
+          atom=xrllines_at(line)
+          ion=xrllines_ion(line)
+          z=zion(atom)
+          p=pop(ion,atom)
+          if ((z*p.ge.pzlimit)) then
+           f=xrllines_gf(line)
+           es=xrllines_egij(line)
+           xrllines_dwlin(2,line)=fdismul(tdw,dh,drdwh,dvdwh,atom,ion,
+     &      es,f)
           endif
-        enddo
+         endif
+        endif
+       enddo
 c
 c       do line=1,xlines
 c         dwlin(2,line)=1.d0
@@ -401,110 +401,110 @@ c
 c
 c   Hydrogenic lines
 c
-        atom=1
+       atom=1
+       ion=mapz(atom)
+       z=zion(atom)
+       p=pop(ion,atom)
+c
+       do series=1,nhseries
+        do line=1,nhlines
+         f=hydrogf(line,series)
+         hyddwlin(2,line,series)=1.d0
+         j=hbin(line,series)
+         if (j.ne.0) then
+          es=(lmev/hlambda(line,series))*ev
+          if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+           hyddwlin(2,line,series)=fdismul(tdw,dh,drdwh,dvdwh,atom,ion,
+     &      es,f)
+          endif
+         endif
+        enddo
+       enddo
+c
+       atom=2
+       ion=mapz(atom)
+       z=zion(atom)
+       p=pop(ion,atom)
+c
+       do series=1,nheseries
+        do line=1,nhelines
+         f=hydrogf(line,series)
+         heldwlin(2,line,series)=1.d0
+         j=hebin(line,series)
+         if (j.ne.0) then
+          es=(lmev/helambda(line,series))*ev
+          if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+           heldwlin(2,line,series)=fdismul(tdw,dh,drdwh,dvdwh,atom,ion,
+     &      es,f)
+          endif
+         endif
+        enddo
+       enddo
+c
+       do atom=3,atypes
         ion=mapz(atom)
         z=zion(atom)
         p=pop(ion,atom)
-c
-        do series=1,nhseries
-          do line=1,nhlines
-            f=hydrogf(line,series)
-            hyddwlin(2,line,series)=1.d0
-            j=hbin(line,series)
-            if (j.ne.0) then
-              es=(lmev/hlambda(line,series))*ev
-              if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-                hyddwlin(2,line,series)=fdismul(tdw,dh,drdwh,dvdwh,atom,
-     &           ion,es,f)
-              endif
-            endif
-          enddo
+        do series=1,nxhseries
+         do line=1,nxhlines
+          f=hydrogf(line,series)
+          xhyddwlin(2,line,series,atom)=1.d0
+          j=xhbin(line,series,atom)
+          if (j.ne.0) then
+           es=lmev/xhlambda(line,series,atom)*ev
+           if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+            xhyddwlin(2,line,series,atom)=fdismul(tdw,dh,drdwh,dvdwh,
+     &       atom,ion,es,f)
+           endif
+          endif
+         enddo
         enddo
-c
-        atom=2
-        ion=mapz(atom)
-        z=zion(atom)
-        p=pop(ion,atom)
-c
-        do series=1,nheseries
-          do line=1,nhelines
-            f=hydrogf(line,series)
-            heldwlin(2,line,series)=1.d0
-            j=hebin(line,series)
-            if (j.ne.0) then
-              es=(lmev/helambda(line,series))*ev
-              if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-                heldwlin(2,line,series)=fdismul(tdw,dh,drdwh,dvdwh,atom,
-     &           ion,es,f)
-              endif
-            endif
-          enddo
-        enddo
-c
-        do atom=3,atypes
-          ion=mapz(atom)
-          z=zion(atom)
-          p=pop(ion,atom)
-          do series=1,nxhseries
-            do line=1,nxhlines
-              f=hydrogf(line,series)
-              xhyddwlin(2,line,series,atom)=1.d0
-              j=xhbin(line,series,atom)
-              if (j.ne.0) then
-                es=lmev/xhlambda(line,series,atom)*ev
-                if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-                  xhyddwlin(2,line,series,atom)=fdismul(tdw,dh,drdwh,
-     &             dvdwh,atom,ion,es,f)
-                endif
-              endif
-            enddo
-          enddo
-        enddo
+       enddo
 c dwf
       endif
 c
       if (upf.gt.0.d0) then
 c
-        druph=drup*0.5d0
-        dvuph=dvup*0.5d0
+       druph=drup*0.5d0
+       dvuph=dvup*0.5d0
 c
 c first the general resonance lines
 c
-        do line=1,nxr3lines
-          xr3lines_uplin(2,line)=1.d0
-          if (xr3lines_uplin(1,line).gt.epsilon) then
-            if (xr3lines_frac(line).gt.epsilon) then
-              atom=xr3lines_at(line)
-              ion=xr3lines_ion(line)
-              z=zion(atom)
-              p=pop(ion,atom)
-              if ((z*p.ge.pzlimit)) then
-                f=xr3lines_gf(line)
-                es=xr3lines_egij(line)
-                xr3lines_uplin(2,line)=fdismul(tup,dh,druph,dvuph,atom,
-     &           ion,es,f)
-              endif
-            endif
+       do line=1,nxr3lines
+        xr3lines_uplin(2,line)=1.d0
+        if (xr3lines_uplin(1,line).gt.epsilon) then
+         if (xr3lines_frac(line).gt.epsilon) then
+          atom=xr3lines_at(line)
+          ion=xr3lines_ion(line)
+          z=zion(atom)
+          p=pop(ion,atom)
+          if ((z*p.ge.pzlimit)) then
+           f=xr3lines_gf(line)
+           es=xr3lines_egij(line)
+           xr3lines_uplin(2,line)=fdismul(tup,dh,druph,dvuph,atom,ion,
+     &      es,f)
           endif
-        enddo
+         endif
+        endif
+       enddo
 c
-        do line=1,nxrllines
-          xrllines_uplin(2,line)=1.d0
-          if (xrllines_uplin(1,line).gt.epsilon) then
-            if (xrllines_frac(line).gt.epsilon) then
-              atom=xrllines_at(line)
-              ion=xrllines_ion(line)
-              z=zion(atom)
-              p=pop(ion,atom)
-              if ((z*p.ge.pzlimit)) then
-                f=xrllines_gf(line)
-                es=xrllines_egij(line)
-                xrllines_uplin(2,line)=fdismul(tup,dh,druph,dvuph,atom,
-     &           ion,es,f)
-              endif
-            endif
+       do line=1,nxrllines
+        xrllines_uplin(2,line)=1.d0
+        if (xrllines_uplin(1,line).gt.epsilon) then
+         if (xrllines_frac(line).gt.epsilon) then
+          atom=xrllines_at(line)
+          ion=xrllines_ion(line)
+          z=zion(atom)
+          p=pop(ion,atom)
+          if ((z*p.ge.pzlimit)) then
+           f=xrllines_gf(line)
+           es=xrllines_egij(line)
+           xrllines_uplin(2,line)=fdismul(tup,dh,druph,dvuph,atom,ion,
+     &      es,f)
           endif
-        enddo
+         endif
+        endif
+       enddo
 c
 c       do line=1,xlines
 c         uplin(2,line)=1.d0
@@ -522,65 +522,65 @@ c       enddo
 c
 c   Hydrogenic lines
 c
-        atom=1
+       atom=1
+       ion=mapz(atom)
+       z=zion(atom)
+       p=pop(ion,atom)
+c
+       do series=1,nhseries
+        do line=1,nhlines
+         f=hydrogf(line,series)
+         hyduplin(2,line,series)=1.d0
+         j=hbin(line,series)
+         if (j.ne.0) then
+          es=(lmev/hlambda(line,series))*ev
+          if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+           hyduplin(2,line,series)=fdismul(tup,dh,druph,dvuph,atom,ion,
+     &      es,f)
+          endif
+         endif
+        enddo
+       enddo
+c
+       atom=2
+       ion=mapz(atom)
+       z=zion(atom)
+       p=pop(ion,atom)
+c
+       do series=1,nheseries
+        do line=1,nhelines
+         f=hydrogf(line,series)
+         heluplin(2,line,series)=1.d0
+         j=hebin(line,series)
+         if (j.ne.0) then
+          es=(lmev/helambda(line,series))*ev
+          if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+           heluplin(2,line,series)=fdismul(tup,dh,druph,dvuph,atom,ion,
+     &      es,f)
+          endif
+         endif
+        enddo
+       enddo
+c
+       do atom=3,atypes
         ion=mapz(atom)
         z=zion(atom)
         p=pop(ion,atom)
-c
-        do series=1,nhseries
-          do line=1,nhlines
-            f=hydrogf(line,series)
-            hyduplin(2,line,series)=1.d0
-            j=hbin(line,series)
-            if (j.ne.0) then
-              es=(lmev/hlambda(line,series))*ev
-              if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-                hyduplin(2,line,series)=fdismul(tup,dh,druph,dvuph,atom,
-     &           ion,es,f)
-              endif
-            endif
-          enddo
+        do series=1,nxhseries
+         do line=1,nxhlines
+          f=hydrogf(line,series)
+          xhyduplin(2,line,series,atom)=1.d0
+          j=xhbin(line,series,atom)
+          if (j.ne.0) then
+           es=lmev/xhlambda(line,series,atom)*ev
+           if ((z*p.ge.pzlimit).and.(series.eq.1)) then
+            xhyduplin(2,line,series,atom)=fdismul(tup,dh,druph,dvuph,
+     &       atom,ion,es,f)
+           endif
+          endif
+         enddo
         enddo
-c
-        atom=2
-        ion=mapz(atom)
-        z=zion(atom)
-        p=pop(ion,atom)
-c
-        do series=1,nheseries
-          do line=1,nhelines
-            f=hydrogf(line,series)
-            heluplin(2,line,series)=1.d0
-            j=hebin(line,series)
-            if (j.ne.0) then
-              es=(lmev/helambda(line,series))*ev
-              if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-                heluplin(2,line,series)=fdismul(tup,dh,druph,dvuph,atom,
-     &           ion,es,f)
-              endif
-            endif
-          enddo
-        enddo
-c
-        do atom=3,atypes
-          ion=mapz(atom)
-          z=zion(atom)
-          p=pop(ion,atom)
-          do series=1,nxhseries
-            do line=1,nxhlines
-              f=hydrogf(line,series)
-              xhyduplin(2,line,series,atom)=1.d0
-              j=xhbin(line,series,atom)
-              if (j.ne.0) then
-                es=lmev/xhlambda(line,series,atom)*ev
-                if ((z*p.ge.pzlimit).and.(series.eq.1)) then
-                  xhyduplin(2,line,series,atom)=fdismul(tup,dh,druph,
-     &             dvuph,atom,ion,es,f)
-                endif
-              endif
-            enddo
-          enddo
-        enddo
+       enddo
 c upf
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -591,72 +591,71 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       do 90 inl=1,infph-1
 c
-        energ=cphote(inl)
-        pathlength=dr*fi
+       energ=cphote(inl)
+       pathlength=dr*fi
 c
-        tauso=0.d0
-        sigmt=0.d0
-        dustsigmat=0.d0
+       tauso=0.d0
+       sigmt=0.d0
+       dustsigmat=0.d0
 c
-        if (grainmode.le.0)
-     &        call crosssections (inl, tauso, sigmt)
-        if (grainmode.gt.0)
-     &        call crosssectionsdust (inl, tauso, sigmt,dustsigmat)
+       if (grainmode.le.0) call crosssections (inl, tauso, sigmt)
+       if (grainmode.gt.0) call crosssectionsdust (inl, tauso, sigmt,
+     &  dustsigmat)
 c
-        sigmt=dh*sigmt
-        dustsigmat=dh*dustsigmat
+       sigmt=dh*sigmt
+       dustsigmat=dh*dustsigmat
 c
 c tauso already includes dh, fi and distance implicitly
 c
 c
 c     ***ATTENUATION OF THE ORIGINAL INTENSITY OF THE DIFFUSE FIELD
 c
-        tau0=pathlength*sigmt
-        tau=tau0
+       tau0=pathlength*sigmt
+       tau=tau0
 c
 c tauso already includes dh, fi and distance implicitly
 c
 c upsteam escape for total optical depth
 c
-        escapeso=dexp(-tauso)
+       escapeso=dexp(-tauso)
 c
-        dwdif(inl)=dwdif(inl)*(wadw*dexp(-(dwex*tau)))
-        updif(inl)=updif(inl)*(waup*dexp(-(upex*tau)))
+       dwdif(inl)=dwdif(inl)*(wadw*dexp(-(dwex*tau)))
+       updif(inl)=updif(inl)*(waup*dexp(-(upex*tau)))
 c
-        dwdifcont(inl)=dwdifcont(inl)*(wadw*dexp(-(dwex*tau)))
-        dwdifcont(inl)=dwdifcont(inl)*(waup*dexp(-(upex*tau)))
+       dwdifcont(inl)=dwdifcont(inl)*(wadw*dexp(-(dwex*tau)))
+       dwdifcont(inl)=dwdifcont(inl)*(waup*dexp(-(upex*tau)))
 c
 c     distance multipliers attenuate lines for emilin etc
 c
-        do line=1,nxr3lines
-          if (xr3lines_bin(line).eq.inl) then
-            if ((xr3lines_uplin(1,line).gt.epsilon)
-     &       .or.(xr3lines_dwlin(1,line).gt.epsilon)) then
-              dismul=(dwex*xr3lines_dwlin(2,line))+(upex*
-     &         xr3lines_uplin(2,line))
-              tau=tauline(dismul,tau0)
-              xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)*(wadw*dexp(-
-     &         (dwex*tau)))
-              xr3lines_uplin(1,line)=xr3lines_uplin(1,line)*(waup*dexp(-
-     &         (upex*tau)))
-            endif
-          endif
-        enddo
+       do line=1,nxr3lines
+        if (xr3lines_bin(line).eq.inl) then
+         if ((xr3lines_uplin(1,line).gt.epsilon).or.(xr3lines_dwlin(1,
+     &    line).gt.epsilon)) then
+          dismul=(dwex*xr3lines_dwlin(2,line))+(upex*xr3lines_uplin(2,
+     &     line))
+          tau=tauline(dismul,tau0)
+          xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)*(wadw*dexp(-
+     &     (dwex*tau)))
+          xr3lines_uplin(1,line)=xr3lines_uplin(1,line)*(waup*dexp(-
+     &     (upex*tau)))
+         endif
+        endif
+       enddo
 c
-        do line=1,nxrllines
-          if (xrllines_bin(line).eq.inl) then
-            if ((xrllines_uplin(1,line).gt.epsilon)
-     &       .or.(xrllines_dwlin(1,line).gt.epsilon)) then
-              dismul=(dwex*xrllines_dwlin(2,line))+(upex*
-     &         xrllines_uplin(2,line))
-              tau=tauline(dismul,tau0)
-              xrllines_dwlin(1,line)=xrllines_dwlin(1,line)*(wadw*dexp(-
-     &         (dwex*tau)))
-              xrllines_uplin(1,line)=xrllines_uplin(1,line)*(waup*dexp(-
-     &         (upex*tau)))
-            endif
-          endif
-        enddo
+       do line=1,nxrllines
+        if (xrllines_bin(line).eq.inl) then
+         if ((xrllines_uplin(1,line).gt.epsilon).or.(xrllines_dwlin(1,
+     &    line).gt.epsilon)) then
+          dismul=(dwex*xrllines_dwlin(2,line))+(upex*xrllines_uplin(2,
+     &     line))
+          tau=tauline(dismul,tau0)
+          xrllines_dwlin(1,line)=xrllines_dwlin(1,line)*(wadw*dexp(-
+     &     (dwex*tau)))
+          xrllines_uplin(1,line)=xrllines_uplin(1,line)*(waup*dexp(-
+     &     (upex*tau)))
+         endif
+        endif
+       enddo
 c
 c       do n=1,xlines
 c         if (xbin(n).eq.inl) then
@@ -672,78 +671,78 @@ c       enddo
 c
 c   Hydrogenic lines
 c
-        do series=1,nhseries
-          do line=1,nhlines
-            if (hbin(line,series).eq.inl) then
-              dismul=(dwex*hyddwlin(2,line,series))+(upex*hyduplin(2,
-     &         line,series))
-              tau=tauline(dismul,tau0)
-              hyddwlin(1,line,series)=hyddwlin(1,line,series)*(wadw*
-     &         dexp(-(dwex*tau)))
-              hyduplin(1,line,series)=hyduplin(1,line,series)*(waup*
-     &         dexp(-(upex*tau)))
-            endif
-          enddo
+       do series=1,nhseries
+        do line=1,nhlines
+         if (hbin(line,series).eq.inl) then
+          dismul=(dwex*hyddwlin(2,line,series))+(upex*hyduplin(2,line,
+     &     series))
+          tau=tauline(dismul,tau0)
+          hyddwlin(1,line,series)=hyddwlin(1,line,series)*(wadw*dexp(-
+     &     (dwex*tau)))
+          hyduplin(1,line,series)=hyduplin(1,line,series)*(waup*dexp(-
+     &     (upex*tau)))
+         endif
         enddo
+       enddo
 c
 c   Helium lines
 c
-        do series=1,nheseries
-          do line=1,nhelines
-            if (hebin(line,series).eq.inl) then
-              dismul=(dwex*heldwlin(2,line,series))+(upex*heluplin(2,
-     &         line,series))
-              tau=tauline(dismul,tau0)
+       do series=1,nheseries
+        do line=1,nhelines
+         if (hebin(line,series).eq.inl) then
+          dismul=(dwex*heldwlin(2,line,series))+(upex*heluplin(2,line,
+     &     series))
+          tau=tauline(dismul,tau0)
 c
-              dfbu=1.d0
-              dfbd=1.d0
-              if ((line.eq.1).and.(series.eq.1)) then
-                dfbu=1.d0-fbu
-                dfbd=1.d0-fbd
+          dfbu=1.d0
+          dfbd=1.d0
+          if ((line.eq.1).and.(series.eq.1)) then
+           dfbu=1.d0-fbu
+           dfbd=1.d0-fbd
 c                 write(*,*)'fbu fbd',fbu, fbd
-              endif
+          endif
 c
-              heldwlin(1,line,series)=dfbd*heldwlin(1,line,series)*
-     &         (wadw*dexp(-(dwex*tau)))
-              heluplin(1,line,series)=dfbu*heluplin(1,line,series)*
-     &         (waup*dexp(-(upex*tau)))
-            endif
-          enddo
+          heldwlin(1,line,series)=dfbd*heldwlin(1,line,series)*(wadw*
+     &     dexp(-(dwex*tau)))
+          heluplin(1,line,series)=dfbu*heluplin(1,line,series)*(waup*
+     &     dexp(-(upex*tau)))
+         endif
         enddo
+       enddo
 c
-        do atom=3,atypes
-          do series=1,nxhseries
-            do line=1,nxhlines
-              if (xhbin(line,series,atom).eq.inl) then
-                dismul=(dwex*xhyddwlin(2,line,series,atom))+(upex*
-     &           xhyduplin(2,line,series,atom))
-                tau=tauline(dismul,tau0)
-                xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,
-     &           atom)*(wadw*dexp(-(dwex*tau)))
-                xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,
-     &           atom)*(waup*dexp(-(upex*tau)))
-              endif
-            enddo
-          enddo
+       do atom=3,atypes
+        do series=1,nxhseries
+         do line=1,nxhlines
+          if (xhbin(line,series,atom).eq.inl) then
+           dismul=(dwex*xhyddwlin(2,line,series,atom))+(upex*
+     &      xhyduplin(2,line,series,atom))
+           tau=tauline(dismul,tau0)
+           xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,atom)*
+     &      (wadw*dexp(-(dwex*tau)))
+           xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,atom)*
+     &      (waup*dexp(-(upex*tau)))
+          endif
+         enddo
         enddo
+       enddo
 c
 c     ***ADS LOCAL EMISSIVITY CONTRIBUTION TO THE NEW DIFFUSE FIELD
 c
-        tau=tau0
-        escape=localout(dismul,tau)
+       tau=tau0
+       escape=localout(dismul,tau)
 c
-        emis=energ*pathlength
+       emis=energ*pathlength
 c
-        dwem=(dwf*emis)*escape
-        upem=(upf*emis)*escapeso
+       dwem=(dwf*emis)*escape
+       upem=(upf*emis)*escapeso
 c
 c     Add local diffuse field through this zone
 c
-        dwdif(inl)=dwdif(inl)+(dwem*wedw*emidif(inl))
-        updif(inl)=updif(inl)+(upem*weup*emidif(inl))
+       dwdif(inl)=dwdif(inl)+(dwem*wedw*emidif(inl))
+       updif(inl)=updif(inl)+(upem*weup*emidif(inl))
 c
-        dwdifcont(inl)=dwdif(inl)+(dwem*wedw*emidifcont(inl))
-        updifcont(inl)=updif(inl)+(upem*weup*emidifcont(inl))
+       dwdifcont(inl)=dwdif(inl)+(dwem*wedw*emidifcont(inl))
+       updifcont(inl)=updif(inl)+(upem*weup*emidifcont(inl))
 c
 c     need to add dust scattering contribution,
 c
@@ -787,45 +786,41 @@ c            updif(inl) = updif(inl)+(upsc*(weup*(dexp(-(dwex*tauso)))))
 c
 c         endif
 c
-        do line=1,nxr3lines
-          if (xr3lines_bin(line).eq.inl) then
-            if ((xr3lines_uplin(1,line).gt.epsilon)
-     &       .or.(xr3lines_dwlin(1,line).gt.epsilon)) then
-              dismul=(dwex*xr3lines_dwlin(2,line))+(upex*
-     &         xr3lines_uplin(2,line))
-              tau=tau0
-              energ=xr3lines_egij(line)
-              emis=energ*xr3lines_emilin(1,line)*pathlength
-              escape=localout(dismul,tau)
-              dwliem=(dwf*emis)*escape
-              upliem=(upf*emis)*escapeso
-              xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)+(dwliem*
-     &         wedw)
-              xr3lines_uplin(1,line)=xr3lines_uplin(1,line)+(upliem*
-     &         weup)
-            endif
-          endif
-        enddo
+       do line=1,nxr3lines
+        if (xr3lines_bin(line).eq.inl) then
+         if ((xr3lines_uplin(1,line).gt.epsilon).or.(xr3lines_dwlin(1,
+     &    line).gt.epsilon)) then
+          dismul=(dwex*xr3lines_dwlin(2,line))+(upex*xr3lines_uplin(2,
+     &     line))
+          tau=tau0
+          energ=xr3lines_egij(line)
+          emis=energ*xr3lines_emilin(1,line)*pathlength
+          escape=localout(dismul,tau)
+          dwliem=(dwf*emis)*escape
+          upliem=(upf*emis)*escapeso
+          xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)+(dwliem*wedw)
+          xr3lines_uplin(1,line)=xr3lines_uplin(1,line)+(upliem*weup)
+         endif
+        endif
+       enddo
 c
-        do line=1,nxrllines
-          if (xrllines_bin(line).eq.inl) then
-            if ((xrllines_uplin(1,line).gt.epsilon)
-     &       .or.(xrllines_dwlin(1,line).gt.epsilon)) then
-              dismul=(dwex*xrllines_dwlin(2,line))+(upex*
-     &         xrllines_uplin(2,line))
-              tau=tau0
-              energ=xrllines_egij(line)
-              emis=energ*xrllines_emilin(1,line)*pathlength
-              escape=localout(dismul,tau)
-              dwliem=(dwf*emis)*escape
-              upliem=(upf*emis)*escapeso
-              xrllines_dwlin(1,line)=xrllines_dwlin(1,line)+(dwliem*
-     &         wedw)
-              xrllines_uplin(1,line)=xrllines_uplin(1,line)+(upliem*
-     &         weup)
-            endif
-          endif
-        enddo
+       do line=1,nxrllines
+        if (xrllines_bin(line).eq.inl) then
+         if ((xrllines_uplin(1,line).gt.epsilon).or.(xrllines_dwlin(1,
+     &    line).gt.epsilon)) then
+          dismul=(dwex*xrllines_dwlin(2,line))+(upex*xrllines_uplin(2,
+     &     line))
+          tau=tau0
+          energ=xrllines_egij(line)
+          emis=energ*xrllines_emilin(1,line)*pathlength
+          escape=localout(dismul,tau)
+          dwliem=(dwf*emis)*escape
+          upliem=(upf*emis)*escapeso
+          xrllines_dwlin(1,line)=xrllines_dwlin(1,line)+(dwliem*wedw)
+          xrllines_uplin(1,line)=xrllines_uplin(1,line)+(upliem*weup)
+         endif
+        endif
+       enddo
 c
 c     do emilin resonance lines
 c
@@ -846,101 +841,97 @@ c       enddo
 c
 c Hydrogen
 c
-        do series=1,nhseries
-          do line=1,nhlines
+       do series=1,nhseries
+        do line=1,nhlines
 c
-            if (hbin(line,series).eq.inl) then
+         if (hbin(line,series).eq.inl) then
 c
-              dismul=(dwex*hyddwlin(2,line,series))+(upex*hyduplin(2,
-     &         line,series))
+          dismul=(dwex*hyddwlin(2,line,series))+(upex*hyduplin(2,line,
+     &     series))
 c
-              tau=tau0
+          tau=tau0
 c
-              energ=ev*lmev/hlambda(line,series)
-              emis=hydlin(1,line,series)*pathlength*energ
+          energ=ev*lmev/hlambda(line,series)
+          emis=hydlin(1,line,series)*pathlength*energ
 c
-              escape=localout(dismul,tau)
-              dwliem=(dwf*emis)*escape
+          escape=localout(dismul,tau)
+          dwliem=(dwf*emis)*escape
 c
-              upliem=(upf*emis)*escapeso
+          upliem=(upf*emis)*escapeso
 c
-              hyddwlin(1,line,series)=hyddwlin(1,line,series)+(dwliem*
-     &         wedw)
-              hyduplin(1,line,series)=hyduplin(1,line,series)+(upliem*
-     &         weup)
+          hyddwlin(1,line,series)=hyddwlin(1,line,series)+(dwliem*wedw)
+          hyduplin(1,line,series)=hyduplin(1,line,series)+(upliem*weup)
 c
-            endif
+         endif
 c
-          enddo
         enddo
+       enddo
 c
 c Helium
 c
-        do series=1,nheseries
-          do line=1,nhelines
+       do series=1,nheseries
+        do line=1,nhelines
 c
-            if (hebin(line,series).eq.inl) then
-              dismul=(dwex*heldwlin(2,line,series))+(upex*heluplin(2,
-     &         line,series))
+         if (hebin(line,series).eq.inl) then
+          dismul=(dwex*heldwlin(2,line,series))+(upex*heluplin(2,line,
+     &     series))
 c
-              tau=tau0
-              escape=localout(dismul,tau)
-              energ=ev*lmev/helambda(line,series)
+          tau=tau0
+          escape=localout(dismul,tau)
+          energ=ev*lmev/helambda(line,series)
 c
-              dfb=1.d0
-              if ((line.eq.1).and.(series.eq.1)) then
-                dfb=1.d0-fb
-              endif
+          dfb=1.d0
+          if ((line.eq.1).and.(series.eq.1)) then
+           dfb=1.d0-fb
+          endif
 c
 c degrade local HeII 303 photons locally to OIII BF lines by an
 c approximate conversion fraction....  Set to 1-0 = 1.0, no
 c conversion for now
 c
-              emis=dfb*energ*hellin(1,line,series)*pathlength
-              dwliem=(dwf*emis)*escape
-              upliem=(upf*emis)*escapeso
-              heldwlin(1,line,series)=heldwlin(1,line,series)+(dwliem*
-     &         wedw)
-              heluplin(1,line,series)=heluplin(1,line,series)+(upliem*
-     &         weup)
+          emis=dfb*energ*hellin(1,line,series)*pathlength
+          dwliem=(dwf*emis)*escape
+          upliem=(upf*emis)*escapeso
+          heldwlin(1,line,series)=heldwlin(1,line,series)+(dwliem*wedw)
+          heluplin(1,line,series)=heluplin(1,line,series)+(upliem*weup)
 c
-            endif
+         endif
 c
-          enddo
         enddo
+       enddo
 c
 c
 c Heavy Hydrogenic
 c
-        do atom=3,atypes
-          if (xhydlin(1,1,1,atom).gt.epsilon) then
-            do series=1,nxhseries
-              do line=1,nxhlines
+       do atom=3,atypes
+        if (xhydlin(1,1,1,atom).gt.epsilon) then
+         do series=1,nxhseries
+          do line=1,nxhlines
 c
-                if (xhbin(line,series,atom).eq.inl) then
-                  dismul=(dwex*xhyddwlin(2,line,series,atom))+(upex*
-     &             xhyduplin(2,line,series,atom))
-                  tau=tau0
+           if (xhbin(line,series,atom).eq.inl) then
+            dismul=(dwex*xhyddwlin(2,line,series,atom))+(upex*
+     &       xhyduplin(2,line,series,atom))
+            tau=tau0
 c
-                  energ=ev*lmev/xhlambda(line,series,atom)
-                  emis=energ*xhydlin(1,line,series,atom)*pathlength
+            energ=ev*lmev/xhlambda(line,series,atom)
+            emis=energ*xhydlin(1,line,series,atom)*pathlength
 c
-                  escape=localout(dismul,tau)
-                  dwliem=(dwf*emis)*escape
+            escape=localout(dismul,tau)
+            dwliem=(dwf*emis)*escape
 c
-                  upliem=(upf*emis)*escapeso
+            upliem=(upf*emis)*escapeso
 c
-                  xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,
-     &             atom)+(dwliem*wedw)
-                  xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,
-     &             atom)+(upliem*weup)
+            xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,atom)+
+     &       (dwliem*wedw)
+            xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,atom)+
+     &       (upliem*weup)
 c
-                endif
+           endif
 c
-              enddo
-            enddo
-          endif
-        enddo
+          enddo
+         enddo
+        endif
+       enddo
 c
 c end vector loop inl
 c
@@ -948,11 +939,10 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine newdif2 (tdw, tup, dh, rad,
-     & drdw, dvdw, drup, dvup, frdw, jmod)
+      subroutine newdif2 (tdw, tup, dh, rad, drdw, dvdw, drup, dvup,
+     &frdw, jmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1041,23 +1031,23 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if ((fi.gt.1.0d0).and.(fi.le.0.0d0)) then
-        write (*,10) fi
+       write (*,10) fi
    10     format(//' INCONSISTENT FILLING FACTOR IN NEWDIF: ',1pg10.3)
-        fi=1.0
+       fi=1.0
       endif
       dvdw=dabs(dvdw)
       dvup=dabs(dvup)
 c
       if ((tdw.lt.0.d0).or.(tup.lt.0.d0).or.(rad.lt.0.d0)
      &.or.(drdw.lt.0.d0).or.(drup.lt.0.d0)) then
-        write (*,20) tdw,tup,rad,drdw,drup
+       write (*,20) tdw,tup,rad,drdw,drup
    20   format(/,/,'ONE OF THE ARGUMENTS HAS A NEGATIVE VALUE IN NEWDIF'
      &         ,'****',/,5(1pg10.3))
-        tdw=dabs(tdw)
-        tup=dabs(tup)
-        rad=dabs(rad)
-        drdw=dabs(drdw)
-        drup=dabs(drup)
+       tdw=dabs(tdw)
+       tup=dabs(tup)
+       rad=dabs(rad)
+       drdw=dabs(drdw)
+       drup=dabs(drup)
       endif
 c
       if ((jmod.eq.'LODW').or.(jmod.eq.'LOUP').or.(jmod.eq.'OUTW')
@@ -1068,10 +1058,10 @@ c
    40 continue
 c
       if ((frdw.gt.1.d0).or.(frdw.lt.0.d0)) then
-        write (*,50) frdw
+       write (*,50) frdw
    50       format(/,/,' INCONSISTENT VALUE FOR THE ARGUMENT FRDW :'
      &             ,1pg10.3)
-        frdw=0.5d0
+       frdw=0.5d0
       endif
 c
 c     ***SET MODE AND INTERNAL DILUTION FACTORS
@@ -1086,15 +1076,15 @@ c
       if (jmod.eq.'DWUP') upex=1.d0
 c
       if (jmod.eq.'LOUP') then
-        dr=drup
-        drem=drup
-        dvem=dvup
-        telc=tup
+       dr=drup
+       drem=drup
+       dvem=dvup
+       telc=tup
       else
-        dr=drdw
-        drem=drdw
-        dvem=dvdw
-        telc=tdw
+       dr=drdw
+       drem=drdw
+       dvem=dvdw
+       telc=tdw
       endif
 c
       curad=rad
@@ -1106,18 +1096,18 @@ c
 c
 c     Spherical
 c
-        rm=curad+drdw
-        wlo=(2.d0*dlog(curad))-(2.d0*dlog(rm))
-        rm=(curad+dr)-drup
-        if (rm.le.0.d0) then
-          write (*,60) drup,curad
+       rm=curad+drdw
+       wlo=(2.d0*dlog(curad))-(2.d0*dlog(rm))
+       rm=(curad+dr)-drup
+       if (rm.le.0.d0) then
+        write (*,60) drup,curad
    60       format(/,/,' DRUP IS LARGER THAN THE RADIUS OF CURVATURE :'
      &              ,2(1pg10.3))
-          stop
-        endif
-        ulo=(2.d0*dlog(curad+dr))-(2.d0*dlog(rm))
-        dildw=dexp(wlo)
-        dilup=dexp(ulo)
+        stop
+       endif
+       ulo=(2.d0*dlog(curad+dr))-(2.d0*dlog(rm))
+       dildw=dexp(wlo)
+       dilup=dexp(ulo)
 c
 c     Spherical
 c
@@ -1150,7 +1140,7 @@ c     ***COMPUTES RESONANCE-LINES DISTANCE MULTIPLIERS
 c      dr_eff = (rad + 0.5d0*dr - remp)
       dremh=0.5*dr_eff
       if (jgeo.eq.'S') then
-        dremh=dmin1((rstromhb-remp),dremh)
+       dremh=dmin1((rstromhb-remp),dremh)
       endif
       dvemh=dvem
       call emilindismuls (telc, dh, dremh, dvemh)
@@ -1161,40 +1151,40 @@ c
       fbu=0.0d0
       fbd=0.0d0
       if (zmap(2).gt.0) then
-        fb=fbowen(telc,dvemh)
-        fbu=fbowen(tup,dvup)
-        fbd=fbowen(tdw,dvdw)
+       fb=fbowen(telc,dvemh)
+       fbu=fbowen(tup,dvup)
+       fbd=fbowen(tdw,dvdw)
       endif
       heiioiiibf=fb
 c
 c     do up and down if needed
 c
       if (dwf.gt.0.d0) then
-        drdwh=0.5d0*dr_eff
-        if (jgeo.eq.'S') then
-          drdwh=0.5d0*dmin1((rstromhb-remp),drdwh)
-        endif
-        dvdwh=dvdw
-        call dwlindismuls (tdw, dh, drdwh, dvdwh)
+       drdwh=0.5d0*dr_eff
+       if (jgeo.eq.'S') then
+        drdwh=0.5d0*dmin1((rstromhb-remp),drdwh)
+       endif
+       dvdwh=dvdw
+       call dwlindismuls (tdw, dh, drdwh, dvdwh)
 c dwf
       endif
 c
       if (upf.gt.0.d0) then
-        druph=0.5d0*dr_eff
-        if (jgeo.eq.'S') then
-          druph=0.5d0*dmin1((rstromhb-remp),druph)
-        endif
-        dvuph=dvup
-        call uplindismuls (tup, dh, druph, dvuph)
+       druph=0.5d0*dr_eff
+       if (jgeo.eq.'S') then
+        druph=0.5d0*dmin1((rstromhb-remp),druph)
+       endif
+       dvuph=dvup
+       call uplindismuls (tup, dh, druph, dvuph)
 c upf
       endif
 c
 c     call casab with hydrogenic Lyman gamma
 c
       do atom=1,atypes
-        line=3
-        series=1
-        caseab(atom)=casab(mapz(atom),line,series)
+       line=3
+       series=1
+       caseab(atom)=casab(mapz(atom),line,series)
       enddo
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1208,76 +1198,74 @@ c
       pathlength=dr*fi
 c
       do inl=1,infph-1
-        tau_i(inl)=0.d0
-        escapeso_i(inl)=1.d0
-        energ=cphotev(inl)*ev
-        tauso=0.d0
-        sigmt=0.d0
-        dustsigmat=0.d0
+       tau_i(inl)=0.d0
+       escapeso_i(inl)=1.d0
+       energ=cphotev(inl)*ev
+       tauso=0.d0
+       sigmt=0.d0
+       dustsigmat=0.d0
 c
-       if (grainmode.le.0)
-     &        call crosssections (inl, tauso, sigmt)
-        if (grainmode.gt.0)
-     &        call crosssectionsdust (inl, tauso, sigmt, dustsigmat)
+       if (grainmode.le.0) call crosssections (inl, tauso, sigmt)
+       if (grainmode.gt.0) call crosssectionsdust (inl, tauso, sigmt,
+     &  dustsigmat)
 c
-        sigmt=dh*sigmt
-        dustsigmat=dh*dustsigmat
+       sigmt=dh*sigmt
+       dustsigmat=dh*dustsigmat
 c
 c tauso already includes dh, fi and distance implicitly, so no simatso
 c
 c     ***ATTENUATION OF THE ORIGINAL INTENSITY OF THE DIFFUSE FIELD
 c
-        tau0=pathlength*sigmt
+       tau0=pathlength*sigmt
 c
 c tauso already includes dh, fi and distance implicitly
 c
-        escapeso=dexp(-tauso)
+       escapeso=dexp(-tauso)
 c
-
-        f1 = (wadw*dexp(-(dwex*tau0)))
-        f2 = (waup*dexp(-(upex*tau0)))
-        dwdif(inl)=dwdif(inl)*f1
-        updif(inl)=updif(inl)*f2
+       f1=(wadw*dexp(-(dwex*tau0)))
+       f2=(waup*dexp(-(upex*tau0)))
+       dwdif(inl)=dwdif(inl)*f1
+       updif(inl)=updif(inl)*f2
 c
-        dwdifcont(inl)=dwdifcont(inl)*f1
-        updifcont(inl)=updifcont(inl)*f2
+       dwdifcont(inl)=dwdifcont(inl)*f1
+       updifcont(inl)=updifcont(inl)*f2
 c
-        tau_i(inl)=tau0
-        escapeso_i(inl)=escapeso
+       tau_i(inl)=tau0
+       escapeso_i(inl)=escapeso
       enddo
 c
 c     distance multipliers attenuate lines for emilin etc
 c
       do line=1,nxr3lines
-        inl=xr3lines_bin(line)
-        if (inl.gt.0) then
-          if ((xr3lines_dwlin(1,line)+xr3lines_uplin(1,line))
-     &     .gt.epsilon) then
-            dismul=(dwex*xr3lines_dwlin(2,line))+(upex*xr3lines_uplin(2,
-     &       line))
-            tau=tauline(dismul,tau_i(inl))
-            xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)*(wadw*dexp(-
-     &       (dwex*tau)))
-            xr3lines_uplin(1,line)=xr3lines_uplin(1,line)*(waup*dexp(-
-     &       (upex*tau)))
-          endif
+       inl=xr3lines_bin(line)
+       if (inl.gt.0) then
+        if ((xr3lines_dwlin(1,line)+xr3lines_uplin(1,line)).gt.epsilon)
+     &   then
+         dismul=(dwex*xr3lines_dwlin(2,line))+(upex*xr3lines_uplin(2,
+     &    line))
+         tau=tauline(dismul,tau_i(inl))
+         xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)*(wadw*dexp(-
+     &    (dwex*tau)))
+         xr3lines_uplin(1,line)=xr3lines_uplin(1,line)*(waup*dexp(-
+     &    (upex*tau)))
         endif
+       endif
       enddo
 c
       do line=1,nxrllines
-        inl=xrllines_bin(line)
-        if (inl.gt.0) then
-          if ((xrllines_dwlin(1,line)+xrllines_uplin(1,line))
-     &     .gt.epsilon) then
-            dismul=(dwex*xrllines_dwlin(2,line))+(upex*xrllines_uplin(2,
-     &       line))
-            tau=tauline(dismul,tau_i(inl))
-            xrllines_dwlin(1,line)=xrllines_dwlin(1,line)*(wadw*dexp(-
-     &       (dwex*tau)))
-            xrllines_uplin(1,line)=xrllines_uplin(1,line)*(waup*dexp(-
-     &       (upex*tau)))
-          endif
+       inl=xrllines_bin(line)
+       if (inl.gt.0) then
+        if ((xrllines_dwlin(1,line)+xrllines_uplin(1,line)).gt.epsilon)
+     &   then
+         dismul=(dwex*xrllines_dwlin(2,line))+(upex*xrllines_uplin(2,
+     &    line))
+         tau=tauline(dismul,tau_i(inl))
+         xrllines_dwlin(1,line)=xrllines_dwlin(1,line)*(wadw*dexp(-
+     &    (dwex*tau)))
+         xrllines_uplin(1,line)=xrllines_uplin(1,line)*(waup*dexp(-
+     &    (upex*tau)))
         endif
+       endif
       enddo
 c
 c     do line=1,xlines
@@ -1295,119 +1283,119 @@ c
 c   Hydrogenic lines
 c
       do series=1,nhseries
-        do line=1,nhlines
-          inl=hbin(line,series)
-          if (inl.gt.0) then
-            if ((hyddwlin(1,line,series)+hyduplin(1,line,series))
-     &       .gt.epsilon) then
+       do line=1,nhlines
+        inl=hbin(line,series)
+        if (inl.gt.0) then
+         if ((hyddwlin(1,line,series)+hyduplin(1,line,series))
+     &    .gt.epsilon) then
 c Hydrogenic series use dismul to lookup case A/B
 c modified ratios already, so not needed for transfer here
-              dismul=1.d0
-              tau=tauline(dismul,tau_i(inl))
-              hyddwlin(1,line,series)=hyddwlin(1,line,series)*(wadw*
-     &         dexp(-(dwex*tau)))
-              hyduplin(1,line,series)=hyduplin(1,line,series)*(waup*
-     &         dexp(-(upex*tau)))
-            endif
-          endif
-        enddo
+          dismul=1.d0
+          tau=tauline(dismul,tau_i(inl))
+          hyddwlin(1,line,series)=hyddwlin(1,line,series)*(wadw*dexp(-
+     &     (dwex*tau)))
+          hyduplin(1,line,series)=hyduplin(1,line,series)*(waup*dexp(-
+     &     (upex*tau)))
+         endif
+        endif
+       enddo
       enddo
 c
 c   Helium lines
 c
       do series=1,nheseries
-        do line=1,nhelines
-          inl=hebin(line,series)
-          if (inl.gt.0) then
-            if ((heldwlin(1,line,series)+heluplin(1,line,series))
-     &       .gt.epsilon) then
-              dismul=1.d0
-              tau=tauline(dismul,tau_i(inl))
+       do line=1,nhelines
+        inl=hebin(line,series)
+        if (inl.gt.0) then
+         if ((heldwlin(1,line,series)+heluplin(1,line,series))
+     &    .gt.epsilon) then
+          dismul=1.d0
+          tau=tauline(dismul,tau_i(inl))
 c
-              dfbu=1.d0
-              dfbd=1.d0
+          dfbu=1.d0
+          dfbd=1.d0
 c             if ((line.eq.1).and.(series.eq.1)) then
 c               dfbu=1.d0-fbu
 c               dfbd=1.d0-fbd
 c               write(*,*)'dfbu dfbd',dfbu,dfbd
 c             endif
 c
-              heldwlin(1,line,series)=dfbd*heldwlin(1,line,series)*
-     &         (wadw*dexp(-(dwex*tau)))
-              heluplin(1,line,series)=dfbu*heluplin(1,line,series)*
-     &         (waup*dexp(-(upex*tau)))
-            endif
-          endif
-        enddo
+          heldwlin(1,line,series)=dfbd*heldwlin(1,line,series)*(wadw*
+     &     dexp(-(dwex*tau)))
+          heluplin(1,line,series)=dfbu*heluplin(1,line,series)*(waup*
+     &     dexp(-(upex*tau)))
+         endif
+        endif
+       enddo
       enddo
 c
       do atom=3,atypes
-        do series=1,nxhseries
-          do line=1,nxhlines
-            inl=xhbin(line,series,atom)
-            if (inl.gt.0) then
-              if ((xhyddwlin(1,line,series,atom)+xhyduplin(1,line,
-     &         series,atom)).gt.epsilon) then
-                dismul=1.d0
-                tau=tauline(dismul,tau_i(inl))
-                xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,
-     &           atom)*(wadw*dexp(-(dwex*tau)))
-                xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,
-     &           atom)*(waup*dexp(-(upex*tau)))
-              endif
-            endif
-          enddo
+       do series=1,nxhseries
+        do line=1,nxhlines
+         inl=xhbin(line,series,atom)
+         if (inl.gt.0) then
+          if ((xhyddwlin(1,line,series,atom)+xhyduplin(1,line,series,
+     &     atom)).gt.epsilon) then
+           dismul=1.d0
+           tau=tauline(dismul,tau_i(inl))
+           xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,atom)*
+     &      (wadw*dexp(-(dwex*tau)))
+           xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,atom)*
+     &      (waup*dexp(-(upex*tau)))
+          endif
+         endif
         enddo
+       enddo
       enddo
 c
 c     ***ADS LOCAL EMISSIVITY CONTRIBUTION TO THE NEW DIFFUSE FIELD
 c
       do inl=1,infph-1
-        if (emidif(inl).gt.epsilon) then
-          escape=localout(1.d0,tau_i(inl))
-          energ=cphotev(inl)*ev
-          emis=energ*pathlength
-          dwem=(dwf*emis)*escape
-          upem=(upf*emis)*escapeso_i(inl)
-          dwdif(inl)=dwdif(inl)+(dwem*wedw*emidif(inl))
-          updif(inl)=updif(inl)+(upem*weup*emidif(inl))
-          dwdifcont(inl)=dwdifcont(inl)+(dwem*wedw*emidifcont(inl))
-          updifcont(inl)=updifcont(inl)+(upem*weup*emidifcont(inl))
-        endif
+       if (emidif(inl).gt.epsilon) then
+        escape=localout(1.d0,tau_i(inl))
+        energ=cphotev(inl)*ev
+        emis=energ*pathlength
+        dwem=(dwf*emis)*escape
+        upem=(upf*emis)*escapeso_i(inl)
+        dwdif(inl)=dwdif(inl)+(dwem*wedw*emidif(inl))
+        updif(inl)=updif(inl)+(upem*weup*emidif(inl))
+        dwdifcont(inl)=dwdifcont(inl)+(dwem*wedw*emidifcont(inl))
+        updifcont(inl)=updifcont(inl)+(upem*weup*emidifcont(inl))
+       endif
       enddo
 c
       do line=1,nxr3lines
-        inl=xr3lines_bin(line)
-        if (inl.gt.0) then
-          if (xr3lines_emilin(1,line).gt.epsilon) then
-            dismul=(dwex*xr3lines_dwlin(2,line))+(upex*xr3lines_uplin(2,
-     &       line))
-            escape=localout(dismul,tau_i(inl))
-            energ=xr3lines_egij(line)
-            emis=energ*xr3lines_emilin(1,line)*pathlength
-            dwliem=(dwf*emis)*escape
-            upliem=(upf*emis)*escapeso_i(inl)
-            xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)+(dwliem*wedw)
-            xr3lines_uplin(1,line)=xr3lines_uplin(1,line)+(upliem*weup)
-          endif
+       inl=xr3lines_bin(line)
+       if (inl.gt.0) then
+        if (xr3lines_emilin(1,line).gt.epsilon) then
+         dismul=(dwex*xr3lines_dwlin(2,line))+(upex*xr3lines_uplin(2,
+     &    line))
+         escape=localout(dismul,tau_i(inl))
+         energ=xr3lines_egij(line)
+         emis=energ*xr3lines_emilin(1,line)*pathlength
+         dwliem=(dwf*emis)*escape
+         upliem=(upf*emis)*escapeso_i(inl)
+         xr3lines_dwlin(1,line)=xr3lines_dwlin(1,line)+(dwliem*wedw)
+         xr3lines_uplin(1,line)=xr3lines_uplin(1,line)+(upliem*weup)
         endif
+       endif
       enddo
 c
       do line=1,nxrllines
-        inl=xrllines_bin(line)
-        if (inl.gt.0) then
-          if (xrllines_emilin(1,line).gt.epsilon) then
-            dismul=(dwex*xrllines_dwlin(2,line))+(upex*xrllines_uplin(2,
-     &       line))
-            escape=localout(dismul,tau_i(inl))
-            energ=xrllines_egij(line)
-            emis=energ*xrllines_emilin(1,line)*pathlength
-            dwliem=(dwf*emis)*escape
-            upliem=(upf*emis)*escapeso_i(inl)
-            xrllines_dwlin(1,line)=xrllines_dwlin(1,line)+(dwliem*wedw)
-            xrllines_uplin(1,line)=xrllines_uplin(1,line)+(upliem*weup)
-          endif
+       inl=xrllines_bin(line)
+       if (inl.gt.0) then
+        if (xrllines_emilin(1,line).gt.epsilon) then
+         dismul=(dwex*xrllines_dwlin(2,line))+(upex*xrllines_uplin(2,
+     &    line))
+         escape=localout(dismul,tau_i(inl))
+         energ=xrllines_egij(line)
+         emis=energ*xrllines_emilin(1,line)*pathlength
+         dwliem=(dwf*emis)*escape
+         upliem=(upf*emis)*escapeso_i(inl)
+         xrllines_dwlin(1,line)=xrllines_dwlin(1,line)+(dwliem*wedw)
+         xrllines_uplin(1,line)=xrllines_uplin(1,line)+(upliem*weup)
         endif
+       endif
       enddo
 c
 c
@@ -1432,84 +1420,80 @@ c
 c Hydrogen
 c
       do series=1,nhseries
-        do line=1,nhlines
-          inl=hbin(line,series)
-          if (inl.gt.0) then
-            if (hydlin(1,line,series).gt.epsilon) then
+       do line=1,nhlines
+        inl=hbin(line,series)
+        if (inl.gt.0) then
+         if (hydlin(1,line,series).gt.epsilon) then
 c
 c Hydrogenic series use dismul to lookup case A/B
 c modified ratios already, so not needed for transfer here
 c
-              dismul=1.d0
-              escape=localout(dismul,tau_i(inl))
-              energ=ev*lmev/hlambda(line,series)
-              emis=hydlin(1,line,series)*pathlength*energ
-              dwliem=(dwf*emis)*escape
-              upliem=(upf*emis)*escapeso_i(inl)
-              hyddwlin(1,line,series)=hyddwlin(1,line,series)+(dwliem*
-     &         wedw)
-              hyduplin(1,line,series)=hyduplin(1,line,series)+(upliem*
-     &         weup)
-            endif
-          endif
-        enddo
+          dismul=1.d0
+          escape=localout(dismul,tau_i(inl))
+          energ=ev*lmev/hlambda(line,series)
+          emis=hydlin(1,line,series)*pathlength*energ
+          dwliem=(dwf*emis)*escape
+          upliem=(upf*emis)*escapeso_i(inl)
+          hyddwlin(1,line,series)=hyddwlin(1,line,series)+(dwliem*wedw)
+          hyduplin(1,line,series)=hyduplin(1,line,series)+(upliem*weup)
+         endif
+        endif
+       enddo
       enddo
 c
 c Helium
 c
       do series=1,nheseries
-        do line=1,nhelines
-          inl=hebin(line,series)
-          if (inl.gt.0) then
-            if (hellin(1,line,series).gt.epsilon) then
-              dismul=1.d0
-              escape=localout(dismul,tau_i(inl))
-              energ=ev*lmev/helambda(line,series)
+       do line=1,nhelines
+        inl=hebin(line,series)
+        if (inl.gt.0) then
+         if (hellin(1,line,series).gt.epsilon) then
+          dismul=1.d0
+          escape=localout(dismul,tau_i(inl))
+          energ=ev*lmev/helambda(line,series)
 c
-              dfb=1.d0
-              if ((line.eq.1).and.(series.eq.1)) then
-                dfb=1.d0-fb
+          dfb=1.d0
+          if ((line.eq.1).and.(series.eq.1)) then
+           dfb=1.d0-fb
 c                write(*,*)'dfb',dfb
-              endif
+          endif
 c
 c degrade local HeII 303 photons locally to OIII BF lines by an
 c approximate conversion fraction....  Set to 1-0 = 1.0, no
 c conversion for now
 c
-              emis=dfb*energ*hellin(1,line,series)*pathlength
-              dwliem=(dwf*emis)*escape
-              upliem=(upf*emis)*escapeso_i(inl)
-              heldwlin(1,line,series)=heldwlin(1,line,series)+(dwliem*
-     &         wedw)
-              heluplin(1,line,series)=heluplin(1,line,series)+(upliem*
-     &         weup)
-            endif
-          endif
-        enddo
+          emis=dfb*energ*hellin(1,line,series)*pathlength
+          dwliem=(dwf*emis)*escape
+          upliem=(upf*emis)*escapeso_i(inl)
+          heldwlin(1,line,series)=heldwlin(1,line,series)+(dwliem*wedw)
+          heluplin(1,line,series)=heluplin(1,line,series)+(upliem*weup)
+         endif
+        endif
+       enddo
       enddo
 c
 c Heavy Hydrogenic
 c
       do atom=3,atypes
-        do series=1,nxhseries
-          do line=1,nxhlines
-            inl=xhbin(line,series,atom)
-            if (inl.gt.0) then
-              if (xhydlin(1,line,series,atom).gt.epsilon) then
-                dismul=1.d0
-                escape=localout(dismul,tau_i(inl))
-                energ=ev*lmev/xhlambda(line,series,atom)
-                emis=energ*xhydlin(1,line,series,atom)*pathlength
-                dwliem=(dwf*emis)*escape
-                upliem=(upf*emis)*escapeso_i(inl)
-                xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,
-     &           atom)+(dwliem*wedw)
-                xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,
-     &           atom)+(upliem*weup)
-              endif
-            endif
-          enddo
+       do series=1,nxhseries
+        do line=1,nxhlines
+         inl=xhbin(line,series,atom)
+         if (inl.gt.0) then
+          if (xhydlin(1,line,series,atom).gt.epsilon) then
+           dismul=1.d0
+           escape=localout(dismul,tau_i(inl))
+           energ=ev*lmev/xhlambda(line,series,atom)
+           emis=energ*xhydlin(1,line,series,atom)*pathlength
+           dwliem=(dwf*emis)*escape
+           upliem=(upf*emis)*escapeso_i(inl)
+           xhyddwlin(1,line,series,atom)=xhyddwlin(1,line,series,atom)+
+     &      (dwliem*wedw)
+           xhyduplin(1,line,series,atom)=xhyduplin(1,line,series,atom)+
+     &      (upliem*weup)
+          endif
+         endif
         enddo
+       enddo
       enddo
 c
       return

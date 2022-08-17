@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -97,94 +97,93 @@ c
       ifraction=0.0d0
       ftype='A'
       do i=1,infph
-        souvec(i)=0.0d0
-        readflux(i)=0.d0
-        skipbin(i)=.true.
+       souvec(i)=0.0d0
+       readflux(i)=0.d0
+       skipbin(i)=.true.
       enddo
 c
-      nMetalQs=21
-      ionElem( 1)=zmap( 1) !HI
-      ionElem( 2)=zmap( 2) !HeI
-      ionElem( 3)=zmap( 2) !HeII
-      ionElem( 4)=zmap( 6) !CII
-      ionElem( 5)=zmap( 6) !CIII
-      ionElem( 6)=zmap( 6) !CIV
-      ionElem( 7)=zmap( 7) !NII
-      ionElem( 8)=zmap( 7) !NIII
-      ionElem( 9)=zmap( 7) !NIV
-      ionElem(10)=zmap( 8) !OII
-      ionElem(11)=zmap( 8) !OIII
-      ionElem(12)=zmap( 8) !OIV
-      ionElem(13)=zmap(10) !NeII
-      ionElem(14)=zmap(10) !NeIII
-      ionElem(15)=zmap(10) !NeIV
-      ionElem(16)=zmap(16) !SII
-      ionElem(17)=zmap(16) !SIII
-      ionElem(18)=zmap(16) !SIV
-      ionElem(19)=zmap(26) !FeII
-      ionElem(20)=zmap(26) !FeIII
-      ionElem(21)=zmap(26) !FeIV
+      nmetalqs=21
+      ionelem(1)=zmap(1)!hi
+      ionelem(2)=zmap(2)!hei
+      ionelem(3)=zmap(2)!heii
+      ionelem(4)=zmap(6)!cii
+      ionelem(5)=zmap(6)!ciii
+      ionelem(6)=zmap(6)!civ
+      ionelem(7)=zmap(7)!nii
+      ionelem(8)=zmap(7)!niii
+      ionelem(9)=zmap(7)!niv
+      ionelem(10)=zmap(8)!oii
+      ionelem(11)=zmap(8)!oiii
+      ionelem(12)=zmap(8)!oiv
+      ionelem(13)=zmap(10)!neii
+      ionelem(14)=zmap(10)!neiii
+      ionelem(15)=zmap(10)!neiv
+      ionelem(16)=zmap(16)!sii
+      ionelem(17)=zmap(16)!siii
+      ionelem(18)=zmap(16)!siv
+      ionelem(19)=zmap(26)!feii
+      ionelem(20)=zmap(26)!feiii
+      ionelem(21)=zmap(26)!feiv
 c
-      ionIon( 1)=1 !HI
-      ionIon( 2)=1 !HeI
-      ionIon( 3)=2 !HeII
-      ionIon( 4)=2 !CII
-      ionIon( 5)=3 !CIII
-      ionIon( 6)=4 !CIV
-      ionIon( 7)=2 !NII
-      ionIon( 8)=3 !NIII
-      ionIon( 9)=4 !NIV
-      ionIon(10)=2 !OII
-      ionIon(11)=3 !OIII
-      ionIon(12)=4 !OIV
-      ionIon(13)=2 !NeII
-      ionIon(14)=3 !NeIII
-      ionIon(15)=4 !NeIV
-      ionIon(16)=2 !SII
-      ionIon(17)=3 !SIII
-      ionIon(18)=4 !SIV
-      ionIon(19)=2 !FeII
-      ionIon(20)=3 !FeIII
-      ionIon(21)=4 !FeIV
+      ionion(1)=1!hi
+      ionion(2)=1!hei
+      ionion(3)=2!heii
+      ionion(4)=2!cii
+      ionion(5)=3!ciii
+      ionion(6)=4!civ
+      ionion(7)=2!nii
+      ionion(8)=3!niii
+      ionion(9)=4!niv
+      ionion(10)=2!oii
+      ionion(11)=3!oiii
+      ionion(12)=4!oiv
+      ionion(13)=2!neii
+      ionion(14)=3!neiii
+      ionion(15)=4!neiv
+      ionion(16)=2!sii
+      ionion(17)=3!siii
+      ionion(18)=4!siv
+      ionion(19)=2!feii
+      ionion(20)=3!feiii
+      ionion(21)=4!feiv
 c
 c      eV ionisation limits ion,elem
 c
-      ionLimits( 1)=ipotev(1,ionElem( 1)) !HI
-      ionLimits( 2)=ipotev(1,ionElem( 2)) !HeI
-      ionLimits( 3)=ipotev(2,ionElem( 3)) !HeII
-      ionLimits( 4)=ipotev(2,ionElem( 4)) !CII
-      ionLimits( 5)=ipotev(3,ionElem( 5)) !CIII
-      ionLimits( 6)=ipotev(4,ionElem( 6)) !CIV
-      ionLimits( 7)=ipotev(2,ionElem( 7)) !NII
-      ionLimits( 8)=ipotev(3,ionElem( 8)) !NIII
-      ionLimits( 9)=ipotev(4,ionElem( 9)) !NIV
-      ionLimits(10)=ipotev(2,ionElem(10)) !OII
-      ionLimits(11)=ipotev(3,ionElem(11)) !OIII
-      ionLimits(12)=ipotev(4,ionElem(12)) !OIV
-      ionLimits(13)=ipotev(2,ionElem(13)) !NeII
-      ionLimits(14)=ipotev(3,ionElem(14)) !NeIII
-      ionLimits(15)=ipotev(4,ionElem(15)) !NeIV
-      ionLimits(16)=ipotev(2,ionElem(16)) !SII
-      ionLimits(17)=ipotev(3,ionElem(17)) !SIII
-      ionLimits(18)=ipotev(4,ionElem(18)) !SIV
-      ionLimits(19)=ipotev(2,ionElem(19)) !FeII
-      ionLimits(20)=ipotev(3,ionElem(20)) !FeIII
-      ionLimits(21)=ipotev(4,ionElem(21)) !FeIV
+      ionlimits(1)=ipotev(1,ionelem(1))!hi
+      ionlimits(2)=ipotev(1,ionelem(2))!hei
+      ionlimits(3)=ipotev(2,ionelem(3))!heii
+      ionlimits(4)=ipotev(2,ionelem(4))!cii
+      ionlimits(5)=ipotev(3,ionelem(5))!ciii
+      ionlimits(6)=ipotev(4,ionelem(6))!civ
+      ionlimits(7)=ipotev(2,ionelem(7))!nii
+      ionlimits(8)=ipotev(3,ionelem(8))!niii
+      ionlimits(9)=ipotev(4,ionelem(9))!niv
+      ionlimits(10)=ipotev(2,ionelem(10))!oii
+      ionlimits(11)=ipotev(3,ionelem(11))!oiii
+      ionlimits(12)=ipotev(4,ionelem(12))!oiv
+      ionlimits(13)=ipotev(2,ionelem(13))!neii
+      ionlimits(14)=ipotev(3,ionelem(14))!neiii
+      ionlimits(15)=ipotev(4,ionelem(15))!neiv
+      ionlimits(16)=ipotev(2,ionelem(16))!sii
+      ionlimits(17)=ipotev(3,ionelem(17))!siii
+      ionlimits(18)=ipotev(4,ionelem(18))!siv
+      ionlimits(19)=ipotev(2,ionelem(19))!feii
+      ionlimits(20)=ipotev(3,ionelem(20))!feiii
+      ionlimits(21)=ipotev(4,ionelem(21))!feiv
 c
-      do i=1,nMetalQs
-        ionQs(i)=0.0d0
-        ionIs(i)=0.0d0
+      do i=1,nmetalqs
+       ionqs(i)=0.0d0
+       ionis(i)=0.0d0
       enddo
-
-      nXQs=5
-      xrayLimits(1)=100.d0
-      xrayLimits(2)=1000.d0
-      xrayLimits(3)=2000.d0
-      xrayLimits(4)=5000.d0
-      xrayLimits(5)=10000.d0
-      do i=1,nXQs
-        xrayQs(i)=0.0d0
-        xrayIs(i)=0.0d0
+      nxqs=5
+      xraylimits(1)=100.d0
+      xraylimits(2)=1000.d0
+      xraylimits(3)=2000.d0
+      xraylimits(4)=5000.d0
+      xraylimits(5)=10000.d0
+      do i=1,nxqs
+       xrayqs(i)=0.0d0
+       xrayis(i)=0.0d0
       enddo
 c
       ipho=ipho+1
@@ -222,39 +221,38 @@ c
 c
 c get current field, in E and Phots, total, ion and xrays
 c
-      blum=0.d0
-      qall=0.d0
+       blum=0.d0
+       qall=0.d0
 c
-      ilum=0.d0
-      qi=0.d0
+       ilum=0.d0
+       qi=0.d0
 c
-      xlum=0.d0
-      qx=0.d0
+       xlum=0.d0
+       qx=0.d0
 c
-      do i=1,infph-1
+       do i=1,infph-1
         if (souvec(i).gt.epsilon) then
-            widnu=widbinnu(i)
-            blum=blum+souvec(i)*widnu
-            qall=qall+souvec(i)*widnu/cphote(i)
-            if (photev(i).ge.iph) then
-                ilum=ilum+souvec(i)*widnu
-                qi=qi+souvec(i)*widnu/cphote(i)
-            endif
-
-        do j=1,nMetalQs
-            if (photev(i).ge.ionLimits(j))  ionQs(j)=ionQs(j)
-     &                           +souvec(i)*widnu/cphote(i)
-            if (photev(i).ge.ionLimits(j))  ionIs(j)=ionIs(j)
-     &                                     +souvec(i)*widnu
-        enddo
-        do j=1,nXQs
-            if (photev(i).ge.xrayLimits(j)) xrayQs(j)=xrayQs(j)
-     &                           +souvec(i)*widnu/cphote(i)
-            if (photev(i).ge.xrayLimits(j)) xrayIs(j)=xrayIs(j)
-     &                                     +souvec(i)*widnu
-        enddo
+         widnu=widbinnu(i)
+         blum=blum+souvec(i)*widnu
+         qall=qall+souvec(i)*widnu/cphote(i)
+         if (photev(i).ge.iph) then
+          ilum=ilum+souvec(i)*widnu
+          qi=qi+souvec(i)*widnu/cphote(i)
+         endif
+         do j=1,nmetalqs
+          if (photev(i).ge.ionlimits(j)) ionqs(j)=ionqs(j)+souvec(i)*
+     &     widnu/cphote(i)
+          if (photev(i).ge.ionlimits(j)) ionis(j)=ionis(j)+souvec(i)*
+     &     widnu
+         enddo
+         do j=1,nxqs
+          if (photev(i).ge.xraylimits(j)) xrayqs(j)=xrayqs(j)+souvec(i)*
+     &     widnu/cphote(i)
+          if (photev(i).ge.xraylimits(j)) xrayis(j)=xrayis(j)+souvec(i)*
+     &     widnu
+         enddo
         endif
-      enddo
+       enddo
 c
 c  souvec is Inu 1/pi units
 c
@@ -272,27 +270,27 @@ c
        qfall=0.d0
        qfi=0.d0
 c
-      do i=1,infph-1
+       do i=1,infph-1
         widnu=widbinnu(i)
         bflum=bflum+readflux(i)*widnu
         qfall=qfall+readflux(i)*widnu/cphote(i)
         if (photev(i).ge.iph) then
-            iflum=iflum+readflux(i)*widnu
-            qfi=qfi+readflux(i)*widnu/cphote(i)
+         iflum=iflum+readflux(i)*widnu
+         qfi=qfi+readflux(i)*widnu/cphote(i)
         endif
-        do j=1,nMetalQs
-            if (photev(i).ge.ionLimits(j))  ionQs(j)=ionQs(j)
-     &                           +readflux(i)*widnu/cphote(i)
-            if (photev(i).ge.ionLimits(j))  ionIs(j)=ionIs(j)
-     &                                     +readflux(i)*widnu
+        do j=1,nmetalqs
+         if (photev(i).ge.ionlimits(j)) ionqs(j)=ionqs(j)+readflux(i)*
+     &    widnu/cphote(i)
+         if (photev(i).ge.ionlimits(j)) ionis(j)=ionis(j)+readflux(i)*
+     &    widnu
         enddo
-        do j=1,nXQs
-            if (photev(i).ge.xrayLimits(j)) xrayQs(j)=xrayQs(j)
-     &                           +readflux(i)*widnu/cphote(i)
-            if (photev(i).ge.xrayLimits(j)) xrayIs(j)=xrayIs(j)
-     &                                     +readflux(i)*widnu
+        do j=1,nxqs
+         if (photev(i).ge.xraylimits(j)) xrayqs(j)=xrayqs(j)+readflux(i)
+     &    *widnu/cphote(i)
+         if (photev(i).ge.xraylimits(j)) xrayis(j)=xrayis(j)+readflux(i)
+     &    *widnu
         enddo
-      enddo
+       enddo
 c
 c scale these direct Inu  by pi to allow the main subroutine to
 c rescale from Inu units.
@@ -301,14 +299,14 @@ c
        iflum=iflum*pi
        qfall=qfall*pi
        qfi=qfi*pi
-        do j=1,nMetalQs
-           ionQs(j)=ionQs(j)*pi
-           ionIs(j)=ionIs(j)*pi
-        enddo
-        do j=1,nXQs
-            xrayQs(j)=xrayQs(j)*pi
-            xrayIs(j)=xrayIs(j)*pi
-        enddo
+       do j=1,nmetalqs
+        ionqs(j)=ionqs(j)*pi
+        ionis(j)=ionis(j)*pi
+       enddo
+       do j=1,nxqs
+        xrayqs(j)=xrayqs(j)*pi
+        xrayis(j)=xrayis(j)*pi
+       enddo
 c
 c  default ionising luminosity ratio incase ftype is malformed
 c
@@ -317,8 +315,8 @@ c
        if (ftype.eq.'B') fratio=(qfall/qall)
        if (ftype.eq.'C') fratio=(iflum/ilum)
        if (ftype.eq.'D') fratio=(qfi/qi)
-       if (ftype.eq.'E') fratio=(xrayIs(1)/xlum)
-       if (ftype.eq.'F') fratio=(xrayQs(1)/qx)
+       if (ftype.eq.'E') fratio=(xrayis(1)/xlum)
+       if (ftype.eq.'F') fratio=(xrayqs(1)/qx)
 c
 c scale to desired fraction
 c
@@ -327,19 +325,18 @@ c       write(*,'(3(x,1pg12.5))')  fratio, ifraction, ifraction/fratio
 c
        fratio=ifraction/fratio
        do i=1,infph-1
-         readflux(i)=fratio*readflux(i)
+        readflux(i)=fratio*readflux(i)
        enddo
-
 c ifraction > 0
       endif
 c
 c add readflux into existing souvec
 c
       do i=1,infph
-        if (readflux(i).gt.epsilon) then
-          souvec(i)=souvec(i)+readflux(i)
-          skipbin(i)=.false.
-        endif
+       if (readflux(i).gt.epsilon) then
+        souvec(i)=souvec(i)+readflux(i)
+        skipbin(i)=.false.
+       endif
       enddo
 c
 c loop back for operators or cancels
@@ -352,42 +349,42 @@ c
       qoii=0.d0
       qall=0.d0
       qh2=0.0d0
-      do j=1,nMetalQs
-         ionQs(j)=0.0d0
-         ionIs(j)=0.0d0
+      do j=1,nmetalqs
+       ionqs(j)=0.0d0
+       ionis(j)=0.0d0
       enddo
-      do j=1,nXQs
-          xrayQs(j)=0.0d0
-          xrayIs(j)=0.0d0
+      do j=1,nxqs
+       xrayqs(j)=0.0d0
+       xrayis(j)=0.0d0
       enddo
 c
 c  Semi-Infinite Integrals
 c
       do i=1,infph-1
-        if (souvec(i).gt.epsilon) then
-           widnu=widbinnu(i)
-           blum=blum+souvec(i)*widnu
-           qall=qall+souvec(i)*widnu/(cphote(i))
-           if (photev(i).ge.iph) then
-                ilum=ilum+souvec(i)*widnu
-                qh2=qh2+souvec(i)*widnu/(cphote(i))
-           endif
-c
-           do j=1,nMetalQs
-               if (photev(i).ge.ionLimits(j))  ionQs(j)=ionQs(j)
-     &                                +souvec(i)*widnu/cphote(i)
-               if (photev(i).ge.ionLimits(j))  ionIs(j)=ionIs(j)
-     &                                          +souvec(i)*widnu
-           enddo
-           do j=1,nXQs
-               if (photev(i).ge.xrayLimits(j)) xrayQs(j)=xrayQs(j)
-     &                           +souvec(i)*widnu/cphote(i)
-               if (photev(i).ge.xrayLimits(j)) xrayIs(j)=xrayIs(j)
-     &                                           +souvec(i)*widnu
-           enddo
-        else
-           souvec(i)=0.d0
+       if (souvec(i).gt.epsilon) then
+        widnu=widbinnu(i)
+        blum=blum+souvec(i)*widnu
+        qall=qall+souvec(i)*widnu/(cphote(i))
+        if (photev(i).ge.iph) then
+         ilum=ilum+souvec(i)*widnu
+         qh2=qh2+souvec(i)*widnu/(cphote(i))
         endif
+c
+        do j=1,nmetalqs
+         if (photev(i).ge.ionlimits(j)) ionqs(j)=ionqs(j)+souvec(i)*
+     &    widnu/cphote(i)
+         if (photev(i).ge.ionlimits(j)) ionis(j)=ionis(j)+souvec(i)*
+     &    widnu
+        enddo
+        do j=1,nxqs
+         if (photev(i).ge.xraylimits(j)) xrayqs(j)=xrayqs(j)+souvec(i)*
+     &    widnu/cphote(i)
+         if (photev(i).ge.xraylimits(j)) xrayis(j)=xrayis(j)+souvec(i)*
+     &    widnu
+        enddo
+       else
+        souvec(i)=0.d0
+       endif
       enddo
 c
 c     Plane Parallel Inu, pi not 4pi. souvec is 1/4pi sr
@@ -395,13 +392,13 @@ c
       qall=pi*qall
       blum=pi*blum
       ilum=pi*ilum
-      do j=1,nMetalQs
-         ionQs(j)=ionQs(j)*pi
-         ionIs(j)=ionIs(j)*pi
+      do j=1,nmetalqs
+       ionqs(j)=ionqs(j)*pi
+       ionis(j)=ionis(j)*pi
       enddo
-      do j=1,nXQs
-          xrayQs(j)=xrayQs(j)*pi
-          xrayIs(j)=xrayIs(j)*pi
+      do j=1,nxqs
+       xrayqs(j)=xrayqs(j)*pi
+       xrayis(j)=xrayis(j)*pi
       enddo
 c
       q1=0.0d0
@@ -431,8 +428,8 @@ c
 c
       if (qht.gt.epsilon) then
 c
-      write (*,50) blum,qall,ilum,qht,ilum/(ev*qht),
-     & xrayIs(1)/(ev*xrayQs(1)),qht,qhi,qhei,qheii
+       write (*,50) blum,qall,ilum,qht,ilum/(ev*qht),xrayis(1)/(ev*
+     &  xrayqs(1)),qht,qhi,qhei,qheii
    50 format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
      & '::::::::::::::::'/
@@ -448,7 +445,7 @@ c
      & '  FQHI  (13.6-24.6eV) : ',1pg12.5,' (phots/cm^2/s) '/
      & '  FQHeI (24.6-54.4eV) : ',1pg12.5,' (phots/cm^2/s) '/
      & '  FQHeII    (>54.4eV) : ',1pg12.5,' (phots/cm^2/s) ')
-      write (*,60) (ionQs(i),i=4,nMetalQs)
+       write (*,60) (ionqs(i),i=4,nmetalqs)
    60 format(
      &  ' :::Key Metal Ions (phots/cm^2/s)::::::::::::::::',
      & '::::::::::::::::'/
@@ -466,8 +463,8 @@ c
      & '(16.2,30.7,54.9eV) '/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
      & '::::::::::::::::')
-      write (*,65) (xrayIs(j),xrayQs(j),j=1,nXQs)
-   65 format(
+       write (*,70) (xrayis(j),xrayqs(j),j=1,nxqs)
+   70 format(
      & '  X-Ray >0.1keV int. : ',1pg12.5,' (ergs/s/cm^2)'/
      & '  X-Ray >0.1keV Phot.: ',1pg12.5,' (phots/cm^2/s'/
      & '  X-Ray >1.0keV int. : ',1pg12.5,' (ergs/s/cm^2)'/
@@ -480,7 +477,6 @@ c
      & '  X-Ray >10.keV Phot.: ',1pg12.5,' (phots/cm^2/s'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
      & '::::::::::::::::'//)
-
       endif
 c
 c These options work but are not listed
@@ -490,8 +486,8 @@ c     & '    C5 :   CMFGEN Theta1C Models (37000-41000K)'/
 c     & '    C6 :   Old polynomial 4G stars from MAPPINGS II'/
 c     & '    OX :   AGN (OPTXAGNF, Done et al 2012) '/
 c     & '   IFI :   Input as a fraction of ionising intensity'/
-      write (*,70) infph-1,infph,infph-1,infph
-   70 format(/
+      write (*,80) infph-1,infph,infph-1,infph
+   80 format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
      & '::::::::::::::::'/
      & '  Multiple Component Photoionisation Source: '/
@@ -524,17 +520,16 @@ c     & '   IFI :   Input as a fraction of ionising intensity'/
      & '    X  :   eXit with current source'/
      & ' :: ',$)
       iso='    '
-      read (*,80) iso
-   80 format(a)
-      call toup (iso,iso)
+      read (*,90) iso
+   90 format(a)
+      call toup (iso, iso)
       subsub=iso(3:3)
       sub=iso(2:2)
       iso=iso(1:1)
       if ((iso.eq.'H').and.(sub.eq.'')) sub='9'
-
       ifraction=0.d0
       if ((sub.eq.'F').or.(subsub.eq.'F')) then
-   90 format(/
+  100 format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Input new source as a fraction of existing : '/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
@@ -545,65 +540,64 @@ c     & '   IFI :   Input as a fraction of ionising intensity'/
      & '    E  : X-Ray >0.1keV Intensity  (ergs/s/cm^2)  '/
      & '    F  : X-Ray >0.1keV Photons    (phots/cm^2/s)   '/
      & ' :: ',$)
-        write (*,90)
-      ftype='    '
-        read (*,80) ftype
-      call toup (ftype(1:1),ftype)
-      write (*,*)
-  100 format( ' Fraction of existing field (>0) :',$)
-        write (*,100)
-         read(*,*) ifraction
+       write (*,100)
+       ftype='    '
+       read (*,90) ftype
+       call toup (ftype(1:1), ftype)
+       write (*,*)
+  110 format( ' Fraction of existing field (>0) :',$)
+       write (*,110)
+       read (*,*) ifraction
       endif
-
 c
 c Basic sources, powerlaw and BB
 c
-      if (iso.eq.'A') goto 150
-      if (iso.eq.'B') goto 140
+      if (iso.eq.'A') goto 160
+      if (iso.eq.'B') goto 150
 c Stars
 c ATLAS9 Stellar models
-      if ((iso.eq.'C').and.(sub.eq.'1')) goto 220
+      if ((iso.eq.'C').and.(sub.eq.'1')) goto 230
 c TLUSTY Stellar models
-      if ((iso.eq.'C').and.(sub.eq.'2')) goto 230
+      if ((iso.eq.'C').and.(sub.eq.'2')) goto 240
 c CMFGEN Stellar models
-      if ((iso.eq.'C').and.(sub.eq.'3')) goto 240
+      if ((iso.eq.'C').and.(sub.eq.'3')) goto 250
 c WMBASIC Moont, Westmoquette 2004
-      if ((iso.eq.'C').and.(sub.eq.'4')) goto 250
+      if ((iso.eq.'C').and.(sub.eq.'4')) goto 260
 c Theta 1C 40M_0 CMFGEN MODELS
-      if ((iso.eq.'C').and.(sub.eq.'5')) goto 260
+      if ((iso.eq.'C').and.(sub.eq.'5')) goto 270
 c 4G polynomial 'stars'
-      if ((iso.eq.'C').and.(sub.eq.'6')) goto 270
+      if ((iso.eq.'C').and.(sub.eq.'6')) goto 280
 c 4G polynomial 'stars'
-      if ((iso.eq.'C').and.(sub.eq.'7')) goto 210
-      if ((iso.eq.'P').and.(sub.eq.'1')) goto 280
-      if ((iso.eq.'P').and.(sub.eq.'2')) goto 290
+      if ((iso.eq.'C').and.(sub.eq.'7')) goto 220
+      if ((iso.eq.'P').and.(sub.eq.'1')) goto 290
+      if ((iso.eq.'P').and.(sub.eq.'2')) goto 300
 c  AGN spectra
-      if (iso.eq.'G') goto 180
-      if (iso.eq.'J') goto 190
-      if ((iso.eq.'O').and.(sub.eq.'X')) goto 200
+      if (iso.eq.'G') goto 190
+      if (iso.eq.'J') goto 200
+      if ((iso.eq.'O').and.(sub.eq.'X')) goto 210
 c Misc
-      if (iso.eq.'E') goto 160
-      if (iso.eq.'F') goto 170
+      if (iso.eq.'E') goto 170
+      if (iso.eq.'F') goto 180
 c File IO
-      if ((iso.eq.'H').and.(sub.eq.'9')) goto 320
-      if ((iso.eq.'H').and.(sub.eq.'S')) goto 340
-      if (iso.eq.'H') goto 320
-      if (iso.eq.'I') goto 360
-      if (iso.eq.'K') goto 300
-      if (iso.eq.'O') goto 530
+      if ((iso.eq.'H').and.(sub.eq.'9')) goto 330
+      if ((iso.eq.'H').and.(sub.eq.'S')) goto 350
+      if (iso.eq.'H') goto 330
+      if (iso.eq.'I') goto 370
+      if (iso.eq.'K') goto 310
+      if (iso.eq.'O') goto 540
 c operations
-      if (iso.eq.'N') goto 130
-      if (iso.eq.'Z') goto 110
-      if (iso.eq.'S') goto 120
+      if (iso.eq.'N') goto 140
+      if (iso.eq.'Z') goto 120
+      if (iso.eq.'S') goto 130
 c exit
-      if (iso.eq.'X') goto 630
+      if (iso.eq.'X') goto 610
 c
       write (*,*) 'Unknown Component Type:',iso,' Re-Enter code.'
 c
       ifraction=0.d0
       ftype='A'
       do i=1,infph
-        readflux(i)=0.d0
+       readflux(i)=0.d0
       enddo
 c
       goto 30
@@ -614,7 +608,7 @@ c     Zero field
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  110 call zerofield (souvec)
+  120 call zerofield (souvec)
 c
       ipho=ipho+1
       zstar=0.0d0
@@ -635,7 +629,7 @@ c     scale factor
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  120 call scalefield (souvec)
+  130 call scalefield (souvec)
       goto 40
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -644,7 +638,7 @@ c     Normalise
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  130 call normalisefield (souvec)
+  140 call normalisefield (souvec)
       goto 40
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -652,7 +646,7 @@ c    ***STAR WITH BLACK BODY DISTRIBUTION
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  140 call blackbody (readflux)
+  150 call blackbody (readflux)
       goto 30
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -661,7 +655,7 @@ c    ***NON-THERMAL SOURCE ; INTENSITY PROPORTIONAL TO NU**ALPHA
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  150 call powerlaw (readflux)
+  160 call powerlaw (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -669,7 +663,7 @@ c    ***X-Ray Thermal Bremsstrahlung ; A exp (-h nu/kT)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  160 call bremss (readflux)
+  170 call bremss (readflux)
       goto 30
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -681,7 +675,7 @@ c     in photons cm-2 sr-1 eV-1
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  170 call interstellar (readflux)
+  180 call interstellar (readflux)
       goto 30
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -698,7 +692,7 @@ c  H is the heavyside operator  Spectrum in photons
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  180 call jbhagn (readflux)
+  190 call jbhagn (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -706,7 +700,7 @@ c read AGN Model Files 2012MNRAS,425,907J
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  190 call componentagn2 (readflux)
+  200 call componentagn2 (readflux)
       goto 30
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -715,7 +709,7 @@ c Full OPTXAGNF AGN Model Files 2012MNRAS,425,907J
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  200 call doneagn (readflux)
+  210 call doneagn (readflux)
       goto 30
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -724,7 +718,7 @@ cc    *** HUMMER,D.G.,MIHALAS,D.M.(1970) 4G polynomial 'stars'
 cc    ***STELLAR ATMOSPHERE MODELS
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
-  210 call stellar (readflux)
+  220 call stellar (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
@@ -732,7 +726,7 @@ cc    ***ATLAS9 STELLAR ATMOSPHERE MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  220 call atlas (readflux)
+  230 call atlas (readflux)
       goto 30
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -741,7 +735,7 @@ cc    ***TLUSTY STELLAR ATMOSPHERE MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  230 call tlusty (readflux)
+  240 call tlusty (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
@@ -749,7 +743,7 @@ cc    ***CMFGEN Ostar Grid Atmosphere MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
-  240 call cmfgenostars (readflux)
+  250 call cmfgenostars (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
@@ -757,7 +751,7 @@ cc    ***WMBASIC Moont, Westmoquette 2004 STELLAR ATMOSPHERE MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
-  250 call wmbasic (readflux)
+  260 call wmbasic (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
@@ -765,7 +759,7 @@ cc    ***Theta 1C 40M_0 CMFGEN MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
-  260 call theta1c (readflux)
+  270 call theta1c (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
@@ -773,7 +767,7 @@ cc    ***Theta 1C 40M_0 CMFGEN MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
-  270 call mocassin18 (readflux)
+  280 call mocassin18 (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
@@ -781,7 +775,7 @@ cc    ***Rauch CSPN current HNi Grid Atmospheres
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
-  280 call cspn_hni (readflux)
+  290 call cspn_hni (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
@@ -789,7 +783,7 @@ cc    ***Rauch CSPN older HCa Grid Atmospheres
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cc
-  290 call cspn_hca (readflux)
+  300 call cspn_hca (readflux)
       goto 30
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -797,22 +791,22 @@ c read  generic flux files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  300 fname=' '
-  310 format(/' Enter two column flux file name : ',$)
-      write (*,310)
+  310 fname=' '
+  320 format(/' Enter two column flux file name : ',$)
+      write (*,320)
       read (*,'(a)') fname
       write (*,*)
       l=lenv(fname)
       inquire (file=fname(1:l),exist=iexi)
       if (iexi) then
-        write (*,*) ' Reading: ',fname(1:l)
+       write (*,*) ' Reading: ',fname(1:l)
       else
-        write (*,*) fname(1:l),' NOT FOUND. Retry...'
-        goto 30
+       write (*,*) fname(1:l),' NOT FOUND. Retry...'
+       goto 30
       endif
 c
       do i=1,infph
-        readflux(i)=0.d0
+       readflux(i)=0.d0
       enddo
 c
       srcfile=fname
@@ -827,28 +821,28 @@ c read  lambda-L_lam SB99 spectrum luminous flux files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  320 continue
+  330 continue
 c
       do i=1,infph
-        readflux(i)=0.d0
+       readflux(i)=0.d0
       enddo
 c
       fname=' '
-  330 format(/' Enter SB99 spectrum file name : ',$)
-      write (*,330)
+  340 format(/' Enter SB99 spectrum file name : ',$)
+      write (*,340)
       read (*,'(a)') fname
       write (*,*)
       l=lenv(fname)
       inquire (file=fname(1:l),exist=iexi)
       if (iexi) then
-        write (*,*) ' Reading: ',fname(1:l)
+       write (*,*) ' Reading: ',fname(1:l)
       else
-        write (*,*) fname(1:l),' NOT FOUND. Retry...'
-        goto 30
+       write (*,*) fname(1:l),' NOT FOUND. Retry...'
+       goto 30
       endif
 c
       do i=1,infph
-        readflux(i)=0.d0
+       readflux(i)=0.d0
       enddo
 c
       srcfile=fname
@@ -863,32 +857,31 @@ c read  lambda-L_lam SLUG2 5 column spectrum luminous flux files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  340 continue
+  350 continue
 c
       do i=1,infph
-        readflux(i)=0.d0
+       readflux(i)=0.d0
       enddo
 c
       fname=' '
-  350 format(/' Enter SLUG2 5 column file name : ',$)
-      write (*,350)
+  360 format(/' Enter SLUG2 5 column file name : ',$)
+      write (*,360)
       read (*,'(a)') fname
       write (*,*)
       l=lenv(fname)
       inquire (file=fname(1:l),exist=iexi)
       if (iexi) then
-        write (*,*) ' Reading: ',fname(1:l)
+       write (*,*) ' Reading: ',fname(1:l)
       else
-        write (*,*) fname(1:l),' NOT FOUND. Retry...'
-        goto 30
+       write (*,*) fname(1:l),' NOT FOUND. Retry...'
+       goto 30
       endif
 c
       do i=1,infph
-        readflux(i)=0.d0
+       readflux(i)=0.d0
       enddo
 c
       srcfile=fname
-
       call readrebin (fname, 11, readflux)
 c
       goto 30
@@ -901,25 +894,25 @@ c     file NEEDS "PHOTON SOURCE FILE" in header to be recognized
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  360 continue
+  370 continue
 c
       do i=1,infph
-        readflux(i)=0.d0
+       readflux(i)=0.d0
       enddo
 c
-  370 fname=' '
-      write (*,380)
-  380 format(/' Enter file name : ',$)
-      read (*,390) fname
-  390 format(a)
+  380 fname=' '
+      write (*,390)
+  390 format(/' Enter file name : ',$)
+      read (*,400) fname
+  400 format(a)
       write (*,*)
       l=lenv(fname)
       inquire (file=fname(1:l),exist=iexi)
       if (iexi) then
-        write (*,*) ' Reading: ',fname(1:l)
+       write (*,*) ' Reading: ',fname(1:l)
       else
-        write (*,*) fname(1:l),' NOT FOUND. Retry...'
-        goto 40
+       write (*,*) fname(1:l),' NOT FOUND. Retry...'
+       goto 40
       endif
 c
       if (iexi) then
@@ -928,88 +921,88 @@ c     found the file...
 c
 c     get turn on
 c
-        etr=photev(1)
-  400   write (*,410) etr
-  410 format(/' Turn-on energy (Min.:',1pg12.5,' eV.) : ',$)
-        read (*,*) yc
-        write (*,*)
-        if (yc.lt.0.0d0) goto 400
-        turn=yc
+       etr=photev(1)
+  410  write (*,420) etr
+  420 format(/' Turn-on energy (Min.:',1pg12.5,' eV.) : ',$)
+       read (*,*) yc
+       write (*,*)
+       if (yc.lt.0.0d0) goto 410
+       turn=yc
 c
 c     get turn off
 c
-        etr=photev(infph)
-  420   write (*,430) etr
-  430 format(/' Cut-off energy (Max.:',1pg12.5,' eV) : ',$)
+       etr=photev(infph)
+  430  write (*,440) etr
+  440 format(/' Cut-off energy (Max.:',1pg12.5,' eV) : ',$)
 c
-        read (*,*) yc
-        write (*,*)
-        if (yc.lt.0.0d0) goto 420
-        cut=yc
+       read (*,*) yc
+       write (*,*)
+       if (yc.lt.0.0d0) goto 430
+       cut=yc
 c
-        open (luin,file=fname,status='OLD')
-  440 format(a)
-        do 450 j=1,300
-          read (luin,440) caract
-          ki=index(caract,'PHOTON')
-          if (ki.gt.0) then
-            kii=index(caract,'SOURCE')
-            kiii=index(caract,'FILE')
-            if ((kiii.gt.kii).and.(kii.gt.ki)) goto 470
-          endif
-  450   continue
-        write (*,460) fname
-  460 format(/'STRING : " PHOTON SOURCE FILE" NOT FOUND IN FILE:',a)
-        goto 30
+       open (luin,file=fname,status='OLD')
+  450 format(a)
+       do 460 j=1,300
+        read (luin,450) caract
+        ki=index(caract,'PHOTON')
+        if (ki.gt.0) then
+         kii=index(caract,'SOURCE')
+         kiii=index(caract,'FILE')
+         if ((kiii.gt.kii).and.(kii.gt.ki)) goto 480
+        endif
+  460  continue
+       write (*,470) fname
+  470 format(/'STRING : " PHOTON SOURCE FILE" NOT FOUND IN FILE:',a)
+       goto 30
 c
-  470   continue
+  480  continue
 c
 c     read and display any header..
 c
-        read (luin,440) caract
+       read (luin,450) caract
 c        write (*,*) caract
-        if (caract(1:1).eq.'%') goto 470
+       if (caract(1:1).eq.'%') goto 480
 c
 c   Check for v2.0.0+ Field Verions ID (<0)
 c
-        read (luin,*) fv
-        if (fv.ne.fieldversion) then
+       read (luin,*) fv
+       if (fv.ne.fieldversion) then
 c
 c Special case old files if old style compatibility PHOTDAT.old is used.
 c
-          if ((fv.eq.359).and.(fieldversion.eq.0)) then
-            iinto=infph-1
-            iinf=fv
-            if (iinf.ne.iinto) then
-              write (*,480) iinf,iinto
-  480          format(/,' Mismatch number of data points (',i6,').',
+        if ((fv.eq.359).and.(fieldversion.eq.0)) then
+         iinto=infph-1
+         iinf=fv
+         if (iinf.ne.iinto) then
+          write (*,490) iinf,iinto
+  490          format(/,' Mismatch number of data points (',i6,').',
      &         ' Require :',i5,' points')
-              stop
-            endif
-            do j=1,iinto
-              read (luin,*) sv
-              den=cphotev(j)
-              if ((den.ge.turn).and.(den.lt.cut)) then
-                readflux(j)=readflux(j)+sv
-              endif
-            enddo
-            goto 30
-          else
-            read (luin,*) iinto
-            write (*,490) fv,fieldversion,iinto,infph
-  490         format(/' WARNING: Mismatched source vector ID',i4,
+          stop
+         endif
+         do j=1,iinto
+          read (luin,*) sv
+          den=cphotev(j)
+          if ((den.ge.turn).and.(den.lt.cut)) then
+           readflux(j)=readflux(j)+sv
+          endif
+         enddo
+         goto 30
+        else
+         read (luin,*) iinto
+         write (*,500) fv,fieldversion,iinto,infph
+  500         format(/' WARNING: Mismatched source vector ID',i4,
      &        ' needed ',i4,/
      &        ' Rebin:',i4,' to : ',i4,' bins'/)
-          endif
+        endif
 cc
 cc ID missmatch , attempt to rebin using wev in .sou file as is
 cc
-          close (luin)
+        close (luin)
 c
-          call readrebin (fname, 5, readflux)
-          goto 30
+        call readrebin (fname, 5, readflux)
+        goto 30
 c
-        else
+       else
 c
 c     Input matched the current field ID, assume the
 c     bins are OK and ignore energies, only reading
@@ -1024,46 +1017,46 @@ c               Short = -3
 c            reserved = -4...-1024
 c        free for use   -1025... -max int
 c
-          iinto=infph-1
-          iinf=0
-          read (luin,*) iinf
+        iinto=infph-1
+        iinf=0
+        read (luin,*) iinf
 c
 c     error
 c
-          if ((iinf.ne.iinto).and.(iinf.ne.infph)) then
-            write (*,500) iinf,iinto,infph
-  500 format(/' Invalid number of data points (',i6,').',
+        if ((iinf.ne.iinto).and.(iinf.ne.infph)) then
+         write (*,510) iinf,iinto,infph
+  510 format(/' Invalid number of data points (',i6,').',
      &     ' Require :',i6,' or ', i6,' points')
-            stop
-          endif
+         stop
+        endif
 c
 c     Multiply by 4 to convert 1/4pi sr in files to
 c     1/pi for Inu source field.
 c
-          do j=1,iinto
-            read (luin,*) bv,sv
-            den=cphotev(j)
-            if ((den.ge.turn).and.(den.lt.cut)) then
-              readflux(j)=sv*4.d0
-            endif
-          enddo
-          close (luin)
+        do j=1,iinto
+         read (luin,*) bv,sv
+         den=cphotev(j)
+         if ((den.ge.turn).and.(den.lt.cut)) then
+          readflux(j)=sv*4.d0
+         endif
+        enddo
+        close (luin)
 c
-        endif
+       endif
 c
-        srcfile=fname
-        goto 30
+       srcfile=fname
+       goto 30
 c
       else
 c
-  510   write (*,520)
-  520    format(/,' File Not Found: Try again or cancel (a/c): ',$)
-        read (*,390) ilgg
-        write (*,*)
-        call toup(ilgg(1:1),ilgg)
-        if (ilgg.eq.'A') goto 370
-        if (ilgg.eq.'C') goto 40
-        goto 510
+  520  write (*,530)
+  530    format(/,' File Not Found: Try again or cancel (a/c): ',$)
+       read (*,400) ilgg
+       write (*,*)
+       call toup (ilgg(1:1), ilgg)
+       if (ilgg.eq.'A') goto 380
+       if (ilgg.eq.'C') goto 40
+       goto 520
 c
       endif
 c
@@ -1073,45 +1066,44 @@ c     ***WRITE A SOURCE FILE OF CURRENT FIELD
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  530 continue
-  540 fname=' '
-      write (*,550)
-  550    format(/' Enter new source file name : ',$)
-      read (*,560) fname
+  540 continue
+  550 fname=' '
+      write (*,560)
+  560    format(/' Enter new source file name : ',$)
+      read (*,570) fname
       np=lenv(fname)
       fname=fname(1:np)
-  560 format(a)
+  570 format(a)
       write (*,*) fname(1:np)
       inquire (file=fname(1:np),exist=iexi)
 c
       if (iexi) then
 c
-  570   write (*,580)
-  580 format(//,
+  580  write (*,590)
+  590 format(//,
      & ' File Already Exists: Try again or cancel(a/c): ',$)
-        read (*,560) ilgg
-        write (*,*)
-        call toup(ilgg(1:1),ilgg)
-        if (ilgg.eq.'A') goto 540
-        if (ilgg.eq.'C') goto 40
-        goto 570
+       read (*,570) ilgg
+       write (*,*)
+       call toup (ilgg(1:1), ilgg)
+       if (ilgg.eq.'A') goto 550
+       if (ilgg.eq.'C') goto 40
+       goto 580
 c
       else
 c
 c     Valid file name...
 c
-        write (*,590)
-  590   format(/' Give code/identifier for source file (40chars): ')
-        read (*,560) runname
+       write (*,600)
+  600   format(/' Give code/identifier for source file (40chars): ')
+       read (*,570) runname
 c
-      wmod='PSOU'
+       wmod='PSOU'
 c
 c     as Jnu = Inu*0.25
 c     uses raw name - no newfil and 0000 counters.sfx
 c
-      call wpsou ( 'Source Menu', fname, np, wmod,
-     &    0.d0, 0.d0, 0.d0,
-     &    1.d0, 0.25d0, souvec)
+       call wpsou ('Source Menu', fname, np, wmod, 0.d0, 0.d0, 0.d0,
+     &  1.d0, 0.25d0, souvec)
 c
       endif
 c  nothing to add
@@ -1128,39 +1120,39 @@ c   Jnu 1/4pi emissivity  units, invec expects Jnu hence * 0.25 below
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  630 continue
+  610 continue
 c
 c    ***FIND actual CUT-OFF FREQUENCY
 c
       cut=0.0d0
       do i=infph,1,-1
-        if (souvec(i).le.epsilon) then
-          souvec(i)=0.d0
-        else
-          cut=photev(i)/iph
-          goto 660
-        endif
+       if (souvec(i).le.epsilon) then
+        souvec(i)=0.d0
+       else
+        cut=photev(i)/iph
+        goto 620
+       endif
       enddo
-  660 continue
+  620 continue
 c
 c    ***FIND actual TURN-ON FREQUENCY
 c
       turn=photev(infph)
       do i=1,infph
-        if (souvec(i).le.epsilon) then
-          souvec(i)=0.d0
-        else
-          turn=photev(i)/iph
-          goto 690
-        endif
+       if (souvec(i).le.epsilon) then
+        souvec(i)=0.d0
+       else
+        turn=photev(i)/iph
+        goto 630
+       endif
       enddo
-  690 continue
+  630 continue
 c
 c    ***PUT PHOTON SOURCE IN VECTOR SOUPHO IN /PHOTDAT/
 c    as Inu soupho
 c
       do i=1,infph
-        soupho(i)=souvec(i)
+       soupho(i)=souvec(i)
       enddo
 c
       q1=0.0d0
@@ -1175,11 +1167,11 @@ c
       qheii=q3
       qht=q4
 c
-      write (*,700)
-  700 format(/' Mod',t7,'Temp.',t16,'Alpha',t22,'Turn-on',t30,'Cut-off'
+      write (*,640)
+  640 format(/' Mod',t7,'Temp.',t16,'Alpha',t22,'Turn-on',t30,'Cut-off'
      &,t38,'Zstar',t47,'FQHI',t56,'FQHeI',t66,'FQHeII')
-      write (*,710) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
-  710 format(' ',a2,1pg10.3,4(0pf7.2),1x,3(1pg10.3))
+      write (*,650) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+  650 format(' ',a2,1pg10.3,4(0pf7.2),1x,3(1pg10.3))
 c
 c     cosmic ray event rate disabled by default
 c
@@ -1189,26 +1181,24 @@ c
 c
 c need upgrade
 c
-  730 write (*,740)
-  740 format(/' Include cosmic ray heating? (Y/N): ',$)
-      read (*,390) ilgg
-      call toup(ilgg(1:1),ilgg)
+  660  write (*,670)
+  670 format(/' Include cosmic ray heating? (Y/N): ',$)
+       read (*,400) ilgg
+       call toup (ilgg(1:1), ilgg)
 c
-      if ((ilgg.ne.'Y').and.(ilgg.ne.'N')) goto 730
+       if ((ilgg.ne.'Y').and.(ilgg.ne.'N')) goto 660
 c
-      if (ilgg.eq.'Y') then
+       if (ilgg.eq.'Y') then
 c
-  750   write (*,760)
-  760 format(/' Give event rate per second (~1e-17): ',$)
+  680   write (*,690)
+  690 format(/' Give event rate per second (~1e-17): ',$)
         read (*,*) crate
-        if (crate.lt.0.d0) goto 750
-      endif
-
+        if (crate.lt.0.d0) goto 680
+       endif
       endif
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Simple Operations
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1223,7 +1213,7 @@ c
       real*8 flux(mxinfph)
       integer*4 idx
       do idx=1,infph
-        flux(idx)=0.0d0
+       flux(idx)=0.0d0
       enddo
       return
       end
@@ -1244,7 +1234,7 @@ c
       read (*,*) scale
       if (scale.le.0.d0) scale=1.0d0
       do idx=1,infph
-        flux(idx)=flux(idx)*scale
+       flux(idx)=flux(idx)*scale
       enddo
       return
       end
@@ -1279,7 +1269,7 @@ c
      & '    X  :   X-ray Intensity    (100 - Inf eV)'/
      & ' :: ',$)
       read (*,'(a)') ilgg
-      call toup (ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
       write (*,*)
 c
       q1=0.0d0
@@ -1302,11 +1292,11 @@ c
       qall=0.d0
 c
       do i=1,infph-1
-        widnu=widbinnu(i)
-        blum=blum+flux(i)*widnu
-        qall=qall+flux(i)*widnu/cphote(i)
-        if (photev(i).ge.iph) ilum=ilum+flux(i)*widnu
-        if (photev(i).ge.100.d0) xlum=xlum+flux(i)*widnu
+       widnu=widbinnu(i)
+       blum=blum+flux(i)*widnu
+       qall=qall+flux(i)*widnu/cphote(i)
+       if (photev(i).ge.iph) ilum=ilum+flux(i)*widnu
+       if (photev(i).ge.100.d0) xlum=xlum+flux(i)*widnu
       enddo
 c
 c scale these direct integrals by pi to allow the main subroutine to
@@ -1330,24 +1320,24 @@ c
      & '    NOTE "C" the range is always over-ridden to "E".'/
      & ' :: ',$)
       read (*,'(a)') nf
-      call toup (nf(1:1),nf)
+      call toup (nf(1:1), nf)
       write (*,*)
 c
       scale=1.d0
       if (nf.eq.'B') then
-        scale=cls
-        if (ilgg.eq.'E') ilgg='F'
-        if (ilgg.eq.'I') ilgg='A'
-        if (ilgg.eq.'X') ilgg='F'
+       scale=cls
+       if (ilgg.eq.'E') ilgg='F'
+       if (ilgg.eq.'I') ilgg='A'
+       if (ilgg.eq.'X') ilgg='F'
       endif
       if (nf.eq.'C') then
    30   format(' Give scale effective temperature (K): ',$)
-        write (*,30)
-        read (*,*) ts
-        scale=stefan*(ts**4)
+       write (*,30)
+       read (*,*) ts
+       scale=stefan*(ts**4)
    40   format(' BB intensity:',1pg12.5,'(erg/s/cm^2)')
-        write (*,40) scale
-        ilgg='E'
+       write (*,40) scale
+       ilgg='E'
       endif
       if (ilgg.eq.'A') scale=scale/qht
       if (ilgg.eq.'B') scale=scale/qhi
@@ -1359,11 +1349,10 @@ c
       if (ilgg.eq.'X') scale=scale/xlum
 c
       do idx=1,infph
-        flux(idx)=flux(idx)*scale
+       flux(idx)=flux(idx)*scale
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Basic Sources
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1388,7 +1377,7 @@ c
       real*8 fplank
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
    10 write (*,20)
@@ -1433,19 +1422,18 @@ c
 c   integrate with Simpsons (1-4-1)/6 quadrature
 c
       do idx=1,infph-1
-          rnuh0=photev(idx)/iph
-          rnuh=cphotev(idx)/iph
-          rnuh1=photev(idx+1)/iph
-          if ((rnuh1.lt.cut).and.(rnuh0.ge.turn)) then
-            sv=fplank(teff,rnuh0)
-            sv=sv+4.0d0*fplank(teff,rnuh)
-            sv=(sv+fplank(teff,rnuh1))/6.d0
-            readflux(idx)=sv*scale
-          endif
+       rnuh0=photev(idx)/iph
+       rnuh=cphotev(idx)/iph
+       rnuh1=photev(idx+1)/iph
+       if ((rnuh1.lt.cut).and.(rnuh0.ge.turn)) then
+        sv=fplank(teff,rnuh0)
+        sv=sv+4.0d0*fplank(teff,rnuh)
+        sv=(sv+fplank(teff,rnuh1))/6.d0
+        readflux(idx)=sv*scale
+       endif
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine powerlaw (readflux)
@@ -1464,7 +1452,7 @@ c
       integer*4 idx
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -1513,13 +1501,13 @@ c
       if (scale.le.0.d0) goto 70
 c
       do idx=1,infph-1
-        den=cphotev(idx)
-        sv=flu*((den/ze)**alnth)
-        if (sv.gt.epsilon) then
-          if ((den.ge.turn).and.(den.lt.cut)) then
-            readflux(idx)=sv*scale
-          endif
+       den=cphotev(idx)
+       sv=flu*((den/ze)**alnth)
+       if (sv.gt.epsilon) then
+        if ((den.ge.turn).and.(den.lt.cut)) then
+         readflux(idx)=sv*scale
         endif
+       endif
       enddo
 c
       write (*,90) ze,flu
@@ -1540,7 +1528,6 @@ c
 c    ***X-Ray Thermal Bremsstrahlung ; A exp (-h nu/kT)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -1550,9 +1537,9 @@ c
       integer*4 i,idx
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
-      const = 1.d0
+      const=1.d0
 c
       write (*,10)
    10 format(//' Give electron temperature'/
@@ -1562,13 +1549,13 @@ c
       srcfile='Bremsstrah'
 c
       if (teff.le.10.d0) then
-        teff=10.d0**teff
-        goto 20
+       teff=10.d0**teff
+       goto 20
       endif
 c
       if (teff.le.1.d5) then
-        teff=teff*(ev/rkb)
-        goto 20
+       teff=teff*(ev/rkb)
+       goto 20
       endif
 c
    20 write (*,30)
@@ -1606,35 +1593,34 @@ c
 c
       blum=0.d0
       do i=1,infph-1
-        den=cphotev(i)
-        if (den.ge.turn) then
-          if (den.lt.cut) then
-            sv=const*dexp(-(den*ev)/(teff*rkb))
-            if (sv.gt.epsilon) then
-               blum=blum+sv*widbinnu(i)
-            endif
-          endif
+       den=cphotev(i)
+       if (den.ge.turn) then
+        if (den.lt.cut) then
+         sv=const*dexp(-(den*ev)/(teff*rkb))
+         if (sv.gt.epsilon) then
+          blum=blum+sv*widbinnu(i)
+         endif
         endif
+       endif
       enddo
       blum=pi*blum
       scale=scale*inu/blum
 c
       do i=1,infph-1
-        readflux(i)=0.d0
-        den=cphotev(i)
-        sv=scale*const*dexp(-(den*ev)/(teff*rkb))
-        if (den.ge.turn) then
-          if (den.lt.cut) then
-            if (sv.gt.epsilon) then
-              readflux(i)=sv
-            endif
-          endif
+       readflux(i)=0.d0
+       den=cphotev(i)
+       sv=scale*const*dexp(-(den*ev)/(teff*rkb))
+       if (den.ge.turn) then
+        if (den.lt.cut) then
+         if (sv.gt.epsilon) then
+          readflux(i)=sv
+         endif
         endif
+       endif
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine interstellar (readflux)
@@ -1647,7 +1633,6 @@ c
 c     in photons cm-2 sr-1 eV-1
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -1657,7 +1642,7 @@ c
       real*8 fplank
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
    10 write (*,20)
@@ -1669,43 +1654,43 @@ c
       rnuh=cphotev(i)/iph
 c     lambda > 0.246 mum:
       do while (rnuh.lt.0.3706314d0)
-        sv=1.0d-14*fplank(7.5d3,rnuh)+1.65d-13*fplank(4.0d3,rnuh)+4.0d-
-     &   13*fplank(3.0d3,rnuh)
-        if (sv.gt.epsilon) then
-          readflux(i)=sv
-        endif
-        i=i+1
-        rnuh=cphotev(i)/iph
+       sv=1.0d-14*fplank(7.5d3,rnuh)+1.65d-13*fplank(4.0d3,rnuh)+4.0d-
+     &  13*fplank(3.0d3,rnuh)
+       if (sv.gt.epsilon) then
+        readflux(i)=sv
+       endif
+       i=i+1
+       rnuh=cphotev(i)/iph
       enddo
 c     den=wave in mum
       den=cls*1d4/(cphotev(i)*evplk)
 c     0.246>L_mum>0.134
       do while (den.lt.0.134d0)
 c      factor of den**2/cls for J_Lam to J_nu
-        sv=7.115d-4*den**(0.3322d0)
-        if (sv.gt.epsilon) then
-          readflux(i)=sv/(cls*1d4)
-        endif
-        i=i+1
-        den=cls*1e4/(cphotev(i)*evplk)
+       sv=7.115d-4*den**(0.3322d0)
+       if (sv.gt.epsilon) then
+        readflux(i)=sv/(cls*1d4)
+       endif
+       i=i+1
+       den=cls*1e4/(cphotev(i)*evplk)
       enddo
       do while (den.lt.0.110d0)
-        sv=2.045d-2*den**2
-        if (sv.gt.epsilon) then
-          readflux(i)=sv/(cls*1d4)
-        endif
-        i=i+1
-        den=cls*1d4/(cphotev(i)*evplk)
+       sv=2.045d-2*den**2
+       if (sv.gt.epsilon) then
+        readflux(i)=sv/(cls*1d4)
+       endif
+       i=i+1
+       den=cls*1d4/(cphotev(i)*evplk)
       enddo
 c     0.110>L_mum>0.0912- upto 13.6 eV
       do while (cphotev(i).lt.iph)
 c       factor of den**2/cls for J_Lam to J_nu
-        sv=38.57d0*den**(5.4172d0)
-        if (sv.gt.epsilon) then
-          readflux(i)=sv/(cls*1d4)
-        endif
-        i=i+1
-        den=cls*1d4/(cphotev(i)*evplk)
+       sv=38.57d0*den**(5.4172d0)
+       if (sv.gt.epsilon) then
+        readflux(i)=sv/(cls*1d4)
+       endif
+       i=i+1
+       den=cls*1d4/(cphotev(i)*evplk)
       enddo
 c
       return
@@ -1741,7 +1726,7 @@ c
       real*8 fincgamma
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -1797,11 +1782,11 @@ c compute relevant k1 and k2 for given eta and type
 c
       if (inlr.eq.'I') then
 c Ionising  luminosity ratio
-        w1=iph/fe1!eta_i
+       w1=iph/fe1!eta_i
       endif
       if (inlr.eq.'E') then
 c E_1+ luminosity ratio
-        w1=1.0!eta_1
+       w1=1.0!eta_1
       endif
 c
       a=2.d0-alpha1
@@ -1829,12 +1814,12 @@ c
       if (inlr.eq.'I') then
 c Ionising  luminosity ratio
   100 format('  eta_i: ',1pg12.5)
-        write (*,100) eta
+       write (*,100) eta
       endif
       if (inlr.eq.'E') then
 c E_1+ luminosity ratio
   110 format('  eta_1: ',1pg12.5)
-        write (*,110) eta
+       write (*,110) eta
       endif
 c
   120 format('  Derived values:',/
@@ -1872,23 +1857,22 @@ c
       if (scale.le.0.d0) goto 20
 c
       do i=1,infph-1
-        den=cphotev(i)
-        cutlow=dexp(-6.d0*fe1/(6.d0*den))
-        sv1=fk1*(den**(-alpha1))*dexp(-den/fe1)
-        sv2=(fk2*(den**(-alpha2))*dexp(-den/fe2))*cutlow
-        sv=sv1+sv2
+       den=cphotev(i)
+       cutlow=dexp(-6.d0*fe1/(6.d0*den))
+       sv1=fk1*(den**(-alpha1))*dexp(-den/fe1)
+       sv2=(fk2*(den**(-alpha2))*dexp(-den/fe2))*cutlow
+       sv=sv1+sv2
 c        convert photons to energy Inu
-        sv=sv*den*ev/pi
-        if (sv.gt.epsilon) then
-          if ((den.ge.turn).and.(den.lt.cut)) then
-            readflux(i)=readflux(i)+sv*scale
-          endif
+       sv=sv*den*ev/pi
+       if (sv.gt.epsilon) then
+        if ((den.ge.turn).and.(den.lt.cut)) then
+         readflux(i)=readflux(i)+sv*scale
         endif
+       endif
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine componentagn (readflux)
@@ -1912,7 +1896,7 @@ c
       integer*4 lenv
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -1994,12 +1978,12 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & '    B  :   BLS, Broad Line Seyfert Model. '/
      & ' :: ',$)
       read (*,'(a)') bhtype
-      call toup(bhtype(1:1),bhtype)
+      call toup (bhtype(1:1), bhtype)
       write (*,*)
 c
       if ((bhtype.ne.'N').and.(bhtype.ne.'B')) then
-        write (*,*) ' Unknown Model, using NLS.'
-        bhtype='N'
+       write (*,*) ' Unknown Model, using NLS.'
+       bhtype='N'
       endif
 c
       if (bhtype.eq.'N') agnfile=agnfile(1:11)//'NLS1.txt'
@@ -2011,17 +1995,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/compSED/'//agnfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/compSED/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/compSED/'//agnfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/compSED/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c     format 2 = compSED File v1
@@ -2030,7 +2014,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine componentagn2 (readflux)
@@ -2053,7 +2036,7 @@ c
       integer*4 lenv
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -2128,12 +2111,12 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & '    B  :   BLS, Broad Line Seyfert Model. '/
      & ' :: ',$)
       read (*,'(a)') bhtype
-      call toup(bhtype(1:1),bhtype)
+      call toup (bhtype(1:1), bhtype)
       write (*,*)
 c
       if ((bhtype.ne.'N').and.(bhtype.ne.'B')) then
-        write (*,*) ' Unknown Model, using NLS.'
-        bhtype='N'
+       write (*,*) ' Unknown Model, using NLS.'
+       bhtype='N'
       endif
 c
       if (bhtype.eq.'N') agnfile=agnfile(1:11)//'NLS1.txt'
@@ -2145,17 +2128,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/compSED2/'//agnfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/compSED2/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/compSED2/'//agnfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/compSED2/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c     format 4 = compSED2 File v2
@@ -2163,7 +2146,6 @@ c
       call readrebin (srcfile, 4, readflux)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine doneagn (readflux)
@@ -2205,7 +2187,7 @@ c
       integer*4 idx
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -2257,7 +2239,7 @@ c
       read (*,*) rc
       if (rc.lt.6.d0) rc=6.d0
       param(5)=rc
-      write (*,*)
+      write (*,*) 
 c
    50 format('  Outer Radius Ro (units Rg, gravitational radii)',/
      & '                          (log10 Rg, NLS/BLS 4.0): ',$)
@@ -2331,17 +2313,17 @@ c
       real*8 fplank
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
       do i=1,5
-         xx(i)=0.d0
-         yy(i)=0.d0
-         al(i)=0.d0
-         cc(i)=0.d0
+       xx(i)=0.d0
+       yy(i)=0.d0
+       al(i)=0.d0
+       cc(i)=0.d0
       enddo
       pt0=0.d0
 c
-   10 write (*,20)
+   10 write (*,20) 
    20 format(//' Give effective temperature : (26000<Teff<56000) : ',$)
       read (*,*) teff
 c
@@ -2364,10 +2346,10 @@ c
       if (gr.eq.5.d0) kstr='TNO5'
 c
       do i=1,16
-        call fpol (kstr, tm1, i)
-        tedge(i,1)=tno4(i,1)
-        tedge(i,2)=tno4(i,2)
-        tedge(i,3)=tm1
+       call fpol (kstr, tm1, i)
+       tedge(i,1)=tno4(i,1)
+       tedge(i,2)=tno4(i,2)
+       tedge(i,3)=tm1
       enddo
 c
       kstr='TMET'
@@ -2376,17 +2358,17 @@ c
       call fpol (kstr, pt0, i)
       do i=2,8
 c
-        j=idint(tmet(i,1))
+       j=idint(tmet(i,1))
 c
-        dt1=tedge(j,3)-pt0
+       dt1=tedge(j,3)-pt0
 c
-        if (dt1.lt.1.0d-17) dt1=1.d-17
+       if (dt1.lt.1.0d-17) dt1=1.d-17
 c
-        call fpol (kstr, del, i)
-        if (del.lt.0.0d0) del=0.0d0
-        dt0=dt1+del
-        dtot=dt0*((1.d0+((((dt0/dt1)**2)-1.d0)*zmod))**(-0.5d0))
-        tedge(j,3)=pt0+dtot
+       call fpol (kstr, del, i)
+       if (del.lt.0.0d0) del=0.0d0
+       dt0=dt1+del
+       dtot=dt0*((1.d0+((((dt0/dt1)**2)-1.d0)*zmod))**(-0.5d0))
+       tedge(j,3)=pt0+dtot
 c
       enddo
 c
@@ -2422,30 +2404,30 @@ c
       jg=0
 c
       do i=1,infph-1
-        den=cphotev(i)
-        rnuh=den/iph
+       den=cphotev(i)
+       rnuh=den/iph
 c
-  110   if (tedge(j+1,2).lt.den) j=j+1
-        if (j.gt.jmax-1) goto 130
-        if (tedge(j+1,2).lt.den) goto 110
-        if (jg.eq.j) goto 120
+  110  if (tedge(j+1,2).lt.den) j=j+1
+       if (j.gt.jmax-1) goto 130
+       if (tedge(j+1,2).lt.den) goto 110
+       if (jg.eq.j) goto 120
 c
-        do n=1,2
-          n1=(j+n)-1
-          xx(n)=dlog(tedge(n1,2))
-          yy(n)=dlog(tedge(n1,3))
-        enddo
+       do n=1,2
+        n1=(j+n)-1
+        xx(n)=dlog(tedge(n1,2))
+        yy(n)=dlog(tedge(n1,3))
+       enddo
 c
-        al(1)=(yy(2)-yy(1))/(xx(2)-xx(1))
-        cc(1)=((yy(1)*xx(2))-(yy(2)*xx(1)))/(xx(2)-xx(1))
-        jg=j
+       al(1)=(yy(2)-yy(1))/(xx(2)-xx(1))
+       cc(1)=((yy(1)*xx(2))-(yy(2)*xx(1)))/(xx(2)-xx(1))
+       jg=j
 c
-  120   tnu=teff*dexp(cc(1)+(al(1)*dlog(den)))
-        sv=fplank(tnu,rnuh)
+  120  tnu=teff*dexp(cc(1)+(al(1)*dlog(den)))
+       sv=fplank(tnu,rnuh)
 c
-        if ((rnuh.ge.turn).and.(rnuh.lt.cut)) then
-          readflux(i)=sv*scale
-        endif
+       if ((rnuh.ge.turn).and.(rnuh.lt.cut)) then
+        readflux(i)=sv*scale
+       endif
 c
       enddo
 c
@@ -2453,7 +2435,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine atlas (readflux)
@@ -2475,7 +2456,7 @@ c
       character feh*4, logg*4, pat*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -2499,8 +2480,8 @@ c
       if (pat.eq.'a') pat='A'
       if (pat.eq.'b') pat='B'
       if ((pat.ne.'A').and.(pat.ne.'B')) then
-        write (*,*) 'Unknown abundance pattern, using solar pattern.'
-        pat='A'
+       write (*,*) 'Unknown abundance pattern, using solar pattern.'
+       pat='A'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2508,7 +2489,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c   Standard Solar Ratios
 c
-        write (*,20)
+       write (*,20)
    20 format(//' Solar Composition: Choose [Fe/H]:'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    A  :  [Fe/H] = +0.5    B  :  [Fe/H] = +0.2'/
@@ -2518,25 +2499,25 @@ c
      & '    H  :  [Fe/H] = -2.5'/
      & ' :: ',$)
 c
-        read (*,'(a)') feh
-        feh=feh(1:1)
-        write (*,*)
+       read (*,'(a)') feh
+       feh=feh(1:1)
+       write (*,*)
 c
-        if (feh.eq.'a') feh='A'
-        if (feh.eq.'b') feh='B'
-        if (feh.eq.'c') feh='C'
-        if (feh.eq.'d') feh='D'
-        if (feh.eq.'e') feh='E'
-        if (feh.eq.'f') feh='F'
-        if (feh.eq.'g') feh='G'
-        if (feh.eq.'h') feh='H'
+       if (feh.eq.'a') feh='A'
+       if (feh.eq.'b') feh='B'
+       if (feh.eq.'c') feh='C'
+       if (feh.eq.'d') feh='D'
+       if (feh.eq.'e') feh='E'
+       if (feh.eq.'f') feh='F'
+       if (feh.eq.'g') feh='G'
+       if (feh.eq.'h') feh='H'
 c
-        if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C').and.(feh.ne.'
-     &D').and.(feh.ne.'E').and.(feh.ne.'F').and.(feh.ne.'G')
-     &   .and.(feh.ne.'H')) then
-          write (*,*) 'Unknown [Fe/H], using solar [Fe/H].'
-          feh='C'
-        endif
+       if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C').and.(feh.ne.'D
+     &').and.(feh.ne.'E').and.(feh.ne.'F').and.(feh.ne.'G')
+     &  .and.(feh.ne.'H')) then
+        write (*,*) 'Unknown [Fe/H], using solar [Fe/H].'
+        feh='C'
+       endif
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2545,7 +2526,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c   Alpha Enhanced  Ratios
 c
-        write (*,30)
+       write (*,30)
    30 format(//' Alpha Enhanced: Choose [Fe/H]:'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    A  :  [Fe/H] = +0.5    B  :  [Fe/H] = +0.2'/
@@ -2554,21 +2535,21 @@ c
      & '    F  :  [Fe/H] = -1.5    G  :  [Fe/H] = -2.0'/
      & '    H  :  [Fe/H] = -2.5    I  :  [Fe/H] = -4.0'/
      & ' :: ',$)
-        read (*,'(a)') feh
-        feh=feh(1:1)
-        write (*,*)
-        if (feh.eq.'a') feh='A'
-        if (feh.eq.'b') feh='B'
-        if (feh.eq.'c') feh='C'
-        if (feh.eq.'d') feh='D'
-        if (feh.eq.'e') feh='E'
-        if (feh.eq.'f') feh='F'
-        if (feh.eq.'g') feh='G'
-        if (feh.eq.'h') feh='H'
-        if (feh.eq.'i') feh='I'
-        if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C').and.(feh.ne.'
-     &D').and.(feh.ne.'E').and.(feh.ne.'F').and.(feh.ne.'G')
-     &   .and.(feh.ne.'H').and.(feh.ne.'I')) feh='C'
+       read (*,'(a)') feh
+       feh=feh(1:1)
+       write (*,*)
+       if (feh.eq.'a') feh='A'
+       if (feh.eq.'b') feh='B'
+       if (feh.eq.'c') feh='C'
+       if (feh.eq.'d') feh='D'
+       if (feh.eq.'e') feh='E'
+       if (feh.eq.'f') feh='F'
+       if (feh.eq.'g') feh='G'
+       if (feh.eq.'h') feh='H'
+       if (feh.eq.'i') feh='I'
+       if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C').and.(feh.ne.'D
+     &').and.(feh.ne.'E').and.(feh.ne.'F').and.(feh.ne.'G')
+     &  .and.(feh.ne.'H').and.(feh.ne.'I')) feh='C'
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2604,7 +2585,7 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'A') then
-        write (*,50)
+       write (*,50)
 c
    50 format(//' Logg = 4.0, Choose Teff: 30-39 kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
@@ -2613,21 +2594,21 @@ c
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.3.0d4) teff=3.0d4
-        if (teff.gt.3.9d4) teff=3.9d4
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.001d0)
-        iteff0=iteff
-        if (iteff0.eq.39) iteff0=38
-        ig=40
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.3.0d4) teff=3.0d4
+       if (teff.gt.3.9d4) teff=3.9d4
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.001d0)
+       iteff0=iteff
+       if (iteff0.eq.39) iteff0=38
+       ig=40
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'B') then
-        write (*,60)
+       write (*,60)
    60 format(//' Logg = 4.5, Choose Teff: 30-49 kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 1000K will read direct from grid files    :'/
@@ -2635,22 +2616,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.3.0d4) teff=3.0d4
-        if (teff.gt.4.9d4) teff=4.9d4
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.001d0)
-        iteff0=iteff
-        if (iteff0.eq.49) iteff0=48
-        ig=45
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.3.0d4) teff=3.0d4
+       if (teff.gt.4.9d4) teff=4.9d4
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.001d0)
+       iteff0=iteff
+       if (iteff0.eq.49) iteff0=48
+       ig=45
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'C') then
-        write (*,70)
+       write (*,70)
    70 format(//' Logg = 5.0, Choose Teff: 30-50 kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 1000K will read direct from grid files    :'/
@@ -2658,17 +2639,17 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.3.0d4) teff=3.0d4
-        if (teff.gt.5.0d4) teff=5.0d4
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.001d0)
-        iteff0=iteff
-        if (iteff0.eq.50) iteff0=49
-        ig=50
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.3.0d4) teff=3.0d4
+       if (teff.gt.5.0d4) teff=5.0d4
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.001d0)
+       iteff0=iteff
+       if (iteff0.eq.50) iteff0=49
+       ig=50
       endif
       iteff1=iteff0+1
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2676,13 +2657,13 @@ c
       xt0=1.0d3*iteff0
       xt1=1.0d3*iteff1
       if (dabs(xt0-teff).lt.1.d0) then
-        call readatlasmodel (pat, iabn, iteff0, ig, readflux)
+       call readatlasmodel (pat, iabn, iteff0, ig, readflux)
       elseif (dabs(xt1-teff).lt.1.d0) then
-        call readatlasmodel (pat, iabn, iteff1, ig, readflux)
+       call readatlasmodel (pat, iabn, iteff1, ig, readflux)
       else
-        call readatlasmodel (pat, iabn, iteff0, ig, flux0)
-        call readatlasmodel (pat, iabn, iteff1, ig, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readatlasmodel (pat, iabn, iteff0, ig, flux0)
+       call readatlasmodel (pat, iabn, iteff1, ig, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -2691,7 +2672,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine tlusty (readflux)
@@ -2701,7 +2681,6 @@ cc
 cc    ***TLUSTY STELLAR ATMOSPHERE MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -2714,7 +2693,7 @@ c
       character feh*4, logg*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -2757,8 +2736,8 @@ c
       if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C').and.(feh.ne.'D'
      &).and.(feh.ne.'E').and.(feh.ne.'F').and.(feh.ne.'G').and.(feh.ne.'
      &H').and.(feh.ne.'I')) then
-        write (*,*) 'Unknown [Fe/H], using solar [Fe/H].'
-        feh='B'
+       write (*,*) 'Unknown [Fe/H], using solar [Fe/H].'
+       feh='B'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2800,8 +2779,8 @@ c
       if ((logg.ne.'A').and.(logg.ne.'B').and.(logg.ne.'C')
      &.and.(logg.ne.'D').and.(logg.ne.'E').and.(logg.ne.'F')
      &.and.(logg.ne.'G').and.(logg.ne.'H')) then
-        write (*,*) 'Unknown Log(g), Log(g) = 4.0.'
-        logg='E'
+       write (*,*) 'Unknown Log(g), Log(g) = 4.0.'
+       logg='E'
       endif
 c
       ig=400
@@ -2809,7 +2788,7 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'A') then
-        write (*,40)
+       write (*,40)
    40 format(//' Logg = 3.0, Choose Teff: 27.5-30.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
@@ -2817,21 +2796,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K           :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.30.0d3) teff=30.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=275
-        ig=300
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.30.0d3) teff=30.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=275
+       ig=300
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'B') then
-        write (*,50)
+       write (*,50)
    50 format(//' Logg = 3.25, Choose Teff 27.5-35.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
@@ -2839,22 +2818,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.35.0d3) teff=35.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=iteff
-        if (iteff0.eq.350) iteff0=325
-        ig=325
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.35.0d3) teff=35.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=iteff
+       if (iteff0.eq.350) iteff0=325
+       ig=325
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'C') then
-        write (*,60)
+       write (*,60)
    60 format(//' Logg = 3.50, Choose Teff: 27.5-40.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
@@ -2862,21 +2841,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.40.0d3) teff=40.0d3
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=iteff
-        if (iteff0.eq.400) iteff0=375
-        ig=350
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.40.0d3) teff=40.0d3
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=iteff
+       if (iteff0.eq.400) iteff0=375
+       ig=350
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'D') then
-        write (*,70)
+       write (*,70)
    70 format(//' Logg = 3.75, Choose Teff: 27.5-47.5kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
@@ -2884,22 +2863,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K           :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.47.5d4) teff=47.5d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=iteff
-        if (iteff0.eq.475) iteff0=450
-        ig=375
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.47.5d4) teff=47.5d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=iteff
+       if (iteff0.eq.475) iteff0=450
+       ig=375
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'E') then
-        write (*,80)
+       write (*,80)
    80 format(//' Logg = 4.00, Choose Teff: 27.5-55.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
@@ -2907,44 +2886,44 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.55.0d3) teff=55.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=iteff
-        if (iteff0.eq.550) iteff0=525
-        ig=400
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.55.0d3) teff=55.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=iteff
+       if (iteff0.eq.550) iteff0=525
+       ig=400
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'F') then
-        write (*,90)
+       write (*,90)
    90 format(//' Logg = 4.25, Choose Teff: 27.5-55.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
      & ' : non-multiples of 2500K will be interpolated using      :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.55.0d3) teff=55.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=iteff
-        if (iteff0.eq.550) iteff0=525
-        ig=425
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.55.0d3) teff=55.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=iteff
+       if (iteff0.eq.550) iteff0=525
+       ig=425
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'G') then
-        write (*,100)
+       write (*,100)
   100 format(//' Logg = 4.50, Choose Teff: 27.5-55.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
@@ -2952,22 +2931,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.55.0d3) teff=55.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=iteff
-        if (iteff0.eq.550) iteff0=525
-        ig=450
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.55.0d3) teff=55.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=iteff
+       if (iteff0.eq.550) iteff0=525
+       ig=450
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'H') then
-        write (*,110)
+       write (*,110)
   110 format(//' Logg = 4.75, Choose Teff: 27.5-55.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 2500K will read direct from grid files    :'/
@@ -2975,18 +2954,18 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : conservative optimal quartic weighting ( err(I) << 1%) :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.55.0d3) teff=55.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0004d0)
-        iteff=iteff*25
-        iteff0=iteff
-        if (iteff0.eq.550) iteff0=525
-        ig=475
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.55.0d3) teff=55.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0004d0)
+       iteff=iteff*25
+       iteff0=iteff
+       if (iteff0.eq.550) iteff0=525
+       ig=475
       endif
       iteff1=iteff0+25
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2994,13 +2973,13 @@ c
       xt0=1.0d2*iteff0
       xt1=1.0d2*iteff1
       if (dabs(xt0-teff).lt.1.d0) then
-        call readtlustymodel (iteff0, iabn, ig, readflux)
+       call readtlustymodel (iteff0, iabn, ig, readflux)
       elseif (dabs(xt1-teff).lt.1.d0) then
-        call readtlustymodel (iteff1, iabn, ig, readflux)
+       call readtlustymodel (iteff1, iabn, ig, readflux)
       else
-        call readtlustymodel (iteff0, iabn, ig, flux0)
-        call readtlustymodel (iteff1, iabn, ig, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readtlustymodel (iteff0, iabn, ig, flux0)
+       call readtlustymodel (iteff1, iabn, ig, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -3009,7 +2988,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine wmbasic (readflux)
@@ -3019,7 +2997,6 @@ cc
 cc    ***WMBASIC Moont, Westmoquette 2004 STELLAR ATMOSPHERE MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -3033,9 +3010,9 @@ c
       character feh*4, logg*4, testar*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
-        flux0(idx)=0.d0
-        flux1(idx)=0.d0
+       readflux(idx)=0.d0
+       flux0(idx)=0.d0
+       flux1(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -3074,8 +3051,8 @@ c
 c
       if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C').and.(feh.ne.'D'
      &).and.(feh.ne.'E')) then
-        write (*,*) 'Unknown [Fe/H], using solar [Fe/H].'
-        feh='B'
+       write (*,*) 'Unknown [Fe/H], using solar [Fe/H].'
+       feh='B'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3099,8 +3076,8 @@ c
       if (logg.eq.'g') logg='G'
 c
       if ((logg.ne.'D').and.(logg.ne.'G')) then
-        write (*,*) 'Unknown Sequence, using Dwarf models'
-        logg='D'
+       write (*,*) 'Unknown Sequence, using Dwarf models'
+       logg='D'
       endif
 c
       ig=400
@@ -3108,7 +3085,7 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'D') then
-        write (*,40)
+       write (*,40)
    40 format(//' Dwarf Sequence Logg = 4.00,  Teff: 25-50.0kK     :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : Exact values: 25,26.3,28.1,30.2,32.3,34.6,37.2,40.0kK, :'/
@@ -3117,56 +3094,56 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & ' : quartic weighting ( err(I) << 1%)                      :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.25.0d3) teff=25.0d3
-        if (teff.gt.50.0d3) teff=50.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.01d0)
-        iteff0=iteff
-        if (iteff0.ge.500) then
-          iteff1=iteff0
-        else if (iteff0.le.250) then
-          iteff1=iteff0
-        else if (iteff.le.263) then
-          iteff0=250
-          iteff1=263
-        else if (iteff.le.281) then
-          iteff0=263
-          iteff1=281
-        else if (iteff.le.302) then
-          iteff0=281
-          iteff1=302
-        else if (iteff.le.323) then
-          iteff0=302
-          iteff1=323
-        else if (iteff.le.346) then
-          iteff0=323
-          iteff1=346
-        else if (iteff.le.372) then
-          iteff0=346
-          iteff1=372
-        else if (iteff.le.400) then
-          iteff0=372
-          iteff1=400
-        else if (iteff.le.426) then
-          iteff0=400
-          iteff1=426
-        else if (iteff.le.457) then
-          iteff0=426
-          iteff1=457
-        else if (iteff.lt.500) then
-          iteff0=457
-          iteff1=500
-        endif
-        ig=40
-        write (*,*) iteff0,iteff1,teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.25.0d3) teff=25.0d3
+       if (teff.gt.50.0d3) teff=50.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.01d0)
+       iteff0=iteff
+       if (iteff0.ge.500) then
+        iteff1=iteff0
+       elseif (iteff0.le.250) then
+        iteff1=iteff0
+       elseif (iteff.le.263) then
+        iteff0=250
+        iteff1=263
+       elseif (iteff.le.281) then
+        iteff0=263
+        iteff1=281
+       elseif (iteff.le.302) then
+        iteff0=281
+        iteff1=302
+       elseif (iteff.le.323) then
+        iteff0=302
+        iteff1=323
+       elseif (iteff.le.346) then
+        iteff0=323
+        iteff1=346
+       elseif (iteff.le.372) then
+        iteff0=346
+        iteff1=372
+       elseif (iteff.le.400) then
+        iteff0=372
+        iteff1=400
+       elseif (iteff.le.426) then
+        iteff0=400
+        iteff1=426
+       elseif (iteff.le.457) then
+        iteff0=426
+        iteff1=457
+       elseif (iteff.lt.500) then
+        iteff0=457
+        iteff1=500
+       endif
+       ig=40
+       write (*,*) iteff0,iteff1,teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (logg.eq.'G') then
-        write (*,50)
+       write (*,50)
    50 format(//' Subgiant Sequence, Choose Fixed Teff: 25-51.4kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    A  :   Teff 25.0kK  Logg = 3.0'/
@@ -3181,96 +3158,96 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & '    J  :   Teff 45.7kK  Logg = 3.7'/
      & '    K  :   Teff 51.4kK  Logg = 3.9'/
      & ' :: ',$)
-        read (*,*) testar
-        call toup (testar(1:1),testar)
-        write (*,*)
+       read (*,*) testar
+       call toup (testar(1:1), testar)
+       write (*,*)
 c
+       iteff=400
+       ig=35
+c
+       if (testar.eq.'A') then
+        iteff=250
+        iteff0=250
+        iteff1=250
+        ig=30
+       endif
+       if (testar.eq.'B') then
+        iteff=263
+        iteff0=250
+        iteff1=250
+        ig=30
+       endif
+       if (testar.eq.'C') then
+        iteff=281
+        iteff0=281
+        iteff1=281
+        ig=31
+       endif
+       if (testar.eq.'D') then
+        iteff=302
+        iteff0=302
+        iteff1=302
+        ig=31
+       endif
+       if (testar.eq.'E') then
+        iteff=323
+        iteff0=323
+        iteff1=323
+        ig=32
+       endif
+       if (testar.eq.'F') then
+        iteff=346
+        iteff0=346
+        iteff1=346
+        ig=33
+       endif
+       if (testar.eq.'G') then
+        iteff=372
+        iteff0=372
+        iteff1=372
+        ig=34
+       endif
+       if (testar.eq.'H') then
         iteff=400
+        iteff0=400
+        iteff1=400
         ig=35
-c
-        if (testar.eq.'A') then
-          iteff=250
-          iteff0=250
-          iteff1=250
-          ig=30
-        endif
-        if (testar.eq.'B') then
-          iteff=263
-          iteff0=250
-          iteff1=250
-          ig=30
-        endif
-        if (testar.eq.'C') then
-          iteff=281
-          iteff0=281
-          iteff1=281
-          ig=31
-        endif
-        if (testar.eq.'D') then
-          iteff=302
-          iteff0=302
-          iteff1=302
-          ig=31
-        endif
-        if (testar.eq.'E') then
-          iteff=323
-          iteff0=323
-          iteff1=323
-          ig=32
-        endif
-        if (testar.eq.'F') then
-          iteff=346
-          iteff0=346
-          iteff1=346
-          ig=33
-        endif
-        if (testar.eq.'G') then
-          iteff=372
-          iteff0=372
-          iteff1=372
-          ig=34
-        endif
-        if (testar.eq.'H') then
-          iteff=400
-          iteff0=400
-          iteff1=400
-          ig=35
-        endif
-        if (testar.eq.'I') then
-          iteff=426
-          iteff0=426
-          iteff1=426
-          ig=37
-        endif
-        if (testar.eq.'J') then
-          iteff=457
-          iteff0=457
-          iteff1=457
-          ig=37
-        endif
-        if (testar.eq.'K') then
-          iteff=500
-          iteff0=500
-          iteff1=500
-          ig=39
-        endif
+       endif
+       if (testar.eq.'I') then
+        iteff=426
+        iteff0=426
+        iteff1=426
+        ig=37
+       endif
+       if (testar.eq.'J') then
+        iteff=457
+        iteff0=457
+        iteff1=457
+        ig=37
+       endif
+       if (testar.eq.'K') then
+        iteff=500
+        iteff0=500
+        iteff1=500
+        ig=39
+       endif
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       xt0=1.0d2*iteff0
       xt1=1.0d2*iteff1
-C     write (*,*) 'Teff:',xt0,xt1,teff
-C     write (*,*) 'Logg:',0.1d0*ig
+c     write (*,*) 'Teff:',xt0,xt1,teff
+c     write (*,*) 'Logg:',0.1d0*ig
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (dabs(xt0-teff).lt.1.d0) then
-        call readwmbasicmodel (iteff0, iabn, ig, readflux)
-      else if (dabs(xt1-teff).lt.1.d0) then
-        call readwmbasicmodel (iteff1, iabn, ig, readflux)
+       call readwmbasicmodel (iteff0, iabn, ig, readflux)
+      elseif (dabs(xt1-teff).lt.1.d0) then
+       call readwmbasicmodel (iteff1, iabn, ig, readflux)
       else
-        call readwmbasicmodel (iteff0, iabn, ig, flux0)
-        call readwmbasicmodel (iteff1, iabn, ig, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readwmbasicmodel (iteff0, iabn, ig, flux0)
+       call readwmbasicmodel (iteff1, iabn, ig, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -3279,7 +3256,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine cmfgenostars (readflux)
@@ -3300,9 +3276,9 @@ c
       character logg*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
-        flux0(idx)=0.d0
-        flux1(idx)=0.d0
+       readflux(idx)=0.d0
+       flux0(idx)=0.d0
+       flux1(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -3342,170 +3318,170 @@ c
 c
       if ((logg.ne.'A').and.(logg.ne.'B').and.(logg.ne.'C')
      &.and.(logg.ne.'D').and.(logg.ne.'E').and.(logg.ne.'F')) then
-        write (*,*) 'Unknown Log(g), Log(g) = 4.00'
-        logg='E'
+       write (*,*) 'Unknown Log(g), Log(g) = 4.00'
+       logg='E'
       endif
 c
       ig=400
 c
       if (logg.eq.'A') then
-        ig=300
-        write (*,30)
+       ig=300
+       write (*,30)
    30 format(//' Logg = 3.00; Choose Teff: 27.5-30.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K           :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.30.0d3) teff=30.0d3
-        iteff0=275
-        iteff1=300
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.30.0d3) teff=30.0d3
+       iteff0=275
+       iteff1=300
       endif
 c
       if (logg.eq.'B') then
-        ig=325
-        write (*,40)
+       ig=325
+       write (*,40)
    40 format(//' Logg = 3.25; Choose Teff: 27.5-35.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K           :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.35.0d3) teff=35.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.35.0d3) teff=35.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff0=275
+       iteff1=300
+       if (teff.lt.30.0d3) then
         iteff0=275
         iteff1=300
-        if (teff.lt.30.0d3) then
-          iteff0=275
-          iteff1=300
-        elseif (teff.lt.32.0d3) then
-          iteff0=300
-          iteff1=320
-        elseif (teff.le.35.0d3) then
-          iteff0=320
-          iteff1=350
-        endif
+       elseif (teff.lt.32.0d3) then
+        iteff0=300
+        iteff1=320
+       elseif (teff.le.35.0d3) then
+        iteff0=320
+        iteff1=350
+       endif
       endif
 c
       if (logg.eq.'C') then
-        ig=350
-        write (*,50)
+       ig=350
+       write (*,50)
    50 format(//' Logg = 3.50; Choose Teff: 27.5-40.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.40.0d3) teff=40.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.40.0d3) teff=40.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff0=275
+       iteff1=325
+       if (teff.lt.32.5d3) then
         iteff0=275
         iteff1=325
-        if (teff.lt.32.5d3) then
-          iteff0=275
-          iteff1=325
-        elseif (teff.lt.35.0d3) then
-          iteff0=325
-          iteff1=350
-        elseif (teff.lt.37.5d3) then
-          iteff0=350
-          iteff1=375
-        elseif (teff.le.40.0d3) then
-          iteff0=375
-          iteff1=400
-        endif
+       elseif (teff.lt.35.0d3) then
+        iteff0=325
+        iteff1=350
+       elseif (teff.lt.37.5d3) then
+        iteff0=350
+        iteff1=375
+       elseif (teff.le.40.0d3) then
+        iteff0=375
+        iteff1=400
+       endif
       endif
 c
       if (logg.eq.'D') then
-        ig=375
-        write (*,60)
+       ig=375
+       write (*,60)
    60 format(//' Logg = 3.75; Choose Teff: 27.5-42.5kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.27.5d3) teff=27.5d3
-        if (teff.gt.40.0d3) teff=40.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.27.5d3) teff=27.5d3
+       if (teff.gt.40.0d3) teff=40.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff0=275
+       iteff1=375
+       if (teff.lt.37.5d3) then
         iteff0=275
         iteff1=375
-        if (teff.lt.37.5d3) then
-          iteff0=275
-          iteff1=375
-        elseif (teff.le.42.5d3) then
-          iteff0=375
-          iteff1=425
-        endif
+       elseif (teff.le.42.5d3) then
+        iteff0=375
+        iteff1=425
+       endif
       endif
 c
       if (logg.eq.'E') then
-        ig=400
-        write (*,70)
+       ig=400
+       write (*,70)
    70 format(//' Logg = 4.00; Choose Teff: 30.0-48.5kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.30.0d3) teff=30.0d3
-        if (teff.gt.48.5d3) teff=48.5d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.30.0d3) teff=30.0d3
+       if (teff.gt.48.5d3) teff=48.5d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff0=300
+       iteff1=325
+       if (teff.lt.32.5d3) then
         iteff0=300
         iteff1=325
-        if (teff.lt.32.5d3) then
-          iteff0=300
-          iteff1=325
-        elseif (teff.lt.35.0d3) then
-          iteff0=325
-          iteff1=350
-        elseif (teff.lt.40.0d3) then
-          iteff0=350
-          iteff1=400
-        elseif (teff.lt.42.5d3) then
-          iteff0=400
-          iteff1=425
-        elseif (teff.le.48.5d3) then
-          iteff0=425
-          iteff1=485
-        endif
+       elseif (teff.lt.35.0d3) then
+        iteff0=325
+        iteff1=350
+       elseif (teff.lt.40.0d3) then
+        iteff0=350
+        iteff1=400
+       elseif (teff.lt.42.5d3) then
+        iteff0=400
+        iteff1=425
+       elseif (teff.le.48.5d3) then
+        iteff0=425
+        iteff1=485
+       endif
       endif
 c
       if (logg.eq.'F') then
-        ig=425
-        write (*,80)
+       ig=425
+       write (*,80)
    80 format(//' Logg = 4.25; Choose Teff: 30.0-35.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.30.0d3) teff=30.0d3
-        if (teff.gt.35.0d3) teff=35.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.30.0d3) teff=30.0d3
+       if (teff.gt.35.0d3) teff=35.0d3
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff0=300
+       iteff1=325
+       if (teff.lt.32.5d3) then
         iteff0=300
         iteff1=325
-        if (teff.lt.32.5d3) then
-          iteff0=300
-          iteff1=325
-        elseif (teff.lt.35.0d3) then
-          iteff0=325
-          iteff1=350
-        endif
+       elseif (teff.lt.35.0d3) then
+        iteff0=325
+        iteff1=350
+       endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3523,13 +3499,13 @@ c
       xt0=1.0d2*iteff0
       xt1=1.0d2*iteff1
       if (dabs(xt0-teff).lt.1.d0) then
-        call readcmfgenmodel (iteff0, ig, readflux)
+       call readcmfgenmodel (iteff0, ig, readflux)
       elseif (dabs(xt1-teff).lt.1.d0) then
-        call readcmfgenmodel (iteff1, ig, readflux)
+       call readcmfgenmodel (iteff1, ig, readflux)
       else
-        call readcmfgenmodel (iteff0, ig, flux0)
-        call readcmfgenmodel (iteff1, ig, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readcmfgenmodel (iteff0, ig, flux0)
+       call readcmfgenmodel (iteff1, ig, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -3538,7 +3514,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mocassin18 (readflux)
@@ -3559,9 +3534,9 @@ c
       character feh*4, logg*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
-        flux0(idx)=0.d0
-        flux1(idx)=0.d0
+       readflux(idx)=0.d0
+       flux0(idx)=0.d0
+       flux1(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -3600,8 +3575,8 @@ c
       if (feh.eq.'c') feh='C'
 c
       if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C')) then
-        write (*,*) 'Unknown zeta, using solar z = 1.0.'
-        feh='A'
+       write (*,*) 'Unknown zeta, using solar z = 1.0.'
+       feh='A'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3632,8 +3607,8 @@ c     write (*,*)
 c
       if ((logg.ne.'A').and.(logg.ne.'B').and.(logg.ne.'C')
      &.and.(logg.ne.'D')) then
-        write (*,*) 'Unknown Log(g), Log(g) = 4.10'
-        logg='C'
+       write (*,*) 'Unknown Log(g), Log(g) = 4.10'
+       logg='C'
       endif
 c
       ig=400
@@ -3656,17 +3631,17 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (teff.lt.1.0d3) teff=teff*1.d3
       if (teff.lt.27.5d3) teff=27.5d3
       if (teff.gt.55.0d3) teff=55.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+      write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
       iteff=idint(teff*4.0d-04)
       iteff0=iteff*250
       if (iteff0.ge.5500) then
-        iteff0=5500
-        iteff1=iteff0
-      else if (iteff0.lt.2750) then
-        iteff0=2750
-        iteff1=iteff0
+       iteff0=5500
+       iteff1=iteff0
+      elseif (iteff0.lt.2750) then
+       iteff0=2750
+       iteff1=iteff0
       else
-        iteff1=iteff0+250
+       iteff1=iteff0+250
       endif
       xt0=1.0d1*iteff0
       xt1=1.0d1*iteff1
@@ -3674,13 +3649,13 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (dabs(xt0-teff).lt.1.d0) then
-        call readn18model (iteff0, ig, iabn, readflux)
-      else if (dabs(xt1-teff).lt.1.d0) then
-        call readn18model (iteff1, ig, iabn, readflux)
+       call readn18model (iteff0, ig, iabn, readflux)
+      elseif (dabs(xt1-teff).lt.1.d0) then
+       call readn18model (iteff1, ig, iabn, readflux)
       else
-        call readn18model (iteff0, ig, iabn, flux0)
-        call readn18model (iteff1, ig, iabn, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readn18model (iteff0, ig, iabn, flux0)
+       call readn18model (iteff1, ig, iabn, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -3688,7 +3663,6 @@ c
       call renormestellar (teff, readflux)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine theta1c (readflux)
@@ -3709,9 +3683,9 @@ c
       character feh*4, logg*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
-        flux0(idx)=0.d0
-        flux1(idx)=0.d0
+       readflux(idx)=0.d0
+       flux0(idx)=0.d0
+       flux1(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -3747,8 +3721,8 @@ c
       if (feh.eq.'c') feh='C'
 c
       if ((feh.ne.'A').and.(feh.ne.'B').and.(feh.ne.'C')) then
-        write (*,*) 'Unknown zeta, using solar zeta = 1.0.'
-        feh='A'
+       write (*,*) 'Unknown zeta, using solar zeta = 1.0.'
+       feh='A'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3778,8 +3752,8 @@ c
 c
       if ((logg.ne.'A').and.(logg.ne.'B').and.(logg.ne.'C')
      &.and.(logg.ne.'D')) then
-        write (*,*) 'Unknown Log(g), Log(g) = 4.10'
-        logg='C'
+       write (*,*) 'Unknown Log(g), Log(g) = 4.10'
+       logg='C'
       endif
 c
       ig=410
@@ -3802,27 +3776,27 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (teff.lt.1.0d3) teff=teff*1.d3
       if (teff.lt.37.0d3) teff=37.0d3
       if (teff.gt.41.0d3) teff=41.0d3
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+      write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
       iteff=idint(teff*0.002d0)
       iteff0=iteff*5
       if (iteff0.eq.410) then
-        iteff1=iteff0
+       iteff1=iteff0
       else
-         iteff1=iteff0+5
+       iteff1=iteff0+5
       endif
-C     write (*,*) iteff0,iteff1,teff
+c     write (*,*) iteff0,iteff1,teff
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       xt0=1.0d2*iteff0
       xt1=1.0d2*iteff1
       if (dabs(xt0-teff).lt.1.d0) then
-        call readt1cmodel (iteff0, ig, iabn, readflux)
+       call readt1cmodel (iteff0, ig, iabn, readflux)
       elseif (dabs(xt1-teff).lt.1.d0) then
-        call readt1cmodel (iteff1, ig, iabn, readflux)
+       call readt1cmodel (iteff1, ig, iabn, readflux)
       else
-        call readt1cmodel (iteff0, ig, iabn, flux0)
-        call readt1cmodel (iteff1, ig, iabn, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readt1cmodel (iteff0, ig, iabn, flux0)
+       call readt1cmodel (iteff1, ig, iabn, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -3830,7 +3804,6 @@ c
       call renormestellar (teff, readflux)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine cspn_hni (readflux)
@@ -3840,7 +3813,6 @@ cc
 cc    ***RAUCH TNMAP Current H-Ni CSPN MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -3852,7 +3824,7 @@ c
       character feh*4, logg*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -3886,8 +3858,8 @@ c
       if (feh.eq.'b') feh='B'
 c
       if ((feh.ne.'A').and.(feh.ne.'B')) then
-        write (*,*) 'Unknown abundances, using solar [Fe/H] = 0.0.'
-        feh='A'
+       write (*,*) 'Unknown abundances, using solar [Fe/H] = 0.0.'
+       feh='A'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3916,8 +3888,8 @@ c
 c
       if ((logg.ne.'A').and.(logg.ne.'B').and.(logg.ne.'C')
      &.and.(logg.ne.'D')) then
-        write (*,*) 'Unknown Log(g), Log(g) = 7.00'
-        logg='C'
+       write (*,*) 'Unknown Log(g), Log(g) = 7.00'
+       logg='C'
       endif
 c
       ig=70
@@ -3928,67 +3900,67 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ig.eq.50) then
-        write (*,40)
+       write (*,40)
    40 format(//' Choose Teff: 50.0 - 100.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 1e4 K will read direct from grid files    :'/
      & ' : non-multiples of 1e4 K will be interpolated            :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.50.0d3) teff=50.0d3
-        if (teff.gt.100.0d3) then
-          write (*,*) ' *** WARNING: Max Teff is 100kK, using 100kK'
-          teff=100.0d3
-        endif
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0001d0)
-        iteff0=iteff*10
-        if (iteff0.eq.100) iteff0=90
-        iteff1=iteff0+10
-        write (*,*) iteff0,iteff1,teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.50.0d3) teff=50.0d3
+       if (teff.gt.100.0d3) then
+        write (*,*) ' *** WARNING: Max Teff is 100kK, using 100kK'
+        teff=100.0d3
+       endif
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0001d0)
+       iteff0=iteff*10
+       if (iteff0.eq.100) iteff0=90
+       iteff1=iteff0+10
+       write (*,*) iteff0,iteff1,teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ig.gt.50) then
-        write (*,50)
+       write (*,50)
    50 format(//' Choose Teff: 50.0 - 190.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 1e4 K will read direct from grid files    :'/
      & ' : non-multiples of 1e4 K will be interpolated using      :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.50.0d3) teff=50.0d3
-        if (teff.gt.190.0d3) then
-          write (*,*) ' *** WARNING: Max Teff is 190kK, using 190kK'
-          teff=190.0d3
-        endif
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0001d0)
-        iteff0=iteff*10
-        if (iteff0.eq.190) iteff0=180
-        iteff1=iteff0+10
-        write (*,*) iteff0,iteff1,teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.50.0d3) teff=50.0d3
+       if (teff.gt.190.0d3) then
+        write (*,*) ' *** WARNING: Max Teff is 190kK, using 190kK'
+        teff=190.0d3
+       endif
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0001d0)
+       iteff0=iteff*10
+       if (iteff0.eq.190) iteff0=180
+       iteff1=iteff0+10
+       write (*,*) iteff0,iteff1,teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       xt0=1.0d3*iteff0
       xt1=1.0d3*iteff1
       if (dabs(xt0-teff).lt.100.d0) then
-        call readcspn_hni (iteff0, ig, iabn, readflux)
+       call readcspn_hni (iteff0, ig, iabn, readflux)
       elseif (dabs(xt1-teff).lt.100.d0) then
-        call readcspn_hni (iteff1, ig, iabn, readflux)
+       call readcspn_hni (iteff1, ig, iabn, readflux)
       else
-        call readcspn_hni (iteff0, ig, iabn, flux0)
-        call renormestellar (xt0, flux0)
-        call readcspn_hni (iteff1, ig, iabn, flux1)
-        call renormestellar (xt1, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readcspn_hni (iteff0, ig, iabn, flux0)
+       call renormestellar (xt0, flux0)
+       call readcspn_hni (iteff1, ig, iabn, flux1)
+       call renormestellar (xt1, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -3997,7 +3969,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine cspn_hca (readflux)
@@ -4007,7 +3978,6 @@ cc
 cc    ***RAUCH TNMAP Older H-Ca CSPN MODELS
 cc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -4019,7 +3989,7 @@ c
       character feh*4, logg*4
 c
       do idx=1,infph
-        readflux(idx)=0.d0
+       readflux(idx)=0.d0
       enddo
 c
       write (*,10)
@@ -4053,8 +4023,8 @@ c
       if (feh.eq.'b') feh='B'
 c
       if ((feh.ne.'A').and.(feh.ne.'B')) then
-        write (*,*) 'Unknown abundances, using solar [Fe/H] = 0.0.'
-        feh='A'
+       write (*,*) 'Unknown abundances, using solar [Fe/H] = 0.0.'
+       feh='A'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4085,8 +4055,8 @@ c
 c
       if ((logg.ne.'A').and.(logg.ne.'B').and.(logg.ne.'C')
      &.and.(logg.ne.'D').and.(logg.ne.'E')) then
-        write (*,*) 'Unknown Log(g), Log(g) = 7.00'
-        logg='C'
+       write (*,*) 'Unknown Log(g), Log(g) = 7.00'
+       logg='C'
       endif
 c
       ig=70
@@ -4098,157 +4068,157 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ig.eq.50) then
-        write (*,40)
+       write (*,40)
    40 format(//' Choose Teff: 50.0 - 100.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 10kK will read direct from grid files    :'/
      & ' : non-multiples of 10kK will be interpolated using      :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.50.0d3) then
-          write (*,*) ' *** WARNING: Min Teff is 50kK, using 50kK'
-          teff=50.0d3
-        endif
-        if (teff.gt.100.0d3) then
-          write (*,*) ' *** WARNING: Max Teff is 100kK, using 100kK'
-          teff=100.0d3
-        endif
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
-        iteff=idint(teff*0.0001d0)
-        iteff0=iteff*10
-        if (iteff0.eq.100) iteff0=90
-        iteff1=iteff0+10
-C       write (*,*) iteff0,iteff1,teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.50.0d3) then
+        write (*,*) ' *** WARNING: Min Teff is 50kK, using 50kK'
+        teff=50.0d3
+       endif
+       if (teff.gt.100.0d3) then
+        write (*,*) ' *** WARNING: Max Teff is 100kK, using 100kK'
+        teff=100.0d3
+       endif
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       iteff=idint(teff*0.0001d0)
+       iteff0=iteff*10
+       if (iteff0.eq.100) iteff0=90
+       iteff1=iteff0+10
+c       write (*,*) iteff0,iteff1,teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ig.eq.60) then
-        write (*,50)
+       write (*,50)
    50 format(//' Choose Teff: 50.0 - 190.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 10kK will read direct from grid files    :'/
      & ' : non-multiples of 10kK will be interpolated using      :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.50.0d3) then
-          teff=50.0d3
-        endif
-        if (teff.gt.190.0d3) then
-          teff=190.0d3
-        endif
-        iteff=idint(teff*0.0001d0)
-        iteff0=iteff*10
-        if (iteff0.eq.190) iteff0=180
-        iteff1=iteff0+10
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.50.0d3) then
+        teff=50.0d3
+       endif
+       if (teff.gt.190.0d3) then
+        teff=190.0d3
+       endif
+       iteff=idint(teff*0.0001d0)
+       iteff0=iteff*10
+       if (iteff0.eq.190) iteff0=180
+       iteff1=iteff0+10
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ig.eq.70) then
-        write (*,60)
+       write (*,60)
    60 format(//' Choose Teff: 50.0 - 300.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 10kK will read direct from grid files    :'/
      & ' : non-multiples of 10kK will be interpolated             :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.50.0d3) then
-          teff=50.0d3
-        endif
-        if (teff.gt.300.0d3) then
-          teff=300.0d3
-        endif
-        if (teff.gt.200.0d3) then
-          iteff=idint(teff*0.00001d0)
-          iteff0=iteff*100
-          if (iteff0.eq.300) iteff0=200
-          iteff1=iteff0+100
-        else
-          iteff=idint(teff*0.0001d0)
-          iteff0=iteff*10
-          iteff1=iteff0+10
-        endif
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.50.0d3) then
+        teff=50.0d3
+       endif
+       if (teff.gt.300.0d3) then
+        teff=300.0d3
+       endif
+       if (teff.gt.200.0d3) then
+        iteff=idint(teff*0.00001d0)
+        iteff0=iteff*100
+        if (iteff0.eq.300) iteff0=200
+        iteff1=iteff0+100
+       else
+        iteff=idint(teff*0.0001d0)
+        iteff0=iteff*10
+        iteff1=iteff0+10
+       endif
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ig.eq.80) then
-        write (*,70)
+       write (*,70)
    70 format(//' Choose Teff: 50.0 - 500.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 10kK will read direct from grid files    :'/
      & ' : non-multiples of 10kK will be interpolated             :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.50.0d3) then
-          teff=50.0d3
-        endif
-        if (teff.gt.500.0d3) then
-          teff=500.0d3
-        endif
-        if (teff.gt.200.0d3) then
-          iteff=idint(teff*0.00001d0)
-          iteff0=iteff*100
-          if (iteff0.eq.500) iteff0=400
-          iteff1=iteff0+100
-        else
-          iteff=idint(teff*0.0001d0)
-          iteff0=iteff*10
-          iteff1=iteff0+10
-        endif
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.50.0d3) then
+        teff=50.0d3
+       endif
+       if (teff.gt.500.0d3) then
+        teff=500.0d3
+       endif
+       if (teff.gt.200.0d3) then
+        iteff=idint(teff*0.00001d0)
+        iteff0=iteff*100
+        if (iteff0.eq.500) iteff0=400
+        iteff1=iteff0+100
+       else
+        iteff=idint(teff*0.0001d0)
+        iteff0=iteff*10
+        iteff1=iteff0+10
+       endif
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ig.eq.90) then
-        write (*,80)
+       write (*,80)
    80 format(//' Choose Teff: 200.0 - 1000.0kK :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' : multiples of 1e5 K will read direct from grid files    :'/
      & ' : non-multiples of 1e5 K will be interpolated            :'/
      & ' : (< 10 as log10, <= 1000 as kK, > 1000 as K             :'/
      & ' :: Teff: ',$)
-        read (*,*) teff
-        write (*,*)
-        if (teff.lt.1.0d1) teff=10.d0**teff
-        if (teff.lt.1.0d3) teff=teff*1.d3
-        if (teff.lt.50.0d3) then
-          teff=50.0d3
-        endif
-        if (teff.gt.190.0d3) then
-          teff=500.0d3
-        endif
-        iteff=idint(teff*0.00001d0)
-        iteff0=iteff*100
-        if (iteff0.eq.1000) iteff0=900
-        iteff1=iteff0+100
-        write(*,'("# Setting Teff = ",1pg14.6,"K")') teff
+       read (*,*) teff
+       write (*,*)
+       if (teff.lt.1.0d1) teff=10.d0**teff
+       if (teff.lt.1.0d3) teff=teff*1.d3
+       if (teff.lt.50.0d3) then
+        teff=50.0d3
+       endif
+       if (teff.gt.190.0d3) then
+        teff=500.0d3
+       endif
+       iteff=idint(teff*0.00001d0)
+       iteff0=iteff*100
+       if (iteff0.eq.1000) iteff0=900
+       iteff1=iteff0+100
+       write (*,'("# Setting Teff = ",1pg14.6,"K")') teff
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       xt0=1.0d3*iteff0
       xt1=1.0d3*iteff1
       if (dabs(xt0-teff).lt.100.d0) then
-        call readcspn_hca (iteff0, ig, iabn, readflux)
+       call readcspn_hca (iteff0, ig, iabn, readflux)
       elseif (dabs(xt1-teff).lt.100.d0) then
-        call readcspn_hca (iteff1, ig, iabn, readflux)
+       call readcspn_hca (iteff1, ig, iabn, readflux)
       else
-        call readcspn_hca (iteff0, ig, iabn, flux0)
-        call renormestellar (xt0, flux0)
-        call readcspn_hca (iteff1, ig, iabn, flux1)
-        call renormestellar (xt1, flux1)
-        call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
+       call readcspn_hca (iteff0, ig, iabn, flux0)
+       call renormestellar (xt0, flux0)
+       call readcspn_hca (iteff1, ig, iabn, flux1)
+       call renormestellar (xt1, flux1)
+       call intpstellartemp (xt0, xt1, teff, flux0, flux1, readflux)
       endif
 c
 c Check normalisation
@@ -4257,7 +4227,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readatlasmodel (pat, iabn, iteff, ig, flux)
@@ -4283,26 +4252,26 @@ c Standard Solar Ratios
 c
       atfile='FP00T40G45.txt'
       if (pat.eq.'A') then
-        if (iabn.lt.0) then
-          write (atfile,'("std/M",I2.2,"/FM",I2.2,"T",I2.2,"G",I2.2,
-     &    ".txt")') -iabn,-iabn,iteff,ig
-        else
-          write (atfile,'("std/P",I2.2,"/FP",I2.2,"T",I2.2,"G",I2.2,
-     &    ".txt")') iabn,iabn,iteff,ig
-        endif
+       if (iabn.lt.0) then
+        write (atfile,'("std/M",I2.2,"/FM",I2.2,"T",I2.2,"G",I2.2,      
+     &  ".txt")') -iabn,-iabn,iteff,ig
+       else
+        write (atfile,'("std/P",I2.2,"/FP",I2.2,"T",I2.2,"G",I2.2,      
+     &  ".txt")') iabn,iabn,iteff,ig
+       endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Alpha Enhanced Ratios
 c
       if (pat.eq.'B') then
-        if (iabn.lt.0) then
-          write (atfile,'("alpha/M",I2.2,"/FM",I2.2,"AT",I2.2,"G",I2.2,"
-     &.txt")') -iabn,-iabn,iteff,ig
-        else
-          write (atfile,'("alpha/P",I2.2,"/FP",I2.2,"AT",I2.2,"G",I2.2,"
-     &.txt")') iabn,iabn,iteff,ig
-        endif
+       if (iabn.lt.0) then
+        write (atfile,'("alpha/M",I2.2,"/FM",I2.2,"AT",I2.2,"G",I2.2,".t
+     &xt")') -iabn,-iabn,iteff,ig
+       else
+        write (atfile,'("alpha/P",I2.2,"/FP",I2.2,"AT",I2.2,"G",I2.2,".t
+     &xt")') iabn,iabn,iteff,ig
+       endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4310,17 +4279,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/ATLAS9/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/ATLAS9/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/ATLAS9/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/ATLAS9/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c  format = 0, std atmos lib file
@@ -4329,7 +4298,6 @@ c
       call readrebin (srcfile, coordstype, flux)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readtlustymodel (iteff, iabn, ig, flux)
@@ -4349,11 +4317,11 @@ c functions
 c
       atfile='TL_P00T400G400.txt'
       if (iabn.lt.0) then
-        write (atfile,'("M",I2.2,"/TL_M",I2.2,"T",I3.3,"G",I3.3,".txt")'
-     &   ) -iabn,-iabn,iteff,ig
+       write (atfile,'("M",I2.2,"/TL_M",I2.2,"T",I3.3,"G",I3.3,".txt")')
+     &   -iabn,-iabn,iteff,ig
       else
-        write (atfile,'("P",I2.2,"/TL_P",I2.2,"T",I3.3,"G",I3.3,".txt")'
-     &   ) iabn,iabn,iteff,ig
+       write (atfile,'("P",I2.2,"/TL_P",I2.2,"T",I3.3,"G",I3.3,".txt")')
+     &   iabn,iabn,iteff,ig
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4361,17 +4329,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/TLUSTY/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/TLUSTY/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/TLUSTY/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/TLUSTY/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(atfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c  format = 6, TLUSTY atmos lib file
@@ -4379,7 +4347,6 @@ c
       call readrebin (srcfile, 6, flux)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readcmfgenmodel (iteff, ig, flux)
@@ -4410,17 +4377,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/CMFGEN/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CMFGEN/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/CMFGEN/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CMFGEN/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4429,7 +4396,6 @@ c
       call readlinrebin (srcfile, 8, flux)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readt1cmodel (iteff, ig, iz, flux)
@@ -4456,17 +4422,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/T1CLibrary/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/T1CLibrary/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/T1CLibrary/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/T1CLibrary/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c  format = 8, T1C test atmos CMFGEN lib file
@@ -4475,7 +4441,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readn18model (iteff, ig, iz, flux)
@@ -4502,17 +4467,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/N18CMFGEN/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/N18CMFGEN/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/N18CMFGEN/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/N18CMFGEN/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c  format = 10, same as T1C test atmos CMFGEN lib file but 9 headers
@@ -4521,7 +4486,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readwmbasicmodel (iteff, iabn, ig, flux)
@@ -4546,17 +4510,17 @@ c
 c
       atfile='DWM_P00T400G40.txt'
       if (ig.gt.39) then
-        if (iabn.lt.0) then
-          write (atfile,10) -iabn,-iabn,iteff,ig
-        else
-          write (atfile,20) iabn,iabn,iteff,ig
-        endif
+       if (iabn.lt.0) then
+        write (atfile,10) -iabn,-iabn,iteff,ig
+       else
+        write (atfile,20) iabn,iabn,iteff,ig
+       endif
       else
-        if (iabn.lt.0) then
-          write (atfile,30) -iabn,-iabn,iteff,ig
-        else
-          write (atfile,40) iabn,iabn,iteff,ig
-        endif
+       if (iabn.lt.0) then
+        write (atfile,30) -iabn,-iabn,iteff,ig
+       else
+        write (atfile,40) iabn,iabn,iteff,ig
+       endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4564,17 +4528,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/WMBASIC/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/WMBASIC/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/WMBASIC/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/WMBASIC/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c  format = 7, WMBASIC atmos lib file, no interp yet
@@ -4582,7 +4546,6 @@ c
       call readrebin (srcfile, 7, flux)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readcspn_hni (iteff, iabn, ig, flux)
@@ -4609,17 +4572,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/CSPN/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CSPN/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/CSPN/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CSPN/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c  format = 9, CSPN Rauch TMAF HNi grid
@@ -4632,7 +4595,6 @@ c      call readlinrebin (atfile, 9, flux)
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readcspn_hca (iteff, iabn, ig, flux)
@@ -4659,17 +4621,17 @@ c
       l=lenv(srcfile)
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
-        write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/CSPN/'//atfile
-        l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CSPN/'
-        inquire (file=srcfile(1:l),exist=iexi)
+       write (*,*) srcfile(1:l),' NOT FOUND.'
+       srcfile=datadir(1:dtlen)//'atmos/CSPN/'//atfile
+       l=lenv(srcfile)
+       write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CSPN/'
+       inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
       if (iexi) then
-        write (*,*) ' Reading: ',srcfile(1:l)
+       write (*,*) ' Reading: ',srcfile(1:l)
       else
-        write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
+       write (*,*) srcfile(1:l),' NOT FOUND. Retry...'
       endif
 c
 c  format = 9, CSPN Rauch TNMAF HCa/HNi grid
@@ -4678,7 +4640,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine renormestellar (xt, src)
@@ -4701,24 +4662,23 @@ c
 c
       blum=0.d0
       do i=1,infph-1
-        widnu=widbinnu(i)
-        blum=blum+widnu*src(i)
+       widnu=widbinnu(i)
+       blum=blum+widnu*src(i)
       enddo
       blum=blum*pi
       intensity=stefan*(xt**4.d0)
       ratio=intensity/blum
       if (dabs(ratio-1.d0).gt.0.01d0) then
-        write (*,*) ' Renormestellar: more than 1% total intensity '
-        write (*,*) ' difference, renormalising.'
-        write (*,'(4(1pg12.5,x))') xt,blum,intensity,ratio
-        do i=1,infph
-          src(i)=src(i)*ratio
-        enddo
+       write (*,*) ' Renormestellar: more than 1% total intensity '
+       write (*,*) ' difference, renormalising.'
+       write (*,'(4(1pg12.5,x))') xt,blum,intensity,ratio
+       do i=1,infph
+        src(i)=src(i)*ratio
+       enddo
       endif
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine intpstellartemp (xt0, xt1, xt, src0, src1, dst)
@@ -4757,15 +4717,14 @@ c set up interp fractions
       cf=1.d0-f
 c
       do i=1,infph
-        a=dmax1(src0(i),0.d0)**0.25d0
-        b=dmax1(src1(i),0.d0)**0.25d0
-        c=(a*cf+b*f)**4.d0
-        dst(i)=dmax1(c,0.d0)
+       a=dmax1(src0(i),0.d0)**0.25d0
+       b=dmax1(src1(i),0.d0)**0.25d0
+       c=(a*cf+b*f)**4.d0
+       dst(i)=dmax1(c,0.d0)
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine fpol (kstr, tm1, i)
@@ -4776,7 +4735,6 @@ c*******CALCULATES POLYNOME VALUE FOR A GIVEN TEFF
 c     COEFFICIENTS IN /STAR/
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c

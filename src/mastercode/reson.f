@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -292,27 +292,26 @@ c should be type 3 or 13, most differences are lost on init
 c as x, y, and y2 are made for all types. only some types need
 c exponentiation at the end
 c
-        btc=xr3col_tc(icol,idx)
-        beta=(t/(t+btc))
-        nspl=xr3col_nspl(icol,idx)
-        do l=1,nspl
-          btx(l)=xr3col_x(l) ! uniform splines for all hhe data
-          bty(l)=xr3col_y(l,icol,idx)
-          bty2(l)=xr3col_y2(l,icol,idx)
-        enddo
-        upsilon=fsplint(btx,bty,bty2,nspl,beta)
-        if (omtype.eq.13) then
-           upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
-        endif
+       btc=xr3col_tc(icol,idx)
+       beta=(t/(t+btc))
+       nspl=xr3col_nspl(icol,idx)
+       do l=1,nspl
+        btx(l)=xr3col_x(l)!uniformsplinesforallhhedata
+        bty(l)=xr3col_y(l,icol,idx)
+        bty2(l)=xr3col_y2(l,icol,idx)
+       enddo
+       upsilon=fsplint(btx,bty,bty2,nspl,beta)
+       if (omtype.eq.13) then
+        upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
+       endif
       else
-        write (*,*) 'ERROR, Invalid spline type in fxr3omgspl:',omtype
-        write (*,*) t,icol,idx
-        stop
+       write (*,*) 'ERROR, Invalid spline type in fxr3omgspl:',omtype
+       write (*,*) t,icol,idx
+       stop
       endif
       fxr3omgspl=dmax1(0.d0,upsilon)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvexr3ionkappa (t, de, dh, idx, bri, ni)
@@ -341,7 +340,6 @@ c      real*8 ratekappa,f,br,ee,invgi,emiss,j2ploss
 c
       real*8 fkenhance
       real*8 fxr3omgspl
-
       atom=xr3at(idx)
       if (atom.eq.0) return
       ion=xr3ion(idx)
@@ -352,31 +350,31 @@ c
       j2phlevel=xr32s12j(idx)
 c
       do i=1,ni
-        do j=1,ni
-          bri(i,j)=0.d0
-          eji(i,j)=plk*cls*dabs(xr3ei(j,idx)-xr3ei(i,idx))
-        enddo
+       do j=1,ni
+        bri(i,j)=0.d0
+        eji(i,j)=plk*cls*dabs(xr3ei(j,idx)-xr3ei(i,idx))
+       enddo
       enddo
 c lower level pop fractions for collision populations
       do l=1,mxxr3lvls
-        fl(l)=0.d0
+       fl(l)=0.d0
       enddo
       fl(1)=1.d0
 c find fractions in lower levels
       mspecies=fmspindex(ion,atom)
       if (mspecies.gt.0) then
-        sum=0.d0
-        ngrnd=fmnl(mspecies)
-        do l=1,ngrnd
-          fl(l)=0.d0
-          if (fmx(l,mspecies).gt.1.0d-3) then
-            fl(l)=fmx(l,mspecies)
-            sum=sum+fl(l)
-          endif
-        enddo
-        do l=1,ngrnd
-          fl(l)=fl(l)/sum
-        enddo
+       sum=0.d0
+       ngrnd=fmnl(mspecies)
+       do l=1,ngrnd
+        fl(l)=0.d0
+        if (fmx(l,mspecies).gt.1.0d-3) then
+         fl(l)=fmx(l,mspecies)
+         sum=sum+fl(l)
+        endif
+       enddo
+       do l=1,ngrnd
+        fl(l)=fl(l)/sum
+       enddo
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       t=dmax1(t,mintemp)
@@ -387,49 +385,48 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  kappa
       do icol=1,nc
 c i = lower, j = upper
-        i=xr3col_i(icol,idx)
-        xr3col_fr(icol,idx)=fl(i)
-        if (fl(i).gt.epsilon) then
-         j=xr3col_j(icol,idx)
-         ee=eji(i,j)
-         y=ee*invrkt
+       i=xr3col_i(icol,idx)
+       xr3col_fr(icol,idx)=fl(i)
+       if (fl(i).gt.epsilon) then
+        j=xr3col_j(icol,idx)
+        ee=eji(i,j)
+        y=ee*invrkt
         if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          ratekappa=fkenhance(kappa,y)
-          invgi=xr3invgi(i,idx)
-          omegaij=fxr3omgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=fl(i)*cgjb*omegaij*ratekappa
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            if (linecoolmode.eq.1) then
-              if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
-              endif
-              if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
-              endif
-            endif
-            loss=rr*ee
-            xr3loss=xr3loss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
-   10       continue
-            nl=xr3col_nl(icol,idx)
-            do line=1,nl
-              jj=xr3col_jj(line,icol,idx) ! lower
-              kk=xr3col_kk(line,icol,idx) ! higher
-              br=xr3col_br(line,icol,idx)
-              emiss=(rr*br*eji(jj,kk)) ! note index swap above
-              bri(kk,jj)=bri(kk,jj)+emiss
-            enddo
+         ratekappa=fkenhance(kappa,y)
+         invgi=xr3invgi(i,idx)
+         omegaij=fxr3omgspl(t,y,icol,idx)*invgi
+         cgjb=rka*f*dexp(-y)
+         cr=fl(i)*cgjb*omegaij*ratekappa
+         rr=abde*cr
+         if (rr.gt.epsilon) then
+          if (linecoolmode.eq.1) then
+           if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+            goto 10
+           endif
+           if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+            goto 10
+           endif
           endif
+          loss=rr*ee
+          xr3loss=xr3loss+loss
+          coolz(atom)=coolz(atom)+loss
+          coolzion(ion,atom)=coolzion(ion,atom)+loss
+   10     continue
+          nl=xr3col_nl(icol,idx)
+          do line=1,nl
+           jj=xr3col_jj(line,icol,idx)!lower
+           kk=xr3col_kk(line,icol,idx)!higher
+           br=xr3col_br(line,icol,idx)
+           emiss=(rr*br*eji(jj,kk))!noteindexswapabove
+           bri(kk,jj)=bri(kk,jj)+emiss
+          enddo
+         endif
         endif
-        endif
+       endif
       enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvexr3ion (t, de, dh, idx, bri, ni)
@@ -457,7 +454,6 @@ c      real*8 ratekappa
       real*8 fl(mxxr3lvls)
 c
       real*8 fxr3omgspl
-
       atom=xr3at(idx)
       if (atom.eq.0) return
       ion=xr3ion(idx)
@@ -468,31 +464,31 @@ c
       j2phlevel=xr32s12j(idx)
 c
       do i=1,ni
-        do j=1,ni
-          bri(i,j)=0.d0
-          eji(i,j)=plk*cls*dabs(xr3ei(j,idx)-xr3ei(i,idx))
-        enddo
+       do j=1,ni
+        bri(i,j)=0.d0
+        eji(i,j)=plk*cls*dabs(xr3ei(j,idx)-xr3ei(i,idx))
+       enddo
       enddo
 c lower level pop fractions for collision populations
       do l=1,mxxr3lvls
-        fl(l)=0.d0
+       fl(l)=0.d0
       enddo
       fl(1)=1.d0
 c find fractions in lower levels
       mspecies=fmspindex(ion,atom)
       if (mspecies.gt.0) then
-        sum=0.d0
-        ngrnd=fmnl(mspecies)
-        do l=1,ngrnd
-          fl(l)=0.d0
-          if (fmx(l,mspecies).gt.1.0d-3) then
-            fl(l)=fmx(l,mspecies)
-            sum=sum+fl(l)
-          endif
-        enddo
-        do l=1,ngrnd
-          fl(l)=fl(l)/sum
-        enddo
+       sum=0.d0
+       ngrnd=fmnl(mspecies)
+       do l=1,ngrnd
+        fl(l)=0.d0
+        if (fmx(l,mspecies).gt.1.0d-3) then
+         fl(l)=fmx(l,mspecies)
+         sum=sum+fl(l)
+        endif
+       enddo
+       do l=1,ngrnd
+        fl(l)=fl(l)/sum
+       enddo
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       t=dmax1(t,mintemp)
@@ -502,48 +498,47 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       nc=nxr3ioncol(idx)
       do icol=1,nc
 c i = lower, j = upper
-        i=xr3col_i(icol,idx)
-        xr3col_fr(icol,idx)=fl(i)
-        if (fl(i).gt.epsilon) then
+       i=xr3col_i(icol,idx)
+       xr3col_fr(icol,idx)=fl(i)
+       if (fl(i).gt.epsilon) then
         j=xr3col_j(icol,idx)
         ee=eji(i,j)
         y=ee*invrkt
         if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          invgi=xr3invgi(i,idx)
-          omegaij=fxr3omgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=fl(i)*cgjb*omegaij
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            if (linecoolmode.eq.1) then
-              if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
-              endif
-              if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
-              endif
-            endif
-            loss=rr*ee
-            xr3loss=xr3loss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
-   10       continue
-            nl=xr3col_nl(icol,idx)
-            do line=1,nl
-              jj=xr3col_jj(line,icol,idx) ! lower
-              kk=xr3col_kk(line,icol,idx) ! higher
-              br=xr3col_br(line,icol,idx)
-              emiss=(rr*br*eji(jj,kk)) ! note index swap above
-              bri(kk,jj)=bri(kk,jj)+emiss
-            enddo
+         invgi=xr3invgi(i,idx)
+         omegaij=fxr3omgspl(t,y,icol,idx)*invgi
+         cgjb=rka*f*dexp(-y)
+         cr=fl(i)*cgjb*omegaij
+         rr=abde*cr
+         if (rr.gt.epsilon) then
+          if (linecoolmode.eq.1) then
+           if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+            goto 10
+           endif
+           if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+            goto 10
+           endif
           endif
+          loss=rr*ee
+          xr3loss=xr3loss+loss
+          coolz(atom)=coolz(atom)+loss
+          coolzion(ion,atom)=coolzion(ion,atom)+loss
+   10     continue
+          nl=xr3col_nl(icol,idx)
+          do line=1,nl
+           jj=xr3col_jj(line,icol,idx)!lower
+           kk=xr3col_kk(line,icol,idx)!higher
+           br=xr3col_br(line,icol,idx)
+           emiss=(rr*br*eji(jj,kk))!noteindexswapabove
+           bri(kk,jj)=bri(kk,jj)+emiss
+          enddo
+         endif
         endif
-        endif
+       endif
       enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine reson3 (t, de, dh)
@@ -568,40 +563,38 @@ c
       if (nxr3ions.lt.1) return
 c
       do line=1,nxr3lines
-        xr3lines_bri(line)=0.d0
+       xr3lines_bri(line)=0.d0
       enddo
       do atom=1,atypes
-        if (mapz(atom).gt.2) collrate2p(atom)=0.d0
-        if (mapz(atom).gt.1) collrate2phe(atom)=0.d0
+       if (mapz(atom).gt.2) collrate2p(atom)=0.d0
+       if (mapz(atom).gt.1) collrate2phe(atom)=0.d0
       enddo
 c
       do idx=1,nxr3ions
-        atom=xr3at(idx)
-        if (atom.ne.0) then
-          ion=xr3ion(idx)
-          is=mapz(atom)-ion+1
-          pz=zion(atom)*pop(ion,atom)
-          if (pz.ge.pzlimit) then
+       atom=xr3at(idx)
+       if (atom.ne.0) then
+        ion=xr3ion(idx)
+        is=mapz(atom)-ion+1
+        pz=zion(atom)*pop(ion,atom)
+        if (pz.ge.pzlimit) then
 c
 c pzlimit
 c
-            j2phlevel=xr32S12j(idx)
-            ni=xr3ni(idx)
-
-           if (usekappa) then
-             call solvexr3ionkappa (t, de, dh, idx, ion_bri, ni)
-           else
-             call solvexr3ion (t, de, dh, idx, ion_bri, ni)
-           endif
-
+         j2phlevel=xr32s12j(idx)
+         ni=xr3ni(idx)
+         if (usekappa) then
+          call solvexr3ionkappa (t, de, dh, idx, ion_bri, ni)
+         else
+          call solvexr3ion (t, de, dh, idx, ion_bri, ni)
+         endif
 c H like
-            if (is.eq.1) then
+         if (is.eq.1) then
 c is = 1
-              i=1
-              do j=1,ni
+          i=1
+          do j=1,ni
 c
-                if (ion_bri(i,j).gt.brilimit) then
-                  line=xr3lines_map(i,j,idx)
+           if (ion_bri(i,j).gt.brilimit) then
+            line=xr3lines_map(i,j,idx)
 c
 c get effective 2 photon coll rates including cascade
 c contributions to j2phlevel,  j2phlevel = 0 for non H- or
@@ -609,36 +602,36 @@ c He-like ions and is ignored. Also don't let the 2photon
 c energy appear as a monochrome line, the emission is spread
 c added elsewhere in twophoton.f
 c
-                  if (j.eq.j2phlevel) then
-                    collrate2p(atom)=ion_bri(i,j)/xr3lines_egij(line)
-                    collrate2p(atom)=collrate2p(atom)/(de*dh*pz)
-                    goto 10
-                  endif
+            if (j.eq.j2phlevel) then
+             collrate2p(atom)=ion_bri(i,j)/xr3lines_egij(line)
+             collrate2p(atom)=collrate2p(atom)/(de*dh*pz)
+             goto 10
+            endif
 c
-                  xr3lines_bri(line)=ion_bri(i,j)*ifpi
-                endif
-   10         continue
+            xr3lines_bri(line)=ion_bri(i,j)*ifpi
+           endif
+   10      continue
 c j i=1
-              enddo
+          enddo
 c next j levels, i >1
-              do i=2,ni
-                do j=1,ni
-                  if (ion_bri(i,j).gt.brilimit) then
-                    line=xr3lines_map(i,j,idx)
-                    xr3lines_bri(line)=ion_bri(i,j)*ifpi
-                  endif
-                enddo
-              enddo
+          do i=2,ni
+           do j=1,ni
+            if (ion_bri(i,j).gt.brilimit) then
+             line=xr3lines_map(i,j,idx)
+             xr3lines_bri(line)=ion_bri(i,j)*ifpi
+            endif
+           enddo
+          enddo
 c is = 1
-           goto 30
-           endif
+          goto 30
+         endif
 c He like
-           if (is.eq.2) then
+         if (is.eq.2) then
 c is = 2
-            i=1
-            do j=1,ni
-              if (ion_bri(i,j).gt.brilimit) then
-                line=xr3lines_map(i,j,idx)
+          i=1
+          do j=1,ni
+           if (ion_bri(i,j).gt.brilimit) then
+            line=xr3lines_map(i,j,idx)
 c
 c get effective 2 photon coll rates including cascade
 c contributions to j2phlevel,  j2phlevel = 0 for non H- or
@@ -646,48 +639,47 @@ c He-like ions and is ignored. Also don't let the 2photon
 c energy appear as a monochrome line, the emission is spread
 c added elsewhere in twophoton.f
 c
-                  if (j.eq.j2phlevel) then
-                    collrate2phe(atom)=ion_bri(i,j)/xr3lines_egij(line)
-                    collrate2phe(atom)=collrate2phe(atom)/(de*dh*pz)
-                    goto 20
-                  endif
-
-                  xr3lines_bri(line)=ion_bri(i,j)*ifpi
-              endif
-   20         continue
-c j, i=1
-              enddo
-c next j le vels, i >1
-              do i=2,ni
-                do j=1,ni
-                  if (ion_bri(i,j).gt.brilimit) then
-                    line=xr3lines_map(i,j,idx)
-                    xr3lines_bri(line)=ion_bri(i,j)*ifpi
-                  endif
-                enddo
-              enddo
-c is = 2
-           goto 30
+            if (j.eq.j2phlevel) then
+             collrate2phe(atom)=ion_bri(i,j)/xr3lines_egij(line)
+             collrate2phe(atom)=collrate2phe(atom)/(de*dh*pz)
+             goto 20
+            endif
+            xr3lines_bri(line)=ion_bri(i,j)*ifpi
            endif
+   20      continue
+c j, i=1
+          enddo
+c next j le vels, i >1
+          do i=2,ni
+           do j=1,ni
+            if (ion_bri(i,j).gt.brilimit) then
+             line=xr3lines_map(i,j,idx)
+             xr3lines_bri(line)=ion_bri(i,j)*ifpi
+            endif
+           enddo
+          enddo
+c is = 2
+          goto 30
+         endif
 c
-C          if (is.gt.2) then
+c          if (is.gt.2) then
 c is others
-            do i=1,ni
-              do j=1,ni
-                if (ion_bri(i,j).gt.brilimit) then
-                  line=xr3lines_map(i,j,idx)
-                  xr3lines_bri(line)=ion_bri(i,j)*ifpi
-                endif
-              enddo
-            enddo
+         do i=1,ni
+          do j=1,ni
+           if (ion_bri(i,j).gt.brilimit) then
+            line=xr3lines_map(i,j,idx)
+            xr3lines_bri(line)=ion_bri(i,j)*ifpi
+           endif
+          enddo
+         enddo
 c is others
-C          endif
+c          endif
 c
-   30      continue
+   30    continue
 c
 c pzlimit
 c
-          endif
+        endif
 c atom
        endif
       enddo
@@ -696,7 +688,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fxrlomgspl(t,y,icol,idx)
@@ -721,33 +712,32 @@ c
 c
       upsilon=0.d0
       omtype=xrlcol_typespl(icol,idx)
-C     if ((omtype.eq.3).or.(omtype.eq.13)) then
+c     if ((omtype.eq.3).or.(omtype.eq.13)) then
 c
 c should be type 3 or 13, most differences are lost on init
 c as x, y, and y2 are made for all types. only type 13 needs
 c extra scaling at the end
 c
-        btc=xrlcol_tc(icol,idx)
-        beta=(t/(t+btc))
-        nspl=xrlcol_nspl(icol,idx)
-        do l=1,nspl
-          btx(l)=xrlcol_x(l) ! uniform splines for all hhe data
-          bty(l)=xrlcol_y(l,icol,idx)
-          bty2(l)=xrlcol_y2(l,icol,idx)
-        enddo
-        upsilon=fsplint(btx,bty,bty2,nspl,beta)
-        if (omtype.eq.13) then
-           upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
-        endif
-C     else
-C       write (*,*) 'ERROR, Invalid spline type in fxrlomgspl:',omtype
-C       write (*,*) t,icol,idx
-C       stop
-C     endif
+      btc=xrlcol_tc(icol,idx)
+      beta=(t/(t+btc))
+      nspl=xrlcol_nspl(icol,idx)
+      do l=1,nspl
+       btx(l)=xrlcol_x(l)!uniformsplinesforallhhedata
+       bty(l)=xrlcol_y(l,icol,idx)
+       bty2(l)=xrlcol_y2(l,icol,idx)
+      enddo
+      upsilon=fsplint(btx,bty,bty2,nspl,beta)
+      if (omtype.eq.13) then
+       upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
+      endif
+c     else
+c       write (*,*) 'ERROR, Invalid spline type in fxrlomgspl:',omtype
+c       write (*,*) t,icol,idx
+c       stop
+c     endif
       fxrlomgspl=dmax1(0.d0,upsilon)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvexrlion (t, de, dh, idx, bri, ni)
@@ -789,96 +779,95 @@ c
       abde=de*dh*pz
 c
       do l=1,mxxrllvls
-        fl(l)=0.d0
+       fl(l)=0.d0
       enddo
 c
       fl(1)=1.d0
 c
       mspecies=fmspindex(ion,atom)
       if (mspecies.gt.0) then
-        sum=0.d0
-        ngrnd=fmnl(mspecies)
-        do l=1,ngrnd
-          fl(l)=0.d0
-          if (fmx(l,mspecies).gt.1.0d-3) then
-            fl(l)=fmx(l,mspecies)
-            sum=sum+fmx(l,mspecies)
-          endif
-        enddo
-        do l=1,ngrnd
-          fl(l)=fl(l)/sum
-        enddo
+       sum=0.d0
+       ngrnd=fmnl(mspecies)
+       do l=1,ngrnd
+        fl(l)=0.d0
+        if (fmx(l,mspecies).gt.1.0d-3) then
+         fl(l)=fmx(l,mspecies)
+         sum=sum+fmx(l,mspecies)
+        endif
+       enddo
+       do l=1,ngrnd
+        fl(l)=fl(l)/sum
+       enddo
       endif
 c
       fespecies=fespindex(ion,atom)
       if (fespecies.gt.0) then
-        ngnd=fenl(fespecies)
-        if ((mapz(atom).eq.26).and.(ion.eq.3)) then
-          ngnd=34
+       ngnd=fenl(fespecies)
+       if ((mapz(atom).eq.26).and.(ion.eq.3)) then
+        ngnd=34
+       endif
+       sum=0.d0
+       do l=1,ngnd
+        fl(l)=0.d0
+        if (fex(l,fespecies).gt.1.0d-3) then
+         fl(l)=fex(l,fespecies)
+         sum=sum+fex(l,fespecies)
         endif
-        sum=0.d0
-        do l=1,ngnd
-          fl(l)=0.d0
-          if (fex(l,fespecies).gt.1.0d-3) then
-             fl(l)=fex(l,fespecies)
-             sum=sum+fex(l,fespecies)
-          endif
-        enddo
-        do l=1,ngnd
-          fl(l)=fl(l)/sum
-        enddo
+       enddo
+       do l=1,ngnd
+        fl(l)=fl(l)/sum
+       enddo
       endif
 c
       do i=1,ni
-        do j=1,ni
-          bri(i,j)=0.d0
-          eji(i,j)=plk*cls*dabs(xrlei(j,idx)-xrlei(i,idx))
-        enddo
+       do j=1,ni
+        bri(i,j)=0.d0
+        eji(i,j)=plk*cls*dabs(xrlei(j,idx)-xrlei(i,idx))
+       enddo
       enddo
 c
       t=dmax1(t,mintemp)
       f=1.d0/dsqrt(t)
       invrkt=1.d0/(rkb*t)
 c
-       nc=nxrlioncol(idx)
-       do icol=1,nc
+      nc=nxrlioncol(idx)
+      do icol=1,nc
 c i = lower, j = upper
-        i=xrlcol_i(icol,idx)
-        xrlcol_fr(icol,idx)=fl(i)
-        if (fl(i).gt.0.d0) then
+       i=xrlcol_i(icol,idx)
+       xrlcol_fr(icol,idx)=fl(i)
+       if (fl(i).gt.0.d0) then
         j=xrlcol_j(icol,idx)
         ee=eji(i,j)
         y=ee*invrkt
         if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          ratekappa=1.d0
-          if (usekappa) then
-            ratekappa=fkenhance(kappa,y)
-          endif
-          invgi=xrlinvgi(i,idx)
-          omegaij=fxrlomgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=fl(i)*cgjb*omegaij*ratekappa
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            loss=rr*ee
-            xrlloss=xrlloss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
-            nl=xrlcol_nl(icol,idx)
-            do line=1,nl
-              jj=xrlcol_jj(line,icol,idx) ! lower
-              kk=xrlcol_kk(line,icol,idx) ! higher
-              br=xrlcol_br(line,icol,idx)
-              emiss=(rr*br*eji(jj,kk)) ! note index swap above
-              bri(kk,jj)=bri(kk,jj)+emiss
-            enddo
-          endif
+         ratekappa=1.d0
+         if (usekappa) then
+          ratekappa=fkenhance(kappa,y)
+         endif
+         invgi=xrlinvgi(i,idx)
+         omegaij=fxrlomgspl(t,y,icol,idx)*invgi
+         cgjb=rka*f*dexp(-y)
+         cr=fl(i)*cgjb*omegaij*ratekappa
+         rr=abde*cr
+         if (rr.gt.epsilon) then
+          loss=rr*ee
+          xrlloss=xrlloss+loss
+          coolz(atom)=coolz(atom)+loss
+          coolzion(ion,atom)=coolzion(ion,atom)+loss
+          nl=xrlcol_nl(icol,idx)
+          do line=1,nl
+           jj=xrlcol_jj(line,icol,idx)!lower
+           kk=xrlcol_kk(line,icol,idx)!higher
+           br=xrlcol_br(line,icol,idx)
+           emiss=(rr*br*eji(jj,kk))!noteindexswapabove
+           bri(kk,jj)=bri(kk,jj)+emiss
+          enddo
+         endif
         endif
-        endif
+       endif
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine resonl (t, de, dh)
@@ -902,27 +891,27 @@ c
       if (nxrlions.lt.1) return
 c
       do line=1,nxrllines
-        xrllines_bri(line)=0.d0
+       xrllines_bri(line)=0.d0
       enddo
 c
       do idx=1,nxrlions
-        atom=xrlat(idx)
-        if (atom.ne.0) then
-          ion=xrlion(idx)
-          ni=xrlni(idx)
-          pz=zion(atom)*pop(ion,atom)
-          if (pz.ge.pzlimit) then
-            call solvexrlion (t, de, dh, idx, ion_bri, ni)
-            do i=1,ni
-              do j=1,ni
-                if (ion_bri(i,j).gt.epsilon) then
-                  line=xrllines_map(i,j,idx)
-                  xrllines_bri(line)=ion_bri(i,j)*ifpi
-                endif
-              enddo
-            enddo
-          endif
+       atom=xrlat(idx)
+       if (atom.ne.0) then
+        ion=xrlion(idx)
+        ni=xrlni(idx)
+        pz=zion(atom)*pop(ion,atom)
+        if (pz.ge.pzlimit) then
+         call solvexrlion (t, de, dh, idx, ion_bri, ni)
+         do i=1,ni
+          do j=1,ni
+           if (ion_bri(i,j).gt.epsilon) then
+            line=xrllines_map(i,j,idx)
+            xrllines_bri(line)=ion_bri(i,j)*ifpi
+           endif
+          enddo
+         enddo
         endif
+       endif
       enddo
       if (xrlloss.lt.epsilon) xrlloss=0.d0
       return

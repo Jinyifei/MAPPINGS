@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -56,35 +56,35 @@ c    *** OIII
 c
       tnii=0.0d0
       ratio=roiii
-      if (ratio.le.0.0d0) goto 30
+      if (ratio.le.0.0d0) goto 20
       dens=deoiii
 c
       tg=ftr(ratio,ao,bo)
 c
       do k=1,kf
-        tgi=tg
-        ra=fde(dens,tg,co)*ratio
-        tg=ftr(ra,ao,bo)
-        if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 20
+       tgi=tg
+       ra=fde(dens,tg,co)*ratio
+       tg=ftr(ra,ao,bo)
+       if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 10
       enddo
-   20 toiii=tg
+   10 toiii=tg
 c
 c    *** NII
 c
-   30 continue
+   20 continue
       ratio=rnii
-      if (ratio.le.0.0d0) goto 60
+      if (ratio.le.0.0d0) goto 40
       dens=denii
 c
       tg=ftr(ratio,an,bn)
       do k=1,kf
-        tgi=tg
-        ra=fde(dens,tg,cn)*ratio
-        tg=ftr(ra,an,bn)
-        if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 50
+       tgi=tg
+       ra=fde(dens,tg,cn)*ratio
+       tg=ftr(ra,an,bn)
+       if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 30
       enddo
-   50 tnii=tg
+   30 tnii=tg
 c
-   60 continue
+   40 continue
       return
       end

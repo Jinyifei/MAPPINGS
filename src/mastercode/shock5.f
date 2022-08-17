@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -46,7 +46,7 @@ c
       iterations=3
       ieln=4
 c
-      call shock5setup   (iterations)
+      call shock5setup (iterations)
       call shock5headers (iterations)
 c
       iterationindex=0
@@ -59,37 +59,36 @@ c
 c
       if (iterations.gt.1) then
 c
-   40   iterationindex=iterationindex+1
+   40  iterationindex=iterationindex+1
 c
-        write (*,10) iterationindex,iterations
+       write (*,10) iterationindex,iterations
 c
-        call shock5precursor (iterationindex, iterations)
-        call compsh5 (iterationindex, iterations)
-        call shock5check (iterationindex, iterations)
+       call shock5precursor (iterationindex, iterations)
+       call compsh5 (iterationindex, iterations)
+       call shock5check (iterationindex, iterations)
 c
-        write (*,20) iterationindex,iterations
+       write (*,20) iterationindex,iterations
 c
-        if ((converged.eq.0).and.(iterations.lt.mxshockits)) goto 40
+       if ((converged.eq.0).and.(iterations.lt.mxshockits)) goto 40
 c
 c repeat a final model for outputs
 c
-        finalit=1
-        iterationindex=iterationindex+1
+       finalit=1
+       iterationindex=iterationindex+1
 c
-        call shock5precursor (iterationindex, iterationindex)
-        call compsh5         (iterationindex, iterationindex)
-        call shock5check     (iterationindex, iterationindex)
+       call shock5precursor (iterationindex, iterationindex)
+       call compsh5 (iterationindex, iterationindex)
+       call shock5check (iterationindex, iterationindex)
 c
       endif
 c
-      call closeS5files()
+      call closes5files ()
 c
       write (*,30)
 c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine shock5setup (iterations)
@@ -145,8 +144,8 @@ c
 c
       mtype='A'
       magparam=0.d0
-      Pmag=0.0d0
-      Bmag=0.d0
+      pmag=0.0d0
+      bmag=0.d0
 c
       vmod='NONE'
       s5pfx='v100sh'
@@ -183,7 +182,7 @@ c     set up current field conditions
 c
       call photsou (subname)
       do i=1,infph
-        prefield(i)=soupho(i)
+       prefield(i)=soupho(i)
       enddo
 c
 c     Shock model preferences
@@ -210,7 +209,7 @@ c
 c
    50 write (*,40)
       read (*,10) stype
-      call toup(stype(1:1),stype)
+      call toup (stype(1:1), stype)
 c
       if ((stype.ne.'T').and.(stype.ne.'V')) goto 50
 c
@@ -237,25 +236,22 @@ c
      & ' :: ',$)
    70 write (*,60)
       read (*,10) mtype
-      call toup(mtype(1:1),mtype)
+      call toup (mtype(1:1), mtype)
 c
-      if ((mtype.ne.'A').and.
-     &    (mtype.ne.'B').and.
-     &    (mtype.ne.'C').and.
-     &    (mtype.ne.'M').and.
-     &    (mtype.ne.'R')) goto 70
+      if ((mtype.ne.'A').and.(mtype.ne.'B').and.(mtype.ne.'C')
+     &.and.(mtype.ne.'M').and.(mtype.ne.'R')) goto 70
 c
       if (mtype.eq.'B') then
 c       Preshock magnetic field at shockfront in uG
    80   format(//,
      & ' Specify the magnetic field at shockfront, B: ',/,
      & ' (microgauss): ', $ )
-        write (*,80)
-        read (*,*) magparam
-        Bmag=dabs(magparam)
-        magparam=Bmag
-        Bmag=Bmag*1e-6
-        Pmag=(Bmag*Bmag)/epi
+       write (*,80)
+       read (*,*) magparam
+       bmag=dabs(magparam)
+       magparam=bmag
+       bmag=bmag*1e-6
+       pmag=(bmag*bmag)/epi
       endif
 c
       if (mtype.eq.'A') then
@@ -265,37 +261,37 @@ c     Alpha = 0.1 is weak magnetic field. Alpha = 0.0 is no magnetic
    90   format(//,
      & ' Specify the magnetic Alpha_0 in proto-state',/,
      & ' ( >= 0.0: Pmag/Pgas): ', $)
-        write (*,90)
-        read (*,*) magparam
-        malpha=magparam
-        if (magparam.lt.0.0d0) then
-          Bmag=-magparam
-          Bmag=Bmag*1e-6
-          Pmag=(Bmag*Bmag)/epi
-          mtype='B'
-          magparam=dabs(magparam)
-          mageta=1.0d0
-          malpha=1.0d0
-        endif
+       write (*,90)
+       read (*,*) magparam
+       malpha=magparam
+       if (magparam.lt.0.0d0) then
+        bmag=-magparam
+        bmag=bmag*1e-6
+        pmag=(bmag*bmag)/epi
+        mtype='B'
+        magparam=dabs(magparam)
+        mageta=1.0d0
+        malpha=1.0d0
+       endif
       endif
 c
       if (mtype.eq.'C') then
   100   format(//,
      & ' Specify the magnetic Alpha at shockfront',/,
      & ' ( >= 0.0: Pmag/Pgas): ', $)
-        write (*,100)
-        read (*,*) magparam
-        malpha=magparam
-        if (magparam.lt.0.0d0) then
-          Bmag=-magparam
-          Bmag=Bmag*1e-6
-          Pmag=(Bmag*Bmag)/epi
-          mtype='B'
-          magparam=dabs(magparam)
-          mageta=1.0d0
-          malpha=1.0d0
-          mmach=0.d0
-        endif
+       write (*,100)
+       read (*,*) magparam
+       malpha=magparam
+       if (magparam.lt.0.0d0) then
+        bmag=-magparam
+        bmag=bmag*1e-6
+        pmag=(bmag*bmag)/epi
+        mtype='B'
+        magparam=dabs(magparam)
+        mageta=1.0d0
+        malpha=1.0d0
+        mmach=0.d0
+       endif
       endif
 c
       if (mtype.eq.'M') then
@@ -303,19 +299,19 @@ c       Preshock magnetic field expressed as magnetic Alfven Mach number
   110   format(//,
      & ' Specify the magnetic Alfven Mach Number, Ma',/,
      & ' ( v/sqrt(Pmag/rho), Ma>= 0.0 ) ', $)
-        write (*,110)
-        read (*,*) magparam
-        mmach=magparam
-        if (magparam.lt.0.0d0) then
-          Bmag=-magparam
-          Bmag=Bmag*1e-6
-          Pmag=(Bmag*Bmag)/epi
-          mtype='B'
-          magparam=dabs(magparam)
-          mageta=1.0d0
-          malpha=1.0d0
-          mmach=0.d0
-        endif
+       write (*,110)
+       read (*,*) magparam
+       mmach=magparam
+       if (magparam.lt.0.0d0) then
+        bmag=-magparam
+        bmag=bmag*1e-6
+        pmag=(bmag*bmag)/epi
+        mtype='B'
+        magparam=dabs(magparam)
+        mageta=1.0d0
+        malpha=1.0d0
+        mmach=0.d0
+       endif
       endif
 c
       if (mtype.eq.'R') then
@@ -325,18 +321,18 @@ c       Pram = rho*vs*vs; Pmag = (B^2)/8pi
   120   format(//,
      & ' Specify the magnetic Eta at shockfront',/,
      & ' ( >= 0.0: 2Pmag/Pram): ', $)
-        write (*,120)
-        read (*,*) magparam
-        mageta=magparam
-        if (magparam.lt.0.0d0) then
-          Bmag=dabs(magparam)*1e-6
-          Pmag=(Bmag*Bmag)/epi
-          mtype='B'
-          magparam=dabs(magparam)
-          mageta=1.0d0
-          malpha=1.0d0
-          mmach=0.d0
-        endif
+       write (*,120)
+       read (*,*) magparam
+       mageta=magparam
+       if (magparam.lt.0.0d0) then
+        bmag=dabs(magparam)*1e-6
+        pmag=(bmag*bmag)/epi
+        mtype='B'
+        magparam=dabs(magparam)
+        mageta=1.0d0
+        malpha=1.0d0
+        mmach=0.d0
+       endif
       endif
 c
 c always  plane parallel
@@ -357,61 +353,61 @@ c
      & '  T (K), dh (N), v (< 1e5 km/s, >= 1e5 cm/s)',/,
      & ' (T<10 taken as a log, dh <= 0 taken as a log),',/,
      & ' : ',$)
-        write (*,130)
-        read (*,*) t,dh,ve
+       write (*,130)
+       read (*,*) t,dh,ve
 c
-        dr=1.d0
-        de=feldens(dh,pop_neu)
+       dr=1.d0
+       de=feldens(dh,pop_neu)
 c
-        if (ve.lt.1.d5) ve=ve*1.d5
-        if (t.le.10.d0) t=10.d0**t
-        if (dh.le.0.d0) dh=10.d0**dh
+       if (ve.lt.1.d5) ve=ve*1.d5
+       if (t.le.10.d0) t=10.d0**t
+       if (dh.le.0.d0) dh=10.d0**dh
 c
-        Pgas=fpresse(t,de,dh)
-        de=feldens(dh,pop_neu)
-        rh_neu=frho(de,dh)
-        Pram=rh_neu*ve*ve
+       pgas=fpresse(t,de,dh)
+       de=feldens(dh,pop_neu)
+       rh_neu=frho(de,dh)
+       pram=rh_neu*ve*ve
 c
-        if (mtype.eq.'B') then
-          Bmag=magparam*1.0d-6
-          Pmag=(Bmag*Bmag)/epi
-        endif
-        if (mtype.eq.'A') then
-          Pmag=malpha*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
-        if (mtype.eq.'C') then
-          Pmag=malpha*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
-        if (mtype.eq.'M') then
-          va=ve/mmach
-          Pmag=(0.5*rh_neu*va*va)
-          Bmag=dsqrt(epi*Pmag)
-        endif
-        if (mtype.eq.'R') then
-          Pmag=0.5d0*mageta*Pram
-          Bmag=dsqrt(epi*Pmag)
-        endif
+       if (mtype.eq.'B') then
+        bmag=magparam*1.0d-6
+        pmag=(bmag*bmag)/epi
+       endif
+       if (mtype.eq.'A') then
+        pmag=malpha*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
+       if (mtype.eq.'C') then
+        pmag=malpha*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
+       if (mtype.eq.'M') then
+        va=ve/mmach
+        pmag=(0.5*rh_neu*va*va)
+        bmag=dsqrt(epi*pmag)
+       endif
+       if (mtype.eq.'R') then
+        pmag=0.5d0*mageta*pram
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        vshoc=ve
+       vshoc=ve
 c
-        bm_neu=Bmag
-        te_neu=t
-        de_neu=de
-        dh_neu=dh
-        vs_neu=ve
-        pr_neu=fpresse(te_neu,de_neu,dh_neu)
-        rh_neu=frho(de_neu,dh_neu)
+       bm_neu=bmag
+       te_neu=t
+       de_neu=de
+       dh_neu=dh
+       vs_neu=ve
+       pr_neu=fpresse(te_neu,de_neu,dh_neu)
+       rh_neu=frho(de_neu,dh_neu)
 c
 c     fill in other default parameters
 c
-        dt=0.d0
-        tloss=0.d0
+       dt=0.d0
+       tloss=0.d0
 c
-        call shockcmpf (t, de, dh, ve, Bmag)
+       call shockcmpf (t, de, dh, ve, bmag)
 c
-        tm00=te0
+       tm00=te0
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -428,90 +424,90 @@ c
      & ' Specify the proto-shock conditions:',/,
      & ' (T<10 taken as a log, dh <= 0 taken as a log)',/,
      & ' T (K), dh (N) : ',$)
-        write (*,140)
-        read (*,*) tpr,dh
-        wdil=0.5d0
+       write (*,140)
+       read (*,*) tpr,dh
+       wdil=0.5d0
 c
-        if (tpr.le.10.d0) tpr=10.d0**tpr
-        if (dh.le.0.0d0) dh=10.d0**dh
+       if (tpr.le.10.d0) tpr=10.d0**tpr
+       if (dh.le.0.0d0) dh=10.d0**dh
 c
   150   format(//,
      & ' Specify the post-shock temperature:',/,
      & ' (T<10 taken as a log) T (K) : ',$)
-        write (*,150)
-        read (*,*) tpo
+       write (*,150)
+       read (*,*) tpo
 c
-        if (tpo.le.10.d0) tpo=10.d0**tpo
+       if (tpo.le.10.d0) tpo=10.d0**tpo
 c
-        te0=tpr
-        te1=tpo
+       te0=tpr
+       te1=tpo
 c       Partially set up proto-state
-        te_neu=tpr
-        dh_neu=dh
-        de_neu=feldens(dh_neu,pop_neu)
-        Pgas=fpresse(te_neu,de_neu,dh_neu)
-        rh_neu=frho(de_neu,dh_neu)
+       te_neu=tpr
+       dh_neu=dh
+       de_neu=feldens(dh_neu,pop_neu)
+       pgas=fpresse(te_neu,de_neu,dh_neu)
+       rh_neu=frho(de_neu,dh_neu)
 c
-        if (mtype.eq.'B') then
-          Bmag=magparam*1.0d-6
-          Pmag=(Bmag*Bmag)/epi
-        endif
-        if (mtype.eq.'A') then
-          Pmag=malpha*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
-        if (mtype.eq.'C') then
-          Pmag=malpha*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
+       if (mtype.eq.'B') then
+        bmag=magparam*1.0d-6
+        pmag=(bmag*bmag)/epi
+       endif
+       if (mtype.eq.'A') then
+        pmag=malpha*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
+       if (mtype.eq.'C') then
+        pmag=malpha*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        vapprox=velshock2(dh_neu,tpr,0.d0,tpo)
-        rh_neu=frho(de_neu,dh_neu)
-        Pram=rh_neu*vapprox*vapprox
-        if (mtype.eq.'R') then
-          Pmag=0.5d0*mageta*Pram
-          Bmag=dsqrt(epi*Pmag)
-        endif
+       vapprox=velshock2(dh_neu,tpr,0.d0,tpo)
+       rh_neu=frho(de_neu,dh_neu)
+       pram=rh_neu*vapprox*vapprox
+       if (mtype.eq.'R') then
+        pmag=0.5d0*mageta*pram
+        bmag=dsqrt(epi*pmag)
+       endif
 c
 c       We need to iterate for a consistent solution.  We have the
 c       density and T jump; solve for shock speed and magnetic field.
 c
-  160   bm0=Bmag
+  160  bm0=bmag
 c
-        vshoc=velshock2(dh_neu,tpr,Bmag,tpo)
-        ve=vshoc
-        Pram=rh_neu*ve*ve
+       vshoc=velshock2(dh_neu,tpr,bmag,tpo)
+       ve=vshoc
+       pram=rh_neu*ve*ve
 c
-        if (mtype.eq.'M') then
-          va=vshoc/mmach
-          Pmag=(0.5*rh_neu*va*va)
-          Bmag=dsqrt(epi*Pmag)
-          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
-          if (eps.gt.1.0d-6) goto 160
-        endif
+       if (mtype.eq.'M') then
+        va=vshoc/mmach
+        pmag=(0.5*rh_neu*va*va)
+        bmag=dsqrt(epi*pmag)
+        eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+        if (eps.gt.1.0d-6) goto 160
+       endif
 c
-        if (mtype.eq.'R') then
+       if (mtype.eq.'R') then
 c
 c iterate for rampressure/alpha_r
 c
-          Pmag=0.5d0*mageta*Pram
-          Bmag=dsqrt(epi*Pmag)
+        pmag=0.5d0*mageta*pram
+        bmag=dsqrt(epi*pmag)
 c           write(*,*) vshoc,Pram,Pmag,bm0,Bmag,te1
-          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
-C         write (*,*) eps,Bmag,bm0
-          if (eps.gt.1.0d-6) goto 160
-        endif
+        eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+c         write (*,*) eps,Bmag,bm0
+        if (eps.gt.1.0d-6) goto 160
+       endif
 c
-        dt=0.d0
-        tloss=0.d0
+       dt=0.d0
+       tloss=0.d0
 c
-        call shockcmpf (te_neu, de_neu, dh_neu, ve, Bmag)
+       call shockcmpf (te_neu, de_neu, dh_neu, ve, bmag)
 c
-        tm00=te0
-        bm_neu=Bmag
-        vs_neu=vshoc
-        pr_neu=fpresse(te_neu,de_neu,dh_neu)
-        rh_neu=frho(de_neu,dh_neu)
+       tm00=te0
+       bm_neu=bmag
+       vs_neu=vshoc
+       pr_neu=fpresse(te_neu,de_neu,dh_neu)
+       rh_neu=frho(de_neu,dh_neu)
 c
       endif
 c
@@ -524,9 +520,9 @@ c
      & '    Give index alpha, Lambda at 1e6K',/,
      & '    (Lambda<0 as log)',/,
      & ' :: ',$)
-        write (*,170)
-        read (*,*) alphaclaw,alphac0
-        if (alphac0.lt.0.d0) alphac0=10.d0**alphac0
+       write (*,170)
+       read (*,*) alphaclaw,alphac0
+       if (alphac0.lt.0.d0) alphac0=10.d0**alphac0
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -553,15 +549,15 @@ c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
 c
-      Pmag=bp0
-      Pgas=pr0
-      Pram=rho0*vel0*vel0
+      pmag=bp0
+      pgas=pr0
+      pram=rho0*vel0*vel0
 c
-      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rho0)
-      malpha=Pmag/Pgas
-      gaseta=gammaEOS*Pgas/Pram
-      mageta=2.d0*Pmag/Pram
+      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
+      malpha=pmag/pgas
+      gaseta=gammaeos*pgas/pram
+      mageta=2.d0*pmag/pram
 c
       call shocksummary (6)
 c
@@ -607,7 +603,7 @@ c
      & ' :: ',$)
   190 write (*,180)
       read (*,10) ilgg
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
 c
       if ((ilgg.ne.'Z').and.(ilgg.ne.'F')) goto 190
 c
@@ -621,7 +617,6 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Calculation Limit Settings ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-
       write (*,200)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -668,16 +663,11 @@ c
 c
   230 write (*,220)
       read (*,10) jend
-      call toup(jend(1:1),jend)
+      call toup (jend(1:1), jend)
 c
-      if ((jend.ne.'A')
-     &.and.(jend.ne.'B')
-     &.and.(jend.ne.'C')
-     &.and.(jend.ne.'D')
-     &.and.(jend.ne.'E')
-     &.and.(jend.ne.'F')
-     &.and.(jend.ne.'G')
-     &.and.(jend.ne.'S')) goto 230
+      if ((jend.ne.'A').and.(jend.ne.'B').and.(jend.ne.'C')
+     &.and.(jend.ne.'D').and.(jend.ne.'E').and.(jend.ne.'F')
+     &.and.(jend.ne.'G').and.(jend.ne.'S')) goto 230
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -689,29 +679,29 @@ c
   240   format(//,
      & ' Give atom, ion and limit fraction: ',/,
      & ' (eg 1 2 0.05 = stop when HII < 0.05): ',$)
-        write (*,240)
-        read (*,*) ielen,jpoen,fren
+       write (*,240)
+       read (*,*) ielen,jpoen,fren
       endif
       if ((jend.eq.'C').or.(jend.eq.'S')) then
   250   format(//,
      & ' Give final temperature (K > 10, log <= 10): ',$)
-        write (*,250)
-        read (*,*) tend
-        if (tend.le.10.d0) tend=10.d0**tend
+       write (*,250)
+       read (*,*) tend
+       if (tend.le.10.d0) tend=10.d0**tend
       endif
       if (jend.eq.'D') then
   260   format(//,
      & ' Give final distance (cm > 100, log<=100): ',$)
-        write (*,260)
-        read (*,*) diend
-        if (diend.le.100.d0) diend=10.d0**diend
+       write (*,260)
+       read (*,*) diend
+       if (diend.le.100.d0) diend=10.d0**diend
       endif
       if (jend.eq.'E') then
   270   format(//,
      & ' Give time limit (s > 100, log<=100): ',$)
-        write (*,270)
-        read (*,*) timend
-        if (timend.le.100.d0) timend=10.d0**timend
+       write (*,270)
+       read (*,*) timend
+       if (timend.le.100.d0) timend=10.d0**timend
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -793,57 +783,57 @@ c
 c     Ion Balances
 c
       if (tsrmod.eq.'Y') then
-        call myappend (outsettings, '+B', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+B', outshow)
+       outsettings=outshow
       endif
 c
 c    rates file
 c
       if (ratmod.eq.'Y') then
-        call myappend (outsettings, '+C', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+C', outshow)
+       outsettings=outshow
       endif
 c
 c    dynamics file
 c
       if (dynmod.eq.'Y') then
-        call myappend (outsettings, '+D', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+D', outshow)
+       outsettings=outshow
       endif
 c
 c    final downstream field
 c
       if (jspec.eq.'Y') then
-        call myappend (outsettings, '+E', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+E', outshow)
+       outsettings=outshow
       endif
 c
 c    all up stream fields
 c
       if (lmod.eq.'Y') then
-        call myappend (outsettings, '+F', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+F', outshow)
+       outsettings=outshow
       endif
 c
 c     emission bands
 c
       if (bandsmod.eq.'Y') then
-        call myappend (outsettings, '+H', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+H', outshow)
+       outsettings=outshow
       endif
 c
 c     Cooling Components
 c
       if (fclmod.eq.'Y') then
-        call myappend (outsettings, '+K', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+K', outshow)
+       outsettings=outshow
       endif
 c
 c    monitor 16 lines
 c
       if (jlin.eq.'Y') then
-        call myappend (outsettings, '+L', outshow)
-        outsettings=outshow
+       call myappend (outsettings, '+L', outshow)
+       outsettings=outshow
       endif
 c
   340 format(//,
@@ -866,22 +856,15 @@ c
      & ' :: ',$)
   350 write (*,340) outsettings,mxmonlines
       read (*,10) ilgg
-      call toup(ilgg(1:1),ilgg)
-      write(*,*)
+      call toup (ilgg(1:1), ilgg)
+      write (*,*)
 c
       if (ilgg.eq.'Q') ilgg='X'
 c
-      if ((ilgg.ne.'A')
-     &.and.(ilgg.ne.'B')
-     &.and.(ilgg.ne.'C')
-     &.and.(ilgg.ne.'D')
-     &.and.(ilgg.ne.'E')
-     &.and.(ilgg.ne.'F')
-     &.and.(ilgg.ne.'H')
-     &.and.(ilgg.ne.'K')
-     &.and.(ilgg.ne.'L')
-     &.and.(ilgg.ne.'R')
-     &.and.(ilgg.ne.'X')) goto 350
+      if ((ilgg.ne.'A').and.(ilgg.ne.'B').and.(ilgg.ne.'C')
+     &.and.(ilgg.ne.'D').and.(ilgg.ne.'E').and.(ilgg.ne.'F')
+     &.and.(ilgg.ne.'H').and.(ilgg.ne.'K').and.(ilgg.ne.'L')
+     &.and.(ilgg.ne.'R').and.(ilgg.ne.'X')) goto 350
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -926,43 +909,42 @@ c
 c
   360   format(//' Monitor ions/columns of max ',i2,' elements:',/
      & '::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
-  365   format(' Enter number of elements to track : ',$)
-  366   format(/' Elements (Z) : ',$)
-        write (*,360) atypes
-        write (*,365)
-        read (*,*) ieln
+  370   format(' Enter number of elements to track : ',$)
+       write (*,360) atypes
+       write (*,370)
+       read (*,*) ieln
 c
-        ieln=min(max(ieln,1),atypes)
-        read (*,*) (iel(i),i=1,ieln)
+       ieln=min(max(ieln,1),atypes)
+       read (*,*) (iel(i),i=1,ieln)
 c
-        do i=1,ieln
-           elok(i)=0
-           do idx=1,atypes
-              if (iel(i).eq.mapz(idx)) elok(i)=1
-           enddo
+       do i=1,ieln
+        elok(i)=0
+        do idx=1,atypes
+         if (iel(i).eq.mapz(idx)) elok(i)=1
         enddo
+       enddo
 c
+       if (tsrmod.eq.'Y') then
+        nel=0
+        do i=1,ieln
+         if (elok(i).eq.1) then
+          nel=nel+1
+          iel(nel)=zmap(iel(i))
+         endif
+        enddo
+        if (nel.lt.1) tsrmod='N'
         if (tsrmod.eq.'Y') then
-           nel=0
-           do i=1,ieln
-              if (elok(i).eq.1) then
-                 nel=nel+1
-                 iel(nel)=zmap(iel(i))
-              endif
-           enddo
-           if (nel.lt.1) tsrmod='N'
-           if (tsrmod.eq.'Y') then
-              ieln=nel
-  367         format(/' Monitoring :',30(x,a2),/)
-              write(*,367) (elem(iel(i)),i=1,ieln)
+         ieln=nel
+  380         format(/' Monitoring :',30(x,a2),/)
+         write (*,380) (elem(iel(i)),i=1,ieln)
 c
-  370         format(/,' Record all ions file (Y/N)? : ',$)
-  375         write (*,370)
-              read (*,10) allmod
-              call toup(allmod(1:1),allmod)
-              if ((allmod.ne.'Y').and.(allmod.ne.'N')) goto 375
-           endif
+  390         format(/,' Record all ions file (Y/N)? : ',$)
+  400    write (*,390)
+         read (*,10) allmod
+         call toup (allmod(1:1), allmod)
+         if ((allmod.ne.'Y').and.(allmod.ne.'N')) goto 400
         endif
+       endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1010,13 +992,13 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (fclmod.eq.'Y') then
-        jnorm=0
+       jnorm=0
   410  format (//' Cooling File Normalisation,',/
      & ' (0=ne.nH, 1=nH^2, 2=ne.ni, 3=n^2, 4=ne^2): ',$)
-        write (*,410)
-        read (*,*) jnorm
-        if (jnorm.lt.0) jnorm=0
-        if (jnorm.gt.4) jnorm=0
+       write (*,410)
+       read (*,*) jnorm
+       if (jnorm.lt.0) jnorm=0
+       if (jnorm.gt.4) jnorm=0
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1028,33 +1010,28 @@ c
       njlines=0
       if (jlin.eq.'Y') then
 c
-  380   format('   ',a3,a6,' ',f12.3)
-  385   format(//' Select up to ',i3,' lines by (A, incl air)   :',/
+  420   format('   ',a3,a6,' ',f12.3)
+  430   format(//' Select up to ',i3,' lines by (A, incl air)   :',/
      & '::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
-  390   format(' Enter number of lines to track: ',$)
-        write (*,385) mxmonlines
-        write (*,390)
-        read (*,*) nl
-        nl=min(max(nl,1),mxmonlines)
-        njlines=nl
-
-  395   format(/' Wavelengths (see spec list files) : ',$)
-        write (*,395)
-        read (*,*) (emlinlist(i),i=1,njlines)
-        do i=1,mxmonlines
-          emlindeltas(i)=0.001d0
-        enddo
-        call speclocallineids (emlinlistatom, emlinlistion)
-
-  396   format(/' Monitoring :')
-        write(*,396)
-        do i=1,njlines
-           write(*,380)
-     &    elem(emlinlistatom(i)),
-     &    rom(emlinlistion(i)),
-     &    emlinlist(i)
-        enddo
-
+  440   format(' Enter number of lines to track: ',$)
+       write (*,430) mxmonlines
+       write (*,440)
+       read (*,*) nl
+       nl=min(max(nl,1),mxmonlines)
+       njlines=nl
+  450   format(/' Wavelengths (see spec list files) : ',$)
+       write (*,450)
+       read (*,*) (emlinlist(i),i=1,njlines)
+       do i=1,mxmonlines
+        emlindeltas(i)=0.001d0
+       enddo
+       call speclocallineids (emlinlistatom, emlinlistion)
+  460   format(/' Monitoring :')
+       write (*,460)
+       do i=1,njlines
+        write (*,420) elem(emlinlistatom(i)),rom(emlinlistion(i)),
+     &   emlinlist(i)
+       enddo
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1063,7 +1040,7 @@ c     get screen display mode
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  420 format(//,
+  470 format(//,
      & ' Runtime screen display:',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    A  : Standard display ',/,
@@ -1071,9 +1048,9 @@ c
      & '    C  : Full Display (Full slab display + timescales).',/,
      & '    M  : Minimal Display (batch mode).',/,
      & ' :: ',$)
-      write (*,420)
+      write (*,470)
       read (*,10) ilgg
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
 c
       vmod='NONE'
       if (ilgg.eq.'A') vmod='MINI'
@@ -1087,9 +1064,9 @@ c     get runname
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  430 format(//,
+  480 format(//,
      & ' Set a name/code for this model: ',$)
-      write (*,430)
+      write (*,480)
       read (*,'(a)') runname
       np=mlen(runname)
       runname=runname(1:np)
@@ -1098,13 +1075,12 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Create User and open main model files
 c
-      call createS5files ()
+      call creates5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine shock5headers (iterations)
@@ -1128,7 +1104,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Write Headers, open files to write
 c
-      call appendS5files()
+      call appends5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       de=feldens(dh,pop)
@@ -1149,9 +1125,9 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ratmod.eq.'Y') write (lurtsh,10) iterations,theversion
       if (dynmod.eq.'Y') write (ludy,10) iterations,theversion
       if (tsrmod.eq.'Y') then
-        do i=1,ieln
-          write (luionsh(i),10) iterations,theversion
-        enddo
+       do i=1,ieln
+        write (luionsh(i),10) iterations,theversion
+       enddo
       endif
       if (allmod.eq.'Y') write (lualsh,10) iterations,theversion
       if (fclmod.eq.'Y') write (lucl,10) iterations,theversion
@@ -1169,9 +1145,9 @@ c
       if (ratmod.eq.'Y') write (lurtsh,20) runname,fsm
       if (dynmod.eq.'Y') write (ludy,20) runname,fsm
       if (tsrmod.eq.'Y') then
-        do i=1,ieln
-          write (luionsh(i),20) runname,fsm
-        enddo
+       do i=1,ieln
+        write (luionsh(i),20) runname,fsm
+       enddo
       endif
       if (allmod.eq.'Y') write (lualsh,20) runname,fsm
       if (fclmod.eq.'Y') write (lucl,20) runname,fsm
@@ -1216,9 +1192,9 @@ c
       if (ratmod.eq.'Y') write (lurtsh,30) abnfile,ionsetup,srcfile
       if (dynmod.eq.'Y') write (ludy,30) abnfile,ionsetup,srcfile
       if (tsrmod.eq.'Y') then
-        do i=1,ieln
-          write (luionsh(i),30) abnfile,ionsetup,srcfile
-        enddo
+       do i=1,ieln
+        write (luionsh(i),30) abnfile,ionsetup,srcfile
+       enddo
       endif
       if (allmod.eq.'Y') write (lualsh,30) abnfile,ionsetup,srcfile
       if (fclmod.eq.'Y') write (lucl,30) abnfile,ionsetup,srcfile
@@ -1234,7 +1210,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       abundtitle=' Initial Abundances :'
       do i=1,atypes
-        zi(i)=zion0(i)*deltazion(i)
+       zi(i)=zion0(i)*deltazion(i)
       enddo
       call dispabundances (luop, zi, abundtitle)
       if (lupt.gt.0) call dispabundances (lupt, zi, abundtitle)
@@ -1259,29 +1235,29 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (usekappa) then
-        write (luop,50) cht,pht,clt,kappa
-        if (lupt.gt.0) write (lupt,50) cht,pht,clt,kappa
+       write (luop,50) cht,pht,clt,kappa
+       if (lupt.gt.0) write (lupt,50) cht,pht,clt,kappa
       else
-        write (luop,40) cht,pht,clt
-        if (lupt.gt.0) write (lupt,40) cht,pht,clt
+       write (luop,40) cht,pht,clt
+       if (lupt.gt.0) write (lupt,40) cht,pht,clt
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       write (luop,60)
-      write (luop,70) jden,jgeo,jtrans,jend,ielen,jpoen,fren,
-     &                tend,diend,tauen,tmod,tm00
+      write (luop,70) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,diend,
+     &tauen,tmod,tm00
       write (luop,80)
       write (luop,90)
       write (luop,100) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
 c
       if (lupt.gt.0) then
-         write (lupt,60)
-         write (lupt,70) jden,jgeo,jtrans,jend,ielen,jpoen,fren,
-     &                   tend,diend,tauen,tmod,tm00
-         write (lupt,80)
-         write (lupt,90)
-         write (lupt,100) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+       write (lupt,60)
+       write (lupt,70) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
+     &  diend,tauen,tmod,tm00
+       write (lupt,80)
+       write (lupt,90)
+       write (lupt,100) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1294,7 +1270,7 @@ c
      & ' Initial Jump Conditions:',/,
      & ' =========================')
       write (luop,110)
-      if (lupt.gt.0)write (lupt,110)
+      if (lupt.gt.0) write (lupt,110)
 c
   120 format(//'  T0',1pg14.7,' V0',1pg14.7,/,
      & ' RH0',1pg14.7,' P0',1pg14.7,' B0',1pg14.7,//,
@@ -1304,12 +1280,12 @@ c
       dr=0.d0
       dv=vel1-vel0
 c
-      write (*,120) te0,vel0*1.d-5,rho0,pr0,bm0*1.d6,te1,
-     &   vel1*1.d-5,rho1,pr1,bm1*1.d6
-      write (luop,120) te0,vel0*1.d-5,rho0,pr0,bm0*1.d6,te1,
-     &   vel1*1.d-5,rho1,pr1,bm1*1.d6
-      if (lupt.gt.0) write (lupt,120) te0,vel0*1.d-5,rho0,
-     &   pr0,bm0*1.d6,te1,vel1*1.d-5,rho1,pr1,bm1*1.d6
+      write (*,120) te0,vel0*1.d-5,rho0,pr0,bm0*1.d6,te1,vel1*1.d-5,
+     &rho1,pr1,bm1*1.d6
+      write (luop,120) te0,vel0*1.d-5,rho0,pr0,bm0*1.d6,te1,vel1*1.d-5,
+     &rho1,pr1,bm1*1.d6
+      if (lupt.gt.0) write (lupt,120) te0,vel0*1.d-5,rho0,pr0,bm0*1.d6,
+     &te1,vel1*1.d-5,rho1,pr1,bm1*1.d6
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1356,9 +1332,9 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ratmod.eq.'Y') write (lurtsh,130)
       if (dynmod.eq.'Y') write (ludy,130)
       if (tsrmod.eq.'Y') then
-        do i=1,ieln
-          write (luionsh(i),130)
-        enddo
+       do i=1,ieln
+        write (luionsh(i),130)
+       enddo
       endif
       if (allmod.eq.'Y') write (lualsh,130)
       if (fclmod.eq.'Y') write (lucl,130)
@@ -1368,9 +1344,9 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ratmod.eq.'Y') call wionpop (lurtsh, pop)
       if (dynmod.eq.'Y') call wionpop (ludy, pop)
       if (tsrmod.eq.'Y') then
-        do i=1,ieln
-          call wionpop (luionsh(i), pop)
-        enddo
+       do i=1,ieln
+        call wionpop (luionsh(i), pop)
+       enddo
       endif
       if (allmod.eq.'Y') call wionpop (lualsh, pop)
       if (fclmod.eq.'Y') call wionpop (lucl, pop)
@@ -1381,7 +1357,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (ratmod.eq.'Y') then
-        call wmodel (lurtsh, 0.d0, 0.0d0, 0.d0, 0.0d0, 'LOSH')
+       call wmodel (lurtsh, 0.d0, 0.0d0, 0.d0, 0.0d0, 'LOSH')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1395,31 +1371,31 @@ c
      & ' #[1], [2] <X>     , [3] DeltaX  , [4] t       , [5] dt      ,',
      & '  [6] <T>    , [7] <ne>    , [8] <nH>    , [9] <nT>    ,',
      & 31(' [',i2,'] ', a6,' ,'))
-        do i=1,ieln
-          write (luionsh(i),'(//," Element : ",a2)') elem(iel(i))
-          write (luionsh(i),140) (j+9,rom(j),j=1,maxion(iel(i)))
-        enddo
+       do i=1,ieln
+        write (luionsh(i),'(//," Element : ",a2)') elem(iel(i))
+        write (luionsh(i),140) (j+9,rom(j),j=1,maxion(iel(i)))
+       enddo
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  160 format(//,
+  150 format(//,
      & 17(a12,a1))
       if (bandsmod.eq.'Y') then
-        write (lupb,160) 'Te',tab,'de',tab,'dh',tab,'en',tab,'XHI',tab,'
-     &XHII',tab,'mu',tab,'tloss',tab,'Lambda',tab,'ff/total',tab,'BHI-0
-     &.1keV',tab,'B0.1-0.5keV',tab,'B0.5-1.0keV',tab,'B1.0-2.0eV',tab,'B
-     &2.0-10.0keV',tab,'Ball'
+       write (lupb,150) 'Te',tab,'de',tab,'dh',tab,'en',tab,'XHI',tab,'X
+     &HII',tab,'mu',tab,'tloss',tab,'Lambda',tab,'ff/total',tab,'BHI-0 .
+     &1keV',tab,'B0.1-0.5keV',tab,'B0.5-1.0keV',tab,'B1.0-2.0eV',tab,'B2
+     &.0-10.0keV',tab,'Ball'
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  170 format(/'Mean Zone Values'/
+  160 format(/'Mean Zone Values'/
      & '================'/)
-  180 format(10(a12,a2),30(a12,a2),33(a12,a2))
-  190 format(10(a12,a2),30(a12,a2),33(1pg12.5,a2))
+  170 format(10(a12,a2),30(a12,a2),33(a12,a2))
+  180 format(10(a12,a2),30(a12,a2),33(1pg12.5,a2))
 c
-  200 format('=======================================================',
+  190 format('=======================================================',
      & '=======================================================',
      & '=======================================================',
      & '=======================================================',
@@ -1430,44 +1406,43 @@ c
      & '=======================================================',
      & '=======================================================',
      & '======================================')
-c
       if (fclmod.eq.'Y') then
-        write (lucl,170)
-        if (jnorm.eq.0) then
-          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
-     & ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(ne
-     &.nH)',tab,(elem(j),tab,j=1,atypes),'Eloss/ne.nH',tab,'Egain/ne.nH'
-     &     ,tab,'Netloss/ne.nH'
-        endif
-        if (jnorm.eq.1) then
-          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
-     & ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(nH
-     &^2)',tab,(elem(j),tab,j=1,atypes),'Eloss/nH^2',tab,'Egain/nH^2',
-     &     tab,'Netloss/nH^2'
-        endif
-        if (jnorm.eq.2) then
-          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
-     & ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(ne
-     &.ni)',tab,(elem(j),tab,j=1,atypes),'Eloss/ne.ni',tab,'Egain/ne.ni'
-     &     ,tab,'Netloss/ne.ni'
-        endif
-        if (jnorm.eq.3) then
-          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
-     & ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n^
-     &2)',tab,(elem(j),tab,j=1,atypes),'Eloss/n2',tab,'Egain/n2',tab,'Ne
-     &tloss/n2'
-        endif
-        if (jnorm.eq.4) then
-          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
-     & ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(ne
-     &^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',tab,'LLya
-     &lpha'
-        endif
-        write (lucl,190) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,'(/cm^3)'
-     &   ,tab,'(g/cm^3)',tab,' ',tab,' ',tab,'(amu)',tab,'(erg/cm^3/s)',
-     &   tab,'(erg cm^3/s)',tab,('(erg cm^3/s)',tab,j=1,atypes),'(erg cm
-     &^3/s)',tab,'(erg cm^3/s)',tab,'(erg cm^3/s)'
-        write (lucl,200)
+       write (lucl,160)
+       if (jnorm.eq.0) then
+        write (lucl,170) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho '
+     &   ,tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n
+     &e.nH)',tab,(elem(j),tab,j=1,atypes),'Eloss/ne.nH',tab,'Egain/ne.nH
+     &',tab,'Netloss/ne.nH'
+       endif
+       if (jnorm.eq.1) then
+        write (lucl,170) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho '
+     &   ,tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n
+     &H^2)',tab,(elem(j),tab,j=1,atypes),'Eloss/nH^2',tab,'Egain/nH^2',
+     &   tab,'Netloss/nH^2'
+       endif
+       if (jnorm.eq.2) then
+        write (lucl,170) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho '
+     &   ,tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n
+     &e.ni)',tab,(elem(j),tab,j=1,atypes),'Eloss/ne.ni',tab,'Egain/ne.ni
+     &',tab,'Netloss/ne.ni'
+       endif
+       if (jnorm.eq.3) then
+        write (lucl,170) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho '
+     &   ,tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n
+     &^2)',tab,(elem(j),tab,j=1,atypes),'Eloss/n2',tab,'Egain/n2',tab,'N
+     &etloss/n2'
+       endif
+       if (jnorm.eq.4) then
+        write (lucl,170) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho '
+     &   ,tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n
+     &e^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',tab,'LLy
+     &alpha'
+       endif
+       write (lucl,180) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,'(/cm^3)',
+     &  tab,'(g/cm^3)',tab,' ',tab,' ',tab,'(amu)',tab,'(erg/cm^3/s)',
+     &  tab,'(erg cm^3/s)',tab,('(erg cm^3/s)',tab,j=1,atypes),'(erg cm^
+     &3/s)',tab,'(erg cm^3/s)',tab,'(erg cm^3/s)'
+       write (lucl,190)
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1475,18 +1450,18 @@ c
 c
 c L  : Monitor up to ',i3,' lines  - precursor and shocks
 c
-  210   format(// ,'     ,             ,             ,             ,',
+  200   format(// ,'     ,             ,             ,             ,',
      & '             ,             ,             ,             ',
      &   30(',    ',a2,a6,'    '))
-        write (lulsh,'("Run: ",a96)') runname
-        write (lulsh,210) (elem(emlinlistatom(itr)),
-     &        rom(emlinlistion(itr)),itr=1,njlines)
-  220  format(
+       write (lulsh,'("Run: ",a96)') runname
+       write (lulsh,200) (elem(emlinlistatom(itr)),rom(emlinlistion(itr)
+     &  ),itr=1,njlines)
+  210  format(
      & ' # [1] <X>, [2] DeltaX, [3] dX, [4] t, [5] dt,  [6] <T>,'
      & ' [7] <ne>, [8] <nH> , [9]  <nT>, [10] logQH, [11]  logUH,',
      & ' [12]  logQN, [13]   <HB>,',
      &   16(',',f12.3,'[',i2,']'))
-        write (lulsh,220) (emlinlist(itr),itr+13,itr=1,njlines)
+       write (lulsh,210) (emlinlist(itr),itr+13,itr=1,njlines)
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1498,7 +1473,7 @@ c
 c     Close all files and flush
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      call closeS5files()
+      call closes5files ()
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
@@ -1538,15 +1513,15 @@ c
 c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
-      Pgas=pr0
-      Pmag=bp0
-      Pram=rh_pre*vs_pre*vs_pre
+      pgas=pr0
+      pmag=bp0
+      pram=rh_pre*vs_pre*vs_pre
 c
-      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.d0*Pmag/rho0)
-      malpha=Pmag/Pgas
-      gaseta=gammaEOS*Pgas/Pram
-      mageta=2.d0*Pmag/Pram
+      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      alfvennumber=vel0/dsqrt(2.d0*pmag/rho0)
+      malpha=pmag/pgas
+      gaseta=gammaeos*pgas/pram
+      mageta=2.d0*pmag/pram
 c
    10   format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
@@ -1583,36 +1558,34 @@ c
      & '    Postshock  Pmag:',1pg12.5,' dyne/cm^2',/,
      & '    Postshock  Pram:',1pg12.5,' dyne/cm^2',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-
 c
       en=zen*dh0
       pr0=fpresse(te0,de0,dh0)
       rho0=frho(de0,dh0)
-      cspd=dsqrt(gammaEOS*pr0/rho0)
+      cspd=dsqrt(gammaeos*pr0/rho0)
       wmol=rho0/(en+de0)
       mu=fmua(de0,dh0)
 c
-      Pgas=pr0
-      Pmag=(bm0*bm0)/epi
-      Pram=rho0*vel0*vel0
+      pgas=pr0
+      pmag=(bm0*bm0)/epi
+      pram=rho0*vel0*vel0
 c
-      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rho0)
-      malpha=Pmag/Pgas
-      gaseta=gammaEOS*Pgas/Pram
-      mageta=2.d0*Pmag/Pram
+      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
+      malpha=pmag/pgas
+      gaseta=gammaeos*pgas/pram
+      mageta=2.d0*pmag/pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,
      &gaseta,mageta,te0,de0,dh0,rho0,pr0,mu,pop(1,zmap(1)),pop(2,zmap(1)
-     &),pop(1,zmap(2)),pop(2,zmap(2)),pop(3,zmap(2)),bm0*1.d6,bp0,Pram
+     &),pop(1,zmap(2)),pop(2,zmap(2)),pop(3,zmap(2)),bm0*1.d6,bp0,pram
 c
-      Pram=rho1*vel1*vel1
+      pram=rho1*vel1*vel1
       write (lunit,20) cmpf,te1,de1,dh1,vel1*1d-5,rho1,pr1,bm1*1.d6,bp1,
-     &Pram
+     &pram
 c
       return
       end
-c
       subroutine shock5jump ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1631,64 +1604,64 @@ c
       call copypop (pop_pre, pop)
       rh_pre=frho(de_pre,dh_pre)
 c
-      Pram=rh_pre*vs_pre*vs_pre
+      pram=rh_pre*vs_pre*vs_pre
 c
       if (stype.eq.'V') then
 c
-        dr=1.d0
+       dr=1.d0
 c
-        if (mtype.eq.'B') then
+       if (mtype.eq.'B') then
 c         Specified B field in uG.  Won't change between iterations.
-          Bmag=magparam*1.0d-6
-          Pmag=(Bmag*Bmag)/epi
-        endif
+        bmag=magparam*1.0d-6
+        pmag=(bmag*bmag)/epi
+       endif
 c
-        if (mtype.eq.'A') then
+       if (mtype.eq.'A') then
 c         Specified protostate malpha. B won't change between iterations
-          Pram=rh_neu*vs_pre*vs_pre
-          Pgas=fpresse(te_neu,de_neu,dh_neu)
-          Pmag=magparam*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
+        pram=rh_neu*vs_pre*vs_pre
+        pgas=fpresse(te_neu,de_neu,dh_neu)
+        pmag=magparam*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        if (mtype.eq.'C') then
+       if (mtype.eq.'C') then
 c         Specified shockfront malpha.  B will change between iterations
 c         as the gas pressure at the back of the precursor changes.
-          Pgas=fpresse(te_pre,de_pre,dh_pre)
-          Pmag=magparam*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
+        pgas=fpresse(te_pre,de_pre,dh_pre)
+        pmag=magparam*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        if (mtype.eq.'M') then
+       if (mtype.eq.'M') then
 c         Specified Alfven Mach number
-          va=vs_pre/mmach
-          Pmag=(0.5*rh_pre*va*va)
-          Bmag=dsqrt(epi*Pmag)
-        endif
+        va=vs_pre/mmach
+        pmag=(0.5*rh_pre*va*va)
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        if (mtype.eq.'R') then
+       if (mtype.eq.'R') then
 c         Specified magnetic eta = 2Pmag/Pram.  Bmag shouldn't change
 c         between iterations since Pram doesn't change.
-          Pmag=0.5d0*mageta*Pram
-          Bmag=dsqrt(epi*Pmag)
-        endif
+        pmag=0.5d0*mageta*pram
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        bm_pre=Bmag
+       bm_pre=bmag
 c
 c       Now call post-shock state always P_pre, alpha may change for A
 c
 c        vshoc=vs_pre
 c
-        tj=te_pre
-        dhj=dh_pre
-        dej=de_pre
+       tj=te_pre
+       dhj=dh_pre
+       dej=de_pre
 c
 c jump is the new exact quadratric with no dx time or losses
 c pre and post 0,1 globals are set in routine
 c
-        call shockcmpf (tj, dej, dhj, vshoc, Bmag)
+       call shockcmpf (tj, dej, dhj, vshoc, bmag)
 c
-        tm00=te0
+       tm00=te0
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1699,82 +1672,82 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (stype.eq.'T') then
 c
-        dr=1.d0
+       dr=1.d0
 c
 c
-        if (mtype.eq.'B') then
+       if (mtype.eq.'B') then
 c         Specified B field in uG.  Won't change between iterations.
-          Bmag=magparam*1.0d-6
-          Pmag=(Bmag*Bmag)/epi
-        endif
+        bmag=magparam*1.0d-6
+        pmag=(bmag*bmag)/epi
+       endif
 c
-        if (mtype.eq.'A') then
+       if (mtype.eq.'A') then
 c         Specified malpha in protostate
-          Pgas=fpresse(te_neu,de_neu,dh_neu)
-          Pmag=magparam*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
+        pgas=fpresse(te_neu,de_neu,dh_neu)
+        pmag=magparam*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        if (mtype.eq.'C') then
+       if (mtype.eq.'C') then
 c         Specified shockfront malpha.  B will change between iterations
 c         as the gas pressure at the back of the precursor changes.
-          Pram=rh_neu*vs_pre*vs_pre
-          Pgas=fpresse(te_pre,de_pre,dh_pre)
-          Pmag=magparam*Pgas
-          Bmag=dsqrt(epi*Pmag)
-        endif
+        pram=rh_neu*vs_pre*vs_pre
+        pgas=fpresse(te_pre,de_pre,dh_pre)
+        pmag=magparam*pgas
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        if (mtype.eq.'M') then
-          va=vs_pre/mmach
-          Pmag=(0.5*rh_pre*va*va)
-          Bmag=dsqrt(epi*Pmag)
-        endif
+       if (mtype.eq.'M') then
+        va=vs_pre/mmach
+        pmag=(0.5*rh_pre*va*va)
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        if (mtype.eq.'R') then
-          Pmag=0.5d0*mageta*Pram
-          Bmag=dsqrt(epi*Pmag)
-        endif
+       if (mtype.eq.'R') then
+        pmag=0.5d0*mageta*pram
+        bmag=dsqrt(epi*pmag)
+       endif
 c
-        bm_pre=Bmag
+       bm_pre=bmag
 c
 c       Now call velshock2 to find the shock speed
 c
-        Pgas=fpresse(te_pre,de_pre,dh_pre)
-        vshoc=vs_pre
-        t=te_pre
-        tpo=te_pst
-        dh=dh_pre
-        de=feldens(dh,pop)
-        tloss=0.0d0
-        dt=0.0d0
+       pgas=fpresse(te_pre,de_pre,dh_pre)
+       vshoc=vs_pre
+       t=te_pre
+       tpo=te_pst
+       dh=dh_pre
+       de=feldens(dh,pop)
+       tloss=0.0d0
+       dt=0.0d0
 c
-   10   bm0=Bmag
+   10  bm0=bmag
 c
 c       Call function velshock2 to find the new shock speed
 c       N.B. velshock2 calls subroutine rankhug
-        vshoc=velshock2(dh,t,Bmag,tpo)
+       vshoc=velshock2(dh,t,bmag,tpo)
 c
-        Pram=rh_neu*vshoc*vshoc
+       pram=rh_neu*vshoc*vshoc
 c
-        if (mtype.eq.'M') then
-          va=vshoc/mmach
-          Pmag=(0.5*rh_pre*va*va)
-          Bmag=dsqrt(epi*Pmag)
-          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
-          if (eps.gt.1.0d-6) goto 10
-        endif
+       if (mtype.eq.'M') then
+        va=vshoc/mmach
+        pmag=(0.5*rh_pre*va*va)
+        bmag=dsqrt(epi*pmag)
+        eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+        if (eps.gt.1.0d-6) goto 10
+       endif
 c
-        if (mtype.eq.'R') then
+       if (mtype.eq.'R') then
 c iterate for rampressure/alpha_r
-          Pmag=0.5d0*mageta*Pram
-          Bmag=dsqrt(epi*Pmag)
-          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
-          if (eps.gt.1.0d-6) goto 10
-        endif
+        pmag=0.5d0*mageta*pram
+        bmag=dsqrt(epi*pmag)
+        eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+        if (eps.gt.1.0d-6) goto 10
+       endif
 c
-        vs_neu=vel0
-        bm_neu=Bmag
-        tm00=te0
+       vs_neu=vel0
+       bm_neu=bmag
+       tm00=te0
       endif
 c
 c Shock intial state kept for iterations, above numbers are
@@ -1798,18 +1771,17 @@ c
 c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
-      Pmag=bp0
-      Pgas=pr0
-      Pram=rho0*vel0*vel0
+      pmag=bp0
+      pgas=pr0
+      pram=rho0*vel0*vel0
 c
-      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      malpha=Pmag/Pgas
-      gaseta=gammaEOS*Pgas/Pram
-      mageta=2.d0*Pmag/Pram
+      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      malpha=pmag/pgas
+      gaseta=gammaeos*pgas/pram
+      mageta=2.d0*pmag/pram
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine shock5check (its, maxits)
@@ -1856,57 +1828,54 @@ c
 c
 c uses global pop
 c
-        call difhhe (pop_pre, pop_pre0, delhhe)
-        write (*,10) its,maxits
-        term=2.d0*(cmpf-cmpf0)/(cmpf+cmpf0)
-        rmserr=term*term
-        term=2.d0*(te_pre-te_pre0)/(te_pre+te_pre0)
-        rmserr=rmserr+(term*term)
-        term=2.d0*(te_pst-te_pst0)/(te_pst+te_pst0)
-        rmserr=rmserr+(term*term)
-        term=2.d0*(de_pre-de_pre0)/(de_pre+de_pre0)
-        rmserr=rmserr+(term*term)
-        rmserr=rmserr+(delhhe*delhhe)
-        rmserr=dsqrt(rmserr/6.d0)
-
-        write (*,40) psi,psi0,cmpf,cmpf0,te_pre,te_pre0,te_pst,te_pst0,
-     &   de_pre,de_pre0,delhhe*100.d0,rmserr*100.d0
-        if (rmserr.lt.1.d-4) then
-          converged=1
-          write (*,20)
-        else
-          converged=0
-          if (its.ge.maxits) maxits=maxits+1
-          write (*,30)
-        endif
-
+       call difhhe (pop_pre, pop_pre0, delhhe)
+       write (*,10) its,maxits
+       term=2.d0*(cmpf-cmpf0)/(cmpf+cmpf0)
+       rmserr=term*term
+       term=2.d0*(te_pre-te_pre0)/(te_pre+te_pre0)
+       rmserr=rmserr+(term*term)
+       term=2.d0*(te_pst-te_pst0)/(te_pst+te_pst0)
+       rmserr=rmserr+(term*term)
+       term=2.d0*(de_pre-de_pre0)/(de_pre+de_pre0)
+       rmserr=rmserr+(term*term)
+       rmserr=rmserr+(delhhe*delhhe)
+       rmserr=dsqrt(rmserr/6.d0)
+       write (*,40) psi,psi0,cmpf,cmpf0,te_pre,te_pre0,te_pst,te_pst0,
+     &  de_pre,de_pre0,delhhe*100.d0,rmserr*100.d0
+       if (rmserr.lt.1.d-4) then
+        converged=1
+        write (*,20) 
+       else
+        converged=0
+        if (its.ge.maxits) maxits=maxits+1
+        write (*,30)
+       endif
       endif
 c
 c save current shock for next test
 c
-        call copypop (pop_pre, pop_pre0)
-        psi0=psi
-        te_pre0=te_pre
-        de_pre0=de_pre
-        dh_pre0=dh_pre
-        vs_pre0=vs_pre
-        rh_pre0=rh_pre
-        pr_pre0=pr_pre
-        bm_pre0=bm_pre
+      call copypop (pop_pre, pop_pre0)
+      psi0=psi
+      te_pre0=te_pre
+      de_pre0=de_pre
+      dh_pre0=dh_pre
+      vs_pre0=vs_pre
+      rh_pre0=rh_pre
+      pr_pre0=pr_pre
+      bm_pre0=bm_pre
 c
-        te_pst0=te_pst
-        de_pst0=de_pst
-        dh_pst0=dh_pst
-        vs_pst0=vs_pst
-        rh_pst0=rh_pst
-        pr_pst0=pr_pst
-        bm_pst0=bm_pst
+      te_pst0=te_pst
+      de_pst0=de_pst
+      dh_pst0=dh_pst
+      vs_pst0=vs_pst
+      rh_pst0=rh_pst
+      pr_pst0=pr_pst
+      bm_pst0=bm_pst
 c
-        cmpf0=cmpf
+      cmpf0=cmpf
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine shock5precursor (iteration, maxits)
@@ -1944,7 +1913,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Open files, main and precursor
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appendS5files()
+      call appends5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1952,7 +1921,7 @@ c
      & ' ********************************************************',/,
      & '  SHOCK 5 Precursor Iteration: ',i2.2,' of ',i2.2,/,
      & ' ********************************************************')
-      write (   *,10) ,iteration,maxits
+      write (*,10) ,iteration,maxits
       write (lupt,10) ,iteration,maxits
 c
       tab=','
@@ -1974,8 +1943,8 @@ c
       t=te_neu
       de=de_neu
       dh=dh_neu
-      Bmag=bm_neu
-      call copypop(pop_neu, pop)
+      bmag=bm_neu
+      call copypop (pop_neu, pop)
 c
       rad=dist(step)
       dr=dist(step)-dist(step-1)
@@ -1987,18 +1956,18 @@ c
       call totphot2 (t, dh, 1.0d38, 1.0d0, 0.0d0, wdil, specmode)
 c
       do idx=1,infph
-        soupho(idx)=0.d0
+       soupho(idx)=0.d0
 c UP mode is upf=1.0d0, need 0.5x
-        tphot(idx)=tphot(idx)*0.5d0
-        src(idx)=tphot(idx)
+       tphot(idx)=tphot(idx)*0.5d0
+       src(idx)=tphot(idx)
       enddo
 c
 c  lets see what we got:
 c
-      write(*,*)
-      call fieldsummary (6,1,tphot)
-      write(*,*)
-      call fieldsummary (lupt,1,tphot)
+      write (*,*)
+      call fieldsummary (6, 1, tphot)
+      write (*,*)
+      call fieldsummary (lupt, 1, tphot)
 c
 c   compare ion front velocity to shock velocity
 c
@@ -2019,12 +1988,8 @@ c
      & '     Psi_H (Q_H/v) : ',  1pg12.5,/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
 c
-      write (*,20)
-     &  vshoc*1.d-5,viofr*1.d-5,psi,
-     &  qh*1.d-5,qh/vshoc
-      write (lupt,20)
-     &  vshoc*1.d-5,viofr*1.d-5,psi,
-     &  qh*1.d-5,qh/vshoc
+      write (*,20) vshoc*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vshoc
+      write (lupt,20) vshoc*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vshoc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c setup for precursor iteration, fill arrays with protoionisation
@@ -2069,64 +2034,64 @@ c
       absf=0.04d0
       dtime=frdr/vshoc
       if (iteration.eq.1) then
-        nfs=nint(dlog(1.d-6)/dlog(1.d0-absf))
-        nfs=min(nfs,mxifsteps)
+       nfs=nint(dlog(1.d-6)/dlog(1.d0-absf))
+       nfs=min(nfs,mxifsteps)
 c
-C       dr=1.0d18
-C       call absdis2 (dh, absf, dr, 0.0d0, pop_neu)
-        do i=1,nfs
-           dr=1.0d18
-           f=absf*min(1.0d0,0.04d0*dble(i*i))
-           fra(i)=absf*f
-           call absdis2 (dh, absf*f, dr, 0.0d0, pop_neu)
-           predr(i)=dr
-        enddo
-        frdr=nfs*dr
-        dtime=frdr/ve
-        invnfs=1.d0/dble(nfs)
+c       dr=1.0d18
+c       call absdis2 (dh, absf, dr, 0.0d0, pop_neu)
+       do i=1,nfs
+        dr=1.0d18
+        f=absf*min(1.0d0,0.04d0*dble(i*i))
+        fra(i)=absf*f
+        call absdis2 (dh, absf*f, dr, 0.0d0, pop_neu)
+        predr(i)=dr
+       enddo
+       frdr=nfs*dr
+       dtime=frdr/ve
+       invnfs=1.d0/dble(nfs)
 c
       endif
 c
       x(1)=0.d0
       fra(1)=absf*0.04d0
       do i=2,nfs
-        x(i)=x(i-1)+predr(i-1)
-        f=min(1.0d0,0.04d0*dble(i*i))
-        fra(i)=absf*f
+       x(i)=x(i-1)+predr(i-1)
+       f=min(1.0d0,0.04d0*dble(i*i))
+       fra(i)=absf*f
       enddo
 c
 c index 1 is zone at the source, index nfs is outer edge of front zone
 c
       if (iteration.eq.1) then
+       call copypop (pop_neu, p1)
+       dr=predr(1)
+       call copypopstep (p1, 1, popfr)
+       call clearpop (p1)
+       call copypopstep (p1, 1, popintfr)
+       fh(1)=pop_neu(2,1)
+       foi(1)=pop_neu(1,zmap(8))
+       foii(1)=pop_neu(2,zmap(8))
+       foiii(1)=pop_neu(3,zmap(8))
+       nh(1)=dh_0
+       ne(1)=de_0
+       nte(1)=te_0
+       do i=2,nfs
         call copypop (pop_neu, p1)
-        dr=predr(1)
-        call copypopstep (p1, 1, popfr)
-        call clearpop (p1)
-        call copypopstep (p1, 1, popintfr)
-        fh(1)=pop_neu(2,1)
-        foi(1)=pop_neu(1,zmap(8))
-        foii(1)=pop_neu(2,zmap(8))
-        foiii(1)=pop_neu(3,zmap(8))
-        nh(1)=dh_0
-        ne(1)=de_0
-        nte(1)=te_0
-        do i=2,nfs
-          call copypop (pop_neu, p1)
-          dr=predr(i)
-          call copypopstep (p1, i, popfr)
-          call scalepop (p1, dr)
-          call copysteppop (i-1, popintfr, p2)
-          call addpop (p1, p2)
-          call copypopstep (p2, i, popintfr)
-          fh(i)=pop_neu(2,1)
-          foi(i)=pop_neu(1,zmap(8))
-          foii(i)=pop_neu(2,zmap(8))
-          foiii(i)=pop_neu(3,zmap(8))
-C         fra(i)=absf
-          nh(i)=dh_0
-          ne(i)=de_0
-          nte(i)=te_0
-        enddo
+        dr=predr(i)
+        call copypopstep (p1, i, popfr)
+        call scalepop (p1, dr)
+        call copysteppop (i-1, popintfr, p2)
+        call addpop (p1, p2)
+        call copypopstep (p2, i, popintfr)
+        fh(i)=pop_neu(2,1)
+        foi(i)=pop_neu(1,zmap(8))
+        foii(i)=pop_neu(2,zmap(8))
+        foiii(i)=pop_neu(3,zmap(8))
+c         fra(i)=absf
+        nh(i)=dh_0
+        ne(i)=de_0
+        nte(i)=te_0
+       enddo
       endif
       dtime=x(nfs)/vshoc
 c
@@ -2140,8 +2105,7 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
 c
       if (vmod.ne.'NONE') then
-      write (*,30) nfs,dtime,
-     &             nfs,frdr,dtimer,drr
+       write (*,30) nfs,dtime,nfs,frdr,dtimer,drr
       endif
 c
       dr=frdr*invnfs
@@ -2177,36 +2141,36 @@ c
       nrms=min(max(minifsteps,nfs/2),50)
       x(1)=0.d0
       do i=2,nfs
-        x(i)=x(i-1)+predr(i-1)
+       x(i)=x(i-1)+predr(i-1)
       enddo
 c
       do i=nfs,1,-1
 c
 c full column absorption applied to spectrum
 c
-        dr=predr(i)
-        tstep=dr/vshoc
-        call copysteppop (i, popintfr, p1)
-        call attsig (dh, dr, p1, attcol, sigcol)
-        do idx=ionstartbin,infph-1
-          tphot(idx)=src(idx)*attcol(idx)
-          skipbin(idx)=.true.
-          if (tphot(idx).gt.epsilon) skipbin(idx)=.false.
-          ipho=1
-          iphom=0
-          tem=0.d0
-        enddo
+       dr=predr(i)
+       tstep=dr/vshoc
+       call copysteppop (i, popintfr, p1)
+       call attsig (dh, dr, p1, attcol, sigcol)
+       do idx=ionstartbin,infph-1
+        tphot(idx)=src(idx)*attcol(idx)
+        skipbin(idx)=.true.
+        if (tphot(idx).gt.epsilon) skipbin(idx)=.false.
+        ipho=1
+        iphom=0
+        tem=0.d0
+       enddo
 c redo rates
-        call allrates (t, ratemode)
+       call allrates (t, ratemode)
 c evolve in attenuated field to inner boundary
-        call copypop (pop, p1)
-        call teequi2 (t, tf, de, dh, tstep, nmod)
-        call copypop (pop, p2)
-        call averinto (0.5d0, p1, p2, p1)
-        call absdis2 (dh, fra(i), dr, 0.0d0, p1)
-        predr(i)=dr
-        nh(i)=dh
-        ne(i)=feldens(dh,p1)
+       call copypop (pop, p1)
+       call teequi2 (t, tf, de, dh, tstep, nmod)
+       call copypop (pop, p2)
+       call averinto (0.5d0, p1, p2, p1)
+       call absdis2 (dh, fra(i), dr, 0.0d0, p1)
+       predr(i)=dr
+       nh(i)=dh
+       ne(i)=feldens(dh,p1)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2214,32 +2178,32 @@ c RMS Error
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        if (i.le.nrms) then
-          call copysteppop (i, popfr, p1)
-          call difhhe (pop, p1, diff)
-          diff=dabs(1.d0-(10.d0**diff))
-          rmserr=rmserr+(diff*diff)
-          diff=0.5d0*(tf-nte(i))/(tf+nte(i))
-          rmserr=rmserr+(diff*diff)
-        endif
+       if (i.le.nrms) then
+        call copysteppop (i, popfr, p1)
+        call difhhe (pop, p1, diff)
+        diff=dabs(1.d0-(10.d0**diff))
+        rmserr=rmserr+(diff*diff)
+        diff=0.5d0*(tf-nte(i))/(tf+nte(i))
+        rmserr=rmserr+(diff*diff)
+       endif
 c save step temp at point
-        nte(i)=tf
+       nte(i)=tf
 c save pop after step = closer to src, ith pop is inner edge of ith zone
-        call copypopstep (pop, i, popfr)
-        fh(i)=pop(2,1)
-        foi(i)=pop(1,zmap(8))
-        foii(i)=pop(2,zmap(8))
-        foiii(i)=pop(3,zmap(8))
-        de=feldens(dh,pop)
-        t=tf
+       call copypopstep (pop, i, popfr)
+       fh(i)=pop(2,1)
+       foi(i)=pop(1,zmap(8))
+       foii(i)=pop(2,zmap(8))
+       foiii(i)=pop(3,zmap(8))
+       de=feldens(dh,pop)
+       t=tf
       enddo
 c
       x(1)=0.d0
       fra(1)=absf*0.04d0
       do i=2,nfs
-        x(i)=x(i-1)+predr(i-1)
-        f=min(1.0d0,0.04d0*dble(i*i))
-        fra(i)=absf*f
+       x(i)=x(i-1)+predr(i-1)
+       f=min(1.0d0,0.04d0*dble(i*i))
+       fra(i)=absf*f
       enddo
 c
    60 format(//,
@@ -2250,35 +2214,25 @@ c
    70 format(i5.3,14(a1,1pg13.6))
 c
       if (vmod.ne.'NONE') then
-        write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',
-     &   tab,'Time (s)',tab,'dt (s)',
-     &   tab, 'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',
-     &   tab,'XHI',tab,'XHII',tab,'<abs>',
-     &   tab,'XOI',tab,'XOII',tab,'XOIII'
-      do i=nfs,1,-1
+       write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',tab,'Time (s)'
+     &  ,tab,'dt (s)',tab,'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',tab,'
+     &XHI',tab,'XHII',tab,'<abs>',tab,'XOI',tab,'XOII',tab,'XOIII'
+       do i=nfs,1,-1
         call copysteppop (i, popintfr, p1)
-        write (*,70) i,tab,x(i),tab,predr(i),
-     &    tab,x(i)/vshoc,tab,predr(i)/vshoc,
-     &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
-     &    tab,fh(i),tab,fra(i),
-     &    tab,foi(i),tab,foii(i),tab,foiii(i)
-      enddo
+        write (*,70) i,tab,x(i),tab,predr(i),tab,x(i)/vshoc,tab,predr(i)
+     &   /vshoc,tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),tab,fh(i),
+     &   tab,fra(i),tab,foi(i),tab,foii(i),tab,foiii(i)
+       enddo
       endif
-
       if (vmod.eq.'NONE') then
-        write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',
-     &   tab,'Time (s)',tab,'dt (s)',
-     &   tab, 'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',
-     &   tab,'XHI',tab,'XHII',tab,'<abs>',
-     &   tab,'XOI',tab,'XOII',tab,'XOIII'
-        i=1
-        call copysteppop (i, popintfr, p1)
-        write (*,70) i,tab,x(i),tab,predr(i),
-     &    tab,x(i)/vshoc,tab,predr(i)/vshoc,
-     &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
-     &    tab,fh(i),tab,fra(i),
-     &    tab,foi(i),tab,foii(i),tab,foiii(i)
-
+       write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',tab,'Time (s)'
+     &  ,tab,'dt (s)',tab,'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',tab,'
+     &XHI',tab,'XHII',tab,'<abs>',tab,'XOI',tab,'XOII',tab,'XOIII'
+       i=1
+       call copysteppop (i, popintfr, p1)
+       write (*,70) i,tab,x(i),tab,predr(i),tab,x(i)/vshoc,tab,predr(i)/
+     &  vshoc,tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),tab,fh(i),
+     &  tab,fra(i),tab,foi(i),tab,foii(i),tab,foiii(i)
       endif
 c
 c get post precursor outward field
@@ -2304,18 +2258,18 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       n100=nfs
       do i=1,nfs
-        if (nte(i).lt.100.d0) then
-          n100=i
-          goto 90
-        endif
+       if (nte(i).lt.100.d0) then
+        n100=i
+        goto 90
+       endif
       enddo
    90 nfs=max(n100,minifsteps)
       if (popfr(nfs,1,1).lt.0.95d0) then
-        nfs=nfs+10
+       nfs=nfs+10
       endif
       if (nte(nfs).ge.500.d0) then
-        t0lim=1
-        nfs=nfs+nint(nte(nfs)*0.01d0)+10
+       t0lim=1
+       nfs=nfs+nint(nte(nfs)*0.01d0)+10
       endif
       nfs=min0(nfs,mxifsteps)
 c
@@ -2323,35 +2277,35 @@ c
 c
 c copy last cell to fill out expanded grid, leave if reduced
 c
-        do i=nfs0+1,nfs
-          predr(i)=predr(nfs0)
-          call copypopstep (popfr, nfs0, p1)
-          call copypopstep (p1, i, popfr)
-          dr=predr(nfs0)
-          call scalepop (p1, dr)
-          call copysteppop (nfs0, popintfr, p2)
-          call addpop (p1, p2)
-          call copypopstep (p2, i, popintfr)
-          call copypopstep (popfr, nfs0, p1)
-          fh(i)=p1(2,1)
-          foi(i)=p1(1,zmap(8))
-          foii(i)=p1(2,zmap(8))
-          foiii(i)=p1(3,zmap(8))
-C         fra(i)=absf
-          nh(i)=nh(nfs0)
-          ne(i)=ne(nfs0)
-          nte(i)=nte(nfs0)
-        enddo
-        x(1)=0.d0
-        fra(1)=absf*0.04d0
+       do i=nfs0+1,nfs
+        predr(i)=predr(nfs0)
+        call copypopstep (popfr, nfs0, p1)
+        call copypopstep (p1, i, popfr)
+        dr=predr(nfs0)
+        call scalepop (p1, dr)
+        call copysteppop (nfs0, popintfr, p2)
+        call addpop (p1, p2)
+        call copypopstep (p2, i, popintfr)
+        call copypopstep (popfr, nfs0, p1)
+        fh(i)=p1(2,1)
+        foi(i)=p1(1,zmap(8))
+        foii(i)=p1(2,zmap(8))
+        foiii(i)=p1(3,zmap(8))
+c         fra(i)=absf
+        nh(i)=nh(nfs0)
+        ne(i)=ne(nfs0)
+        nte(i)=nte(nfs0)
+       enddo
+       x(1)=0.d0
+       fra(1)=absf*0.04d0
 c
 c taper intial abs fractions close to shock front.
 c
-        do i=2,nfs
-          x(i)=x(i-1)+predr(i-1)
-          f=min(1.0d0,0.04d0*dble(i*i))
-          fra(i)=absf*f
-        enddo
+       do i=2,nfs
+        x(i)=x(i-1)+predr(i-1)
+        f=min(1.0d0,0.04d0*dble(i*i))
+        fra(i)=absf*f
+       enddo
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2366,15 +2320,15 @@ c     columns up to inneredge ofzone
       call copypopstep (p1, 1, popintfr)
       do i=2,nfs
 c pops at end time of previous zone, nearer source
-        call copysteppop (i-1, popfr, p1)
+       call copysteppop (i-1, popfr, p1)
 c pops at end time of this zone, further from source
-        call copysteppop (i, popfr, p2)
+       call copysteppop (i, popfr, p2)
 c average of pops from start to end in prev zone
-        call averinto (0.5d0, p1, p2, p1)
-        call scalepop (p1, predr(i))
-        call copysteppop (i-1, popintfr, p2)
-        call addpop (p1, p2)
-        call copypopstep (p2, i, popintfr)
+       call averinto (0.5d0, p1, p2, p1)
+       call scalepop (p1, predr(i))
+       call copysteppop (i-1, popintfr, p2)
+       call addpop (p1, p2)
+       call copypopstep (p2, i, popintfr)
       enddo
 c
       xhfinal=pop(1,1)
@@ -2392,15 +2346,10 @@ c
 c
       if (finalit.gt.0) goto 100
 c
-         if ((iabs(nfs0-nfs).gt.10)
-     &      .or.(
-     &           (rmserr.gt.rmslimit)
-     &      .and.(itcount.lt.mxpcits)
-     &      .and.(nfs.gt.minifsteps)
-     &          )
-     &      .or.(itcount.lt.minpcits)
-     &      .or.((nfs.lt.mxifsteps).and.(t0lim.gt.0))
-     &   ) goto 50
+      if ((iabs(nfs0-nfs).gt.10).or.((rmserr.gt.rmslimit)
+     &.and.(itcount.lt.mxpcits).and.(nfs.gt.minifsteps))
+     &.or.(itcount.lt.minpcits).or.((nfs.lt.mxifsteps).and.(t0lim.gt.0))
+     &) goto 50
 c
   100 continue
 c
@@ -2418,22 +2367,22 @@ c
 c     Now get revised shock solution for changed pre shock values:
 c     Shock in terms of flow velocity
 c
-      call shock5jump()
+      call shock5jump ()
 c
 c and show the result
 c
       call shocksummary (6)
-      call fieldsummary (6,1,tphot)
+      call fieldsummary (6, 1, tphot)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (finalit.gt.0) then
 c
-         call shocksummary (luop)
-         call fieldsummary (luop,1,tphot)
+       call shocksummary (luop)
+       call fieldsummary (luop, 1, tphot)
 c
-         call shocksummary (lupt)
-         call fieldsummary (lupt,1,tphot)
+       call shocksummary (lupt)
+       call fieldsummary (lupt, 1, tphot)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Psi Summary
@@ -2452,45 +2401,37 @@ c
 c
 c redo Psi as vel0 has changes slightly
 c
-         psi=viofr/vel0
-         write (   *,110) vel0*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vel0
-         write (luop,110) vel0*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vel0
-         write (lupt,110) vel0*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vel0
+       psi=viofr/vel0
+       write (*,110) vel0*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vel0
+       write (luop,110) vel0*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vel0
+       write (lupt,110) vel0*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vel0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Write out final structure and last RMS
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-           write (   *,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',
-     &      tab,'Time (s)',tab,'dt (s)',
-     &      tab, 'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',
-     &      tab,'XHI',tab,'XHII',tab,'<abs>',
-     &      tab,'XOI',tab,'XOII',tab,'XOIII'
+       write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',tab,'Time (s)'
+     &  ,tab,'dt (s)',tab,'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',tab,'
+     &XHI',tab,'XHII',tab,'<abs>',tab,'XOI',tab,'XOII',tab,'XOIII'
 c
-           write (lupt,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',
-     &      tab,'Time (s)',tab,'dt (s)',
-     &      tab, 'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',
-     &      tab,'XHI',tab,'XHII',tab,'<abs>',
-     &      tab,'XOI',tab,'XOII',tab,'XOIII'
+       write (lupt,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',tab,'Time (
+     &s)',tab,'dt (s)',tab,'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',tab,
+     &  'XHI',tab,'XHII',tab,'<abs>',tab,'XOI',tab,'XOII',tab,'XOIII'
 c
-         do i=1,nfs
-           write (   *,70) i,tab,x(i),tab,predr(i),
-     &      tab,x(i)/vshoc,tab,predr(i)/vshoc,
-     &      tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
-     &      tab,fh(i),tab,fra(i),
-     &      tab,foi(i),tab,foii(i),tab,foiii(i)
-           write (lupt,70) i,tab,x(i),tab,predr(i),
-     &      tab,x(i)/vshoc,tab,predr(i)/vshoc,
-     &      tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
-     &      tab,fh(i),tab,fra(i),
-     &      tab,foi(i),tab,foii(i),tab,foiii(i)
-         enddo
+       do i=1,nfs
+        write (*,70) i,tab,x(i),tab,predr(i),tab,x(i)/vshoc,tab,predr(i)
+     &   /vshoc,tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),tab,fh(i),
+     &   tab,fra(i),tab,foi(i),tab,foii(i),tab,foiii(i)
+        write (lupt,70) i,tab,x(i),tab,predr(i),tab,x(i)/vshoc,tab,
+     &   predr(i)/vshoc,tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
+     &   tab,fh(i),tab,fra(i),tab,foi(i),tab,foii(i),tab,foiii(i)
+       enddo
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-         write (lupt,80) 100.d0*rmserr,itcount,iabs(nfs0-nfs)
+       write (lupt,80) 100.d0*rmserr,itcount,iabs(nfs0-nfs)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-         call wrsppop  (lupt)
+       call wrsppop (lupt)
 c
       endif
 c
@@ -2498,14 +2439,14 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Now clear tphot so it doesn't accumulate in each global iteration
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call zerbuf()
+      call zerbuf ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c set *both* the initial population arrays and go back to computing
 c post shock flow.
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call copypop (pop_pre, pop )
+      call copypop (pop_pre, pop)
       call copypop (pop_pre, pop0)
       t=te_pre
       de=dh_pre
@@ -2514,11 +2455,10 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Close precursor files
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      call closeS5files()
+      call closes5files ()
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function flocallosses(tm,ne,nh,pp,r,dr,dv,w)
@@ -2547,13 +2487,13 @@ c
       character mode*4
       parameter(mode='DW')
 c
-      call copypop(pop,savepop)
-      call copypop(pp,pop)
+      call copypop (pop, savepop)
+      call copypop (pp, pop)
       call localem (tm, ne, nh)
       call totphot2 (tm, nh, r, dr, dv, w, mode)
       call zetaeff (nh)
       call cool (tm, ne, nh)
-      call copypop(savepop,pop)
+      call copypop (savepop, pop)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2561,7 +2501,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine compsh5 (iteration, maxits)
@@ -2588,8 +2527,8 @@ c save state for step integral, uses pop, pop0 and pop1 in cblocks
 c
 c structural markers
 c
-      real*8 timMark(7),disMark(7),bmMark(7)
-      real*8 prMark(7),rhMark(7),dhMark(7),deMark(7)
+      real*8 timmark(7),dismark(7),bmmark(7)
+      real*8 prmark(7),rhmark(7),dhmark(7),demark(7)
       real*8 templim,ft,cft
       integer*4 tempidx
 c
@@ -2610,13 +2549,13 @@ c
       tab=','
 c
       do idx=1,7
-          timMark(idx)=0.0d0
-          disMark(idx)=0.0d0
-          bmMark(idx) =0.0d0
-          prMark(idx) =0.0d0
-          rhMark(idx) =0.0d0
-          dhMark(idx) =0.0d0
-          deMark(idx) =0.0d0
+       timmark(idx)=0.0d0
+       dismark(idx)=0.0d0
+       bmmark(idx)=0.0d0
+       prmark(idx)=0.0d0
+       rhmark(idx)=0.0d0
+       dhmark(idx)=0.0d0
+       demark(idx)=0.0d0
       enddo
 c
       rdvol=1.0d0
@@ -2629,7 +2568,7 @@ c open all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appendS5files
+      call appends5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2643,8 +2582,8 @@ c
      & ' ********************************************************')
       write (*,10) iteration,maxits
       if (finalit.gt.0) then
-        write (luop,10) iteration,maxits
-        call shocksummary (luop)
+       write (luop,10) iteration,maxits
+       call shocksummary (luop)
       endif
 c
    20 format(//'  T0',1pg14.7,' V0',1pg14.7,/,
@@ -2652,11 +2591,11 @@ c
      & '  T1',1pg14.7,' V1',1pg14.7,/,
      & ' RH1',1pg14.7,' P1',1pg14.7,' B1',1pg14.7,//)
 c
-      if (vmod.ne.'NONE') write (*,20) te0,vel0*1.d-5,rho0,pr0,
-     &   bm0*1.d6,te1,vel1*1.d-5,rho1,pr1,bm1*1.d6
+      if (vmod.ne.'NONE') write (*,20) te0,vel0*1.d-5,rho0,pr0,bm0*1.d6,
+     &te1,vel1*1.d-5,rho1,pr1,bm1*1.d6
       if (finalit.gt.0) then
-        write (luop,20) te0,vel0*1.d-5,rho0,pr0,
-     &   bm0*1.d6,te1,vel1*1.d-5,rho1,pr1,bm1*1.d6
+       write (luop,20) te0,vel0*1.d-5,rho0,pr0,bm0*1.d6,te1,vel1*1.d-5,
+     &  rho1,pr1,bm1*1.d6
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2680,7 +2619,7 @@ c
       dr=0.d0
       ve=vel0
       vpo=vel1
-      Bmag=bm0
+      bmag=bm0
       bm0=bm0
       dv=ve*0.01d0
       fi=1.d0
@@ -2699,9 +2638,8 @@ c
      & ' #    Te(K)       ne(/cm3)    nH(/cm3)    ni(/cm3)    ',
      & 'B(G)        XHI         Time(s)     dt(s)       ',
      & 'Dist(cm)    dr(cm)      v(cm/s)     L(erg.cm3/s)')
-c
       if (vmod.eq.'MINI') then
-        write (*,50)
+       write (*,50)
       endif
    60 format (i4,6(1x,1pg11.4),6(1x,1pg11.4))
 c
@@ -2709,57 +2647,52 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       step=-2
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call copypop(pop_neu,pop)
+      call copypop (pop_neu, pop)
       en=zen*dh_neu
-      cspd=dsqrt(gammaEOS*pr_neu/rh_neu)
+      cspd=dsqrt(gammaeos*pr_neu/rh_neu)
       wmol=rh_neu/(en+de_neu)
       mu=fmua(de_neu,dh_neu)
-      t =te_neu
+      t=te_neu
       de=de_neu
       dh=dh_neu
       en=zen*dh
-      Bmag=bm_neu
+      bmag=bm_neu
 c
       netloss=flocallosses(t,de,dh,pop_neu,1.d38,0.d0,0.d0,wdil)
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=tloss/((en+de)*(en+de))
 c
       if (finalit.gt.0) then
 c
-        write (luop,40) step,
-     &   0.d0,0.d0,
-     &   te_neu,de_neu,dh_neu,en,mu,
-     &   0.d0,0.d0,
-     &   tnloss,tloss,dlos,
-     &   pop(1,1),pop(2,1),bm_neu
-
-       endif
+       write (luop,40) step,0.d0,0.d0,te_neu,de_neu,dh_neu,en,mu,0.d0,
+     &  0.d0,tnloss,tloss,dlos,pop(1,1),pop(2,1),bm_neu
+      endif
 c
-C        if (vmod.eq.'MINI') then
-           write (*,60) step,te_neu,de_neu,dh_neu,en,bm_neu
-     &        ,pop_neu(1,1),0.d0,0.d0,0.0d0,0.d0,vel0,tnloss
-C        endif
+c        if (vmod.eq.'MINI') then
+      write (*,60) step,te_neu,de_neu,dh_neu,en,bm_neu,pop_neu(1,1),
+     &0.d0,0.d0,0.0d0,0.d0,vel0,tnloss
+c        endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       step=-1
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call copypop(pop_pre,pop)
-      call copypop(pop_pre,pop0)
+      call copypop (pop_pre, pop)
+      call copypop (pop_pre, pop0)
       en=zen*dh_pre
-      cspd=dsqrt(gammaEOS*pr_pre/rh_pre)
+      cspd=dsqrt(gammaeos*pr_pre/rh_pre)
       wmol=rh_pre/(en+de_pre)
       mu=fmua(de_pre,dh_pre)
-      t =te_pre
+      t=te_pre
       de=de_pre
       dh=dh_pre
       en=zen*dh
-      Bmag=bm_pre
+      bmag=bm_pre
 c
       netloss=flocallosses(t,de,dh,pop_pre,1.d38,0.d0,0.d0,wdil)
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
       rhotot=frho(de,dh)
@@ -2767,24 +2700,20 @@ c
       mu=fmua(de,dh)
 c
       if (finalit.gt.0) then
-        write (luop,40) step,
-     &   0.d0,0.d0,
-     &   te_pre,de_pre,dh_pre,en,mu,
-     &   0.d0,0.d0,
-     &   0.0d0,0.0d0,0.d0,
-     &   pop_pre(1,1),pop_pre(2,1),bm_pre
+       write (luop,40) step,0.d0,0.d0,te_pre,de_pre,dh_pre,en,mu,0.d0,
+     &  0.d0,0.0d0,0.0d0,0.d0,pop_pre(1,1),pop_pre(2,1),bm_pre
       endif
 c
-C     if (vmod.eq.'MINI') then
-        write (*,60) step,te_pre,de_pre,dh_pre,en,bm_pre,
-     &   pop_pre(1,1),0.d0,0.d0,0.0d0,0.d0,vel0,tnloss
-C     endif
+c     if (vmod.eq.'MINI') then
+      write (*,60) step,te_pre,de_pre,dh_pre,en,bm_pre,pop_pre(1,1),
+     &0.d0,0.d0,0.0d0,0.d0,vel0,tnloss
+c     endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       step=0
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c for later step^2 5x5=25, 25*0.04=1.0
       tscale=0.04d0
@@ -2798,19 +2727,19 @@ c     Setup Initial first step in post shock-front gas(#1) zero losses
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C     rmod='NEAR'
+c     rmod='NEAR'
 c      call isochorflow (t, de, dh, ve, Bmag, rmod, netloss, dt)
 c      call isobarflow (t, de, dh, ve, Bmag, rmod, netloss, dt)
 c      call rankhug (t, de, dh, ve, Bmag, 0.d0, 0.d0)
-      call shockcmpf (t, de, dh, ve, Bmag)
+      call shockcmpf (t, de, dh, ve, bmag)
 c
       t=te1
       de=de1
       dh=dh1
-      Bmag=bm1
+      bmag=bm1
 c
-      call copypop(pop_pre,pop)
-      call copypop(pop_pre,pop0)
+      call copypop (pop_pre, pop)
+      call copypop (pop_pre, pop0)
 c
 c sets up 0 and 1 vars
 c
@@ -2818,7 +2747,7 @@ c
       dv=vel1-vel0
 c
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
       tscale=0.04d0
@@ -2864,36 +2793,32 @@ c
 c
       netloss=flocallosses(t,de,dh,pop_pre,1.d38,0.d0,0.d0,wdil)
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
       if (finalit.gt.0) then
-        write (luop,40) step,
-     &   0.0d0,0.0d0,
-     &   t,de,dh,en,mu,
-     &   0.0d0,0.0d0,
-     &   tnloss,tloss,dlos,
-     &   pop(1,1),pop(2,1),bm1
+       write (luop,40) step,0.0d0,0.0d0,t,de,dh,en,mu,0.0d0,0.0d0,
+     &  tnloss,tloss,dlos,pop(1,1),pop(2,1),bm1
       endif
 c
-C     if (vmod.eq.'MINI') then
-        write (*,50)
-        write (*,60) step,t,de,dh,en,bm1,pop(1,1),
-     &   0.0d0,0.0d0,0.0d0,0.0d0,ve,tnloss
-C     endif
+c     if (vmod.eq.'MINI') then
+      write (*,50)
+      write (*,60) step,t,de,dh,en,bm1,pop(1,1),0.0d0,0.0d0,0.0d0,0.0d0,
+     &ve,tnloss
+c     endif
 c
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-   90 format(i4,1x,i4)
-  100 format(1pg14.7,'K',1x,1pg14.7,'cm/s',1x,1pg14.7,'g/cm3',1x,
+   70 format(i4,1x,i4)
+   80 format(1pg14.7,'K',1x,1pg14.7,'cm/s',1x,1pg14.7,'g/cm3',1x,
      &1pg14.7,'dyne/cm2',1x,1pg14.7,'Gauss',1x,1pg14.7,'ergs/cm3/s')
-  110 format(2(1pg14.7,' cm',1x),2(1pg14.7,' s',1x))
-  120 format(1pg14.7,' ergs/cm^3',1x,1pg14.7,' /cm^3',1x,
+   90 format(2(1pg14.7,' cm',1x),2(1pg14.7,' s',1x))
+  100 format(1pg14.7,' ergs/cm^3',1x,1pg14.7,' /cm^3',1x,
      &1pg14.7,' cm/s',1x,1pg14.7,' g/particle ')
-  135 format(1x,i4,',', 11(1pg12.5,', '),31(1pg12.5,', '))
-  140 format(43(1pg12.5,a2))
-  150 format(17(1pg12.5,a1))
-  160 format(//,
+  110 format(1x,i4,',', 11(1pg12.5,', '),31(1pg12.5,', '))
+  120 format(43(1pg12.5,a2))
+  130 format(17(1pg12.5,a1))
+  140 format(//,
      & ' Step   Te Ave.(K)   ',
      & '  ne(cm^-3)   ',
      & '  nH(cm^-3)   ',
@@ -2902,16 +2827,16 @@ c
      & ' Pr1(erg/cm^3)',
      & '   Dist.(cm)  ',
      & ' Elps. Time(s)')
-  170 format(1x,i4,8(1pg14.7)/)
-  180 format(1x,i4,41(', ',1pg12.5))
+  150 format(1x,i4,8(1pg14.7)/)
+  160 format(1x,i4,41(', ',1pg12.5))
 c
       call copypop (pop0, pop)
       de0=feldens(dh0,pop0)
       if (finalit.gt.0) then
-        caller='S5'
-        pfx=s5pfx(1:nprefix)
-        np=nprefix
-        call wbal (caller, pfx, np, pop)
+       caller='S5'
+       pfx=s5pfx(1:nprefix)
+       np=nprefix
+       call wbal (caller, pfx, np, pop)
       endif
 c
       specmode='DW'
@@ -2934,19 +2859,19 @@ c
       dh0=dh1
       de0=de1
       bm0=bm1
-      Bmag=bm0
+      bmag=bm0
       dist(1)=0.d0
       timlps(1)=0.d0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (vmod.ne.'NONE') then
-        write (*,50)
+       write (*,50)
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      if (finalit.gt.0) write (luop, 30)
+      if (finalit.gt.0) write (luop,30)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2954,7 +2879,7 @@ c    MAIN STEP LOOP
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-   70 count=0
+  170 count=0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2962,7 +2887,7 @@ c save step initial condition
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call copypop(pop0,popstep)
+      call copypop (pop0, popstep)
       tstep=te0
       dhstep=dh0
       destep=feldens(dh0,pop0)
@@ -2985,7 +2910,7 @@ c initial slow start scaling
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C     netloss=flocallosses(te0,de0,dh0,pop0,rad,dr,dv,wdil)
+c     netloss=flocallosses(te0,de0,dh0,pop0,rad,dr,dv,wdil)
 c     slow start in step^2 for 5 steps : 25*0.04=1.0
       tscale=dmin1(1.d0,0.04d0*dble(step*step))
       dt0=fdynamictimestep(tstep,dhstep,rad,velstep,popstep,netloss)
@@ -2996,7 +2921,7 @@ c     slow start in step^2 for 5 steps : 25*0.04=1.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  80  count=count+1
+      count=count+1
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3025,7 +2950,7 @@ c from rankhug common block te0/te1 change vars
 c midpoint t,de,dh,v,b all in '1' vars, not to get pop1 to match
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       temp2=te1
-      tav  =0.5d0*(temp1+temp2)
+      tav=0.5d0*(temp1+temp2)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     reset for ionisation t de dh: pop not changed by rh
 c     xhii unused here, new balance in pop at hdt -> pop1
@@ -3036,7 +2961,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       dh=dhstep
       xhii=xhstep
       call timion (tav, de, dh, xhii, hdt)
-      call copypop(pop,pop1)
+      call copypop (pop, pop1)
 c
 c  get midpoint cooling at temp2=te1, with improved pop1
 c
@@ -3054,7 +2979,7 @@ c
       call rankhug (t, de, dh, v, b, netloss, dt)
       temp3=te1
 c higher order step temp
-      tav =0.5d0*(temp1+temp3)
+      tav=0.5d0*(temp1+temp3)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3087,7 +3012,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     record step
 c
-      call averinto(0.5d0,pop0,pop1,pop)
+      call averinto (0.5d0, pop0, pop1, pop)
 c
       te(step)=(te0+te1)*0.5d0
       dhy(step)=(dh0+dh1)*0.5d0
@@ -3102,18 +3027,18 @@ c
 c
       en=zen*dh
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
-      cspd=dsqrt(gammaEOS*(pr1+pr0)/(rho1+rho0))
+      cspd=dsqrt(gammaeos*(pr1+pr0)/(rho1+rho0))
       wmol=(rho1+rho0)/(2.d0*(en+de))
       mu=fmua(de,dh)
 c
       mb=(bm0+bm1)*0.5d0
 c
       if ((vmod.eq.'FULL').or.(vmod.eq.'SLAB')) then
-        wmod='SCRN'
-        call wmodel (luop, t, de, dh, dr, wmod)
+       wmod='SCRN'
+       call wmodel (luop, t, de, dh, dr, wmod)
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3123,42 +3048,36 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       templim=1.0d7
-  130 tempidx=idnint(dlog10(templim))
+  180 tempidx=idnint(dlog10(templim))
       if ((te1.le.templim).and.(te0.gt.templim)) then
-        ft=(templim-te1)/(te0-te1)
-        cft=1.d0-ft
-        timmark(tempidx)=cft*timlps(step)+ft*timlps(step)
-        dismark(tempidx)=cft*dist(step)+ft*dist(step)
-        bmmark(tempidx)=cft*bm0+ft*bm1
-        prmark(tempidx)=cft*pr0+ft*pr1
-        rhmark(tempidx)=cft*rho0+ft*rho1
-        dhmark(tempidx)=cft*dh0+ft*dh1
-        demark(tempidx)=cft*de0+ft*de1
+       ft=(templim-te1)/(te0-te1)
+       cft=1.d0-ft
+       timmark(tempidx)=cft*timlps(step)+ft*timlps(step)
+       dismark(tempidx)=cft*dist(step)+ft*dist(step)
+       bmmark(tempidx)=cft*bm0+ft*bm1
+       prmark(tempidx)=cft*pr0+ft*pr1
+       rhmark(tempidx)=cft*rho0+ft*rho1
+       dhmark(tempidx)=cft*dh0+ft*dh1
+       demark(tempidx)=cft*de0+ft*de1
       endif
       templim=templim*0.1d0
-      if (templim.gt.10.d0) goto 130
+      if (templim.gt.10.d0) goto 180
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (vmod.eq.'MINI') then
-        write (*,60) step,t,de,dh,en,mb,pop(1,1),
-     &   timlps(step),dt,
-     &   dist(step),dr,
-     &   veloc(step),tnloss
+       write (*,60) step,t,de,dh,en,mb,pop(1,1),timlps(step),dt,
+     &  dist(step),dr,veloc(step),tnloss
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        if (finalit.gt.0) then
+      if (finalit.gt.0) then
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        write (luop,40) step,
-     &   dist(step),dr,
-     &   t,de,dh,en,mu,
-     &   timlps(step),dt,
-     &   tnloss,tloss,dlos,
-     &   pop(1,1),pop(2,1),bm1
+       write (luop,40) step,dist(step),dr,t,de,dh,en,mu,timlps(step),dt,
+     &  tnloss,tloss,dlos,pop(1,1),pop(2,1),bm1
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3167,123 +3086,121 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        if (jlin.eq.'Y') then
-             call speclocallines (linfluxes)
-             write (lulsh,135) step,dist(step),dist(step)+dr*0.5d0,dr,
-     &       t,de,dh,de+en,
-     &       0.0d0,0.0d0,0.0d0,hydrobri(2,2),
-     &       (linfluxes(i),i=1,njlines)
-          endif
+       if (jlin.eq.'Y') then
+        call speclocallines (linfluxes)
+        write (lulsh,110) step,dist(step),dist(step)+dr*0.5d0,dr,t,de,
+     &   dh,de+en,0.0d0,0.0d0,0.0d0,hydrobri(2,2),(linfluxes(i),i=1,
+     &   njlines)
+       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        if (ratmod.eq.'Y') then
-          wmod='LOSS'
-          call wmodel (lurtsh, t, de, dh, dr, wmod)
-        endif
+       if (ratmod.eq.'Y') then
+        wmod='LOSS'
+        call wmodel (lurtsh, t, de, dh, dr, wmod)
+       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        if (dynmod.eq.'Y') then
-          write (ludy,90) step,count
-          write (ludy,110) dist(step),dr,timlps(step),dt
-          write (ludy,100) te0,vel0,rho0,pr0,bm0,l0
-          write (ludy,100) te1,vel1,rho1,pr1,bm1,l11
-          write (ludy,120) ue,en,cspd,wmol
-        endif
+       if (dynmod.eq.'Y') then
+        write (ludy,70) step,count
+        write (ludy,90) dist(step),dr,timlps(step),dt
+        write (ludy,80) te0,vel0,rho0,pr0,bm0,l0
+        write (ludy,80) te1,vel1,rho1,pr1,bm1,l11
+        write (ludy,100) ue,en,cspd,wmol
+       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        if (fclmod.eq.'Y') then
-         do i=1,atypes
-            meanion(i)=0.d0
-            ionbar=0.d0
-            do j=1,maxion(i)
-              ionbar=ionbar+(pop(j,i)*j)
-            enddo
-            meanion(i)=dmax1(ionbar-1.0d0,0.0d0)
+       if (fclmod.eq.'Y') then
+        do i=1,atypes
+         meanion(i)=0.d0
+         ionbar=0.d0
+         do j=1,maxion(i)
+          ionbar=ionbar+(pop(j,i)*j)
          enddo
+         meanion(i)=dmax1(ionbar-1.0d0,0.0d0)
+        enddo
 c
-          en=zen*dh
-          n=(de*dh)
-          if (jnorm.eq.0) n=(de*dh)
-          if (jnorm.eq.1) n=(dh*dh)
-          if (jnorm.eq.2) n=(de*en)
-          if (jnorm.eq.3) n=((de+en)*(de+en))
-          if (jnorm.eq.4) n=(de*de)
-          invn=1.d0/dble(n)
+        en=zen*dh
+        n=(de*dh)
+        if (jnorm.eq.0) n=(de*dh)
+        if (jnorm.eq.1) n=(dh*dh)
+        if (jnorm.eq.2) n=(de*en)
+        if (jnorm.eq.3) n=((de+en)*(de+en))
+        if (jnorm.eq.4) n=(de*de)
+        invn=1.d0/dble(n)
 c
-          write (lucl,140) t,tab,de,tab,dh,tab,en,tab,(0.5*(rho0+rho1)),
-     &     tab,pop(1,1),tab,pop(2,1),tab,mu,tab,tloss,tab,tloss*invn,
-     &     (tab,coolz(j)*invn,j=1,atypes),tab,eloss*invn,tab,egain*invn,
-     &     tab,netloss*invn
+        write (lucl,120) t,tab,de,tab,dh,tab,en,tab,(0.5*(rho0+rho1)),
+     &   tab,pop(1,1),tab,pop(2,1),tab,mu,tab,tloss,tab,tloss*invn,(tab,
+     &   coolz(j)*invn,j=1,atypes),tab,eloss*invn,tab,egain*invn,tab,
+     &   netloss*invn
 c
-        endif
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-      if (bandsmod.eq.'Y') then
-c
-         b0=0.d0
-         b1=0.d0
-         b2=0.d0
-         b3=0.d0
-         b4=0.d0
-         blum=0.d0
-         do idx=1,infph-1
-            if (tphot(idx).gt.epsilon) then
-            widnu=widbinnu(idx)
-            pe=photev(idx)
-            binlum=tphot(idx)*fpi*widnu/dr
-            blum=blum+binlum
-            if ((pe.gt.0.0d0).and.(pe.le.100.0d0)) b0=b0+binlum
-            if ((pe.gt.100.0d0).and.(pe.le.500.0d0)) b1=b1+binlum
-            if ((pe.gt.500.0d0).and.(pe.le.1000.0d0)) b2=b2+binlum
-            if ((pe.gt.1000.0d0).and.(pe.le.2000.0d0)) b3=b3+binlum
-            if ((pe.gt.2000.0d0).and.(pe.le.10000.0d0)) b4=b4+binlum
-            endif
-         enddo
-c
-          b0=b0/tloss
-          b1=b1/tloss
-          b2=b2/tloss
-          b3=b3/tloss
-          b4=b4/tloss
-          blum=blum/tloss
-c
-         if (b0.lt.epsilon) b0=0.d0
-         if (b1.lt.epsilon) b1=0.d0
-         if (b2.lt.epsilon) b2=0.d0
-         if (b3.lt.epsilon) b3=0.d0
-         if (b4.lt.epsilon) b4=0.d0
-         if (blum.lt.epsilon) blum=0.d0
-c
-        write (lupb,150) t,tab,de,tab,dh,tab,en,tab,pop(1,1),
-     &   tab,pop(2,1),tab,mu,tab,tloss,tab,tloss*invn,tab,fflos/tloss,
-     &   tab,b0,tab,b1,tab,b2,tab,b3,tab,b4,tab,blum,tab
-c
-      endif
+       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      if (allmod.eq.'Y') then
-          write (lualsh,160)
-          write (lualsh,170) step,t,de,dh,vel1,rho1,pr1,dist(step),
-     &     timlps(step)
+       if (bandsmod.eq.'Y') then
 c
-          call wionabal (lualsh, pop)
-          call wionabal (lualsh, popint)
-      endif
+        b0=0.d0
+        b1=0.d0
+        b2=0.d0
+        b3=0.d0
+        b4=0.d0
+        blum=0.d0
+        do idx=1,infph-1
+         if (tphot(idx).gt.epsilon) then
+          widnu=widbinnu(idx)
+          pe=photev(idx)
+          binlum=tphot(idx)*fpi*widnu/dr
+          blum=blum+binlum
+          if ((pe.gt.0.0d0).and.(pe.le.100.0d0)) b0=b0+binlum
+          if ((pe.gt.100.0d0).and.(pe.le.500.0d0)) b1=b1+binlum
+          if ((pe.gt.500.0d0).and.(pe.le.1000.0d0)) b2=b2+binlum
+          if ((pe.gt.1000.0d0).and.(pe.le.2000.0d0)) b3=b3+binlum
+          if ((pe.gt.2000.0d0).and.(pe.le.10000.0d0)) b4=b4+binlum
+         endif
+        enddo
 c
-      if (tsrmod.eq.'Y') then
+        b0=b0/tloss
+        b1=b1/tloss
+        b2=b2/tloss
+        b3=b3/tloss
+        b4=b4/tloss
+        blum=blum/tloss
 c
-          do i=1,ieln
-            write (luionsh(i),180) step,dist(step),dr,
-     &         timlps(step),dt,t,de,dh,en,(pop(j,iel(i)),j=1,
-     &         maxion(iel(i)))
-          enddo
+        if (b0.lt.epsilon) b0=0.d0
+        if (b1.lt.epsilon) b1=0.d0
+        if (b2.lt.epsilon) b2=0.d0
+        if (b3.lt.epsilon) b3=0.d0
+        if (b4.lt.epsilon) b4=0.d0
+        if (blum.lt.epsilon) blum=0.d0
 c
-        endif
+        write (lupb,130) t,tab,de,tab,dh,tab,en,tab,pop(1,1),tab,pop(2,
+     &   1),tab,mu,tab,tloss,tab,tloss*invn,tab,fflos/tloss,tab,b0,tab,
+     &   b1,tab,b2,tab,b3,tab,b4,tab,blum,tab
+c
+       endif
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+       if (allmod.eq.'Y') then
+        write (lualsh,140)
+        write (lualsh,150) step,t,de,dh,vel1,rho1,pr1,dist(step),
+     &   timlps(step)
+c
+        call wionabal (lualsh, pop)
+        call wionabal (lualsh, popint)
+       endif
+c
+       if (tsrmod.eq.'Y') then
+c
+        do i=1,ieln
+         write (luionsh(i),160) step,dist(step),dr,timlps(step),dt,t,de,
+     &    dh,en,(pop(j,iel(i)),j=1,maxion(iel(i)))
+        enddo
+c
+       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3302,30 +3219,30 @@ c
 c
 c     Local photon field
 c
-        specmode='LOCL'
-        call localem (t, de, dh)
-        rad=dist(step)
-        call totphot2 (t, dh, rad, dr, dv, wdil, specmode)
-        caller='S5'
-        pfx='shlocl'//s5pfx(1:nprefix)
-        np=lenv(pfx)
-        wmod='NORM'
-        dva=vel1-vel0
-        en=zen*dh
-        n=(de*dh)
-        if (jnorm.eq.0) n=(de*dh)
-        if (jnorm.eq.1) n=(dh*dh)
-        if (jnorm.eq.2) n=(de*en)
-        if (jnorm.eq.3) n=((de+en)*(de+en))
-        if (jnorm.eq.4) n=(de*de)
-        invn=1.d0/n
-        call wpsou(caller,pfx,np, wmod, t, de, dh, dr, invn, tphot)
+       specmode='LOCL'
+       call localem (t, de, dh)
+       rad=dist(step)
+       call totphot2 (t, dh, rad, dr, dv, wdil, specmode)
+       caller='S5'
+       pfx='shlocl'//s5pfx(1:nprefix)
+       np=lenv(pfx)
+       wmod='NORM'
+       dva=vel1-vel0
+       en=zen*dh
+       n=(de*dh)
+       if (jnorm.eq.0) n=(de*dh)
+       if (jnorm.eq.1) n=(dh*dh)
+       if (jnorm.eq.2) n=(de*en)
+       if (jnorm.eq.3) n=((de+en)*(de+en))
+       if (jnorm.eq.4) n=(de*de)
+       invn=1.d0/n
+       call wpsou (caller, pfx, np, wmod, t, de, dh, dr, invn, tphot)
 c
 c     reset mode and tphot
 c
-        specmode='DW'
-        rad=dist(step)
-        call totphot2 (t, dh, rad, dr, dv, wdil, specmode)
+       specmode='DW'
+       rad=dist(step)
+       call totphot2 (t, dh, rad, dr, dv, wdil, specmode)
       endif
 c
 c     get mean ionisation state for step
@@ -3346,8 +3263,8 @@ c
 c
       call localem (t, de, dh)
       call zetaeff (dh)
-      call newdif2 (tdw, tup, dh, rad, drdw, dvdw, drup, dvup,
-     &   frdw, jtrans)
+      call newdif2 (tdw, tup, dh, rad, drdw, dvdw, drup, dvup, frdw,
+     &jtrans)
 c
       imod='ALL'
       dvol=dr*irdvol
@@ -3356,19 +3273,19 @@ c
 c     record line ratios
 c
       if (ox3.ne.0) then
-        hoiii(step)=(fluxm(6,ox3)+fluxm(8,ox3))/(fluxh(2)+epsilon)
+       hoiii(step)=(fluxm(6,ox3)+fluxm(8,ox3))/(fluxh(2)+epsilon)
       endif
       if (ox2.ne.0) then
-        hoii(step)=(fluxm(1,ox2)+fluxm(2,ox2))/(fluxh(2)+epsilon)
+       hoii(step)=(fluxm(1,ox2)+fluxm(2,ox2))/(fluxh(2)+epsilon)
       endif
       if (ni2.ne.0) then
-        hnii(step)=(fluxm(7,ni2)+fluxm(10,ni2))/(fluxh(2)+epsilon)
+       hnii(step)=(fluxm(7,ni2)+fluxm(10,ni2))/(fluxh(2)+epsilon)
       endif
       if (su2.ne.0) then
-        hsii(step)=(fluxm(1,su2)+fluxm(1,su2))/(fluxh(2)+epsilon)
+       hsii(step)=(fluxm(1,su2)+fluxm(1,su2))/(fluxh(2)+epsilon)
       endif
       if (ox1.ne.0) then
-        if (ispo.eq.' OI') hsii(step)=fluxm(3,ox1)/(fluxh(1)+epsilon)
+       if (ispo.eq.' OI') hsii(step)=fluxm(3,ox1)/(fluxh(1)+epsilon)
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3390,7 +3307,7 @@ c
       dh0=dh1
       de0=de1
       bm0=bm1
-      Bmag=bm0
+      bmag=bm0
       count=0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3410,9 +3327,9 @@ c
       ionbar=0.d0
 c
       do i=1,atypes
-        do j=2,maxion(i)
-          ionbar=ionbar+(pop(j,i)*zion(i))
-        enddo
+       do j=2,maxion(i)
+        ionbar=ionbar+(pop(j,i)*zion(i))
+       enddo
       enddo
 c
       ionbar=ionbar/totn
@@ -3422,25 +3339,24 @@ c
 c     Specific species ionisation limit
 c
       if (jend.eq.'B') then
-        if (pop(jpoen,ielen).lt.fren) goto 190
+       if (pop(jpoen,ielen).lt.fren) goto 190
       endif
 c
 c stop first iteration at heating==cooling if maxits>1
 c
-      if ((iteration.le.1)
-     &  .and.(maxits.gt.1)
-     &  .and.(dlos.lt.0.5d0)) goto 190
+      if ((iteration.le.1).and.(maxits.gt.1).and.(dlos.lt.0.5d0)) goto
+     &190
 c
 c     Temperature limit
 c
       if (jend.eq.'C') then
-        if (t.lt.tend) goto 190
+       if (t.lt.tend) goto 190
       endif
 c
 c     Temperature limit, plus 95% neutral
 c
       if ((jend.eq.'S').and.(t.lt.tend)) then
-        if (ionbar.lt.0.05d0) goto 190
+       if (ionbar.lt.0.05d0) goto 190
       endif
 c
 c     Distance Limit
@@ -3470,7 +3386,7 @@ c     permit
 c
       step=step+1
       if ((t.gt.100.d0).and.(step.lt.(mxnsteps-1))) then
-        goto 70
+       goto 170
       endif
 c
   190 continue
@@ -3481,7 +3397,7 @@ c     Close all files and flush
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call closeS5files()
+      call closes5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3494,7 +3410,7 @@ c     Reopen all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appendS5files
+      call appends5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3503,26 +3419,26 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (finalit.gt.0) then
-        if (jspec(1:1).eq.'Y') then
+       if (jspec(1:1).eq.'Y') then
 c
-          caller='S5'
-          pfx='SHdw'//s5pfx(1:nprefix)
-          np=lenv(pfx)
-          dva=0.d0
+        caller='S5'
+        pfx='SHdw'//s5pfx(1:nprefix)
+        np=lenv(pfx)
+        dva=0.d0
 c
-          wmod='LFLM'
-          call wpsou(caller, pfx, np, wmod, t, de, dh, dr, wdil, tphot)
+        wmod='LFLM'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, wdil, tphot)
 c
-          wmod='REAL'
-          call wpsou(caller, pfx, np, wmod, t, de, dh, dr, wdil, tphot)
+        wmod='REAL'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, wdil, tphot)
 c
         if (lmod.eq.'Y') then
 c
-          wmod='NFNU'
-          call wpsou(caller, pfx, np, wmod, t, de, dh, dr, wdil, tphot)
+         wmod='NFNU'
+         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, wdil, tphot)
 c
-          endif
         endif
+       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3530,30 +3446,33 @@ c     Upstream photon field
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-        call localem (t, de, dh)
-        specmode='UP'
-        rad=dist(step)
-        call totphot2 (t, dh, 1.0d38, 1.0d0, 0.d0, wdil, specmode)
+       call localem (t, de, dh)
+       specmode='UP'
+       rad=dist(step)
+       call totphot2 (t, dh, 1.0d38, 1.0d0, 0.d0, wdil, specmode)
 c
-        call fieldsummary(6,1,tphot)
+       call fieldsummary (6, 1, tphot)
 c
-        caller='S5'
-        pfx='SHup'//s5pfx(1:nprefix)
-        np=lenv(pfx)
-        dva=vel1-vel0
+       caller='S5'
+       pfx='SHup'//s5pfx(1:nprefix)
+       np=lenv(pfx)
+       dva=vel1-vel0
 c
-        wmod='LFLM'
-        call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
+       wmod='LFLM'
+       call wpsou (caller, pfx, np, wmod, te1, de1, dh1, dr, wdil,
+     &  tphot)
 c
-        wmod='REAL'
-        call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
+       wmod='REAL'
+       call wpsou (caller, pfx, np, wmod, te1, de1, dh1, dr, wdil,
+     &  tphot)
 c
-        if (lmod.eq.'Y') then
+       if (lmod.eq.'Y') then
 c
         wmod='NFNU'
-        call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
+        call wpsou (caller, pfx, np, wmod, te1, de1, dh1, dr, wdil,
+     &   tphot)
 c
-        endif
+       endif
 c
       endif
 c
@@ -3563,15 +3482,15 @@ c     dynamics
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call avrdata()
+      call avrdata ()
 c
       if (finalit.gt.0) then
 c
   200 format(//,
      & ' Model ended: , Distance:, ',1pg14.7,
      &', Time:, ',1pg14.7,', Temp:, ',1pg12.5,/)
-        write (luop,200) dist(step),timlps(step),t
-        write (*,200) dist(step),timlps(step),t
+       write (luop,200) dist(step),timlps(step),t
+       write (*,200) dist(step),timlps(step),t
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3587,47 +3506,36 @@ c
      & '    rho',i1,':, ',1pg12.5,/,
      & '     nH',i1,':, ',1pg12.5,/,
      & '     ne',i1,':, ',1pg12.5,/)
-        do idx=7,1,-1
-          if (timmark(idx).gt.0.d0) then
-            templim=10.0d0**dble(idx)
-          write(luop,210) idx,templim
-     &              ,idx,timMark(idx)
-     &              ,idx,disMark(idx)
-     &              ,idx,bmMark(idx)
-     &              ,idx,prMark(idx)
-     &              ,idx,rhMark(idx)
-     &              ,idx,dhMark(idx)
-     &              ,idx,deMark(idx)
-          write(*,210) idx,templim
-     &              ,idx,timMark(idx)
-     &              ,idx,disMark(idx)
-     &              ,idx,bmMark(idx)
-     &              ,idx,prMark(idx)
-     &              ,idx,rhMark(idx)
-     &              ,idx,dhMark(idx)
-     &              ,idx,deMark(idx)
-          endif
-        enddo
+       do idx=7,1,-1
+        if (timmark(idx).gt.0.d0) then
+         templim=10.0d0**dble(idx)
+         write (luop,210) idx,templim,idx,timmark(idx),idx,dismark(idx),
+     &    idx,bmmark(idx),idx,prmark(idx),idx,rhmark(idx),idx,
+     &    dhmark(idx),idx,demark(idx)
+         write (*,210) idx,templim,idx,timmark(idx),idx,dismark(idx),
+     &    idx,bmmark(idx),idx,prmark(idx),idx,rhmark(idx),idx,
+     &    dhmark(idx),idx,demark(idx)
+        endif
+       enddo
 c
-        spmod='REL'
-        linemod='LAMB'
-        call spec2 (lusp, linemod, spmod)
+       spmod='REL'
+       linemod='LAMB'
+       call spec2 (lusp, linemod, spmod)
 c
 c both summary columns and spec/spectrum all in one
 c
-        call wrsppop (luop)
+       call wrsppop (luop)
 c
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call closeS5files()
+      call closes5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fdynamictimestep(t,dh,x,vel,p,netloss)
@@ -3648,19 +3556,19 @@ c
       de=feldens(dh,p)
       en=zen*dh+de
       pr=en*rkb*t
-      ue=gammaEOSU*pr
+      ue=gammaeosu*pr
 c
 c initial cooling rate for initial timestep guess
 c
-      netloss=flocallosses(t, de, dh, p, x, 0.d0, 0.d0, wdil)
+      netloss=flocallosses(t,de,dh,p,x,0.d0,0.d0,wdil)
 c
       cltime=(ue/(dabs(netloss)+epsilon))
       absdr=1.0d38
       abstime=1.d0/epsilon
       if (photonmode.ne.0) then
-        absdr=1.0d19/dh0
-        call absdis2 (dh, 0.5d0, absdr, 0.0d0, p)
-        abstime=absdr/(dabs(vel)+epsilon)
+       absdr=1.0d19/dh0
+       call absdis2 (dh, 0.5d0, absdr, 0.0d0, p)
+       abstime=absdr/(dabs(vel)+epsilon)
       endif
       ctime=fcolltim(de)
       rtime=frectim2(de)
@@ -3674,7 +3582,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine protostate (lunit)
@@ -3713,31 +3620,29 @@ c
      & '    Proto      Pmag:',1pg12.5,' dyne/cm^2',/,
      & '    Proto      Pram:',1pg12.5,' dyne/cm^2',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-
 c
       en=zen*dh_neu
-      cspd=dsqrt(gammaEOS*pr_neu/rh_neu)
+      cspd=dsqrt(gammaeos*pr_neu/rh_neu)
       wmol=rh_neu/(en+de_neu)
       mu=fmua(de_neu,dh_neu)
 c
-      Pram=rh_neu*vel0*vel0
-      Pgas=pr_neu
-      Pmag=(bm_neu*bm_neu)/epi
+      pram=rh_neu*vel0*vel0
+      pgas=pr_neu
+      pmag=(bm_neu*bm_neu)/epi
 c
-      machnumber=vel0/dsqrt(gammaEOS*pr_neu/rh_neu)
-      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rh_neu)
-      malpha=Pmag/Pgas
-      gaseta=gammaEOS*Pgas/Pram
-      mageta=2.d0*Pmag/Pram
+      machnumber=vel0/dsqrt(gammaeos*pr_neu/rh_neu)
+      alfvennumber=vel0/dsqrt(2.0d0*pmag/rh_neu)
+      malpha=pmag/pgas
+      gaseta=gammaeos*pgas/pram
+      mageta=2.d0*pmag/pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,
      &gaseta,mageta,te_neu,de_neu,dh_neu,rh_neu,pr_neu,mu,pop_neu(1,
      &zmap(1)),pop_neu(2,zmap(1)),pop_neu(1,zmap(2)),pop_neu(2,zmap(2)),
-     &pop_neu(3,zmap(2)),bm_neu*1.d6,Pmag,Pram
+     &pop_neu(3,zmap(2)),bm_neu*1.d6,pmag,pram
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine shock5filenames (px)
@@ -3817,7 +3722,7 @@ c
       lulsh=30
       ieln=4
       do i=1,atypes
-        luionsh(i)=30+i
+       luionsh(i)=30+i
       enddo
 c
 c     Name "sh5" general output files
@@ -3938,16 +3843,16 @@ c
       sfx='csv'
       do i=1,atypes
 c       mapppings internal ids not z, names mapped in prefs
-        if (elem_len(i).eq.1) then
-          pfx='elSH'//s5pfx(1:nprefix)//elem(i)//'_'
-        else
-          pfx='elSH'//s5pfx(1:nprefix)//elem(i)
-        endif
-        np=lenv(pfx)
-        fn=' '
-        call newfile (pfx, np, sfx, 3, fn)
-        fash=fn(1:np+8)
-        fionsh(i)=fash
+       if (elem_len(i).eq.1) then
+        pfx='elSH'//s5pfx(1:nprefix)//elem(i)//'_'
+       else
+        pfx='elSH'//s5pfx(1:nprefix)//elem(i)
+       endif
+       np=lenv(pfx)
+       fn=' '
+       call newfile (pfx, np, sfx, 3, fn)
+       fash=fn(1:np+8)
+       fionsh(i)=fash
 c
       enddo
 c
@@ -3960,10 +3865,9 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine createS5files ()
+      subroutine creates5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4004,14 +3908,14 @@ c
 c
 c B  : Ion balance files.'
 c
-        do i=1,ieln
-          open (luionsh(i),file=fionsh(iel(i)),status='NEW')
-        enddo
+       do i=1,ieln
+        open (luionsh(i),file=fionsh(iel(i)),status='NEW')
+       enddo
 c
       endif
 c
       if (allmod.eq.'Y') then
-        open (lualsh,file=fash,status='NEW')
+       open (lualsh,file=fash,status='NEW')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4024,7 +3928,7 @@ c
 c
 c C  : Dynamics file.'
 c
-        open (ludy,file=fd,status='NEW')
+       open (ludy,file=fd,status='NEW')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4037,7 +3941,7 @@ c
 c
 c D  : All Rates file.
 c
-        open (lurtsh,file=frsh,status='NEW')
+       open (lurtsh,file=frsh,status='NEW')
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4045,20 +3949,19 @@ c     spectrum files handled on the fly by wpsou
 c     lmod and jspec
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
-C     if (jspec.eq.'Y') then
+c     if (jspec.eq.'Y') then
 c
 c E  : Final downstream field.'
 c       units made by wpsou
 c
-C     endif
+c     endif
 c
-C     if (lmod.eq.'Y') then
+c     if (lmod.eq.'Y') then
 c
 c F  : All upstream fields at each step.
 c       units made by wpsou
 c
-C     endif
+c     endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4070,7 +3973,7 @@ c
 c
 c H  : Cooling in x-ray bands.'
 c
-        open (lupb,file=fpb,status='NEW')
+       open (lupb,file=fpb,status='NEW')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4084,7 +3987,7 @@ c
 c
 c K  : Cooling, Components by Elements file.'
 c
-        open (lucl,file=fcl,status='NEW')
+       open (lucl,file=fcl,status='NEW')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4099,16 +4002,13 @@ c     L  : Monitor up to ',i3,' lines'/
 c     line structures, shocks and precursors
 c     jlin=Y
 c
-        open (lulsh,file=flsh,status='NEW')
+       open (lulsh,file=flsh,status='NEW')
       endif
-
       return
       end
-c
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine closeS5files()
+      subroutine closes5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4123,38 +4023,37 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       logical unitopen
 c
-      inquire(unit=luop, opened=unitopen)
+      inquire (unit=luop,opened=unitopen)
       if (unitopen) close (luop)
       if (lupt.gt.0) then
-         inquire(unit=lupt, opened=unitopen)
-         if (unitopen) close (lupt)
+       inquire (unit=lupt,opened=unitopen)
+       if (unitopen) close (lupt)
       endif
-      inquire(unit=lusp, opened=unitopen)
+      inquire (unit=lusp,opened=unitopen)
       if (unitopen) close (lusp)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      inquire(unit=lurtsh, opened=unitopen)
+      inquire (unit=lurtsh,opened=unitopen)
       if (unitopen) close (lurtsh)
-      inquire(unit=ludy, opened=unitopen)
+      inquire (unit=ludy,opened=unitopen)
       if (unitopen) close (ludy)
       do i=1,ieln
-          inquire(unit=luionsh(i), opened=unitopen)
-          if (unitopen) close (luionsh(i))
+       inquire (unit=luionsh(i),opened=unitopen)
+       if (unitopen) close (luionsh(i))
       enddo
-      inquire(unit=lualsh, opened=unitopen)
+      inquire (unit=lualsh,opened=unitopen)
       if (unitopen) close (lualsh)
-      inquire(unit=lucl, opened=unitopen)
+      inquire (unit=lucl,opened=unitopen)
       if (unitopen) close (lucl)
-      inquire(unit=lulsh, opened=unitopen)
+      inquire (unit=lulsh,opened=unitopen)
       if (unitopen) close (lulsh)
-      inquire(unit=lupb, opened=unitopen)
+      inquire (unit=lupb,opened=unitopen)
       if (unitopen) close (lupb)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine appendS5files()
+      subroutine appends5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4190,14 +4089,15 @@ c
 c
 c B  : Ion balance files.'
 c
-      do i=1,ieln
-      open (luionsh(i),file=fionsh(iel(i)),status='OLD',access='APPEND')
-      enddo
+       do i=1,ieln
+        open (luionsh(i),file=fionsh(iel(i)),status='OLD',access='APPEND
+     &')
+       enddo
 c
       endif
 c
       if (allmod.eq.'Y') then
-        open (lualsh,file=fash,status='OLD',access='APPEND')
+       open (lualsh,file=fash,status='OLD',access='APPEND')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4210,7 +4110,7 @@ c
 c
 c C  : Dynamics file.'
 c
-        open (ludy,file=fd,status='OLD',access='APPEND')
+       open (ludy,file=fd,status='OLD',access='APPEND')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4223,7 +4123,7 @@ c
 c
 c D  : All Rates file.
 c
-        open (lurtsh,file=frsh,status='OLD',access='APPEND')
+       open (lurtsh,file=frsh,status='OLD',access='APPEND')
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4231,20 +4131,19 @@ c     spectrum files handled on the fly by wpsou
 c     lmod and jspec
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
-C     if (jspec.eq.'Y') then
+c     if (jspec.eq.'Y') then
 c
 c E  : Final downstream field.'
 c       units made by wpsou
 c
-C     endif
+c     endif
 c
-C     if (lmod.eq.'Y') then
+c     if (lmod.eq.'Y') then
 c
 c F  : All upstream fields at each step.
 c       units made by wpsou
 c
-C     endif
+c     endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4256,7 +4155,7 @@ c
 c
 c H  : Cooling in x-ray bands.'
 c
-        open (lupb,file=fpb,status='OLD',access='APPEND')
+       open (lupb,file=fpb,status='OLD',access='APPEND')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4271,7 +4170,7 @@ c
 c K  : Cooling, Components by Elements file.'
 c
 c
-        open (lucl,file=fcl,status='OLD',access='APPEND')
+       open (lucl,file=fcl,status='OLD',access='APPEND')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4286,10 +4185,9 @@ c     L  : Monitor up to ',i3,' lines'/
 c     line structures, shocks and precursors
 c     jlin=Y
 c
-        open (lulsh,file=flsh,status='OLD',access='APPEND')
+       open (lulsh,file=flsh,status='OLD',access='APPEND')
       endif
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

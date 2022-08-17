@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -51,9 +51,9 @@ c
 c
       if ((imod.ne.'ALL').and.(imod.ne.'COLD').and.(imod.ne.'REST'))
      &then
-        write (luty,10) imod
+       write (luty,10) imod
    10    format(/' MODE IMPROPERLY SET FOR SUBR. SUMDATA  : ',a4)
-        stop
+       stop
       endif
 c
 c     ***INTEGRATION FOR THE AVERAGE IONISATION : PAM(6,11) ,
@@ -62,70 +62,70 @@ c     AVERAGE ELECTRONIC DENSITIES IN DEAM(6,11)
 c     AVERAGE DISTANCES IN RDISA(6,11)
 c
       if (imod.ne.'COLD') then
-        wei=((de*dh)*fi)*dvol
-        wei2=wei*de
-        dhav=dhav+wei2
-        deav=deav+wei
-        do j=1,atypes
-          do i=1,maxion(j)
-            deam(i,j)=deam(i,j)+(wei2*pop(i,j))
-            rdisa(i,j)=rdisa(i,j)+((wei*pop(i,j))*(rdis/rno))
-            pam(i,j)=pam(i,j)+(wei*pop(i,j))
-          enddo
+       wei=((de*dh)*fi)*dvol
+       wei2=wei*de
+       dhav=dhav+wei2
+       deav=deav+wei
+       do j=1,atypes
+        do i=1,maxion(j)
+         deam(i,j)=deam(i,j)+(wei2*pop(i,j))
+         rdisa(i,j)=rdisa(i,j)+((wei*pop(i,j))*(rdis/rno))
+         pam(i,j)=pam(i,j)+(wei*pop(i,j))
         enddo
+       enddo
 c
 c     ***INTEGRATION FOR THE AVERAGE TEMPERATURES : TEAV(6,11) ,
 c     WEIGHT IN : PAM(6,11)  ;  VOLUME STEP : DVOLUNI
 c
-        do j=1,atypes
-          do i=1,maxion(j)
-            teav(i,j)=teav(i,j)+((t*wei)*pop(i,j))
-          enddo
+       do j=1,atypes
+        do i=1,maxion(j)
+         teav(i,j)=teav(i,j)+((t*wei)*pop(i,j))
         enddo
+       enddo
 c
 c     ***INTEGRATION FOR THE AVERAGE TEMPERATURES GIVEN BY LINE
 c     RATIOS : TOIII,TNII  (INTEG. EL. DENS. IN : DEOIII,DENII)
 c     WEIGHT IN : WEOIII,WENII  ;  VOLUME STEP : DVOLUNI
 c
-        if (ox3.ne.0) then
-          wei=(fmbri(6,ox3)+fmbri(8,ox3))
-          weoiii=weoiii+((wei*dvol)*fi)
-          roiii=roiii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(10,ox3))))
-          deoiii=deoiii+(((de*wei)*dvol)*fi)
-        endif
-        if (ni2.ne.0) then
-          wei=(fmbri(7,ni2)+fmbri(10,ni2))
-          wenii=wenii+((wei*dvol)*fi)
-          rnii=rnii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(13,ni2))))
-          denii=denii+(((de*wei)*dvol)*fi)
-        endif
+       if (ox3.ne.0) then
+        wei=(fmbri(6,ox3)+fmbri(8,ox3))
+        weoiii=weoiii+((wei*dvol)*fi)
+        roiii=roiii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(10,ox3))))
+        deoiii=deoiii+(((de*wei)*dvol)*fi)
+       endif
+       if (ni2.ne.0) then
+        wei=(fmbri(7,ni2)+fmbri(10,ni2))
+        wenii=wenii+((wei*dvol)*fi)
+        rnii=rnii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(13,ni2))))
+        denii=denii+(((de*wei)*dvol)*fi)
+       endif
 c
 c     ***INTEGRATION FOR THE AVERAGE DENSITIES GIVEN BY LINE
 c     RATIOS : TOII,TSII  (INTEG. TEMP. IN : TOII,TSII)
 c     WEIGHT IN : WEOII,WESII  ;  VOLUME STEP : DVOLUNI
 c
-        if (ox2.ne.0) then
-          wei=fmbri(1,ox2)
-          weoii=weoii+((wei*dvol)*fi)
-          roii=roii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(2,ox2))))
-          toii=toii+(((t*wei)*dvol)*fi)
-        endif
-        if (su2.ne.0) then
-          wei=fmbri(2,su2)
-          wesii=wesii+((wei*dvol)*fi)
-          rsii=rsii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(1,su2))))
-          tsii=tsii+(((t*wei)*dvol)*fi)
-        endif
+       if (ox2.ne.0) then
+        wei=fmbri(1,ox2)
+        weoii=weoii+((wei*dvol)*fi)
+        roii=roii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(2,ox2))))
+        toii=toii+(((t*wei)*dvol)*fi)
+       endif
+       if (su2.ne.0) then
+        wei=fmbri(2,su2)
+        wesii=wesii+((wei*dvol)*fi)
+        rsii=rsii+(((wei*dvol)*fi)*(wei/(epsilon+fmbri(1,su2))))
+        tsii=tsii+(((t*wei)*dvol)*fi)
+       endif
 c
-        wei=dvol*fi
+       wei=dvol*fi
 c
-        do j=1,nxr3lines
-          xr3lines_flux(j)=xr3lines_flux(j)+(xr3lines_bri(j)*wei)
-        enddo
+       do j=1,nxr3lines
+        xr3lines_flux(j)=xr3lines_flux(j)+(xr3lines_bri(j)*wei)
+       enddo
 c
-        do j=1,nxrllines
-          xrllines_flux(j)=xrllines_flux(j)+(xrllines_bri(j)*wei)
-        enddo
+       do j=1,nxrllines
+        xrllines_flux(j)=xrllines_flux(j)+(xrllines_bri(j)*wei)
+       enddo
 c
 c       do j=1,xlines
 c         fluxx(j)=fluxx(j)+(xrbri(j)*wei)
@@ -143,125 +143,125 @@ c       do j=1,nlines
 c         fluxr(j)=fluxr(j)+(rbri(j)*wei)
 c       enddo
 c
-        do j=1,mlines
-          fluxi(j)=fluxi(j)+(fsbri(j)*wei)
-        enddo
+       do j=1,mlines
+        fluxi(j)=fluxi(j)+(fsbri(j)*wei)
+       enddo
 c
-        do j=1,nfmions
-          do i=1,nfmtrans(j)
-            fluxm(i,j)=fluxm(i,j)+(fmbri(i,j)*wei)
-          enddo
+       do j=1,nfmions
+        do i=1,nfmtrans(j)
+         fluxm(i,j)=fluxm(i,j)+(fmbri(i,j)*wei)
         enddo
+       enddo
 c
-        do j=1,nfeions
-          do i=1,nfetrans(j)
-            fluxfe(i,j)=fluxfe(i,j)+(febri(i,j)*wei)
-          enddo
+       do j=1,nfeions
+        do i=1,nfetrans(j)
+         fluxfe(i,j)=fluxfe(i,j)+(febri(i,j)*wei)
         enddo
+       enddo
 c
-        do j=1,nf3ions
-          do i=1,nf3trans
-            fluxf3(i,j)=fluxf3(i,j)+(f3bri(i,j)*wei)
-          enddo
+       do j=1,nf3ions
+        do i=1,nf3trans
+         fluxf3(i,j)=fluxf3(i,j)+(f3bri(i,j)*wei)
         enddo
+       enddo
 c
 c
 c CII recomb - all in one loop
 c
-        do j=1,nrccii
-          fluxrccii_a(j)=fluxrccii_a(j)+(rccii_abri(j)*wei)
-          fluxrccii_b(j)=fluxrccii_b(j)+(rccii_bbri(j)*wei)
-        enddo
+       do j=1,nrccii
+        fluxrccii_a(j)=fluxrccii_a(j)+(rccii_abri(j)*wei)
+        fluxrccii_b(j)=fluxrccii_b(j)+(rccii_bbri(j)*wei)
+       enddo
 c
 c NII recomb - all in one loop
 c
-        do j=1,nrcnii
-          fluxrcnii_a(j)=fluxrcnii_a(j)+(rcnii_abri(j)*wei)
-          fluxrcnii_b(j)=fluxrcnii_b(j)+(rcnii_bbri(j)*wei)
-        enddo
+       do j=1,nrcnii
+        fluxrcnii_a(j)=fluxrcnii_a(j)+(rcnii_abri(j)*wei)
+        fluxrcnii_b(j)=fluxrcnii_b(j)+(rcnii_bbri(j)*wei)
+       enddo
 c
 c  OI rec: Separate Quintets and Triplets
 c
-        do j=1,nrcoi_q
-          fluxrcoi_qa(j)=fluxrcoi_qa(j)+(rcoi_qabri(j)*wei)
-          fluxrcoi_qb(j)=fluxrcoi_qb(j)+(rcoi_qbbri(j)*wei)
-        enddo
-        do j=1,nrcoi_t
-          fluxrcoi_ta(j)=fluxrcoi_ta(j)+(rcoi_tabri(j)*wei)
-          fluxrcoi_tb(j)=fluxrcoi_tb(j)+(rcoi_tbbri(j)*wei)
-        enddo
+       do j=1,nrcoi_q
+        fluxrcoi_qa(j)=fluxrcoi_qa(j)+(rcoi_qabri(j)*wei)
+        fluxrcoi_qb(j)=fluxrcoi_qb(j)+(rcoi_qbbri(j)*wei)
+       enddo
+       do j=1,nrcoi_t
+        fluxrcoi_ta(j)=fluxrcoi_ta(j)+(rcoi_tabri(j)*wei)
+        fluxrcoi_tb(j)=fluxrcoi_tb(j)+(rcoi_tbbri(j)*wei)
+       enddo
 c
 c OII recomb - all in one loop
 c
-        do j=1,nrcoii
-          fluxrcoii_a(j)=fluxrcoii_a(j)+(rcoii_abri(j)*wei)
-          fluxrcoii_b(j)=fluxrcoii_b(j)+(rcoii_bbri(j)*wei)
-          fluxrcoii_c(j)=fluxrcoii_c(j)+(rcoii_cbri(j)*wei)
-        enddo
+       do j=1,nrcoii
+        fluxrcoii_a(j)=fluxrcoii_a(j)+(rcoii_abri(j)*wei)
+        fluxrcoii_b(j)=fluxrcoii_b(j)+(rcoii_bbri(j)*wei)
+        fluxrcoii_c(j)=fluxrcoii_c(j)+(rcoii_cbri(j)*wei)
+       enddo
 c
 c NeII recomb - all in one loop
 c
-        do j=1,nrcneii
-          fluxrcneii_a(j)=fluxrcneii_a(j)+(rcneii_abri(j)*wei)
-          fluxrcneii_b(j)=fluxrcneii_b(j)+(rcneii_bbri(j)*wei)
+       do j=1,nrcneii
+        fluxrcneii_a(j)=fluxrcneii_a(j)+(rcneii_abri(j)*wei)
+        fluxrcneii_b(j)=fluxrcneii_b(j)+(rcneii_bbri(j)*wei)
+       enddo
+c
+       do j=1,10
+        fluxh(j)=fluxh(j)+(hbri(j)*wei)
+       enddo
+c
+       do j=1,nheilines
+        fluxhei(j)=fluxhei(j)+(heibri(j)*wei)
+       enddo
+c
+       do j=1,nheislines
+        fluxheis(j)=fluxheis(j)+(heisbri(j)*wei)
+       enddo
+c
+       do j=1,nheitlines
+        fluxheit(j)=fluxheit(j)+(heitbri(j)*wei)
+       enddo
+c
+       heiioiiibfsum=heiioiiibfsum+(heiioiiibf*helibri(1,1)*wei)
+c
+       do series=1,nhseries
+        do line=1,nhlines
+         hydroflux(line,series)=hydroflux(line,series)+(hydrobri(line,
+     &    series)*wei)
         enddo
+       enddo
 c
-        do j=1,10
-          fluxh(j)=fluxh(j)+(hbri(j)*wei)
+       do series=1,nheseries
+        do line=1,nhelines
+         if ((series.eq.1).and.(line.eq.1)) then
+          dfb=1.d0-heiioiiibf
+          heliflux(line,series)=heliflux(line,series)+dfb*(helibri(line,
+     &     series)*wei)
+         else
+          heliflux(line,series)=heliflux(line,series)+(helibri(line,
+     &     series)*wei)
+         endif
         enddo
+       enddo
 c
-        do j=1,nheilines
-          fluxhei(j)=fluxhei(j)+(heibri(j)*wei)
+       do i=3,atypes
+        do series=1,nxhseries
+         do line=1,nxhlines
+          xhydroflux(line,series,i)=xhydroflux(line,series,i)+
+     &     (xhydrobri(line,series,i)*wei)
+         enddo
         enddo
-c
-        do j=1,nheislines
-          fluxheis(j)=fluxheis(j)+(heisbri(j)*wei)
-        enddo
-c
-        do j=1,nheitlines
-          fluxheit(j)=fluxheit(j)+(heitbri(j)*wei)
-        enddo
-c
-        heiioiiibfsum=heiioiiibfsum+(heiioiiibf*helibri(1,1)*wei)
-c
-        do series=1,nhseries
-          do line=1,nhlines
-            hydroflux(line,series)=hydroflux(line,series)+
-     &       (hydrobri(line,series)*wei)
-          enddo
-        enddo
-c
-        do series=1,nheseries
-          do line=1,nhelines
-            if ((series.eq.1).and.(line.eq.1)) then
-              dfb=1.d0-heiioiiibf
-              heliflux(line,series)=heliflux(line,series)+dfb*
-     &         (helibri(line,series)*wei)
-            else
-              heliflux(line,series)=heliflux(line,series)+(helibri(line,
-     &         series)*wei)
-            endif
-          enddo
-        enddo
-c
-        do i=3,atypes
-          do series=1,nxhseries
-            do line=1,nxhlines
-              xhydroflux(line,series,i)=xhydroflux(line,series,i)+
-     &         (xhydrobri(line,series,i)*wei)
-            enddo
-          enddo
-        enddo
+       enddo
 c
 c
-        h2qav=h2qav+(h2ql*wei)
-        hei2qa=hei2qa+(hein(2)*wei)
-        heii2qa=heii2qa+(heii2ql*wei)
-        do atom=1,atypes
-          h2qflux(atom)=h2qflux(atom)+(h2qbri(atom)*wei)
-        enddo
+       h2qav=h2qav+(h2ql*wei)
+       hei2qa=hei2qa+(hein(2)*wei)
+       heii2qa=heii2qa+(heii2ql*wei)
+       do atom=1,atypes
+        h2qflux(atom)=h2qflux(atom)+(h2qbri(atom)*wei)
+       enddo
 c
-        fhbeta=fhbeta+(hbeta*wei)
+       fhbeta=fhbeta+(hbeta*wei)
 c
       endif
 c
@@ -272,25 +272,25 @@ c     INTEGRATION OF PAH COLUMN
 c     RADIUS STEP SIZE : DR
 c
       if (imod.ne.'REST') then
-        wei2=((de*dh)*fi)*dvol
-        dhavv=dhavv+wei2
-        qhdha=qhdha+(wei2*qhdh)
-        zetaeav=zetaeav+(wei2*zetae)
-        wei=(dh*fi)*dr
-        do j=1,atypes
-          do i=1,maxion(j)
-            popint(i,j)=popint(i,j)+((wei*pop(i,j))*zion(j))
-          enddo
-c            popint(maxion(j)+1,j) = popint(maxion(j)+1,j)+wei*Zion(j)
+       wei2=((de*dh)*fi)*dvol
+       dhavv=dhavv+wei2
+       qhdha=qhdha+(wei2*qhdh)
+       zetaeav=zetaeav+(wei2*zetae)
+       wei=(dh*fi)*dr
+       do j=1,atypes
+        do i=1,maxion(j)
+         popint(i,j)=popint(i,j)+((wei*pop(i,j))*zion(j))
         enddo
-        if (grainmode.eq.1) then
-          dustint=dustint+wei
-          if ((pahmode.eq.1).and.(pahactive.eq.1)) then
-            do i=1,pahi
-              pahint(i)=pahint(i)+wei*pahz(i)
-            enddo
-          endif
+c            popint(maxion(j)+1,j) = popint(maxion(j)+1,j)+wei*Zion(j)
+       enddo
+       if (grainmode.eq.1) then
+        dustint=dustint+wei
+        if ((pahmode.eq.1).and.(pahactive.eq.1)) then
+         do i=1,pahi
+          pahint(i)=pahint(i)+wei*pahz(i)
+         enddo
         endif
+       endif
       endif
 c
       return

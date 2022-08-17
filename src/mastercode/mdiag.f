@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -45,67 +45,66 @@ c
       jc=jl+1
       jca=jc+1
       do il=1,jl
-        do ic=1,jca
-          a(ic,il)=alph(ic,il)
-        enddo
+       do ic=1,jca
+        a(ic,il)=alph(ic,il)
+       enddo
       enddo
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
       do il=1,jl
-        aa=aa+dabs(a(il,il))
-        x(il)=0.0d0
+       aa=aa+dabs(a(il,il))
+       x(il)=0.0d0
       enddo
       do il=1,jl
-        do ic=1,jc
-          a(ic,il)=a(ic,il)/aa
-          b(ic,il)=a(ic,il)
-        enddo
-        a(jca,il)=a(jc,il)
-        b(jca,il)=a(jc,il)
+       do ic=1,jc
+        a(ic,il)=a(ic,il)/aa
+        b(ic,il)=a(ic,il)
+       enddo
+       a(jca,il)=a(jc,il)
+       b(jca,il)=a(jc,il)
       enddo
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 110 il=1,jl
-        do 70 kl=il,jl
-          rab=a(il,kl)
-          ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
-            a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+      do 60 il=1,jl
+       do 20 kl=il,jl
+        rab=a(il,kl)
+        ra=dabs(rab)
+        if (ra.lt.epsilon) goto 20
+        do 10 kc=1,jc
+         a(kc,kl)=a(kc,kl)/rab
+   10   continue
+   20  continue
 c
-        do 80 kl=il,jl
-          r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
-  110 continue
+       do 30 kl=il,jl
+        r(kl)=a(il,kl)
+   30  continue
+       do 50 kl=1,jl
+        if (kl.eq.il) goto 50
+        ra=dabs(r(kl))
+        if (ra.lt.epsilon) goto 50
+        do 40 kc=1,jc
+   40    a(kc,kl)=a(kc,kl)-a(kc,il)
+   50  continue
+   60 continue
 c
 c    ***BACK SUBSTITUTION
 c
-      do 140 ila=1,jl
-        il=(jl+1)-ila
-        ics=il+1
-        aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
-        x(il)=x(il)+dx
-  140 continue
+      do 90 ila=1,jl
+       il=(jl+1)-ila
+       ics=il+1
+       aaa=0.0d0
+       if (ics.gt.jl) goto 80
+       do 70 ic=ics,jl
+   70   aaa=aaa+(a(ic,il)*x(ic))
+   80  dx=(a(jc,il)-aaa)/a(il,il)
+       x(il)=x(il)+dx
+   90 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag3 (jl, alph, x)
@@ -137,66 +136,65 @@ c
       jc=jl+1
       jca=jc+1
       do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
+       do 10 ic=1,jca
+   10   a(ic,il)=alph(ic,il)
    20 continue
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
       do 30 il=1,jl
-        aa=aa+dabs(a(il,il))
-        x(il)=0.0d0
+       aa=aa+dabs(a(il,il))
+       x(il)=0.0d0
    30 continue
       do 50 il=1,jl
-        do 40 ic=1,jc
-          a(ic,il)=a(ic,il)/aa
-          b(ic,il)=a(ic,il)
-   40   continue
-        a(jca,il)=a(jc,il)
-        b(jca,il)=a(jc,il)
+       do 40 ic=1,jc
+        a(ic,il)=a(ic,il)/aa
+        b(ic,il)=a(ic,il)
+   40  continue
+       a(jca,il)=a(jc,il)
+       b(jca,il)=a(jc,il)
    50 continue
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
       do 110 il=1,jl
-        do 70 kl=il,jl
-          rab=a(il,kl)
-          ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
-            a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+       do 70 kl=il,jl
+        rab=a(il,kl)
+        ra=dabs(rab)
+        if (ra.lt.epsilon) goto 70
+        do 60 kc=1,jc
+         a(kc,kl)=a(kc,kl)/rab
+   60   continue
+   70  continue
 c
-        do 80 kl=il,jl
-          r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
+       do 80 kl=il,jl
+        r(kl)=a(il,kl)
+   80  continue
+       do 100 kl=1,jl
+        if (kl.eq.il) goto 100
+        ra=dabs(r(kl))
+        if (ra.lt.epsilon) goto 100
+        do 90 kc=1,jc
+   90    a(kc,kl)=a(kc,kl)-a(kc,il)
+  100  continue
   110 continue
 c
 c    ***BACK SUBSTITUTION
 c
       do 140 ila=1,jl
-        il=(jl+1)-ila
-        ics=il+1
-        aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
-        x(il)=x(il)+dx
+       il=(jl+1)-ila
+       ics=il+1
+       aaa=0.0d0
+       if (ics.gt.jl) goto 130
+       do 120 ic=ics,jl
+  120   aaa=aaa+(a(ic,il)*x(ic))
+  130  dx=(a(jc,il)-aaa)/a(il,il)
+       x(il)=x(il)+dx
   140 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag6 (alph, x)
@@ -230,66 +228,65 @@ c
       jc=jl+1
       jca=jc+1
       do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
+       do 10 ic=1,jca
+   10   a(ic,il)=alph(ic,il)
    20 continue
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
       do 30 il=1,jl
-        aa=aa+dabs(a(il,il))
-        x(il)=0.0d0
+       aa=aa+dabs(a(il,il))
+       x(il)=0.0d0
    30 continue
       do 50 il=1,jl
-        do 40 ic=1,jc
-          a(ic,il)=a(ic,il)/aa
-          b(ic,il)=a(ic,il)
-   40   continue
-        a(jca,il)=a(jc,il)
-        b(jca,il)=a(jc,il)
+       do 40 ic=1,jc
+        a(ic,il)=a(ic,il)/aa
+        b(ic,il)=a(ic,il)
+   40  continue
+       a(jca,il)=a(jc,il)
+       b(jca,il)=a(jc,il)
    50 continue
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
       do 110 il=1,jl
-        do 70 kl=il,jl
-          rab=a(il,kl)
-          ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
-            a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+       do 70 kl=il,jl
+        rab=a(il,kl)
+        ra=dabs(rab)
+        if (ra.lt.epsilon) goto 70
+        do 60 kc=1,jc
+         a(kc,kl)=a(kc,kl)/rab
+   60   continue
+   70  continue
 c
-        do 80 kl=il,jl
-          r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
+       do 80 kl=il,jl
+        r(kl)=a(il,kl)
+   80  continue
+       do 100 kl=1,jl
+        if (kl.eq.il) goto 100
+        ra=dabs(r(kl))
+        if (ra.lt.epsilon) goto 100
+        do 90 kc=1,jc
+   90    a(kc,kl)=a(kc,kl)-a(kc,il)
+  100  continue
   110 continue
 c
 c    ***BACK SUBSTITUTION
 c
       do 140 ila=1,jl
-        il=(jl+1)-ila
-        ics=il+1
-        aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
-        x(il)=x(il)+dx
+       il=(jl+1)-ila
+       ics=il+1
+       aaa=0.0d0
+       if (ics.gt.jl) goto 130
+       do 120 ic=ics,jl
+  120   aaa=aaa+(a(ic,il)*x(ic))
+  130  dx=(a(jc,il)-aaa)/a(il,il)
+       x(il)=x(il)+dx
   140 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag9 (alph, x)
@@ -323,66 +320,65 @@ c
       jc=jl+1
       jca=jc+1
       do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
+       do 10 ic=1,jca
+   10   a(ic,il)=alph(ic,il)
    20 continue
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
       do 30 il=1,jl
-        aa=aa+dabs(a(il,il))
-        x(il)=0.0d0
+       aa=aa+dabs(a(il,il))
+       x(il)=0.0d0
    30 continue
       do 50 il=1,jl
-        do 40 ic=1,jc
-          a(ic,il)=a(ic,il)/aa
-          b(ic,il)=a(ic,il)
-   40   continue
-        a(jca,il)=a(jc,il)
-        b(jca,il)=a(jc,il)
+       do 40 ic=1,jc
+        a(ic,il)=a(ic,il)/aa
+        b(ic,il)=a(ic,il)
+   40  continue
+       a(jca,il)=a(jc,il)
+       b(jca,il)=a(jc,il)
    50 continue
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
       do 110 il=1,jl
-        do 70 kl=il,jl
-          rab=a(il,kl)
-          ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
-            a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+       do 70 kl=il,jl
+        rab=a(il,kl)
+        ra=dabs(rab)
+        if (ra.lt.epsilon) goto 70
+        do 60 kc=1,jc
+         a(kc,kl)=a(kc,kl)/rab
+   60   continue
+   70  continue
 c
-        do 80 kl=il,jl
-          r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
+       do 80 kl=il,jl
+        r(kl)=a(il,kl)
+   80  continue
+       do 100 kl=1,jl
+        if (kl.eq.il) goto 100
+        ra=dabs(r(kl))
+        if (ra.lt.epsilon) goto 100
+        do 90 kc=1,jc
+   90    a(kc,kl)=a(kc,kl)-a(kc,il)
+  100  continue
   110 continue
 c
 c    ***BACK SUBSTITUTION
 c
       do 140 ila=1,jl
-        il=(jl+1)-ila
-        ics=il+1
-        aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
-        x(il)=x(il)+dx
+       il=(jl+1)-ila
+       ics=il+1
+       aaa=0.0d0
+       if (ics.gt.jl) goto 130
+       do 120 ic=ics,jl
+  120   aaa=aaa+(a(ic,il)*x(ic))
+  130  dx=(a(jc,il)-aaa)/a(il,il)
+       x(il)=x(il)+dx
   140 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag16 (alph, x)
@@ -415,66 +411,65 @@ c
       jc=jl+1
       jca=jc+1
       do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
+       do 10 ic=1,jca
+   10   a(ic,il)=alph(ic,il)
    20 continue
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
       do 30 il=1,jl
-        aa=aa+dabs(a(il,il))
-        x(il)=0.0d0
+       aa=aa+dabs(a(il,il))
+       x(il)=0.0d0
    30 continue
       do 50 il=1,jl
-        do 40 ic=1,jc
-          a(ic,il)=a(ic,il)/aa
-          b(ic,il)=a(ic,il)
-   40   continue
-        a(jca,il)=a(jc,il)
-        b(jca,il)=a(jc,il)
+       do 40 ic=1,jc
+        a(ic,il)=a(ic,il)/aa
+        b(ic,il)=a(ic,il)
+   40  continue
+       a(jca,il)=a(jc,il)
+       b(jca,il)=a(jc,il)
    50 continue
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
       do 110 il=1,jl
-        do 70 kl=il,jl
-          rab=a(il,kl)
-          ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
-            a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+       do 70 kl=il,jl
+        rab=a(il,kl)
+        ra=dabs(rab)
+        if (ra.lt.epsilon) goto 70
+        do 60 kc=1,jc
+         a(kc,kl)=a(kc,kl)/rab
+   60   continue
+   70  continue
 c
-        do 80 kl=il,jl
-          r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
+       do 80 kl=il,jl
+        r(kl)=a(il,kl)
+   80  continue
+       do 100 kl=1,jl
+        if (kl.eq.il) goto 100
+        ra=dabs(r(kl))
+        if (ra.lt.epsilon) goto 100
+        do 90 kc=1,jc
+   90    a(kc,kl)=a(kc,kl)-a(kc,il)
+  100  continue
   110 continue
 c
 c    ***BACK SUBSTITUTION
 c
       do 140 ila=1,jl
-        il=(jl+1)-ila
-        ics=il+1
-        aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
-        x(il)=x(il)+dx
+       il=(jl+1)-ila
+       ics=il+1
+       aaa=0.0d0
+       if (ics.gt.jl) goto 130
+       do 120 ic=ics,jl
+  120   aaa=aaa+(a(ic,il)*x(ic))
+  130  dx=(a(jc,il)-aaa)/a(il,il)
+       x(il)=x(il)+dx
   140 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiagn (alph, x, n)
@@ -511,66 +506,65 @@ c
       jc=jl+1
       jca=jc+1
       do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
+       do 10 ic=1,jca
+   10   a(ic,il)=alph(ic,il)
    20 continue
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
       do 30 il=1,jl
-        aa=aa+dabs(a(il,il))
-        x(il)=0.0d0
+       aa=aa+dabs(a(il,il))
+       x(il)=0.0d0
    30 continue
       do 50 il=1,jl
-        do 40 ic=1,jc
-          a(ic,il)=a(ic,il)/aa
-          b(ic,il)=a(ic,il)
-   40   continue
-        a(jca,il)=a(jc,il)
-        b(jca,il)=a(jc,il)
+       do 40 ic=1,jc
+        a(ic,il)=a(ic,il)/aa
+        b(ic,il)=a(ic,il)
+   40  continue
+       a(jca,il)=a(jc,il)
+       b(jca,il)=a(jc,il)
    50 continue
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
       do 110 il=1,jl
-        do 70 kl=il,jl
-          rab=a(il,kl)
-          ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
-            a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+       do 70 kl=il,jl
+        rab=a(il,kl)
+        ra=dabs(rab)
+        if (ra.lt.epsilon) goto 70
+        do 60 kc=1,jc
+         a(kc,kl)=a(kc,kl)/rab
+   60   continue
+   70  continue
 c
-        do 80 kl=il,jl
-          r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
+       do 80 kl=il,jl
+        r(kl)=a(il,kl)
+   80  continue
+       do 100 kl=1,jl
+        if (kl.eq.il) goto 100
+        ra=dabs(r(kl))
+        if (ra.lt.epsilon) goto 100
+        do 90 kc=1,jc
+   90    a(kc,kl)=a(kc,kl)-a(kc,il)
+  100  continue
   110 continue
 c
 c    ***BACK SUBSTITUTION
 c
       do 140 ila=1,jl
-        il=(jl+1)-ila
-        ics=il+1
-        aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
-        x(il)=x(il)+dx
+       il=(jl+1)-ila
+       ics=il+1
+       aaa=0.0d0
+       if (ics.gt.jl) goto 130
+       do 120 ic=ics,jl
+  120   aaa=aaa+(a(ic,il)*x(ic))
+  130  dx=(a(jc,il)-aaa)/a(il,il)
+       x(il)=x(il)+dx
   140 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiagfe (alph, x, n)
@@ -606,66 +600,65 @@ c
       jc=jl+1
       jca=jc+1
       do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
+       do 10 ic=1,jca
+   10   a(ic,il)=alph(ic,il)
    20 continue
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
       do 30 il=1,jl
-        aa=aa+dabs(a(il,il))
-        x(il)=0.0d0
+       aa=aa+dabs(a(il,il))
+       x(il)=0.0d0
    30 continue
       do 50 il=1,jl
-        do 40 ic=1,jc
-          a(ic,il)=a(ic,il)/aa
-          b(ic,il)=a(ic,il)
-   40   continue
-        a(jca,il)=a(jc,il)
-        b(jca,il)=a(jc,il)
+       do 40 ic=1,jc
+        a(ic,il)=a(ic,il)/aa
+        b(ic,il)=a(ic,il)
+   40  continue
+       a(jca,il)=a(jc,il)
+       b(jca,il)=a(jc,il)
    50 continue
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
       do 110 il=1,jl
-        do 70 kl=il,jl
-          rab=a(il,kl)
-          ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
-            a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+       do 70 kl=il,jl
+        rab=a(il,kl)
+        ra=dabs(rab)
+        if (ra.lt.epsilon) goto 70
+        do 60 kc=1,jc
+         a(kc,kl)=a(kc,kl)/rab
+   60   continue
+   70  continue
 c
-        do 80 kl=il,jl
-          r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
+       do 80 kl=il,jl
+        r(kl)=a(il,kl)
+   80  continue
+       do 100 kl=1,jl
+        if (kl.eq.il) goto 100
+        ra=dabs(r(kl))
+        if (ra.lt.epsilon) goto 100
+        do 90 kc=1,jc
+   90    a(kc,kl)=a(kc,kl)-a(kc,il)
+  100  continue
   110 continue
 c
 c    ***BACK SUBSTITUTION
 c
       do 140 ila=1,jl
-        il=(jl+1)-ila
-        ics=il+1
-        aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
-        x(il)=x(il)+dx
+       il=(jl+1)-ila
+       ics=il+1
+       aaa=0.0d0
+       if (ics.gt.jl) goto 130
+       do 120 ic=ics,jl
+  120   aaa=aaa+(a(ic,il)*x(ic))
+  130  dx=(a(jc,il)-aaa)/a(il,il)
+       x(il)=x(il)+dx
   140 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine matsolve (alph, x, n, np)
@@ -687,31 +680,30 @@ c
       real*8 a(maxn,maxn),b(maxn),d
 c
       if (n.gt.maxn) then
-        write (*,*) 'ERROR in matsolve, n exceed current MAXN'
-        write (*,*) n,maxn
-        write (*,*) 'edit matsolve to increase the maximum'
-        stop
+       write (*,*) 'ERROR in matsolve, n exceed current MAXN'
+       write (*,*) n,maxn
+       write (*,*) 'edit matsolve to increase the maximum'
+       stop
       endif
 c
       do i=1,n
-        do j=1,n
-          a(i,j)=alph(j,i)
-        enddo
+       do j=1,n
+        a(i,j)=alph(j,i)
+       enddo
       enddo
       do j=1,n
-        b(j)=alph(n+1,j)
+       b(j)=alph(n+1,j)
       enddo
 c
       call ludcmp (a, n, maxn, indx, d)
       call lubksb (a, n, maxn, indx, b)
 c
       do i=1,n
-        x(i)=b(i)
+       x(i)=b(i)
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine matsolvemulti (alph, x, n)
@@ -731,24 +723,23 @@ c
 c
       np=mxnl
       do i=1,n
-        do j=1,n
-          a(i,j)=alph(j,i)
-        enddo
+       do j=1,n
+        a(i,j)=alph(j,i)
+       enddo
       enddo
       do j=1,n
-        b(j)=alph(n+1,j)
+       b(j)=alph(n+1,j)
       enddo
 c
       call ludcmp (a, n, np, indx, d)
       call lubksb (a, n, np, indx, b)
 c
       do i=1,n
-        x(i)=b(i)
+       x(i)=b(i)
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine matsolvefe (alph, x, n)
@@ -771,28 +762,28 @@ c
 c
       np=mxfenl
       do i=1,n
-        do j=1,n
-          alu(i,j)=alph(j,i)
-        enddo
+       do j=1,n
+        alu(i,j)=alph(j,i)
+       enddo
       enddo
       do j=1,n
-        b(j)=alph(n+1,j)
+       b(j)=alph(n+1,j)
       enddo
 c
       call ludcmp (alu, n, np, indx, d)
       call lubksb (alu, n, np, indx, b)
 c save x
       do i=1,n
-        x(i)=b(i)
+       x(i)=b(i)
       enddo
 c redo a and b
       do i=1,n
-        do j=1,n
-          a(i,j)=alph(j,i)
-        enddo
+       do j=1,n
+        a(i,j)=alph(j,i)
+       enddo
       enddo
       do j=1,n
-        b(j)=alph(n+1,j)
+       b(j)=alph(n+1,j)
       enddo
 c iterate solution, result directly in x
       call mprove (a, alu, n, np, indx, b, x)
@@ -802,7 +793,6 @@ c     write(*,*) i, x(i)
 c     enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine ludcmp (a, n, np, indx, d)
@@ -820,58 +810,57 @@ c
       d=1.d0
       imax=0
       do i=1,n
-        aamax=0.d0
-        do j=1,n
-          if (dabs(a(i,j)).gt.aamax) aamax=dabs(a(i,j))
-        enddo
-        if (aamax.lt.epsilon) then
-          write (*,*) 'ERROR: singular matrix in ludcmp, in mdiag.f'
-          stop
-        endif
-        vv(i)=1.d0/aamax
+       aamax=0.d0
+       do j=1,n
+        if (dabs(a(i,j)).gt.aamax) aamax=dabs(a(i,j))
+       enddo
+       if (aamax.lt.epsilon) then
+        write (*,*) 'ERROR: singular matrix in ludcmp, in mdiag.f'
+        stop
+       endif
+       vv(i)=1.d0/aamax
       enddo
       do j=1,n
-        do i=1,j-1
-          sum=a(i,j)
-          do k=1,i-1
-            sum=sum-a(i,k)*a(k,j)
-          enddo
-          a(i,j)=sum
+       do i=1,j-1
+        sum=a(i,j)
+        do k=1,i-1
+         sum=sum-a(i,k)*a(k,j)
         enddo
-        aamax=0.d0
-        do i=j,n
-          sum=a(i,j)
-          do k=1,j-1
-            sum=sum-a(i,k)*a(k,j)
-          enddo
-          a(i,j)=sum
-          dum=vv(i)*dabs(sum)
-          if (dum.ge.aamax) then
-            imax=i
-            aamax=dum
-          endif
+        a(i,j)=sum
+       enddo
+       aamax=0.d0
+       do i=j,n
+        sum=a(i,j)
+        do k=1,j-1
+         sum=sum-a(i,k)*a(k,j)
         enddo
-        if (j.ne.imax) then
-          do k=1,n
-            dum=a(imax,k)
-            a(imax,k)=a(j,k)
-            a(j,k)=dum
-          enddo
-          d=-d
-          vv(imax)=vv(j)
+        a(i,j)=sum
+        dum=vv(i)*dabs(sum)
+        if (dum.ge.aamax) then
+         imax=i
+         aamax=dum
         endif
-        indx(j)=imax
-        if (a(j,j).eq.0.d0) a(j,j)=tiny
-        if (j.ne.n) then
-          dum=1.d0/a(j,j)
-          do i=j+1,n
-            a(i,j)=a(i,j)*dum
-          enddo
-        endif
+       enddo
+       if (j.ne.imax) then
+        do k=1,n
+         dum=a(imax,k)
+         a(imax,k)=a(j,k)
+         a(j,k)=dum
+        enddo
+        d=-d
+        vv(imax)=vv(j)
+       endif
+       indx(j)=imax
+       if (a(j,j).eq.0.d0) a(j,j)=tiny
+       if (j.ne.n) then
+        dum=1.d0/a(j,j)
+        do i=j+1,n
+         a(i,j)=a(i,j)*dum
+        enddo
+       endif
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine lubksb (a, n, np, indx, b)
@@ -887,28 +876,27 @@ c
       real*8 sum
       ii=0
       do i=1,n
-        ll=indx(i)
-        sum=b(ll)
-        b(ll)=b(i)
-        if (ii.ne.0) then
-          do j=ii,i-1
-            sum=sum-a(i,j)*b(j)
-          enddo
-        elseif (sum.ne.0.d0) then
-          ii=i
-        endif
-        b(i)=sum
+       ll=indx(i)
+       sum=b(ll)
+       b(ll)=b(i)
+       if (ii.ne.0) then
+        do j=ii,i-1
+         sum=sum-a(i,j)*b(j)
+        enddo
+       elseif (sum.ne.0.d0) then
+        ii=i
+       endif
+       b(i)=sum
       enddo
       do i=n,1,-1
-        sum=b(i)
-        do j=i+1,n
-          sum=sum-a(i,j)*b(j)
-        enddo
-        b(i)=sum/a(i,i)
+       sum=b(i)
+       do j=i+1,n
+        sum=sum-a(i,j)*b(j)
+       enddo
+       b(i)=sum/a(i,i)
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mprove (a, alud, n, np, indx, b, x)
@@ -926,15 +914,15 @@ cu    uses lubksb
       real*8 r(nmax)
       real*8 sdp
       do i=1,n
-        sdp=-b(i)
-        do j=1,n
-          sdp=sdp+a(i,j)*x(j)
-        enddo
-        r(i)=sdp
+       sdp=-b(i)
+       do j=1,n
+        sdp=sdp+a(i,j)*x(j)
+       enddo
+       r(i)=sdp
       enddo
       call lubksb (alud, n, np, indx, r)
       do i=1,n
-        x(i)=x(i)-r(i)
+       x(i)=x(i)-r(i)
       enddo
       return
       end

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -75,19 +75,19 @@ c
       qtosoh=0.0d0
 c
       do atom=1,atypes
-        do ion=1,maxion(atom)
-          rasec (ion,atom)=0.0d0
-          auphot(ion,atom)=0.0d0
-          rphot (ion,atom)=0.0d0
-          do n=1,2
-            anr(n,ion,atom)=0.0d0
-            wnr(n,ion,atom)=0.0d0
-            heaph(n,ion,atom)=0.0d0
-          enddo
-          do n=3,5
-            heaph(n,ion,atom)=0.0d0
-          enddo
+       do ion=1,maxion(atom)
+        rasec(ion,atom)=0.0d0
+        auphot(ion,atom)=0.0d0
+        rphot(ion,atom)=0.0d0
+        do n=1,2
+         anr(n,ion,atom)=0.0d0
+         wnr(n,ion,atom)=0.0d0
+         heaph(n,ion,atom)=0.0d0
         enddo
+        do n=3,5
+         heaph(n,ion,atom)=0.0d0
+        enddo
+       enddo
       enddo
 cc
 c in zero field mode there is no photoionsation
@@ -99,13 +99,13 @@ c
 c
       do inl=ionstartbin,infph-1
 c
-        if (tphot(inl).gt.epsilon) then
+       if (tphot(inl).gt.epsilon) then
 c
         e0=cphotev(inl)
         wid=widbinnu(inl)
         q=fpi*(wid*tphot(inl)/cphote(inl))
         if (e0.ge.iph) then
-          qtosoh=qtosoh+q
+         qtosoh=qtosoh+q
         endif
 c
 c do i=1,ionum
@@ -114,89 +114,89 @@ c
 c
 c inl.ge.photbinstart(i)
 c
-            if (inl.ge.photbinstart(i)) then
+         if (inl.ge.photbinstart(i)) then
 c
-            atom=atpho(i)
-            ion=ionpho(i)
+          atom=atpho(i)
+          ion=ionpho(i)
 c
-            augen=augpho(i)
-            dain=q*photxsec(i,inl)
+          augen=augpho(i)
+          dain=q*photxsec(i,inl)
 c
 c if grain mode
 c
-            if (grainmode.ne.0) then
-              if ((atom.eq.cbie).and.(e0.gt.cedge)) then
-                dain=dain*invdion(atom)
-              else if ((atom.eq.niie).and.(e0.gt.nedge)) then
-                dain=dain*invdion(atom)
-              else if ((atom.eq.oxie).and.(e0.gt.oedge)) then
-                dain=dain*invdion(atom)
-              else if ((mapz(atom).gt.8).and.(e0.gt.hiedge)) then
-                dain=dain*invdion(atom)
-              endif
-            endif
+          if (grainmode.ne.0) then
+           if ((atom.eq.cbie).and.(e0.gt.cedge)) then
+            dain=dain*invdion(atom)
+           elseif ((atom.eq.niie).and.(e0.gt.nedge)) then
+            dain=dain*invdion(atom)
+           elseif ((atom.eq.oxie).and.(e0.gt.oedge)) then
+            dain=dain*invdion(atom)
+           elseif ((mapz(atom).gt.8).and.(e0.gt.hiedge)) then
+            dain=dain*invdion(atom)
+           endif
+          endif
 c
 c if dain.gt.1.d-35
 c
-            if (dain.lt.1.d-36) dain=0.d0
-            if (dain.gt.epsilon) then
-               if (augen.le.0.0d0) then
-                 rphot(ion,atom)=rphot(ion,atom)+dain
-               else
-                 auphot(ion,atom)=auphot(ion,atom)+dain
-               endif
+          if (dain.lt.1.d-36) dain=0.d0
+          if (dain.gt.epsilon) then
+           if (augen.le.0.0d0) then
+            rphot(ion,atom)=rphot(ion,atom)+dain
+           else
+            auphot(ion,atom)=auphot(ion,atom)+dain
+           endif
 c
-               daip=dain*(cphotev(inl)-ipotpho(i))*ev
+           daip=dain*(cphotev(inl)-ipotpho(i))*ev
 c
-               if (daip.gt.0.0d0) then
-                etr=ipotpho(i)
-                rr1=e0/etr
-                ed=dmax1(1.d-3,(((rr1*etr)+e0)*0.5d0)-(etr+10.2d0))
-                heaph(1,ion,atom)=heaph(1,ion,atom)+(eff1(ed)*daip)
-                heaph(2,ion,atom)=heaph(2,ion,atom)+(eff2(ed)*daip)
-                heaph(3,ion,atom)=heaph(3,ion,atom)+(eff3(ed)*daip)
-                heaph(4,ion,atom)=heaph(4,ion,atom)+(eff4(ed)*daip)
-                heaph(5,ion,atom)=heaph(5,ion,atom)+(eff5(ed)*daip)
-                dait=daip-(dain*iphe)
-                if (dait.ge.0.0d0) then
-                  anr(1,ion,atom)=anr(1,ion,atom)+dait
-                  wnr(1,ion,atom)=wnr(1,ion,atom)+dain
-                  dait=daip-(dain*eau2ev)
-                  if (dait.ge.0.0d0) then
-                    anr(2,ion,atom)=anr(2,ion,atom)+dait
-                    wnr(2,ion,atom)=wnr(2,ion,atom)+dain
-                  endif
-                endif
-               endif
-c
-            if (augen.gt.iph) then
-              augt=augen-10.2d0
-              augerg=augen*ev
-              daiau=dain*augerg
-              heaph(1,ion,atom)=heaph(1,ion,atom)+(eff1(augt)*daiau)
-              heaph(2,ion,atom)=heaph(2,ion,atom)+(eff2(augt)*daiau)
-              heaph(3,ion,atom)=heaph(3,ion,atom)+(eff3(augt)*daiau)
-              heaph(4,ion,atom)=heaph(4,ion,atom)+(eff4(augt)*daiau)
-              heaph(5,ion,atom)=heaph(5,ion,atom)+(eff5(augt)*daiau)
-              dait=dain*(augerg-iphe)
-              if (dait.ge.0.0d0) then
-                anr(1,ion,atom)=anr(1,ion,atom)+dait
-                wnr(1,ion,atom)=wnr(1,ion,atom)+dain
-                dait=dain*(augerg-eau2ev)
-                if (dait.ge.0.0d0) then
-                  anr(2,ion,atom)=anr(2,ion,atom)+dait
-                  wnr(2,ion,atom)=wnr(2,ion,atom)+dain
-                endif
-              endif
+           if (daip.gt.0.0d0) then
+            etr=ipotpho(i)
+            rr1=e0/etr
+            ed=dmax1(1.d-3,(((rr1*etr)+e0)*0.5d0)-(etr+10.2d0))
+            heaph(1,ion,atom)=heaph(1,ion,atom)+(eff1(ed)*daip)
+            heaph(2,ion,atom)=heaph(2,ion,atom)+(eff2(ed)*daip)
+            heaph(3,ion,atom)=heaph(3,ion,atom)+(eff3(ed)*daip)
+            heaph(4,ion,atom)=heaph(4,ion,atom)+(eff4(ed)*daip)
+            heaph(5,ion,atom)=heaph(5,ion,atom)+(eff5(ed)*daip)
+            dait=daip-(dain*iphe)
+            if (dait.ge.0.0d0) then
+             anr(1,ion,atom)=anr(1,ion,atom)+dait
+             wnr(1,ion,atom)=wnr(1,ion,atom)+dain
+             dait=daip-(dain*eau2ev)
+             if (dait.ge.0.0d0) then
+              anr(2,ion,atom)=anr(2,ion,atom)+dait
+              wnr(2,ion,atom)=wnr(2,ion,atom)+dain
+             endif
             endif
+           endif
+c
+           if (augen.gt.iph) then
+            augt=augen-10.2d0
+            augerg=augen*ev
+            daiau=dain*augerg
+            heaph(1,ion,atom)=heaph(1,ion,atom)+(eff1(augt)*daiau)
+            heaph(2,ion,atom)=heaph(2,ion,atom)+(eff2(augt)*daiau)
+            heaph(3,ion,atom)=heaph(3,ion,atom)+(eff3(augt)*daiau)
+            heaph(4,ion,atom)=heaph(4,ion,atom)+(eff4(augt)*daiau)
+            heaph(5,ion,atom)=heaph(5,ion,atom)+(eff5(augt)*daiau)
+            dait=dain*(augerg-iphe)
+            if (dait.ge.0.0d0) then
+             anr(1,ion,atom)=anr(1,ion,atom)+dait
+             wnr(1,ion,atom)=wnr(1,ion,atom)+dain
+             dait=dain*(augerg-eau2ev)
+             if (dait.ge.0.0d0) then
+              anr(2,ion,atom)=anr(2,ion,atom)+dait
+              wnr(2,ion,atom)=wnr(2,ion,atom)+dain
+             endif
+            endif
+           endif
 c
 c if (dain.gt.1.d-35) then
 c
-            endif
+          endif
 c
 c         if (inl.ge.photbinstart(i)) then
 c
-          endif
+         endif
 c
 c       do i=1,ionum
 c
@@ -204,7 +204,7 @@ c
 c
 c       if (tphot(inl).gt.1.d0-50) then
 c
-        endif
+       endif
 c
 c     do inl=ionstartbin,infph-1
 c

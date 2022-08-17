@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -17,7 +17,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine preion (lterm, luop, tsmax, vs, dh, def, tef, qtot,
-     & drta )
+     &drta)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -72,10 +72,10 @@ c
       tsm=tsmax
       if (tsm.le.0.d0) tsm=1.d36
       if (tef.lt.100.d0) then
-        tef=1.d4
-        lpm='FIXT'
+       tef=1.d4
+       lpm='FIXT'
       else
-        lpm='EQ'
+       lpm='EQ'
       endif
 c
 c
@@ -111,106 +111,105 @@ c
       dt=1.d0
       dqp=0.d0
       do 70 m=1,nf
-        if (m.eq.1) then
-          frta=frti
-          frtp=frta
-          frmm=1.d38
-          frpp=0.d0
-        else
-          zrr=dmin1(ztr,dmax1(0.03d0,ztr*(dt/tmi)))
-          if ((dq1.gt.zrr).and.(dq1.lt.dqpp)) then
-            dqpp=dq1
-            frpp=frta
-          endif
-          if ((dq1.lt.(-zrr)).and.(dq1.gt.dqmm)) then
-            dqmm=dq1
-            frmm=frta
-          endif
-c
-          fma=5.d0
-          if (((((dabs(dq1)-dabs(dqp))/((dabs(dq1)+dabs(dqp))+1.d-36))
-     &     .lt.0.05d0).and.(dabs(dq1).gt.0.5d0)).and.(m.gt.2)) fma=
-     &     12.0d0
-          if (((dqp/(dq1+epsilon)).lt.0.d0).and.(m.gt.2)) then
-            wei=0.5d0*(((dabs(dqp)/((dabs(dqp)+dabs(dq1))+1.d-36))/
-     &       0.5d0)**0.75d0)
-            dch=dexp((wei*dlog(frta))+((1.d0-wei)*dlog(frtp)))
-            frtp=frta
-            frta=dch
-          else
-            dch=(qavail/qused)*frta
-            if (dch.gt.frmm) then
-              wei=0.5d0*(((dabs(dqmm)/((dabs(dqmm)+dabs(dq1))+1.d-36))/
-     &         0.5d0)**0.75d0)
-              dch=dexp((wei*dlog(frta))+((1.0d0-wei)*dlog(frmm)))
-            else if (dch.lt.frpp) then
-              wei=0.5d0*(((dabs(dqpp)/((dabs(dqpp)+dabs(dq1))+1.d-36))/
-     &         0.5d0)**0.75d0)
-              dch=dexp((wei*dlog(frta))+((1.0d0-wei)*dlog(frpp)))
-            endif
-            frtp=frta
-            frta=dmin1(fma*frta,dmax1(frta/fma,dch))
-          endif
+       if (m.eq.1) then
+        frta=frti
+        frtp=frta
+        frmm=1.d38
+        frpp=0.d0
+       else
+        zrr=dmin1(ztr,dmax1(0.03d0,ztr*(dt/tmi)))
+        if ((dq1.gt.zrr).and.(dq1.lt.dqpp)) then
+         dqpp=dq1
+         frpp=frta
         endif
-        dqp=dq1
+        if ((dq1.lt.(-zrr)).and.(dq1.gt.dqmm)) then
+         dqmm=dq1
+         frmm=frta
+        endif
 c
-        call copypop (popi, popf)
+        fma=5.d0
+        if (((((dabs(dq1)-dabs(dqp))/((dabs(dq1)+dabs(dqp))+1.d-36))
+     &   .lt.0.05d0).and.(dabs(dq1).gt.0.5d0)).and.(m.gt.2)) fma=12.0d0
+        if (((dqp/(dq1+epsilon)).lt.0.d0).and.(m.gt.2)) then
+         wei=0.5d0*(((dabs(dqp)/((dabs(dqp)+dabs(dq1))+1.d-36))/0.5d0)**
+     &    0.75d0)
+         dch=dexp((wei*dlog(frta))+((1.d0-wei)*dlog(frtp)))
+         frtp=frta
+         frta=dch
+        else
+         dch=(qavail/qused)*frta
+         if (dch.gt.frmm) then
+          wei=0.5d0*(((dabs(dqmm)/((dabs(dqmm)+dabs(dq1))+1.d-36))/
+     &     0.5d0)**0.75d0)
+          dch=dexp((wei*dlog(frta))+((1.0d0-wei)*dlog(frmm)))
+         elseif (dch.lt.frpp) then
+          wei=0.5d0*(((dabs(dqpp)/((dabs(dqpp)+dabs(dq1))+1.d-36))/
+     &     0.5d0)**0.75d0)
+          dch=dexp((wei*dlog(frta))+((1.0d0-wei)*dlog(frpp)))
+         endif
+         frtp=frta
+         frta=dmin1(fma*frta,dmax1(frta/fma,dch))
+        endif
+       endif
+       dqp=dq1
 c
-        do 60 l=1,10
-          u=frta
-          wei=fr(u,ct)
-          call averinto (wei, popf, popi, pop)
-          call taudist (dh, frta, drta, rad, pop, mmod)
-          call copypop (popi, pop)
-          tstep=dmin1(drta/vs,tsm)
-          if (l.gt.1) tstep=dmax1(ts1*0.5d0,dmin1(2.d0*ts1,tstep,tsm))
-          ts0=ts1
-          ts1=tstep
-          dt=dabs(ts1-ts0)/(ts1+ts0)
+       call copypop (popi, popf)
 c
-          if (lpm.eq.'EQ') then
-            call teequi (tef, t, def, dh, tstep, nmod)
-          else
-            t=tef
-            call timion (t, def, dh, xhyf, tstep)
-          endif
+       do 60 l=1,10
+        u=frta
+        wei=fr(u,ct)
+        call averinto (wei, popf, popi, pop)
+        call taudist (dh, frta, drta, rad, pop, mmod)
+        call copypop (popi, pop)
+        tstep=dmin1(drta/vs,tsm)
+        if (l.gt.1) tstep=dmax1(ts1*0.5d0,dmin1(2.d0*ts1,tstep,tsm))
+        ts0=ts1
+        ts1=tstep
+        dt=dabs(ts1-ts0)/(ts1+ts0)
 c
-          call copypop (pop, popf)
+        if (lpm.eq.'EQ') then
+         call teequi (tef, t, def, dh, tstep, nmod)
+        else
+         t=tef
+         call timion (t, def, dh, xhyf, tstep)
+        endif
 c
-          qused=0.d0
-          do 40 i=1,atypes
-            do 30 j=1,maxion(i)
-              qused=qused+((zion(i)*0.5d0)*dabs(popf(j,i)-popi(j,i)))
-   30       continue
-   40     continue
+        call copypop (pop, popf)
 c
-          qused=(((dh*fi)*drta)*qused)*fr(u,ct)
-          qavail=qtot*tstep
-          dq=(qavail-qused)/((qavail+qused)+1.d-36)
-          dq0=dq1
-          dq1=dq
-          dqva=dabs(dq0-dq1)
-          fhi=popf(1,1)
-          tef=t
+        qused=0.d0
+        do 40 i=1,atypes
+         do 30 j=1,maxion(i)
+          qused=qused+((zion(i)*0.5d0)*dabs(popf(j,i)-popi(j,i)))
+   30    continue
+   40   continue
 c
-          if (lterm.gt.0) write (lterm,50) m,tef,qavail,qused,fhi,tstep,
-     &     drta,frta,dq
-          if (luop.gt.0) write (luop,50) m,tef,qavail,qused,fhi,tstep,
-     &     drta,frta,dq
+        qused=(((dh*fi)*drta)*qused)*fr(u,ct)
+        qavail=qtot*tstep
+        dq=(qavail-qused)/((qavail+qused)+1.d-36)
+        dq0=dq1
+        dq1=dq
+        dqva=dabs(dq0-dq1)
+        fhi=popf(1,1)
+        tef=t
+c
+        if (lterm.gt.0) write (lterm,50) m,tef,qavail,qused,fhi,tstep,
+     &   drta,frta,dq
+        if (luop.gt.0) write (luop,50) m,tef,qavail,qused,fhi,tstep,
+     &   drta,frta,dq
 c
    50 format(' ',i2,f9.0,2(1pg10.3),3(1pg9.2),1pg10.3,0pf9.4)
-          if ((((dabs(dq).lt.dqmi).or.(frta.gt.frtma))
-     &     .or.((tstep.ge.tsm).and.(dq.ge.dqmi))).and.(l.gt.1)) goto 90
-          if (((l.gt.1).and.(dt.lt.tmi)).and.(dabs(dq).gt.(2.0*tmi)))
-     &     goto 70
-          if ((l.gt.1).and.(dqva.lt.(dqmi/2.0))) goto 70
-          if ((l.gt.3).and.(dt.lt.(2.0*tmi))) goto 70
-   60   continue
+        if ((((dabs(dq).lt.dqmi).or.(frta.gt.frtma)).or.((tstep.ge.tsm)
+     &   .and.(dq.ge.dqmi))).and.(l.gt.1)) goto 90
+        if (((l.gt.1).and.(dt.lt.tmi)).and.(dabs(dq).gt.(2.0*tmi)))
+     &   goto 70
+        if ((l.gt.1).and.(dqva.lt.(dqmi/2.0))) goto 70
+        if ((l.gt.3).and.(dt.lt.(2.0*tmi))) goto 70
+   60  continue
    70 continue
 c
       if (dabs(dq).gt.(4.0*dqmi)) then
-        if (luop.gt.0) write (luop,80)
-        if (lterm.gt.0) write (lterm,80)
+       if (luop.gt.0) write (luop,80)
+       if (lterm.gt.0) write (lterm,80)
    80 format(/'$$$$$$$$$$$$$$$$ CONVERGENCE WAS NOT REACHED ' ,
      &'DURING DETERMINATION OF PREIONISATION' /)
       endif

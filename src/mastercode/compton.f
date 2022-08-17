@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -53,25 +53,25 @@ c
       sumf=0.0d0
       sumfe=0.0d0
       do i=1,infph-1
-        energ=ev*cphotev(i)
-        f1=tphot(i)*widbinnu(i)
-        sumfe=sumfe+f1*energ
-        sumf=sumf+f1
+       energ=ev*cphotev(i)
+       f1=tphot(i)*widbinnu(i)
+       sumfe=sumfe+f1*energ
+       sumf=sumf+f1
       enddo
 c
       if (sumf.gt.0.d0) then
 c
-        eav=sumfe/sumf
+       eav=sumfe/sumf
 c
 c     get the loss rate...
 c
-        cmplos=((sigmat*sumf)/(me*cls*cls))*de*((4*rkb*t)-eav)
-        cmpcool=((sigmat*sumf)/(me*cls*cls))*de*((4*rkb*t))
-        cmpheat=((sigmat*sumf)/(me*cls*cls))*de*(-eav)
+       cmplos=((sigmat*sumf)/(me*cls*cls))*de*((4*rkb*t)-eav)
+       cmpcool=((sigmat*sumf)/(me*cls*cls))*de*((4*rkb*t))
+       cmpheat=((sigmat*sumf)/(me*cls*cls))*de*(-eav)
       endif
 c
       if (expertmode.gt.0) then
-        write (*,10) 'Te,Ctot,ht,cl:',t,cmplos,cmpcool,cmpheat
+       write (*,10) 'Te,Ctot,ht,cl:',t,cmplos,cmpcool,cmpheat
    10    format (a15,1p4e15.4)
       endif
 c

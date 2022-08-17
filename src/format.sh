@@ -26,7 +26,9 @@ then
 #
 # clean up elseif if to elseif bug in old tidy72 code..
 #
- sed s/elseif\ if/elseif/g ${srcbase}.tid > ${srcbase}.f
+ sed s/elseif\ if/elseif/g ${srcbase}.tid > tst_${srcbase}.f
+ sed s/^c\ $/c/g tst_${srcbase}.f > ${srcbase}.f
+ rm tst_${srcbase}.f
  fi
 done
 cd ..

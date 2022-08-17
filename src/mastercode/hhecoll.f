@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -45,27 +45,26 @@ c
 c should be type 3 or 13, for all
 c as x, y, and y2 are made for all types.
 c
-        btc=hhecol_tc(icol,idx)
-        beta=(t/(t+btc))
-        nspl=hhecol_nspl(icol,idx)
-        do l=1,nspl
-          btx(l)=hhecol_x(l) ! uniform splines for all hhe data
-          bty(l)=hhecol_y(l,icol,idx)
-          bty2(l)=hhecol_y2(l,icol,idx)
-        enddo
-        upsilon=fsplint(btx,bty,bty2,nspl,beta)
-        if (omtype.eq.13) then
-           upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
-        endif
+       btc=hhecol_tc(icol,idx)
+       beta=(t/(t+btc))
+       nspl=hhecol_nspl(icol,idx)
+       do l=1,nspl
+        btx(l)=hhecol_x(l)!uniformsplinesforallhhedata
+        bty(l)=hhecol_y(l,icol,idx)
+        bty2(l)=hhecol_y2(l,icol,idx)
+       enddo
+       upsilon=fsplint(btx,bty,bty2,nspl,beta)
+       if (omtype.eq.13) then
+        upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
+       endif
       else
-        write (*,*) 'ERROR, Invalid spline type in fhheomgspl:',omtype
-        write (*,*) t,icol,idx
-        stop
+       write (*,*) 'ERROR, Invalid spline type in fhheomgspl:',omtype
+       write (*,*) t,icol,idx
+       stop
       endif
       fhheomgspl=dmax1(0.d0,upsilon)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvehheion (t, de, dh, idx, ni)
@@ -103,9 +102,9 @@ c
       abde=de*dh*pz
 c
       do i=1,ni
-        do j=1,ni
-          eji(i,j)=plk*cls*dabs(hheei(j,idx)-hheei(i,idx))
-        enddo
+       do j=1,ni
+        eji(i,j)=plk*cls*dabs(hheei(j,idx)-hheei(i,idx))
+       enddo
       enddo
 c
       t=dmax1(t,mintemp)
@@ -115,47 +114,46 @@ c
       nc=nhheioncol(idx)
       do icol=1,nc
 c lower = i upper = j
-        i=hhecol_i(icol,idx)
+       i=hhecol_i(icol,idx)
 c        ground excitation only atm
-        if (i.eq.1) then
+       if (i.eq.1) then
         j=hhecol_j(icol,idx)
         nq=hhen(j,idx)
         ee=eji(i,j)
         y=ee*invrkt
         if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          ratekappa=1.d0
-          if (usekappa) then
-            ratekappa=fkenhance(kappa,y)
-          endif
-          invgi=hheinvgi(i,idx)
-          omegaij=fhheomgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=cgjb*omegaij*ratekappa
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            loss=rr*ee
+         ratekappa=1.d0
+         if (usekappa) then
+          ratekappa=fkenhance(kappa,y)
+         endif
+         invgi=hheinvgi(i,idx)
+         omegaij=fhheomgspl(t,y,icol,idx)*invgi
+         cgjb=rka*f*dexp(-y)
+         cr=cgjb*omegaij*ratekappa
+         rr=abde*cr
+         if (rr.gt.epsilon) then
+          loss=rr*ee
 c            1s 2S1/2->2s 2S1/2 collision
-              if (j.eq.2) then
+          if (j.eq.2) then
 c           save rate for 2p calcs
-                collrate2p(atom)=cr
+           collrate2p(atom)=cr
 c            dont add 2S to Ly Alpha! distributed elsewhere
-                rr=0.d0
-                if (linecoolmode.eq.1) then
-                  loss=0.d0
-                endif
-            endif
-            hheloss=hheloss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
-              rateton(atom,nq)=rateton(atom,nq)+rr
+           rr=0.d0
+           if (linecoolmode.eq.1) then
+            loss=0.d0
+           endif
           endif
+          hheloss=hheloss+loss
+          coolz(atom)=coolz(atom)+loss
+          coolzion(ion,atom)=coolzion(ion,atom)+loss
+          rateton(atom,nq)=rateton(atom,nq)+rr
+         endif
         endif
-        endif
+       endif
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine hhecoll (t, de, dh)
@@ -178,23 +176,22 @@ c
       f=1.d0/dsqrt(t)
       hheloss=0.d0
       do idx=1,nhheions
-        atom=hheat(idx)
-        if (atom.ne.0) then
-          do j=1,5
-            rateton(atom,j)=0.0d0
-          enddo
-          collrate2p(atom)=0.0d0
-          ion=hheion(idx)
-          ni=hheni(idx)
-          pz=zion(atom)*pop(ion,atom)
-          if (pz.ge.pzlimit) then
-            call solvehheion (t, de, dh, idx, ni)
-          endif
+       atom=hheat(idx)
+       if (atom.ne.0) then
+        do j=1,5
+         rateton(atom,j)=0.0d0
+        enddo
+        collrate2p(atom)=0.0d0
+        ion=hheion(idx)
+        ni=hheni(idx)
+        pz=zion(atom)*pop(ion,atom)
+        if (pz.ge.pzlimit) then
+         call solvehheion (t, de, dh, idx, ni)
         endif
+       endif
       enddo
       if (hheloss.lt.epsilon) hheloss=0.d0
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

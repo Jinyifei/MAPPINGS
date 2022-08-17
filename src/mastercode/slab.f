@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -24,7 +24,6 @@ c     A single slab model
 c     full diffuse field, includes slab depth.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -102,14 +101,14 @@ c
 c
       l=2
       do 50 i=1,atypes
-        do 40 j=1,maxion(i)
-   40     pop(j,i)=0.0d0
-        if ((ilgg.eq.'C').or.(ilgg.eq.'B')) pop(l,i)=1.0d0
-        if (((ilgg.eq.'D').or.(ilgg.eq.'E')).or.(ilgg.eq.'F')) then
-          l=1
-          if (ipote(1,i).lt.epotmi) l=2
-          pop(l,i)=1.0d0
-        endif
+       do 40 j=1,maxion(i)
+   40   pop(j,i)=0.0d0
+       if ((ilgg.eq.'C').or.(ilgg.eq.'B')) pop(l,i)=1.0d0
+       if (((ilgg.eq.'D').or.(ilgg.eq.'E')).or.(ilgg.eq.'F')) then
+        l=1
+        if (ipote(1,i).lt.epotmi) l=2
+        pop(l,i)=1.0d0
+       endif
    50 continue
 c
       call popcha (model)
@@ -146,26 +145,26 @@ c
    80 write (*,90)
    90 format(//' Spectrum printout required? (y/n) ',$)
       read (*,30) jprin
-      call toup(jprin(1:1),jprin)
+      call toup (jprin(1:1), jprin)
 c
       if ((jprin.ne.'N').and.(jprin.ne.'Y')) goto 80
 c
       if (jprin.eq.'Y') then
 c
-        call zerbuf
+       call zerbuf
 c
-        if (ilgg.eq.'F') then
-  100     write (*,110)
+       if (ilgg.eq.'F') then
+  100   write (*,110)
   110    format(//' Spectrum for each iteration? (y/n) ',$)
-          read (*,30) jspec
-          call toup(jspec(1:1),jspec)
+        read (*,30) jspec
+        call toup (jspec(1:1), jspec)
 c
-          if ((jspec.ne.'N').and.(jspec.ne.'Y')) goto 100
+        if ((jspec.ne.'N').and.(jspec.ne.'Y')) goto 100
 c
-          if (jspec.eq.'Y') jspec='Y'
-          if (jspec.eq.'N') jspec='N'
+        if (jspec.eq.'Y') jspec='Y'
+        if (jspec.eq.'N') jspec='N'
 c
-        endif
+       endif
 c
       endif
 c
@@ -183,8 +182,8 @@ c
 c
 c    initial ionisation
 c
-      write(*,*)' Initial State (t,de,dh):'
-      write(*,*) t, de, dh
+      write (*,*) ' Initial State (t,de,dh):'
+      write (*,*) t,de,dh
 c
 c
       rad=1.d38
@@ -208,180 +207,178 @@ c
 c
 c eq ionisation
 c
-        call equion (t, de, dh)
+       call equion (t, de, dh)
 c
-        i=0
+       i=0
 c
-        trea=1.d-12
-        dift=0.d0
+       trea=1.d-12
+       dift=0.d0
 c
 c
-  130   call copypop (pop, popz)
+  130  call copypop (pop, popz)
 c
-        if (cab.ge.0) caseab(1)=cab
-        if (cab.ge.0) caseab(2)=cab
+       if (cab.ge.0) caseab(1)=cab
+       if (cab.ge.0) caseab(2)=cab
 c
 c        write(*,*) 'Loop localem'
-        call localem (t, de, dh)
-        call totphot (t, dh, rad, dr, dv, wdil, lmod)
-        call zetaeff (dh)
-        call equion (t, de, dh)
+       call localem (t, de, dh)
+       call totphot (t, dh, rad, dr, dv, wdil, lmod)
+       call zetaeff (dh)
+       call equion (t, de, dh)
 c
-        call difpop (pop, popz, trea, atypes, dift)
-        i=i+1
+       call difpop (pop, popz, trea, atypes, dift)
+       i=i+1
 c
-        if ((dift.ge.1.d-4).or.(i.le.4)) goto 130
+       if ((dift.ge.1.d-4).or.(i.le.4)) goto 130
 c
-        call copypop (pop, popz)
+       call copypop (pop, popz)
 c
-        call cool (t, de, dh)
-        call localem (t, de, dh)
-        call totphot (t, dh, rad, dr, dv, wdil, lmod)
-        call zetaeff (dh)
+       call cool (t, de, dh)
+       call localem (t, de, dh)
+       call totphot (t, dh, rad, dr, dv, wdil, lmod)
+       call zetaeff (dh)
 c
       endif
 c
       trec=frectim(t,de,dh)
 c
       if (ilgg.gt.'B') then
-        if (ilgg.eq.'C') then
-          nmod='EQUI'
-        else
-          if (ilgg.ne.'F') then
-            nmod='TIM'
-            write (*,140) zetae,qhdh
+       if (ilgg.eq.'C') then
+        nmod='EQUI'
+       else
+        if (ilgg.ne.'F') then
+         nmod='TIM'
+         write (*,140) zetae,qhdh
   140       format(/' Zetae :',1pg10.3,'  QHDH :',1pg10.3/
      & ' Give time step (dt<100 as log) :',$ )
-            read (*,*) tstep
+         read (*,*) tstep
 c
-            if (tstep.lt.100.d0) tstep=10**tstep
-            tstep1=tstep
+         if (tstep.lt.100.d0) tstep=10**tstep
+         tstep1=tstep
 c
-          else
+        else
 c
-            nmod='TIM'
-  150       write (*,160) zetae,qhdh
+         nmod='TIM'
+  150    write (*,160) zetae,qhdh
   160       format(//' Zetae :',1pg10.3,'  QHDH :',1pg10.3/
      &      ' Give final time and source lifetime:',$ )
-            read (*,*,err=150) tst,tsl
-            if (tst.le.0.d0) goto 150
-            fron=0.d0
-            tstep3=dmax1(0.d0,tst-tsl)
-            tstep1=fron*dmin1(tsl,tst)
-            tstep2=dmax1(0.0d0,dmin1(tsl,tst)-tstep1)
+         read (*,*,err=150) tst,tsl
+         if (tst.le.0.d0) goto 150
+         fron=0.d0
+         tstep3=dmax1(0.d0,tst-tsl)
+         tstep1=fron*dmin1(tsl,tst)
+         tstep2=dmax1(0.0d0,dmin1(tsl,tst)-tstep1)
 c
-  170       write (*,180)
+  170    write (*,180)
   180 format(/' Density: Isochoric or Isobaric (c/b) :',$ )
-            read (*,30) jden
+         read (*,30) jden
 c
-            jden=jden(1:1)
-            if (jden.eq.'c') jden='C'
-            if (jden.eq.'b') jden='B'
+         jden=jden(1:1)
+         if (jden.eq.'c') jden='C'
+         if (jden.eq.'b') jden='B'
 c
-            if ((jden.ne.'C').and.(jden.ne.'B')) goto 170
+         if ((jden.ne.'C').and.(jden.ne.'B')) goto 170
 c
-          endif
-          if (ill.eq.'N') then
-            call copypop (pop0, pop)
-          else
-            call copypop (pop, pop0)
-          endif
-
-          write(*,*) t, de, dh, pop(1,1),pop(2,1)
-
         endif
-        if (ilgg.lt.'E') then
-          call teequi (t, tf, de, dh, tstep1, nmod)
-          trec=frectim(tf,de,dh)
-        else if (ilgg.eq.'E') then
-c
-          tst=0.0d0
-          call cool (t, de, dh)
-          write (*,'(4(1x,1pg14.7))') tst,de,dh,tloss
-c
-c     output diffuse field photon source file
-c
-          pfx='sltd'
-          np=4
-          caller='TE'
-          wmod='REAL'
-c
-          call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
-c
-          call timion (t, de, dh, xhyf, tstep1)
-          tst=tst+tstep1
-          call cool (t, de, dh)
-          write (*,'(4(1x,1pg14.7))') tst,de,dh,tloss
-c
-c     output diffuse field photon source file
-c
-          pfx='sltd'
-          np=4
-          caller='TE'
-          wmod='REAL'
-c
-          call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
-c
-          dift=0.d0
-c
-  190     call copypop (pop, popz)
-c
-          if (cab.ge.0) caseab(1)=cab
-          if (cab.ge.0) caseab(2)=cab
-c
-          call cool (t, de, dh)
-          call localem (t, de, dh)
-          call totphot (t, dh, rad, dr, dv, wdil, lmod)
-          call zetaeff (dh)
-          call timion (t, de, dh, xhyf, tstep1)
-          call cool (t, de, dh)
-          tst=tst+tstep1
-          write (*,'(4(1x,1pg14.7))') tst,de,dh,tloss
-c
-c     output diffuse field photon source file
-c
-          pfx='sltd'
-          np=4
-          caller='TE'
-          wmod='REAL'
-c
-          call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
-c
-          call difpop (pop, popz, trea, atypes, dift)
-c
-          tstep1=tstep1*1.05
-c
-          i=i+1
-c
-          if ((dift.ge.0.001)) goto 190
-c
-          trec=frectim(t,de,dh)
+        if (ill.eq.'N') then
+         call copypop (pop0, pop)
         else
-          wd00=0.0d0
-          tex=100.d0
-          exl=1.d-20
-          if (tstep1.gt.0.d0) call teequi (t, tf, de, dh, tstep1, nmod)
-          prescc=fpressu(t,dh,pop)
-          if (tstep2.gt.0.d0) call evoltem (tf, tf, de, dh, prescc,
-     &    tstep2, 0.0d0, 0.0d0,luop)
-          trec=frectim(tf,de,dh)
-c
-          if (cab.ge.0) caseab(1)=cab
-          if (cab.ge.0) caseab(2)=cab
-c
-          call localem (t , de, dh)
-          call totphot (t , dh, rad, dr, dv, wd00, lmod)
-          if (tstep3.gt.0.d0) call evoltem (tf, tf, de, dh, prescc,
-     &    tstep3, exl, tex, luop)
+         call copypop (pop, pop0)
         endif
+        write (*,*) t,de,dh,pop(1,1),pop(2,1)
+       endif
+       if (ilgg.lt.'E') then
+        call teequi (t, tf, de, dh, tstep1, nmod)
+        trec=frectim(tf,de,dh)
+       elseif (ilgg.eq.'E') then
+c
+        tst=0.0d0
+        call cool (t, de, dh)
+        write (*,'(4(1x,1pg14.7))') tst,de,dh,tloss
+c
+c     output diffuse field photon source file
+c
+        pfx='sltd'
+        np=4
+        caller='TE'
+        wmod='REAL'
+c
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+c
+        call timion (t, de, dh, xhyf, tstep1)
+        tst=tst+tstep1
+        call cool (t, de, dh)
+        write (*,'(4(1x,1pg14.7))') tst,de,dh,tloss
+c
+c     output diffuse field photon source file
+c
+        pfx='sltd'
+        np=4
+        caller='TE'
+        wmod='REAL'
+c
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+c
+        dift=0.d0
+c
+  190   call copypop (pop, popz)
+c
+        if (cab.ge.0) caseab(1)=cab
+        if (cab.ge.0) caseab(2)=cab
+c
+        call cool (t, de, dh)
+        call localem (t, de, dh)
+        call totphot (t, dh, rad, dr, dv, wdil, lmod)
+        call zetaeff (dh)
+        call timion (t, de, dh, xhyf, tstep1)
+        call cool (t, de, dh)
+        tst=tst+tstep1
+        write (*,'(4(1x,1pg14.7))') tst,de,dh,tloss
+c
+c     output diffuse field photon source file
+c
+        pfx='sltd'
+        np=4
+        caller='TE'
+        wmod='REAL'
+c
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+c
         call difpop (pop, popz, trea, atypes, dift)
-        t=tf
+c
+        tstep1=tstep1*1.05
+c
+        i=i+1
+c
+        if ((dift.ge.0.001)) goto 190
+c
+        trec=frectim(t,de,dh)
+       else
+        wd00=0.0d0
+        tex=100.d0
+        exl=1.d-20
+        if (tstep1.gt.0.d0) call teequi (t, tf, de, dh, tstep1, nmod)
+        prescc=fpressu(t,dh,pop)
+        if (tstep2.gt.0.d0) call evoltem (tf, tf, de, dh, prescc,
+     &   tstep2, 0.0d0, 0.0d0, luop)
+        trec=frectim(tf,de,dh)
+c
+        if (cab.ge.0) caseab(1)=cab
+        if (cab.ge.0) caseab(2)=cab
+c
+        call localem (t, de, dh)
+        call totphot (t, dh, rad, dr, dv, wd00, lmod)
+        if (tstep3.gt.0.d0) call evoltem (tf, tf, de, dh, prescc,
+     &   tstep3, exl, tex, luop)
+       endif
+       call difpop (pop, popz, trea, atypes, dift)
+       t=tf
       endif
 c
 c Sum up fluxes etc
 c
       if (ilgg.lt.'E') then
-        call sumdata (t, de, dh, dr, dr, dr, imod)
+       call sumdata (t, de, dh, dr, dr, dr, imod)
       endif
       call avrdata
 c
@@ -408,14 +405,14 @@ c
   220 format(/' ZETAE:',1pg10.3,4x,'QHDH:',1pg10.3,4x,'TSTEP:'
      &,3(1pg10.3),4x,'DIFT:',0pf7.3,4x,'TREC:',1pg9.2/)
       if (jprin.ne.'N') then
-        write (luop,230) caseab(1),caseab(2)
+       write (luop,230) caseab(1),caseab(2)
   230 format(//' CASE A,B (H, He) : ',f4.2,f4.2)
 c
-        kmod='REL'
+       kmod='REL'
 c        linemod='LAMB'
 c        call spec2 (luop, linemod, kmod)
 c
-        call spectrum(luop, kmod)
+       call spectrum (luop, kmod)
 c
       endif
 c
@@ -428,14 +425,14 @@ c
       caller='TE'
       wmod='REAL'
 c
-      call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
+      call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
 c
       pfx='slfn'
       np=4
       caller='TE'
       wmod='NFNU'
 c
-      call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
+      call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
 c
 c      write out balance file
 c

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -45,9 +45,9 @@ c
       telc=dmax1(t,mintemp)
       if (((jjmod.ne.'ALL').and.(jjmod.ne.'PHOT')).and.(jjmod.ne.'TEMP')
      &) then
-        write (*,10) jjmod
+       write (*,10) jjmod
    10 format('  MODE WRONGLY DEFINED FOR SUBR. ALLRATES :',a4)
-        stop
+       stop
       endif
 c
 c
@@ -57,15 +57,15 @@ c
       call cosmic (0.d0)
 c
       if ((iphom.ne.ipho).and.(jjmod.ne.'TEMP')) then
-        call phion
-        iphom=ipho
+       call phion
+       iphom=ipho
       endif
 c
       if ((telc.ne.tem).and.(jjmod.ne.'PHOT')) then
-        call recom (telc)
-        call collion (telc)
-        call charex (telc)
-        tem=telc
+       call recom (telc)
+       call collion (telc)
+       call charex (telc)
+       tem=telc
       endif
 c
       return

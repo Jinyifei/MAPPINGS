@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -25,7 +25,6 @@ c     USES FUNCTION FGAUNT
 c     COOLING RATE : HELOS
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -86,9 +85,9 @@ c old poly fit
 c      pol5(x)=dmax1(0.0d0,(((((((((-(6.5289d0*x))+41.54554d0)*x)-
 c     &97.135778d0)*x)+97.0517d0)*x)-32.02831d0)*x)-0.045645d0)
 c
-      qss(u)=10.d0**(fsplint(xs,qss_y,qss_y2,21,    (u/(u+ 1.0d0)) ))
-      qsp(u)=10.d0**(fsplint(xs,qsp_y,qsp_y2,21,    (u/(u+ 5.0d0)) ))
-      qsp3(u)=10.d0**(fsplint(xs,qsp3_y,qsp3_y2,21, (u/(u+10.0d0)) ))
+      qss(u)=10.d0**(fsplint(xs,qss_y,qss_y2,21,(u/(u+1.0d0))))
+      qsp(u)=10.d0**(fsplint(xs,qsp_y,qsp_y2,21,(u/(u+5.0d0))))
+      qsp3(u)=10.d0**(fsplint(xs,qsp3_y,qsp3_y2,21,(u/(u+10.0d0))))
 c old fns
 c      qss(u)=1.d-8*pol5(u**0.3333333d0)
 c      qsp(u)=5.73d-9*pol5((0.175d0+(0.2d0*u))**0.3333333d0)
@@ -96,7 +95,6 @@ c      qsp3(u)=3.70d-7*pol5((0.218d0+(0.1d0*u))**0.3333333d0)
 c
       frs3(u)=0.775d0*(u**0.0213d0)
       fusp(u)=0.42d0*(u**0.23d0)
-
       data xs/0.0d0,0.05d0,0.10d0,0.15d0,0.20d0,0.25d0,0.30d0,
      & 0.35d0,0.40d0,0.45d0,0.50d0,0.55d0,0.60d0,0.65d0,0.70d0,
      & 0.75d0,0.80d0,0.85d0,0.90d0,0.95d0,1.00d0/
@@ -202,7 +200,6 @@ c     i,j,aji,TC: 01 07 1.80000d+09 5.00000d+04
       data s17_y2/0.000000d+00,0.285931d-01,0.273014d-01,0.105796d+00,
      &0.464563d-01,0.739346d+00,-.627440d+00,0.164969d+02,
      &-.229865d+02,0.178022d+03,0.000000d+00/
-
 c
       u=t/1.d4
 c relax!
@@ -247,8 +244,8 @@ c
       xs1=heien(2)/(rkb*t)
       xp1=heien(3)/(rkb*t)
 c
-      cos1=(ara*omes1*dexp(-xs1))! *fgaunt(1,1,xs1) omes1 is complete
-      cop1=(ara*omep1*dexp(-xp1))! *fgaunt(1,1,xp1) omep1 is complete
+      cos1=(ara*omes1*dexp(-xs1))!*fgaunt(1,1,xs1)omes1iscomplete
+      cop1=(ara*omep1*dexp(-xp1))!*fgaunt(1,1,xp1)omep1iscomplete
 c
       collrate2phe(atom)=cos1/abup
       ee2phe(atom)=heien(2)
@@ -273,7 +270,6 @@ c
 c     2S(T) > 2S(S)
 c
       hein(2)=(heien(2)*((ras1+frs1)+cos1))*ifpi
-
 c
 c     2S(T) > 2P(S)
 c
@@ -295,101 +291,101 @@ c
       coolf=0.d0
 c
       do idx=1,nheislines
-        heisbri(idx)=0.d0
+       heisbri(idx)=0.d0
       enddo
 c
       do idx=1,nheitlines
-        heitbri(idx)=0.d0
+       heitbri(idx)=0.d0
       enddo
 c
       if (zion(atom)*pop(2,atom).gt.pzlimit) then
 c
 c First, collision contributions
 c
-        t4=1.0d-4*t
-        if (t4.lt.0.01d0) t4=0.01d0
-        if (t4.gt.5.0d0) t4=5.0d0
+       t4=1.0d-4*t
+       if (t4.lt.0.01d0) t4=0.01d0
+       if (t4.gt.5.0d0) t4=5.0d0
 c
-        do idx=1,nheis
-          n=nheiscr(idx)
-          cr(idx)=0.d0
-          if (n.gt.0) then
-            sum=0.d0
-            do i=1,n
-              ai=heiscra(i,idx)
-              bi=heiscrb(i,idx)
-              ci=heiscrc(i,idx)
-              sum=sum+(ai*(t4**bi)*dexp(ci/t4))
-            enddo
-            cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
-            cr(idx)=cr(idx)*sum
-          endif
+       do idx=1,nheis
+        n=nheiscr(idx)
+        cr(idx)=0.d0
+        if (n.gt.0) then
+         sum=0.d0
+         do i=1,n
+          ai=heiscra(i,idx)
+          bi=heiscrb(i,idx)
+          ci=heiscrc(i,idx)
+          sum=sum+(ai*(t4**bi)*dexp(ci/t4))
+         enddo
+         cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
+         cr(idx)=cr(idx)*sum
+        endif
 c
 c collisions of He I are now all in XR3DATA collisional cascades
 c          cr(idx)=cr(idx)+1.d0
-          cr(idx)=1.d0
+        cr(idx)=1.d0
 c      write(*,*) t,idx,cr(idx)
-        enddo
-        abde=de*dh*zion(atom)*pop(2,atom)
-        lnte=dlog(t)
-        invt=1.d0/(epsilon+t)
+       enddo
+       abde=de*dh*zion(atom)*pop(2,atom)
+       lnte=dlog(t)
+       invt=1.d0/(epsilon+t)
 c
 c then singlet recomb
 c
-        do idx=1,nheislines
-          a=heisreccoef(1,idx)
-          b=heisreccoef(2,idx)
-          c=heisreccoef(3,idx)
-          d=heisreccoef(4,idx)
-          emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
-          emiss=dmax1(0.d0,emiss)
-          heisbri(idx)=abde*emiss*ifpi
-          upid=heisupid(idx)
-          if (cr(upid).gt.1.0d0) then
-            heisbri(idx)=heisbri(idx)*cr(upid)
-            coolf=coolf+heisbri(idx)*(cr(upid)-1.d0)
-          endif
-        enddo
+       do idx=1,nheislines
+        a=heisreccoef(1,idx)
+        b=heisreccoef(2,idx)
+        c=heisreccoef(3,idx)
+        d=heisreccoef(4,idx)
+        emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
+        emiss=dmax1(0.d0,emiss)
+        heisbri(idx)=abde*emiss*ifpi
+        upid=heisupid(idx)
+        if (cr(upid).gt.1.0d0) then
+         heisbri(idx)=heisbri(idx)*cr(upid)
+         coolf=coolf+heisbri(idx)*(cr(upid)-1.d0)
+        endif
+       enddo
 c
 c then triplet colls
 c
-        do idx=1,nheit
-          n=nheitcr(idx)
-          cr(idx)=0.d0
-          if (n.gt.0) then
-            sum=0.d0
-            do i=1,n
-              ai=heitcra(i,idx)
-              bi=heitcrb(i,idx)
-              ci=heitcrc(i,idx)
-              sum=sum+(ai*(t4**bi)*dexp(ci/t4))
-            enddo
-            cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
-            cr(idx)=cr(idx)*sum
-          endif
+       do idx=1,nheit
+        n=nheitcr(idx)
+        cr(idx)=0.d0
+        if (n.gt.0) then
+         sum=0.d0
+         do i=1,n
+          ai=heitcra(i,idx)
+          bi=heitcrb(i,idx)
+          ci=heitcrc(i,idx)
+          sum=sum+(ai*(t4**bi)*dexp(ci/t4))
+         enddo
+         cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
+         cr(idx)=cr(idx)*sum
+        endif
 c
 c collisions of He I are now all in XR3DATA collisional cascades
 c          cr(idx)=cr(idx)+1.d0
-          cr(idx)=1.d0
+        cr(idx)=1.d0
 c      write(*,*) t,idx,cr(idx)
-        enddo
+       enddo
 c
 c then triplet recomb
 c
-        do idx=1,nheitlines
-          a=heitreccoef(1,idx)
-          b=heitreccoef(2,idx)
-          c=heitreccoef(3,idx)
-          d=heitreccoef(4,idx)
-          emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
-          emiss=dmax1(0.d0,emiss)
-          heitbri(idx)=abde*emiss*ifpi
-          upid=heitupid(idx)
-          if (cr(upid).gt.1.0d0) then
-            heitbri(idx)=heitbri(idx)*cr(upid)
-            coolf=coolf+heitbri(idx)*(cr(upid)-1.d0)
-          endif
-        enddo
+       do idx=1,nheitlines
+        a=heitreccoef(1,idx)
+        b=heitreccoef(2,idx)
+        c=heitreccoef(3,idx)
+        d=heitreccoef(4,idx)
+        emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
+        emiss=dmax1(0.d0,emiss)
+        heitbri(idx)=abde*emiss*ifpi
+        upid=heitupid(idx)
+        if (cr(upid).gt.1.0d0) then
+         heitbri(idx)=heitbri(idx)*cr(upid)
+         coolf=coolf+heitbri(idx)*(cr(upid)-1.d0)
+        endif
+       enddo
 c
 c      write(*,*) 'HeI coll losses: ',helos, coolf
 c
@@ -398,6 +394,5 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

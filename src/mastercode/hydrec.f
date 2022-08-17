@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -87,22 +87,22 @@ c    ***DERIVES THE OTHER LINES FLUX USING THEIR PREDICTED
 c   RATIOS RELATIVE TO H-BETA
 c
       do l=1,5
-        a1=balcoe(l,1)
-        a2=balcoe(l,2)
-        a3=balcoe(l,3)
-        a4=balcoe(l,4)
-        a5=balcoe(l,5)
-        raln=fli(argu,a1,a2,a3,a4,a5)
-        a1=balcoe(l,6)
-        a2=balcoe(l,7)
-        a3=balcoe(l,8)
-        a4=balcoe(l,9)
-        b1=balcoe(l,10)
-        b2=balcoe(l,11)
-        deloef=delo10*fun(tinv,b1,b2)
-        delc=fcor(deloef,a1,a2,a3,a4)
-        if (dabs(delc).gt.cormax) delc=dsign(cormax,delc)
-        hbri(l)=hbet*(dexp(raln)*(1.d0+delc))
+       a1=balcoe(l,1)
+       a2=balcoe(l,2)
+       a3=balcoe(l,3)
+       a4=balcoe(l,4)
+       a5=balcoe(l,5)
+       raln=fli(argu,a1,a2,a3,a4,a5)
+       a1=balcoe(l,6)
+       a2=balcoe(l,7)
+       a3=balcoe(l,8)
+       a4=balcoe(l,9)
+       b1=balcoe(l,10)
+       b2=balcoe(l,11)
+       deloef=delo10*fun(tinv,b1,b2)
+       delc=fcor(deloef,a1,a2,a3,a4)
+       if (dabs(delc).gt.cormax) delc=dsign(cormax,delc)
+       hbri(l)=hbet*(dexp(raln)*(1.d0+delc))
       enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -174,27 +174,27 @@ c
       k=6
       do l=1,12
 c      if ((hel0(2,l).gt.0.d0).or.(j108m.eq.l)) then
-        temul=dabs(hel0(2,l))
-        tlolo=dlog(dlog((temul*telc)*2.d0))
-        argu=fun(tlolo,ab1,ab2)
-        if (temul.eq.0.5d0) then
-          fnorm=3.04804d0
-        else if (temul.eq.0.25d0) then
-          fnorm=3.30346d0
-        else if (temul.eq.0.1d0) then
-          fnorm=3.74000d0
-        else
-          fnorm=3.04804d0*((temul/0.5d0)**(-0.12712d0))
-        endif
-        raln=fli(argu,a1,a2,a3,a4,a5)
+       temul=dabs(hel0(2,l))
+       tlolo=dlog(dlog((temul*telc)*2.d0))
+       argu=fun(tlolo,ab1,ab2)
+       if (temul.eq.0.5d0) then
+        fnorm=3.04804d0
+       elseif (temul.eq.0.25d0) then
+        fnorm=3.30346d0
+       elseif (temul.eq.0.1d0) then
+        fnorm=3.74000d0
+       else
+        fnorm=3.04804d0*((temul/0.5d0)**(-0.12712d0))
+       endif
+       raln=fli(argu,a1,a2,a3,a4,a5)
 c
-        rmm=dexp(raln)/fnorm
-        amul=hel0(3,l)
-        bex=hel0(4,l)
-        delmu=hel0(5,l)
-        efden=(1.d0+(delmu*delc))*(1.d0+(4.3d-3*delmu))
-        hel0(6,l)=(he4471*(amul*(rmm**bex)))*efden
-        heibri(l+3)=hel0(6,l)
+       rmm=dexp(raln)/fnorm
+       amul=hel0(3,l)
+       bex=hel0(4,l)
+       delmu=hel0(5,l)
+       efden=(1.d0+(delmu*delc))*(1.d0+(4.3d-3*delmu))
+       hel0(6,l)=(he4471*(amul*(rmm**bex)))*efden
+       heibri(l+3)=hel0(6,l)
 c      if ((j108m .ne. l).and.(hel0(2,l).gt.0.d0)) then
 c      hbri(k) = hel0(6,l)
 c      k = min0(10,k+1)

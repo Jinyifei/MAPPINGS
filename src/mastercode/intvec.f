@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -40,22 +40,22 @@ c
       integer*4 i, j, inl
 c
       do i=1,2
-        do j=1,2
-          phq(j,i)=0.d0
-        enddo
+       do j=1,2
+        phq(j,i)=0.d0
+       enddo
       enddo
 c
       do inl=1,infph-1
-        if (bufpho(inl).gt.epsilon) then
+       if (bufpho(inl).gt.epsilon) then
         wid=widbinnu(inl)
         q=fpi*(wid*bufpho(inl)/cphote(inl))
         do i=1,2
-          do 10 j=1,maxion(i)-1
-            if (cphote(inl).lt.ipote(j,i)) goto 10
-            phq(j,i)=phq(j,i)+q
-   10     continue
+         do 10 j=1,maxion(i)-1
+          if (cphote(inl).lt.ipote(j,i)) goto 10
+          phq(j,i)=phq(j,i)+q
+   10    continue
         enddo
-        endif
+       endif
       enddo
 c
       qaheii=phq(2,2)
@@ -84,23 +84,23 @@ c
       integer*4 i, j, inl
 c
       do i=1,2
-        do j=1,2
-          phq(j,i)=0.d0
-        enddo
+       do j=1,2
+        phq(j,i)=0.d0
+       enddo
       enddo
 c
       do inl=1,infph-1
-        if (inupho(inl).gt.epsilon) then
+       if (inupho(inl).gt.epsilon) then
         widnu=widbinnu(inl)
 c 1/pi Inu
         q=pi*(widnu*inupho(inl)/cphote(inl))
         do i=1,2
-          do 10 j=1,maxion(i)-1
-            if (cphote(inl).lt.ipote(j,i)) goto 10
-            phq(j,i)=phq(j,i)+q
-   10     continue
+         do 10 j=1,maxion(i)-1
+          if (cphote(inl).lt.ipote(j,i)) goto 10
+          phq(j,i)=phq(j,i)+q
+   10    continue
         enddo
-        endif
+       endif
       enddo
 c
       qaheii=phq(2,2)
@@ -129,23 +129,23 @@ c
       integer*4 i, j, inl
 c
       do i=1,2
-        do j=1,2
-          phq(j,i)=0.d0
-        enddo
+       do j=1,2
+        phq(j,i)=0.d0
+       enddo
       enddo
 c
       do inl=1,infph-1
-        if (inupho(inl).gt.epsilon) then
+       if (inupho(inl).gt.epsilon) then
         widnu=widbinnu(inl)
 c 1/4pi Jnu
         q=fpi*(widnu*inupho(inl)/cphote(inl))
         do i=1,2
-          do 10 j=1,maxion(i)-1
-            if (cphote(inl).lt.ipote(j,i)) goto 10
-            phq(j,i)=phq(j,i)+q
-   10     continue
+         do 10 j=1,maxion(i)-1
+          if (cphote(inl).lt.ipote(j,i)) goto 10
+          phq(j,i)=phq(j,i)+q
+   10    continue
         enddo
-        endif
+       endif
       enddo
 c
       qaheii=phq(2,2)
@@ -169,17 +169,17 @@ c
         real*8 widnu
         integer*4 i
 c
-        blum=0.d0
-        ilum=0.d0
+      blum=0.d0
+      ilum=0.d0
 c
-        do i=1,infph-1
-          widnu=widbinnu(i)
-          blum=blum+sp(i)*widnu
-          if (photev(i).ge.iph) ilum=ilum+sp(i)*widnu
-        enddo
+      do i=1,infph-1
+       widnu=widbinnu(i)
+       blum=blum+sp(i)*widnu
+       if (photev(i).ge.iph) ilum=ilum+sp(i)*widnu
+      enddo
 c
-        blum=fpi*blum
-        ilum=fpi*ilum
+      blum=fpi*blum
+      ilum=fpi*ilum
 c
       return
       end
@@ -196,19 +196,18 @@ c
         real*8 widnu
         integer*4 i
 c
-        blum=0.d0
-        ilum=0.d0
+      blum=0.d0
+      ilum=0.d0
 c
-        do i=1,infph-1
-          widnu=widbinnu(i)
-          blum=blum+sp(i)*widnu
-          if (photev(i).ge.iph) ilum=ilum+sp(i)*widnu
-        enddo
+      do i=1,infph-1
+       widnu=widbinnu(i)
+       blum=blum+sp(i)*widnu
+       if (photev(i).ge.iph) ilum=ilum+sp(i)*widnu
+      enddo
 c
-        blum=pi*blum
-        ilum=pi*ilum
+      blum=pi*blum
+      ilum=pi*ilum
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

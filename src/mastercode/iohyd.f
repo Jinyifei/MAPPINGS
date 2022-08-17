@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -108,51 +108,51 @@ c
 c     Recomb reactions
 c     with neutral H -> ionise H
 c
-        do j=1,nchxr
-          if (chxr(j).gt.0.d0) then
-            at=chxrat(j)
-            ies=chxrx(j)
-            if (ies.eq.zmap(1)) then
-              ion=chxrio(j)
-              abu=zion(at)*pop(ion,at)
-              eps=eps+(chxr(j)*abu*dh)
-            endif
-          endif
-        enddo
+       do j=1,nchxr
+        if (chxr(j).gt.0.d0) then
+         at=chxrat(j)
+         ies=chxrx(j)
+         if (ies.eq.zmap(1)) then
+          ion=chxrio(j)
+          abu=zion(at)*pop(ion,at)
+          eps=eps+(chxr(j)*abu*dh)
+         endif
+        endif
+       enddo
 c
 c     Ionising reactions
 c     with ionised H -> recomb H
 c
-        do j=1,nchxi
-          if (chxi(j).gt.0.d0) then
-            at=chxiat(j)
-            ies=chxix(j)
-            if (ies.eq.zmap(1)) then
-              ion=chxiio(j)
-              abu=zion(at)*pop(ion,at)
-              rkn=rkn+(chxi(j)*abu*dh)
-            endif
-          endif
-        enddo
+       do j=1,nchxi
+        if (chxi(j).gt.0.d0) then
+         at=chxiat(j)
+         ies=chxix(j)
+         if (ies.eq.zmap(1)) then
+          ion=chxiio(j)
+          abu=zion(at)*pop(ion,at)
+          rkn=rkn+(chxi(j)*abu*dh)
+         endif
+        endif
+       enddo
       endif
 c
       if (chargemode.eq.1) then
 c
 c     old mappings charge exchanges
 c
-        do 70 j=1,nchxold
-          idx=idint(charte(1,j))
-          if (idx.lt.2) goto 70
-          ion=idint(charte(2,j))
-          if (rec(ion+1,idx).le.0.0d0) goto 70
-          ies=idint(charte(5,j))
-          if (ies.ne.1) goto 70
-          abu=dh*zion(idx)
-          if (abu*pop(ion,idx).lt.pzlimit) goto 70
-          if (abu*pop(ion+1,idx).lt.pzlimit) goto 70
-          rkn=rkn+((charte(3,j)*abu)*pop(ion,idx))
-          eps=eps+((charte(4,j)*abu)*pop(ion+1,idx))
-   70   continue
+       do 70 j=1,nchxold
+        idx=idint(charte(1,j))
+        if (idx.lt.2) goto 70
+        ion=idint(charte(2,j))
+        if (rec(ion+1,idx).le.0.0d0) goto 70
+        ies=idint(charte(5,j))
+        if (ies.ne.1) goto 70
+        abu=dh*zion(idx)
+        if (abu*pop(ion,idx).lt.pzlimit) goto 70
+        if (abu*pop(ion+1,idx).lt.pzlimit) goto 70
+        rkn=rkn+((charte(3,j)*abu)*pop(ion,idx))
+        eps=eps+((charte(4,j)*abu)*pop(ion+1,idx))
+   70  continue
 c
 c     end old charge reactions
 c
@@ -165,30 +165,30 @@ c
 c harmonic dampening of CHX rates for stability in cold dark gas
 c
       if (eps.gt.0.d0) then
-        maxrate=dmax1(co,phi,spo)
-        eps=1.d0/((2.d0/maxrate)+(1.d0/eps))
+       maxrate=dmax1(co,phi,spo)
+       eps=1.d0/((2.d0/maxrate)+(1.d0/eps))
       endif
       if (rkn.gt.0.d0) then
-        rkn=1.d0/((2.d0/rce)+(1.d0/rkn))
+       rkn=1.d0/((2.d0/rce)+(1.d0/rkn))
       endif
 c
       if (mod.eq.'EQUI') then
-        rectotal=dmax1((rce+rkn),0.d0)
-        iontotal=dmax1((coe+phe-spo+eps),0.d0)
+       rectotal=dmax1((rce+rkn),0.d0)
+       iontotal=dmax1((coe+phe-spo+eps),0.d0)
 c      write(*,*) 'iohyd:  ', rectotal,iontotal,rc,rkn,coe,phe,eps
-        if (iontotal.gt.rectotal) then
-          rateratio=rectotal/(iontotal+epsilon)
-          eqhi=rateratio/(rateratio+1.d0)
-          eqhi=dmax1(eqhi,0.d0)
-          eqhii=1.d0-eqhi
-        else
-          rateratio=iontotal/(rectotal+epsilon)
-          eqhii=rateratio/(rateratio+1.d0)
-          eqhii=dmax1(eqhii,0.d0)
-          eqhi=1.d0-eqhii
-        endif
-        fhi=eqhi
-        fhii=eqhii
+       if (iontotal.gt.rectotal) then
+        rateratio=rectotal/(iontotal+epsilon)
+        eqhi=rateratio/(rateratio+1.d0)
+        eqhi=dmax1(eqhi,0.d0)
+        eqhii=1.d0-eqhi
+       else
+        rateratio=iontotal/(rectotal+epsilon)
+        eqhii=rateratio/(rateratio+1.d0)
+        eqhii=dmax1(eqhii,0.d0)
+        eqhi=1.d0-eqhii
+       endif
+       fhi=eqhi
+       fhii=eqhii
 c      write(*,*) 'iohyd: Simple EQ ', fhi, fhii
       endif
 c
@@ -208,13 +208,13 @@ c
 c      endif
 c
       if (fhi.lt.pzlimit) then
-        fhi=0.d0
-        fhii=1.d0
+       fhi=0.d0
+       fhii=1.d0
       endif
 c
       if (fhii.lt.pzlimit) then
-        fhii=0.d0
-        fhi=1.d0
+       fhii=0.d0
+       fhi=1.d0
       endif
 c
 c c

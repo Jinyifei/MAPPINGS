@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -48,32 +48,32 @@ c
 c
       if (crate.gt.0.d0) then
 c
-        xe=pop(2,1)/(pop(1,1)+epsilon)
-        lxe=dlog10(xe+epsilon)
+       xe=pop(2,1)/(pop(1,1)+epsilon)
+       lxe=dlog10(xe+epsilon)
 c
 c     cubic fit for eh to log (xe) at Eo = 35 ev
 c
-        eh=a(0)+lxe*(a(1)+lxe*(a(2)+lxe*a(3)))
+       eh=a(0)+lxe*(a(1)+lxe*(a(2)+lxe*a(3)))
 c
 c     sanity
 c
-        if (eh.gt.35.d0) eh=35.d0
-        if (lxe.lt.-4.d0) eh=7.d0
-        if (eh.lt.7.d0) eh=7.d0
+       if (eh.gt.35.d0) eh=35.d0
+       if (lxe.lt.-4.d0) eh=7.d0
+       if (eh.lt.7.d0) eh=7.d0
 c
-        cosgain=dh*pop(1,1)*eh*crate*ev
+       cosgain=dh*pop(1,1)*eh*crate*ev
 c
-        heatz(1)=heatz(1)+cosgain
-        heatzion(1,1)=heatzion(1,1)+cosgain
+       heatz(1)=heatz(1)+cosgain
+       heatzion(1,1)=heatzion(1,1)+cosgain
 c
 c     cubic fit for phi to log (xe) at Eo = 35 ev
 c
-        cosphi=ph(0)+lxe*(ph(1)+lxe*(ph(2)+lxe*ph(3)))
+       cosphi=ph(0)+lxe*(ph(1)+lxe*(ph(2)+lxe*ph(3)))
 c
 c     sanity
 c
-        if (cosphi.lt.0.d0) cosphi=0.d0
-        if (lxe.lt.-4.d0) cosphi=0.75
+       if (cosphi.lt.0.d0) cosphi=0.d0
+       if (lxe.lt.-4.d0) cosphi=0.75
 c
       endif
 c
