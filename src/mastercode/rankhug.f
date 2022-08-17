@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -38,7 +38,7 @@ c
       real*8 g,lambda, en0,delta
       real*8 rv0,beta,q,pram
       real*8 cmpf,x1,x2,r1,r2,x
-      real*8 cmpfNEW,rv2,cmpfHD
+      real*8 cmpfnew,rv2,cmpfhd
       real*8 frho
 c
 c     set globals
@@ -46,7 +46,8 @@ c
       vel0=vpr
       te0=tpr
       dh0=dhpr
-      de0=delpr ! feldens(dhpr,pop)
+c      feldens(dhpr,pop)
+      de0=delpr
       bm0=bmag
       pb0=(bm0*bm0)/epi
 c
@@ -68,7 +69,7 @@ c
 c quadratic full solution for non-magnetic case, for shocks
 c and flows, with or without cooling
 c
-      g=gammaEOSg
+      g=gammaeosg
       lambda=tl*tstep
       a(3)=-(g*pr0+0.5d0*rv2-lambda)/rv2
       a(2)=g*(pr0+rv2)/rv2
@@ -77,9 +78,9 @@ c
       q=-0.5d0*(a(2)+dsign(1.d0,a(2))*dsqrt(delta))
       r1=a(1)/q
       r2=q/a(3)
-      cmpfHD=dmax1(r1,r2)
-      vel1=vel0/cmpfHD
-      cmpf=cmpfHD
+      cmpfhd=dmax1(r1,r2)
+      vel1=vel0/cmpfhd
+      cmpf=cmpfhd
 c
       if (bmag.gt.0.d0) then
 c
@@ -87,47 +88,47 @@ c       MHD shock only quadratic solution, discards x=1 root so cant be
 c       used in general flow with cooling, here for validaton purposes
 c
         lambda=tl*tstep
-C       g=(gammaEOS)/(gammaEOS-1.d0)
+c       g=(gammaEOS)/(gammaEOS-1.d0)
         beta=pb0*2.d0
-        pram=rv2 ! for clarity and compared to paper
+c      for clarity and compared to paper
+        pram=rv2
 c /rv2 scale to normalise numbers in cubic root finder better
-        a(4)= (pb0*(2.d0-g))/rv2
+        a(4)=(pb0*(2.d0-g))/rv2
         a(3)=-(g*pr0+0.5d0*pram+2.d0*pb0-lambda)/rv2
-        a(2)= g*(pr0+pram+pb0)/rv2
-        a(1)= (0.5d0-g)
+        a(2)=g*(pr0+pram+pb0)/rv2
+        a(1)=(0.5d0-g)
 c
         x1=0.5d0
-        x2=gammaEOSx
+        x2=gammaeosx
 c
 c find the two positive roots near x1 and x2  for the cubic in a
 c
         call cubic (a, x1, x2, r1, r2)
 c       for S5 this is the root we always need
-        cmpfNEW=dmax1(r1,r2)
+        cmpfnew=dmax1(r1,r2)
 c
-        cmpf=cmpfNEW
+        cmpf=cmpfnew
 c
-       endif
+      endif
 c
-       x=cmpf
-       vel1=vel0/x
-       bm1=bm0*x
-       pb1=(bm1*bm1)/epi
-       rho1=rho0*x
-       de1=de0*x
-       dh1=dh0*x
+      x=cmpf
+      vel1=vel0/x
+      bm1=bm0*x
+      pb1=(bm1*bm1)/epi
+      rho1=rho0*x
+      de1=de0*x
+      dh1=dh0*x
 c
 c       call invrho (rho1, de1, dh1, pop)
 c
-       pr1=pr0+(rho0*vel0*vel0*(1.d0-(1.d0/x)))+pb0*(1.d0-(x*x))
-       te1=pr1/((zen*dh1+de1)*rkb)
+      pr1=pr0+(rho0*vel0*vel0*(1.d0-(1.d0/x)))+pb0*(1.d0-(x*x))
+      te1=pr1/((zen*dh1+de1)*rkb)
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C     double precision function shockcmpf (t, de, dh, v, bm)
+c     double precision function shockcmpf (t, de, dh, v, bm)
       subroutine shockcmpf (t, de, dh, v, bm)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -152,7 +153,7 @@ c
       real*8 frho
 c
       cmp=1.d0
-      gam=gammaEOS
+      gam=gammaeos
 c
 c     set globals
 c
@@ -171,17 +172,20 @@ c
       rho=rho0
       pram=rho*v*v
 c
-      c2=2.d0*pbm*(2.d0-gam) ! a x^2
-      c1= (gam-1.d0)*pram + 2.d0*gam*(pbm+pr) ! b x
-      c0=-(gam+1.d0)*pram ! c
+c      a x^2
+      c2=2.d0*pbm*(2.d0-gam)
+c      b x
+      c1=(gam-1.d0)*pram+2.d0*gam*(pbm+pr)
+c      c
+      c0=-(gam+1.d0)*pram
 c
       delta=(c1*c1)-(4.d0*(c2*c0))
 c
-       q=1.0d0
+      q=1.0d0
       r1=1.0d0
       r2=1.0d0
       if (delta.ge.0.d0) then
-         q=-0.5d0*(c1+dsign(1.d0,c1)*dsqrt(delta))
+        q=-0.5d0*(c1+dsign(1.d0,c1)*dsqrt(delta))
         if (q.ne.0.d0) r1=c0/q
         if (c2.ne.0.d0) r2=q/c2
       endif
@@ -203,7 +207,6 @@ c
 c      shockcmpf=cmp
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine quart (a, x1, x2, root, rmod)
@@ -277,7 +280,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine cubic (a, x1, x2, r1, r2)
@@ -295,7 +297,8 @@ c
 c find the two positive roots near x1 and x2  for the cubic in a
 c
 c Solve characterisitc cubic for R-H flow with cooling
-c !!!! modifies a, by normalising.
+c      modifies a, by normalising.
+c !!!
 c returns both roots if possible, may the the same.
 c
 c
@@ -310,9 +313,10 @@ c
 c find the value at x=0 for normalising the
 c polynomial.
 c
-      invk=dabs(1.d0/a(1))  ! preserve sign of poly
-      do i =1,4
-         a(i)=invk*a(i)
+c      preserve sign of poly
+      invk=dabs(1.d0/a(1))
+      do i=1,4
+        a(i)=invk*a(i)
       enddo
 c
 c     get derivative
@@ -328,24 +332,24 @@ c
       dx=(mxx-mnx)*0.01d0
 c         write(*,*) mxx,mnx,dx
 c search for 1st sign change down from mxx
-        f0=a(1)+mxx*(a(2)+mxx*(a(3)+mxx*a(4)))
-        do i=0,200
-          x2=mxx-dx*dble(i)
-          f2=a(1)+x2*(a(2)+x2*(a(3)+x2*a(4)))
+      f0=a(1)+mxx*(a(2)+mxx*(a(3)+mxx*a(4)))
+      do i=0,200
+        x2=mxx-dx*dble(i)
+        f2=a(1)+x2*(a(2)+x2*(a(3)+x2*a(4)))
 c          write(*,*) x2,f2
-          if (f2.ne.dsign(f2,f0)) goto 10
-          f0=f2
-        enddo
-   10  continue
+        if (f2.ne.dsign(f2,f0)) goto 10
+        f0=f2
+      enddo
+   10 continue
 c search for 1st sign change up from mnx
-        f0=a(1)+mnx*(a(2)+mnx*(a(3)+mnx*a(4)))
-        do i=0,200
-          x1=mnx+dx*dble(i)
-          f1=a(1)+x1*(a(2)+x1*(a(3)+x1*a(4)))
+      f0=a(1)+mnx*(a(2)+mnx*(a(3)+mnx*a(4)))
+      do i=0,200
+        x1=mnx+dx*dble(i)
+        f1=a(1)+x1*(a(2)+x1*(a(3)+x1*a(4)))
 c          write(*,*) x1,f1
-          if (f1.ne.dsign(f1,f0)) goto 20
-          f0=f1
-        enddo
+        if (f1.ne.dsign(f1,f0)) goto 20
+        f0=f1
+      enddo
    20 continue
 c
       itmax=20
@@ -377,7 +381,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function velshock2 (dh, t, bmag, tpo)
@@ -421,36 +424,35 @@ c enough for 30,000 km/s
 c find first 100km/s too fast
 c
       do idx=1,300
-         vin=dble(idx)*dv
-         call rankhug (t, de, dh, vin, binit, 0.d0, 0.d0)
-         write(*,*) 'init',idx,vin*1.d-5,te1,tinit
-         if ((te1+epsilon).gt.tinit) goto 10
+        vin=dble(idx)*dv
+        call rankhug (t, de, dh, vin, binit, 0.d0, 0.d0)
+        write (*,*) 'init',idx,vin*1.d-5,te1,tinit
+        if ((te1+epsilon).gt.tinit) goto 10
       enddo
 c Make sure people going over 30,000km/s know what they are doing...
-      write(*,*) 'ERROR: shock too fast in velshock2, tepo too large'
+      write (*,*) 'ERROR: shock too fast in velshock2, tepo too large'
       stop
 c
-   10  continue
+   10 continue
 c
 c polish with bisection
 c
       itdivs=0
       v0=vin-dv
       v1=vin
-   20 continue
-      v2=0.5d0*(v0+v1)
+   20 v2=0.5d0*(v0+v1)
       call rankhug (t, de, dh, v2, binit, 0.d0, 0.d0)
       if (te1.gt.tinit) then
-          v1=v2
+        v1=v2
       else
-          v0=v2
+        v0=v2
       endif
       itdivs=itdivs+1
       eps=dabs(2.d0*(v1-v0)/(v1+v0))
 c        write(*,*) itdivs,v0,v1,v2,vel0,te1,tinit
-      if (itdivs.gt.maxits)then
-        write(*,*) 'ERROR: in velshock2, to many iterations'
-        write(*,*) itdivs,v0,v1,v2,vel0,te1,tinit
+      if (itdivs.gt.maxits) then
+        write (*,*) 'ERROR: in velshock2, to many iterations'
+        write (*,*) itdivs,v0,v1,v2,vel0,te1,tinit
         stop
       endif
       if (eps.gt.tol) goto 20
@@ -459,7 +461,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine velshock (dhpr, xhpr, tepr, tepo, hmag)
@@ -574,7 +575,7 @@ c it must be a bug and needs checking
 c
       qst=(2.d0*ww)-((5.d0*gam)+(4.d0*hmago)+(vpo*vpo))
 c
-      write(*,*) 'qst ww',qst,ww
+      write (*,*) 'qst ww',qst,ww
 c
 c     ***COMPUTES APPROXIMATE FINAL STATE OF GAS
 c
@@ -588,7 +589,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine roots (a, ncoef, root)
@@ -648,10 +648,9 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine isochorflow (tpr, delpr, dhpr, vpr, hmag, tl,tstep)
+      subroutine isochorflow (tpr, delpr, dhpr, vpr, hmag, tl, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -670,18 +669,20 @@ c
       vel0=vpr
       te0=tpr
       dh0=dhpr
-      de0=delpr ! feldens(dhpr,pop)
+c      feldens(dhpr,pop)
+      de0=delpr
       bm0=hmag
 c
       en0=zen*dh0+de0
       pr0=en0*rkb*te0
       humag=(hmag*hmag)*iepi
-      u0=gammaEOSU*en0*rkb*te0
+      u0=gammaeosu*en0*rkb*te0
       lambda=tl*tstep
       u1=dmax1(epsilon,(u0-lambda))
       cmpf=u1/u0
       te1=te0*cmpf
-      vel1=vel0*cmpf!constantmachnumber
+c     constantmachnumber
+      vel1=vel0*cmpf
       rho1=rho0
       dh1=dh0
       de1=de0
@@ -693,10 +694,9 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine isobarflow (tpr, delpr, dhpr, vpr, hmag, tl,tstep)
+      subroutine isobarflow (tpr, delpr, dhpr, vpr, hmag, tl, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -715,18 +715,20 @@ c
       vel0=vpr
       te0=tpr
       dh0=dhpr
-      de0=delpr ! feldens(dhpr,pop)
+c      feldens(dhpr,pop)
+      de0=delpr
       bm0=hmag
 c
       en0=zen*dh0+de0
       pr0=en0*rkb*te0
       humag=(hmag*hmag)*iepi
-      u0=gammaEOSU*en0*rkb*te0
+      u0=gammaeosu*en0*rkb*te0
       lambda=tl*tstep
       u1=dmax1(epsilon,(u0-lambda))
       cmpf=u1/u0
       te1=te0*cmpf
-      vel1=vel0*cmpf!constantmachnumber
+c     constant mach number
+      vel1=vel0*cmpf
       rho1=rho0/cmpf
       dh1=dh0/cmpf
       de1=de0/cmpf

@@ -9,14 +9,14 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine phocrv()
+      subroutine phocrv ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -33,7 +33,7 @@ c
       real*8 dv,epotmi, tauav
       real*8 press,rad,rhotot,tf,tl,tnloss,trea,trec
       real*8 tstep,ue,wmol
-C     real*8 ab,t,de,dh,en,fhi,fhii
+c     real*8 ab,t,de,dh,en,fhi,fhii
       real*8 t,de,dh,en,fhi,fhii
       real*8 poplog(mxion, mxelem),rlow,rhigh,rinc
       real*8 sv,qlow,qhigh,qinc
@@ -189,11 +189,11 @@ c     variable radiation
 c
       endif
 c
-   45 format(//' Lambda Normalisation:',/
+   50 format(//' Lambda Normalisation:',/
      & ' 0: ne.nH',/, ' 1: nH^2',/
      & ' 2: ne.ni',/, ' 3: n^2',/
      & ' 4: ne^2      :: ',$)
-      write (*,45)
+      write (*,50)
       read (*,*) jnorm
       if (jnorm.lt.0) jnorm=0
       if (jnorm.gt.4) jnorm=0
@@ -208,7 +208,7 @@ c
 c
       write (*,10) ' Save element ionisation files (Y/N):'
       read (*,20) jsaveatoms
-      call toup(jsaveatoms(1:1),jsaveatoms)
+      call toup (jsaveatoms(1:1), jsaveatoms)
 c
       call popcha (model)
       call photsou (model)
@@ -242,13 +242,13 @@ c
       call copypop (pop, pop0)
 c
 c
-   50 format(//' Give initial conditions:',/
+   60 format(//' Give initial conditions:',/
      &'::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/
      &'    t (K), dr (cm)'/
      &'    (t<10 taken as a log),'/
      &'    (dr<100 taken as log)'//
      &' :: ',$)
-      write (*,50)
+      write (*,60)
       read (*,*) t,dr
       if (t.le.10.d0) t=10.d0**t
       if (dr.le.100.d0) dr=10.d0**dr
@@ -269,7 +269,7 @@ c
       write (*,*) '  '
 c
       if (jsaveatoms.eq.'Y') then
-      do i=1,atypes
+        do i=1,atypes
           j=i
           fn=' '
           pfx='IonPIE'//elem(j)
@@ -284,9 +284,9 @@ c
           write (luions(i),'(" Element    : ",a2)') elem(i)
           write (luions(i),'(" Ionisation : ")')
    80     format(3x,', ',5(a11,a2),31(3x,a8,a2))
-          write (luions(i),80) '  LogTe   ',tab,'   LogQH  ',tab,
-     &      '   LogQHI ',tab,'  LogQHeI ',tab,' LogQHeII ',tab,
-     &       (rom(j), tab,j=1,maxion(i))
+          write (luions(i),80) '  LogTe   ',tab,'   LogQH  ',tab,'   Log
+     &QHI ',tab,'  LogQHeI ',tab,' LogQHeII ',tab,(rom(j),tab,j=1,
+     &     maxion(i))
           close (luions(i))
         enddo
       endif
@@ -310,23 +310,23 @@ c
       write (luop,90) theversion,runname(1:np)
       write (lupb,90) theversion,runname(1:np)
 c
-      write (luop,95) n2,norm
-   95 format(' QH (cm/s)  , Te (K)     , ne (cm^-3) , nt (cm^-3) ,',
+      write (luop,100) n2,norm
+  100 format(' QH (cm/s)  , Te (K)     , ne (cm^-3) , nt (cm^-3) ,',
      & a12,', XHI        , XHII       , mu (amu)   ,',
      &' tauav      , fflos      , tloss      , eloss      ,',
      & a12)
-  160 format(//,
+  110 format(//,
      & 17(a12,a1))
-        write (lupb,160) 'Te',tab,'ne',tab,'nt',tab,n2,tab,'XHI',tab,
-     & 'XHII',tab,'mu',tab,'tloss',tab,norm,tab,'ff/total',tab,
-     & 'B0.0-0.1keV',tab,'B0.1-0.5keV',tab,'B0.5-1.0keV',tab,
-     & 'B1.0-2.0eV',tab,'B2.0-10.0keV',tab,'Ball'
+      write (lupb,110) 'Te',tab,'ne',tab,'nt',tab,n2,tab,'XHI',tab,'XHII
+     &',tab,'mu',tab,'tloss',tab,norm,tab,'ff/total',tab,'B0.0-0.1keV',
+     &tab,'B0.1-0.5keV',tab,'B0.5-1.0keV',tab,'B1.0-2.0eV',tab,'B2.0-10.
+     &0keV',tab,'Ball'
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       m=0
-      write(*,*) '   log(Q)       Te (K)         ne(cm^-1)   nH(cm^-1)',
-     &           '  Free-Free  NetLoss'
+      write (*,*) '   log(Q)       Te (K)         ne(cm^-1)   nH(cm^-1)'
+     &,'  Free-Free  NetLoss'
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -334,9 +334,9 @@ c  loop head
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  100 if (fmod.eq.'dens') then
+  120 if (fmod.eq.'dens') then
         dh=10.d0**(dlog10(dh)+rinc)
-        if (dh.gt.rhigh) goto 140
+        if (dh.gt.rhigh) goto 160
       endif
 c
       if (fmod.eq.'rads') then
@@ -356,7 +356,7 @@ c
         q3=q3*sv
         q0=q0*sv
 c
-        if (qlow.gt.(1.01d0*qhigh)) goto 140
+        if (qlow.gt.(1.01d0*qhigh)) goto 160
 c
       endif
 c
@@ -445,15 +445,15 @@ c
       band4=0.d0
       bandall=0.d0
 c
-  150  format(17(1pg12.5,a1))
-       b0=0.d0
-       b1=0.d0
-       b2=0.d0
-       b3=0.d0
-       b4=0.d0
-       blum=0.d0
-       do idx=1,infph-1
-          if (tphot(idx).gt.epsilon) then
+  130  format(17(1pg12.5,a1))
+      b0=0.d0
+      b1=0.d0
+      b2=0.d0
+      b3=0.d0
+      b4=0.d0
+      blum=0.d0
+      do idx=1,infph-1
+        if (tphot(idx).gt.epsilon) then
           widnu=widbinnu(idx)
           pe=photev(idx)
           binlum=tphot(idx)*fpi*widnu/dr
@@ -463,33 +463,33 @@ c
           if ((pe.gt.500.0d0).and.(pe.le.1000.0d0)) b2=b2+binlum
           if ((pe.gt.1000.0d0).and.(pe.le.2000.0d0)) b3=b3+binlum
           if ((pe.gt.2000.0d0).and.(pe.le.10000.0d0)) b4=b4+binlum
-          endif
-       enddo
+        endif
+      enddo
 c
-        b0=b0/tloss
-        b1=b1/tloss
-        b2=b2/tloss
-        b3=b3/tloss
-        b4=b4/tloss
-        blum=blum/tloss
+      b0=b0/tloss
+      b1=b1/tloss
+      b2=b2/tloss
+      b3=b3/tloss
+      b4=b4/tloss
+      blum=blum/tloss
 c
-       if (b0.lt.epsilon) b0=0.d0
-       if (b1.lt.epsilon) b1=0.d0
-       if (b2.lt.epsilon) b2=0.d0
-       if (b3.lt.epsilon) b3=0.d0
-       if (b4.lt.epsilon) b4=0.d0
-       if (blum.lt.epsilon) blum=0.d0
+      if (b0.lt.epsilon) b0=0.d0
+      if (b1.lt.epsilon) b1=0.d0
+      if (b2.lt.epsilon) b2=0.d0
+      if (b3.lt.epsilon) b3=0.d0
+      if (b4.lt.epsilon) b4=0.d0
+      if (blum.lt.epsilon) blum=0.d0
 c
-        write (lupb,150) t,tab,de,tab,en,tab,n,tab,pop(1,1),
-     &   tab,pop(2,1),tab,mu,tab,tloss,tab,tloss*invn,tab,fflos/tloss,
-     &   tab,b0,tab,b1,tab,b2,tab,b3,tab,b4,tab,blum,tab
+      write (lupb,130) t,tab,de,tab,en,tab,n,tab,pop(1,1),tab,pop(2,1),
+     &tab,mu,tab,tloss,tab,tloss*invn,tab,fflos/tloss,tab,b0,tab,b1,tab,
+     &b2,tab,b3,tab,b4,tab,blum,tab
 c
       press=(en+de)*rkb*t
-      ue=gammaEOSU*press
+      ue=gammaeosu*press
       tnloss=tloss*invn
 c
       rhotot=frho(de,dh)
-      cspd=dsqrt(gammaEOS*press/rhotot)
+      cspd=dsqrt(gammaeos*press/rhotot)
       wmol=(rhotot/(en+de))/amu
 c
       tauav=0.0d0
@@ -497,28 +497,28 @@ c
 c
       tab=','
 c
-  110 format(14(1pg12.5,a1))
-      write (luop,110) qt,tab,t,tab,de,tab,en,tab,n,tab,pop(1,1),tab,
+  140 format(14(1pg12.5,a1))
+      write (luop,140) qt,tab,t,tab,de,tab,en,tab,n,tab,pop(1,1),tab,
      &pop(2,1),tab,mu,tab,tauav,tab,fflos,tab,tloss,tab,eloss,tab,
      &tnloss,tab
-C
+c
       tl=dlog10(t)
-C     ab=zion(i)
+c     ab=zion(i)
 c
       if (jsaveatoms.eq.'Y') then
-      do i=1,atypes
-        open (luions(i),file=filn(i),status='OLD',access='APPEND')
-        do j=1,maxion(i)
-          poplog(j,i)=log10pz
-          if (pop(j,i).gt.pzlimit) then
-            poplog(j,i)=dlog10(pop(j,i))
-          endif
+        do i=1,atypes
+          open (luions(i),file=filn(i),status='OLD',access='APPEND')
+          do j=1,maxion(i)
+            poplog(j,i)=log10pz
+            if (pop(j,i).gt.pzlimit) then
+              poplog(j,i)=dlog10(pop(j,i))
+            endif
+          enddo
+  150 format(i3.3,a1,5(1pg12.5,a1),31(0pg12.5,a1))
+          write (luions(i),150) m,tab,tl,tab,qt,tab,qh1,tab,qhe1,tab,
+     &     qhe2,tab,(poplog(j,i),tab,j=1,maxion(i))
+          close (luions(i))
         enddo
-  130 format(i3.3,a1,5(1pg12.5,a1),31(0pg12.5,a1))
-        write (luions(i),130) m,tab,tl,tab,qt,tab,qh1,tab,qhe1,tab,qhe2,
-     &   tab,(poplog(j,i),tab,j=1,maxion(i))
-        close (luions(i))
-      enddo
       endif
 c
       m=m+1
@@ -529,10 +529,10 @@ c  loop tail
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      goto 100
+      goto 120
 c
 c
-  140 continue
+  160 continue
 c
 c
       close (luop)
@@ -542,6 +542,4 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-

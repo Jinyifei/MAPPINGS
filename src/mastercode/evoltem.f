@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -118,18 +118,14 @@ c
 c
       call copypop (pop, popj)
 c
-      if (lut.gt.0) write (lut,100) tuf,deu,eps,
-     & pop(1,zmap(1)),pop(2,zmap(1)),
-     & pop(4,zmap(6)),pop(2,zmap(6)),
-     & pop(4,zmap(14)),pop(2,zmap(14)),
-     & fpi*hydrobri(1,2)*3.058352101864043D29,
-     & hydrobri(1,2)/hydrobri(2,2)
-       if (lut.gt.6) write (*,100) tuf,deu,eps,
-     & pop(1,zmap(1)),pop(2,zmap(1)),
-     & pop(4,zmap(6)),pop(2,zmap(6)),
-     & pop(4,zmap(14)),pop(2,zmap(14)),
-     & fpi*hydrobri(1,2)*3.058352101864043D29,
-     & hydrobri(1,2)/hydrobri(2,2)
+      if (lut.gt.0) write (lut,100) tuf,deu,eps,pop(1,zmap(1)),pop(2,
+     &zmap(1)),pop(4,zmap(6)),pop(2,zmap(6)),pop(4,zmap(14)),pop(2,
+     &zmap(14)),fpi*hydrobri(1,2)*3.058352101864043d29,hydrobri(1,2)/
+     &hydrobri(2,2)
+      if (lut.gt.6) write (*,100) tuf,deu,eps,pop(1,zmap(1)),pop(2,
+     &zmap(1)),pop(4,zmap(6)),pop(2,zmap(6)),pop(4,zmap(14)),pop(2,
+     &zmap(14)),fpi*hydrobri(1,2)*3.058352101864043d29,hydrobri(1,2)/
+     &hydrobri(2,2)
 c
       dhj=dh
       dej=de
@@ -150,23 +146,19 @@ c
      &tj))
 c
       if (jden.eq.'B') gammav=0.60d0*gammav
-      if (lut.gt.0) write (lut,100) tuf,deu,eps,
-     & pop(1,zmap(1)),pop(2,zmap(1)),
-     & pop(4,zmap(6)),pop(2,zmap(6)),
-     & pop(4,zmap(14)),pop(2,zmap(14)),
-     & fpi*hydrobri(1,2)*3.058352101864043D29,
-     & hydrobri(1,2)/hydrobri(2,2)
-C     if (lut.gt.0) write (lut,120) tj,eps,0.0d0,eloss,fmloss,dhj,
-C    &popj(1,1),popj(2,1),rmuj,dlosj
+      if (lut.gt.0) write (lut,100) tuf,deu,eps,pop(1,zmap(1)),pop(2,
+     &zmap(1)),pop(4,zmap(6)),pop(2,zmap(6)),pop(4,zmap(14)),pop(2,
+     &zmap(14)),fpi*hydrobri(1,2)*3.058352101864043d29,hydrobri(1,2)/
+     &hydrobri(2,2)
+c     if (lut.gt.0) write (lut,120) tj,eps,0.0d0,eloss,fmloss,dhj,
+c    &popj(1,1),popj(2,1),rmuj,dlosj
 c
-      if (lut.gt.6) write (lut,100) tuf,deu,eps,
-     & pop(1,zmap(1)),pop(2,zmap(1)),
-     & pop(4,zmap(6)),pop(2,zmap(6)),
-     & pop(4,zmap(14)),pop(2,zmap(14)),
-     & fpi*hydrobri(1,2)*3.058352101864043D29,
-     & hydrobri(1,2)/hydrobri(2,2)
-C     if (lut.gt.6) write (*,120) tj,eps,0.0,eloss,fmloss,dhj,popj(1,1),
-C    &popj(2,1),rmuj,dlosj
+      if (lut.gt.6) write (lut,100) tuf,deu,eps,pop(1,zmap(1)),pop(2,
+     &zmap(1)),pop(4,zmap(6)),pop(2,zmap(6)),pop(4,zmap(14)),pop(2,
+     &zmap(14)),fpi*hydrobri(1,2)*3.058352101864043d29,hydrobri(1,2)/
+     &hydrobri(2,2)
+c     if (lut.gt.6) write (*,120) tj,eps,0.0,eloss,fmloss,dhj,popj(1,1),
+c    &popj(2,1),rmuj,dlosj
 c
       dfr=dfr00
       dfmr=dfm00*0.2d0
@@ -307,7 +299,7 @@ c
           if (idiv.eq.1) then
             div=dmax1(1.3d0,far(1.1d0*(ra0**dmin1(1.d0,0.6d0+((1.d0/ra0)
      &       **0.5d0))),4.d0))
-          else if (idiv.eq.2) then
+          elseif (idiv.eq.2) then
             div=dmin1(20.d0,dmax1(1.4d0,1.3d0*(ra0**0.65d0)))
           else
             div=dmin1(50.d0,2.d0*(ra0**(0.6d0+(rgami/1.5d0))))
@@ -355,7 +347,7 @@ c
           wei=0.66
 c
           tuf=(wei*tuf)+((1.0-wei)*tuco)
-        else if (iconsis.gt.0) then
+        elseif (iconsis.gt.0) then
           varf=dmin1(dfr*0.5d0,1.25*varf)
           tuf=tuco+dsign(dmin1(varf*tuco,dabs(dtuf)),dtuf)
           ftu=(tuf-tu)/dmax1(tuf,tu,1.d0)
@@ -398,7 +390,7 @@ c
      &dabs(dlosj))))*dlosu
       if ((cavx.lt.1.2d0).and.(rain.gt.10.2d0)) then
         eca=1.d0-((0.07d0*far(rain/100.d0,1.d0))/(cavx**2))
-      else if (ical.gt.1) then
+      elseif (ical.gt.1) then
         eca=(eca)**0.3d0
       endif
 c
@@ -430,23 +422,18 @@ c
 c
       call copypop (pop, popj)
 c
-      if (lut.gt.0) write (lut,100) tuf,deu,eps,
-     & pop(1,zmap(1)),pop(2,zmap(1)),
-     & pop(4,zmap(6)),pop(2,zmap(6)),
-     & pop(4,zmap(14)),pop(2,zmap(14)),
-     & fpi*hydrobri(1,2)*3.058352101864043D29,
-     & hydrobri(1,2)/hydrobri(2,2)
-       if (lut.gt.6) write (*,100) tuf,deu,eps,
-     & pop(1,zmap(1)),pop(2,zmap(1)),
-     & pop(4,zmap(6)),pop(2,zmap(6)),
-     & pop(4,zmap(14)),pop(2,zmap(14)),
-     & fpi*hydrobri(1,2)*3.058352D29,
-     & hydrobri(1,2)/hydrobri(2,2)
-
-C     if (lut.gt.0) write (lut,120) tuf,eps,dtim,eloss,fmloss,dhu,pop(1,
-C    &1),pop(2,1),rmuu,dlosu,dfr
-C     if (lut.gt.6) write (*,120) tuf,eps,dtim,eloss,fmloss,dhu,pop(1,1)
-C    &,pop(2,1),rmuu,dlosu,dfr
+      if (lut.gt.0) write (lut,100) tuf,deu,eps,pop(1,zmap(1)),pop(2,
+     &zmap(1)),pop(4,zmap(6)),pop(2,zmap(6)),pop(4,zmap(14)),pop(2,
+     &zmap(14)),fpi*hydrobri(1,2)*3.058352101864043d29,hydrobri(1,2)/
+     &hydrobri(2,2)
+      if (lut.gt.6) write (*,100) tuf,deu,eps,pop(1,zmap(1)),pop(2,
+     &zmap(1)),pop(4,zmap(6)),pop(2,zmap(6)),pop(4,zmap(14)),pop(2,
+     &zmap(14)),fpi*hydrobri(1,2)*3.058352d29,hydrobri(1,2)/hydrobri(2,
+     &2)
+c     if (lut.gt.0) write (lut,120) tuf,eps,dtim,eloss,fmloss,dhu,pop(1,
+c    &1),pop(2,1),rmuu,dlosu,dfr
+c     if (lut.gt.6) write (*,120) tuf,eps,dtim,eloss,fmloss,dhu,pop(1,1)
+c    &,pop(2,1),rmuu,dlosu,dfr
 c
 c      if (lut.gt.0) write(lut, 9) eps, dtim, tuf, deu, dhu
 c     &, pop(1,1),pop(2,1),330.0*deu*deu*300.0,330.0*deu*pop(2,1)*dhu*30
@@ -498,15 +485,15 @@ c
       fnre=((deu/dhu)-dedhmi)/dedhma
       tmuvar=0.0d0
       wei=0.0d0
-      do 130 i=1,mma
+      do 120 i=1,mma
         wei=wei+dsqrt(dble(i))
         tmuvar=tmuvar+(dsqrt(dble(i))*dabs((tmuav(i)-tmu0)/tmu0))
-  130 continue
+  120 continue
       tmuvar=tmuvar/wei
       ttm=1.0d0
-      do 140 i=2,mma
+      do 130 i=2,mma
         ttm=ttm*dmin1(tmuav(i)/dmax1(tmuav(i-1),1.0d0),1.6d0)
-  140 continue
+  130 continue
       ttm=ttm**(1.0d0/(mma-1.0d0))
       ttm=dmax1(1.10d0,dmin1(1.65d0,ttm))
       tmu=dmin1(tmuma,tmu0*dmin1(2.0d0,ttm*((1.0d0+tmuvar)**0.5d0)))
@@ -518,10 +505,10 @@ c
       if (((((fnre.le.exl).and.(dlosu.gt.0.d0)).or.((dlto.le.dlexi)
      &.and.(dmin1(dlsl,dlsk).ge.1.0d0))).or.(((jok.gt.3).and.(dleq(mma)
      &.lt.((2.d0*dlexi)*jok))).and.(rrmu.lt.0.25d0))).or.(tuf.le.texi))
-     &goto 150
+     &goto 140
 c
       if (eps.lt.(0.99999d0*tim)) goto 10
-  150 continue
+  140 continue
       dh=dhu
       de=deu
 c

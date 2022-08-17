@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -93,7 +93,7 @@ c
 c
         nz=mapz(atom)
         ab1=zion(atom)*pop(nz+1,atom)
-        ab0=zion(atom)*pop(nz  ,atom)
+        ab0=zion(atom)*pop(nz,atom)
 c
         if ((ab0.gt.pzlimit).and.(ab1.gt.pzlimit)) then
 c
@@ -111,21 +111,22 @@ c
 c
 c     proton & electron deexcitation collision
 c
-          dp=dh*zion(1)*pop(2,1) ! protons
+c      protons
+          dp=dh*zion(1)*pop(2,1)
           dexcoll=(dp*qpr(tz)+de*qel(tz))/z
 c
           a21=ahi(z,alphafs)
           r2q=r2q/(1.0d0+(dexcoll/a21))
 c
           if (r2q.gt.epsilon) then
-          do inl=1,infph-1
-            bev=cphote(inl)
-            y=bev/ez
-            if (y.lt.1.d0) then
-              phots=2.d0*plk*y*fpsiy(y)*r2q/(fpi*bev)
-              p2ph(inl)=p2ph(inl)+phots
-            endif
-          enddo
+            do inl=1,infph-1
+              bev=cphote(inl)
+              y=bev/ez
+              if (y.lt.1.d0) then
+                phots=2.d0*plk*y*fpsiy(y)*r2q/(fpi*bev)
+                p2ph(inl)=p2ph(inl)+phots
+              endif
+            enddo
           endif
         endif
       enddo
@@ -140,94 +141,96 @@ c
       do atom=2,atypes
 c
 c      atom=2
-      nz=mapz(atom)-1
-      ab1=zion(atom)*pop(nz+1,atom)
-      ab0=zion(atom)*pop(nz  ,atom)
+        nz=mapz(atom)-1
+        ab1=zion(atom)*pop(nz+1,atom)
+        ab0=zion(atom)*pop(nz,atom)
 c
-      if ((ab1.gt.pzlimit).and.(ab0.gt.pzlimit)) then
+        if ((ab1.gt.pzlimit).and.(ab0.gt.pzlimit)) then
 c
-        z=dble(nz+1)
-        z2=z*z
+          z=dble(nz+1)
+          z2=z*z
 c
-        ez=ee2phe(atom)
-        es1=ez/rkt
+          ez=ee2phe(atom)
+          es1=ez/rkt
 c
 c approx He 2p coll strengths as f(z)
 c based on CHIANTI 8 mid spline values
 c
-        z12=dsqrt(z-1.d0)
-        omes1=10.d0**(-9.9690240511d-01+z12*
-     &  (-4.2553741502d-01+z12*2.1011474554d-04))
+          z12=dsqrt(z-1.d0)
+          omes1=10.d0**(-9.9690240511d-01+z12*(-4.2553741502d-01+z12*
+     &     2.1011474554d-04))
 c
-        r2q=0.d0
+          r2q=0.d0
 c
-c        u=dabs(4.d0*t/z2) ! scaled t
+c      scaled t
+c        u=dabs(4.d0*t/z2)
 c        f=dsqrt(1.0d0/u)
 c
-        f=t12
+          f=t12
 c
-        cos1=0.d0
-        if (es1.lt.logkhuge) then
+          cos1=0.d0
+          if (es1.lt.logkhuge) then
 c
 c    ***APPROX COLLISIONAL RATES FROM GROUND STATE 1S
 c
-          ara=rka*f
+            ara=rka*f
 c         br0=(1.d0-1.34d0/z)
 c         ara=rka*f*br0
 c         cos1=ara*(omes1/(nz*nz))*dexp(-es1)*fgaunt(1,1,es1)
-          cos1=ara*omes1*dexp(-es1) ! gi = 1.0, br included in omes fit
-          if ( collrate2phe(atom).gt.0.d0) then
+c      gi = 1.0, br included in omes fit
+            cos1=ara*omes1*dexp(-es1)
+            if (collrate2phe(atom).gt.0.d0) then
 c get full t dependent rate if available
-            cos1=collrate2phe(atom)
+              cos1=collrate2phe(atom)
+            endif
           endif
-        endif
 c
-        if (nz.eq.1) then
+          if (nz.eq.1) then
 c
 c   Recombination into triplet and singlet systems
 c
 c
 c   He atom only - don't yet have rec(4,2) for heavier elements.
 c
-          tz=1.d-4*t
-          if (tz.lt.0.05d0) tz=0.05d0
-          if (tz.gt.10.0d0) tz=10.d0
+            tz=1.d-4*t
+            if (tz.lt.0.05d0) tz=0.05d0
+            if (tz.gt.10.0d0) tz=10.d0
 c
-          reche=rec(4,2)
+            reche=rec(4,2)
 c
-          frs1=(reche*fusp(tz))*(1.0d0-frs3(tz))
+            frs1=(reche*fusp(tz))*(1.0d0-frs3(tz))
 c
-          ra3=reche*frs3(tz)
-          ra1=(reche*fusp(tz))*(1.0d0-frs3(tz))
-          ras1=ra1*qss(tz)
+            ra3=reche*frs3(tz)
+            ra1=(reche*fusp(tz))*(1.0d0-frs3(tz))
+            ras1=ra1*qss(tz)
 c
-          r2q=de*dh*(ab0*cos1+ab1*ra1)
-          dexcoll=de*(qss(tz)+qsp(tz))
-          a21=ahei(z)
+            r2q=de*dh*(ab0*cos1+ab1*ra1)
+            dexcoll=de*(qss(tz)+qsp(tz))
+            a21=ahei(z)
 c
-          r2q=r2q/(1.0d0+(dexcoll/a21))
-        else
+            r2q=r2q/(1.0d0+(dexcoll/a21))
+          else
 c
 c colls only for heavy He atm, will fix when we have
 c rec(4,2) equivalent rates
 c
-          r2q=de*dh*ab0*cos1
-        endif
+            r2q=de*dh*ab0*cos1
+          endif
 c
 c        write(*,*) 'HeR', mapz(atom), nz, cos1*de*dh*ab0,r2q
 c
-        if (r2q.gt.epsilon) then
-          do inl=1,infph-1
-            bev=cphote(inl)
-            y=bev/ez
-            if (y.lt.1.d0) then
-              phots=2.d0*plk*y*fpsiy(y)*r2q/(fpi*bev)
-              p2ph(inl)=p2ph(inl)+phots
-            endif
-          enddo
-        endif
+          if (r2q.gt.epsilon) then
+            do inl=1,infph-1
+              bev=cphote(inl)
+              y=bev/ez
+              if (y.lt.1.d0) then
+                phots=2.d0*plk*y*fpsiy(y)*r2q/(fpi*bev)
+                p2ph(inl)=p2ph(inl)+phots
+              endif
+            enddo
+          endif
 c
-      endif
+        endif
 c
 c   He like atoms
 c

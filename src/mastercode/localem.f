@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -91,8 +91,8 @@ c
         endif
         if ((pahmode.eq.1).and.(pahactive.eq.1).and.(irmode.ne.0)) then
           do inl=1,infph
-            emidifcont(inl)=emidifcont(inl)
-     &                     +paheng*pahflux(inl)*pahfrac*dh
+            emidifcont(inl)=emidifcont(inl)+paheng*pahflux(inl)*pahfrac*
+     &       dh
             emidif(inl)=emidifcont(inl)
           enddo
         endif
@@ -275,10 +275,10 @@ c
         if (xr3lines_bri(line).gt.epsilon) then
           j=xr3lines_bin(line)
           if (j.ne.0) then
-          energ=xr3lines_egij(line)
-          wid=widbinnu(j)
-          xr3lines_emilin(1,line)=xr3lines_bri(line)/(wid*energ)
-        endif
+            energ=xr3lines_egij(line)
+            wid=widbinnu(j)
+            xr3lines_emilin(1,line)=xr3lines_bri(line)/(wid*energ)
+          endif
         endif
       enddo
 c
@@ -289,10 +289,10 @@ c
         if (xrllines_bri(line).gt.epsilon) then
           j=xrllines_bin(line)
           if (j.ne.0) then
-          energ=xrllines_egij(line)
-          wid=widbinnu(j)
-          xrllines_emilin(1,line)=xrllines_bri(line)/(wid*energ)
-        endif
+            energ=xrllines_egij(line)
+            wid=widbinnu(j)
+            xrllines_emilin(1,line)=xrllines_bri(line)/(wid*energ)
+          endif
         endif
       enddo
 c
@@ -318,12 +318,12 @@ c
         do line=1,nhlines
           hydlin(1,line,series)=0.d0
           if (hydrobri(line,series).gt.epsilon) then
-          j=hbin(line,series)
-          if (j.ne.0) then
-            energ=ev*lmev/hlambda(line,series)
-            wid=widbinnu(j)
-            hydlin(1,line,series)=hydrobri(line,series)/(wid*energ)
-          endif
+            j=hbin(line,series)
+            if (j.ne.0) then
+              energ=ev*lmev/hlambda(line,series)
+              wid=widbinnu(j)
+              hydlin(1,line,series)=hydrobri(line,series)/(wid*energ)
+            endif
           endif
         enddo
       enddo
@@ -332,12 +332,12 @@ c
         do line=1,nhelines
           hellin(1,line,series)=0.d0
           if (helibri(line,series).gt.epsilon) then
-          j=hebin(line,series)
-          if (j.ne.0) then
-            energ=ev*lmev/helambda(line,series)
-            wid=widbinnu(j)
-            hellin(1,line,series)=helibri(line,series)/(wid*energ)
-          endif
+            j=hebin(line,series)
+            if (j.ne.0) then
+              energ=ev*lmev/helambda(line,series)
+              wid=widbinnu(j)
+              hellin(1,line,series)=helibri(line,series)/(wid*energ)
+            endif
           endif
         enddo
       enddo
@@ -353,14 +353,14 @@ c
             do line=1,nxhlines
               xhydlin(1,line,series,atom)=0.d0
               if (xhydrobri(line,series,atom).gt.epsilon) then
-              j=xhbin(line,series,atom)
-              if (j.ne.0) then
+                j=xhbin(line,series,atom)
+                if (j.ne.0) then
 c            energ = 0.5d0*(ev*(photev(j+1)+photev(j)))
-                energ=ev*lmev/xhlambda(line,series,atom)
-                wid=widbinnu(j)
-                xhydlin(1,line,series,atom)=xhydrobri(line,series,atom)/
-     &           (wid*energ)
-              endif
+                  energ=ev*lmev/xhlambda(line,series,atom)
+                  wid=widbinnu(j)
+                  xhydlin(1,line,series,atom)=xhydrobri(line,series,
+     &             atom)/(wid*energ)
+                endif
               endif
             enddo
           enddo

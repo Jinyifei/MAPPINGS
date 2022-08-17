@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -58,14 +58,14 @@ c     internal functions
 c
       qpr(u)=4.74d-4*(u**(-0.151d0))
       qel(u)=0.57d-4*(u**(-0.373d0))
-      fr(u) =0.588d0*(u**(-0.234d0)) ! fraction of collisions -> 2Phots
+c      fraction of collisions -> 2Phots
+      fr(u)=0.588d0*(u**(-0.234d0))
 c
 c HI Parpia, F. A., and Johnson, W. R., 1982, Phys. Rev. A, 26, 1142.
 c HI Goldman, S.P. and Drake, G.W.F., 1981, Phys Rev A, 24, 183
 c
-      ahi(z,a)=8.22943d0*(z**6)*
-     &         (1.d0+(a*z)*(a*z)*(3.9448d0-(a*z)*(a*z)*2.040d0))/
-     &         (1.d0+4.6019d0*(a*z)*(a*z))
+      ahi(z,a)=8.22943d0*(z**6)*(1.d0+(a*z)*(a*z)*(3.9448d0-(a*z)*(a*z)*
+     &2.040d0))/(1.d0+4.6019d0*(a*z)*(a*z))
 c
 c     init
 c
@@ -118,91 +118,90 @@ c        ab1=zion(atom)*pop(nz+1,atom)
 c
         if (ab0.gt.pzlimit) then
 c
-        z2=dble(nz*nz)
+          z2=dble(nz*nz)
 c
-        u=dabs(t)/z2
-        uomg=u
+          u=dabs(t)/z2
+          uomg=u
 c
-        if (uomg.ge.5.0d5) uomg=5.0d5
+          if (uomg.ge.5.0d5) uomg=5.0d5
 c
-        do j=1,20
+          do j=1,20
 c
 c     ground level excitation
 c     energy of upper level
 c
-          nq=colid(j,3)
-          egj=ipote(nz,atom)*(1.d0-(1.d0/(nq*nq)))
-          aa=egj/(rkb*t)
+            nq=colid(j,3)
+            egj=ipote(nz,atom)*(1.d0-(1.d0/(nq*nq)))
+            aa=egj/(rkb*t)
 c
-          if (aa.lt.maxdekt) then
+            if (aa.lt.maxdekt) then
 c
-            ratekappa=1.0d0
-            skappa=1.d0
-            tkappaex=t
+              ratekappa=1.0d0
+              skappa=1.d0
+              tkappaex=t
 c
-            if (usekappa) then
-              skappa=aa
-              ratekappa=fkenhance(kappa,skappa)
-            endif
+              if (usekappa) then
+                skappa=aa
+                ratekappa=fkenhance(kappa,skappa)
+              endif
 c
-            if (u.lt.7.2d4) then
-              omg=ccoln(j,1)+uomg*(ccoln(j,2)+uomg*(ccoln(j,3)+uomg*
-     &         ccoln(j,4)))
-            else
-              omg=dcoln(j,1)+uomg*(dcoln(j,2)+uomg*(dcoln(j,3)+uomg*
-     &         dcoln(j,4)))
-            endif
+              if (u.lt.7.2d4) then
+                omg=ccoln(j,1)+uomg*(ccoln(j,2)+uomg*(ccoln(j,3)+uomg*
+     &           ccoln(j,4)))
+              else
+                omg=dcoln(j,1)+uomg*(dcoln(j,2)+uomg*(dcoln(j,3)+uomg*
+     &           dcoln(j,4)))
+              endif
 c
 c ground state 2S_1/2, gi = 2, wi/w0 = 0.5
 c
-            rate=ratekappa*rka*f*dexp(-aa)*(omg/z2)*0.5d0
+              rate=ratekappa*rka*f*dexp(-aa)*(omg/z2)*0.5d0
 c
-            collloss=abde*rate*egj
+              collloss=abde*rate*egj
 c
-            if (hhecollmode.eq.0) then
+              if (hhecollmode.eq.0) then
 c
 c Anderson rates for n = 2-5, GNP for 6-16 for H He
 c  GNP 2-16 for > He
 c
-              if (ishheion(atom).eq.0) then
+                if (ishheion(atom).eq.0) then
 c
 c dont have full ion data, use GNP
 c
+                  if (j.eq.1) then
+                    collrate2p(atom)=rate
+                    rate=0.d0
+                    collloss=0.d0
+                  endif
+                  hloss=hloss+collloss
+                  coolz(atom)=coolz(atom)+collloss
+                  coolzion(nz,atom)=coolzion(nz,atom)+collloss
+c      no eij
+                  rateton(atom,nq)=rateton(atom,nq)+rate*abde
+                endif
+                if ((ishheion(atom).eq.1).and.(nq.gt.5)) then
+c have full ion data up to n = 5, use GNP 6-16
+                  hloss=hloss+collloss
+                  coolz(atom)=coolz(atom)+collloss
+                  coolzion(nz,atom)=coolzion(nz,atom)+collloss
+c      no eij
+                  rateton(atom,nq)=rateton(atom,nq)+rate*abde
+                endif
+              else
+c All use GNP for 2-16
+                hloss=hloss+collloss
+                coolz(atom)=coolz(atom)+collloss
+                coolzion(nz,atom)=coolzion(nz,atom)+collloss
                 if (j.eq.1) then
                   collrate2p(atom)=rate
                   rate=0.d0
-                  collloss=0.d0
                 endif
-                hloss=hloss+collloss
-                coolz(atom)=coolz(atom)+collloss
-                coolzion(nz,atom)=coolzion(nz,atom)+collloss
-                rateton(atom,nq)=rateton(atom,nq)+rate*abde ! no eij
+                rateton(atom,nq)=rateton(atom,nq)+rate*abde
               endif
-
-              if ((ishheion(atom).eq.1).and.(nq.gt.5)) then
-c have full ion data up to n = 5, use GNP 6-16
-                hloss=hloss+collloss
-                coolz(atom)=coolz(atom)+collloss
-                coolzion(nz,atom)=coolzion(nz,atom)+collloss
-                rateton(atom,nq)=rateton(atom,nq)+rate*abde ! no eij
-              endif
-
-            else
-c All use GNP for 2-16
-              hloss=hloss+collloss
-              coolz(atom)=coolz(atom)+collloss
-              coolzion(nz,atom)=coolzion(nz,atom)+collloss
-              if (j.eq.1) then
-                collrate2p(atom)=rate
-                rate=0.d0
-              endif
-              rateton(atom,nq)=rateton(atom,nq)+rate*abde
-
+c
             endif
 c
-          endif
-c
-        enddo
+          enddo
         endif
       enddo
 cc
@@ -222,7 +221,7 @@ c       write(*,'("H N=8 rate:",2(1pg14.7))') rateton(1,8), rateton(2,8)
 c       write(*,'("H N=9 rate:",2(1pg14.7))') rateton(1,9), rateton(2,9)
 c       write(*,'("H N=10 rate:",2(1pg14.7))')rateton(1,10),rateton(2,10)
 c
-        hloss=hloss+hheloss
+      hloss=hloss+hheloss
 c
 c       write(*,*) 'old:',sumr5
 c       write(*,*) 'old 2s',collrate2p(1),collrate2p(2)
@@ -320,13 +319,13 @@ c
         m=ni
 c
    20   if (m-l.gt.1) then
-        k=(m+l)/2
-        if (th42(k).gt.tlo) then
-          m=k
-        else
-          l=k
-        endif
-        goto 20
+          k=(m+l)/2
+          if (th42(k).gt.tlo) then
+            m=k
+          else
+            l=k
+          endif
+          goto 20
         endif
 c
         logth0=th42(l)
@@ -353,23 +352,23 @@ c c
 c c        write(*,*) logth0,tlo,logth1,ft,cft
 c c
         do idx=1,ni
-          y (idx)=h42b (idx,i)
+          y(idx)=h42b(idx,i)
           y2(idx)=h42b2(idx,i)
         enddo
         d1b=fsplint(th42,y,y2,ni,tlo)
         do idx=1,ni
-          y (idx)=h42b (idx,j)
+          y(idx)=h42b(idx,j)
           y2(idx)=h42b2(idx,j)
         enddo
         d2b=fsplint(th42,y,y2,ni,tlo)
 c
         do idx=1,ni
-          y (idx)=h42a (idx,i)
+          y(idx)=h42a(idx,i)
           y2(idx)=h42a2(idx,i)
         enddo
         d1a=fsplint(th42,y,y2,ni,tlo)
         do idx=1,ni
-          y (idx)=h42a (idx,j)
+          y(idx)=h42a(idx,j)
           y2(idx)=h42a2(idx,j)
         enddo
         d2a=fsplint(th42,y,y2,ni,tlo)
@@ -394,12 +393,12 @@ c
         m=ni
 c
    30   if (m-l.gt.1) then
-        k=(m+l)/2
-        if (th42(k).gt.tlo) then
-          m=k
-        else
-          l=k
-        endif
+          k=(m+l)/2
+          if (th42(k).gt.tlo) then
+            m=k
+          else
+            l=k
+          endif
           goto 30
         endif
 c
@@ -424,12 +423,12 @@ c           d2b=(cft*hb3b)+(hb4b*ft)
 c           d3b=(cfd*d1b)+(d2b*fd)
 c
             do idx=1,ni
-              y (idx)=hylratsb (line,series,idx,i)
+              y(idx)=hylratsb(line,series,idx,i)
               y2(idx)=hylratsb2(line,series,idx,i)
             enddo
             d1b=fsplint(th42,y,y2,ni,tlo)
             do idx=1,ni
-              y (idx)=hylratsb (line,series,idx,j)
+              y(idx)=hylratsb(line,series,idx,j)
               y2(idx)=hylratsb2(line,series,idx,j)
             enddo
             d2b=fsplint(th42,y,y2,ni,tlo)
@@ -445,12 +444,12 @@ c           d2a=(cft*hb3a)+(hb4a*ft)
 c           d3a=(cfd*d1a)+(d2a*fd)
 c
             do idx=1,ni
-              y (idx)=hylratsa (line,series,idx,i)
+              y(idx)=hylratsa(line,series,idx,i)
               y2(idx)=hylratsa2(line,series,idx,i)
             enddo
             d1a=fsplint(th42,y,y2,ni,tlo)
             do idx=1,ni
-              y (idx)=hylratsa (line,series,idx,j)
+              y(idx)=hylratsa(line,series,idx,j)
               y2(idx)=hylratsa2(line,series,idx,j)
             enddo
             d2a=fsplint(th42,y,y2,ni,tlo)
@@ -492,12 +491,12 @@ c
         m=ni
 c
    40   if (m-l.gt.1) then
-        k=(m+l)/2
-        if (the43(k).gt.tlo) then
-          m=k
-        else
-          l=k
-        endif
+          k=(m+l)/2
+          if (the43(k).gt.tlo) then
+            m=k
+          else
+            l=k
+          endif
           goto 40
         endif
 c
@@ -516,23 +515,23 @@ c         d2a=(cft*he43a(l,j))+(he43a(m,j)*ft)
 c         d3a=(cfd*d1a)+(d2a*fd)
 c c
         do idx=1,ni
-          y (idx)=he43b (idx,i)
+          y(idx)=he43b(idx,i)
           y2(idx)=he43b2(idx,i)
         enddo
         d1b=fsplint(the43,y,y2,ni,tlo)
         do idx=1,ni
-          y (idx)=he43b (idx,j)
+          y(idx)=he43b(idx,j)
           y2(idx)=he43b2(idx,j)
         enddo
         d2b=fsplint(the43,y,y2,ni,tlo)
 c
         do idx=1,ni
-          y (idx)=he43a (idx,i)
+          y(idx)=he43a(idx,i)
           y2(idx)=he43a2(idx,i)
         enddo
         d1a=fsplint(the43,y,y2,ni,tlo)
         do idx=1,ni
-          y (idx)=he43a (idx,j)
+          y(idx)=he43a(idx,j)
           y2(idx)=he43a2(idx,j)
         enddo
         d2a=fsplint(the43,y,y2,ni,tlo)
@@ -561,12 +560,12 @@ c             d2b=(cft*hb3b)+(hb4b*ft)
 c             d3b=(cfd*d1b)+(d2b*fd)
 c c
             do idx=1,ni
-              y (idx)=helratsb (line,series,idx,i)
+              y(idx)=helratsb(line,series,idx,i)
               y2(idx)=helratsb2(line,series,idx,i)
             enddo
             d1b=fsplint(the43,y,y2,ni,tlo)
             do idx=1,ni
-              y (idx)=helratsb (line,series,idx,j)
+              y(idx)=helratsb(line,series,idx,j)
               y2(idx)=helratsb2(line,series,idx,j)
             enddo
             d2b=fsplint(the43,y,y2,ni,tlo)
@@ -582,12 +581,12 @@ c             d2a=(cft*hb3a)+(hb4a*ft)
 c             d3a=(cfd*d1a)+(d2a*fd)
 c c
             do idx=1,ni
-              y (idx)=helratsa (line,series,idx,i)
+              y(idx)=helratsa(line,series,idx,i)
               y2(idx)=helratsa2(line,series,idx,i)
             enddo
             d1a=fsplint(the43,y,y2,ni,tlo)
             do idx=1,ni
-              y (idx)=helratsa (line,series,idx,j)
+              y(idx)=helratsa(line,series,idx,j)
               y2(idx)=helratsa2(line,series,idx,j)
             enddo
             d2a=fsplint(the43,y,y2,ni,tlo)
@@ -627,7 +626,6 @@ c
             enddo
           enddo
         enddo
-
         do atom=3,atypes
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     ***FINDS ABSOLUTE FLUX FOR Heavy Z H-BETA
@@ -654,12 +652,12 @@ c
               m=ni
 c
    50         if (m-l.gt.1) then
-              k=(m+l)/2
-              if (th42(k).gt.tlo) then
-                m=k
-              else
-                l=k
-              endif
+                k=(m+l)/2
+                if (th42(k).gt.tlo) then
+                  m=k
+                else
+                  l=k
+                endif
                 goto 50
               endif
 c
@@ -686,10 +684,8 @@ c
                   hb2a=hylratsa(line,series,m,i)
                   hb3a=hylratsa(line,series,l,j)
                   hb4a=hylratsa(line,series,m,j)
-
                   d1a=(cft*hb1a)+(hb2a*ft)
                   d2a=(cft*hb3a)+(hb4a*ft)
-
                   d3a=(cfd*d1a)+(d2a*fd)
                   br=xhbeta(atom)*10.d0**d3a
                   xhydrobri(line,series,atom)=dmax1(0.d0,br)
@@ -716,43 +712,42 @@ c
           nz=mapz(atom)
           abde=zion(atom)*pop(nz,atom)
           if (abde.gt.pzlimit) then
-
-          z2=dble(nz*nz)
-          telec=tkrecom+epsilon
-          tz=telec/z2
-          tlo=dlog10(tz)
+            z2=dble(nz*nz)
+            telec=tkrecom+epsilon
+            tz=telec/z2
+            tlo=dlog10(tz)
 c
-          if ((tz.ge.tmin).and.(tz.le.tmax)) then
+            if ((tz.ge.tmin).and.(tz.le.tmax)) then
 c
-            ni=10
-            l=1
-            m=ni
+              ni=10
+              l=1
+              m=ni
 c
    60         if (m-l.gt.1) then
-            k=(m+l)/2
-            if (th42(k).gt.tlo) then
-              m=k
-            else
-              l=k
-            endif
+                k=(m+l)/2
+                if (th42(k).gt.tlo) then
+                  m=k
+                else
+                  l=k
+                endif
                 goto 60
-            endif
+              endif
 c
-            logth0=th42(l)
-            logth1=th42(m)
+              logth0=th42(l)
+              logth1=th42(m)
 c
-            ft=(tlo-logth0)/(logth1-logth0)
-            cft=1.d0-ft
+              ft=(tlo-logth0)/(logth1-logth0)
+              cft=1.d0-ft
 c
 c     Interpolate 2S0 recombination rate
 c
-            d1a=(cft*r2s1a(l,i))+(r2s1a(m,i)*ft)
-            d2a=(cft*r2s1a(l,j))+(r2s1a(m,j)*ft)
+              d1a=(cft*r2s1a(l,i))+(r2s1a(m,i)*ft)
+              d2a=(cft*r2s1a(l,j))+(r2s1a(m,j)*ft)
 c
-            d3a=10.d0**(d1a+(d2a-d1a)*fd)
-            recrate2p(atom)=nz*d3a
+              d3a=10.d0**(d1a+(d2a-d1a)*fd)
+              recrate2p(atom)=nz*d3a
 c
-          endif
+            endif
           endif
 c
         enddo
@@ -891,7 +886,6 @@ c
 c
         ab1=zion(atom)*pop(nz+1,atom)
         ab0=zion(atom)*pop(nz,atom)
-
         if ((ab0.gt.pzlimit).or.(ab1.gt.pzlimit)) then
 c
           ez=0.75d0*ipote(nz,atom)

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -598,10 +598,9 @@ c
         sigmt=0.d0
         dustsigmat=0.d0
 c
-        if (grainmode.le.0)
-     &        call crosssections (inl, tauso, sigmt)
-        if (grainmode.gt.0)
-     &        call crosssectionsdust (inl, tauso, sigmt,dustsigmat)
+        if (grainmode.le.0) call crosssections (inl, tauso, sigmt)
+        if (grainmode.gt.0) call crosssectionsdust (inl, tauso, sigmt,
+     &   dustsigmat)
 c
         sigmt=dh*sigmt
         dustsigmat=dh*dustsigmat
@@ -948,11 +947,10 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine newdif2 (tdw, tup, dh, rad,
-     & drdw, dvdw, drup, dvup, frdw, jmod)
+      subroutine newdif2 (tdw, tup, dh, rad, drdw, dvdw, drup, dvup,
+     &frdw, jmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1215,10 +1213,9 @@ c
         sigmt=0.d0
         dustsigmat=0.d0
 c
-       if (grainmode.le.0)
-     &        call crosssections (inl, tauso, sigmt)
-        if (grainmode.gt.0)
-     &        call crosssectionsdust (inl, tauso, sigmt, dustsigmat)
+        if (grainmode.le.0) call crosssections (inl, tauso, sigmt)
+        if (grainmode.gt.0) call crosssectionsdust (inl, tauso, sigmt,
+     &   dustsigmat)
 c
         sigmt=dh*sigmt
         dustsigmat=dh*dustsigmat
@@ -1233,9 +1230,8 @@ c tauso already includes dh, fi and distance implicitly
 c
         escapeso=dexp(-tauso)
 c
-
-        f1 = (wadw*dexp(-(dwex*tau0)))
-        f2 = (waup*dexp(-(upex*tau0)))
+        f1=(wadw*dexp(-(dwex*tau0)))
+        f2=(waup*dexp(-(upex*tau0)))
         dwdif(inl)=dwdif(inl)*f1
         updif(inl)=updif(inl)*f2
 c

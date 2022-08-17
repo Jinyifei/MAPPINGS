@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -44,7 +44,7 @@ c     take place), then the ionic abundances at the end of the time
 c     step, n_j, are given in terms of the abundances at the start of
 c     the timestep, n_i, by (Pullman, 1976)
 c
-c         n_j = {exp(Rt)} n_i = {I + Rt + (Rt)^2/2! + (Rt)^3/3! ...} n_i
+c     n_j = {exp(Rt)} n_i = {I + Rt + (Rt)^2/2! + (Rt)^3/3! ...} n_i
 c
 c     For large t, this series is not convergent.  However, this can be
 c     resolved by expressing the solution in the following manner:
@@ -156,9 +156,8 @@ c
 c     ***FORM MATRIX OF IONISATION RATES IN C
 c
       ndyn='TEST'
-   10 continue
       do k=1,nde-1
-        c(k,k+1)=reco(k)
+   10   c(k,k+1)=reco(k)
         c(k+1,k+1)=-c(k,k+1)
       enddo
       c(1,1)=0.d0
@@ -270,9 +269,8 @@ c
       rn=0.d0
       da=0.d0
       m1=maxio+1
-   80 continue
       do m=1,10
-        rn=rn+1.d0
+   80   rn=rn+1.d0
         invrn=1.d0/rn
         do k=1,nde
           do l=1,nde
@@ -389,5 +387,4 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

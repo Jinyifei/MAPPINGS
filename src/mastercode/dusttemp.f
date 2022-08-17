@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -71,7 +71,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine dusttemp (t_e, hdens, n_e, dr, ircount)
@@ -138,10 +137,10 @@ c
       if (irmode.eq.1) then
         quickir=.true.
         nlimit=50
-      else if (irmode.eq.2) then
+      elseif (irmode.eq.2) then
         quickir=.true.
         nlimit=100
-      else if (irmode.eq.3) then
+      elseif (irmode.eq.3) then
         quickir=.false.
       else
         write (*,*) 'IR program incorrect'
@@ -519,7 +518,6 @@ c
       endif
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine initgrids (dtype, v, atom_no, t_grid, t_edge, h_grid,
@@ -530,7 +528,6 @@ c
 c  Subroutine intialises Grids and grid values
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       implicit none
       integer*4 dtype,nmax, i, mxbin
@@ -556,7 +553,6 @@ c  calculate enthalpy for each temperature
       endif
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function sil_enth(n,v,t)
@@ -582,11 +578,11 @@ c
       fint4=0.d0
       if (t.le.50.d0) then
         fint1=1.40d3*(t*t*t)/3.d0
-      else if (t.le.150.d0) then
+      elseif (t.le.150.d0) then
         fint1=c1
         t2=50.d0
         fint2=2.1647d4*((t**2.3d0)-(t2**2.3d0))/2.3d0
-      else if (t.le.500.d0) then
+      elseif (t.le.500.d0) then
         fint1=c1
         fint2=c2
         t2=150.d0
@@ -601,7 +597,6 @@ c
       sil_enth=f*(fint1+fint2+fint3+fint4)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function gra_enth(n,t)
@@ -616,12 +611,11 @@ c
       implicit none
       real*8 n,t
       real*8 hatom
-      hatom=(4.15d-22*t**3.3d0)/
-     &        (1+6.51d-3*t+1.5d-6*t**2+8.3d-7*t**2.3d0)
+      hatom=(4.15d-22*t**3.3d0)/(1+6.51d-3*t+1.5d-6*t**2+8.3d-7*t**
+     &2.3d0)
       gra_enth=(1.d0-2.d0/n)*n*hatom
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c      real*8 function Planck(invkT,E)
@@ -666,7 +660,6 @@ c      MBdist=2.d0*dsqrt(E/(pi*(rkb*T)**3.d0))*dexp(-E/(rkb*T))
       mbdist=2*b*c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine transmatrix (grarea, n_e, s_f, nmax, absmax, dabsmax,
@@ -747,9 +740,9 @@ c
             if (dengy(k).ge.w1) then
               if (dengy(k).lt.w2) then
                 gfac=(dengy(k)-w1)*invfac
-              else if (dengy(k).lt.w3) then
+              elseif (dengy(k).lt.w3) then
                 gfac=min(deltah(i),deltah(j))*invfac
-              else if (dengy(k).le.w4) then
+              elseif (dengy(k).le.w4) then
                 gfac=(w4-dengy(k))*invfac
               else
                 goto 20
@@ -781,7 +774,7 @@ c  Photon & collisional heating
         do k=1,dabsmax
           if ((dengy(k).gt.w1).and.(dengy(k).lt.w4)) then
             heat=heat+(dengy(k)-w1)*w5*(dabsphot(k)+stick*collheat(k))
-          else if (dengy(k).ge.w4) then
+          elseif (dengy(k).ge.w4) then
             heat=heat+dabsphot(k)+stick*collheat(k)
           endif
         enddo
@@ -817,7 +810,6 @@ c      write(69,*)
 c      close(69)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine probsolve (tr_matrix, t_prob, nmax, mxbin)

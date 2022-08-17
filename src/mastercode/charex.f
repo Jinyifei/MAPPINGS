@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -115,7 +115,7 @@ c
 c
 c Allow for hard fields by entering constant adiabatic limit
 c
-          else if (tl.lt.tl0) then
+          elseif (tl.lt.tl0) then
             lowt=10**(tl0-4)
             chxrlegacy(i)=(chxrlegacycos(1,i)*(lowt)**chxrlegacycos(2,i)
      &       )*(1.d0+chxrlegacycos(3,i)*dexp(lowt*chxrlegacycos(4,i)))

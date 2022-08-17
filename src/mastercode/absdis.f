@@ -9,14 +9,14 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine absdis ( dh, absf, drta, rad, popul)
+      subroutine absdis (dh, absf, drta, rad, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -34,7 +34,7 @@ c
       real*8 wid,wei,phots
       real*8 dh, absf, drta, rad,pcros
       real*8 plos,qto, de, g1, g2, temp
-      real*8 nfn(mxinfph),r2,r3,cebin,sig
+      real*8 r2,r3,sig
       integer*4 bincount,inl,i,ie,j,k,dtype,dstmin
 c
       real*8 ptime,rtime,ctime,abio,crosec
@@ -63,27 +63,27 @@ c
       qto=0.d0
 c
       do inl=1,infph
-      xsec(inl)=0.d0
+        xsec(inl)=0.d0
       enddo
 c
       do i=1,ionum
-      ie=atpho(i)
-      j=ionpho(i)
-      abio=zion(ie)*popul(j,ie)
-      if (abio.gt.pzlimit) then
-        abio=abio*(dh*fi)
-        do inl=photbinstart(i),infph-1
-          if (skipbin(inl)) goto 20
-          if (photxsec(i,inl).gt.epsilon) then
-          crosec=photxsec(i,inl)
-          sig=(abio*crosec)
+        ie=atpho(i)
+        j=ionpho(i)
+        abio=zion(ie)*popul(j,ie)
+        if (abio.gt.pzlimit) then
+          abio=abio*(dh*fi)
+          do inl=photbinstart(i),infph-1
+            if (skipbin(inl)) goto 10
+            if (photxsec(i,inl).gt.epsilon) then
+              crosec=photxsec(i,inl)
+              sig=(abio*crosec)
 c         sig=(dh*fi)*sig
-          xsec(inl)=xsec(inl)+sig
-          xsect=xsect+sig
-          endif
-   20     continue
-         enddo
-      endif
+              xsec(inl)=xsec(inl)+sig
+              xsect=xsect+sig
+            endif
+   10       continue
+          enddo
+        endif
       enddo
 c
 c  dust
@@ -136,7 +136,7 @@ c
 c      write(*,*) 'Weighted total : ',qto
 c
       iter=0
-   30 plos=0.d0
+   20 plos=0.d0
 c
       do inl=1,infph-1
         wei=xsec(inl)/xsect
@@ -152,7 +152,7 @@ c
 c        write(*,*) 'Change in dr:',r2
         if (r3.gt.0.01d0) then
           drta=drta*r2
-          goto 30
+          goto 20
         endif
       else
         r2=1.d0/epsilon
@@ -169,7 +169,7 @@ c
         g2=fdilu(rstar,r2)
         temp=dsqrt(1.23456789d0*g2/g1)
         r2=(r2*temp)-rad
-        if(r2.lt.0) r2=drta
+        if (r2.lt.0) r2=drta
         r3=1.d0/r2+1.d0/drta
         drta=1.d0/r3
 c         write(*,*) 'Geometric Correction:',temp
@@ -185,7 +185,6 @@ c      drta = min(5.0e14,drta)
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine absdis2 (dh, absf, drta, rad, popul)
@@ -199,7 +198,7 @@ c
       real*8 dh, absf, drta, rad, pcros
       real*8 plos,qto
 c      real*8 g1, g2
-      real*8 r1,r2,r3,cebin,sig
+      real*8 r1,r2,r3,sig
       integer*4 bincount,inl,i,ie,j,k,dtype,dstmin
 c
       real*8 abio,crosec
@@ -212,27 +211,27 @@ c
       qto=0.d0
 c
       do inl=1,infph
-      xsec(inl)=0.d0
+        xsec(inl)=0.d0
       enddo
 c
       do i=1,ionum
-      ie=atpho(i)
-      j=ionpho(i)
-      abio=zion(ie)*popul(j,ie)
-      if (abio.gt.pzlimit) then
-        abio=abio*(dh*fi)
-        do inl=photbinstart(i),infph-1
-          if (skipbin(inl)) goto 20
-          if (photxsec(i,inl).gt.epsilon) then
-          crosec=photxsec(i,inl)
-          sig=(abio*crosec)
+        ie=atpho(i)
+        j=ionpho(i)
+        abio=zion(ie)*popul(j,ie)
+        if (abio.gt.pzlimit) then
+          abio=abio*(dh*fi)
+          do inl=photbinstart(i),infph-1
+            if (skipbin(inl)) goto 10
+            if (photxsec(i,inl).gt.epsilon) then
+              crosec=photxsec(i,inl)
+              sig=(abio*crosec)
 c         sig=(dh*fi)*sig
-          xsec(inl)=xsec(inl)+sig
-          xsect=xsect+sig
-          endif
-   20     continue
-         enddo
-      endif
+              xsec(inl)=xsec(inl)+sig
+              xsect=xsect+sig
+            endif
+   10       continue
+          enddo
+        endif
       enddo
 c
 c  dust
@@ -280,7 +279,7 @@ c
       enddo
 c
       iter=0
-   30 plos=0.d0
+   20 plos=0.d0
 c
       do inl=1,infph-1
         if (xsec(inl).gt.epsilon) then
@@ -299,7 +298,7 @@ c
         r3=dabs(1.d0-r2)
         if (r3.gt.0.01d0) then
           drta=drta*r2
-          goto 30
+          goto 20
         endif
       endif
 c
@@ -344,7 +343,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine attsig (dh, dr, popcols, attenuate, sigma)
@@ -376,22 +374,21 @@ c
       enddo
 c
       do inl=1,infph
-         sigma(inl)=0.d0
+        sigma(inl)=0.d0
       enddo
 c
       do i=1,ionum
-      atom=atpho(i)
-      ion=ionpho(i)
-      abio=zion(atom)*(dh*fi)
-      cols=popcols(ion,atom)
-      if (cols.gt.1.0d10) then
-        do inl=photbinstart(i),infph-1
-          crosec=photxsec(i,inl)
-          sig=(abio*cols*crosec)
-          sigma(inl)=sigma(inl)+sig
-   20     continue
-         enddo
-      endif
+        atom=atpho(i)
+        ion=ionpho(i)
+        abio=zion(atom)*(dh*fi)
+        cols=popcols(ion,atom)
+        if (cols.gt.1.0d10) then
+          do inl=photbinstart(i),infph-1
+            crosec=photxsec(i,inl)
+            sig=(abio*cols*crosec)
+            sigma(inl)=sigma(inl)+sig
+          enddo
+        endif
       enddo
 c
 c  dust
@@ -433,12 +430,11 @@ c
           att=dexp(-sigma(inl))
           attenuate(inl)=dmax1(dmin1(att,1.d0),0.d0)
 c          if (attenuate(inl).lt.1.d0) write(*,*) inl, attenuate(inl)
-          endif
+        endif
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine habsfrac (absf, dh, drta, popul)
@@ -456,8 +452,7 @@ c
       real*8 popul(mxion, mxelem)
       real*8 wei, dh, absf, drta, pcros
       real*8 plos,qto
-c      real*8 g1, g2
-      real*8 cebin,sig
+      real*8 sig
       integer*4 bincount,inl,i,atom,ion,k,dtype,dstmin
 c
       real*8 abio,crosec
@@ -470,25 +465,25 @@ c
       qto=0.d0
 c
       do inl=1,infph
-         xsec(inl)=0.d0
+        xsec(inl)=0.d0
       enddo
 c
       do i=1,ionum
-      atom=atpho(i)
-      ion=ionpho(i)
-      abio=zion(atom)*popul(ion,atom)
-      if (abio.gt.pzlimit) then
-        do inl=photbinstart(i),infph-1
-          if (skipbin(inl)) goto 20
-          if (photxsec(i,inl).le.epsilon) goto 20
-          crosec=photxsec(i,inl)
-          sig=(abio*crosec)
-          sig=(dh*fi)*sig
-          xsec(inl)=xsec(inl)+sig
-          xsect=xsect+sig
-   20     continue
-         enddo
-      endif
+        atom=atpho(i)
+        ion=ionpho(i)
+        abio=zion(atom)*popul(ion,atom)
+        if (abio.gt.pzlimit) then
+          do inl=photbinstart(i),infph-1
+            if (skipbin(inl)) goto 10
+            if (photxsec(i,inl).le.epsilon) goto 10
+            crosec=photxsec(i,inl)
+            sig=(abio*crosec)
+            sig=(dh*fi)*sig
+            xsec(inl)=xsec(inl)+sig
+            xsect=xsect+sig
+   10       continue
+          enddo
+        endif
       enddo
 c
 c  dust
@@ -527,24 +522,24 @@ c
       endif
 c
       do inl=1,infph-1
-        if ( (cphotev(inl).gt.ipotev(1,1)).and.
-     &       (cphotev(inl).lt.ipotev(1,2)) ) then
-        if (xsec(inl).gt.epsilon) then
-          wei=xsec(inl)/xsect
-          qto=qto+wei
-        endif
+        if ((cphotev(inl).gt.ipotev(1,1)).and.(cphotev(inl).lt.ipotev(1,
+     &   2))) then
+          if (xsec(inl).gt.epsilon) then
+            wei=xsec(inl)/xsect
+            qto=qto+wei
+          endif
         endif
       enddo
 c
       absf=0.d0
 c
       do inl=1,infph-1
-        if ( (cphotev(inl).gt.ipotev(1,1)).and.
-     &       (cphotev(inl).lt.ipotev(1,2)) ) then
-        if (xsec(inl).gt.epsilon) then
-          wei=xsec(inl)/xsect
-          absf=absf+(1.d0-dexp(-drta*xsec(inl)))*wei
-        endif
+        if ((cphotev(inl).gt.ipotev(1,1)).and.(cphotev(inl).lt.ipotev(1,
+     &   2))) then
+          if (xsec(inl).gt.epsilon) then
+            wei=xsec(inl)/xsect
+            absf=absf+(1.d0-dexp(-drta*xsec(inl)))*wei
+          endif
         endif
       enddo
 c
@@ -552,7 +547,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine absfrac (absf, dh, drta, popul)
@@ -565,8 +559,7 @@ c
       real*8 wid,wei,phots
       real*8 dh, absf, drta, pcros
       real*8 plos,qto
-c      real*8 g1, g2
-      real*8 cebin,sig
+      real*8 sig
       integer*4 bincount,inl,i,atom,ion,k,dtype,dstmin
 c
       real*8 abio,crosec
@@ -579,25 +572,25 @@ c
       qto=0.d0
 c
       do inl=1,infph
-         xsec(inl)=0.d0
+        xsec(inl)=0.d0
       enddo
 c
       do i=1,ionum
-      atom=atpho(i)
-      ion=ionpho(i)
-      abio=zion(atom)*popul(ion,atom)
-      if (abio.gt.pzlimit) then
-        do inl=photbinstart(i),infph-1
-          if (skipbin(inl)) goto 20
-          if (photxsec(i,inl).le.epsilon) goto 20
-          crosec=photxsec(i,inl)
-          sig=(abio*crosec)
-          sig=(dh*fi)*sig
-          xsec(inl)=xsec(inl)+sig
-          xsect=xsect+sig
-   20     continue
-         enddo
-      endif
+        atom=atpho(i)
+        ion=ionpho(i)
+        abio=zion(atom)*popul(ion,atom)
+        if (abio.gt.pzlimit) then
+          do inl=photbinstart(i),infph-1
+            if (skipbin(inl)) goto 10
+            if (photxsec(i,inl).le.epsilon) goto 10
+            crosec=photxsec(i,inl)
+            sig=(abio*crosec)
+            sig=(dh*fi)*sig
+            xsec(inl)=xsec(inl)+sig
+            xsect=xsect+sig
+   10       continue
+          enddo
+        endif
       enddo
 c
 c  dust
@@ -659,7 +652,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine taudist (dh, tauav, drta, rad, popul, mmod)

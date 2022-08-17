@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -361,7 +361,7 @@ c
 c
   150 write (*,140)
       read (*,10) tmod
-      call toup(tmod(1:1),tmod)
+      call toup (tmod(1:1), tmod)
 c
       if ((tmod.ne.'A').and.(tmod.ne.'M').and.(tmod.ne.'N')
      &.and.(tmod.ne.'S')) goto 150
@@ -408,7 +408,6 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Boundry Conditions ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-
       write (*,190)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -431,7 +430,7 @@ c
 c
   210 write (*,200)
       read (*,10) jend
-      call toup(jend(1:1),jend)
+      call toup (jend(1:1), jend)
 c
       if ((jend.ne.'A').and.(jend.ne.'B').and.(jend.ne.'C')
      &.and.(jend.ne.'D').and.(jend.ne.'E').and.(jend.ne.'F')
@@ -515,7 +514,7 @@ c
      & ' :: ',$)
   280 write (*,270)
       read (*,10) ilgg
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
 c
       if ((ilgg.ne.'A').and.(ilgg.ne.'B').and.(ilgg.ne.'C')
      &.and.(ilgg.ne.'D').and.(ilgg.ne.'E').and.(ilgg.ne.'F')
@@ -598,8 +597,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       allmod='N'
       tsrmod='N'
 c
-      if ((ilgg.eq.'B').or.(ilgg.eq.'G')
-     &    .or.(ilgg.eq.'H').or.(ilgg.eq.'I')) then
+      if ((ilgg.eq.'B').or.(ilgg.eq.'G').or.(ilgg.eq.'H').or.(ilgg.eq.'I
+     &')) then
 c
         if ((ilgg.eq.'B').or.(ilgg.eq.'G').or.(ilgg.eq.'H')) then
 c
@@ -624,50 +623,50 @@ c
         if (ilgg.eq.'B') tsrmod='Y'
         if (ilgg.eq.'I') tsrmod='Y'
         if (ilgg.eq.'G') tsrmod='Y'
-C       if (ilgg.eq.'B') then
-C 300    format(//,
-C    & ' Record particular ion balances (Y/N)?: ')
-C         write (*,300)
-C         read (*,10) tsrmod
-C         tsrmod=tsrmod(1:1)
-C         if (tsrmod.eq.'y') tsrmod='Y'
-C       endif
+c       if (ilgg.eq.'B') then
+c 300    format(//,
+c    & ' Record particular ion balances (Y/N)?: ')
+c         write (*,300)
+c         read (*,10) tsrmod
+c         tsrmod=tsrmod(1:1)
+c         if (tsrmod.eq.'y') tsrmod='Y'
+c       endif
 c
 c
         if (tsrmod.eq.'Y') then
-  310      format(//,
+  300      format(//,
      &     ' Give 4 elements by atomic number: ')
-           write (*,310)
-           read (*,*) idx1,idx2,idx3,idx4
-           idx1=max(min(idx1,atypes),1)
-           idx2=max(min(idx2,atypes),1)
-           idx3=max(min(idx3,atypes),1)
-           idx4=max(min(idx4,atypes),1)
-           iel(1)=zmap(idx1)
-           iel(2)=zmap(idx2)
-           iel(3)=zmap(idx3)
-           iel(4)=zmap(idx4)
-C         read (*,*) iel(1),iel(2),iel(3),iel(4)
-C         iel(1)=zmap(iel(1))
-C         iel(2)=zmap(iel(2))
-C         iel(3)=zmap(iel(3))
-C         iel(4)=zmap(iel(4))
+          write (*,300)
+          read (*,*) idx1,idx2,idx3,idx4
+          idx1=max(min(idx1,atypes),1)
+          idx2=max(min(idx2,atypes),1)
+          idx3=max(min(idx3,atypes),1)
+          idx4=max(min(idx4,atypes),1)
+          iel(1)=zmap(idx1)
+          iel(2)=zmap(idx2)
+          iel(3)=zmap(idx3)
+          iel(4)=zmap(idx4)
+c         read (*,*) iel(1),iel(2),iel(3),iel(4)
+c         iel(1)=zmap(iel(1))
+c         iel(2)=zmap(iel(2))
+c         iel(3)=zmap(iel(3))
+c         iel(4)=zmap(iel(4))
         endif
       endif
 c
 c     get final field file prefix
 c
-  320 format (a8)
-  330 format(//,
+  310 format (a8)
+  320 format(//,
      & ' Give a prefix for final field file (5chars): ')
-      write (*,330)
-      read (*,320) mypfx
+      write (*,320)
+      read (*,310) mypfx
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     get screen display mode
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  340 format(//,
+  330 format(//,
      & ' Choose runtime screen display:',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    A  : Standard display ',/,
@@ -675,9 +674,9 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
      & '    C  : Full Display',/,
      & '       : (Full slab display + timescales).',/,
      & ' :: ',$)
-      write (*,340)
+      write (*,330)
       read (*,10) ilgg
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
 c
       vmod='NONE'
 c
@@ -693,9 +692,9 @@ c
 c     get runname
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  350 format(//,
+  340 format(//,
      & ' Give a name/code for this run: ')
-      write (*,350)
+      write (*,340)
       read (*,'(a)') runname
       np=mlen(runname)
       runname=runname(1:np)
@@ -729,18 +728,18 @@ c
         do i=1,ieln
           write (luions(i),*) fl,', ',runname
 c
-  370 format('Step [1], <X> [2], dX [3], <T> [4]',31(',',a6,'[',i2,']'))
+  350 format('Step [1], <X> [2], dX [3], <T> [4]',31(',',a6,'[',i2,']'))
           if (i.eq.1) then
-            write (luions(i),370) (rom(j),j+4,j=1,maxion(iel(1)))
+            write (luions(i),350) (rom(j),j+4,j=1,maxion(iel(1)))
           endif
           if (i.eq.2) then
-            write (luions(i),370) (rom(j),j+4,j=1,maxion(iel(2)))
+            write (luions(i),350) (rom(j),j+4,j=1,maxion(iel(2)))
           endif
           if (i.eq.3) then
-            write (luions(i),370) (rom(j),j+4,j=1,maxion(iel(3)))
+            write (luions(i),350) (rom(j),j+4,j=1,maxion(iel(3)))
           endif
           if (i.eq.4) then
-            write (luions(i),370) (rom(j),j+4,j=1,maxion(iel(4)))
+            write (luions(i),350) (rom(j),j+4,j=1,maxion(iel(4)))
           endif
 c
         enddo
@@ -761,61 +760,61 @@ c
 c
 c     Title
 c
-  380 format(/
+  360 format(/
      & ' SHOCK4: Explicit Rankine-Hugoniot shock code: ',/,
      & ' ============================================',/,
      & ' Diffuse Field, Full Continuum Calculations.',/,
      & ' Calculated by MAPPINGS V ',a8)
-      write (*,380) theversion
-      write (luop,380) theversion
-      write (lusp,380) theversion
-      write (lupb,380) theversion
-      if (ratmod.eq.'Y') write (lurt,380) theversion
-      if (dynmod.eq.'Y') write (ludy,380) theversion
-      if (allmod.eq.'Y') write (lual,380) theversion
-      if (fclmod.eq.'Y') write (lucl,380) theversion
-  390 format(//' Run  :',a,/
+      write (*,360) theversion
+      write (luop,360) theversion
+      write (lusp,360) theversion
+      write (lupb,360) theversion
+      if (ratmod.eq.'Y') write (lurt,360) theversion
+      if (dynmod.eq.'Y') write (ludy,360) theversion
+      if (allmod.eq.'Y') write (lual,360) theversion
+      if (fclmod.eq.'Y') write (lucl,360) theversion
+  370 format(//' Run  :',a,/
      &         ' File :',a)
-      write (luop,390) runname,fl
-      write (lusp,390) runname,fl
-      write (lupb,390) runname,fl
-      if (ratmod.eq.'Y') write (lurt,390) runname,fl
-      if (dynmod.eq.'Y') write (ludy,390) runname,fl
-      if (allmod.eq.'Y') write (lual,390) runname,fl
-      if (fclmod.eq.'Y') write (lucl,390) runname,fl
+      write (luop,370) runname,fl
+      write (lusp,370) runname,fl
+      write (lupb,370) runname,fl
+      if (ratmod.eq.'Y') write (lurt,370) runname,fl
+      if (dynmod.eq.'Y') write (ludy,370) runname,fl
+      if (allmod.eq.'Y') write (lual,370) runname,fl
+      if (fclmod.eq.'Y') write (lucl,370) runname,fl
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Write Model Parameters
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  400 format(//,
+  380 format(//,
      & ' Model Parameters:',/,
      & ' =================',//,
      & ' Abundances     : ',a128,/,
      & ' Pre-ionisation : ',a128,/,
      & ' Photon Source  : ',a128)
-  410 format(/
+  390 format(/
      & ' Charge Exchange: ',a12,/,
      & ' Photon Mode    : ',a12,/,
      & ' Collision calcs: ',a12)
-  420 format(/
+  400 format(/
      & ' Charge Exchange: ',a12,/,
      & ' Photon Mode    : ',a12,/,
      & ' Collision calcs: ',a12,/,
      & ' Electron Kappa : ',1pg11.4)
-  430 format(//
+  410 format(//
      & ' ',t2,'Jden',t9,'Jgeo',t16,'Jtrans',
      &            t23,'Jend',t29,'Ielen',t35,
      & 'Jpoen',t43,'Fren',t51,'Tend',t57,'DIend',t67,
      & 'TAUen',t77,'Jeq',t84,'Teini')
-  440 format('  ',4(a4,3x),2(i2,4x),0pf6.4,0pf6.0,
+  420 format('  ',4(a4,3x),2(i2,4x),0pf6.4,0pf6.0,
      &           2(1pg10.3),3x,a4,0pf7.1)
-  450 format(//
+  430 format(//
      & ' Photon Source'/
      & ' ============='/)
-  460 format(/' MOD',t7,'Temp.',t16,'Alpha',t22,'Turn-on',t30,'Cut-off'
+  440 format(/' MOD',t7,'Temp.',t16,'Alpha',t22,'Turn-on',t30,'Cut-off'
      &,t38,'Zstar',t47,'FQHI',t56,'FQHEI',t66,'FQHEII')
-  470 format(' ',a2,1pg10.3,4(0pf7.2),1x,3(1pg10.3))
+  450 format(' ',a2,1pg10.3,4(0pf7.2),1x,3(1pg10.3))
 c
       write (luop,90) vel0*1.d-5,de,dh,rho0,pr0,te0,bm0*1.d6,bp0,de1,
      &dhpo,rho1,pr1,te1,bm1*1.d6,bp1
@@ -847,7 +846,7 @@ c
 c     abundances file header
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      write (luop,400) abnfile,ionsetup,srcfile
+      write (luop,380) abnfile,ionsetup,srcfile
 c
       abundtitle=' Initial Abundances :'
       do i=1,atypes
@@ -858,11 +857,11 @@ c
       abundtitle=' Gas Phase Abundances :'
       call dispabundances (luop, zion, abundtitle)
 c
-      write (lupb,400) abnfile,ionsetup,srcfile
-      if (ratmod.eq.'Y') write (lurt,400) abnfile,ionsetup,srcfile
-      if (dynmod.eq.'Y') write (ludy,400) abnfile,ionsetup,srcfile
-      if (allmod.eq.'Y') write (lual,400) abnfile,ionsetup,srcfile
-      if (fclmod.eq.'Y') write (lucl,400) abnfile,ionsetup,srcfile
+      write (lupb,380) abnfile,ionsetup,srcfile
+      if (ratmod.eq.'Y') write (lurt,380) abnfile,ionsetup,srcfile
+      if (dynmod.eq.'Y') write (ludy,380) abnfile,ionsetup,srcfile
+      if (allmod.eq.'Y') write (lual,380) abnfile,ionsetup,srcfile
+      if (fclmod.eq.'Y') write (lucl,380) abnfile,ionsetup,srcfile
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -878,69 +877,69 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (usekappa) then
-        write (luop,420) cht,pht,clt,kappa
+        write (luop,400) cht,pht,clt,kappa
       else
-        write (luop,410) cht,pht,clt
+        write (luop,390) cht,pht,clt
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+      write (luop,410)
+      write (luop,420) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
+     &diend,tauen,tmod,tm00
       write (luop,430)
-      write (luop,440) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
-     &diend,tauen,tmod,tm00
-      write (luop,450)
-      write (luop,460)
-      write (luop,470) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+      write (luop,440)
+      write (luop,450) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
 c
-      write (lupb,410) cht,pht,clt
-      write (lupb,430)
-      write (lupb,440) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
+      write (lupb,390) cht,pht,clt
+      write (lupb,410)
+      write (lupb,420) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
      &diend,tauen,tmod,tm00
-      write (lupb,450)
-      write (lupb,460)
-      write (lupb,470) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+      write (lupb,430)
+      write (lupb,440)
+      write (lupb,450) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
 c
       if (ratmod.eq.'Y') then
-        write (lurt,410) cht,pht,clt
-        write (lurt,430)
-        write (lurt,440) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
+        write (lurt,390) cht,pht,clt
+        write (lurt,410)
+        write (lurt,420) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
      &   diend,tauen,tmod,tm00
-        write (lurt,450)
-        write (lurt,460)
-        write (lurt,470) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+        write (lurt,430)
+        write (lurt,440)
+        write (lurt,450) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
       endif
 c
       if (dynmod.eq.'Y') then
-        write (ludy,410) cht,pht,clt
-        write (ludy,430)
-        write (ludy,440) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
+        write (ludy,390) cht,pht,clt
+        write (ludy,410)
+        write (ludy,420) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
      &   diend,tauen,tmod,tm00
-        write (ludy,450)
-        write (ludy,460)
-        write (ludy,470) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+        write (ludy,430)
+        write (ludy,440)
+        write (ludy,450) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
       endif
 c
       if (allmod.eq.'Y') then
 c
-        write (lual,410) cht,pht,clt
-        write (lual,430)
-        write (lual,440) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
+        write (lual,390) cht,pht,clt
+        write (lual,410)
+        write (lual,420) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
      &   diend,tauen,tmod,tm00
-        write (lual,450)
-        write (lual,460)
-        write (lual,470) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+        write (lual,430)
+        write (lual,440)
+        write (lual,450) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
 c
       endif
 c
       if (fclmod.eq.'Y') then
 c
-        write (lucl,410) cht,pht,clt
-        write (lucl,430)
-        write (lucl,440) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
+        write (lucl,390) cht,pht,clt
+        write (lucl,410)
+        write (lucl,420) jden,jgeo,jtrans,jend,ielen,jpoen,fren,tend,
      &   diend,tauen,tmod,tm00
-        write (lucl,450)
-        write (lucl,460)
-        write (lucl,470) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
+        write (lucl,430)
+        write (lucl,440)
+        write (lucl,450) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -948,18 +947,18 @@ c
 c     Shock parameters
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  480 format(//,
+  460 format(//,
      & ' Jump Conditions:',/,
      & ' ================')
-      write (luop,480)
-      write (lupb,480)
-      write (lusp,480)
-      if (ratmod.eq.'Y') write (lurt,480)
-      if (dynmod.eq.'Y') write (ludy,480)
-      if (allmod.eq.'Y') write (lual,480)
-      if (fclmod.eq.'Y') write (lucl,480)
+      write (luop,460)
+      write (lupb,460)
+      write (lusp,460)
+      if (ratmod.eq.'Y') write (lurt,460)
+      if (dynmod.eq.'Y') write (ludy,460)
+      if (allmod.eq.'Y') write (lual,460)
+      if (fclmod.eq.'Y') write (lucl,460)
 c
-  490 format(//
+  470 format(//
      & ' T1',1pg14.7,' V1',1pg14.7,
      & ' RH1',1pg14.7,' P1',1pg14.7,' B1',1pg14.7/
      & ' T2',1pg14.7,' V2',1pg14.7,
@@ -968,15 +967,15 @@ c
       dr=0.d0
       dv=vel1-vel0
 c
-      write (*,490) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
-      write (luop,490) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
-      write (lupb,490) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
-      write (lusp,490) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
-      if (ratmod.eq.'Y') write (lurt,490) te0,vel0,rho0,pr0,bm0,te1,
+      write (*,470) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
+      write (luop,470) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
+      write (lupb,470) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
+      write (lusp,470) te0,vel0,rho0,pr0,bm0,te1,vel1,rho1,pr1,bm1
+      if (ratmod.eq.'Y') write (lurt,470) te0,vel0,rho0,pr0,bm0,te1,
      &vel1,rho1,pr1,bm1
-      if (dynmod.eq.'Y') write (ludy,490) te0,vel0,rho0,pr0,bm0,te1,
+      if (dynmod.eq.'Y') write (ludy,470) te0,vel0,rho0,pr0,bm0,te1,
      &vel1,rho1,pr1,bm1
-      if (fclmod.eq.'Y') write (lucl,490) te0,vel0,rho0,pr0,bm0,te1,
+      if (fclmod.eq.'Y') write (lucl,470) te0,vel0,rho0,pr0,bm0,te1,
      &vel1,rho1,pr1,bm1
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1013,12 +1012,12 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  500 format(//,
+  480 format(//,
      & ' Precursor Conditions and Ionisation State',/
      & ' =========================================',/)
-      write (luop,500)
-      write (lupb,500)
-      if (fclmod.eq.'Y') write (lucl,500)
+      write (luop,480)
+      write (lupb,480)
+      if (fclmod.eq.'Y') write (lucl,480)
 c
       if ((vmod.eq.'FULL').or.(vmod.eq.'SLAB')) then
         wmod='SCRN'
@@ -1044,18 +1043,18 @@ c
       if (fclmod.eq.'Y') call wionabal (lucl, pop)
 c
       close (luop)
-  520 format(17(a12,a1))
-      write (lupb,520) 'Te',tab,'de',tab,'dh',tab,'en',tab,'XHI',tab,'FH
+  490 format(17(a12,a1))
+      write (lupb,490) 'Te',tab,'de',tab,'dh',tab,'en',tab,'XHI',tab,'FH
      &II',tab,'mu',tab,'Lambda',tab,'tloss',tab,'ff',tab,'B0.5-2.0keV',
      &tab,'B2.0-8.0keV',tab,'B0.5-8.0keV',tab,'B3.0-10.0eV',tab,'B1.0-2.
      &0keV',tab,'B2.0-3.0keV',tab,'Ball'
       close (lupb)
-  530 format(//
+  500 format(//
      & 'Mean Zone Values'/
      & '================'/)
-  540 format(10(a12,a1),30(a12,a1))
-  550 format(10(a12,a1),30(a12,a1),30(1pg12.5,a1))
-  560 format( '                                                ',
+  510 format(10(a12,a1),30(a12,a1))
+  520 format(10(a12,a1),30(a12,a1),30(1pg12.5,a1))
+  530 format( '                                                ',
      & '                             ',
      & '                                                ',
      & '                             ',
@@ -1067,7 +1066,7 @@ c
      & '============================',
      & '=================================================',
      & '==============================')
-  570 format( '==================================================',
+  540 format( '==================================================',
      & '===========================',
      & '=================================================',
      & '============================',
@@ -1087,17 +1086,17 @@ c
      & '============================',
      & '============================================')
       if (fclmod.eq.'Y') then
+        write (lucl,500)
         write (lucl,530)
-        write (lucl,560)
-        write (lucl,570)
-        write (lucl,540) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho '
+        write (lucl,540)
+        write (lucl,510) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho '
      &   ,tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n
      &_H^2)',tab,(elem(j),tab,j=1,atypes)
-        write (lucl,550) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,'(/cm^3)'
+        write (lucl,520) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,'(/cm^3)'
      &   ,tab,'(g/cm^3)',tab,' ',tab,' ',tab,'(amu)',tab,'(erg/cm^3/s)',
      &   tab,'(erg cm^3/s)',tab,('(erg cm^3/s)',tab,j=1,atypes),
      &   (atwei(j),tab,j=1,atypes)
-        write (lucl,570)
+        write (lucl,540)
       endif
       if (ratmod.eq.'Y') close (lurt)
       if (dynmod.eq.'Y') close (ludy)
@@ -1139,42 +1138,42 @@ c
 c
       en=zen*dh
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=tloss/(en*de)
 c
-      cspd=dsqrt(gammaEOS*pr1/rho1)
+      cspd=dsqrt(gammaeos*pr1/rho1)
       wmol=rho1/(en+de)
       mu=fmua(de,dh)
 c
       step=0
 c
-  580 format(//,
+  550 format(//,
      & a4,a1,14(4x,a6,4x,a1))
-  590 format(i4.3,a1,14(1pg13.6,a1))
+  560 format(i4.3,a1,14(1pg13.6,a1))
 c
-  600 format(//
+  570 format(//
      & ' #',t9,'Te',t21,'ne',t33,'nH',t45,'ni',t57,
      & 'B',t69,'XHI'/t8,'Time',t22,'dt',t32,'Dist',t45,
      & 'dr',t57,'v',t67,'dlos'/)
-  610 format (i4,6(1x,1pg11.4)/t4,6(1x,1pg11.4))
+  580 format (i4,6(1x,1pg11.4)/t4,6(1x,1pg11.4))
       open (luop,file=fl,status='OLD',access='APPEND')
-      write (luop,580) 'Step',tab,'Dist.',tab,'Time',tab,'Te',tab,'de',
+      write (luop,550) 'Step',tab,'Dist.',tab,'Time',tab,'Te',tab,'de',
      &tab,'dh',tab,'en',tab,'mu',tab,'Lambda',tab,'Tloss',tab,'dlos',
      &tab,'XHI',tab,'XHII',tab,'Bbar',tab,'dr',tab
-      write (luop,590) step,tab,dist(step+1),tab,timlps(step+1),tab,t,
+      write (luop,560) step,tab,dist(step+1),tab,timlps(step+1),tab,t,
      &tab,de,tab,dh,tab,en,tab,mu,tab,tloss/(dh*dh),tab,tloss,tab,dlos,
      &tab,pop(1,1),tab,pop(2,1),tab,bm0,tab,dr,tab
       close (luop)
 c
       if (vmod.eq.'MINI') then
-        write (*,600)
-        write (*,610) step,t,de,dh,en,bm0,pop(1,1),timlps(step+1),ftime,
+        write (*,570)
+        write (*,580) step,t,de,dh,en,bm0,pop(1,1),timlps(step+1),ftime,
      &   dist(step+1),dr,veloc(step+1),dlos
       endif
 c
       en=zen*dh
       press=(en+de)*rkb*t
-      ue=gammaEOSU*press
+      ue=gammaeosu*press
 c
 c     effective cooling timescale, based on net loss
 c
@@ -1211,7 +1210,7 @@ c
       if ((tmod.eq.'N').and.(ftime.lt.utime)) ftime=utime
       if (tmod.eq.'S') ftime=utime
 c
-  620 format ( //
+  590 format ( //
      & ' Tot. Internal :',1pg14.7,/,
      & ' Tot.loss rate :',1pg14.7,/' Eff.loss rate :',1pg14.7,/,
      & ' Enthaply time :',1pg14.7,/' Eff.Cool time :',1pg14.7,/,
@@ -1221,7 +1220,7 @@ c
      & ' Choice   time :',1pg14.7/)
 c
       if (vmod.eq.'FULL') then
-        write (*,620) ue,tloss,tloss,htime,cltime,ctime,rtime,ptime,
+        write (*,590) ue,tloss,tloss,htime,cltime,ctime,rtime,ptime,
      &   stime,eqtime,abstime,ftime
       endif
 c
@@ -1286,7 +1285,7 @@ c     SHOCK Iteration reentry point:
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  630 count=count+1
+  600 count=count+1
 c
       call copypop (pop0, pop)
 c
@@ -1338,7 +1337,7 @@ c     &   (eqtime.le.abstime*abtimefrac).and.
           vel1=vel0
           bm1=bm0
         endif
-        goto 640
+        goto 610
       endif
 c
       tloss=(l11+l0)*0.5d0
@@ -1357,7 +1356,7 @@ c
         dh=(dh0+dh1)*0.5d0
         de=feldens(dh,pop)
         call cool (t, de, dh)
-        goto 650
+        goto 620
       endif
 c
 c     try 8 times then give up
@@ -1372,12 +1371,12 @@ c         ftime = ftime*0.5d0
         dh=(dh0+dh1)*0.5d0
         de=feldens(dh,pop)
         call cool (t, de, dh)
-        goto 650
+        goto 620
       endif
 c
       en=zen*dh+de
       press=en*rkb*t
-      ue=gammaEOSU*press
+      ue=gammaeosu*press
 c
       cltime=dabs(ue/tloss)
 c
@@ -1405,7 +1404,7 @@ c
 c     otherwise continue with the normal NEQ
 c     mode
 c
-      goto 630
+      goto 600
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     pseudo equilibrium calculations for case where
@@ -1415,7 +1414,7 @@ c     = photoionized post-shock zone
 c
 c     pseudo equilibrium entry point
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  640 continue
+  610 continue
 c
       write (*,*) 'Equilibrium'
 c
@@ -1431,7 +1430,7 @@ c
 c     initial internal energy /unit mass
 c
       en=zen*dh
-      ue0=gammaEOSU*(en+de)*rkb*te1
+      ue0=gammaeosu*(en+de)*rkb*te1
 c
       tt0=te1
       t=te1
@@ -1451,7 +1450,7 @@ c
       dheq=dh
 c
       en=zen*dheq
-      ue1=gammaEOSU*(en+de)*rkb*t
+      ue1=gammaeosu*(en+de)*rkb*t
 c
 c     Net Loss
 c
@@ -1503,7 +1502,7 @@ c
 c End step iterations
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  650 continue
+  620 continue
 c
       step=step+1
 c
@@ -1518,18 +1517,18 @@ c
       timlps(step+1)=timlps(step)+ftime
 c
 c
-  660 format(i4,1x,i4)
-  670 format(1pg14.7,'K',1x,1pg14.7,'cm/s',1x,1pg14.7,'g/cm3',1x,
+  630 format(i4,1x,i4)
+  640 format(1pg14.7,'K',1x,1pg14.7,'cm/s',1x,1pg14.7,'g/cm3',1x,
      &1pg14.7,'dyne/cm2',1x,1pg14.7,'Gauss',1x,1pg14.7,'ergs/cm3/s')
-  680 format(2(1pg14.7,' cm',1x),2(1pg14.7,' s',1x))
-  690 format(2(1pg14.7,' ergs/cm^3',1x),1pg14.7,' /cm^3',1x,
+  650 format(2(1pg14.7,' cm',1x),2(1pg14.7,' s',1x))
+  660 format(2(1pg14.7,' ergs/cm^3',1x),1pg14.7,' /cm^3',1x,
      &1pg14.7,' cm/s',1x,1pg14.7,' g ')
       en=zen*dh
 c
-      ue=gammaEOSU*(en+de)*rkb*t
+      ue=gammaeosu*(en+de)*rkb*t
       tnloss=tloss/(en*de)
 c
-      cspd=dsqrt(gammaEOS*(pr1+pr0)/(rho1+rho0))
+      cspd=dsqrt(gammaeos*(pr1+pr0)/(rho1+rho0))
       wmol=(rho1+rho0)/(2.d0*(en+de))
 c
       mb=(bm0+bm1)*0.5
@@ -1540,11 +1539,11 @@ c
       endif
 c
 c
-  700    format('     Case A-B (HI, HeII): ',2(1pg11.3))
-      write (*,700) caseab(1),caseab(2)
+  670    format('     Case A-B (HI, HeII): ',2(1pg11.3))
+      write (*,670) caseab(1),caseab(2)
 c
       if (vmod.eq.'MINI') then
-        write (*,610) step,t,de,dh,en,mb,pop(1,1),timlps(step+1),ftime,
+        write (*,580) step,t,de,dh,en,mb,pop(1,1),timlps(step+1),ftime,
      &   dist(step+1),dr,veloc(step+1),dlos
       endif
 c
@@ -1566,20 +1565,20 @@ c
 c
       if (dynmod.eq.'Y') then
         open (ludy,file=fd,status='OLD',access='APPEND')
-        write (ludy,660) step,count
-        write (ludy,680) dist(step+1),dr,timlps(step+1),ftime
-        write (ludy,670) te0,vel0,rho0,pr0,bm0,l0
-        write (ludy,670) te1,vel1,rho1,pr1,bm1,l11
-        write (ludy,690) ue,hfree,en,cspd,wmol
+        write (ludy,630) step,count
+        write (ludy,650) dist(step+1),dr,timlps(step+1),ftime
+        write (ludy,640) te0,vel0,rho0,pr0,bm0,l0
+        write (ludy,640) te1,vel1,rho1,pr1,bm1,l11
+        write (ludy,660) ue,hfree,en,cspd,wmol
         close (ludy)
       endif
 c
       open (luop,file=fl,status='OLD',access='APPEND')
-      write (luop,590) step,tab,dist(step+1),tab,timlps(step+1),tab,t,
+      write (luop,560) step,tab,dist(step+1),tab,timlps(step+1),tab,t,
      &tab,de,tab,dh,tab,en,tab,mu,tab,tloss/(dh*dh),tab,tloss,tab,dlos,
      &tab,pop(1,1),tab,pop(2,1),tab,(0.5*(bm0+bm1)),tab,dr,tab
       close (luop)
-  710 format(70(1pg12.5,a1))
+  680 format(70(1pg12.5,a1))
       if (fclmod.eq.'Y') then
         do i=1,atypes
 c
@@ -1596,7 +1595,7 @@ c
 c
         open (lucl,file=fcl,status='OLD',access='APPEND')
 c
-        write (lucl,710) t,tab,de,tab,dh,tab,en,tab,(0.5*(rho0+rho1)),
+        write (lucl,680) t,tab,de,tab,dh,tab,en,tab,(0.5*(rho0+rho1)),
      &   tab,pop(1,1),tab,pop(2,1),tab,mu,tab,tloss,tab,tloss/(dh*dh),
      &   (tab,coolz(j)/(dh*dh),j=1,atypes),(tab,meanion(j),j=1,atypes)
         close (lucl)
@@ -1605,10 +1604,10 @@ c
 c
       if (allmod.eq.'Y') then
         open (lual,file=fa,status='OLD',access='APPEND')
-        write (lual,720)
-        write (lual,730) step,t,de,dh,vel1,rho1,pr1,dist(step+1),
+        write (lual,690)
+        write (lual,700) step,t,de,dh,vel1,rho1,pr1,dist(step+1),
      &   timlps(step+1)
-  720 format(//,
+  690 format(//,
      & ' Step   Te Ave.(K)   ',
      & '  ne(cm^-3)   ',
      & '  nH(cm^-3)   ',
@@ -1617,7 +1616,7 @@ c
      & ' Pr1(erg/cm^3)',
      & '   Dist.(cm)  ',
      & ' Elps. Time(s)')
-  730 format(1x,i4,8(1pg14.7)/)
+  700 format(1x,i4,8(1pg14.7)/)
 c
         call wionabal (lual, pop)
         call wionabal (lual, popint)
@@ -1628,21 +1627,21 @@ c
         do i=1,ieln
           open (luions(i),file=filn(i),status='OLD',access='APPEND')
 c
-  740 format(1x,i4,3(', ',1pg12.5),31(', ',1pg12.5))
+  710 format(1x,i4,3(', ',1pg12.5),31(', ',1pg12.5))
           if (i.eq.1) then
-            write (luions(i),740) step,dist(step)+(dr*0.5),dr,t,(pop(j,
+            write (luions(i),710) step,dist(step)+(dr*0.5),dr,t,(pop(j,
      &       iel(1)),j=1,maxion(iel(1)))
           endif
           if (i.eq.2) then
-            write (luions(i),740) step,dist(step)+(dr*0.5),dr,t,(pop(j,
+            write (luions(i),710) step,dist(step)+(dr*0.5),dr,t,(pop(j,
      &       iel(2)),j=1,maxion(iel(2)))
           endif
           if (i.eq.3) then
-            write (luions(i),740) step,dist(step)+(dr*0.5),dr,t,(pop(j,
+            write (luions(i),710) step,dist(step)+(dr*0.5),dr,t,(pop(j,
      &       iel(3)),j=1,maxion(iel(3)))
           endif
           if (i.eq.4) then
-            write (luions(i),740) step,dist(step)+(dr*0.5),dr,t,(pop(j,
+            write (luions(i),710) step,dist(step)+(dr*0.5),dr,t,(pop(j,
      &       iel(4)),j=1,maxion(iel(4)))
           endif
 c
@@ -1672,7 +1671,7 @@ c
         pfx='plocl'
         np=5
         wmod='REAL'
-        call wpsou(caller,pfx,np,wmod,t,de,dh,dr,1.0d0,tphot)
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
 c
         pfx='slec'
         sfx='sh4'
@@ -1748,8 +1747,8 @@ c
       if (band6.lt.epsilon) band6=0.d0
       if (bandall.lt.epsilon) bandall=0.d0
 c
-  750 format(17(1pg12.5,a1))
-      write (lupb,750) t,tab,de,tab,dh,tab,en,tab,pop(1,1),tab,pop(2,1),
+  720 format(17(1pg12.5,a1))
+      write (lupb,720) t,tab,de,tab,dh,tab,en,tab,pop(1,1),tab,pop(2,1),
      &tab,mu,tab,tloss/(de*dh),tab,tloss,tab,fflos,tab,band1,tab,band2,
      &tab,band3,tab,band4,tab,band5,tab,band6,tab,bandall
 c
@@ -1774,8 +1773,8 @@ c
       call localem (t, de, dh)
       if (photonmode.ne.0) then
         call zetaeff (dh)
-        call newdif2 (tdw, tup, dh, rad, drdw, dvdw, drup, dvup,
-     &   frdw, jtrans)
+        call newdif2 (tdw, tup, dh, rad, drdw, dvdw, drup, dvup, frdw,
+     &   jtrans)
 c
       endif
 c
@@ -1836,7 +1835,7 @@ c
       en=zen*dh0
 c
       press=(en+de0)*rkb*t
-      ue=gammaEOSU*(en+de0)*rkb*t
+      ue=gammaeosu*(en+de0)*rkb*t
 c
       cltime=dabs(ue/tloss)
 c
@@ -1872,7 +1871,7 @@ c
       if (tmod.eq.'S') ftime=utime
 c
       if (vmod.eq.'FULL') then
-        write (*,620) ue,tloss,tloss,htime,cltime,ctime,rtime,ptime,
+        write (*,590) ue,tloss,tloss,htime,cltime,ctime,rtime,ptime,
      &   stime,eqtime,abstime,ftime
       endif
 c
@@ -1911,7 +1910,7 @@ c
 c
         ionbar=ionbar/totn
 c
-        if (ionbar.lt.0.01d0) goto 760
+        if (ionbar.lt.0.01d0) goto 730
 c
       endif
 c
@@ -1919,48 +1918,48 @@ c     Specific species ionisation limit
 c
 c
       if (jend.eq.'B') then
-        if (pop(jpoen,ielen).lt.fren) goto 760
+        if (pop(jpoen,ielen).lt.fren) goto 730
       endif
 c
 c
 c     Temperature limit
 c
-      if ((jend.eq.'C').and.(t.lt.tend)) goto 760
+      if ((jend.eq.'C').and.(t.lt.tend)) goto 730
 c
 c
 c     Distance Limit
 c
-      if ((jend.eq.'D').and.(dist(step+1).ge.diend)) goto 760
+      if ((jend.eq.'D').and.(dist(step+1).ge.diend)) goto 730
 c
 c
 c     Time Limit
 c
-      if ((jend.eq.'E').and.(timlps(step+1).ge.timend)) goto 760
+      if ((jend.eq.'E').and.(timlps(step+1).ge.timend)) goto 730
 c
 c
 c     thermal balance dlos<1e-2
 c
-      if ((jend.eq.'F').and.(dlos.lt.1.d-2)) goto 760
+      if ((jend.eq.'F').and.(dlos.lt.1.d-2)) goto 730
 c
 c
 c     cooling function test, finish when tloss goes -ve
 c
-      if ((jend.eq.'G').and.(tloss.lt.0.d0)) goto 760
+      if ((jend.eq.'G').and.(tloss.lt.0.d0)) goto 730
 c
 c     poll for terminate file
 c
       pollfile='terminate'
       inquire (file=pollfile,exist=iexi)
-      if (iexi) goto 760
+      if (iexi) goto 730
 c
 c     otherwise go to normal iteration loop, if interlocks
 c     permit
 c
       if ((t.gt.100.d0).and.(step.lt.(mxnsteps-1))) then
-        goto 630
+        goto 600
       endif
 c
-  760 continue
+  730 continue
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     End model
@@ -1980,13 +1979,13 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         dva=0
 c
         wmod='REAL'
-        call wpsou(caller,pfx,np,wmod,t,de,dh,dr,0.5d0,tphot)
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 0.5d0, tphot)
 c
         wmod='LFLM'
-        call wpsou(caller,pfx,np,wmod,t,de,dh,dr,0.5d0,tphot)
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 0.5d0, tphot)
 c
         wmod='NFNU'
-        call wpsou(caller,pfx,np,wmod,t,de,dh,dr,0.5d0,tphot)
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 0.5d0, tphot)
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2003,22 +2002,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       dva=vel1-vel0
 c
       wmod='REAL'
-      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
+      call wpsou (caller, pfx, np, wmod, te1, de1, dh1, dr, wdil, tphot)
 c
       wmod='NFNU'
-      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
+      call wpsou (caller, pfx, np, wmod, te1, de1, dh1, dr, wdil, tphot)
 c
       wmod='LFLM'
-      call wpsou(caller,pfx,np, wmod, te1, de1, dh1, dr, wdil, tphot)
+      call wpsou (caller, pfx, np, wmod, te1, de1, dh1, dr, wdil, tphot)
 c
 c     dynamics
 c
       open (luop,file=fl,status='OLD',access='APPEND')
 c
-  770 format(//,
+  740 format(//,
      & ' Model ended.',a1,'Distance:',1pg14.7,a1,
      &'Time:',1pg14.7,a1,'Temp:',1pg12.5//)
-      write (luop,770) tab,dist(step+1),tab,timlps(step+1),tab,t
+      write (luop,740) tab,dist(step+1),tab,timlps(step+1),tab,t
 c
       call avrdata
       call wrsppop (luop)
@@ -2037,5 +2036,4 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

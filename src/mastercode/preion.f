@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -17,7 +17,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine preion (lterm, luop, tsmax, vs, dh, def, tef, qtot,
-     & drta )
+     &drta)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -143,7 +143,7 @@ c
               wei=0.5d0*(((dabs(dqmm)/((dabs(dqmm)+dabs(dq1))+1.d-36))/
      &         0.5d0)**0.75d0)
               dch=dexp((wei*dlog(frta))+((1.0d0-wei)*dlog(frmm)))
-            else if (dch.lt.frpp) then
+            elseif (dch.lt.frpp) then
               wei=0.5d0*(((dabs(dqpp)/((dabs(dqpp)+dabs(dq1))+1.d-36))/
      &         0.5d0)**0.75d0)
               dch=dexp((wei*dlog(frta))+((1.0d0-wei)*dlog(frpp)))

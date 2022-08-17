@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -28,7 +28,6 @@ c     if the file map.prefs is found in the current working directory
 c     then it will be used in place of data/ATDAT
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -80,14 +79,15 @@ c
         dtlen=lenv(datadir)
         filename=datadir(1:dtlen)//'data/ATDAT.txt'
         if (iexi.eqv..false.) then
-        m=lenv(filename)
-        write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
-        write (*,*) ' MV requires a valid local data/ directory or'
-        write (*,*) ' a valid shared /usr/local/share/mappings/data/'
-        write (*,*) ' or a valid shared /opt/local/share/mappings/data/'
-        write (*,*) ' directory.  '
-        stop
-      endif
+          m=lenv(filename)
+          write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
+          write (*,*) ' MV requires a valid local data/ directory or'
+          write (*,*) ' a valid shared /usr/local/share/mappings/data/'
+          write (*,*) ' or a valid shared /opt/local/share/mappings/data
+     &/'
+          write (*,*) ' directory.  '
+          stop
+        endif
       endif
 c
       filename=''
@@ -208,7 +208,7 @@ c
         invdion(i)=1.d0/dion(i)
         zmap(k)=j
         mapz(j)=k
-        if (i.ne.j) goto 380
+        if (i.ne.j) goto 340
    60 continue
 c
       do i=1,atypes
@@ -497,8 +497,8 @@ c
 c test badnell 2015 recom variations
 c
       do i=0,150
-         logte=1.0d0+dble(i)*0.05d0
-         call recom(10.d0**logte)
+        logte=1.0d0+dble(i)*0.05d0
+        call recom (10.d0**logte)
       enddo
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -740,10 +740,10 @@ c
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             heibin(i)=j
-            goto 230
+            goto 220
           endif
         enddo
-  230   continue
+  220   continue
       enddo
 c New HeI lines
       do i=1,nheislines
@@ -752,10 +752,10 @@ c New HeI lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             heisbin(i)=j
-            goto 240
+            goto 230
           endif
         enddo
-  240   continue
+  230   continue
       enddo
       do i=1,nheitlines
         en=(lmev/heitlam(i))
@@ -763,10 +763,10 @@ c New HeI lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             heitbin(i)=j
-            goto 250
+            goto 240
           endif
         enddo
-  250   continue
+  240   continue
       enddo
 c heavy element recomb lines
       do i=1,nrccii
@@ -775,10 +775,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rccii_bin(i)=j
-            goto 260
+            goto 250
           endif
         enddo
-  260   continue
+  250   continue
       enddo
       do i=1,nrcnii
         en=(lmev/rcnii_lam(i))
@@ -786,10 +786,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcnii_bin(i)=j
-            goto 270
+            goto 260
           endif
         enddo
-  270   continue
+  260   continue
       enddo
       do i=1,nrcoi_q
         en=(lmev/rcoi_qlam(i))
@@ -797,10 +797,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcoi_qbin(i)=j
-            goto 280
+            goto 270
           endif
         enddo
-  280   continue
+  270   continue
       enddo
       do i=1,nrcoi_t
         en=(lmev/rcoi_tlam(i))
@@ -808,10 +808,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcoi_tbin(i)=j
-            goto 290
+            goto 280
           endif
         enddo
-  290   continue
+  280   continue
       enddo
       do i=1,nrcoii
         en=(lmev/rcoii_lam(i))
@@ -819,10 +819,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcoii_bin(i)=j
-            goto 300
+            goto 290
           endif
         enddo
-  300   continue
+  290   continue
       enddo
       do i=1,nrcneii
         en=(lmev/rcneii_lam(i))
@@ -830,10 +830,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcneii_bin(i)=j
-            goto 310
+            goto 300
           endif
         enddo
-  310   continue
+  300   continue
       enddo
       do i=1,mlines
         en=e12fs(i)/ev
@@ -841,10 +841,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             lcbin(i)=j
-            goto 320
+            goto 310
           endif
         enddo
-  320   continue
+  310   continue
       enddo
 c
 c     npre=0
@@ -883,21 +883,20 @@ c     enddo
 c
 c      *FINDS IONISATIONS CROSS SECTION NUMBER FOR HEII
 c
-      do 360 i=1,ionum
+      do 320 i=1,ionum
         jhe2p=i
-        if ((atpho(i).eq.2).and.(ionpho(i).eq.2)) goto 370
-  360 continue
-  370 continue
+        if ((atpho(i).eq.2).and.(ionpho(i).eq.2)) goto 330
+  320 continue
+  330 continue
 c
-      goto 390
+      goto 350
 c
-  380 error=.true.
+  340 error=.true.
 c
-  390 continue
+  350 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readiondata (luin, error)
@@ -958,7 +957,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readphiondata (luin, error)
@@ -1155,7 +1153,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readcolldata (luin, error)
@@ -1290,7 +1287,7 @@ c
             do k=1,ni
               y(k)=a(k)
             enddo
-             call spline00 (x, y, ni, y2)
+            call spline00 (x, y, ni, y2)
 c save..
             do k=1,ni
               xcol(k,ncol)=x(k)
@@ -1308,7 +1305,6 @@ c   Precompute splines
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readrecomdata (luin, error)
@@ -1394,58 +1390,56 @@ c
       enddo
 c
 c      if (recommode.eq.2) then
-        filename=datadir(1:dtlen)//'data/ionisation/NORADREC.txt'
-        open (luin,file=filename,status='OLD')
-   50   read (luin,10) (ibuf(i),i=1,19)
-        ilgg=ibuf(1)
-        if (ilgg(1:1).eq.'%') goto 50
-        write (*,20) (ibuf(i),i=1,19)
-        read (luin,*) nions
+      filename=datadir(1:dtlen)//'data/ionisation/NORADREC.txt'
+      open (luin,file=filename,status='OLD')
+   50 read (luin,10) (ibuf(i),i=1,19)
+      ilgg=ibuf(1)
+      if (ilgg(1:1).eq.'%') goto 50
+      write (*,20) (ibuf(i),i=1,19)
+      read (luin,*) nions
 c
-        do 60 i=1,nions
+      do 60 i=1,nions
 c
-          atom=0
-          ion=0
-          read (luin,*) at,io,tp,ni
-          if (zmap(at).ne.0) then
+        atom=0
+        ion=0
+        read (luin,*) at,io,tp,ni
+        if (zmap(at).ne.0) then
 c
-            atom=zmap(at)
+          atom=zmap(at)
 c
-            if (io.lt.maxion(atom)) then
+          if (io.lt.maxion(atom)) then
 c
-              nnorad=nnorad+1
+            nnorad=nnorad+1
 c
-              ion=io+1
+            ion=io+1
 c
-              atndrec(nnorad)=atom
-              ionndrec(nnorad)=ion
-              noradid(ion,atom)=nnorad
-              typendrec(nnorad)=tp
-              nodesndrec(nnorad)=ni
+            atndrec(nnorad)=atom
+            ionndrec(nnorad)=ion
+            noradid(ion,atom)=nnorad
+            typendrec(nnorad)=tp
+            nodesndrec(nnorad)=ni
 c
-              read (luin,*) (tendrec(j,nnorad),j=1,ni)
-              read (luin,*) (andrec(j,nnorad),j=1,ni)
-              read (luin,*) (a2ndrec(j,nnorad),j=1,ni)
+            read (luin,*) (tendrec(j,nnorad),j=1,ni)
+            read (luin,*) (andrec(j,nnorad),j=1,ni)
+            read (luin,*) (a2ndrec(j,nnorad),j=1,ni)
 c
-            else
-              read (luin,10) (ibuf(j),j=1,19)
-              read (luin,10) (ibuf(j),j=1,19)
-              read (luin,10) (ibuf(j),j=1,19)
-            endif
-
           else
-              read (luin,10) (ibuf(j),j=1,19)
-              read (luin,10) (ibuf(j),j=1,19)
-              read (luin,10) (ibuf(j),j=1,19)
+            read (luin,10) (ibuf(j),j=1,19)
+            read (luin,10) (ibuf(j),j=1,19)
+            read (luin,10) (ibuf(j),j=1,19)
           endif
-   60   continue
+        else
+          read (luin,10) (ibuf(j),j=1,19)
+          read (luin,10) (ibuf(j),j=1,19)
+          read (luin,10) (ibuf(j),j=1,19)
+        endif
+   60 continue
 c
-        close (luin)
+      close (luin)
 c      endif
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readdirecomdata (luin, error)
@@ -1541,7 +1535,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readrecomdata2 (luin, error)
@@ -1664,7 +1657,6 @@ c      endif
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readhhedata (luin, error)
@@ -1937,7 +1929,8 @@ c
         read (luin,*) upid,loid,lam,a,b,c,d
 c
         heiseij(j)=(heisej(upid)-heisej(loid))*cls*plk
-        heislam(j)=1.0d8/(heisej(upid)-heisej(loid))!vacritz
+c     vacritz
+        heislam(j)=1.0d8/(heisej(upid)-heisej(loid))
         heisupid(j)=upid
         heisloid(j)=loid
         heisreccoef(1,j)=a
@@ -1972,7 +1965,8 @@ c
       do j=1,nheitlines
         read (luin,*) upid,loid,lam,a,b,c,d
         heiteij(j)=(heitej(upid)-heitej(loid))*cls*plk
-        heitlam(j)=1.0d8/(heitej(upid)-heitej(loid))!vacritz
+c     vacritz
+        heitlam(j)=1.0d8/(heitej(upid)-heitej(loid))
         heitupid(j)=upid
         heitloid(j)=loid
         heitreccoef(1,j)=a
@@ -2067,8 +2061,8 @@ c
         do i=1,ni
           read (luin,*) ti,(hylratsa(line,series,i,k),k=1,nj)
           do k=1,nj
-            hylratsa(line,series,i,k)=
-     &     dlog10(hylratsa(line,series,i,k)+epsilon)
+            hylratsa(line,series,i,k)=dlog10(hylratsa(line,series,i,k)+
+     &       epsilon)
           enddo
         enddo
 c precompute orthogonal splines
@@ -2104,8 +2098,8 @@ c        read (luin,10) (ibuf(k),k=1,19)
         do i=1,ni
           read (luin,*) ti,(hylratsb(line,series,i,k),k=1,nj)
           do k=1,nj
-            hylratsb(line,series,i,k)=
-     &     dlog10(hylratsb(line,series,i,k)+epsilon)
+            hylratsb(line,series,i,k)=dlog10(hylratsb(line,series,i,k)+
+     &       epsilon)
           enddo
         enddo
 c precompute orthogonal splines
@@ -2168,8 +2162,8 @@ c        read (luin,10) (ibuf(k),k=1,19)
         do i=1,ni
           read (luin,*) ti,(helratsa(line,series,i,k),k=1,nj)
           do k=1,nj
-            helratsa(line,series,i,k)=
-     &        dlog10(helratsa(line,series,i,k)+epsilon)
+            helratsa(line,series,i,k)=dlog10(helratsa(line,series,i,k)+
+     &       epsilon)
           enddo
         enddo
 c precompute orthogonal splines
@@ -2205,8 +2199,8 @@ c        read (luin,10) (ibuf(k),k=1,19)
         do i=1,ni
           read (luin,*) ti,(helratsb(line,series,i,k),k=1,nj)
           do k=1,nj
-            helratsb(line,series,i,k)=
-     &          dlog10(helratsb(line,series,i,k)+epsilon)
+            helratsb(line,series,i,k)=dlog10(helratsb(line,series,i,k)+
+     &       epsilon)
           enddo
         enddo
 c precompute orthogonal splines
@@ -2313,17 +2307,22 @@ c Legacy He I recob data, input changed to cm^-1 and A, reconvert here
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,fmt=10) (ibuf(j),j=1,19)
-      read (luin,*) (heien(i),i=1,4)!newreadincm^-1
-      heilam(1)=1.0d0/heien(1)!vacritzlambda,cm
+c     newreadincm^-1
+      read (luin,*) (heien(i),i=1,4)
+c     vacritzlambda,cm
+      heilam(1)=1.0d0/heien(1)
       heilam(2)=1.0d0/heien(3)
       heilam(3)=1.0d0/heien(4)
-      heien(1)=heien(1)*plk*cls!nowinbackinergs
+c     nowinbackinergs
+      heien(1)=heien(1)*plk*cls
       heien(2)=heien(2)*plk*cls
       heien(3)=heien(3)*plk*cls
       heien(4)=heien(4)*plk*cls
       read (luin,fmt=10) (ibuf(j),j=1,19)
-      read (luin,*) (qren(i),i=1,4)!newreadincm^-1
-      qren(1)=qren(1)*plk*cls!nowinbackinergs
+c     newreadincm^-1
+      read (luin,*) (qren(i),i=1,4)
+c     nowinbackinergs
+      qren(1)=qren(1)*plk*cls
       qren(2)=qren(2)*plk*cls
       qren(3)=qren(3)*plk*cls
       qren(4)=qren(4)*plk*cls
@@ -2331,8 +2330,10 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do j=1,12
         read (luin,*) (hel0(i,j),i=1,5)
-        hel0(1,j)=hel0(1,j)*1.0d-8!nowvacritzcm
-        heilam(j+3)=hel0(1,j)!nowvacritzcm
+c     nowvacritzcm
+        hel0(1,j)=hel0(1,j)*1.0d-8
+c     nowvacritzcm
+        heilam(j+3)=hel0(1,j)
       enddo
       nheilines=15
       close (luin)
@@ -2414,7 +2415,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readhhecoldata (luin, error)
@@ -2437,7 +2437,8 @@ c
       character*24 termi
       integer*4 nc,idc,tp,nspl,ids
 c
-c      real*8 hheeij (mxhhelvls,mxhhelvls)  ! cm^-1
+c      cm^-1
+c      real*8 hheeij (mxhhelvls,mxhhelvls)
 c      real*8 hheaji (mxhhelvls,mxhhelvls)
 c      real*8 hhegfij(mxhhelvls,mxhhelvls)
 c
@@ -2556,7 +2557,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readphotdat (luin, error)
@@ -2833,7 +2833,7 @@ c
               x=0.d0
               if ((c0.gt.0.d0).and.(c1.gt.0.d0).and.(c2.gt.0.d0)) then
 c  3rd order PPM/Simpsons integral average over bin
-                  x=(c0+(4.d0*c1)+c2)/6.d0
+                x=(c0+(4.d0*c1)+c2)/6.d0
               endif
               if (is.eq.1) then
 c
@@ -2884,7 +2884,7 @@ c
               c2=acrs(eright,si,be,s)
 c  3rd order PPM/Simpsons integral average over bin
               if ((c0.gt.0.d0).and.(c1.gt.0.d0).and.(c2.gt.0.d0)) then
-                  x=(c0+(4.d0*c1)+c2)/6.d0
+                x=(c0+(4.d0*c1)+c2)/6.d0
               endif
               if (x.lt.1.0d-36) x=0.d0
             endif
@@ -3095,7 +3095,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readion2 (luin, error)
@@ -3370,7 +3369,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readcoll2 (luin, error)
@@ -3446,7 +3444,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readcont (luin, error)
@@ -3675,7 +3672,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     subroutine readxdata (luin, error)
@@ -3857,8 +3853,10 @@ c
       real*8 bty (mxxr3nspl)
       real*8 bty2(mxxr3nspl)
 c local 2d matrix arrays, converted to line list indices
-      real*8 xr3eij (mxxr3lvls,mxxr3lvls)  ! cm^-1
-      real*8 xr3aji (mxxr3lvls,mxxr3lvls)  ! ^-1
+c      cm^-1
+      real*8 xr3eij (mxxr3lvls,mxxr3lvls)
+c      ^-1
+      real*8 xr3aji (mxxr3lvls,mxxr3lvls)
       real*8 xr3gfij(mxxr3lvls,mxxr3lvls)
       real*8 xr3frij(mxxr3lvls,mxxr3lvls)
 c
@@ -3987,7 +3985,8 @@ c               write(*,*) at, io, is, idx, xr32S12j(idx),termi(1:5)
             do i=1,nl
               do j=1,nl
                 xr3eij(i,j)=dabs(xr3ei(j,idx)-xr3ei(i,idx))
-c            xr3egij(i,j,idx)=plk*cls*xr3eij(i,j) ! ergs
+c      ergs
+c            xr3egij(i,j,idx)=plk*cls*xr3eij(i,j)
               enddo
             enddo
 c
@@ -3997,7 +3996,8 @@ c
 c        maxcolls=maxcolls+nc
             if (maxcolls.lt.nc) maxcolls=nc
             if (nc.gt.mxxr3cols) then
-            write (*,*) 'ERROR IN  XR3DATA Collisions Limit Exceeded: '
+              write (*,*) 'ERROR IN  XR3DATA Collisions Limit Exceeded:
+     &'
               write (*,*) idx,nc,mxxr3cols
               write (*,*) mapz(xr3at(idx)),xr3ion(idx)
               stop
@@ -4063,7 +4063,8 @@ c
 c
                   nt=nt+1
                   if (nt.gt.mxxr3lines) then
-              write (*,*) 'ERROR IN XR3DATA line list Limit Exceeded: '
+                    write (*,*) 'ERROR IN XR3DATA line list Limit Exceed
+     &ed: '
                     write (*,*) idx,nt,mxxr3lines
                     write (*,*) mapz(xr3at(idx)),xr3ion(idx)
                     stop
@@ -4088,7 +4089,8 @@ c                  xr3lines_eij(nt)=xr3eij(i,j,idx)
                   xr3lines_egij(nt)=plk*cls*xr3eij(i,j)
 c                  xr3lines_evij(nt)=xr3lines_egij(nt)/ev
 c
-                  xr3lines_lam(nt)=1.0d8/xr3eij(i,j)!vacritz
+c     vacritz
+                  xr3lines_lam(nt)=1.0d8/xr3eij(i,j)
                   xr3lines_aji(nt)=xr3aji(i,j)
                   xr3lines_gf(nt)=xr3gfij(i,j)
                   xr3lines_frac(nt)=xr3frij(i,j)
@@ -4162,10 +4164,8 @@ c
 c
       write (*,30) nxr3ions,nxr3lines
       xr3minxbin=1
-
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readxrldata (luin, error)
@@ -4195,8 +4195,10 @@ c
       real*8 bty (mxxr3nspl)
       real*8 bty2(mxxr3nspl)
 c same for large ions
-      real*8 xrleij (mxxrllvls,mxxrllvls)  ! cm^-1
-      real*8 xrlaji (mxxrllvls,mxxrllvls)  ! ^-1
+c      cm^-1
+      real*8 xrleij (mxxrllvls,mxxrllvls)
+c      ^-1
+      real*8 xrlaji (mxxrllvls,mxxrllvls)
       real*8 xrlgfij(mxxrllvls,mxxrllvls)
       real*8 xrlfrij(mxxrllvls,mxxrllvls)
 c
@@ -4235,7 +4237,7 @@ c
       idx=0
       do n=1,nentries
         read (luin,*) id,at,io
-C       write (*,*) 'READING XRLDATA ION: ',n,id
+c       write (*,*) 'READING XRLDATA ION: ',n,id
         if (id.ne.n) then
           write (*,*) 'ERROR READING XRLDATA ION: ',n,id
           stop
@@ -4296,7 +4298,8 @@ c
             do i=1,nl
               do j=1,nl
                 xrleij(i,j)=dabs(xrlei(j,idx)-xrlei(i,idx))
-c            xrlegij(i,j,idx)=plk*cls*xrleij(i,j) ! ergs
+c      ergs
+c            xrlegij(i,j,idx)=plk*cls*xrleij(i,j)
               enddo
             enddo
 c
@@ -4306,7 +4309,8 @@ c
 c        maxcolls=maxcolls+nc
             if (maxcolls.lt.nc) maxcolls=nc
             if (nc.gt.mxxrlcols) then
-            write (*,*) 'ERROR IN  XRLDATA Collisions Limit Exceeded: '
+              write (*,*) 'ERROR IN  XRLDATA Collisions Limit Exceeded:
+     &'
               write (*,*) idx,nc,mxxrlcols
               write (*,*) mapz(xrlat(idx)),xrlion(idx)
               stop
@@ -4372,7 +4376,8 @@ c
 c
                   nt=nt+1
                   if (nt.gt.mxxrllines) then
-              write (*,*) 'ERROR IN XRLDATA line list Limit Exceeded:'
+                    write (*,*) 'ERROR IN XRLDATA line list Limit Exceed
+     &ed:'
                     write (*,*) idx,nt,mxxrllines
                     write (*,*) mapz(xrlat(idx)),xrlion(idx)
                     stop
@@ -4397,7 +4402,8 @@ c                  xrllines_eij(nt)=xrleij(i,j,idx)
                   xrllines_egij(nt)=plk*cls*xrleij(i,j)
 c                  xrllines_evij(nt)=xrllines_egij(nt)/ev
 c
-                  xrllines_lam(nt)=1.0d8/xrleij(i,j)!vacritz
+c     vacritz
+                  xrllines_lam(nt)=1.0d8/xrleij(i,j)
                   xrllines_aji(nt)=xrlaji(i,j)
                   xrllines_gf(nt)=xrlgfij(i,j)
                   xrllines_frac(nt)=xrlfrij(i,j)
@@ -4474,7 +4480,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fnii(t4,coef)
@@ -4503,7 +4508,6 @@ c
       fnii=emiss
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function foii(t4,abcd)
@@ -4524,7 +4528,6 @@ c
       foii=dlog10(emiss)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fneii(t4,abcdf)
@@ -4546,7 +4549,6 @@ c
       fneii=dlog10(emiss)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readheavyrec (luin, error)
@@ -4629,7 +4631,8 @@ c
           write (*,*) 'ERROR READING RECOMB_CIIDAT ENERGIES: ',id,j
           stop
         endif
-        lm=1.0d8/eij!vacritz
+c     vacritz
+        lm=1.0d8/eij
         rccii_eij(j)=eij*plk*cls
         rccii_lam(j)=lm
         rccii_tr(j)=trans(1:10)
@@ -4735,7 +4738,8 @@ c
           write (*,*) 'ERROR READING RECOMB_NIIDAT: ',id,j,trans
           stop
         endif
-        lm=1.0d8/eij!vacritz
+c     vacritz
+        lm=1.0d8/eij
         rcnii_eij(j)=eij*plk*cls
         rcnii_lam(j)=lm
         rcnii_tr(j)=trans(1:16)
@@ -4960,7 +4964,8 @@ c
           write (*,*) 'ERROR READING RECOMB_OIDAT: Q',id,j,trans
           stop
         endif
-        lm=1.0d8/eij!vacritz
+c     vacritz
+        lm=1.0d8/eij
         rcoi_qeij(j)=eij*plk*cls
         rcoi_qlam(j)=lm
         rcoi_qtr(j)=trans(1:16)
@@ -5010,7 +5015,8 @@ c
           write (*,*) 'ERROR READING RECOMB_OIDAT: T',id,j,trans
           stop
         endif
-        lm=1.0d8/eij!vacritz
+c     vacritz
+        lm=1.0d8/eij
         rcoi_teij(j)=eij*plk*cls
         rcoi_tlam(j)=lm
         rcoi_ttr(j)=trans(1:16)
@@ -5080,7 +5086,8 @@ c
      &     trans
           stop
         endif
-        lm=1.0d8/eij!vacritz
+c     vacritz
+        lm=1.0d8/eij
         rcoii_eij(j)=eij*plk*cls
         rcoii_lam(j)=lm
         rcoii_mltid(j)=mult
@@ -5359,7 +5366,8 @@ c
           write (*,*) 'ERROR READING RECOMB_NEIIDAT: ',id,j,trans
           stop
         endif
-        lm=1.0d8/eij!vacritz
+c     vacritz
+        lm=1.0d8/eij
         rcneii_eij(j)=eij*plk*cls
         rcneii_lam(j)=lm
         rcneii_tr(j)=trans(1:16)
@@ -5420,7 +5428,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine read2level (luin, error)
@@ -5466,7 +5473,8 @@ c           e12r(nl)=e12
 c           omres(nl)=om
 c           fabsr(nl)=fab
 c           tkexres(nl)=e12/rkb
-c           rlam(nl)=plk*cls/e12r(nl)!vacritz
+c     vacritz
+c           rlam(nl)=plk*cls/e12r(nl)
 c           nialines(io,atom)=nialines(io,atom)+1
 c         endif
 c       endif
@@ -5476,13 +5484,13 @@ c
       filename=datadir(1:dtlen)//'data/lines/INTERDAT2.txt'
       open (luin,file=filename,status='OLD')
 c
-   50 read (luin,fmt=10) (ibuf(j),j=1,19)
+   30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
-      if (ilgg(1:1).eq.'%') goto 50
+      if (ilgg(1:1).eq.'%') goto 30
       write (*,20) (ibuf(j),j=1,19)
       mlines=0
       read (luin,*) nentries
-      do 60 j=1,nentries
+      do 40 j=1,nentries
         read (luin,*) at,io,e12,w1,w2,a21,om
         if (zmap(at).ne.0) then
           atom=zmap(at)
@@ -5497,17 +5505,17 @@ c
             a21fs(ml)=a21
             omfs(ml)=om
             tkexfs(ml)=e12/rkb
-            fslam(ml)=plk*cls/e12fs(ml)!vacritz
+c     vacritz
+            fslam(ml)=plk*cls/e12fs(ml)
             nialines(io,atom)=nialines(io,atom)+1
           endif
         endif
-   60 continue
+   40 continue
 c
       close (luin)
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine read3level (luin, error)
@@ -5558,7 +5566,8 @@ c
                 f3ion(nf3ions)=io
                 f3atom(nf3ions)=atom
               endif
-              f3lam(j,nf3ions)=tlam!vacritz
+c     vacritz
+              f3lam(j,nf3ions)=tlam
               nialines(io,atom)=nialines(io,atom)+1
               wi3(j,nf3ions)=wl
               tkex3(j,nf3ions)=e12
@@ -5590,7 +5599,8 @@ c
                 f3ion(nf3ions)=io
                 f3atom(nf3ions)=atom
               endif
-              f3lam(j,nf3ions)=tlam!vacritzmicrons
+c     vacritzmicrons
+              f3lam(j,nf3ions)=tlam
               nialines(io,atom)=nialines(io,atom)+1
               wi3(j,nf3ions)=wl
               ei3(j,nf3ions)=e12
@@ -5609,7 +5619,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readmultilevel (luin, error)
@@ -5618,7 +5627,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Read multi-level data, mostly 5 levels, up to 9x9
 c Replaces  read5level, read6level, read9level,
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -5670,7 +5678,8 @@ c
         read (luin,*) na,ion
         read (luin,*) nl
 c          read (luin,*) nl,omtype,btn
-        ntrans=(nl*(nl-1))/2!expectednumber
+c     expectednumber
+        ntrans=(nl*(nl-1))/2
 c
         if (id.ne.ndata) then
           write (*,*) ' INCOMPATIBLE data/lines/MULTIDAT, index:',id,
@@ -5956,7 +5965,8 @@ c
                   nfmid(n,ni)=s1(1:l1)//'-'//s2(1:l2)
                 endif
                 fmeij(n,ni)=eim(j,i,ni)
-                fmlam(n,ni)=plk*cls/eim(j,i,ni)!vacritzcm
+c     vacritzcm
+                fmlam(n,ni)=plk*cls/eim(j,i,ni)
               enddo
             enddo
 c
@@ -6069,7 +6079,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c TEST Upsilons
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      if (kappamode.eq.1)then
+      if (kappamode.eq.1) then
       endif
       usekappa=.false.
       usekappainterp=.false.
@@ -6194,7 +6204,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readmultife (luin, error)
@@ -6203,7 +6212,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Read multi-level data, for up to 213 level iron III data
 c extended to other Fe-like large n ions
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -6540,7 +6548,8 @@ c
                   nfeid(n,ni)=s1(1:l1)//'-'//s2(1:l2)
                 endif
                 feeij(n,ni)=eife(j,i,ni)
-                felam(n,ni)=plk*cls/eife(j,i,ni)!vacritz
+c     vacritz
+                felam(n,ni)=plk*cls/eife(j,i,ni)
 c
               enddo
             enddo
@@ -6704,7 +6713,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readkappadat (luin, error)
@@ -6734,124 +6742,122 @@ c
    20 format(' ',19a4)
 c
       error=.false.
-
       nkappaions=0
       kapion(1)=0
       kapatom(1)=0
-
       if (kappamode.eq.1) then
 c
-      filename=datadir(1:dtlen)//'data/lines/KAPPADAT.txt'
-      open (luin,file=filename,status='OLD')
-   30 read (luin,fmt=10) (ibuf(j),j=1,19)
-      ilgg=ibuf(1)
-      if (ilgg(1:1).eq.'%') goto 30
+        filename=datadir(1:dtlen)//'data/lines/KAPPADAT.txt'
+        open (luin,file=filename,status='OLD')
+   30   read (luin,fmt=10) (ibuf(j),j=1,19)
+        ilgg=ibuf(1)
+        if (ilgg(1:1).eq.'%') goto 30
 c
-      nkappaions=0
-      write (*,20) (ibuf(j),j=1,19)
+        nkappaions=0
+        write (*,20) (ibuf(j),j=1,19)
 c     read kappas
-      read (luin,*) nk
-      nkappas=nk
-      read (luin,*) (kaps(m),m=1,nk)
-      do k=1,nk
-        kappas(k)=kaps(k)
-      enddo
+        read (luin,*) nk
+        nkappas=nk
+        read (luin,*) (kaps(m),m=1,nk)
+        do k=1,nk
+          kappas(k)=kaps(k)
+        enddo
 c      loop over ions
-      nkappaions=0
-      read (luin,*) nentries
+        nkappaions=0
+        read (luin,*) nentries
 c      write(*,*) " - Kappa Upsilon Data for : ", nentries, " Species."
-      do ndata=1,nentries
-        read (luin,*) i
-        if (i.ne.ndata) then
-          write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, ion error',i
-          error=.true.
-          stop
-        endif
-        read (luin,fmt=*) na,ion
-        read (luin,fmt=*) nl
-        if (zmap(na).ne.0) then
-          atom=zmap(na)
-          if (ion.le.maxion(atom)) then
+        do ndata=1,nentries
+          read (luin,*) i
+          if (i.ne.ndata) then
+            write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, ion error',
+     &       i
+            error=.true.
+            stop
+          endif
+          read (luin,fmt=*) na,ion
+          read (luin,fmt=*) nl
+          if (zmap(na).ne.0) then
+            atom=zmap(na)
+            if (ion.le.maxion(atom)) then
 c      write(*,*) "   Kappa Upsilon Data for : ", elem(atom), rom(ion)
-            nkappaions=nkappaions+1
-            ni=nkappaions
-            kapion(ni)=ion
-            kapatom(ni)=atom
-            kapnl(ni)=nl
-            do i=1,nl
-              do j=1,nl
-                nkaptridx(i,j,ni)=0
+              nkappaions=nkappaions+1
+              ni=nkappaions
+              kapion(ni)=ion
+              kapatom(ni)=atom
+              kapnl(ni)=nl
+              do i=1,nl
+                do j=1,nl
+                  nkaptridx(i,j,ni)=0
+                enddo
               enddo
-            enddo
 c
 c matirix-linelist maps:
 c
-            nt=0
-            do i=1,(nl-1)
-              do j=(i+1),nl
-                nt=nt+1
-                nkaptridx(i,j,ni)=nt
-                nkaptridx(j,i,ni)=nt
-                nkaplower(nt,ni)=i
-                nkapupper(nt,ni)=j
+              nt=0
+              do i=1,(nl-1)
+                do j=(i+1),nl
+                  nt=nt+1
+                  nkaptridx(i,j,ni)=nt
+                  nkaptridx(j,i,ni)=nt
+                  nkaplower(nt,ni)=i
+                  nkapupper(nt,ni)=j
+                enddo
               enddo
-            enddo
-            nkaptrans(ni)=nt
+              nkaptrans(ni)=nt
 c
 c               write(*,*)  nl," Level Atom: ", elem(atom),
 c     &                        " Ion: ",rom(ion),
 c     &                        " Transitions: ",nt
 c
-            do l=1,nt
-              read (luin,*) i,j
-              read (luin,*) ktype
-              kupstype(l,ni)=ktype
-              if (ktype.eq.0) then
-                read (luin,*) btn,btc
-                kupsbtn(l,ni)=btn
-                kupsbtc(l,ni)=btc
-                read (luin,*) (btx(m),m=1,btn)
-                do m=1,btn
-                  kupssplx(m,l,ni)=btx(m)
-                enddo
-                do k=1,nkappas
-                  read (luin,*) (bty(m),m=1,btn)
-                  read (luin,*) (bty2(m),m=1,btn)
+              do l=1,nt
+                read (luin,*) i,j
+                read (luin,*) ktype
+                kupstype(l,ni)=ktype
+                if (ktype.eq.0) then
+                  read (luin,*) btn,btc
+                  kupsbtn(l,ni)=btn
+                  kupsbtc(l,ni)=btc
+                  read (luin,*) (btx(m),m=1,btn)
                   do m=1,btn
-                    kupssply(m,k,l,ni)=bty(m)
-                    kupssply2(m,k,l,ni)=bty2(m)
+                    kupssplx(m,l,ni)=btx(m)
                   enddo
-                enddo
-              else
-                write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, fit type
-     & error',i
-                error=.true.
-                stop
-              endif
-            enddo
+                  do k=1,nkappas
+                    read (luin,*) (bty(m),m=1,btn)
+                    read (luin,*) (bty2(m),m=1,btn)
+                    do m=1,btn
+                      kupssply(m,k,l,ni)=bty(m)
+                      kupssply2(m,k,l,ni)=bty2(m)
+                    enddo
+                  enddo
+                else
+                  write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, fit ty
+     &pe error',i
+                  error=.true.
+                  stop
+                endif
+              enddo
 c
+            else
+              nt=(nl*(nl-1))/2
+              do i=1,nt*(nkappas*2+4)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              enddo
+            endif
           else
             nt=(nl*(nl-1))/2
             do i=1,nt*(nkappas*2+4)
               read (luin,fmt=10) (ibuf(j),j=1,19)
             enddo
           endif
-        else
-          nt=(nl*(nl-1))/2
-          do i=1,nt*(nkappas*2+4)
-            read (luin,fmt=10) (ibuf(j),j=1,19)
-          enddo
-        endif
-      enddo
+        enddo
 c
-      close (luin)
+        close (luin)
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readstardat (luin, error)

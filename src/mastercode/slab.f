@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -24,7 +24,6 @@ c     A single slab model
 c     full diffuse field, includes slab depth.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -146,7 +145,7 @@ c
    80 write (*,90)
    90 format(//' Spectrum printout required? (y/n) ',$)
       read (*,30) jprin
-      call toup(jprin(1:1),jprin)
+      call toup (jprin(1:1), jprin)
 c
       if ((jprin.ne.'N').and.(jprin.ne.'Y')) goto 80
 c
@@ -158,7 +157,7 @@ c
   100     write (*,110)
   110    format(//' Spectrum for each iteration? (y/n) ',$)
           read (*,30) jspec
-          call toup(jspec(1:1),jspec)
+          call toup (jspec(1:1), jspec)
 c
           if ((jspec.ne.'N').and.(jspec.ne.'Y')) goto 100
 c
@@ -183,8 +182,8 @@ c
 c
 c    initial ionisation
 c
-      write(*,*)' Initial State (t,de,dh):'
-      write(*,*) t, de, dh
+      write (*,*) ' Initial State (t,de,dh):'
+      write (*,*) t,de,dh
 c
 c
       rad=1.d38
@@ -286,14 +285,12 @@ c
           else
             call copypop (pop, pop0)
           endif
-
-          write(*,*) t, de, dh, pop(1,1),pop(2,1)
-
+          write (*,*) t,de,dh,pop(1,1),pop(2,1)
         endif
         if (ilgg.lt.'E') then
           call teequi (t, tf, de, dh, tstep1, nmod)
           trec=frectim(tf,de,dh)
-        else if (ilgg.eq.'E') then
+        elseif (ilgg.eq.'E') then
 c
           tst=0.0d0
           call cool (t, de, dh)
@@ -306,7 +303,7 @@ c
           caller='TE'
           wmod='REAL'
 c
-          call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
+          call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
 c
           call timion (t, de, dh, xhyf, tstep1)
           tst=tst+tstep1
@@ -320,7 +317,7 @@ c
           caller='TE'
           wmod='REAL'
 c
-          call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
+          call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
 c
           dift=0.d0
 c
@@ -345,7 +342,7 @@ c
           caller='TE'
           wmod='REAL'
 c
-          call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
+          call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
 c
           call difpop (pop, popz, trea, atypes, dift)
 c
@@ -363,16 +360,16 @@ c
           if (tstep1.gt.0.d0) call teequi (t, tf, de, dh, tstep1, nmod)
           prescc=fpressu(t,dh,pop)
           if (tstep2.gt.0.d0) call evoltem (tf, tf, de, dh, prescc,
-     &    tstep2, 0.0d0, 0.0d0,luop)
+     &     tstep2, 0.0d0, 0.0d0, luop)
           trec=frectim(tf,de,dh)
 c
           if (cab.ge.0) caseab(1)=cab
           if (cab.ge.0) caseab(2)=cab
 c
-          call localem (t , de, dh)
-          call totphot (t , dh, rad, dr, dv, wd00, lmod)
+          call localem (t, de, dh)
+          call totphot (t, dh, rad, dr, dv, wd00, lmod)
           if (tstep3.gt.0.d0) call evoltem (tf, tf, de, dh, prescc,
-     &    tstep3, exl, tex, luop)
+     &     tstep3, exl, tex, luop)
         endif
         call difpop (pop, popz, trea, atypes, dift)
         t=tf
@@ -415,7 +412,7 @@ c
 c        linemod='LAMB'
 c        call spec2 (luop, linemod, kmod)
 c
-        call spectrum(luop, kmod)
+        call spectrum (luop, kmod)
 c
       endif
 c
@@ -428,14 +425,14 @@ c
       caller='TE'
       wmod='REAL'
 c
-      call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
+      call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
 c
       pfx='slfn'
       np=4
       caller='TE'
       wmod='NFNU'
 c
-      call wpsou(caller,pfx,np, wmod, t, de, dh, dr, 1.d0, tphot)
+      call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
 c
 c      write out balance file
 c

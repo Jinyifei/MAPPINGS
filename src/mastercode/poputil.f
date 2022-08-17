@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -33,7 +33,6 @@ c
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine copypop (popin, popout)
@@ -48,7 +47,6 @@ c
    10   popout(ion,at)=popin(ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine addpop (popin, popout)
@@ -63,7 +61,6 @@ c
    10   popout(ion,at)=popin(ion,at)+popout(ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine clearpop (popin)
@@ -78,7 +75,6 @@ c
    10   popin(ion,at)=0.0d0
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine scalepop (popin, x)
@@ -93,7 +89,6 @@ c
    10   popin(ion,at)=popin(ion,at)*x
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine copysteppop (step, popin, popout)
@@ -112,7 +107,6 @@ c
    10   popout(ion,at)=popin(step,ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine copypopstep (popin, step, popout)
@@ -127,7 +121,6 @@ c
    10   popout(step,ion,at)=popin(ion,at)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine averinto (wei, popw, popco, popout)
@@ -156,7 +149,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine difpop (popin, popfi, tre, lim, dif)
@@ -169,7 +161,6 @@ c     TRE : TRESHOLD FOR MEASURING CHANGE
 c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -215,7 +206,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine difhhe (popin, popfi, dif)
@@ -273,5 +263,4 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

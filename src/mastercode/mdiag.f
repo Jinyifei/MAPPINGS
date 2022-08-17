@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -68,44 +68,43 @@ c
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 110 il=1,jl
-        do 70 kl=il,jl
+      do 60 il=1,jl
+        do 20 kl=il,jl
           rab=a(il,kl)
           ra=dabs(rab)
-          if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
+          if (ra.lt.epsilon) goto 20
+          do 10 kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   60     continue
-   70   continue
+   10     continue
+   20   continue
 c
-        do 80 kl=il,jl
+        do 30 kl=il,jl
           r(kl)=a(il,kl)
-   80   continue
-        do 100 kl=1,jl
-          if (kl.eq.il) goto 100
+   30   continue
+        do 50 kl=1,jl
+          if (kl.eq.il) goto 50
           ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
-  100   continue
-  110 continue
+          if (ra.lt.epsilon) goto 50
+          do 40 kc=1,jc
+   40       a(kc,kl)=a(kc,kl)-a(kc,il)
+   50   continue
+   60 continue
 c
 c    ***BACK SUBSTITUTION
 c
-      do 140 ila=1,jl
+      do 90 ila=1,jl
         il=(jl+1)-ila
         ics=il+1
         aaa=0.0d0
-        if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
-  130   dx=(a(jc,il)-aaa)/a(il,il)
+        if (ics.gt.jl) goto 80
+        do 70 ic=ics,jl
+   70     aaa=aaa+(a(ic,il)*x(ic))
+   80   dx=(a(jc,il)-aaa)/a(il,il)
         x(il)=x(il)+dx
-  140 continue
+   90 continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag3 (jl, alph, x)
@@ -196,7 +195,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag6 (alph, x)
@@ -289,7 +287,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag9 (alph, x)
@@ -382,7 +379,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiag16 (alph, x)
@@ -474,7 +470,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiagn (alph, x, n)
@@ -570,7 +565,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mdiagfe (alph, x, n)
@@ -665,7 +659,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine matsolve (alph, x, n, np)
@@ -711,7 +704,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine matsolvemulti (alph, x, n)
@@ -748,7 +740,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine matsolvefe (alph, x, n)
@@ -802,7 +793,6 @@ c     write(*,*) i, x(i)
 c     enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine ludcmp (a, n, np, indx, d)
@@ -871,7 +861,6 @@ c
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine lubksb (a, n, np, indx, b)
@@ -908,7 +897,6 @@ c
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mprove (a, alud, n, np, indx, b, x)

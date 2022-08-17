@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -29,7 +29,7 @@ c
       include 'cblocks.inc'
 c
       real*8 tauso,sigmat
-      integer*4 i,inl,dtype,m
+      integer*4 i,inl
       integer*4 ion,atom
       real*8 pz,crosec,colden
 c
@@ -46,19 +46,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (inl.lt.ionstartbin) return
 c
-        do i=1,ionum
-          if (inl.ge.photbinstart(i)) then
-               atom=atpho(i)
-               ion=ionpho(i)
-               pz=zion(atom)*pop(ion,atom)
-               colden=popint(ion,atom)
-               if ((pz.gt.pzlimit).or.(colden.gt.1.0d10)) then
-               crosec=photxsec(i,inl)
-               sigmat=sigmat+(pz*crosec)
-               tauso=tauso+(colden*crosec)
-               endif
+      do i=1,ionum
+        if (inl.ge.photbinstart(i)) then
+          atom=atpho(i)
+          ion=ionpho(i)
+          pz=zion(atom)*pop(ion,atom)
+          colden=popint(ion,atom)
+          if ((pz.gt.pzlimit).or.(colden.gt.1.0d10)) then
+            crosec=photxsec(i,inl)
+            sigmat=sigmat+(pz*crosec)
+            tauso=tauso+(colden*crosec)
           endif
-        enddo
+        endif
+      enddo
 c
       return
       end
@@ -96,15 +96,15 @@ c
       if (inl.ge.ionstartbin) then
         do i=1,ionum
           if (inl.ge.photbinstart(i)) then
-               atom=atpho(i)
-               ion=ionpho(i)
-               pz=zion(atom)*pop(ion,atom)
-               colden=popint(ion,atom)
-               if ((pz.gt.pzlimit).or.(colden.gt.1.0d10)) then
-               crosec=photxsec(i,inl)
-               sigmat=sigmat+(pz*crosec)
-               tauso=tauso+(colden*crosec)
-               endif
+            atom=atpho(i)
+            ion=ionpho(i)
+            pz=zion(atom)*pop(ion,atom)
+            colden=popint(ion,atom)
+            if ((pz.gt.pzlimit).or.(colden.gt.1.0d10)) then
+              crosec=photxsec(i,inl)
+              sigmat=sigmat+(pz*crosec)
+              tauso=tauso+(colden*crosec)
+            endif
           endif
         enddo
       endif

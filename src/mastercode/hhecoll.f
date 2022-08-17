@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -49,13 +49,14 @@ c
         beta=(t/(t+btc))
         nspl=hhecol_nspl(icol,idx)
         do l=1,nspl
-          btx(l)=hhecol_x(l) ! uniform splines for all hhe data
+c      uniform splines for all hhe data
+          btx(l)=hhecol_x(l)
           bty(l)=hhecol_y(l,icol,idx)
           bty2(l)=hhecol_y2(l,icol,idx)
         enddo
         upsilon=fsplint(btx,bty,bty2,nspl,beta)
         if (omtype.eq.13) then
-           upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
+          upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
         endif
       else
         write (*,*) 'ERROR, Invalid spline type in fhheomgspl:',omtype
@@ -65,7 +66,6 @@ c
       fhheomgspl=dmax1(0.d0,upsilon)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvehheion (t, de, dh, idx, ni)
@@ -118,44 +118,44 @@ c lower = i upper = j
         i=hhecol_i(icol,idx)
 c        ground excitation only atm
         if (i.eq.1) then
-        j=hhecol_j(icol,idx)
-        nq=hhen(j,idx)
-        ee=eji(i,j)
-        y=ee*invrkt
-        if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          ratekappa=1.d0
-          if (usekappa) then
-            ratekappa=fkenhance(kappa,y)
-          endif
-          invgi=hheinvgi(i,idx)
-          omegaij=fhheomgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=cgjb*omegaij*ratekappa
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            loss=rr*ee
+          j=hhecol_j(icol,idx)
+          nq=hhen(j,idx)
+          ee=eji(i,j)
+          y=ee*invrkt
+          if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
+            ratekappa=1.d0
+            if (usekappa) then
+              ratekappa=fkenhance(kappa,y)
+            endif
+            invgi=hheinvgi(i,idx)
+            omegaij=fhheomgspl(t,y,icol,idx)*invgi
+            cgjb=rka*f*dexp(-y)
+            cr=cgjb*omegaij*ratekappa
+            rr=abde*cr
+            if (rr.gt.epsilon) then
+              loss=rr*ee
 c            1s 2S1/2->2s 2S1/2 collision
               if (j.eq.2) then
 c           save rate for 2p calcs
                 collrate2p(atom)=cr
-c            dont add 2S to Ly Alpha! distributed elsewhere
+c      distributed elsewhere
+c            dont add 2S to Ly Alpha
                 rr=0.d0
                 if (linecoolmode.eq.1) then
                   loss=0.d0
                 endif
-            endif
-            hheloss=hheloss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
+              endif
+              hheloss=hheloss+loss
+              coolz(atom)=coolz(atom)+loss
+              coolzion(ion,atom)=coolzion(ion,atom)+loss
               rateton(atom,nq)=rateton(atom,nq)+rr
+            endif
           endif
-        endif
         endif
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine hhecoll (t, de, dh)
@@ -195,6 +195,5 @@ c
       if (hheloss.lt.epsilon) hheloss=0.d0
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

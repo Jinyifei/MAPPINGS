@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -24,13 +24,12 @@ c*******TO ZERO BUFFER ARRAYS,RESET COUNTERS AND
 c     SET DEFAULT VALUES
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
       integer*4 j, i, k, atom
 c
-      call zeroemiss()
+      call zeroemiss ()
 c
 c    ***MAKE RECOMB. COEFFICIENTS EFFECTIVE FOR ALL ELEMENTS
 c
@@ -62,7 +61,6 @@ c
       qtosoh=0.0d0
       qhdha=0.0d0
       zetaeav=0.0d0
-
       weoiii=0.0d0
       wenii=0.0d0
       wesii=0.0d0
@@ -205,7 +203,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine zerbuf ()
@@ -279,7 +276,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine zeroemiss ()

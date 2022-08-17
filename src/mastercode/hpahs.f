@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -175,7 +175,7 @@ c     Jpe-Jec=0
         enddo
 c solve
 c        call mdiag (5, pahstate, pahsolve)
-        call  matsolve (pahstate, pahsolve, 5, 5)
+        call matsolve (pahstate, pahsolve, 5, 5)
 c Calculate (+ve) ionisation fraction
         do i=1,pahi
           pahz(i)=pahsolve(i)

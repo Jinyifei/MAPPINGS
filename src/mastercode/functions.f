@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -32,7 +32,8 @@ c
       real*8 trg,  x_sec, abfrac
       integer*4 line,series,nz,atom
 c
-c     casab=0.d0 ! test always case A for all elements-
+c      test always case A for all elements-
+c     casab=0.d0
 c     return
 c
 c     currently only line=3,series=1 considered
@@ -49,7 +50,8 @@ c
       endif
       if ((nz.gt.2).and.(atom.gt.0)) then
 c        x_sec=xhydlin(2,line,series,atom)-1.0d0
-        casab=0.d0 ! always case A for heavy elements
+c      always case A for heavy elements
+        casab=0.d0
         return
       endif
 c
@@ -65,7 +67,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function densnum(dh)
@@ -93,7 +94,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function denstot(dh)
@@ -119,7 +119,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function dfuint(bet, sa, b1, b2, alo)
@@ -154,7 +153,7 @@ c
         if (sa.eq.0.0d0) then
           da=bet*(((b2**sa1)/sa1)-((b1**sa1)/sa1))
           db=(1.0d0-bet)*(dlog(b2)-dlog(b1))
-        else if (sa1.eq.0.0d0) then
+        elseif (sa1.eq.0.0d0) then
           da=bet*(dlog(b2)-dlog(b1))
           db=(1.0d0-bet)*(((b2**sa)/sa)-((b1**sa)/sa))
         else
@@ -196,7 +195,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function vernerph1(e,l,ph1)
@@ -222,7 +220,6 @@ c
       s=a*(y**q)*(b**p1)
       vernerph1=s
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function vernerph2(e,ph2)
@@ -248,7 +245,6 @@ c
       s=a*(z**q)*(b**p1)
       vernerph2=s
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function vernerphoto(e,ion)
@@ -317,7 +313,7 @@ c
 c
 c all using ph1 H-S cross sections
 c
-        cx=vernerph1(e,l,p1)
+          cx=vernerph1(e,l,p1)
 c
         endif
       endif
@@ -334,7 +330,7 @@ c     from Abramowitz and Stegun or DMLF in public domain
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fE1(x)
+      real*8 function fe1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -354,30 +350,29 @@ c    Fast version
       data nx / 0.d0 /
 c
       if (x.le.0.d0) then
-        fE1=(0.d0/nx)
+        fe1=(0.d0/nx)
         return
       endif
 c
 c     evaluate E1(x) = integral(1 to inf)(e^-xt)/t dt
 c
       f=0.d0
-      if (x.lt.700.d0)then
-      if (x.lt.1.d0) then
+      if (x.lt.700.d0) then
+        if (x.lt.1.d0) then
 c     A&S Eqn 5.1.53 pg231
-        f=a(0)+x*(a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5)))))-dlog(x)
-      else
+          f=a(0)+x*(a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5)))))-dlog(x)
+        else
 c     A&S Eqn 5.1.56 pg 231
-        f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
-        f=f*dexp(-x)/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
+          f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
+          f=f*dexp(-x)/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
+        endif
       endif
-      endif
-      fE1=f
+      fe1=f
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fexpE1(x)
+      real*8 function fexpe1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -403,7 +398,7 @@ c
       data nx / 0.d0 /
 c
       if (x.le.0.d0) then
-        fexpE1=(0.d0/nx)
+        fexpe1=(0.d0/nx)
         return
       endif
 c
@@ -419,13 +414,12 @@ c     A&S Eqn 5.1.56 pg 231
         f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
         f=f/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
       endif
-      fexpE1=f
+      fexpe1=f
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fcodyE1(x)
+      real*8 function fcodye1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -433,69 +427,69 @@ c Precise Exponential Integral, E1(x) and exp(x)*E1(x), x real > 0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C----------------------------------------------------------------------
+c----------------------------------------------------------------------
 c    Compute first exponential integral E1(x) = -Ei(-x)
 c    DP accurate version
-C----------------------------------------------------------------------
-C           integral (from t=-infinity to t=x) (exp(t)/t),  x > 0,
-C  Ei(x) =
-C          -integral (from t=-x to t=infinity) (exp(t)/t),  x < 0,
-C
-C
-C  E1(x) = -Ei(-x), x > 0
-C
-C     Function                      Parameters for CALCE1
-C       Call                         ARG             RESULT
-C      CALCE1(X,RESULT)            X .GT. 0          -Ei(-X)
-C
-C  The main computation involves evaluation of rational Chebyshev
-C  approximations published in Math. Comp. 22, 641-649 (1968), and
-C  Math. Comp. 23, 289-303 (1969) by Cody and Thacher.  This
-C  transportable program is patterned after the machine-dependent
-C  FUNPACK packet  NATSEI,  but cannot match that version for
-C  efficiency or accuracy.  This version uses rational functions
-C  that theoretically approximate the exponential integrals to
-C  at least 18 significant decimal digits.  The accuracy achieved
-C  depends on the arithmetic system, the compiler, the intrinsic
-C  functions, and proper selection of the machine-dependent
-C  constants.
-C
-C
-C*******************************************************************
-C*******************************************************************
-C
-C Explanation of machine-dependent constants
-C
-C   beta = radix for the floating-point system.
-C   minexp = smallest representable power of beta.
-C   maxexp = smallest power of beta that overflows.
-C   XBIG = largest argument acceptable to EONE; solution to
-C          equation:
-C                     exp(-x)/x * (1 + 1/x) = beta ** minexp.
-C   XINF = largest positive machine number; approximately
-C                     beta ** maxexp
-C   XMAX = largest argument acceptable to EI; solution to
-C          equation:  exp(x)/x * (1 + 1/x) = beta ** maxexp.
-C
-C     Approximate values for some important machines are:
-C
-C                     beta      minexp      maxexp
-C  IEEE   (S.P.)       2        -126         128
-C  IEEE   (D.P.)       2       -1022        1024
-C
-C*******************************************************************
-C*******************************************************************
-C
-C Intrinsic functions required are:
-C
-C     ABS, SQRT, EXP
-C
-C
-C  Original Author: W. J. Cody
-C          Mathematics abd Computer Science Division
-C          Argonne National Laboratory
-C          Argonne, IL 60439
-C
+c----------------------------------------------------------------------
+c           integral (from t=-infinity to t=x) (exp(t)/t),  x > 0,
+c  Ei(x) =
+c          -integral (from t=-x to t=infinity) (exp(t)/t),  x < 0,
+c
+c
+c  E1(x) = -Ei(-x), x > 0
+c
+c     Function                      Parameters for CALCE1
+c       Call                         ARG             RESULT
+c      CALCE1(X,RESULT)            X .GT. 0          -Ei(-X)
+c
+c  The main computation involves evaluation of rational Chebyshev
+c  approximations published in Math. Comp. 22, 641-649 (1968), and
+c  Math. Comp. 23, 289-303 (1969) by Cody and Thacher.  This
+c  transportable program is patterned after the machine-dependent
+c  FUNPACK packet  NATSEI,  but cannot match that version for
+c  efficiency or accuracy.  This version uses rational functions
+c  that theoretically approximate the exponential integrals to
+c  at least 18 significant decimal digits.  The accuracy achieved
+c  depends on the arithmetic system, the compiler, the intrinsic
+c  functions, and proper selection of the machine-dependent
+c  constants.
+c
+c
+c*******************************************************************
+c*******************************************************************
+c
+c Explanation of machine-dependent constants
+c
+c   beta = radix for the floating-point system.
+c   minexp = smallest representable power of beta.
+c   maxexp = smallest power of beta that overflows.
+c   XBIG = largest argument acceptable to EONE; solution to
+c          equation:
+c                     exp(-x)/x * (1 + 1/x) = beta ** minexp.
+c   XINF = largest positive machine number; approximately
+c                     beta ** maxexp
+c   XMAX = largest argument acceptable to EI; solution to
+c          equation:  exp(x)/x * (1 + 1/x) = beta ** maxexp.
+c
+c     Approximate values for some important machines are:
+c
+c                     beta      minexp      maxexp
+c  IEEE   (S.P.)       2        -126         128
+c  IEEE   (D.P.)       2       -1022        1024
+c
+c*******************************************************************
+c*******************************************************************
+c
+c Intrinsic functions required are:
+c
+c     ABS, SQRT, EXP
+c
+c
+c  Original Author: W. J. Cody
+c          Mathematics abd Computer Science Division
+c          Argonne National Laboratory
+c          Argonne, IL 60439
+c
 c----------------------------------------------------------------------
       implicit none
       integer*4 i
@@ -552,57 +546,56 @@ c----------------------------------------------------------------------
 c return IEEE infinty for 0.d0 or less
 c----------------------------------------------------------------------
       if (x.le.0.d0) then
-        fcodyE1=(0.d0/zero)
+        fcodye1=(0.d0/zero)
         return
       endif
 c----------------------------------------------------------------------
 c calculate E1.
 c----------------------------------------------------------------------
       ei=0.d0
-      if (x .le. one) then
-         sump = a(7) * x + a(1)
-         sumq = x + b(1)
-         do i = 2, 6
-            sump = sump * x + a(i)
-            sumq = sumq * x + b(i)
-         enddo
-         ei = dlog(x) - sump / sumq
-      else if (x .le. four) then
-         w = one / x
-         sump = c(1)
-         sumq = d(1)
-         do i = 2, 9
-           sump = sump * w + c(i)
-           sumq = sumq * w + d(i)
-         enddo
-         ei = - sump / sumq
-         ei = ei * dexp(-x)
+      if (x.le.one) then
+        sump=a(7)*x+a(1)
+        sumq=x+b(1)
+        do i=2,6
+          sump=sump*x+a(i)
+          sumq=sumq*x+b(i)
+        enddo
+        ei=dlog(x)-sump/sumq
+      elseif (x.le.four) then
+        w=one/x
+        sump=c(1)
+        sumq=d(1)
+        do i=2,9
+          sump=sump*w+c(i)
+          sumq=sumq*w+d(i)
+        enddo
+        ei=-sump/sumq
+        ei=ei*dexp(-x)
       else
-         if (x .gt. xbig) then
-           ei = zero
-         else
-           w = one / x
-           sump = e(1)
-           sumq = f(1)
-           do i = 2, 10
-             sump = sump * w + e(i)
-             sumq = sumq * w + f(i)
-           enddo
-           ei = -w * (one - w * sump / sumq )
-           ei = ei * dexp(-x)
-         end if
-      end if
-      fcodyE1 = -ei
+        if (x.gt.xbig) then
+          ei=zero
+        else
+          w=one/x
+          sump=e(1)
+          sumq=f(1)
+          do i=2,10
+            sump=sump*w+e(i)
+            sumq=sumq*w+f(i)
+          enddo
+          ei=-w*(one-w*sump/sumq)
+          ei=ei*dexp(-x)
+        endif
+      endif
+      fcodye1=-ei
       return
       end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      real*8 function fcodyexpe1(arg)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fcodyExpE1(arg)
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-C----------------------------------------------------------------------
+c----------------------------------------------------------------------
 c    Compute exp(x)*E1(x) = -Ei(-x)*exp(x)
 c
 c    multiply by dexp(x) x < 1.0, remove dexp(-x) , x > 1
@@ -611,66 +604,66 @@ c
 c    Here x can go much much larger than for,E1(x) alone.
 c
 c    DP accurate version
-C----------------------------------------------------------------------
-C           integral (from t=-infinity to t=x) (exp(t)/t),  x > 0,
-C  Ei(x) =
-C          -integral (from t=-x to t=infinity) (exp(t)/t),  x < 0,
-C
-C
-C  E1(x) = -Ei(-x), x > 0
-C
-C     Function                      Parameters for CALCE1
-C       Call                         ARG             RESULT
-C      CALCE1(X,RESULT)            X .GT. 0          -Ei(-X)
-C
-C  The main computation involves evaluation of rational Chebyshev
-C  approximations published in Math. Comp. 22, 641-649 (1968), and
-C  Math. Comp. 23, 289-303 (1969) by Cody and Thacher.  This
-C  transportable program is patterned after the machine-dependent
-C  FUNPACK packet  NATSEI,  but cannot match that version for
-C  efficiency or accuracy.  This version uses rational functions
-C  that theoretically approximate the exponential integrals to
-C  at least 18 significant decimal digits.  The accuracy achieved
-C  depends on the arithmetic system, the compiler, the intrinsic
-C  functions, and proper selection of the machine-dependent
-C  constants.
-C
-C
-C*******************************************************************
-C*******************************************************************
-C
-C Explanation of machine-dependent constants
-C
-C   beta = radix for the floating-point system.
-C   minexp = smallest representable power of beta.
-C   maxexp = smallest power of beta that overflows.
-C   XBIG = largest argument acceptable to EONE; solution to
-C          equation:
-C                     exp(-x)/x * (1 + 1/x) = beta ** minexp.
-C   XINF = largest positive machine number; approximately
-C                     beta ** maxexp
-C   XMAX = largest argument acceptable to EI; solution to
-C          equation:  exp(x)/x * (1 + 1/x) = beta ** maxexp.
-C
-C     Approximate values for some important machines are:
-C
-C                     beta      minexp      maxexp
-C  IEEE   (S.P.)       2        -126         128
-C  IEEE   (D.P.)       2       -1022        1024
-C
-C*******************************************************************
-C*******************************************************************
-C
-C Intrinsic functions required are:
-C
-C     ABS, SQRT, EXP
-C
-C
-C  Original Author: W. J. Cody
-C          Mathematics and Computer Science Division
-C          Argonne National Laboratory
-C          Argonne, IL 60439
-C
+c----------------------------------------------------------------------
+c           integral (from t=-infinity to t=x) (exp(t)/t),  x > 0,
+c  Ei(x) =
+c          -integral (from t=-x to t=infinity) (exp(t)/t),  x < 0,
+c
+c
+c  E1(x) = -Ei(-x), x > 0
+c
+c     Function                      Parameters for CALCE1
+c       Call                         ARG             RESULT
+c      CALCE1(X,RESULT)            X .GT. 0          -Ei(-X)
+c
+c  The main computation involves evaluation of rational Chebyshev
+c  approximations published in Math. Comp. 22, 641-649 (1968), and
+c  Math. Comp. 23, 289-303 (1969) by Cody and Thacher.  This
+c  transportable program is patterned after the machine-dependent
+c  FUNPACK packet  NATSEI,  but cannot match that version for
+c  efficiency or accuracy.  This version uses rational functions
+c  that theoretically approximate the exponential integrals to
+c  at least 18 significant decimal digits.  The accuracy achieved
+c  depends on the arithmetic system, the compiler, the intrinsic
+c  functions, and proper selection of the machine-dependent
+c  constants.
+c
+c
+c*******************************************************************
+c*******************************************************************
+c
+c Explanation of machine-dependent constants
+c
+c   beta = radix for the floating-point system.
+c   minexp = smallest representable power of beta.
+c   maxexp = smallest power of beta that overflows.
+c   XBIG = largest argument acceptable to EONE; solution to
+c          equation:
+c                     exp(-x)/x * (1 + 1/x) = beta ** minexp.
+c   XINF = largest positive machine number; approximately
+c                     beta ** maxexp
+c   XMAX = largest argument acceptable to EI; solution to
+c          equation:  exp(x)/x * (1 + 1/x) = beta ** maxexp.
+c
+c     Approximate values for some important machines are:
+c
+c                     beta      minexp      maxexp
+c  IEEE   (S.P.)       2        -126         128
+c  IEEE   (D.P.)       2       -1022        1024
+c
+c*******************************************************************
+c*******************************************************************
+c
+c Intrinsic functions required are:
+c
+c     ABS, SQRT, EXP
+c
+c
+c  Original Author: W. J. Cody
+c          Mathematics and Computer Science Division
+c          Argonne National Laboratory
+c          Argonne, IL 60439
+c
 c----------------------------------------------------------------------
       implicit none
       integer*4 i
@@ -721,46 +714,45 @@ c----------------------------------------------------------------------
 c----------------------------------------------------------------------
 c return IEEE infinty for 0.d0 or less
 c----------------------------------------------------------------------
-      x = arg
+      x=arg
       if (x.le.0.d0) then
-        fcodyExpE1=(0.d0/zero)
+        fcodyexpe1=(0.d0/zero)
         return
       endif
 c----------------------------------------------------------------------
 c calculate exp(x)*E1.
 c----------------------------------------------------------------------
       ei=0.d0
-      if (x .le. one) then
-         sump = a(7) * x + a(1)
-         sumq = x + b(1)
-         do i = 2, 6
-            sump = sump * x + a(i)
-            sumq = sumq * x + b(i)
-         enddo
-         ei = dexp(x)*(dlog(x) - sump / sumq)
-      else if (x .le. four) then
-         w = one / x
-         sump = c(1)
-         sumq = d(1)
-         do i = 2, 9
-           sump = sump * w + c(i)
-           sumq = sumq * w + d(i)
-         enddo
-         ei = - sump / sumq
-      else
-        w = one / x
-        sump = e(1)
-        sumq = f(1)
-        do i = 2, 10
-          sump = sump * w + e(i)
-          sumq = sumq * w + f(i)
+      if (x.le.one) then
+        sump=a(7)*x+a(1)
+        sumq=x+b(1)
+        do i=2,6
+          sump=sump*x+a(i)
+          sumq=sumq*x+b(i)
         enddo
-        ei = -w * (one - w * sump / sumq )
-      end if
-      fcodyExpE1 = -ei
+        ei=dexp(x)*(dlog(x)-sump/sumq)
+      elseif (x.le.four) then
+        w=one/x
+        sump=c(1)
+        sumq=d(1)
+        do i=2,9
+          sump=sump*w+c(i)
+          sumq=sumq*w+d(i)
+        enddo
+        ei=-sump/sumq
+      else
+        w=one/x
+        sump=e(1)
+        sumq=f(1)
+        do i=2,10
+          sump=sump*w+e(i)
+          sumq=sumq*w+f(i)
+        enddo
+        ei=-w*(one-w*sump/sumq)
+      endif
+      fcodyexpe1=-ei
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function farint(sub,x)
@@ -789,7 +781,7 @@ c     sub is an index to the two different integrals
 c
       real*8 xp,p,q,xinv
       real*8 fint
-      real*8 fcodyExpE1
+      real*8 fcodyexpe1
 c
       real*8 pj(0:14), qj(0:14)
       integer*4 j
@@ -811,7 +803,7 @@ c
 c
 c     evaluate f1(x) = e^x integral(1 to inf)(e^-xt)/t dt
 c
-         fint= fcodyExpE1(x)
+        fint=fcodyexpe1(x)
 c
       else
 c
@@ -837,7 +829,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     exp(u)*E1(u)*exp(-rexp)
 c     = fexpE1(u)*dexp(-rexp)
@@ -846,11 +837,10 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fue1(u, rexp)
       implicit none
-      real*8 u,rexp,fcodyExpE1
-      fue1=fcodyExpE1(u)*dexp(-rexp)
+      real*8 u,rexp,fcodyexpe1
+      fue1=fcodyexpe1(u)*dexp(-rexp)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fautoi(t,atom,ion)
@@ -1024,7 +1014,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function favcha(popul)
@@ -1060,7 +1049,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1098,7 +1086,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fbessi(x)
@@ -1177,7 +1164,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fbessk(x)
@@ -1258,7 +1244,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fcietim(dh)
@@ -1299,7 +1284,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fcolltim(de)
@@ -1340,7 +1324,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fcrit(dloss, zeta)
@@ -1361,7 +1344,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fdilu(rsou, rad)
@@ -1385,7 +1367,7 @@ c
       gdilf=1.0d0
 c
       if (jgeo.eq.'P') then
-         gdilf=0.5d0
+        gdilf=0.5d0
       endif
 c
       if (jgeo.eq.'S') then
@@ -1437,7 +1419,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function feldens(dh, popul)
@@ -1469,7 +1450,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function felneur(popul, neio)
@@ -1501,7 +1481,7 @@ c
    20 continue
       if (mm.eq.1) then
         felneur=ael/ane
-      else if ((ael+ane).gt.0.0d0) then
+      elseif ((ael+ane).gt.0.0d0) then
         felneur=ael/ane
       else
         felneur=1.d0
@@ -1509,7 +1489,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fsplint(xa,ya,y2a,n,x)
@@ -1550,17 +1529,17 @@ c set A=0 and get 1st deriv
 c A=0,B=1
         dydx=(dy/dx)+sixth*dx*y2a(klo)+2.d0*sixth*dx*y2a(khi)
         y=ya(khi)+dydx*(x-xa(khi))
-         fsplint=y
-         return
-      else if (b.lt.0.0d0) then
+        fsplint=y
+        return
+      elseif (b.lt.0.0d0) then
 c linear extrapolate from spline derivs
         dy=ya(khi)-ya(klo)
 c set B=0 and get 1st deriv
 c A=1,B=0
         dydx=(dy/dx)-2.d0*sixth*dx*y2a(klo)-sixth*dx*y2a(khi)
         y=ya(klo)-dydx*(xa(klo)-x)
-         fsplint=y
-         return
+        fsplint=y
+        return
       else
         c=sixth*(a*(a*a-1.d0))*(dx*dx)
         d=sixth*(b*(b*b-1.d0))*(dx*dx)
@@ -1569,7 +1548,6 @@ c A=1,B=0
       fsplint=y
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine splint (xa, ya, y2a, n, x, y)
@@ -1607,12 +1585,12 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         dydx=(dy/dx)+sixth*dx*y2a(klo)+2.0*sixth*dx*y2a(khi)
         y=ya(khi)+dydx*(x-xa(khi))
         return
-      else if (b.lt.0.0d0) then
+      elseif (b.lt.0.0d0) then
         dy=ya(khi)-ya(klo)
         dydx=(dy/dx)-2.0*sixth*dx*y2a(klo)-sixth*dx*y2a(khi)
         y=ya(klo)-dydx*(xa(klo)-x)
         return
-C     else if ((a.ge.0.d0).and.(b.ge.0.d0)) then
+c     else if ((a.ge.0.d0).and.(b.ge.0.d0)) then
       else
         c=sixth*(a*(a*a-1.d0))*(dx*dx)
         d=sixth*(b*(b*b-1.d0))*(dx*dx)
@@ -1620,7 +1598,6 @@ C     else if ((a.ge.0.d0).and.(b.ge.0.d0)) then
       endif
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine endgrads (x, y, n, yp1, ypn)
@@ -1641,7 +1618,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       endif
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine spline (x, y, n, yp1, ypn, y2)
@@ -1687,7 +1663,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine spline00 (x, y, n, y2)
@@ -1726,7 +1701,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine splin2 (x1a, x2a, ya, y2a, m, n, x1, x2, y)
@@ -1756,7 +1730,6 @@ cU    USES spline,splint
       call splint (x1a, yytmp, y2tmp, m, x1, y)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgaunt(ion, ndel, xsi)
@@ -1774,7 +1747,6 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-
       include 'cblocks.inc'
 c
 c           Variables
@@ -1829,7 +1801,6 @@ c
    30 continue
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fheavyside(x)
@@ -1850,7 +1821,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgamln(az)
@@ -1887,7 +1857,6 @@ c      write(*,*) 'gamln : az  z = ',az,z
       fgamln=s
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgserr(a, x, gln)
@@ -1916,12 +1885,11 @@ c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
         sum=sum+del
         if (abs(del).lt.abs(sum)*eps) goto 20
    10 continue
-      write (*,*)
-     &'Warning: Inc. Gamma Fn. fgserr did not converge for A = ',a
+      write (*,*) 'Warning: Inc. Gamma Fn. fgserr did not converge for A
+     & = ',a
    20 fgserr=sum*dexp(-x+a*log(x)-gln)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgcff (a, x, gln)
@@ -1961,12 +1929,11 @@ c            write(*,*) 'gcff: a1 = ',a1
           gold=g
         endif
    10 continue
-      write (*,*)
-     &'Warning: Inc. Gamma Fn. GCFF did not converge for A = ',a
+      write (*,*) 'Warning: Inc. Gamma Fn. GCFF did not converge for A =
+     & ',a
    20 fgcff=dexp(-x+a*dlog(x)-gln)*g
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgammln(xx)
@@ -1997,7 +1964,6 @@ c
       fgammln=tmp+dlog(stp*ser/x)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgamma(x)
@@ -2019,7 +1985,6 @@ c
       fgamma=dexp(calc)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fincgamma(a,x)
@@ -2032,20 +1997,19 @@ c
       real*8 a , x , gln , gammcf , gamser
       real*8 fgserr,fgcff
       if (x.lt.0.d0.or.a.le.0.d0) then
-      write(*,*) 'fincgamma called with x < 0 or A <= 0'
+        write (*,*) 'fincgamma called with x < 0 or A <= 0'
       endif
 c USE THE SERIES REPRESENTATION
       if (x.lt.(a+1.d0)) then
-        gamser= fgserr( a, x, gln)
+        gamser=fgserr(a,x,gln)
         fincgamma=gamser
       else
 c USE THE CONTINUED FRACTION METHOD
-        gammcf = fgcff ( a, x, gln)
+        gammcf=fgcff(a,x,gln)
         fincgamma=1.d0-gammcf
       endif
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fkenhance(k, x)
@@ -2067,8 +2031,8 @@ c
       real*8 rat
 c
       if (.not.(usekappa)) then
-         fkenhance=1.d0
-         return
+        fkenhance=1.d0
+        return
       endif
 c
       gam1=1.d0
@@ -2090,7 +2054,6 @@ c      write(*,*) k,x, min( gam1*rat, 1000.d0)
       fkenhance=min(gam1*rat,1000.d0)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fioncha(popul, iord)
@@ -2128,7 +2091,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fkramer(ion,atom,t)
@@ -2209,7 +2171,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fheirec(ion,atom,t)
@@ -2277,7 +2238,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fnoradrec(ion,atom,t)
@@ -2337,7 +2297,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fmua(de, dh)
@@ -2358,7 +2317,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fpsiy(x)
@@ -2431,7 +2389,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fphotim()
@@ -2472,7 +2429,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fradpress(dr,dh)
@@ -2494,7 +2450,7 @@ c
       real*8 dustradp, ionradp,dh, dgrad
       integer*4 i,k,dtype
 c
-      fradpress = 0.d0
+      fradpress=0.d0
 c
       if (radpressmode.eq.1) return
 c Jnu in tphot
@@ -2545,7 +2501,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fpressu(t, dh, popul)
@@ -2576,7 +2531,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fpresse(t, de, dh)
@@ -2600,7 +2554,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function frectim(t, de, dh)
@@ -2611,7 +2564,6 @@ c   ASSUMING CONSTANT ELECTRONIC DENSITY : DE
 c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -2681,7 +2633,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function frectim2(de)
@@ -2724,7 +2675,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function frectim3(dh)
@@ -2770,7 +2720,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     real*8 function fresga(atom,isoe,trans,ejk,telec, code)
@@ -2897,7 +2846,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine invrho (rho, de, dh, popul)
@@ -2908,7 +2856,6 @@ c       density in g/cc and population in popul
 c     USES FUNCTION DENSTOT (amus)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'const.inc'
 c
@@ -2924,7 +2871,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fzgas()
@@ -2936,7 +2882,6 @@ c       H and He are used, and He is used
 c       uses global zsol and current gas phase abundances, zion
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
       integer*4 i
@@ -2949,7 +2894,7 @@ c
 c
       if (atypes.gt.2) then
         zg=zg/(atypes-2)
-      else if (atypes.eq.2) then
+      elseif (atypes.eq.2) then
         zg=zion(2)/zsol(2)
       else
         zg=1.d0
@@ -2959,7 +2904,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function lambda(t,de,nu)
@@ -2972,8 +2916,9 @@ c     ref: Krolick and McKee 1978 ApJS 37,459
 c
 c     from: Johnston and Dawson 1973, Phys Fluids 16 722 (not sighted)
 c
-c    TODO: needs update!! Try NRL plasma handbook, not urgent as not
-c    used anywhere atm!
+c    TODO: needs update
+c    Try NRL plasma handbook, not urgent as not
+c    used anywhere atm
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
@@ -3004,7 +2949,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fplank(ts, rnuh)
@@ -3044,7 +2988,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fnair(lamvac)
@@ -3079,13 +3022,12 @@ c
       n=1.d0
       if ((lamvac.ge.2.d3).and.(lamvac.lt.4.d4)) then
         s=1.d4/lamvac
-        n=1.0d0+(8060.51d0+2480990.d0/(132.274d0-s*s)
-     &                    +17455.7d0/(39.32957d0-s*s))*1.0d-8
+        n=1.0d0+(8060.51d0+2480990.d0/(132.274d0-s*s)+17455.7d0/
+     &   (39.32957d0-s*s))*1.0d-8
       endif
       fnair=n
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     integer*4 function fclookup(isos,tran)
@@ -3232,10 +3174,9 @@ c  If you have the equation in the form of y = ax^2
 c  + bx + c, you can find the minimum value using the equation
 c  min = min = c - b^2/4a
 c
-      qua=c- ((b*b)/(4.d0*a))
+      qua=c-((b*b)/(4.d0*a))
 c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

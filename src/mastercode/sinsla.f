@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -72,7 +72,7 @@ c
       read (*,30) ilgg
 c
    30 format(a)
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
 c
       l=1
 c      if ((ilgg .eq. 'CC').or.(ilgg .eq. 'BB')) l = 2
@@ -199,7 +199,7 @@ c
         if (ilgg.lt.'E') then
           call teequi (t, tf, de, dh, tstep1, nmod)
           trec=frectim(tf,de,dh)
-        else if (ilgg.eq.'E') then
+        elseif (ilgg.eq.'E') then
           call timion (t, de, dh, xhyf, tstep1)
           call cool (t, de, dh)
           trec=frectim(t,de,dh)

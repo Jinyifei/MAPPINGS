@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -114,7 +114,7 @@ c
 c
         lgkt=dlog10(invrkt)
         do inl=1,infph-1
-          if (ee(inl).gt.0.d0)then
+          if (ee(inl).gt.0.d0) then
             u=lgcphote(inl)+lgkt
             j=idnint(((u+4.d0)*10.d0))+1
             j=min(max(j,1),ngffu-1)
@@ -147,7 +147,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine frefre (t, de, dh)
@@ -269,7 +268,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgfflog(m,g2,u,il,jl)
@@ -328,7 +326,6 @@ c      write(*,*) dble(hitcount)/dble(totalcount)
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgfflogpoly(m,g2,u,il,jl)
@@ -378,7 +375,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine polint (xa, ya, n, x, y, dy)
@@ -430,7 +426,6 @@ c
    30 continue
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fgffspline2(lg2, lu)
@@ -446,5 +441,4 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

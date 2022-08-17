@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -67,7 +67,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fupsilonij(t,i,j,ionidx)
@@ -96,7 +95,7 @@ c
       fupsilonij=0.d0
       if (i.eq.j) return
 c
-      localt= t
+      localt=t
 c
       nt=nfmtridx(j,i,ionidx)
 c
@@ -200,7 +199,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine multilevel (t, de, dh)
@@ -234,6 +232,18 @@ c       fmloss_contrib=0.d0
 c
       fmloss=0.0d0
       if (nfmions.lt.1) return
+      if (t.le.mintemp) then
+        write (*,*) 'min Te in multilevel',t
+        stop
+      endif
+      if (dh.le.0.d0) then
+        write (*,*) 'LE 0.0 nH in multilevel',dh
+        stop
+      endif
+      if (de.le.0.d0) then
+        write (*,*) 'LE 0.0 ne in multilevel',de
+        stop
+      endif
 c
       f=dsqrt(1.0d0/t)
 c
@@ -393,7 +403,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Print out important contributions to fmloss by species
 c Write out all contributions to stdout (lu=6)
 c write (*,*)  'FMLOSS CONTRIBUTIONS'
-c call wionabal2(6, fmloss_contrib)  ! table: col=atom, row=ion
+c      table: col=atom, row=ion
+c call wionabal2(6, fmloss_contrib)
 c Write out the most important contributions on their own line
 c do ionindex=1,nfmions
 c   atom=fmatom(ionindex)
@@ -413,7 +424,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function ffeupsilonij(t,i,j,ionidx)
@@ -544,7 +554,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine multiiron (t, de, dh)
@@ -576,6 +585,9 @@ c
       feloss=0.0d0
 c
       if (nfeions.lt.1) return
+      if (t.le.mintemp) return
+      if (dh.le.0.d0) return
+      if (de.le.0.d0) return
 c
       f=dsqrt(1.0d0/t)
 c
@@ -729,6 +741,5 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

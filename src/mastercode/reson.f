@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -296,13 +296,14 @@ c
         beta=(t/(t+btc))
         nspl=xr3col_nspl(icol,idx)
         do l=1,nspl
-          btx(l)=xr3col_x(l) ! uniform splines for all hhe data
+c      uniform splines for all hhe data
+          btx(l)=xr3col_x(l)
           bty(l)=xr3col_y(l,icol,idx)
           bty2(l)=xr3col_y2(l,icol,idx)
         enddo
         upsilon=fsplint(btx,bty,bty2,nspl,beta)
         if (omtype.eq.13) then
-           upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
+          upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
         endif
       else
         write (*,*) 'ERROR, Invalid spline type in fxr3omgspl:',omtype
@@ -312,7 +313,6 @@ c
       fxr3omgspl=dmax1(0.d0,upsilon)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvexr3ionkappa (t, de, dh, idx, bri, ni)
@@ -341,7 +341,6 @@ c      real*8 ratekappa,f,br,ee,invgi,emiss,j2ploss
 c
       real*8 fkenhance
       real*8 fxr3omgspl
-
       atom=xr3at(idx)
       if (atom.eq.0) return
       ion=xr3ion(idx)
@@ -390,46 +389,50 @@ c i = lower, j = upper
         i=xr3col_i(icol,idx)
         xr3col_fr(icol,idx)=fl(i)
         if (fl(i).gt.epsilon) then
-         j=xr3col_j(icol,idx)
-         ee=eji(i,j)
-         y=ee*invrkt
-        if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          ratekappa=fkenhance(kappa,y)
-          invgi=xr3invgi(i,idx)
-          omegaij=fxr3omgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=fl(i)*cgjb*omegaij*ratekappa
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            if (linecoolmode.eq.1) then
-              if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
+          j=xr3col_j(icol,idx)
+          ee=eji(i,j)
+          y=ee*invrkt
+          if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
+            ratekappa=fkenhance(kappa,y)
+            invgi=xr3invgi(i,idx)
+            omegaij=fxr3omgspl(t,y,icol,idx)*invgi
+            cgjb=rka*f*dexp(-y)
+            cr=fl(i)*cgjb*omegaij*ratekappa
+            rr=abde*cr
+            if (rr.gt.epsilon) then
+              if (linecoolmode.eq.1) then
+                if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+c      dont add the 2photon loss here, testing
+                  goto 10
+                endif
+                if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+c      dont add the 2photon loss here, testing
+                  goto 10
+                endif
               endif
-              if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
-              endif
+              loss=rr*ee
+              xr3loss=xr3loss+loss
+              coolz(atom)=coolz(atom)+loss
+              coolzion(ion,atom)=coolzion(ion,atom)+loss
+   10         continue
+              nl=xr3col_nl(icol,idx)
+              do line=1,nl
+c      lower
+                jj=xr3col_jj(line,icol,idx)
+c      higher
+                kk=xr3col_kk(line,icol,idx)
+                br=xr3col_br(line,icol,idx)
+c      note index swap above
+                emiss=(rr*br*eji(jj,kk))
+                bri(kk,jj)=bri(kk,jj)+emiss
+              enddo
             endif
-            loss=rr*ee
-            xr3loss=xr3loss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
-   10       continue
-            nl=xr3col_nl(icol,idx)
-            do line=1,nl
-              jj=xr3col_jj(line,icol,idx) ! lower
-              kk=xr3col_kk(line,icol,idx) ! higher
-              br=xr3col_br(line,icol,idx)
-              emiss=(rr*br*eji(jj,kk)) ! note index swap above
-              bri(kk,jj)=bri(kk,jj)+emiss
-            enddo
           endif
-        endif
         endif
       enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvexr3ion (t, de, dh, idx, bri, ni)
@@ -457,7 +460,6 @@ c      real*8 ratekappa
       real*8 fl(mxxr3lvls)
 c
       real*8 fxr3omgspl
-
       atom=xr3at(idx)
       if (atom.eq.0) return
       ion=xr3ion(idx)
@@ -505,45 +507,49 @@ c i = lower, j = upper
         i=xr3col_i(icol,idx)
         xr3col_fr(icol,idx)=fl(i)
         if (fl(i).gt.epsilon) then
-        j=xr3col_j(icol,idx)
-        ee=eji(i,j)
-        y=ee*invrkt
-        if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          invgi=xr3invgi(i,idx)
-          omegaij=fxr3omgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=fl(i)*cgjb*omegaij
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            if (linecoolmode.eq.1) then
-              if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
+          j=xr3col_j(icol,idx)
+          ee=eji(i,j)
+          y=ee*invrkt
+          if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
+            invgi=xr3invgi(i,idx)
+            omegaij=fxr3omgspl(t,y,icol,idx)*invgi
+            cgjb=rka*f*dexp(-y)
+            cr=fl(i)*cgjb*omegaij
+            rr=abde*cr
+            if (rr.gt.epsilon) then
+              if (linecoolmode.eq.1) then
+                if ((is.eq.1).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+c      dont add the 2photon loss here, testing
+                  goto 10
+                endif
+                if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
+c      dont add the 2photon loss here, testing
+                  goto 10
+                endif
               endif
-              if ((is.eq.2).and.(i.eq.1).and.(j.eq.j2phlevel)) then
-                 goto 10! dont add the 2photon loss here, testing
-              endif
+              loss=rr*ee
+              xr3loss=xr3loss+loss
+              coolz(atom)=coolz(atom)+loss
+              coolzion(ion,atom)=coolzion(ion,atom)+loss
+   10         continue
+              nl=xr3col_nl(icol,idx)
+              do line=1,nl
+c      lower
+                jj=xr3col_jj(line,icol,idx)
+c      higher
+                kk=xr3col_kk(line,icol,idx)
+                br=xr3col_br(line,icol,idx)
+c      note index swap above
+                emiss=(rr*br*eji(jj,kk))
+                bri(kk,jj)=bri(kk,jj)+emiss
+              enddo
             endif
-            loss=rr*ee
-            xr3loss=xr3loss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
-   10       continue
-            nl=xr3col_nl(icol,idx)
-            do line=1,nl
-              jj=xr3col_jj(line,icol,idx) ! lower
-              kk=xr3col_kk(line,icol,idx) ! higher
-              br=xr3col_br(line,icol,idx)
-              emiss=(rr*br*eji(jj,kk)) ! note index swap above
-              bri(kk,jj)=bri(kk,jj)+emiss
-            enddo
           endif
-        endif
         endif
       enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine reson3 (t, de, dh)
@@ -585,15 +591,13 @@ c
 c
 c pzlimit
 c
-            j2phlevel=xr32S12j(idx)
+            j2phlevel=xr32s12j(idx)
             ni=xr3ni(idx)
-
-           if (usekappa) then
-             call solvexr3ionkappa (t, de, dh, idx, ion_bri, ni)
-           else
-             call solvexr3ion (t, de, dh, idx, ion_bri, ni)
-           endif
-
+            if (usekappa) then
+              call solvexr3ionkappa (t, de, dh, idx, ion_bri, ni)
+            else
+              call solvexr3ion (t, de, dh, idx, ion_bri, ni)
+            endif
 c H like
             if (is.eq.1) then
 c is = 1
@@ -617,7 +621,7 @@ c
 c
                   xr3lines_bri(line)=ion_bri(i,j)*ifpi
                 endif
-   10         continue
+   10           continue
 c j i=1
               enddo
 c next j levels, i >1
@@ -630,15 +634,15 @@ c next j levels, i >1
                 enddo
               enddo
 c is = 1
-           goto 30
-           endif
+              goto 30
+            endif
 c He like
-           if (is.eq.2) then
+            if (is.eq.2) then
 c is = 2
-            i=1
-            do j=1,ni
-              if (ion_bri(i,j).gt.brilimit) then
-                line=xr3lines_map(i,j,idx)
+              i=1
+              do j=1,ni
+                if (ion_bri(i,j).gt.brilimit) then
+                  line=xr3lines_map(i,j,idx)
 c
 c get effective 2 photon coll rates including cascade
 c contributions to j2phlevel,  j2phlevel = 0 for non H- or
@@ -651,10 +655,9 @@ c
                     collrate2phe(atom)=collrate2phe(atom)/(de*dh*pz)
                     goto 20
                   endif
-
                   xr3lines_bri(line)=ion_bri(i,j)*ifpi
-              endif
-   20         continue
+                endif
+   20           continue
 c j, i=1
               enddo
 c next j le vels, i >1
@@ -667,10 +670,10 @@ c next j le vels, i >1
                 enddo
               enddo
 c is = 2
-           goto 30
-           endif
+              goto 30
+            endif
 c
-C          if (is.gt.2) then
+c          if (is.gt.2) then
 c is others
             do i=1,ni
               do j=1,ni
@@ -681,22 +684,21 @@ c is others
               enddo
             enddo
 c is others
-C          endif
+c          endif
 c
-   30      continue
+   30       continue
 c
 c pzlimit
 c
           endif
 c atom
-       endif
+        endif
       enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (xr3loss.lt.brilimit) xr3loss=0.d0
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fxrlomgspl(t,y,icol,idx)
@@ -721,33 +723,33 @@ c
 c
       upsilon=0.d0
       omtype=xrlcol_typespl(icol,idx)
-C     if ((omtype.eq.3).or.(omtype.eq.13)) then
+c     if ((omtype.eq.3).or.(omtype.eq.13)) then
 c
 c should be type 3 or 13, most differences are lost on init
 c as x, y, and y2 are made for all types. only type 13 needs
 c extra scaling at the end
 c
-        btc=xrlcol_tc(icol,idx)
-        beta=(t/(t+btc))
-        nspl=xrlcol_nspl(icol,idx)
-        do l=1,nspl
-          btx(l)=xrlcol_x(l) ! uniform splines for all hhe data
-          bty(l)=xrlcol_y(l,icol,idx)
-          bty2(l)=xrlcol_y2(l,icol,idx)
-        enddo
-        upsilon=fsplint(btx,bty,bty2,nspl,beta)
-        if (omtype.eq.13) then
-           upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
-        endif
-C     else
-C       write (*,*) 'ERROR, Invalid spline type in fxrlomgspl:',omtype
-C       write (*,*) t,icol,idx
-C       stop
-C     endif
+      btc=xrlcol_tc(icol,idx)
+      beta=(t/(t+btc))
+      nspl=xrlcol_nspl(icol,idx)
+      do l=1,nspl
+c      uniform splines for all hhe data
+        btx(l)=xrlcol_x(l)
+        bty(l)=xrlcol_y(l,icol,idx)
+        bty2(l)=xrlcol_y2(l,icol,idx)
+      enddo
+      upsilon=fsplint(btx,bty,bty2,nspl,beta)
+      if (omtype.eq.13) then
+        upsilon=upsilon*dlog((1.d0/y)+2.71828182845905d0)
+      endif
+c     else
+c       write (*,*) 'ERROR, Invalid spline type in fxrlomgspl:',omtype
+c       write (*,*) t,icol,idx
+c       stop
+c     endif
       fxrlomgspl=dmax1(0.d0,upsilon)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine solvexrlion (t, de, dh, idx, bri, ni)
@@ -820,8 +822,8 @@ c
         do l=1,ngnd
           fl(l)=0.d0
           if (fex(l,fespecies).gt.1.0d-3) then
-             fl(l)=fex(l,fespecies)
-             sum=sum+fex(l,fespecies)
+            fl(l)=fex(l,fespecies)
+            sum=sum+fex(l,fespecies)
           endif
         enddo
         do l=1,ngnd
@@ -840,45 +842,47 @@ c
       f=1.d0/dsqrt(t)
       invrkt=1.d0/(rkb*t)
 c
-       nc=nxrlioncol(idx)
-       do icol=1,nc
+      nc=nxrlioncol(idx)
+      do icol=1,nc
 c i = lower, j = upper
         i=xrlcol_i(icol,idx)
         xrlcol_fr(icol,idx)=fl(i)
         if (fl(i).gt.0.d0) then
-        j=xrlcol_j(icol,idx)
-        ee=eji(i,j)
-        y=ee*invrkt
-        if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
-          ratekappa=1.d0
-          if (usekappa) then
-            ratekappa=fkenhance(kappa,y)
+          j=xrlcol_j(icol,idx)
+          ee=eji(i,j)
+          y=ee*invrkt
+          if ((y.gt.0.d0).and.(y.lt.maxdekt)) then
+            ratekappa=1.d0
+            if (usekappa) then
+              ratekappa=fkenhance(kappa,y)
+            endif
+            invgi=xrlinvgi(i,idx)
+            omegaij=fxrlomgspl(t,y,icol,idx)*invgi
+            cgjb=rka*f*dexp(-y)
+            cr=fl(i)*cgjb*omegaij*ratekappa
+            rr=abde*cr
+            if (rr.gt.epsilon) then
+              loss=rr*ee
+              xrlloss=xrlloss+loss
+              coolz(atom)=coolz(atom)+loss
+              coolzion(ion,atom)=coolzion(ion,atom)+loss
+              nl=xrlcol_nl(icol,idx)
+              do line=1,nl
+c      lower
+                jj=xrlcol_jj(line,icol,idx)
+c      higher
+                kk=xrlcol_kk(line,icol,idx)
+                br=xrlcol_br(line,icol,idx)
+c      note index swap above
+                emiss=(rr*br*eji(jj,kk))
+                bri(kk,jj)=bri(kk,jj)+emiss
+              enddo
+            endif
           endif
-          invgi=xrlinvgi(i,idx)
-          omegaij=fxrlomgspl(t,y,icol,idx)*invgi
-          cgjb=rka*f*dexp(-y)
-          cr=fl(i)*cgjb*omegaij*ratekappa
-          rr=abde*cr
-          if (rr.gt.epsilon) then
-            loss=rr*ee
-            xrlloss=xrlloss+loss
-            coolz(atom)=coolz(atom)+loss
-            coolzion(ion,atom)=coolzion(ion,atom)+loss
-            nl=xrlcol_nl(icol,idx)
-            do line=1,nl
-              jj=xrlcol_jj(line,icol,idx) ! lower
-              kk=xrlcol_kk(line,icol,idx) ! higher
-              br=xrlcol_br(line,icol,idx)
-              emiss=(rr*br*eji(jj,kk)) ! note index swap above
-              bri(kk,jj)=bri(kk,jj)+emiss
-            enddo
-          endif
-        endif
         endif
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine resonl (t, de, dh)

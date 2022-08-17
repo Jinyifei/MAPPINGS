@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -43,7 +43,8 @@ c
 c
       qpr(u)=4.74d-4*(u**(-0.151d0))
       qel(u)=0.57d-4*(u**(-0.373d0))
-      reff(u)=0.838d-13*(u**(-0.721d0))  ! X*alpha(T) B
+c      X*alpha(T) B
+      reff(u)=0.838d-13*(u**(-0.721d0))
       x1(u)=0.7179d0*(u**(-0.0584d0))
       fr(u)=0.588d0*(u**(-0.234d0))
 c

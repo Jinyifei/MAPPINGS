@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -45,7 +45,6 @@ c     CALL SUBROUTINES SDIFEQ,ALLRATES,SPOTAP,IONAB,IONSEC
 c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -117,10 +116,9 @@ c
 c
 c     reentry point.
 c
-   30   continue
 c
         do i=1,mxion
-          rech(i)=0.d0
+   30     rech(i)=0.d0
           pich(i)=0.d0
           reco(i)=0.d0
           pion(i)=0.d0
@@ -423,7 +421,7 @@ c
           write (*,*) 'Significant population missed:',1.d0-sigab
           write (*,*) elem(idx),'min:',mnde,'Max:',mxde
           do i=1,maxion(idx)
-          write(*,*) i,pop(i,idx),ab(i),pion(i),reco(i),pionau(i)
+            write (*,*) i,pop(i,idx),ab(i),pion(i),reco(i),pionau(i)
           enddo
           stop
         endif

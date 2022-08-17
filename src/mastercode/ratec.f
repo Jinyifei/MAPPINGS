@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -63,25 +63,25 @@ c
           c=c+0.02d0
           d=d+0.28d0
           fij=0.8324d0
-        else if (n.eq.3) then
+        elseif (n.eq.3) then
           a=0.2d0
           b=0.06d0
           c=0.0d0
           d=0.28d0
           fij=0.1582d0
-        else if (n.eq.4) then
+        elseif (n.eq.4) then
           a=0.25d0
           b=0.04d0
           c=0.0d0
           d=0.28d0
           fij=0.0580d0
-        else if (n.eq.5) then
+        elseif (n.eq.5) then
           a=0.27d0
           b=0.03d0
           c=0.0d0
           d=0.28d0
           fij=0.0279d0
-        else if (n.eq.6) then
+        elseif (n.eq.6) then
           a=0.28d0
           b=0.02d0
           c=0.0d0

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -119,10 +119,10 @@ c
 c
 c       write(*,*) 'Totphot:',t, dh, rad, dr, dv, wd, lmod
 c
-      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP')
-     &.and.(lmod(1:3).ne.'ALL').and.(lmod(1:2).ne.'SO')
-     &.and.(lmod(1:4).ne.'LOCL').and.(lmod(1:3).ne.'NEB')
-     &.and.(lmod(1:4).ne.'CONT').and.(lmod(1:3).ne.'CAB')) then
+      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP').and.(lmod(1:3)
+     &.ne.'ALL').and.(lmod(1:2).ne.'SO').and.(lmod(1:4).ne.'LOCL')
+     &.and.(lmod(1:3).ne.'NEB').and.(lmod(1:4).ne.'CONT').and.(lmod(1:3)
+     &.ne.'CAB')) then
         write (*,10) lmod(1:4)
    10     format(//,
      & 'MODE IMPROPERLY DEFINED IN TOTPHOT :',a4)
@@ -167,8 +167,8 @@ c
               if ((z*p.ge.pzlimit)) then
                 f=xr3lines_gf(line)
                 es=xr3lines_egij(line)
-            xr3lines_emilin(2,line) =
-     &       fdismul(t,dh,drh,dvh,atom,ion,es,f)
+                xr3lines_emilin(2,line)=fdismul(t,dh,drh,dvh,atom,ion,
+     &           es,f)
               endif
             endif
           endif
@@ -188,8 +188,8 @@ c
               if ((z*p.ge.pzlimit)) then
                 f=xrllines_gf(line)
                 es=xrllines_egij(line)
-            xrllines_emilin(2,line) =
-     &       fdismul(t,dh,drh,dvh,atom,ion,es,f)
+                xrllines_emilin(2,line)=fdismul(t,dh,drh,dvh,atom,ion,
+     &           es,f)
               endif
             endif
           endif
@@ -302,15 +302,15 @@ c
 c
       srcf=1.d0
 c
-      if (lmod.eq.'ALL' ) upf=1.0d0
-      if (lmod.eq.'ALL' ) dwf=1.0d0
-      if (lmod.eq.'ALL' ) emf=1.0d0
+      if (lmod.eq.'ALL') upf=1.0d0
+      if (lmod.eq.'ALL') dwf=1.0d0
+      if (lmod.eq.'ALL') emf=1.0d0
 c
-      if (lmod.eq.'UP'  ) upf=1.0d0
-      if (lmod.eq.'UP'  ) emf=1.0d0
+      if (lmod.eq.'UP') upf=1.0d0
+      if (lmod.eq.'UP') emf=1.0d0
 c
-      if (lmod.eq.'DW'  ) dwf=1.0d0
-      if (lmod.eq.'DW'  ) emf=1.0d0
+      if (lmod.eq.'DW') dwf=1.0d0
+      if (lmod.eq.'DW') emf=1.0d0
 c
       if (lmod.eq.'LOCL') dwf=1.0d0
       if (lmod.eq.'LOCL') emf=1.0d0
@@ -319,27 +319,27 @@ c
       if (lmod.eq.'NEBL') dwf=1.0d0
       if (lmod.eq.'NEBL') emf=1.0d0
       if (lmod.eq.'NEBL') srcf=0.0d0
-C
+c
       if (lmod.eq.'NEBC') dwf=1.0d0
       if (lmod.eq.'NEBC') emf=0.0d0
       if (lmod.eq.'NEBC') srcf=0.0d0
 c
       if (lmod.eq.'CONT') dwf=1.0d0
       if (lmod.eq.'CONT') emf=0.0d0
-C
-      if (lmod.eq.'SO'  ) emf=0.0d0
+c
+      if (lmod.eq.'SO') emf=0.0d0
 c
       dwf=dwf*photofraction
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-C     if ((lmod.ne.'UP').and.(lmod.ne.'ALL')) upf=0.0d0
-C     if ((lmod.ne.'DW').and.(lmod.ne.'ALL')) dwf=0.0d0
+c     if ((lmod.ne.'UP').and.(lmod.ne.'ALL')) upf=0.0d0
+c     if ((lmod.ne.'DW').and.(lmod.ne.'ALL')) dwf=0.0d0
 c
-C     if (lmod.eq.'LOCL') dwf=1.0d0
-C     if (lmod.eq.'NEBL') dwf=1.0d0
+c     if (lmod.eq.'LOCL') dwf=1.0d0
+c     if (lmod.eq.'NEBL') dwf=1.0d0
 c
-C     if (lmod.eq.'SO') emf=0.0d0
+c     if (lmod.eq.'SO') emf=0.0d0
 c     if (lmod.eq.'NEBL') emf=0.0d0
 c     if (lmod.eq.'CONT') emf=0.0d0
 c
@@ -396,10 +396,10 @@ c
         tauso=0.d0
         sigmt=0.d0
         dustsigmat=0.d0
-        if ((grainmode.le.0).and.(inl.ge.ionstartbin))
-     &       call crosssections (inl, tauso, sigmt)
-        if ((grainmode.gt.0))
-     &       call crosssectionsdust (inl, tauso, sigmt, dustsigmat)
+        if ((grainmode.le.0).and.(inl.ge.ionstartbin)) call
+     &   crosssections (inl, tauso, sigmt)
+        if ((grainmode.gt.0)) call crosssectionsdust (inl, tauso, sigmt,
+     &    dustsigmat)
 c total crosssection, including dust
         sigmt=dh*sigmt
 c just the dust component
@@ -451,11 +451,11 @@ c
 c     Integrated diffuse field and source
 c
           if (lmod.eq.'CONT') then
-          downflux=dwf*dadw*dwdil*dwdifcont(inl)+srcf0
-          upflux=upf*daup*updifcont(inl)
+            downflux=dwf*dadw*dwdil*dwdifcont(inl)+srcf0
+            upflux=upf*daup*updifcont(inl)
           else
-          downflux=dwf*dadw*dwdil*dwdif(inl)+srcf0
-          upflux=upf*daup*updif(inl)
+            downflux=dwf*dadw*dwdil*dwdif(inl)+srcf0
+            upflux=upf*daup*updif(inl)
           endif
 c
           escape=transferout(1.d0,tau)
@@ -654,9 +654,9 @@ c
         pathlength=(dr*fi)
         energ=den*ev
         if (lmod.eq.'CONT') then
-        localflux=energ*emidifcont(inl)*pathlength
+          localflux=energ*emidifcont(inl)*pathlength
         else
-        localflux=energ*emidif(inl)*pathlength
+          localflux=energ*emidif(inl)*pathlength
         endif
 c
         tau=tau0
@@ -876,27 +876,27 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
         if (lmod.ne.'LOCL') then
-        if (lmod.ne.'CONT') then
-        if (lmod(1:3).ne.'NEB') then
+          if (lmod.ne.'CONT') then
+            if (lmod(1:3).ne.'NEB') then
 c
 c     ephot is in eV
 c     rhoion = densnum(dh)
 c     energ = mean energy of bin in ergs
 c
-          energ=den*ev
-          phots=(tphot(inl)/energ)*widnu
+              energ=den*ev
+              phots=(tphot(inl)/energ)*widnu
 c
-          skipbin(inl)=.false.
-          bincount=bincount+1
-          if (((xsec(inl)/dh)*phots).le.epsilon) then
-            skipbin(inl)=.true.
-            bincount=bincount-1
+              skipbin(inl)=.false.
+              bincount=bincount+1
+              if (((xsec(inl)/dh)*phots).le.epsilon) then
+                skipbin(inl)=.true.
+                bincount=bincount-1
+              endif
+c
+              if (photonmode.eq.0) skipbin(inl)=.true.
+c
+            endif
           endif
-c
-          if (photonmode.eq.0) skipbin(inl)=.true.
-c
-        endif
-        endif
         endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -912,11 +912,11 @@ c     ***FORCE RECALCULATION OF PHOTOIONISING RATES
 c
 c
       if (lmod.ne.'LOCL') then
-      if (lmod.ne.'CONT') then
-      if (lmod(1:3).ne.'NEB') then
-        ipho=ipho+1
-      endif
-      endif
+        if (lmod.ne.'CONT') then
+          if (lmod(1:3).ne.'NEB') then
+            ipho=ipho+1
+          endif
+        endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -925,7 +925,6 @@ c     Jspec disabled
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine totphot2 (t, dh, rad, dr, dv, wd, lmod)
@@ -1042,10 +1041,10 @@ c
 c
 c       write(*,*) 'Totphot:',t, dh, rad, dr, dv, wd, lmod
 c
-      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP')
-     &.and.(lmod(1:3).ne.'ALL').and.(lmod(1:2).ne.'SO')
-     &.and.(lmod(1:4).ne.'LOCL').and.(lmod(1:3).ne.'NEB')
-     &.and.(lmod(1:4).ne.'CONT').and.(lmod(1:3).ne.'CAB')) then
+      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP').and.(lmod(1:3)
+     &.ne.'ALL').and.(lmod(1:2).ne.'SO').and.(lmod(1:4).ne.'LOCL')
+     &.and.(lmod(1:3).ne.'NEB').and.(lmod(1:4).ne.'CONT').and.(lmod(1:3)
+     &.ne.'CAB')) then
         write (*,10) lmod(1:4)
    10     format(//,
      & 'MODE IMPROPERLY DEFINED IN TOTPHOT :',a4)
@@ -1122,15 +1121,15 @@ c
 c
       srcf=1.d0
 c
-      if (lmod.eq.'ALL' ) upf=1.0d0
-      if (lmod.eq.'ALL' ) dwf=1.0d0
-      if (lmod.eq.'ALL' ) emf=1.0d0
+      if (lmod.eq.'ALL') upf=1.0d0
+      if (lmod.eq.'ALL') dwf=1.0d0
+      if (lmod.eq.'ALL') emf=1.0d0
 c
-      if (lmod.eq.'UP'  ) upf=1.0d0
-      if (lmod.eq.'UP'  ) emf=1.0d0
+      if (lmod.eq.'UP') upf=1.0d0
+      if (lmod.eq.'UP') emf=1.0d0
 c
-      if (lmod.eq.'DW'  ) dwf=1.0d0
-      if (lmod.eq.'DW'  ) emf=1.0d0
+      if (lmod.eq.'DW') dwf=1.0d0
+      if (lmod.eq.'DW') emf=1.0d0
 c
       if (lmod.eq.'LOCL') dwf=1.0d0
       if (lmod.eq.'LOCL') emf=1.0d0
@@ -1139,15 +1138,15 @@ c
       if (lmod.eq.'NEBL') dwf=1.0d0
       if (lmod.eq.'NEBL') emf=1.0d0
       if (lmod.eq.'NEBL') srcf=0.0d0
-C
+c
       if (lmod.eq.'NEBC') dwf=1.0d0
       if (lmod.eq.'NEBC') emf=0.0d0
       if (lmod.eq.'NEBC') srcf=0.0d0
 c
       if (lmod.eq.'CONT') dwf=1.0d0
       if (lmod.eq.'CONT') emf=0.0d0
-C
-      if (lmod.eq.'SO'  ) emf=0.0d0
+c
+      if (lmod.eq.'SO') emf=0.0d0
 c
       dwf=dwf*photofraction
 c
@@ -1198,10 +1197,10 @@ c
         tauso=0.d0
         sigmt=0.d0
         dustsigmat=0.d0
-        if ((grainmode.le.0).and.(inl.ge.ionstartbin))
-     &       call crosssections (inl, tauso, sigmt)
-        if ((grainmode.gt.0))
-     &       call crosssectionsdust (inl, tauso, sigmt, dustsigmat)
+        if ((grainmode.le.0).and.(inl.ge.ionstartbin)) call
+     &   crosssections (inl, tauso, sigmt)
+        if ((grainmode.gt.0)) call crosssectionsdust (inl, tauso, sigmt,
+     &    dustsigmat)
         tauso0_i(inl)=tauso
         sigmt=dh*sigmt
         dustsigmat=dh*dustsigmat
@@ -1260,11 +1259,11 @@ c
           rf1=0.d0
 c
           if ((lmod.eq.'CONT').or.(lmod.eq.'NEBC')) then
-             downflux=dwf*dadw*dwdil*dwdifcont(inl)+srcf0
-             upflux=upf*daup*updifcont(inl)
+            downflux=dwf*dadw*dwdil*dwdifcont(inl)+srcf0
+            upflux=upf*daup*updifcont(inl)
           else
-             downflux=dwf*dadw*dwdil*dwdif(inl)+srcf0
-             upflux=upf*daup*updif(inl)
+            downflux=dwf*dadw*dwdil*dwdif(inl)+srcf0
+            upflux=upf*daup*updif(inl)
           endif
 c
           if ((downflux+upflux).gt.epsilon) then
@@ -1432,7 +1431,7 @@ c
           enddo
         enddo
 c
-c ! local
+c      local
 c
       endif
 c
@@ -1616,15 +1615,12 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       do inl=1,infph-1
-
         energ=cphotev(inl)*ev
-
         if ((lmod.eq.'CONT').or.(lmod.eq.'NEBC')) then
-            localflux=energ*emidifcont(inl)*pathlength
+          localflux=energ*emidifcont(inl)*pathlength
         else
-            localflux=energ*emidif(inl)*pathlength
+          localflux=energ*emidif(inl)*pathlength
         endif
-
         if (localflux.gt.epsilon) then
 c
           escape=locout0_i(inl)
@@ -1652,24 +1648,24 @@ c
 c      write(*,*) totsum, srcsum
 c
       if (lmod.ne.'LOCL') then
-      if (lmod.ne.'CONT') then
-      if (lmod(1:3).ne.'NEB') then
-        do inl=1,infph-1
-          widnu=widbinnu(inl)
-          den=cphotev(inl)
-          energ=den*ev
-          phots=(tphot(inl)/energ)*widnu
-          skipbin(inl)=.false.
-          bincount=bincount+1
-          if (((xsec(inl)/dh)*phots).le.epsilon) then
-            skipbin(inl)=.true.
-            bincount=bincount-1
+        if (lmod.ne.'CONT') then
+          if (lmod(1:3).ne.'NEB') then
+            do inl=1,infph-1
+              widnu=widbinnu(inl)
+              den=cphotev(inl)
+              energ=den*ev
+              phots=(tphot(inl)/energ)*widnu
+              skipbin(inl)=.false.
+              bincount=bincount+1
+              if (((xsec(inl)/dh)*phots).le.epsilon) then
+                skipbin(inl)=.true.
+                bincount=bincount-1
+              endif
+              if (photonmode.eq.0) skipbin(inl)=.true.
+            enddo
+            ipho=ipho+1
           endif
-          if (photonmode.eq.0) skipbin(inl)=.true.
-        enddo
-        ipho=ipho+1
-      endif
-      endif
+        endif
       endif
 c
 c*********************************************************
@@ -1678,10 +1674,8 @@ c     Jspec disabled
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-
       subroutine sum_diffuse_up_field (sum_field)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1824,5 +1818,6 @@ c     5. Contributions from hydrogenic series of heavy atoms (Z > 2)
         enddo
       enddo
 c
-      return !sum_diffuse_up_field
+c     sum_diffuse_up_field
+      return
       end

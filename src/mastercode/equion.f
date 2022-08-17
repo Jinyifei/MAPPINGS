@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -69,9 +69,9 @@ c
           dia=dmax1(0.0d0,dlog(5.0d0/(zm+1.d-5))/20.0d0)*pop(2,1)
           if (dif1.ge.dia) then
             nel='ALL'
-          else if ((m.eq.1).and.(n.lt.nf)) then
+          elseif ((m.eq.1).and.(n.lt.nf)) then
             nel='HE'
-          else if (m.gt.2) then
+          elseif (m.gt.2) then
             nel='ALL'
           endif
 c
@@ -87,18 +87,18 @@ c
    20   continue
 c
    30   if (((nel.eq.'ALL').and.(dif1.lt.difma)).and.(dift.lt.difm2))
-     &   goto 60
+     &   goto 50
         call iohyd (dh, xhy, t, tstep, de, xhyf, mod)
         call iobal (mod, nff, de, dh, xhyf, t, tstep)
         inttemp=1
         call difpop (pop, popzero, treh, inttemp, dif1)
 c
         call difpop (pop, popzero, trea, atypes, dift)
-        if ((dif1.le.difma).and.(dift.le.difm2)) goto 60
+        if ((dif1.le.difma).and.(dift.le.difm2)) goto 50
 c
    40 continue
 c
-      if ((dif1.le.difma).and.(dift.le.difm2)) goto 60
+      if ((dif1.le.difma).and.(dift.le.difm2)) goto 50
       dfh=dif1/difma
       dft=dift/difm2
 c      if (dmax1(dfh,dft).gt.5.d0) then
@@ -107,6 +107,6 @@ c   50 format(' Slow convergence for equil. ionisation:','DFH:'
 c     &     ,1pg9.2,'   DFT:',1pg9.2)
 c      endif
 c
-   60 continue
+   50 continue
       return
       end

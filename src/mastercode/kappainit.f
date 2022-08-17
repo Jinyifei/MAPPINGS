@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -23,7 +23,6 @@ c
 c     Subroutine to setup electron distributions
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -61,33 +60,32 @@ c
      & '   (2.0, 3.0, 4.0, 6.0, 10.0, 20.0, 50.0, 100.0 are exact) :',$)
       usekappa=.false.
       if (kappamode.eq.1) then
-      write (*,20)
-      write (*,30)
-      read (*,40) ilgg
-      ilgg=ilgg(1:1)
-      if (ilgg.eq.'y') ilgg='Y'
-      if (ilgg.eq.'Y') usekappa=.true.
-      if (usekappa) then
-        write (*,50)
-        read (*,*) kap
-        if ((kap.ge.2.d0).and.(kap.le.1000.d0)) then
-          kappa=kap
-          do k=1,(nkappas-1)
-            if (kap.ge.kappas(k)) kappaidx=k
-          enddo
-          delta=(1.d0/kappas(kappaidx))-(1.d0/kappas(kappaidx+1))
-
-          x=(1.d0/kappa)-(1.d0/kappas(kappaidx+1))
-          kappaa=x/delta
-          kappab=1.d0-kappaa
-          if (kappaa.lt.0.995d0) usekappainterp=.true.
+        write (*,20)
+        write (*,30)
+        read (*,40) ilgg
+        ilgg=ilgg(1:1)
+        if (ilgg.eq.'y') ilgg='Y'
+        if (ilgg.eq.'Y') usekappa=.true.
+        if (usekappa) then
+          write (*,50)
+          read (*,*) kap
+          if ((kap.ge.2.d0).and.(kap.le.1000.d0)) then
+            kappa=kap
+            do k=1,(nkappas-1)
+              if (kap.ge.kappas(k)) kappaidx=k
+            enddo
+            delta=(1.d0/kappas(kappaidx))-(1.d0/kappas(kappaidx+1))
+            x=(1.d0/kappa)-(1.d0/kappas(kappaidx+1))
+            kappaa=x/delta
+            kappab=1.d0-kappaa
+            if (kappaa.lt.0.995d0) usekappainterp=.true.
 c
-         write(*,*) kappa, kappaA, kappaB, kappaidx, useKappaInterp
+            write (*,*) kappa,kappaa,kappab,kappaidx,usekappainterp
 c
-        else
-          usekappa=.false.
+          else
+            usekappa=.false.
+          endif
         endif
-      endif
       endif
 c
       write (*,10)

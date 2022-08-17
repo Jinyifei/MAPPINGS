@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -25,7 +25,6 @@ c     USING IONISATION FRACTION OF HYDROGEN, IT INTERPOLATES
 c     THE RATES HEAPH(5,ion,elem) CALCULATED IN SUBR. PHION
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -78,7 +77,7 @@ c
                 qval=dexp(quad(del,dlog(aa),dlog(bb),dlog(cc)))
                 val=dmax1(0.0d0,dmin1(qval,heaph(ic,ion,idx)))
                 temp=(dh*pz*val)
-              else if (aa.gt.0.0d0) then
+              elseif (aa.gt.0.0d0) then
                 qval=quad(del,aa,bb,cc)
                 val=dmax1(0.0d0,dmin1(qval,heaph(ic,ion,idx)))
                 temp=(dh*pz*val)
@@ -87,9 +86,9 @@ c
               heatz(idx)=heatz(idx)+temp
               heatzion(ion,idx)=heatzion(ion,idx)+temp
             endif
-C           if (heatzion(ion,iel).gt.0.d0) then
-C           write(*,*)'pheat:',mapz(iel),ion,heatzion(ion,iel)
-C           endif
+c           if (heatzion(ion,iel).gt.0.d0) then
+c           write(*,*)'pheat:',mapz(iel),ion,heatzion(ion,iel)
+c           endif
           enddo
         enddo
 c

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -32,7 +32,7 @@ c
 c
       call neqcheaders ()
 c
-      call compsh5 (0,1)
+      call compsh5 (0, 1)
 c
       close (luop)
 c
@@ -41,7 +41,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine neqcsetup ()
@@ -61,19 +60,28 @@ c
 c
 c     set up logical unit numbers
 c
-      lualsh=20
-      luop=21
-c disable precursor output when compsh5 is called set lupt to 0
-      lupt=0
-      lurtsh=23
-      ludy=24
-      lusp=25
-      lupb=26
-      lucl=27
 c
+c main files, model and specs disable precursors files
+c
+      luop=20
+      lusp=21
+      lupt=0
+c
+c common files
+c
+      lucl=24
+      lupb=25
+      lupb=26
+      ludy=27
+c
+c shock only files
+c
+      lualsh=28
+      lurtsh=29
+      lulsh=30
       ieln=4
       do i=1,atypes
-        luionsh(i)=28+i
+        luionsh(i)=30+i
       enddo
 c
       fsm=' '
@@ -133,11 +141,11 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
       write (*,30)
 c
-        teinit=1.0d9
-        dhinit=1.0d-4
-        magparam=1.0d0
-        machnumber=1.0d0
-   90   format(//,
+      teinit=1.0d9
+      dhinit=1.0d-4
+      magparam=1.0d0
+      machnumber=1.0d0
+   40   format(//,
      & ' Initial state:',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Temperature, H density, Mach number, Magnetic Alpha',/,
@@ -145,35 +153,35 @@ c
      & '  (Mach>=0.0, Alpha>=0.0 Pmag/Pgas, < 0.0 as -microgauss)',/,
      & ' : T (K), dh (N), M, Alpha',/,
      & ' :: ',$)
-        write (*,90)
-        read (*,*) teinit,dhinit,machnumber,magparam
+      write (*,40)
+      read (*,*) teinit,dhinit,machnumber,magparam
 c
-        if (teinit.le.10.d0) teinit=10.d0**teinit
-        if (dhinit.lt.0.d0)  dhinit=10.d0**dhinit
+      if (teinit.le.10.d0) teinit=10.d0**teinit
+      if (dhinit.lt.0.d0) dhinit=10.d0**dhinit
 c
-        if (machnumber.lt.0.d0) machnumber=0.0d0
+      if (machnumber.lt.0.d0) machnumber=0.0d0
 c
-        call ciepops(teinit,dhinit)
+      call ciepops (teinit, dhinit)
 c
 c sets t, de, dh
 c
-        call copypop (pop, pop0)
-        call copypop (pop0, pop_neu)
-        call copypop (pop0, pop_pre)
-        call copypop (pop0, pop_pre0)
-        call zeroemiss
-        subname='NEQ Cooling 5'
+      call copypop (pop, pop0)
+      call copypop (pop0, pop_neu)
+      call copypop (pop0, pop_pre)
+      call copypop (pop0, pop_pre0)
+      call zeroemiss
+      subname='NEQ Cooling 5'
 c
-        t=teinit
-        dh=dhinit
+      t=teinit
+      dh=dhinit
 c
 c Now set constant values at steady velocity, no shock.
 c
-        de=feldens(dh,pop0)
-        rho0=frho(de,dh)
-        pgas=fpresse(t,de,dh)
+      de=feldens(dh,pop0)
+      rho0=frho(de,dh)
+      pgas=fpresse(t,de,dh)
 c
-        wdil=0.5d0
+      wdil=0.5d0
 c
 c     Magnetic fields expressed as Alpha = Pmag/Pgas
 c     Alpha = 1.0 is equipartition, Alpha = 10.0 is strong magnetic
@@ -182,69 +190,69 @@ c     Alpha = 1.0/Beta where Beta is the usual magnetic parameter, but
 c     Alpha allows Alpha = 0.0 for the non-magnetic limit
 c
 c
-        if (magparam.lt.0.0d0) then
-          bmag=-magparam
-        endif
-        if (dr.le.0.d0) dr=1.d0
-        if (wdil.gt.0.5d0) wdil=0.5d0
-        if (magparam.ge.0.d0) then
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)*1.0d6
-        else
-          bmag=-magparam
-        endif
-        bmag=bmag*1.d-6
+      if (magparam.lt.0.0d0) then
+        bmag=-magparam
+      endif
+      if (dr.le.0.d0) dr=1.d0
+      if (wdil.gt.0.5d0) wdil=0.5d0
+      if (magparam.ge.0.d0) then
+        pmag=magparam*pgas
+        bmag=dsqrt(epi*pmag)*1.0d6
+      else
+        bmag=-magparam
+      endif
+      bmag=bmag*1.d-6
 c
-        ve=dsqrt(gammaEOS*Pgas/rho0)*machnumber
+      ve=dsqrt(gammaeos*pgas/rho0)*machnumber
 c
 c set compsh5 gobals
 c
-        te_neu=t
-        de_neu=de
-        dh_neu=dh
-        vs_neu=ve
-        pr_neu=fpresse(t,de,dh)
-        rh_neu=frho(de,dh)
-        bm_neu=Bmag
+      te_neu=t
+      de_neu=de
+      dh_neu=dh
+      vs_neu=ve
+      pr_neu=fpresse(t,de,dh)
+      rh_neu=frho(de,dh)
+      bm_neu=bmag
 c
-        te_pre=t
-        de_pre=de
-        dh_pre=dh
-        vs_pre=ve
-        pr_pre=pr_neu
-        rh_pre=rh_neu
-        bm_pre=Bmag
+      te_pre=t
+      de_pre=de
+      dh_pre=dh
+      vs_pre=ve
+      pr_pre=pr_neu
+      rh_pre=rh_neu
+      bm_pre=bmag
 c
-        call shockcmpf (t, de, dh, ve, Bmag)
-        call shocksummary (6)
+      call shockcmpf (t, de, dh, ve, bmag)
+      call shocksummary (6)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (alphacoolmode.eq.1) then
-  110  format(//,
+   50  format(//,
      & ' Powerlaw Cooling enabled  Lambda T6 ^ alpha :',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    Give index alpha, Lambda at 1e6K',/,
      & '    (Lambda<0 as log)',/,
      & ' :: ',$)
-        write (*,110)
+        write (*,50)
         read (*,*) alphaclaw,alphac0
         if (alphac0.lt.0.d0) alphac0=10.d0**alphac0
       endif
 c
 c     Diffuse field interaction
 c
-  120 format(//,
+   60 format(//,
      & ' Choose Diffuse Field Option :',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    F  : Full diffuse field interaction (Default).',/,
      & '    Z  : Zero diffuse field interaction.',/,
      & ' :: ',$)
-      write (*,120)
-  130 read (*,10) ilgg
-      call toup(ilgg(1:1),ilgg)
+      write (*,60)
+   70 read (*,10) ilgg
+      call toup (ilgg(1:1), ilgg)
 c
-      if ((ilgg.ne.'Z').and.(ilgg.ne.'F')) goto 130
+      if ((ilgg.ne.'Z').and.(ilgg.ne.'F')) goto 70
 c
       if (ilgg.eq.'Z') photonmode=0
       if (ilgg.eq.'F') photonmode=1
@@ -255,16 +263,15 @@ c
       abtimefrac=1.0d0
       utime=0.d0
 c
-  150 format(//,
+   80 format(//,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Boundry Conditions ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-
-      write (*,150)
+      write (*,80)
 c
 c     Choose ending
 c
-  160 format(/,
+   90 format(/,
      & '  Choose Ending :',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    A  : Standard ending, 1% weighted ionisation.',/,
@@ -276,52 +283,51 @@ c
      & '    G  : Heating limit.',/,
      & ' :: ',$)
 c
-  170 write (*,160)
+  100 write (*,90)
       read (*,10) jend
-      call toup(jend(1:1),ilgg)
+      call toup (jend(1:1), ilgg)
 c
       if ((jend.ne.'A').and.(jend.ne.'B').and.(jend.ne.'C')
      &.and.(jend.ne.'D').and.(jend.ne.'E').and.(jend.ne.'F')
-     &.and.(jend.ne.'G')) goto 170
+     &.and.(jend.ne.'G')) goto 100
 c
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     Secondary info:
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (jend.eq.'B') then
-  180   format(//,
+  110   format(//,
      & ' Give Atom, Ion and limit fraction: ')
-        write (*,180)
+        write (*,110)
         read (*,*) ielen,jpoen,fren
       endif
       if (jend.eq.'C') then
-  190   format(//,
+  120   format(//,
      & ' Give final temperature (K > 10, log <= 10): ')
-        write (*,190)
+        write (*,120)
         read (*,*) tend
         if (tend.le.10.d0) tend=10.d0**tend
       endif
       if (jend.eq.'D') then
-  200   format(//,
+  130   format(//,
      & ' Give final distance (cm > 100, log<=100): ')
-        write (*,200)
+        write (*,130)
         read (*,*) diend
         if (diend.le.100.d0) diend=10.d0**diend
       endif
       if (jend.eq.'E') then
-  210   format(//,
+  140   format(//,
      & ' Give time limit (s > 100, log<=100): ')
-        write (*,210)
+        write (*,140)
         read (*,*) timend
         if (timend.le.100.d0) timend=10.d0**timend
       endif
 c
-  220 format(//,
+  150 format(//,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Output Requirements ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-
-      write (*,220)
+      write (*,150)
 c
 c     default monitor elements
 c
@@ -371,11 +377,11 @@ c
 c
       if (fclmod.eq.'Y') then
         jnorm=3
-  250  format (/' Cooling as total and by Element:'/
+  160  format (/' Cooling as total and by Element:'/
      & '::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/
      & ' Cooling File Normalisation,',/
      & ' (0=ne.nH, 1=nH^2, 2=ne.ni, 3=n^2, 4=ne^2):')
-        write (*,250)
+        write (*,160)
         read (*,*) jnorm
         if (jnorm.lt.0) jnorm=3
         if (jnorm.gt.4) jnorm=3
@@ -408,42 +414,40 @@ c     ionbalance files
 c
 c
       if (tsrmod.eq.'Y') then
-  280   format(//,
+  170   format(//,
      & ' Choose max',a2,' Element Ionisation Files by Z: ',/,
      & '::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
-        write (*,280) atypes
-  282   format(' Enter number of elements to track : ',$)
-  283   format(/' Elements (Z) : ',$)
-        write (*,282)
-        read(*,*) ieln
-        ieln=min(max(1,ieln),atypes)
-        write (*,283)
-        read (*,*) (iel(i),i=1,ieln)
-c
-        do i=1,ieln
-           elok(i)=0
-           do idx=1,atypes
-              if (iel(i).eq.mapz(idx)) elok(i)=1
-           enddo
-        enddo
-c
-        nel=ieln
-        do i=1,ieln
-           if (elok(i).eq.0) nel=nel-1
-        enddo
-        if ((nel.lt.1).and.(tsrmod.eq.'Y')) then
-           tsrmod='N'
-        endif
-c
+        write (*,170) atypes
+  180   format(' Enter number of elements to track : ',$)
+  190   format(/' Elements (Z) : ',$)
+        write (*,180)
+        read (*,*) ieln
+        ieln=min(max(0,ieln),atypes)
+        if (ieln.le.0) tsrmod='N'
         if (tsrmod.eq.'Y') then
-           ieln=nel
-           do i=1,ieln
+          write (*,190)
+          read (*,*) (iel(i),i=1,ieln)
+          do i=1,ieln
+            elok(i)=0
+            do idx=1,atypes
+              if (iel(i).eq.mapz(idx)) elok(i)=1
+            enddo
+          enddo
+          nel=ieln
+          do i=1,ieln
+            if (elok(i).eq.0) nel=nel-1
+          enddo
+          if (nel.lt.1) tsrmod='N'
+          if (tsrmod.eq.'Y') then
+            ieln=nel
+            do i=1,ieln
               iel(i)=zmap(iel(i))
-           enddo
-  285      format(/' Monitoring :',30(x,a2),/)
-           write (*,285) (elem(iel(i)),i=1,ieln)
-        else
-           write(*,'("Unable to monitor element ions")')
+            enddo
+  200         format(/' Monitoring :',30(x,a2),/)
+            write (*,200) (elem(iel(i)),i=1,ieln)
+          else
+            write (*,'("Unable to monitor element ions")')
+          endif
         endif
       endif
 c
@@ -456,11 +460,11 @@ c      if (ilgg.eq.'C') vmod='FULL'
 c
 c     get runname
 c
-  320 format (a80)
-  330 format(//,
+  210 format (a80)
+  220 format(//,
      & ' Give a name/code for this run: ')
-      write (*,330)
-      read (*,320) runname
+      write (*,220)
+      read (*,210) runname
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -501,7 +505,7 @@ c     write ion balance files if requested
 c
       if (tsrmod.eq.'Y') then
         do i=1,atypes
-C         ie=iel(i)
+c         ie=iel(i)
           fn=' '
           pfx=elem(i)
           np=lenv(pfx)
@@ -583,30 +587,30 @@ c
      &,t38,'Zstar',t47,'FQHI',t56,'FQHEI',t66,'FQHEII')
   120 format(' ',a2,1pg10.3,4(0pf7.2),1x,3(1pg10.3))
 c
-      write (luop,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
-     &bm0*1.d6,pr0,bp0,rho0*vel0*vel0
+      write (luop,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,bm0*
+     &1.d6,pr0,bp0,rho0*vel0*vel0
 c
-      write (lupb,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
-     &bm0*1.d6,pr0,bp0,rho0*vel0*vel0
+      write (lupb,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,bm0*
+     &1.d6,pr0,bp0,rho0*vel0*vel0
 c
       if (ratmod.eq.'Y') then
-      write (lurtsh,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
-     &bm0*1.d6,pr0,bp0,rho0*vel0*vel0
+        write (lurtsh,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
+     &   bm0*1.d6,pr0,bp0,rho0*vel0*vel0
       endif
 c
       if (dynmod.eq.'Y') then
-      write (ludy,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
-     &bm0*1.d6,pr0,bp0,rho0*vel0*vel0
+        write (ludy,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
+     &   bm0*1.d6,pr0,bp0,rho0*vel0*vel0
       endif
 c
       if (allmod.eq.'Y') then
-      write (lualsh,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
-     &bm0*1.d6,pr0,bp0,rho0*vel0*vel0
+        write (lualsh,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
+     &   bm0*1.d6,pr0,bp0,rho0*vel0*vel0
       endif
 c
       if (fclmod.eq.'Y') then
-      write (lucl,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
-     &bm0*1.d6,pr0,bp0,rho0*vel0*vel0
+        write (lucl,10) vel0*1.d-5,machnumber,magparam,de,dh,rho0,te0,
+     &   bm0*1.d6,pr0,bp0,rho0*vel0*vel0
       endif
 c
       write (luop,50) abnfile,ionsetup,srcfile
@@ -620,7 +624,6 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     abundances file header
-c
 c
       abundtitle=' Initial Abundances :'
       do i=1,atypes
@@ -740,17 +743,15 @@ c
       if (fclmod.eq.'Y') write (lucl,140) te0,vel0,rho0,pr0,bm0,te1,
      &vel1,rho1,pr1,bm1
 c
-c
       close (lusp)
-c
 c
       wdilt0=te0
       t=te0
       ve=vel0
-      dr=1.0
+      dr=1.0d0
       dv=ve*0.01d0
       rad=1.d38
-      if (wdil.eq.0.5) rad=0.d0
+      if (wdil.eq.0.5d0) rad=0.d0
 c
 c     get the electrons...
 c
@@ -759,11 +760,9 @@ c
 c     calculate the radiation field and atomic rates
 c
       call localem (t, de, dh)
-c
       call totphot2 (t, dh, rad, dr, dv, wdil, specmode)
-c
       if (photonmode.ne.0) then
-        call zetaeff ( dh)
+        call zetaeff (dh)
       endif
       call cool (t, de, dh)
 c
@@ -794,18 +793,18 @@ c
       if (fclmod.eq.'Y') call wionabal (lucl, pop)
 c
       close (luop)
-  170 format(17(a12,a1))
-      write (lupb,170) 'Te',tab,'de',tab,'dh',tab,'en',tab,'FHI',tab,'FH
+  160 format(17(a12,a1))
+      write (lupb,160) 'Te',tab,'de',tab,'dh',tab,'en',tab,'FHI',tab,'FH
      &II',tab,'mu',tab,'tloss',tab,'Lambda',tab,'ff/total',tab,'B0.0-0.1
      &keV',tab,'B0.1-0.5keV',tab,'B0.5-1.0keV',tab,'B1.0-2.0eV',tab,'B2.
      &0-10.0keV',tab,'Ball'
       close (lupb)
-  180 format(//'Mean Zone Values'/
+  170 format(//'Mean Zone Values'/
      & '================'/)
-  190 format(10(a12,a2),30(a12,a2),33(a12,a2))
-  200 format(10(a12,a2),30(a12,a2),33(1pg12.5,a2))
+  180 format(10(a12,a2),30(a12,a2),33(a12,a2))
+  190 format(10(a12,a2),30(a12,a2),33(1pg12.5,a2))
 c
-  210 format( '=======================================================',
+  200 format('=======================================================',
      & '=======================================================',
      & '=======================================================',
      & '=======================================================',
@@ -818,50 +817,42 @@ c
      & '======================================')
 c
       if (fclmod.eq.'Y') then
-        write (lucl,180)
-c      write (lucl,560)
-c      write (lucl,570)
+        write (lucl,170)
         if (jnorm.eq.0) then
-          write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
-     & 'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',
-     & tab,'L/(ne.nH)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,
-     & 'LHalpha',tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
+          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
+     & ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(ne
+     &.nH)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',tab,'LLy
+     &alpha'
         endif
         if (jnorm.eq.1) then
-          write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
-     &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
-     &'L/(nH^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
-     &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
+          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
+     & ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(nH
+     &^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',tab,'LLya
+     &lpha'
         endif
         if (jnorm.eq.2) then
-          write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
-     &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
-     &'L/(ne.ni)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
-     &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
+          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
+     & ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(ne
+     &.ni)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',tab,'LLy
+     &alpha'
         endif
         if (jnorm.eq.3) then
-          write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
-     &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
-     &'L/(n^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
-     &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
+          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
+     & ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(n^
+     &2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',tab,'LLyal
+     &pha'
         endif
         if (jnorm.eq.4) then
-          write (lucl,190) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,
-     &'rho ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,
-     &'L/(ne^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',
-     &tab,'LLyalpha'
-c     &    (elem(j),tab,j=1,atypes)
+          write (lucl,180) 'T ',tab,'n_e',tab,'n_H',tab,'n_ion',tab,'rho
+     & ',tab,'FHI   ',tab,'FHII  ',tab,'mu ',tab,'Losses (L)',tab,'L/(ne
+     &^2)',tab,(elem(j),tab,j=1,atypes),'L_5007',tab,'LHalpha',tab,'LLya
+     &lpha'
         endif
-        write (lucl,200) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,
-     &'(/cm^3)',tab,'(g/cm^3)',tab,' ',tab,' ',tab,'(amu)',tab,
-     &'(erg/cm^3/s)',tab,'(erg cm^3/s)',tab,('(erg cm^3/s)',tab,
-     &j=1,atypes),'(erg cm^3/s)',tab,'(erg cm^3/s)',tab,'(erg cm^3/s)'
-c     &    (elem(j),tab,j=1,atypes)
-        write (lucl,210)
+        write (lucl,190) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,'(/cm^3)'
+     &   ,tab,'(g/cm^3)',tab,' ',tab,' ',tab,'(amu)',tab,'(erg/cm^3/s)',
+     &   tab,'(erg cm^3/s)',tab,('(erg cm^3/s)',tab,j=1,atypes),'(erg cm
+     &^3/s)',tab,'(erg cm^3/s)',tab,'(erg cm^3/s)'
+        write (lucl,200)
       endif
       if (ratmod.eq.'Y') close (lurtsh)
       if (dynmod.eq.'Y') close (ludy)

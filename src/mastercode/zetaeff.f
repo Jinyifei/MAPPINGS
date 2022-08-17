@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -44,32 +44,32 @@ c
 c
 c    ***CALCULATE NEW PHOTOIONISATION/HEATING RATES IF NECESSARY.
 c
-        jjmod='PHOT'
-        call allrates (100.d0, jjmod)
+      jjmod='PHOT'
+      call allrates (100.d0, jjmod)
 c
 c
 c    ***COMPUTES ZETAE IN COMMON BLOCK /DENLIN/
 c
-        wei=zion(1)
-        ph=zion(1)*rphot(1,1)
+      wei=zion(1)
+      ph=zion(1)*rphot(1,1)
 c
-        do 20 idx=2,atypes
-          abr=zion(idx)
+      do 20 idx=2,atypes
+        abr=zion(idx)
+        wei=wei+abr
+        ion=maxion(idx)-1
+        ph=ph+(abr*rphot(ion,idx))
+        do 10 ion=1,maxion(idx)-2
           wei=wei+abr
-          ion=maxion(idx)-1
-          ph=ph+(abr*rphot(ion,idx))
-          do 10 ion=1,maxion(idx)-2
-            wei=wei+abr
-            ph=ph+(abr*(rphot(ion,idx)+auphot(ion,idx)))
-   10     continue
-   20   continue
+          ph=ph+(abr*(rphot(ion,idx)+auphot(ion,idx)))
+   10   continue
+   20 continue
 c
-        zetae=ph/(dh*wei)
+      zetae=ph/(dh*wei)
 c
-        qhdh=qtosoh/dh
-        qhdn=qhdh/zen
-        uhdh=qhdh/cls
-        viofr=qtosoh/((fi*dh)*zen)
+      qhdh=qtosoh/dh
+      qhdn=qhdh/zen
+      uhdh=qhdh/cls
+      viofr=qtosoh/((fi*dh)*zen)
 c
       return
       end

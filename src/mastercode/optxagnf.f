@@ -9,14 +9,14 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine optxagnf(param, flux)
+      subroutine optxagnf (param, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -78,29 +78,26 @@ c     Now really simple :) RSS
 c     always returns the total
 c     no need for inefficient repeated -ve parameter calls
 c
-      do i = 1,10,1
-      optxparam(i)=param(i)
+      do i=1,10,1
+        optxparam(i)=param(i)
       enddo
-      optxparam(11) = 0.0d0
-      optxparam(12) = 0.0d0
+      optxparam(11)=0.0d0
+      optxparam(12)=0.0d0
 c
-  10  format(/" OPTXAGNF Parameters: ",//
-     &        "   M_BH: ",1pg12.4," M_0",/
-     &        "   L   : ",1pg12.4," L/Ledd",/
-     &        "   D   : ",1pg12.4," cm",/
-     &        "   Rcor: ",1pg12.4," Rg      ",
-     &        "   Rmax: ",1pg12.4," log[Rg] ",/
-     &        "   C_T : ",1pg12.4," keV     ",
-     &        "   Tau:  ",1pg12.4," Optical Depth ",/
-     &        "   gam : ",1pg12.4," (-slope)",
-     &        "   fpl : ",1pg12.4," Fraction ",/)
+   10 format(/' OPTXAGNF Parameters: ',//
+     &        '   M_BH: ',1pg12.4,' M_0',/
+     &        '   L   : ',1pg12.4,' L/Ledd',/
+     &        '   D   : ',1pg12.4,' cm',/
+     &        '   Rcor: ',1pg12.4,' Rg      ',
+     &        '   Rmax: ',1pg12.4,' log[Rg] ',/
+     &        '   C_T : ',1pg12.4,' keV     ',
+     &        '   Tau:  ',1pg12.4,' Optical Depth ',/
+     &        '   gam : ',1pg12.4,' (-slope)',
+     &        '   fpl : ',1pg12.4,' Fraction ',/)
 c
-      write(*,10) optxparam( 1)
-     & ,(10.d0**optxparam( 3))
-     & ,optxparam( 2)
-     & ,optxparam( 5), optxparam( 6)
-     & ,optxparam( 7), optxparam( 8)
-     & ,optxparam( 9), optxparam(10)
+      write (*,10) optxparam(1),(10.d0**optxparam(3)),optxparam(2),
+     &optxparam(5),optxparam(6),optxparam(7),optxparam(8),optxparam(9),
+     &optxparam(10)
 c
 c set up energy bins, keV
 c
@@ -110,12 +107,12 @@ c
 c
       dloge=dlog10(optxear(neoptx)/optxear(0))/dble(neoptx)
       do i=1,neoptx,1
-        optxear  (i)=10.d0**(dlog10(optxear(0))+dloge*dble(i))
+        optxear(i)=10.d0**(dlog10(optxear(0))+dloge*dble(i))
         optxtotal(i)=0.d0
-        optxdisk (i)=0.d0
-        optxcoro (i)=0.d0
-        optxnont (i)=0.d0
-        phots    (i)=0.d0
+        optxdisk(i)=0.d0
+        optxcoro(i)=0.d0
+        optxnont(i)=0.d0
+        phots(i)=0.d0
       enddo
 c
 c optxear(i), in keV , is the energy at the right of the bin:
@@ -138,31 +135,32 @@ c
 c   convert photons/cm^2/s/bin to Inu at bin centres
 c
       do i=1,neoptx,1
-        ew=(optxear(i)-optxear(i-1))*1.0d3  ! eV
+c      eV
+        ew=(optxear(i)-optxear(i-1))*1.0d3
         ewhz=ew*ev/plk
-        ec(i)=0.5d0*(optxear(i)+optxear(i-1))*1.0d3  ! eV
+c      eV
+        ec(i)=0.5d0*(optxear(i)+optxear(i-1))*1.0d3
         ecergs=ec(i)*ev
 c phots/cm2/s/bin.  *photon energy, / bin width / pi -> Hnu
-        optxhnu(i)=phots(i)*ecergs/(pi*ewhz) ! bin centre mean Inu
+c      bin centre mean Inu
+        optxhnu(i)=phots(i)*ecergs/(pi*ewhz)
       enddo
 c
 c     actually call with Inu in flux...
 c     but rebin doesn't scale like readrebin does, so OK
 c
-      call rebin(ec,optxhnu,neoptx,flux)
+      call rebin (ec, optxhnu, neoptx, flux)
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine mydiskf (param,phots)
+      subroutine mydiskf (param, phots)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c     program to integrate the disk equations from shakura-sunyaev disk
 c     as given by Novikov and Thorne
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
       real*8 param(12),phots(mxoptxbins)
@@ -184,8 +182,10 @@ c     system parameters
 c
       ne=neoptx
 c
-      m=param(1)!in solar units
-      d=param(2)!in cm now, not Mpc
+c     in solar units
+      m=param(1)
+c     in cm now, not Mpc
+      d=param(2)
       lonledd=10.d0**(param(3))
       mdotedd=10.d0**(param(3))
       bhastar=param(4)
@@ -203,8 +203,10 @@ c
 c      mdot in g/s Ledd=1.2572e38 m and c2=8.98755e20
       mdot=lonledd*ledd*m/(cls*cls*eff)
 c     disc parameters
-      rcor=dabs(param(5))!in rin/rg
-      logrout=param(6)!log10rout/rg
+c     in rin/rg
+      rcor=dabs(param(5))
+c     log10rout/rg
+      logrout=param(6)
 c     iv -ve then calculate rout=rsg from laor & netzer 1989
       if (param(6).lt.0.0d0) then
         logrout=((m/1.d9)**(-2.d0/9.d0))*((mdotedd)**(4.d0/9.d0))
@@ -275,9 +277,9 @@ c        go over each photon energy - 3rd order ppm integral average
         do n=1,ne,1
 c          en=0.5d0*(dlog10(optxear(n))+dlog10(optxear(n-1)))
 c          en=10.d0**en
-          el = optxear(n-1)
-          ec = 0.5d0*(optxear(n-1)+optxear(n))
-          er = optxear(n)
+          el=optxear(n-1)
+          ec=0.5d0*(optxear(n-1)+optxear(n))
+          er=optxear(n)
 c
 c           do blackbody spectrum left edge
 c
@@ -320,7 +322,7 @@ c
       do n=1,ne,1
 c         dsk=dsk+flux(n)*(optxear(n)-optxear(n-1))*kevhz
 c        this is ergs cm^2 s-1 Hz^-1
-        ec = 0.5d0*(optxear(n-1)+optxear(n))
+        ec=0.5d0*(optxear(n-1)+optxear(n))
         flux(n)=flux(n)/(4.d0*pi*d*d)
 c        photons is flux/hv - photons cm^2 s-1 Hz^-1
         flux(n)=flux(n)/(plk*kevhz*ec)
@@ -334,7 +336,8 @@ c     now add low temcomptonised emission with comptt
       lpar(1)=0.d0
       lpar(2)=wt0
       lpar(3)=param(7)
-      lpar(4)=dabs(param(8))!if-veplotcomp
+c     if-veplotcomp
+      lpar(4)=dabs(param(8))
       lpar(5)=1
       call xstitg (optxear, neoptx, lpar, lphot, lphote)
 c
@@ -350,7 +353,7 @@ c
       pow=0.d0
       dsk=0.d0
       do n=1,ne,1
-        ec =0.5d0*(optxear(n-1)+optxear(n))
+        ec=0.5d0*(optxear(n-1)+optxear(n))
         cor=cor+lphot(n)*ec
         pow=pow+hphot(n)*ec
         dsk=dsk+optxdisk(n)*ec
@@ -380,17 +383,16 @@ c
 c
 c now safe to rescale even partial spectra
 c
-       do n=1,ne,1
-         optxtotal(n)= optxtotal(n)*renorm
-         optxdisk(n) = optxdisk(n)*renorm
-         optxcoro(n) = optxcoro(n)*renorm
-         optxnont(n) = optxnont(n)*renorm
-         phots(n)    = optxtotal(n)
-       enddo
+      do n=1,ne,1
+        optxtotal(n)=optxtotal(n)*renorm
+        optxdisk(n)=optxdisk(n)*renorm
+        optxcoro(n)=optxcoro(n)*renorm
+        optxnont(n)=optxnont(n)*renorm
+        phots(n)=optxtotal(n)
+      enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function mytemp(m0,bhastar,mdot0,rms,r0)
@@ -418,7 +420,8 @@ c
       part2=part2/(y*y2*(y2-y1)*(y2-y3))
       part1=3.d0*((y1-bhastar)**2)*dlog((y-y1)/(yms-y1))
       part1=part1/(y*y1*(y1-y2)*(y1-y3))
-      a=1.d0-yms/y-(3.d0*bhastar/(2.d0*y))*dlog(y/yms)-part1-part2-part3
+      a=1.d0-yms/y-(3.d0*bhastar/(2.d0*y))*dlog(y/yms)-part1-part2-
+     &part3
       b=1.d0-3.d0/r+2.d0*bhastar/(r**1.5d0)
 c
       mytemp=3.d0*grav*msun*m0*mdot0
@@ -427,7 +430,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine donthcomp (ear, ne, param, photar, photer)
@@ -466,7 +468,6 @@ c
       integer*4 i,j, jl
       save pa0,normfac,normlum,xth,nth,spt
       data pa0/5*9999.d0/
-
 c this model does not calculate errors
       do i=1,ne
         photer(i)=0.d0
@@ -492,7 +493,7 @@ c  calculate internal source spectrum if input parameters have changed
         endif
         xninv=511.d0/zfactor
         normfac=1.d0/spp(xninv,xth,nth,spt)
-c Calculate luminosity normalization  (used in another model!)
+c Calculate luminosity normalization  (used in another model)
         normlum=0.d0
         do i=2,nth-1
           normlum=normlum+0.5d0*(spt(i)/xth(i)+spt(i-1)/xth(i-1))*
@@ -649,7 +650,6 @@ c 498  continue
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine thermlc (tautom, theta, deltal, x, jmax, dphesc,
@@ -732,7 +732,6 @@ c compute new value of dph(x) and new value of dphesc(x)
    50 continue
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine thdscompton (tempbb, theta, gamma, x, jmax, sptot)
@@ -871,7 +870,6 @@ c 498  continue
 c      close(33)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function spp(y,xnonth,nnonth,spnth)
@@ -897,7 +895,6 @@ c
      &xnonth(il))
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine xsdskb (ear, ne, param, idt, photar, photer)
@@ -950,7 +947,6 @@ c this model has no errors
         photar(i)=photar(i)*xn
    20 continue
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mcdspc (e, tin, rin2, flux)
@@ -983,7 +979,6 @@ c  Flux = photon flux, photons/sec/cm^2/keV
       call mcdint (et, value)
       flux=value*tin*tin*rin2/normfact
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine mcdint (et, value)
@@ -1053,7 +1048,6 @@ c
       value=value0*(et/et0)**beki*(1.0d0+a*et**b)*dexp(-et)*gaufact*
      &(1.0d0+resfact)
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine xstitg (ear, npts, param, photar, photer)
@@ -1251,7 +1245,6 @@ c            write(2,*) ens(i),bol7i,bol6,bol6+bol7i
         ophot=phot
    20 continue
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function yyit2(x,alfa,ro)
@@ -1291,7 +1284,6 @@ c            v = w(i)*DEXP(a2*DLOG(ro*x+z(i))+a3*Dlog(z(i))-db)
       yyit2=yyit2
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function gamln(az)
@@ -1324,7 +1316,6 @@ c      write(*,*) 'gamln : az  z = ',az,z
       gamln=s
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function gammi(a,x)
@@ -1336,7 +1327,7 @@ c CODED FROM NUMERICAL RECIPIES
 c INCOMPLETE GAMMA FUNCTION
       real*8 a , x , gln , gammcf , gamser
       if (x.lt.0.d0.or.a.le.0.d0) then
-      write(*,*) 'Inc. Gamma Fn. called with x < 0 or A <= 0'
+        write (*,*) 'Inc. Gamma Fn. called with x < 0 or A <= 0'
       endif
 c USE THE SERIES REPRESENTATION
       if (x.lt.(a+1.d0)) then
@@ -1348,7 +1339,6 @@ c USE THE SERIES REPRESENTATION
       endif
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine gserr (gamser, a, x, gln)
@@ -1375,12 +1365,11 @@ c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
         sum=sum+del
         if (abs(del).lt.abs(sum)*eps) goto 20
    10 continue
-      write (*,*)
-     &'Warning: Inc. Gamma Fn. GSERR did not converge for A = ',a
+      write (*,*) 'Warning: Inc. Gamma Fn. GSERR did not converge for A
+     &= ',a
    20 gamser=sum*dexp(-x+a*log(x)-gln)
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine gcff (gammcf, a, x, gln)
@@ -1420,12 +1409,11 @@ c            write(*,*) 'gcff: a1 = ',a1
           gold=g
         endif
    10 continue
-      write (*,*)
-     &'Warning: Inc. Gamma Fn. GCFF did not converge for A = ',a
+      write (*,*) 'Warning: Inc. Gamma Fn. GCFF did not converge for A =
+     & ',a
    20 gammcf=dexp(-x+a*dlog(x)-gln)*g
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function compd0(x)
@@ -1450,7 +1438,6 @@ c
       endif
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function betaint(tau,apprx)
@@ -1510,7 +1497,6 @@ c      write(*,*) 'tau = ',tau
 c      write(*,*) tau1,tau2,b1,b2,b3
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine dinter (x0, x1, x2, y0, y1, y2)

@@ -10,7 +10,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -271,14 +271,14 @@ c
               goto 40
             endif
             if (drtype.eq.2) then
-            drate=t32*(co(1)*dexp(-co(3)/tp))*(1.d0+co(2)*dexp(-co(4)/
+              drate=t32*(co(1)*dexp(-co(3)/tp))*(1.d0+co(2)*dexp(-co(4)/
      &         tp))
             endif
             if (drtype.eq.3) then
 c
 c compatibility case for special data file that reproduces old code
 c
-            drate=t32*(co(1)*dexp(-co(3)/tp))*(1.d0+co(2)*dexp(-co(4)/
+              drate=t32*(co(1)*dexp(-co(3)/tp))*(1.d0+co(2)*dexp(-co(4)/
      &         tp))
               if (tp.lt.1.d5) then
                 a2=arrec(2,ir)
@@ -362,8 +362,10 @@ c Replace SIII rates with Badnell 2015 data but leave other rates
 c
 c       write(*,*) '//drecmode=2, BD2015 SIII DR + RR rates plus std'
 c
-        ion=3!onlysiiiatm
-        atom=zmap(16)!s=16
+c     only siii atm
+        ion=3
+c     s=16
+        atom=zmap(16)
 c
 c updating rr radiative and dr (dielectronic recombination) rates both
 c even though we don't have photo sections to go with  no milne relation
@@ -380,7 +382,8 @@ c
         tt0=dsqrt(tp/rr_bd15(3))
         tt1=dsqrt(tp/rr_bd15(4))
         t0t=1.d0/tt0
-        t2t=dexp(-rr_bd15(6)/tp)!t2
+c     t2
+        t2t=dexp(-rr_bd15(6)/tp)
 c
         bp=brr+crr*t2t
         f1=(1.d0+tt0)**(1.d0-bp)

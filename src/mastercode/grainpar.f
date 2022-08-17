@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -80,9 +80,10 @@ c     solve for weight of dust
 c
         fw=0.d0
         do i=3,atypes
-        if ((mapz(i).ne.6).and.(mapz(i).ne.10).and.(mapz(i).ne.18)) then
-          fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-        endif
+          if ((mapz(i).ne.6).and.(mapz(i).ne.10).and.(mapz(i).ne.18))
+     &     then
+            fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
+          endif
 c         if (mapz(i).eq.8) then
 c           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
 c         endif
@@ -130,7 +131,7 @@ c
             dustsig(i,2)=pi*const*grainrad(i)**(galpha+2.d0)
           enddo
         endif
-      else if (gdist.eq.'S') then
+      elseif (gdist.eq.'S') then
 c
 c    Grain shattering distribution
 c
@@ -182,24 +183,25 @@ c     solve for weight of dust
 c
         fw=0.d0
         do i=3,atypes
-        if ((mapz(i).ne.6).and.(mapz(i).ne.10).and.(mapz(i).ne.18)) then
+          if ((mapz(i).ne.6).and.(mapz(i).ne.10).and.(mapz(i).ne.18))
+     &     then
             fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-        endif
-C         if (mapz(i).eq.8) then
-C           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-C         endif
-C         if (mapz(i).eq.12) then
-C           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-C         endif
-C         if (mapz(i).eq.13) then
-C           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-C         endif
-C         if (mapz(i).eq.14) then
-C           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-C         endif
-C         if (mapz(i).eq.26) then
-C           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-C         endif
+          endif
+c         if (mapz(i).eq.8) then
+c           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
+c         endif
+c         if (mapz(i).eq.12) then
+c           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
+c         endif
+c         if (mapz(i).eq.13) then
+c           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
+c         endif
+c         if (mapz(i).eq.14) then
+c           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
+c         endif
+c         if (mapz(i).eq.26) then
+c           fw=fw+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
+c         endif
         enddo
         fw=fw*amu
 c
@@ -268,8 +270,8 @@ c         graindgr=graindgr+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i)
 c    &     )
 c       endif
         if (mapz(i).eq.6) then
-        graindgr=graindgr+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i))
-     &     *(1.d0-pahcfrac)
+          graindgr=graindgr+atwei(i)*zion0(i)*deltazion(i)*(1.d0-dion(i)
+     &     )*(1.d0-pahcfrac)
         endif
       enddo
 c
@@ -296,7 +298,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine graindepletegas (taper)
@@ -319,7 +320,6 @@ c
       enddo
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine grainfinalise
@@ -380,7 +380,6 @@ c
    10 continue
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine adjustgrains (t, qh, allowonandoff)
@@ -444,7 +443,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine grainpar ()
@@ -455,7 +453,6 @@ c     Set grain parameters
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-
       include 'cblocks.inc'
       integer*4 i,j,inl,dtype
       character ilgg*4,qlimit*4
@@ -560,8 +557,8 @@ c
       if (ilgg.eq.'Y') grainmode=1
 c
       if (grainmode.ne.1) then
-       do j = 1,atypes
-           dion0(j)=1.0d0
+        do j=1,atypes
+          dion0(j)=1.0d0
         enddo
       endif
 c
@@ -685,7 +682,7 @@ c
           amax(1)=amax(1)*1.d-4
           amin(2)=amin(2)*1.d-4
           amax(2)=amax(2)*1.d-4
-        else if (gdist.eq.'P') then
+        elseif (gdist.eq.'P') then
 c
 c      Power - Law N(a) = A^alpha
 c
@@ -750,7 +747,7 @@ c
           amin(2)=amin(2)*1.d-4
           amax(2)=amax(2)*1.d-4
 c
-        else if (gdist.eq.'S') then
+        elseif (gdist.eq.'S') then
 c
 c      Grain shattering distribution based on Jones et al 1996
 c       with additional exponential cutoffs
@@ -1006,9 +1003,9 @@ c
           ilgg=ilgg(1:1)
           if ((ilgg.eq.'q').or.(ilgg.eq.'Q')) then
             irmode=1
-          else if ((ilgg.eq.'i').or.(ilgg.eq.'I')) then
+          elseif ((ilgg.eq.'i').or.(ilgg.eq.'I')) then
             irmode=2
-          else if ((ilgg.eq.'s').or.(ilgg.eq.'S')) then
+          elseif ((ilgg.eq.'s').or.(ilgg.eq.'S')) then
             irmode=3
           else
             goto 520
@@ -1059,6 +1056,5 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

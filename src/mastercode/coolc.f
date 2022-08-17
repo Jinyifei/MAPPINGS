@@ -9,14 +9,14 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine coolc()
+      subroutine coolc ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -91,7 +91,7 @@ c
       if (expertmode.gt.0) then
         write (*,10) ' Set n_e = n_H (for C8 comparison) (Y/N):'
         read (*,20) jeqnenh
-        call toup(jeqnenh(1:1),jeqnenh)
+        call toup (jeqnenh(1:1), jeqnenh)
       endif
 c
    30 format(' Normalisation:',/
@@ -113,15 +113,15 @@ c
 c
       write (*,10) ' Save element cooling files (Y/N):'
       read (*,20) jcoolelems
-      call toup(jcoolelems(1:1),jcoolelems)
+      call toup (jcoolelems(1:1), jcoolelems)
 c
       write (*,10) ' Save element ionisation files (Y/N):'
       read (*,20) jsaveatoms
-      call toup(jsaveatoms(1:1),jsaveatoms)
+      call toup (jsaveatoms(1:1), jsaveatoms)
 c
       write (*,10) ' Save .emi emissivity files (Y/N):'
       read (*,20) jsavespecs
-      call toup(jsavespecs(1:1),jsavespecs)
+      call toup (jsavespecs(1:1), jsavespecs)
 c
       write (*,10) ' Run/code name for this calculation:'
       read (*,20) runname
@@ -159,29 +159,29 @@ c
           write (luions(i),'(" Element : ",a2)') elem(i)
           write (luions(i),'(" Cooling : ")')
           write (luions(i),120)
-             if (jnorm.eq.0) then
+          if (jnorm.eq.0) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'n_e.n_H',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
      &(L)',tab,'L/(ne.nH)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           if (jnorm.eq.1) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'nH^2',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
      &(L)',tab,'L/(nH^2)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           if (jnorm.eq.2) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'ne.ni',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
      &(L)',tab,'L/(ne.ni)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           if (jnorm.eq.3) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'n^2',tab,
-     & 'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)'
+     &       'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses (L)'
      &       ,tab,'L/(n^2)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           if (jnorm.eq.4) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'ne^2',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
      &(L)',tab,'L/(ne^2)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           write (luions(i),90) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,'(/
@@ -289,28 +289,28 @@ c
 c
       write (*,120)
       if (jnorm.eq.0) then
-        write (*,*) 'T             n_e           n_H         ne.nH
-     & ',' mu          Losses (L)   L/(ne.nH)    ',' 0.5-1.0keV   1.0-2
+        write (*,*) 'T             n_e           n_H         ne.nH      
+     & ',' mu          Losses (L)   L/(ne.nH)    ',' 0.5-1.0keV   1.0-2 
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.1) then
-        write (*,*) 'T             n_e           n_H         nH^2
-     & ',' mu          Losses (L)   L/(nH^2)     ',' 0.5-1.0keV   1.0-2
+        write (*,*) 'T             n_e           n_H         nH^2       
+     & ',' mu          Losses (L)   L/(nH^2)     ',' 0.5-1.0keV   1.0-2 
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.2) then
-        write (*,*) 'T             n_e           n_H         ne.ni
-     & ',' mu          Losses (L)   L/(ne.ni)    ',' 0.5-1.0keV   1.0-2
+        write (*,*) 'T             n_e           n_H         ne.ni      
+     & ',' mu          Losses (L)   L/(ne.ni)    ',' 0.5-1.0keV   1.0-2 
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.3) then
-        write (*,*) 'T             n_e           n_H         n^2
-     & ',' mu          Losses (L)   L/(n^2)      ',' 0.5-1.0keV   1.0-2
+        write (*,*) 'T             n_e           n_H         n^2        
+     & ',' mu          Losses (L)   L/(n^2)      ',' 0.5-1.0keV   1.0-2 
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.4) then
-        write (*,*) 'T             n_e           n_H         ne^2
-     & ',' mu          Losses (L)   L/(ne^2)     ',' 0.5-1.0keV   1.0-2
+        write (*,*) 'T             n_e           n_H         ne^2       
+     & ',' mu          Losses (L)   L/(ne^2)     ',' 0.5-1.0keV   1.0-2 
      &.0keV   2.0-10.0keV'
       endif
 c
@@ -358,7 +358,7 @@ c
         trea=pzlimit
         dift=0.d0
 c
-  140   call copypop (pop, popz)
+  130   call copypop (pop, popz)
 c
         call equion (t, de, dh)
         if (jeqnenh.eq.'Y') de=dh
@@ -381,7 +381,7 @@ c
 c
         i=i+1
 c
-        if ((dift.ge.1.0d-6).and.(i.le.5)) goto 140
+        if ((dift.ge.1.0d-6).and.(i.le.5)) goto 130
 c
         call equion (t, de, dh)
         if (jeqnenh.eq.'Y') de=dh
@@ -417,10 +417,10 @@ c
           invn=0.d0
         endif
 c
-        ue=gammaEOSU*(en+de)*rkb*t
+        ue=gammaeosu*(en+de)*rkb*t
         tnloss=tloss*invn
         rhotot=frho(de,dh)
-        cspd=dsqrt(gammaEOS*press/rhotot)
+        cspd=dsqrt(gammaeos*press/rhotot)
         wmol=(rhotot/(en+de))/amu
 c
         b0=0.d0
@@ -469,7 +469,7 @@ c
           caller='CC'
           pfx='cool'
           spmod='NORM'
-          pfx   ='xray'
+          pfx='xray'
           call wemiss2 (caller, pfx, 4, t, de, dh, dr, 1d23*invn, tphot)
 c
           dr=1.0d0
@@ -483,8 +483,8 @@ c
         if (jsaveatoms.eq.'Y') then
           do i=1,atypes
             open (luions(i),file=filn(i),status='OLD',access='APPEND')
-  150       format(1pe12.5,a2,31(1pe12.5,a2))
-            write (luions(i),150) t,tab,(pop(j,i),tab,j=1,maxion(i))
+  140       format(1pe12.5,a2,31(1pe12.5,a2))
+            write (luions(i),140) t,tab,(pop(j,i),tab,j=1,maxion(i))
             close (luions(i))
           enddo
         endif
@@ -505,8 +505,8 @@ c
       enddo
       close (luop)
 c
-      write (*,160) fn
-  160 format(//' Output created in : ',a14)
+      write (*,150) fn
+  150 format(//' Output created in : ',a14)
 c
       return
       end

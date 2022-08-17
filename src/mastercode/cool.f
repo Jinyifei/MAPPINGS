@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -60,6 +60,11 @@ c
       oiii5007loss=0.d0
 c
 c    ***COMPUTES NEW RATES IF TEMP. OR PHOTON FIELD HAVE CHANGED
+c
+      if ((t.le.mintemp).or.(dh.le.0.d0)) then
+        write (*,*) 'Cool out of range',t,de,dh
+        stop
+      endif
 c
       jjmod='ALL'
       call allrates (t, jjmod)
@@ -116,10 +121,10 @@ c
 c
 c      call helif (t, de, dh)
 c
-C
-C     tll=tll+rloss+fslos+fmloss+xr3loss+xrlloss
-C     tll=tll+f3loss+feloss
-Cc
+c
+c     tll=tll+rloss+fslos+fmloss+xr3loss+xrlloss
+c     tll=tll+f3loss+feloss
+cc
 c
 c    ***FREE-FREE COOLING
 c
@@ -131,7 +136,8 @@ c
 c    ***COLLISIONAL IONISATION LOSSES
 c
       cmplos=0.d0
-      call coloss (de, dh) ! colos
+c      colos
+      call coloss (de, dh)
       tll=tll+colos
 c
 c      tll=hloss+rloss+fslos+fmloss+xrloss+xr3loss+xrlloss+xiloss
@@ -154,7 +160,7 @@ c
 c    ***PHOTOIONISATION HEATING
 c
       pgain=0.d0
-      call pheat (de, dh) ! pgain
+      call pheat (de, dh)
       tgg=tgg+pgain
 c
 c grain / pah heating and cooling
@@ -181,29 +187,29 @@ c      call cosmic (t, de, dh)
 c
 c    ***MICROTURBULENT DISSPATION HEATING
 c
-C     q=0.0d0
-C     if (turbheatmode.gt.0) then
-C       g=1.66666666666667d0
-C       dens=frho(de,dh)
-C       pres=fpresse(t,de,dh)
-C       v=sqrt(g*pres/dens)*admach
-C       alpha_cool=0.d0
-C       if (turbheatmode.eq.1) then
-C         alpha_cool=1.d0/frectim2(de)
-C       endif
-C       if (turbheatmode.eq.2) then
-C         alpha_cool=1.d0/fcietim(dh)
-C       endif
-C       if (turbheatmode.eq.3) then
-C         cooltime=gammaEOSU*pres/tll
-C         alpha_cool=1.d0/cooltime
-C       endif
-C       if (turbheatmode.eq.4) then
-C         alpha_cool=1.d0/alphaturbfixed
-C       endif
-C       q=0.5d0*dens*v*v*alpha_cool
-C       tll=tll-q
-C     endif
+c     q=0.0d0
+c     if (turbheatmode.gt.0) then
+c       g=1.66666666666667d0
+c       dens=frho(de,dh)
+c       pres=fpresse(t,de,dh)
+c       v=sqrt(g*pres/dens)*admach
+c       alpha_cool=0.d0
+c       if (turbheatmode.eq.1) then
+c         alpha_cool=1.d0/frectim2(de)
+c       endif
+c       if (turbheatmode.eq.2) then
+c         alpha_cool=1.d0/fcietim(dh)
+c       endif
+c       if (turbheatmode.eq.3) then
+c         cooltime=gammaEOSU*pres/tll
+c         alpha_cool=1.d0/cooltime
+c       endif
+c       if (turbheatmode.eq.4) then
+c         alpha_cool=1.d0/alphaturbfixed
+c       endif
+c       q=0.5d0*dens*v*v*alpha_cool
+c       tll=tll-q
+c     endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c    ***(SEPARATELY) EFFECTIVE LOSS AND GAIN  :  ELOSS,EGAIN

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -28,7 +28,6 @@ c
 c     Internal Ritz (vac) wavelengths converted to std Air on output.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -440,13 +439,13 @@ c
               write (lunt,130)
               write (lunt,150) elem(atom),rom(mapz(atom))
               write (lunt,130)
-              write (lunt,10)
-     &        (xhlambda(j,1,atom)/fnair(xhlambda(j,1,atom)),j=1,5)
+              write (lunt,10) (xhlambda(j,1,atom)/fnair(xhlambda(j,1,
+     &         atom)),j=1,5)
               write (lunt,30) (xhydroflux(j,1,atom),j=1,5)
 c
               write (lunt,130)
-              write (lunt,10)
-     &        (xhlambda(j,1,atom)/fnair(xhlambda(j,1,atom)),j=6,10)
+              write (lunt,10) (xhlambda(j,1,atom)/fnair(xhlambda(j,1,
+     &         atom)),j=6,10)
               write (lunt,30) (xhydroflux(j,1,atom),j=6,10)
 c
               write (lunt,130)
@@ -454,13 +453,13 @@ c
 c
               write (lunt,150) elem(atom),rom(mapz(atom))
               write (lunt,130)
-              write (lunt,10)
-     &        (xhlambda(j,2,atom)/fnair(xhlambda(j,2,atom)),j=1,5)
+              write (lunt,10) (xhlambda(j,2,atom)/fnair(xhlambda(j,2,
+     &         atom)),j=1,5)
               write (lunt,30) (xhydroflux(j,2,atom),j=1,5)
 c
               write (lunt,130)
-              write (lunt,10)
-     &        (xhlambda(j,2,atom)/fnair(xhlambda(j,2,atom)),j=6,10)
+              write (lunt,10) (xhlambda(j,2,atom)/fnair(xhlambda(j,2,
+     &         atom)),j=6,10)
               write (lunt,30) (xhydroflux(j,2,atom),j=6,10)
 c
             endif
@@ -495,8 +494,8 @@ c
             enddo
             if (lj.gt.0) then
               write (lunt,100) (rccii_tr(idx+j),j=1,nr)
-              write (lunt,10)
-     &        (rccii_lam(idx+j)/fnair(rccii_lam(idx+j)),j=1,nr)
+              write (lunt,10) (rccii_lam(idx+j)/fnair(rccii_lam(idx+j)),
+     &         j=1,nr)
               write (lunt,40) (fluxrccii_a(idx+j),j=1,nr)
               write (lunt,50) (fluxrccii_b(idx+j),j=1,nr)
               write (lunt,130)
@@ -529,8 +528,8 @@ c
             enddo
             if (lj.gt.0) then
               write (lunt,110) (rcnii_tr(idx+j),j=1,nr)
-              write (lunt,10)
-     &        (rcnii_lam(idx+j)/fnair(rcnii_lam(idx+j)),j=1,nr)
+              write (lunt,10) (rcnii_lam(idx+j)/fnair(rcnii_lam(idx+j)),
+     &         j=1,nr)
               write (lunt,40) (fluxrcnii_a(idx+j),j=1,nr)
               write (lunt,50) (fluxrcnii_b(idx+j),j=1,nr)
               write (lunt,130)
@@ -564,8 +563,8 @@ c
             enddo
             if (lj.gt.0) then
               write (lunt,110) (rcoi_qtr(idx+j),j=1,nr)
-              write (lunt,10)
-     &        (rcoi_qlam(idx+j)/fnair(rcoi_qlam(idx+j)),j=1,nr)
+              write (lunt,10) (rcoi_qlam(idx+j)/fnair(rcoi_qlam(idx+j)),
+     &         j=1,nr)
               write (lunt,40) (fluxrcoi_qa(idx+j),j=1,nr)
               write (lunt,50) (fluxrcoi_qa(idx+j),j=1,nr)
               write (lunt,130)
@@ -595,8 +594,8 @@ c
             enddo
             if (lj.gt.0) then
               write (lunt,110) (rcoi_ttr(idx+j),j=1,nr)
-              write (lunt,10)
-     &        (rcoi_tlam(idx+j)/fnair(rcoi_tlam(idx+j)),j=1,nr)
+              write (lunt,10) (rcoi_tlam(idx+j)/fnair(rcoi_tlam(idx+j)),
+     &         j=1,nr)
               write (lunt,40) (fluxrcoi_ta(idx+j),j=1,nr)
               write (lunt,50) (fluxrcoi_qb(idx+j),j=1,nr)
               write (lunt,130)
@@ -632,8 +631,8 @@ c
             enddo
             if (lj.gt.0) then
               write (lunt,120) (rcoii_tr(idx+j),j=1,nr)
-              write (lunt,10)
-     &        (rcoii_lam(idx+j)/fnair(rcoii_lam(idx+j)),j=1,nr)
+              write (lunt,10) (rcoii_lam(idx+j)/fnair(rcoii_lam(idx+j)),
+     &         j=1,nr)
               write (lunt,40) (fluxrcoii_a(idx+j),j=1,nr)
               write (lunt,50) (fluxrcoii_b(idx+j),j=1,nr)
               write (lunt,60) (fluxrcoii_c(idx+j),j=1,nr)
@@ -668,8 +667,8 @@ c
             enddo
             if (lj.gt.0) then
               write (lunt,110) (rcneii_tr(idx+j),j=1,nr)
-              write (lunt,10)
-     &        (rcneii_lam(idx+j)/fnair(rcneii_lam(idx+j)),j=1,nr)
+              write (lunt,10) (rcneii_lam(idx+j)/fnair(rcneii_lam(idx+j)
+     &         ),j=1,nr)
               write (lunt,40) (fluxrcneii_a(idx+j),j=1,nr)
               write (lunt,50) (fluxrcneii_b(idx+j),j=1,nr)
               write (lunt,130)
@@ -916,7 +915,8 @@ c
           if (chcksum.ge.chklim) then
             write (lunt,130)
             write (lunt,150) elem(f3atom(i)),rom(f3ion(i))
-            write (lunt,20) (f3lam(j,i),j=1,nf3trans)!nocorrection
+c     no correction
+            write (lunt,20) (f3lam(j,i),j=1,nf3trans)
             write (lunt,30) (fluxf3(j,i),j=1,nf3trans)
           endif
         enddo
@@ -1098,7 +1098,7 @@ c
           if (chcksum.ge.chklim) then
             write (lunt,130)
             write (lunt,160) (lineion(j),j=1,jl)
-            write (lunt,80)  (linelo(j),linehi(j),j=1,jl)
+            write (lunt,80) (linelo(j),linehi(j),j=1,jl)
             write (lunt,120) (lineid(j),j=1,jl)
             write (lunt,10) (linelam(j),j=1,jl)
             write (lunt,30) (lineflx(j),j=1,jl)
@@ -1256,8 +1256,8 @@ c 760   continue
 c
 c     endif
 c
-      write (lunt,750) h2qav
-  750 format(//
+      write (lunt,720) h2qav
+  720 format(//
      & ' Legacy Hydrogen Lines: HBeta = 1.000'/
      & ' ================================================'/
      & ' HI Two-Photon emission :',1pg10.3)
@@ -1371,7 +1371,6 @@ c
      & ' Species  , Kind, Accuracy (1-5)'/
      & ' =====================================================',
      & '==================')
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     chklim is a lower limit for individual line fluxes to print out.
@@ -1512,7 +1511,8 @@ c
         do j=1,nf3trans
           if (fluxf3(j,i).gt.chklim) then
             linecount=linecount+1
-            linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
+c     no correction
+            linelam(linecount)=(f3lam(j,i)*1.d4)
             linespec(linecount)=fluxf3(j,i)
             lineid(linecount,1)=f3atom(i)
             lineid(linecount,2)=f3ion(i)
@@ -1885,10 +1885,10 @@ c
         write (lunt,100) chklim
 c
         do i=linecount,1,-1
-         write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i)))
-     &   ,linespec(lineidx(i)),elem(lineid(lineidx(i),1))
-     &   ,rom(lineid(lineidx(i),2)),linekind(lineidx(i))
-     &   ,lineacc(lineidx(i))
+          write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i)))
+     &     ,linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
+     &     rom(lineid(lineidx(i),2)),linekind(lineidx(i)),
+     &     lineacc(lineidx(i))
         enddo
 c
       endif
@@ -1906,7 +1906,7 @@ c
         endif
 c
         if (mode.eq.'ABS') then
-          write (lunt,70) fhbtlog, fhbt
+          write (lunt,70) fhbtlog,fhbt
         endif
 c
         if (linecount.gt.mxspeclines) then
@@ -1947,7 +1947,6 @@ c
 c
       return
       end
-c
       subroutine heapindexsort (n, ra, idx)
 c
 c     heapsort (because of partial ordering already present)
@@ -2101,8 +2100,6 @@ c
 c
       return
       end
-c
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       subroutine srcsummary (lunt, screen, sp)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2149,7 +2146,6 @@ c
      & ' : FQHeII   (>4Ryd)  : ',1pg12.5,'   (phots/cm^2/s)    :'/
      & ' : FQOII  (>35.12eV) : ',1pg12.5,'   (phots/cm^2/s)    :'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/)
-c
       blum=0.d0
       ilum=0.d0
       qoii=0.d0
@@ -2187,14 +2183,13 @@ c
       qht=q4
 c
       if (screen.le.0) then
-         write (lunt,10) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
+        write (lunt,10) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
       else
-         write (lunt,20) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
+        write (lunt,20) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
       endif
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine speclocal (lunt, tl, el, eg, dl, t, dh, de, fh1, di,
@@ -2299,7 +2294,6 @@ c
      &  ' Species     Lambda(A)      E(eV)        Flux       Accuracy'/
      &         ' =====================================================',
      &         '==================')
-c
 c     Header
 c
       write (lunt,30)
@@ -2417,7 +2411,8 @@ c
         do j=1,nf3trans
           if (f3bri(j,i).gt.chklim) then
             linecount=linecount+1
-            linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
+c     no correction
+            linelam(linecount)=(f3lam(j,i)*1.d4)
             linespec(linecount)=f3bri(j,i)/(hbeta+epsilon)
             lineid(linecount,1)=f3atom(i)
             lineid(linecount,2)=f3ion(i)
@@ -2663,11 +2658,11 @@ c
 c
 c these have 4pi already, luminosities from total losses/cooling
 c
-         if (jgeo.eq.'S') then
+          if (jgeo.eq.'S') then
             write (lunt,70) fhbtlog,eloslog
-         else
+          else
             write (lunt,60) fhbtlog,eloslog
-         endif
+          endif
 c
         endif
 c
@@ -2767,7 +2762,6 @@ c
 c
       return
       end
-c
       subroutine speclocallines (fluxes)
 c
       include 'cblocks.inc'
@@ -2798,10 +2792,10 @@ c
 c
 c      chklim = epsilon
 c
-       chklim=0.d0
+      chklim=0.d0
 c
       do i=1,mxmonlines
-          fluxes(i)=0.d0
+        fluxes(i)=0.d0
       enddo
 c
       if (njlines.le.0) return
@@ -2895,7 +2889,8 @@ c
         do j=1,nf3trans
           if (f3bri(j,i).ge.chklim) then
             linecount=linecount+1
-            linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
+c     nocorrection
+            linelam(linecount)=(f3lam(j,i)*1.d4)
             linespec(linecount)=f3bri(j,i)
             lineid(linecount,1)=f3atom(i)
             lineid(linecount,2)=f3ion(i)
@@ -2914,7 +2909,6 @@ c
           lineid(linecount,1)=ielfs(i)
           lineid(linecount,2)=ionfs(i)
           lineacc(linecount)=3
-
         endif
       enddo
 c
@@ -3094,17 +3088,16 @@ c
 c
       do i=1,linecount
         do j=1,njlines
-           delta=dabs(linelam(lineidx(i))-emlinlist(j))
-           if (delta.le.emlindeltas(j)) then
-               fluxes(j)=fluxes(j)+linespec(lineidx(i))
-           endif
+          delta=dabs(linelam(lineidx(i))-emlinlist(j))
+          if (delta.le.emlindeltas(j)) then
+            fluxes(j)=fluxes(j)+linespec(lineidx(i))
+          endif
         enddo
       enddo
 c
       return
       end
-c
-      subroutine speclocallineids (lineat,lineion)
+      subroutine speclocallineids (lineat, lineion)
 c
       include 'cblocks.inc'
 c
@@ -3133,11 +3126,11 @@ c function
 c
       real*8 fnair
 c
-       chklim=0.d0
+      chklim=0.d0
 c
       do i=1,mxmonlines
-          lineat(i)=1
-          lineion(i)=1
+        lineat(i)=1
+        lineion(i)=1
       enddo
 c
       if (njlines.le.0) return
@@ -3231,7 +3224,8 @@ c
         do j=1,nf3trans
           if (f3bri(j,i).ge.chklim) then
             linecount=linecount+1
-            linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
+c     nocorrection
+            linelam(linecount)=(f3lam(j,i)*1.d4)
             linespec(linecount)=f3bri(j,i)
             lineid(linecount,1)=f3atom(i)
             lineid(linecount,2)=f3ion(i)
@@ -3250,7 +3244,6 @@ c
           lineid(linecount,1)=ielfs(i)
           lineid(linecount,2)=ionfs(i)
           lineacc(linecount)=3
-
         endif
       enddo
 c
@@ -3430,16 +3423,15 @@ c
 c
       do i=1,linecount
         do j=1,njlines
-           delta=dabs(linelam(lineidx(i))-emlinlist(j))
-           if (delta.le.emlindeltas(j)) then
-               lineat(j)=lineid(lineidx(i),1)
-               lineion(j)=lineid(lineidx(i),2)
+          delta=dabs(linelam(lineidx(i))-emlinlist(j))
+          if (delta.le.emlindeltas(j)) then
+            lineat(j)=lineid(lineidx(i),1)
+            lineion(j)=lineid(lineidx(i),2)
 c        write (*,*) i,j,lineid(lineidx(i),1), lineat(j), lineion(j)
-           endif
+          endif
         enddo
       enddo
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

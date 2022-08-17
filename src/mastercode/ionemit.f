@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -44,7 +44,6 @@ c      character str*18
       character ilgg*4
       character imod*4
       character model*64,s*64
-
 c
       real*8 t, de, dh, dr
       real*8 tmin,tdelta,logt
@@ -57,7 +56,6 @@ c
 c
       real*8 fupsilontr
       real*8 ffeupsilontr
-
       character*64 trimid(mxtr)
 c
    10 format(//' Single Multi-Level Ion Emission Model'/
@@ -487,9 +485,9 @@ c
      &',(trimid(itr),itr=1,nt)
             write (*,370) '          LogT,             T,            ne,
      &',(1.0d8*fmlam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,
+            write (luop,360) '              ,              ,            
      &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,
+            write (luop,370) '          LogT,             T,            
      &ne,',(1.0d8*fmlam(itr,idx),itr=1,nt)
           endif
           if (linetype.eq.2) then
@@ -506,9 +504,9 @@ c
      &',(trimid(itr),itr=1,nt)
             write (*,370) '          LogT,             T,            ne,
      &',(1.0d8*felam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,
+            write (luop,360) '              ,              ,            
      &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,
+            write (luop,370) '          LogT,             T,            
      &ne,',(1.0d8*felam(itr,idx),itr=1,nt)
           endif
           do i=0,ntsteps
@@ -550,9 +548,9 @@ c
      &',(trimid(itr),itr=1,nt)
             write (*,370) '          LogT,             T,            ne,
      &',(1.0d8*fmlam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,
+            write (luop,360) '              ,              ,            
      &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,
+            write (luop,370) '          LogT,             T,            
      &ne,',(1.0d8*fmlam(itr,idx),itr=1,nt)
           endif
           if (linetype.eq.2) then
@@ -569,9 +567,9 @@ c
      &',(trimid(itr),itr=1,nt)
             write (*,370) '          LogT,             T,            ne,
      &',(1.0d8*felam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,
+            write (luop,360) '              ,              ,            
      &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,
+            write (luop,370) '          LogT,             T,            
      &ne,',(1.0d8*felam(itr,idx),itr=1,nt)
           endif
           do i=0,ntsteps
@@ -882,7 +880,6 @@ c
       integer*4 modeltype
       integer*4 linetype
       integer*4 wlower,wupper
-
       character fn*64
       character fl*64
       character pfx*32
@@ -1045,7 +1042,7 @@ c
   160 format ('%  Transition Data at :',1pg11.3,'K', 1pg11.3,'cm-3', /,
      & '%  i, j,           Eij,    vac  lamij,         Upsij,',
      & '           Aji,             f, gi, gj, log10 ne_crit')
-        write (*,160) t, 10.d0**nmin
+        write (*,160) t,10.d0**nmin
         write (luop,160) t,10.d0**nmin
   170 format
      &('% ',i2,',',i2,5(',',1pg14.7),', 'i2.2,', ',i2.2,',',1pg12.5)
@@ -1067,10 +1064,10 @@ c
         wupper=wim(j,idx)
         a1=aim(j,i,idx)
         ncrit1=(a1*wupper)/(rka*f*ups1)
-        write (luop,170) i,j,eim(i,j,idx),lam0,ups1,a1,
-     &   f,wlower,wupper,ncrit1
-        write (*,170) i,j,eim(i,j,idx),lam1,ups1,a1,f,
-     &   wlower,wupper,dlog10(ncrit1)
+        write (luop,170) i,j,eim(i,j,idx),lam0,ups1,a1,f,wlower,wupper,
+     &   ncrit1
+        write (*,170) i,j,eim(i,j,idx),lam1,ups1,a1,f,wlower,wupper,
+     &   dlog10(ncrit1)
 c
 c loop over density range
 c
@@ -1078,20 +1075,15 @@ c
         write (luop,180) elem(at),rom(io)
         write (*,180) elem(at),rom(io)
   190  format(a16,a16,2(', ',1pg14.7),a16,2(a48,a32))
-
-        write (luop,190) '%log10 ne (cm-3)',', log10 T (K)   ',
-     &   lam0, lam1,',   ratio 2/1   ',
-     & ',      alpha12_0,      alpha21_0,          A21_0',
-     & ',         pop1_0,         pop2_0',
-     & ',      alpha12_1,      alpha21_1,          A21_1',
-     & ',         pop1_1,         pop2_1'
+        write (luop,190) '%log10 ne (cm-3)',', log10 T (K)   ',lam0,
+     &   lam1,',   ratio 2/1   ',',      alpha12_0,      alpha21_0,     
+     &     A21_0',',         pop1_0,         pop2_0',',      alpha12_1, 
+     &     alpha21_1,          A21_1',',         pop1_1,         pop2_1'
 c
-        write (*,190) '%log10 ne (cm-3)',', log10 T (K)   ',
-     &   lam0, lam1,',   ratio 2/1   ',
-     & ',      alpha12_0,      alpha21_0,          A21_0',
-     & ',         pop1_0,      pop2_0',
-     & ',      alpha12_1,      alpha21_1,          A21_1',
-     & ',         pop1_1,         pop2_1'
+        write (*,190) '%log10 ne (cm-3)',', log10 T (K)   ',lam0,lam1,',
+     &   ratio 2/1   ',',      alpha12_0,      alpha21_0,          A21_0
+     &',',         pop1_0,      pop2_0',',      alpha12_1,      alpha21_
+     &1,          A21_1',',         pop1_1,         pop2_1'
 c
         do stepidx=0,ndhsteps
           dh=10.d0**(nmin+stepidx*ndelta)
@@ -1148,7 +1140,6 @@ c
       write (*,210) fl
       return
       end
-
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Subject a single ion to a density and temperature range,
@@ -1295,15 +1286,14 @@ c
       lam1=fmlam(itr1,idx)*1.d8/fnair(fmlam(itr1,idx)*1.d8)
       write (*,100) i1,j1,fmlam(itr1,idx)*1.d8,lam1
 c
-  115 format(//' Select Line 3 ([1-3]-4 to sum) by level:',/
+  120 format(//' Select Line 3 ([1-3]-4 to sum) by level:',/
      & '::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/
      & '  lower, upper  : ',$)
-      write (*,115)
+      write (*,120)
       read (*,*) i2,j2
       itr2=nfmtridx(i2,j2,idx)
       lam2=fmlam(itr2,idx)*1.d8/fnair(fmlam(itr2,idx)*1.d8)
       write (*,100) i2,j2,fmlam(itr2,idx)*1.d8,lam2
-
 c
       write (*,*)
 c
@@ -1315,42 +1305,42 @@ c
 c
 c Fixed Te
 c
-  120 format(//' Give fixed density (n = de ) conditions  :',/
+  130 format(//' Give fixed density (n = de ) conditions  :',/
      &'::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/
      &'    ne (cm^-3) (linear),'/
      &' :: ',$)
-        write (*,120)
+        write (*,130)
         read (*,*) ne
         de=ne
         dh=de
 c
         cab=0.d0
-  130 format(//' Give temperature variation:',/
+  140 format(//' Give temperature variation:',/
      &'::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/
      &'    T_min, T_max, delta:'/
      &'    (as log10)'/
      &' :: ',$)
-        write (*,130)
+        write (*,140)
 c
         read (*,*) tmin,tmax,tdelta
         ntsteps=idnint((tmax-tmin)/tdelta)+1
 c
-  140 format (a)
-  150 format(//' Give a name/code for this run: ',$)
-        write (*,150)
-        read (*,140) runname
+  150 format (a)
+  160 format(//' Give a name/code for this run: ',$)
+        write (*,160)
+        read (*,150) runname
         write (luop,10) theversion,runname
         write (*,*)
 c
         t=1.0d4
         f=1.d0/dsqrt(t)
 c
-  160 format ('%  Transition Data at :',1pg11.3,'K', 1pg11.3,'cm-3', /,
+  170 format ('%  Transition Data at :',1pg11.3,'K', 1pg11.3,'cm-3', /,
      & '%  i, j,           Eij,    vac  lamij,         Upsij,',
      & '           Aji,             f, gi, gj, log10 ne_crit')
-        write (*,160) t, ne
-        write (luop,160) t, ne
-  170 format
+        write (*,170) t,ne
+        write (luop,170) t,ne
+  180 format
      &('% ',i2,',',i2,5(',',1pg14.7),', ',i2.2,', ',i2.2,',',1pg12.5)
         i=nfmlower(itr0,idx)
         j=nfmupper(itr0,idx)
@@ -1359,9 +1349,9 @@ c
         wupper=wim(j,idx)
         a0=aim(j,i,idx)
         ncrit0=(a0*wupper)/(rka*f*ups0)
-        write (luop,170) i,j,eim(i,j,idx),fmlam(itr0,idx)*1.d8,ups0,a0,
+        write (luop,180) i,j,eim(i,j,idx),fmlam(itr0,idx)*1.d8,ups0,a0,
      &   f,wlower,wupper,dlog10(ncrit0)
-        write (*,170) i,j,eim(i,j,idx),fmlam(itr0,idx)*1.d8,ups0,a0,f,
+        write (*,180) i,j,eim(i,j,idx),fmlam(itr0,idx)*1.d8,ups0,a0,f,
      &   wlower,wupper,dlog10(ncrit0)
         i=nfmlower(itr1,idx)
         j=nfmupper(itr1,idx)
@@ -1370,9 +1360,9 @@ c
         wupper=wim(j,idx)
         a1=aim(j,i,idx)
         ncrit1=(a1*wupper)/(rka*f*ups1)
-        write (luop,170) i,j,eim(i,j,idx),fmlam(itr1,idx)*1.d8,ups1,a1,
+        write (luop,180) i,j,eim(i,j,idx),fmlam(itr1,idx)*1.d8,ups1,a1,
      &   f,wlower,wupper,dlog10(ncrit1)
-        write (*,170) i,j,eim(i,j,idx),fmlam(itr1,idx)*1.d8,ups1,a1,f,
+        write (*,180) i,j,eim(i,j,idx),fmlam(itr1,idx)*1.d8,ups1,a1,f,
      &   wlower,wupper,dlog10(ncrit1)
         i=nfmlower(itr2,idx)
         j=nfmupper(itr2,idx)
@@ -1381,34 +1371,30 @@ c
         wupper=wim(j,idx)
         a2=aim(j,i,idx)
         ncrit2=(a2*wupper)/(rka*f*ups2)
-        write (luop,170) i,j,eim(i,j,idx),fmlam(itr2,idx)*1.d8,ups2,a2,
+        write (luop,180) i,j,eim(i,j,idx),fmlam(itr2,idx)*1.d8,ups2,a2,
      &   f,wlower,wupper,dlog10(ncrit2)
-        write (*,170) i,j,eim(i,j,idx),fmlam(itr2,idx)*1.d8,ups2,a2,f,
+        write (*,180) i,j,eim(i,j,idx),fmlam(itr2,idx)*1.d8,ups2,a2,f,
      &   wlower,wupper,dlog10(ncrit2)
 c
 c loop over density range
 c
-  180  format('%',/,'% Fluxes (Lambda air) and Ratios for Ion:',a2,a6)
-        write (luop,180) elem(at),rom(io)
-        write (*,180) elem(at),rom(io)
-  190  format(a16,a16,3(', ',1pg14.7),a16,3(a48,a32))
-        write (luop,190) '% log10 T (K)   ',',log10 ne (cm-3)',
-     &  lam0, lam1, lam2,', ratio 1/(2+3) ',
-     &',      alpha12_0,      alpha21_0,          A21_0',
-     &',         pop1_0,         pop2_0',
-     &',      alpha12_1,      alpha21_1,          A21_1',
-     &',         pop1_1,         pop2_1',
-     &',      alpha12_2,      alpha21_2,          A21_2',
-     &',         pop1_2,         pop2_2'
+  190  format('%',/,'% Fluxes (Lambda air) and Ratios for Ion:',a2,a6)
+        write (luop,190) elem(at),rom(io)
+        write (*,190) elem(at),rom(io)
+  200  format(a16,a16,3(', ',1pg14.7),a16,3(a48,a32))
+        write (luop,200) '% log10 T (K)   ',',log10 ne (cm-3)',lam0,
+     &   lam1,lam2,', ratio 1/(2+3) ',',      alpha12_0,      alpha21_0,
+     &          A21_0',',         pop1_0,         pop2_0',',      alpha1
+     &2_1,      alpha21_1,          A21_1',',         pop1_1,         po
+     &p2_1',',      alpha12_2,      alpha21_2,          A21_2',',       
+     &  pop1_2,         pop2_2'
 c
-        write (*,190) '% log10 T (K)   ',',log10 ne (cm-3)',
-     &  lam0, lam1, lam2,', ratio 1/(2+3) ',
-     &',      alpha12_0,      alpha21_0,          A21_0',
-     &',         pop1_0,         pop2_0',
-     &',      alpha12_1,      alpha21_1,          A21_1',
-     &',         pop1_1,         pop2_1',
-     &',      alpha12_2,      alpha21_2,          A21_2',
-     &',         pop1_2,         pop2_2'
+        write (*,200) '% log10 T (K)   ',',log10 ne (cm-3)',lam0,lam1,
+     &   lam2,', ratio 1/(2+3) ',',      alpha12_0,      alpha21_0,     
+     &     A21_0',',         pop1_0,         pop2_0',',      alpha12_1, 
+     &     alpha21_1,          A21_1',',         pop1_1,         pop2_1'
+     &   ,',      alpha12_2,      alpha21_2,          A21_2',',         
+     &pop1_2,         pop2_2'
 c
         do stepidx=0,ntsteps
           t=10.d0**(tmin+stepidx*tdelta)
@@ -1449,31 +1435,19 @@ c
           colexrate2=de*rka*f*aa*(ups2/wlower)
           coldexrate2=de*((rka*f)*ups2)/wupper
           n2=colexrate2/(a2+coldexrate2)
-
-  200     format('  ',1pg14.7,20(', ',1pg14.7))
-          write (luop,200) dlog10(t), dlog10(de)
-     &     ,(br(itr),itr=1,4)
-     &     ,colexrate0,coldexrate0,a0
-     &     ,fmx(nfmlower(itr0,idx),idx)
-     &     ,fmx(nfmupper(itr0,idx),idx)
-     &     ,colexrate1,coldexrate1,a1
-     &     ,fmx(nfmlower(itr1,idx),idx)
-     &     ,fmx(nfmupper(itr1,idx),idx)
-     &     ,colexrate2,coldexrate2,a2
-     &     ,fmx(nfmlower(itr2,idx),idx)
-     &     ,fmx(nfmupper(itr2,idx),idx)
-
-          write (*,200) dlog10(t), dlog10(de)
-     &     ,(br(itr),itr=1,4)
-     &     ,colexrate0,coldexrate0,a0
-     &     ,fmx(nfmlower(itr0,idx),idx)
-     &     ,fmx(nfmupper(itr0,idx),idx)
-     &     ,colexrate1,coldexrate1,a1
-     &     ,fmx(nfmlower(itr1,idx),idx)
-     &     ,fmx(nfmupper(itr1,idx),idx)
-     &     ,colexrate2,coldexrate2,a2
-     &     ,fmx(nfmlower(itr2,idx),idx)
-     &     ,fmx(nfmupper(itr2,idx),idx)
+  210     format('  ',1pg14.7,20(', ',1pg14.7))
+          write (luop,210) dlog10(t),dlog10(de),(br(itr),itr=1,4),
+     &     colexrate0,coldexrate0,a0,fmx(nfmlower(itr0,idx),idx),
+     &     fmx(nfmupper(itr0,idx),idx),colexrate1,coldexrate1,a1,
+     &     fmx(nfmlower(itr1,idx),idx),fmx(nfmupper(itr1,idx),idx),
+     &     colexrate2,coldexrate2,a2,fmx(nfmlower(itr2,idx),idx),
+     &     fmx(nfmupper(itr2,idx),idx)
+          write (*,210) dlog10(t),dlog10(de),(br(itr),itr=1,4),
+     &     colexrate0,coldexrate0,a0,fmx(nfmlower(itr0,idx),idx),
+     &     fmx(nfmupper(itr0,idx),idx),colexrate1,coldexrate1,a1,
+     &     fmx(nfmlower(itr1,idx),idx),fmx(nfmupper(itr1,idx),idx),
+     &     colexrate2,coldexrate2,a2,fmx(nfmlower(itr2,idx),idx),
+     &     fmx(nfmupper(itr2,idx),idx)
         enddo
         close (luop)
 c
@@ -1481,10 +1455,10 @@ c Fixed Te
 c
       endif
 c
-  210 format(/
+  220 format(/
      &' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/
      &'  OUTPUT WRITTEN TO : ', a,/
      &' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::'/)
-      write (*,210) fl
+      write (*,220) fl
       return
       end

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -111,7 +111,6 @@ c     write (luop,110) xi(1),xi(2),(1-xi(1)-xi(2))
      & 1pg12.5,' ]')
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine abecha ()
@@ -152,13 +151,13 @@ c
       if (iexi) then
         abdir='abund/'
       else
-         fnam='/usr/local/share/mappings/abund/solar.txt'
-         m=lenv(fnam)
-         inquire (file=fnam(1:m),exist=iexi)
-         if (iexi) then
-            abdir='/usr/local/share/mappings/abund/'
-         else
-            abdir='/opt/local/share/mappings/abund/'
+        fnam='/usr/local/share/mappings/abund/solar.txt'
+        m=lenv(fnam)
+        inquire (file=fnam(1:m),exist=iexi)
+        if (iexi) then
+          abdir='/usr/local/share/mappings/abund/'
+        else
+          abdir='/opt/local/share/mappings/abund/'
         endif
       endif
 c
@@ -231,9 +230,8 @@ c
 c
       read (*,60) ilgg
    60 format(a)
-      call toup(ilgg(1:1),ilgg)
-      write(*,*) ilgg
-
+      call toup (ilgg(1:1), ilgg)
+      write (*,*) ilgg
 c
       if (ilgg.ne.'Y') ilgg='N'
       if (ilgg.eq.'N') goto 130
@@ -412,7 +410,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine deltaabund ()
@@ -472,7 +469,7 @@ c
   100  format(/' Change Abundance Offsets (y/N)? : ',$)
       read (*,110) ilgg
   110 format(a)
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
       write (*,*)
 c
       if (ilgg.ne.'Y') ilgg='N'
@@ -703,7 +700,7 @@ c
   100 format(/' Change dust depletion (y/N) : ',$)
       read (*,110) ilgg
   110 format(a)
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
       if (ilgg.ne.'Y') ilgg='N'
       if (ilgg.eq.'N') goto 180
 c
@@ -851,7 +848,6 @@ c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine chacha ()
@@ -997,7 +993,6 @@ c       endif
 c cc
 c       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine popcha (model)
@@ -1086,7 +1081,7 @@ c
      & ' :: ',$)
 c
       read (*,20) ilgg
-      call toup(ilgg(1:1),ilgg)
+      call toup (ilgg(1:1), ilgg)
 c
       if (ilgg.eq.'D') goto 440
       if (ilgg.eq.'E') goto 180
@@ -1261,7 +1256,7 @@ c
   260 format(' ::::::::::    Alter?(y/n) : ',$)
         read (*,270,err=250) ilgg
   270 format(a)
-        call toup(ilgg(1:1),ilgg)
+        call toup (ilgg(1:1), ilgg)
 c
         if (ilgg.eq.'N') goto 430
         if (ilgg.ne.'Y') goto 250
@@ -1341,7 +1336,7 @@ c
           pop(j,i)=0.0d0
         enddo
         pop(1,i)=0.990d0
-        if (ipote(1,i).lt.(0.99d0*epotmi)) then ! 0.99 for roundoff err
+        if (ipote(1,i).lt.(0.99d0*epotmi)) then
           pop(1,i)=1.d-2
         endif
         pop(2,i)=1.0d0-pop(1,i)
@@ -1354,12 +1349,12 @@ c
       goto 450
 c
 c
-  450 call zeroemiss () !clearanyresidualradiation
+c      clear any residual radiation
+  450 call zeroemiss ()
 c
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine ciepops (teinit, dhinit)
@@ -1401,7 +1396,7 @@ c
       call copypop (pop, popcie)
       call copypop (pop, pop0)
 c
-      deinit=feldens(dhinit, pop)
+      deinit=feldens(dhinit,pop)
 c
       t=teinit
       de=deinit
@@ -1438,7 +1433,7 @@ c
       call totphot (t, dh, rad, dr, dv, wdil, lmod)
       call zetaeff (dh)
       call equion (t, de, dh)
-      call difpop  (pop, popcie, trea, atypes, dift)
+      call difpop (pop, popcie, trea, atypes, dift)
       call copypop (pop, popcie)
 c
       i=i+1
@@ -1448,7 +1443,7 @@ c
 c
       trec=frectim(t,de,dh)
 c
-      call copypop (popcie, pop )
+      call copypop (popcie, pop)
       call copypop (pop, pop0)
 c
       call zeroemiss

@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -174,10 +174,10 @@ c               write (69,100) U, je1, jpr1, jec1, y1
                 u1=1.5d0*u1
                 check=check+1
                 goto 20
-              else if (dabs(y1).lt.1.0d-4) then
+              elseif (dabs(y1).lt.1.0d-4) then
                 u2=u1
                 goto 50
-              else if (check.ge.11) then
+              elseif (check.ge.11) then
                 write (*,*) 'Grain Charge Error1:lower limit'
                 write (*,10) u2,u1,je1,jpr1,jec1
                 write (*,10) elmax,prmax,phi
@@ -211,7 +211,7 @@ c   U +ve, so some fraction of photoelectrons can't escape potential.
                     es=((engmax-englow)/engmax)
                     spf=4.d0*es*es
                     spf=dmax1(0.d0,dmin1(spf,1.d0))
-                  else if (englow.gt.0.d0) then
+                  elseif (englow.gt.0.d0) then
                     es=(englow/engmax)
                     spf=1.d0-4.d0*es*es
                     spf=dmax1(0.d0,dmin1(spf,1.d0))
@@ -226,10 +226,10 @@ c
                 u2=1.75d0*u2
                 check=check+1
                 goto 30
-              else if (dabs(y2).lt.1.0d-4) then
+              elseif (dabs(y2).lt.1.0d-4) then
                 u1=u2
                 goto 50
-              else if (check.ge.11) then
+              elseif (check.ge.11) then
                 print *,'Grain Charge Error2: upper limit'
                 write (*,10) u2,u1,je1,jpr1,jec1
                 write (*,10) elmax,prmax,phi
@@ -266,7 +266,7 @@ c     ephot > B due to Minbin.
                       es=((engmax-englow)/engmax)
                       spf=4.d0*es*es
                       spf=dmax1(0.d0,dmin1(spf,1.d0))
-                    else if (englow.gt.0.d0) then
+                    elseif (englow.gt.0.d0) then
                       es=(englow/engmax)
                       spf=1.d0-(4.d0*es*es)
                       spf=dmax1(0.d0,dmin1(spf,1.d0))
@@ -285,7 +285,7 @@ c
                 if (ymid.gt.0.d0) then
 c  Too much PE heating
                   u1=umid
-                else if (ymid.lt.0.d0) then
+                elseif (ymid.lt.0.d0) then
 c  Electron current too large
                   u2=umid
                 else
@@ -335,7 +335,7 @@ c
 c U -ve
                     spf=1.d0
                     eng=0.5d0*(engmax+englow)
-                  else if ((engmax+englow).gt.0) then
+                  elseif ((engmax+englow).gt.0) then
 c  engmax > abs(englow)
                     spf=1.d0-2.d0*(englow/(engmax-englow))**2
                     eng=0.5d0*(-4.d0*englow**3/(3.d0*(engmax-englow)**2)
@@ -397,6 +397,5 @@ cc
       return
 c
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

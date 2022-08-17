@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -87,7 +87,6 @@ c
       integer*4 slugid
       character*4 xtype
       character*4 ytype
-
 c
       real*8 agnkev, agnwhidth, agbflux, agnshift
       real*8 agncomp0, agncomp1, agncomp2
@@ -275,7 +274,7 @@ c
           xbump=1.d0
           xinter=1.d0
           xhigh=1.d0
-          write (*,10)
+          write (*,10) 
    10 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  AGN Component Fractions :'/
@@ -332,7 +331,7 @@ c
           xbump=1.d0
           xinter=1.d0
           xhigh=1.d0
-          write (*,40)
+          write (*,40) 
    40 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  AGN Component Fractions :'/
@@ -790,18 +789,17 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
           nfluxes=0
           do m=1,999
             do i=1,99999
-              read (luin,*,end=170)
-     &              slugid, slugtime,slugwave,slugtotal,slugneb
-              if (sluginittime .lt. slugtime) then
+              read (luin,*,end=170) slugid,slugtime,slugwave,slugtotal,
+     &         slugneb
+              if (sluginittime.lt.slugtime) then
                 nmodels=nmodels+1
-                if ( nmodels .gt. 0) time(nmodels)=slugtime
-                sluginittime = slugtime
+                if (nmodels.gt.0) time(nmodels)=slugtime
+                sluginittime=slugtime
               endif
             enddo
           enddo
   170     close (luin)
 c          write (*,*) nfluxes
-
           write (*,*) 'SLUG File: Found Model Times:',nmodels
 c
           if (nmodels.lt.1) then
@@ -816,7 +814,7 @@ c
           write (*,180)
           write (*,190) (i,time(i),i=1,nmodels)
           write (*,200)
-          read  (*,*) modelidx
+          read (*,*) modelidx
           write (*,*)
 c
           if (modelidx<1) modelidx=1
@@ -824,7 +822,7 @@ c
 c
           open (luin,file=fname,status='OLD')
           do i=1,nheadlines
-            read  (luin,'(a)') caract
+            read (luin,'(a)') caract
 c            write (*,'(a)') caract
           enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -838,54 +836,53 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
             idx=1
   210       if (idx.lt.999999) then
               read (luin,*) slugid,slugtime,slugwave,slugtotal,slugneb
-                    stlwave(nfluxes)=slugwave
-                    stlhnu(nfluxes)=slugtotal
+              stlwave(nfluxes)=slugwave
+              stlhnu(nfluxes)=slugtotal
 c                 write(*,*) "skip",i,idx, nfluxes,slugtime,sluginittime
-               if (slugtime.gt.sluginittime) then
-                     sluginittime = slugtime
+              if (slugtime.gt.sluginittime) then
+                sluginittime=slugtime
                 goto 220
-                endif
-               idx=idx+1
-             endif
+              endif
+              idx=idx+1
+            endif
             goto 210
   220     continue
-             i=i-1
+          i=i-1
           write (*,*) 'reading mode',i,modelidx
-             sluginittime=slugtime
-             nfluxes=1
-
-             do idx=1,999999
+          sluginittime=slugtime
+          nfluxes=1
+          do idx=1,999999
             read (luin,*,end=230) slugid,slugtime,slugwave,slugtotal,
      &       slugneb
 c                 write(*,*) "read",i,idx, nfluxes,slugwave,slugtotal
-                 nfluxes=nfluxes+1
-               if (slugtime.gt.sluginittime) then
-                     sluginittime = slugtime
+            nfluxes=nfluxes+1
+            if (slugtime.gt.sluginittime) then
+              sluginittime=slugtime
               goto 230
-                endif
-                 stlwave(nfluxes)=slugwave
-                 stlhnu(nfluxes)=slugtotal
-              enddo
+            endif
+            stlwave(nfluxes)=slugwave
+            stlhnu(nfluxes)=slugtotal
+          enddo
   230     nfluxes=nfluxes-1
           write (*,*) 'Read nfluxes',nfluxes
-         close(luin)
+          close (luin)
 c
-            if (stlwave(nfluxes).gt.stlwave(1)) then
+          if (stlwave(nfluxes).gt.stlwave(1)) then
 c reverse if needed
-              do i=1,nfluxes
-                j=nfluxes-i+1
-                if (i.lt.j) then
-                  swap=stlwave(j)
-                  stlwave(j)=stlwave(i)
-                  stlwave(i)=swap
-                  swap=stlhnu(j)
-                  stlhnu(j)=stlhnu(i)
-                  stlhnu(i)=swap
-                endif
-              enddo
-            endif
+            do i=1,nfluxes
+              j=nfluxes-i+1
+              if (i.lt.j) then
+                swap=stlwave(j)
+                stlwave(j)=stlwave(i)
+                stlwave(i)=swap
+                swap=stlhnu(j)
+                stlhnu(j)=stlhnu(i)
+                stlhnu(i)=swap
+              endif
+            enddo
+          endif
 c
-         do i=1,nfluxes
+          do i=1,nfluxes
 c
 c wave in 1e-8 cm, A, and flux in Linear-L-lam erg/s/A
 c
@@ -894,12 +891,12 @@ c std radius = 1.0d10 area = 4pir^2 = 1.256637061435917e21
 c cm^2 1/area = 7.957747154594766e-22 sr = 1/4pi, also ifpi =
 c invers 4 pi
 c
-               freq=cls/(stlwave(i)*1.0d-8)
-               stlhnu(i)=7.957747154594766d-22
-     &                   *((stlhnu(i)*stlwave(i))/ freq)*ifpi
-               stlwev(i)=lmev/(wavescale*stlwave(i))
+            freq=cls/(stlwave(i)*1.0d-8)
+            stlhnu(i)=7.957747154594766d-22*((stlhnu(i)*stlwave(i))/
+     &       freq)*ifpi
+            stlwev(i)=lmev/(wavescale*stlwave(i))
 c               write(*,*) i, stlwev(i), stlhnu(i)
-           enddo
+          enddo
 c
   240 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
@@ -1066,7 +1063,7 @@ c
      & ' :: ',$)
           write (*,270)
           read (*,'(a)') ytype
-          call toup (ytype(1:1),ytype)
+          call toup (ytype(1:1), ytype)
           write (*,*)
           if ((ytype.ne.'A').and.(ytype.ne.'B').and.(ytype.ne.'C')
      &     .and.(ytype.ne.'D').and.(ytype.ne.'E').and.(ytype.ne.'F')
@@ -1133,7 +1130,7 @@ c reverse
             endif
             do i=1,nfluxes
               stlwev(i)=lmev/(10.d0*stlwave(i))
-           enddo
+            enddo
           endif
 c Hz
           if (xtype.eq.'C') then
@@ -1719,7 +1716,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine readlinrebin (fname, coordstype, rebinnedsrc)
@@ -1794,7 +1790,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  coordstype = 8, Hz Hnu two column atmosphere file. 7/9 line header
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-        nheadlines=7
+          nheadlines=7
           if (coordstype.eq.8) nheadlines=7
           if (coordstype.eq.10) nheadlines=9
           open (luin,file=fname,status='OLD')
@@ -1865,7 +1861,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
             read (luin,*,end=20) stlwave(i),stlhnu(i)
             nfluxes=nfluxes+1
           enddo
-  20     continue
+   20     continue
           close (luin)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2093,7 +2089,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine rebin (eev, hnu, nfluxes, rebinned)
@@ -2148,23 +2143,23 @@ c
 c
       if (nfluxes.gt.mxflxbins) then
         write (*,*) ' Too many bins in rebin:',nfluxes,' > ',mxflxbins
-      stop
+        stop
       endif
 c
 c reverse if needed, low to high energy only...
 c
       if (eev(nfluxes).lt.eev(1)) then
-      do i=1,nfluxes
-        j=nfluxes-i+1
-        if (i.lt.j) then
-          swap=eev(j)
-          eev(j)=eev(i)
-          eev(i)=swap
-          swap=hnu(j)
-          hnu(j)=hnu(i)
-          hnu(i)=swap
-        endif
-      enddo
+        do i=1,nfluxes
+          j=nfluxes-i+1
+          if (i.lt.j) then
+            swap=eev(j)
+            eev(j)=eev(i)
+            eev(i)=swap
+            swap=hnu(j)
+            hnu(j)=hnu(i)
+            hnu(i)=swap
+          endif
+        enddo
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  BEGIN rebinning
@@ -2174,40 +2169,40 @@ c
 c Save the alphas and interval integrals; sflux
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-        do i=1,nfluxes-1
-          stlsflux(i)=0.d0
-          w0=eev(i)
-          w1=eev(i+1)
-          delta=w1-w0
-          logdelta=dlog10(eev(i+1))-dlog10(eev(i))
+      do i=1,nfluxes-1
+        stlsflux(i)=0.d0
+        w0=eev(i)
+        w1=eev(i+1)
+        delta=w1-w0
+        logdelta=dlog10(eev(i+1))-dlog10(eev(i))
         stlalpha(i)=dlog10(hnu(i+1)+epsilon)-dlog10(hnu(i)+epsilon)
-          stlalpha(i)=stlalpha(i)/logdelta
-          if (dabs(stlalpha(i)).lt.30.0d0) then
-            a1=stlalpha(i)+1.d0
-            scale=hnu(i+1)/(w1**stlalpha(i))
-            sum=0.0d0
-            if (a1.eq.0.0d0) then
-              sum=dlog(w1/w0)
-            else
-              sum=((w1**(a1))-(w0**(a1)))/a1
-            endif
-            stlsflux(i)=(scale*sum)
+        stlalpha(i)=stlalpha(i)/logdelta
+        if (dabs(stlalpha(i)).lt.30.0d0) then
+          a1=stlalpha(i)+1.d0
+          scale=hnu(i+1)/(w1**stlalpha(i))
+          sum=0.0d0
+          if (a1.eq.0.0d0) then
+            sum=dlog(w1/w0)
           else
-            stlsflux(i)=delta*0.5*(hnu(i+1)+hnu(i))
+            sum=((w1**(a1))-(w0**(a1)))/a1
           endif
-        enddo
-        stlalpha(nfluxes)=0.d0
-        stlsflux(nfluxes)=0.0d0
-        rebinned(infph)=0.d0
-        do i=1,infph-1
+          stlsflux(i)=(scale*sum)
+        else
+          stlsflux(i)=delta*0.5*(hnu(i+1)+hnu(i))
+        endif
+      enddo
+      stlalpha(nfluxes)=0.d0
+      stlsflux(nfluxes)=0.0d0
+      rebinned(infph)=0.d0
+      do i=1,infph-1
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c loop i over destination ephots
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          rebinned(i)=0.d0
-          e0=photev(i)
-          e1=photev(i+1)
-          wid=e1-e0
-          if ((e0.gt.eev(1)).and.(e1.lt.eev(nfluxes))) then
+        rebinned(i)=0.d0
+        e0=photev(i)
+        e1=photev(i+1)
+        wid=e1-e0
+        if ((e0.gt.eev(1)).and.(e1.lt.eev(nfluxes))) then
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c src in range of destination
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2220,20 +2215,20 @@ c interval that contains e0 and source interval that contains
 c e1, these may be the same or different source intervals.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-            lowbin=0
-            hibin=0
-            do j=1,nfluxes
-              if (e0.ge.eev(j)) then
-                if (e0.lt.eev(j+1)) then
-                  lowbin=j
-                endif
+          lowbin=0
+          hibin=0
+          do j=1,nfluxes
+            if (e0.ge.eev(j)) then
+              if (e0.lt.eev(j+1)) then
+                lowbin=j
               endif
-              if (e1.ge.eev(j)) then
-                if (e1.lt.eev(j+1)) then
-                  hibin=j
-                endif
+            endif
+            if (e1.ge.eev(j)) then
+              if (e1.lt.eev(j+1)) then
+                hibin=j
               endif
-            enddo
+            endif
+          enddo
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c get source integral between e0 and e1
@@ -2244,10 +2239,10 @@ c interval, hibin add the integrals (sflux) for any bins
 c between the low and high interval.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-            ufrac=0.d0
-            lfrac=0.d0
-            sum=0.d0
-            total=0.d0
+          ufrac=0.d0
+          lfrac=0.d0
+          sum=0.d0
+          total=0.d0
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c lfrac = integral of low interval from e0 to upper limit of lowbin,
@@ -2256,25 +2251,25 @@ c
 c If alpha magnitude is too great, use linear integral
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-            a0=stlalpha(lowbin)
-            w0=e0
-            w1=eev(lowbin+1)
-            if (dabs(a0).lt.30.0d0) then
-              a1=a0+1.d0
-              scale=hnu(lowbin+1)/(w1**stlalpha(lowbin))
-              sum=0.0d0
-              if (a1.eq.0.0d0) then
-                sum=dlog(w1/w0)
-              else
-                sum=((w1**(a1))-(w0**(a1)))/a1
-              endif
-              lfrac=(scale*sum)
+          a0=stlalpha(lowbin)
+          w0=e0
+          w1=eev(lowbin+1)
+          if (dabs(a0).lt.30.0d0) then
+            a1=a0+1.d0
+            scale=hnu(lowbin+1)/(w1**stlalpha(lowbin))
+            sum=0.0d0
+            if (a1.eq.0.0d0) then
+              sum=dlog(w1/w0)
             else
-              mean=0.5*(hnu(lowbin)+hnu(lowbin+1))
-              delta=(eev(lowbin+1)-eev(lowbin))
-              f=(eev(lowbin+1)-e0)/delta
-              lfrac=f*mean*delta
+              sum=((w1**(a1))-(w0**(a1)))/a1
             endif
+            lfrac=(scale*sum)
+          else
+            mean=0.5*(hnu(lowbin)+hnu(lowbin+1))
+            delta=(eev(lowbin+1)-eev(lowbin))
+            f=(eev(lowbin+1)-e0)/delta
+            lfrac=f*mean*delta
+          endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c ufrac = integral of high interval from lower limit to e1,
@@ -2283,25 +2278,25 @@ c
 c If alpha magnitude is too great, use linear integral
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-            a0=stlalpha(hibin)
-            w0=eev(hibin)
-            w1=e1
-            if (dabs(a0).lt.30.0d0) then
-              a1=a0+1.d0
-              scale=hnu(hibin+1)/(eev(hibin+1)**stlalpha(hibin))
-              sum=0.0d0
-              if (a1.eq.0.0d0) then
-                sum=dlog(w1/w0)
-              else
-                sum=((w1**(a1))-(w0**(a1)))/a1
-              endif
-              ufrac=(scale*sum)
+          a0=stlalpha(hibin)
+          w0=eev(hibin)
+          w1=e1
+          if (dabs(a0).lt.30.0d0) then
+            a1=a0+1.d0
+            scale=hnu(hibin+1)/(eev(hibin+1)**stlalpha(hibin))
+            sum=0.0d0
+            if (a1.eq.0.0d0) then
+              sum=dlog(w1/w0)
             else
-              mean=0.5*(hnu(hibin)+hnu(hibin+1))
-              delta=(eev(hibin+1)-eev(hibin))
-              f=(e1-eev(hibin))/delta
-              ufrac=f*mean*delta
+              sum=((w1**(a1))-(w0**(a1)))/a1
             endif
+            ufrac=(scale*sum)
+          else
+            mean=0.5*(hnu(hibin)+hnu(hibin+1))
+            delta=(eev(hibin+1)-eev(hibin))
+            f=(e1-eev(hibin))/delta
+            ufrac=f*mean*delta
+          endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c 1) if both e0 and e1 are in the same src interval, lowbin =
@@ -2318,31 +2313,31 @@ c So only two cases  Same bin or different bins.
 c ie
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-            if (lowbin.eq.hibin) then
-              total=lfrac+ufrac-stlsflux(lowbin)
-            else
-              sum=0.d0
-              if ((hibin-lowbin).gt.1) then
-                do l=(lowbin+1),(hibin-1)
-                  sum=sum+stlsflux(l)
-                enddo
-              endif
-              total=lfrac+sum+ufrac
+          if (lowbin.eq.hibin) then
+            total=lfrac+ufrac-stlsflux(lowbin)
+          else
+            sum=0.d0
+            if ((hibin-lowbin).gt.1) then
+              do l=(lowbin+1),(hibin-1)
+                sum=sum+stlsflux(l)
+              enddo
             endif
+            total=lfrac+sum+ufrac
+          endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Finally average integral over dest bin width, using same energy units
 c as the integrals. Keep as Hnu
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-            rebinned(i)=(total/wid)
+          rebinned(i)=(total/wid)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c src in range of destination
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          endif
+        endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c loop i over destination ephots
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-        enddo
+      enddo
       return
       end

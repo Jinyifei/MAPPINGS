@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -179,9 +179,9 @@ c      if ((hel0(2,l).gt.0.d0).or.(j108m.eq.l)) then
         argu=fun(tlolo,ab1,ab2)
         if (temul.eq.0.5d0) then
           fnorm=3.04804d0
-        else if (temul.eq.0.25d0) then
+        elseif (temul.eq.0.25d0) then
           fnorm=3.30346d0
-        else if (temul.eq.0.1d0) then
+        elseif (temul.eq.0.1d0) then
           fnorm=3.74000d0
         else
           fnorm=3.04804d0*((temul/0.5d0)**(-0.12712d0))

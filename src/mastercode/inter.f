@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -27,7 +27,6 @@ c     RETURNS DATA IN COMMON BLOCK /CLINE/
 c     FSLOS (ERG.CM-3.S-1)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-
 c
       include 'cblocks.inc'
 c
@@ -51,11 +50,10 @@ c
         atom=ielfs(m)
         ion=ionfs(m)
         pz=zion(atom)*pop(ion,atom)
-
         if (pz.ge.pzlimit) then
 c
-        fbr=0.0d0
-        fsbri(m)=0.d0
+          fbr=0.0d0
+          fsbri(m)=0.d0
 c
           aa=e12fs(m)*frkt
           if (aa.lt.maxdekt) then
@@ -84,7 +82,6 @@ c
 c
       return
       end
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Subroutine to calculate the transitions

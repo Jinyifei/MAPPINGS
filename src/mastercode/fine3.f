@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -291,7 +291,7 @@ c
           jl=3
 c
 c          call mdiag3 (jl, alph, x)
-          call  matsolve (alph, x, 3, 3)
+          call matsolve (alph, x, 3, 3)
 c
 c     ***CHECK ON NORMALISATION
 c

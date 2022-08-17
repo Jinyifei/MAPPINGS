@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
 c       Version v5.1.21
@@ -66,7 +66,7 @@ c
 c
 c     External Functions
 c
-      real*8 farint,fsplint,fcodyE1
+      real*8 farint,fsplint,fcodye1
       real*8 fkenhance
 c
       rateenhance=1.d0
@@ -106,7 +106,7 @@ c
               ys(k)=ycol(k,io)
               y2s(k)=y2col(k,io)
             enddo
-            ex1=fcodyE1(invt)
+            ex1=fcodye1(invt)
             rate=ex1/(dsqrt(t*ep)*ep)
             x=1.d0-(dlog(f)/dlog(t+f))
             y=fsplint(xs,ys,y2s,ni,x)
