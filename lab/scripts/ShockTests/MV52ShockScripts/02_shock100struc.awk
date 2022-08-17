@@ -1,5 +1,5 @@
 #
-# v5.1.20
+# v5.1.21
 #
 BEGIN{line = 0;
   lineion  = 0;
@@ -33,14 +33,14 @@ BEGIN{line = 0;
 END{
 print  " MV 5.2 Shock Test 02: 100km/s Structure"
 print  " Quantity      ,   MVS5,   Model,  Diff%"
-printf(" TPre    kK    , 13.919, %7.3f, %6.1f\n", tpr    , 100*(tpr    -  1.39190e+01)/ 1.39190e+01);
-printf(" XHIPre        ,  0.665, %7.3f, %6.1f\n", xhi    , 100*(xhi    -  6.65330e-01)/ 6.65330e-01);
-printf(" TShock  kK    , 224.63, %7.2f, %6.1f\n", tin    , 100*(tin    -  2.24632e+02)/ 2.24632e+02);
-printf(" Mach Number   ,  6.993, %7.3f, %6.1f\n", Mach   , 100*(Mach   -  6.99270e+00)/ 6.99270e+00);
-printf(" Alfven Mach   , 86.551, %7.3f, %6.1f\n", MachA  , 100*(MachA  -  8.65510e+01)/ 8.65510e+01);
-printf(" R4   E17cm    ,  0.138, %7.3f, %6.1f\n", r4     , 100*(r4     -  1.37560e-01)/ 1.37560e-01);
-printf(" R3   E17cm    ,  0.243, %7.3f, %6.1f\n", r3     , 100*(r3     -  2.42932e-01)/ 2.42932e-01);
-printf(" nH post       ,  3.767, %7.3f, %6.1f\n", nh     , 100*(nh     -  3.76670e+00)/ 3.76670e+00);
-printf(" nH4           , 76.008, %7.3f, %6.1f\n", n4     , 100*(n4     -  7.60080e+01)/ 7.60080e+01);
-printf(" nH3           , 124.41, %7.2f, %6.1f\n", n3     , 100*(n3     -  1.24410e+02)/ 1.24410e+02);
+printf(" TPre    kK    , 13.968, %7.3f, %6.1f\n", tpr    , 100*(tpr    -  1.39680e+01)/ 1.39680e+01);
+printf(" XHIPre        ,  0.671, %7.3f, %6.1f\n", xhi    , 100*(xhi    -  6.71270e-01)/ 6.71270e-01);
+printf(" TShock  kK    , 225.53, %7.2f, %6.1f\n", tin    , 100*(tin    -  2.25529e+02)/ 2.25529e+02);
+printf(" Mach Number   ,  6.995, %7.3f, %6.1f\n", Mach   , 100*(Mach   -  6.99450e+00)/ 6.99450e+00);
+printf(" Alfven Mach   , 86.551, %7.2f, %6.1f\n", MachA  , 100*(MachA  -  8.65510e+01)/ 8.65510e+01);
+printf(" R4   E17cm    ,  0.138, %7.3f, %6.1f\n", r4     , 100*(r4     -  1.37821e-01)/ 1.37821e-01);
+printf(" R3   E17cm    ,  0.241, %7.3f, %6.1f\n", r3     , 100*(r3     -  2.40642e-01)/ 2.40642e-01);
+printf(" nH post       ,  3.767, %7.3f, %6.1f\n", nh     , 100*(nh     -  3.76680e+00)/ 3.76680e+00);
+printf(" nH4           , 76.208, %7.3f, %6.1f\n", n4     , 100*(n4     -  7.62080e+01)/ 7.62080e+01);
+printf(" nH3           , 124.51, %7.2f, %6.1f\n", n3     , 100*(n3     -  1.24510e+02)/ 1.24510e+02);
 }

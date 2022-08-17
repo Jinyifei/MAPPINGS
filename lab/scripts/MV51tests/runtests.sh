@@ -1,5 +1,5 @@
 #!/bin/tcsh
-# v5.1.20
+# v5.1.21
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 set d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`
@@ -69,6 +69,6 @@ awk -f "$s/05_dustypah.awk" photn0005.ph6
 # awk -f "$s/06_shock200struc.awk" shck_v200s_0001.sh5 >> "$r/MV52test_$d.txt"
 # awk -f "$s/06_shock200struc.awk" shck_v200s_0001.sh5
 echo " MV 5.1 Tests completed. Output in "$r/MV52test_$d.txt""
-# rm -f timing.txt map5output.txt
+rm -f timing.txt map5output.txt
 rm -f *.ph6 *.nfn *.lam v*.sou *.bln *.sh5 *.csv SH*.sou PC*.sou
 cp "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"

@@ -10,7 +10,7 @@
 
 
 `https://mappings.anu.edu.au/code`
-`https://bitbucket.org/RalphSutherland/mv`
+`https://bitbucket.org/RalphSutherland/mappings`
 
 #### Contact:
 

@@ -23,6 +23,6 @@ S      : temperature and ionisation < 0.05 ending 500K
 v200s_
 X      : exit with output options
 A      : Std Diaplay
-MV 5.1.20 test 200km/s shock alpha 0.1
+MV 5.1.20 test 200km/s shock alpha 1.0
 xit    : exit and note extra line feed
 
