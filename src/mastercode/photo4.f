@@ -1564,7 +1564,7 @@ c
      &           ,' needed at the first space step , DTon0 :',1pg10.3,/)
             return
           endif
-          dtco0=(gammaeosu*fpresse(te0,de0,dh0))/(eloss+epsilon)
+          dtco0=(gammaEOSU*fpresse(te0,de0,dh0))/(eloss+epsilon)
         endif
 c
         dhp=dh0
@@ -1816,7 +1816,7 @@ c
           call copypop (pop0, pop)
           call teequi (te1, tef, de1, dh1, dton1, nmod)
         endif
-        dtco1=(gammaeosu*fpressu(tef,dh1,pop))/(eloss+epsilon)
+        dtco1=(gammaEOSU*fpressu(tef,dh1,pop))/(eloss+epsilon)
       endif
 c
 c*********************************************************

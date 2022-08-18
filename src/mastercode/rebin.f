@@ -274,7 +274,7 @@ c
           xbump=1.d0
           xinter=1.d0
           xhigh=1.d0
-          write (*,10) 
+          write (*,10)
    10 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  AGN Component Fractions :'/
@@ -331,7 +331,7 @@ c
           xbump=1.d0
           xinter=1.d0
           xhigh=1.d0
-          write (*,40) 
+          write (*,40)
    40 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  AGN Component Fractions :'/

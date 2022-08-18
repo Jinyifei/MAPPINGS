@@ -485,11 +485,11 @@ c
      &b2,tab,b3,tab,b4,tab,blum,tab
 c
       press=(en+de)*rkb*t
-      ue=gammaeosu*press
+      ue=gammaEOSU*press
       tnloss=tloss*invn
 c
       rhotot=frho(de,dh)
-      cspd=dsqrt(gammaeos*press/rhotot)
+      cspd=dsqrt(gammaEOS*press/rhotot)
       wmol=(rhotot/(en+de))/amu
 c
       tauav=0.0d0

@@ -80,7 +80,7 @@ c
             kappab=1.d0-kappaa
             if (kappaa.lt.0.995d0) usekappainterp=.true.
 c
-            write (*,*) kappa,kappaa,kappab,kappaidx,usekappainterp
+            write (*,*) kappa,kappaA,kappaB,kappaidx,useKappaInterp
 c
           else
             usekappa=.false.

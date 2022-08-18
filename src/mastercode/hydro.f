@@ -58,7 +58,7 @@ c     internal functions
 c
       qpr(u)=4.74d-4*(u**(-0.151d0))
       qel(u)=0.57d-4*(u**(-0.373d0))
-c      fraction of collisions -> 2Phots
+c     fraction of collisions -> 2Phots
       fr(u)=0.588d0*(u**(-0.234d0))
 c
 c HI Parpia, F. A., and Johnson, W. R., 1982, Phys. Rev. A, 26, 1142.

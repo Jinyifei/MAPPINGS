@@ -156,8 +156,9 @@ c
 c     ***FORM MATRIX OF IONISATION RATES IN C
 c
       ndyn='TEST'
+   10 continue
       do k=1,nde-1
-   10   c(k,k+1)=reco(k)
+        c(k,k+1)=reco(k)
         c(k+1,k+1)=-c(k,k+1)
       enddo
       c(1,1)=0.d0
@@ -269,8 +270,9 @@ c
       rn=0.d0
       da=0.d0
       m1=maxio+1
+   80 continue
       do m=1,10
-   80   rn=rn+1.d0
+        rn=rn+1.d0
         invrn=1.d0/rn
         do k=1,nde
           do l=1,nde
@@ -387,4 +389,5 @@ c
 c
       return
       end
+c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

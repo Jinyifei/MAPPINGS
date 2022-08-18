@@ -1,5 +1,5 @@
 #!/bin/bash
-# v1.0.1
+# v1.0.2
 make prepare
 cp mastercode/tidy.ini workcode/
 cd workcode/
@@ -26,10 +26,9 @@ then
 #
 # clean up elseif if to elseif bug in old tidy72 code..
 #
- sed s/elseif\ if/elseif/g ${srcbase}.tid > tst_${srcbase}.f
- sed s/^c\ $/c/g tst_${srcbase}.f > ${srcbase}.f
- rm tst_${srcbase}.f
- fi
+ sed -e s/elseif\ if/elseif/g \
+     -e s/^c\ $/c/g ${srcbase}.tid > ${srcbase}.f
+fi
 done
 cd ..
 #

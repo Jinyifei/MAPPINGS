@@ -481,14 +481,14 @@ c
                 trimid(itr)=s(1:sl)
               endif
             enddo
-            write (*,360) '              ,              ,              ,
-     &',(trimid(itr),itr=1,nt)
-            write (*,370) '          LogT,             T,            ne,
-     &',(1.0d8*fmlam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,            
-     &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,            
-     &ne,',(1.0d8*fmlam(itr,idx),itr=1,nt)
+      write (   *,360) '              ,              ,              ,',
+     &   (trimid(itr),itr=1,nt)
+      write (   *,370) '          LogT,             T,            ne,',
+     &   (1.0d8*fmlam(itr,idx),itr=1,nt)
+      write (luop,360) '              ,              ,              ,',
+     &    (trimid(itr),itr=1,nt)
+      write (luop,370) '          LogT,             T,            ne,',
+     &    (1.0d8*fmlam(itr,idx),itr=1,nt)
           endif
           if (linetype.eq.2) then
             do itr=1,nt
@@ -500,14 +500,14 @@ c
                 trimid(itr)=s(1:sl)
               endif
             enddo
-            write (*,360) '              ,              ,              ,
-     &',(trimid(itr),itr=1,nt)
-            write (*,370) '          LogT,             T,            ne,
-     &',(1.0d8*felam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,            
-     &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,            
-     &ne,',(1.0d8*felam(itr,idx),itr=1,nt)
+      write (   *,360) '              ,              ,              ,',
+     &      (trimid(itr),itr=1,nt)
+      write (   *,370) '          LogT,             T,            ne,',
+     &      (1.0d8*felam(itr,idx),itr=1,nt)
+      write (luop,360) '              ,              ,              ,',
+     &      (trimid(itr),itr=1,nt)
+      write (luop,370) '          LogT,             T,            ne,',
+     &      (1.0d8*felam(itr,idx),itr=1,nt)
           endif
           do i=0,ntsteps
             logt=(tdelta*i+tmin)
@@ -544,14 +544,14 @@ c
                 trimid(itr)=s(1:sl)
               endif
             enddo
-            write (*,360) '              ,              ,              ,
-     &',(trimid(itr),itr=1,nt)
-            write (*,370) '          LogT,             T,            ne,
-     &',(1.0d8*fmlam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,            
-     &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,            
-     &ne,',(1.0d8*fmlam(itr,idx),itr=1,nt)
+      write (   *,360) '              ,              ,              ,',
+     &      (trimid(itr),itr=1,nt)
+      write (   *,370) '          LogT,             T,            ne,',
+     &      (1.0d8*fmlam(itr,idx),itr=1,nt)
+      write (luop,360) '              ,              ,              ,',
+     &      (trimid(itr),itr=1,nt)
+      write (luop,370) '          LogT,             T,            ne,',
+     &      (1.0d8*fmlam(itr,idx),itr=1,nt)
           endif
           if (linetype.eq.2) then
             do itr=1,nt
@@ -563,14 +563,14 @@ c
                 trimid(itr)=s(1:sl)
               endif
             enddo
-            write (*,360) '              ,              ,              ,
-     &',(trimid(itr),itr=1,nt)
-            write (*,370) '          LogT,             T,            ne,
-     &',(1.0d8*felam(itr,idx),itr=1,nt)
-            write (luop,360) '              ,              ,            
-     &  ,',(trimid(itr),itr=1,nt)
-            write (luop,370) '          LogT,             T,            
-     &ne,',(1.0d8*felam(itr,idx),itr=1,nt)
+      write (   *,360) '              ,              ,              ,',
+     &      (trimid(itr),itr=1,nt)
+      write (   *,370) '          LogT,             T,            ne,',
+     &      (1.0d8*felam(itr,idx),itr=1,nt)
+      write (luop,360) '              ,              ,              ,',
+     &      (trimid(itr),itr=1,nt)
+      write (luop,370) '          LogT,             T,            ne,',
+     &      (1.0d8*felam(itr,idx),itr=1,nt)
           endif
           do i=0,ntsteps
             logt=(tdelta*i+tmin)
@@ -1075,15 +1075,20 @@ c
         write (luop,180) elem(at),rom(io)
         write (*,180) elem(at),rom(io)
   190  format(a16,a16,2(', ',1pg14.7),a16,2(a48,a32))
-        write (luop,190) '%log10 ne (cm-3)',', log10 T (K)   ',lam0,
-     &   lam1,',   ratio 2/1   ',',      alpha12_0,      alpha21_0,     
-     &     A21_0',',         pop1_0,         pop2_0',',      alpha12_1, 
-     &     alpha21_1,          A21_1',',         pop1_1,         pop2_1'
 c
-        write (*,190) '%log10 ne (cm-3)',', log10 T (K)   ',lam0,lam1,',
-     &   ratio 2/1   ',',      alpha12_0,      alpha21_0,          A21_0
-     &',',         pop1_0,      pop2_0',',      alpha12_1,      alpha21_
-     &1,          A21_1',',         pop1_1,         pop2_1'
+        write (luop,190) '%log10 ne (cm-3)',', log10 T (K)   ',
+     &   lam0, lam1,',   ratio 2/1   ',
+     & ',      alpha12_0,      alpha21_0,          A21_0',
+     & ',         pop1_0,         pop2_0',
+     & ',      alpha12_1,      alpha21_1,          A21_1',
+     & ',         pop1_1,         pop2_1'
+c
+        write (*,190) '%log10 ne (cm-3)',', log10 T (K)   ',
+     &   lam0, lam1,',   ratio 2/1   ',
+     & ',      alpha12_0,      alpha21_0,          A21_0',
+     & ',         pop1_0,      pop2_0',
+     & ',      alpha12_1,      alpha21_1,          A21_1',
+     & ',         pop1_1,         pop2_1'
 c
         do stepidx=0,ndhsteps
           dh=10.d0**(nmin+stepidx*ndelta)
@@ -1382,19 +1387,23 @@ c
         write (luop,190) elem(at),rom(io)
         write (*,190) elem(at),rom(io)
   200  format(a16,a16,3(', ',1pg14.7),a16,3(a48,a32))
-        write (luop,200) '% log10 T (K)   ',',log10 ne (cm-3)',lam0,
-     &   lam1,lam2,', ratio 1/(2+3) ',',      alpha12_0,      alpha21_0,
-     &          A21_0',',         pop1_0,         pop2_0',',      alpha1
-     &2_1,      alpha21_1,          A21_1',',         pop1_1,         po
-     &p2_1',',      alpha12_2,      alpha21_2,          A21_2',',       
-     &  pop1_2,         pop2_2'
+        write (luop,200) '% log10 T (K)   ',',log10 ne (cm-3)',
+     &  lam0, lam1, lam2,', ratio 1/(2+3) ',
+     &',      alpha12_0,      alpha21_0,          A21_0',
+     &',         pop1_0,         pop2_0',
+     &',      alpha12_1,      alpha21_1,          A21_1',
+     &',         pop1_1,         pop2_1',
+     &',      alpha12_2,      alpha21_2,          A21_2',
+     &',         pop1_2,         pop2_2'
 c
-        write (*,200) '% log10 T (K)   ',',log10 ne (cm-3)',lam0,lam1,
-     &   lam2,', ratio 1/(2+3) ',',      alpha12_0,      alpha21_0,     
-     &     A21_0',',         pop1_0,         pop2_0',',      alpha12_1, 
-     &     alpha21_1,          A21_1',',         pop1_1,         pop2_1'
-     &   ,',      alpha12_2,      alpha21_2,          A21_2',',         
-     &pop1_2,         pop2_2'
+        write (*,190) '% log10 T (K)   ',',log10 ne (cm-3)',
+     &  lam0, lam1, lam2,', ratio 1/(2+3) ',
+     &',      alpha12_0,      alpha21_0,          A21_0',
+     &',         pop1_0,         pop2_0',
+     &',      alpha12_1,      alpha21_1,          A21_1',
+     &',         pop1_1,         pop2_1',
+     &',      alpha12_2,      alpha21_2,          A21_2',
+     &',         pop1_2,         pop2_2'
 c
         do stepidx=0,ntsteps
           t=10.d0**(tmin+stepidx*tdelta)
@@ -1435,19 +1444,32 @@ c
           colexrate2=de*rka*f*aa*(ups2/wlower)
           coldexrate2=de*((rka*f)*ups2)/wupper
           n2=colexrate2/(a2+coldexrate2)
+c
   210     format('  ',1pg14.7,20(', ',1pg14.7))
-          write (luop,210) dlog10(t),dlog10(de),(br(itr),itr=1,4),
-     &     colexrate0,coldexrate0,a0,fmx(nfmlower(itr0,idx),idx),
-     &     fmx(nfmupper(itr0,idx),idx),colexrate1,coldexrate1,a1,
-     &     fmx(nfmlower(itr1,idx),idx),fmx(nfmupper(itr1,idx),idx),
-     &     colexrate2,coldexrate2,a2,fmx(nfmlower(itr2,idx),idx),
-     &     fmx(nfmupper(itr2,idx),idx)
-          write (*,210) dlog10(t),dlog10(de),(br(itr),itr=1,4),
-     &     colexrate0,coldexrate0,a0,fmx(nfmlower(itr0,idx),idx),
-     &     fmx(nfmupper(itr0,idx),idx),colexrate1,coldexrate1,a1,
-     &     fmx(nfmlower(itr1,idx),idx),fmx(nfmupper(itr1,idx),idx),
-     &     colexrate2,coldexrate2,a2,fmx(nfmlower(itr2,idx),idx),
-     &     fmx(nfmupper(itr2,idx),idx)
+          write (luop,210) dlog10(t), dlog10(de)
+     &     ,(br(itr),itr=1,4)
+     &     ,colexrate0,coldexrate0,a0
+     &     ,fmx(nfmlower(itr0,idx),idx)
+     &     ,fmx(nfmupper(itr0,idx),idx)
+     &     ,colexrate1,coldexrate1,a1
+     &     ,fmx(nfmlower(itr1,idx),idx)
+     &     ,fmx(nfmupper(itr1,idx),idx)
+     &     ,colexrate2,coldexrate2,a2
+     &     ,fmx(nfmlower(itr2,idx),idx)
+     &     ,fmx(nfmupper(itr2,idx),idx)
+c
+          write (*,210) dlog10(t), dlog10(de)
+     &     ,(br(itr),itr=1,4)
+     &     ,colexrate0,coldexrate0,a0
+     &     ,fmx(nfmlower(itr0,idx),idx)
+     &     ,fmx(nfmupper(itr0,idx),idx)
+     &     ,colexrate1,coldexrate1,a1
+     &     ,fmx(nfmlower(itr1,idx),idx)
+     &     ,fmx(nfmupper(itr1,idx),idx)
+     &     ,colexrate2,coldexrate2,a2
+     &     ,fmx(nfmlower(itr2,idx),idx)
+     &     ,fmx(nfmupper(itr2,idx),idx)
+c
         enddo
         close (luop)
 c

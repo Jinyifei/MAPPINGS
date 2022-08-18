@@ -2003,7 +2003,7 @@ c
      & ' needed at the first space step , DTon0 :',1pg10.3,/)
             return
           endif
-          dtco0=(gammaeosu*fpressu(te0,dh0,pop))/(eloss+1.d-36)
+          dtco0=(gammaEOSU*fpressu(te0,dh0,pop))/(eloss+1.d-36)
         endif
 c
         dhp=dh0
@@ -2322,7 +2322,7 @@ c
 c     Compute equilibrium temperature and ionization state of the gas
           call teequi2 (te1, tef, de1, dh1, dton1, nmod)
         endif
-        dtco1=(gammaeosu*fpressu(tef,dh1,pop))/(eloss+epsilon)
+        dtco1=(gammaEOSU*fpressu(tef,dh1,pop))/(eloss+epsilon)
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

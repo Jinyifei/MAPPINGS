@@ -136,7 +136,7 @@ c
 c    ***COLLISIONAL IONISATION LOSSES
 c
       cmplos=0.d0
-c      colos
+c     colos
       call coloss (de, dh)
       tll=tll+colos
 c

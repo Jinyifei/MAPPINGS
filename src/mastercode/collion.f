@@ -66,7 +66,7 @@ c
 c
 c     External Functions
 c
-      real*8 farint,fsplint,fcodye1
+      real*8 farint,fsplint,fcodyE1
       real*8 fkenhance
 c
       rateenhance=1.d0

@@ -111,7 +111,7 @@ c
 c
 c     proton & electron deexcitation collision
 c
-c      protons
+c     protons
           dp=dh*zion(1)*pop(2,1)
           dexcoll=(dp*qpr(tz)+de*qel(tz))/z
 c

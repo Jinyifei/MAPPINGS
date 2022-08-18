@@ -335,10 +335,10 @@ c
 c
       en=zen*dh
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       cts=ue/tloss
 c
-      cspd=dsqrt(gammaeos*press/rhotot)
+      cspd=dsqrt(gammaEOS*press/rhotot)
 c
       mag=bm0
       aspd=dsqrt(mag*mag/(fpi*rhotot))
@@ -822,7 +822,7 @@ c
             endif
           elseif (wmod.eq.'NORM') then
             write (lunt,60) photev(j),tl(j)
-          elseif (wmod.eq.'XRAY') then  
+          elseif (wmod.eq.'XRAY') then
             if (tl(j).gt.0.d0) then
               write (lunt,60) cphotev(j),tl(j)
             endif

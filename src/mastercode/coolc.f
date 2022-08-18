@@ -161,17 +161,17 @@ c
           write (luions(i),120)
           if (jnorm.eq.0) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'n_e.n_H',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
      &(L)',tab,'L/(ne.nH)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           if (jnorm.eq.1) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'nH^2',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
      &(L)',tab,'L/(nH^2)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           if (jnorm.eq.2) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'ne.ni',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
      &(L)',tab,'L/(ne.ni)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           if (jnorm.eq.3) then
@@ -181,7 +181,7 @@ c
           endif
           if (jnorm.eq.4) then
             write (luions(i),90) 'T ',tab,'n_e',tab,'n_H',tab,'ne^2',
-     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses 
+     &       tab,'rho ',tab,'XHI   ',tab,'XHII  ',tab,'mu ',tab,'Losses
      &(L)',tab,'L/(ne^2)',tab,(rom(j),tab,j=1,maxion(i))
           endif
           write (luions(i),90) '(K)',tab,'(/cm^3)',tab,'(/cm^3)',tab,'(/
@@ -289,28 +289,28 @@ c
 c
       write (*,120)
       if (jnorm.eq.0) then
-        write (*,*) 'T             n_e           n_H         ne.nH      
-     & ',' mu          Losses (L)   L/(ne.nH)    ',' 0.5-1.0keV   1.0-2 
+        write (*,*) 'T             n_e           n_H         ne.nH
+     & ',' mu          Losses (L)   L/(ne.nH)    ',' 0.5-1.0keV   1.0-2
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.1) then
-        write (*,*) 'T             n_e           n_H         nH^2       
-     & ',' mu          Losses (L)   L/(nH^2)     ',' 0.5-1.0keV   1.0-2 
+        write (*,*) 'T             n_e           n_H         nH^2
+     & ',' mu          Losses (L)   L/(nH^2)     ',' 0.5-1.0keV   1.0-2
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.2) then
-        write (*,*) 'T             n_e           n_H         ne.ni      
-     & ',' mu          Losses (L)   L/(ne.ni)    ',' 0.5-1.0keV   1.0-2 
+        write (*,*) 'T             n_e           n_H         ne.ni
+     & ',' mu          Losses (L)   L/(ne.ni)    ',' 0.5-1.0keV   1.0-2
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.3) then
-        write (*,*) 'T             n_e           n_H         n^2        
-     & ',' mu          Losses (L)   L/(n^2)      ',' 0.5-1.0keV   1.0-2 
+        write (*,*) 'T             n_e           n_H         n^2
+     & ',' mu          Losses (L)   L/(n^2)      ',' 0.5-1.0keV   1.0-2
      &.0keV   2.0-10.0keV'
       endif
       if (jnorm.eq.4) then
-        write (*,*) 'T             n_e           n_H         ne^2       
-     & ',' mu          Losses (L)   L/(ne^2)     ',' 0.5-1.0keV   1.0-2 
+        write (*,*) 'T             n_e           n_H         ne^2
+     & ',' mu          Losses (L)   L/(ne^2)     ',' 0.5-1.0keV   1.0-2
      &.0keV   2.0-10.0keV'
       endif
 c
@@ -417,10 +417,10 @@ c
           invn=0.d0
         endif
 c
-        ue=gammaeosu*(en+de)*rkb*t
+        ue=gammaEOSU*(en+de)*rkb*t
         tnloss=tloss*invn
         rhotot=frho(de,dh)
-        cspd=dsqrt(gammaeos*press/rhotot)
+        cspd=dsqrt(gammaEOS*press/rhotot)
         wmol=(rhotot/(en+de))/amu
 c
         b0=0.d0

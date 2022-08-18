@@ -1138,10 +1138,10 @@ c
 c
       en=zen*dh
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=tloss/(en*de)
 c
-      cspd=dsqrt(gammaeos*pr1/rho1)
+      cspd=dsqrt(gammaEOS*pr1/rho1)
       wmol=rho1/(en+de)
       mu=fmua(de,dh)
 c
@@ -1173,7 +1173,7 @@ c
 c
       en=zen*dh
       press=(en+de)*rkb*t
-      ue=gammaeosu*press
+      ue=gammaEOSU*press
 c
 c     effective cooling timescale, based on net loss
 c
@@ -1376,7 +1376,7 @@ c         ftime = ftime*0.5d0
 c
       en=zen*dh+de
       press=en*rkb*t
-      ue=gammaeosu*press
+      ue=gammaEOSU*press
 c
       cltime=dabs(ue/tloss)
 c
@@ -1430,7 +1430,7 @@ c
 c     initial internal energy /unit mass
 c
       en=zen*dh
-      ue0=gammaeosu*(en+de)*rkb*te1
+      ue0=gammaEOSU*(en+de)*rkb*te1
 c
       tt0=te1
       t=te1
@@ -1450,7 +1450,7 @@ c
       dheq=dh
 c
       en=zen*dheq
-      ue1=gammaeosu*(en+de)*rkb*t
+      ue1=gammaEOSU*(en+de)*rkb*t
 c
 c     Net Loss
 c
@@ -1525,10 +1525,10 @@ c
      &1pg14.7,' cm/s',1x,1pg14.7,' g ')
       en=zen*dh
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=tloss/(en*de)
 c
-      cspd=dsqrt(gammaeos*(pr1+pr0)/(rho1+rho0))
+      cspd=dsqrt(gammaEOS*(pr1+pr0)/(rho1+rho0))
       wmol=(rho1+rho0)/(2.d0*(en+de))
 c
       mb=(bm0+bm1)*0.5
@@ -1835,7 +1835,7 @@ c
       en=zen*dh0
 c
       press=(en+de0)*rkb*t
-      ue=gammaeosu*(en+de0)*rkb*t
+      ue=gammaEOSU*(en+de0)*rkb*t
 c
       cltime=dabs(ue/tloss)
 c

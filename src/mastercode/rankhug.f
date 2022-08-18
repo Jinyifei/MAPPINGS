@@ -46,7 +46,7 @@ c
       vel0=vpr
       te0=tpr
       dh0=dhpr
-c      feldens(dhpr,pop)
+c     feldens(dhpr,pop)
       de0=delpr
       bm0=bmag
       pb0=(bm0*bm0)/epi
@@ -389,7 +389,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c estimate shock velocity to 1 in 10^7 for given shock temperature.
 c using bisection.  Mindlessly solid in the face of
-c terrible instability at high B!  Performance is not an issue, this
+c terrible instability at high B, Performance is not an issue, this
 c routine is only used in setup, not in running  models.
 c
 c **** assumes tpo is a monotonic function of vin ****
