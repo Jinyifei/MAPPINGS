@@ -69,11 +69,11 @@ c
       if (te0.lt.(3.d0*tmin)) te0=3.d0*tmin
       tm1=te0
       tl1=dlog(tm1)
-      do 20 idx=1,atypes
-        do 10 ion=1,maxion(idx)
+      do idx=1,atypes
+        do ion=1,maxion(idx)
           popp0(ion,idx)=pop(ion,idx)
-   10   continue
-   20 continue
+        enddo
+      enddo
 c
       call timion (tm1, edens, hdens, xhyf, tstep)
 c
@@ -91,12 +91,12 @@ c     if (dabs(dlos).lt.(delmin/4.d0)) goto 200
 c
 c
       dl1=dlos
-      do 110 n=1,nf
-        do 40 idx=1,atypes
-          do 30 ion=1,maxion(idx)
+      do n=1,nf
+        do idx=1,atypes
+          do ion=1,maxion(idx)
             pop(ion,idx)=popp0(ion,idx)
-   30     continue
-   40   continue
+          enddo
+        enddo
 c
         call timion (t2, edens, hdens, xhyf, tstep)
 c
@@ -143,7 +143,8 @@ c
 c
    90 format(' ',1pg12.5,g10.3,g12.5,4g10.3,i4,1pg10.3)
   100   if ((dabs(dlos).lt.(delmin*5.d0)).or.(km.ge.3)) goto 130
-  110 continue
+c
+      enddo
 c
       write (*,120) dlos,t2
   120 format(' CONVERGENCE FOR EQUIL. TEMP. IS TOO SLOW   ' ,'DL:'
@@ -151,11 +152,11 @@ c
   130 continue
       if (t2.lt.tmin) t2=tmin
       tef=t2
-      do 150 idx=1,atypes
-        do 140 ion=1,maxion(idx)
+      do idx=1,atypes
+        do ion=1,maxion(idx)
           pop(ion,idx)=popp0(ion,idx)
-  140   continue
-  150 continue
+        enddo
+      enddo
 c
       call timion (tef, edens, hdens, xhyf, tstep)
 c

@@ -1497,10 +1497,10 @@ c
         de0=feldens(dh0,pop0)
         dedhmi=0.d0
         dedhma=0.d0
-        do 20 j=1,atypes
+        do j=1,atypes
           dedhma=dedhma+zion(j)
           if (arad(2,j).le.0.d0) dedhmi=dedhmi+zion(j)
-   20   continue
+        enddo
         call copypop (pop0, pop)
 c
 c

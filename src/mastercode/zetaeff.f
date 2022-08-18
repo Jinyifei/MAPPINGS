@@ -53,16 +53,16 @@ c
       wei=zion(1)
       ph=zion(1)*rphot(1,1)
 c
-      do 20 idx=2,atypes
+      do idx=2,atypes
         abr=zion(idx)
         wei=wei+abr
         ion=maxion(idx)-1
         ph=ph+(abr*rphot(ion,idx))
-        do 10 ion=1,maxion(idx)-2
+        do ion=1,maxion(idx)-2
           wei=wei+abr
           ph=ph+(abr*(rphot(ion,idx)+auphot(ion,idx)))
-   10   continue
-   20 continue
+        enddo
+      enddo
 c
       zetae=ph/(dh*wei)
 c

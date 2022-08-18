@@ -522,8 +522,8 @@ c
       endif
 c
       do inl=1,infph-1
-        if ((cphotev(inl).gt.ipotev(1,1)).and.(cphotev(inl).lt.ipotev(1,
-     &   2))) then
+        if ( (cphotev(inl).gt.ipotev(1,1)).and.
+     &       (cphotev(inl).lt.ipotev(1,2)) ) then
           if (xsec(inl).gt.epsilon) then
             wei=xsec(inl)/xsect
             qto=qto+wei
@@ -534,8 +534,8 @@ c
       absf=0.d0
 c
       do inl=1,infph-1
-        if ((cphotev(inl).gt.ipotev(1,1)).and.(cphotev(inl).lt.ipotev(1,
-     &   2))) then
+        if ( (cphotev(inl).gt.ipotev(1,1)).and.
+     &       (cphotev(inl).lt.ipotev(1,2)) ) then
           if (xsec(inl).gt.epsilon) then
             wei=xsec(inl)/xsect
             absf=absf+(1.d0-dexp(-drta*xsec(inl)))*wei
@@ -744,8 +744,9 @@ c        cebin=cphotev(inl)
         if (skipbin(inl)) goto 60
         sig=0.0d0
         rewe=0.0d0
-        do 30 i=1,atypes
-   30     rela(i)=0.0d0
+        do i=1,atypes
+          rela(i)=0.0d0
+        enddo
         do 40 i=1,ionum
           if (photxsec(i,inl).le.0.d0) goto 40
           ie=atpho(i)
@@ -755,12 +756,12 @@ c        cebin=cphotev(inl)
           sig=sig+(abio*crosec)
           if (arad(j+1,ie).gt.0.0d0) rela(ie)=1.0d0
    40   continue
-c   50   continue
 c
         sig=(dh*fi)*sig
 c
-        do 50 i=1,atypes
-   50     rewe=rewe+(rela(i)*zion(i))
+        do i=1,atypes
+          rewe=rewe+(rela(i)*zion(i))
+        enddo
 c
         phma=dmax1(phma,tphot(inl))
         simax=dmax1(simax,sig*(rewe**2.d0))

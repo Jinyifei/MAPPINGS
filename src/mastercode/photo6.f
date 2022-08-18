@@ -85,12 +85,12 @@ c
    20    format(a)
         carac(1:33)='   '
         j=1
-        do 30 i=3,atypes
+        do i=3,atypes
           j=1+index(carac(1:33),'   ')
           caract='   '
           if (ipote(1,i).lt.epotmi) write (caract,20) elem(i)
           carac(j:j+2)=caract//'   '
-   30   continue
+        enddo
         i=j+2
    40   write (*,50) carac(1:i)
         ilgg='    '
@@ -104,10 +104,11 @@ c
         if (ilgg.eq.'Y') goto 70
         if ((ilgg.ne.'N')) goto 40
 c
-        do 60 i=3,atypes
+        do i=3,atypes
           arad(2,i)=dabs(arad(2,i))
           if (ipote(1,i).lt.epotmi) arad(2,i)=-arad(2,i)
-   60   continue
+        enddo
+c
    70   continue
 c
       endif

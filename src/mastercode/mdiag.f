@@ -68,40 +68,45 @@ c
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 60 il=1,jl
-        do 20 kl=il,jl
+      do il=1,jl
+        do 10 kl=il,jl
           rab=a(il,kl)
           ra=dabs(rab)
-          if (ra.lt.epsilon) goto 20
-          do 10 kc=1,jc
+          if (ra.lt.epsilon) goto 10
+          do kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   10     continue
+          enddo
+c
+   10   continue
+c
+        do kl=il,jl
+          r(kl)=a(il,kl)
+        enddo
+        do 20 kl=1,jl
+          if (kl.eq.il) goto 20
+          ra=dabs(r(kl))
+          if (ra.lt.epsilon) goto 20
+          do kc=1,jc
+            a(kc,kl)=a(kc,kl)-a(kc,il)
+          enddo
+c
    20   continue
 c
-        do 30 kl=il,jl
-          r(kl)=a(il,kl)
-   30   continue
-        do 50 kl=1,jl
-          if (kl.eq.il) goto 50
-          ra=dabs(r(kl))
-          if (ra.lt.epsilon) goto 50
-          do 40 kc=1,jc
-   40       a(kc,kl)=a(kc,kl)-a(kc,il)
-   50   continue
-   60 continue
+      enddo
 c
 c    ***BACK SUBSTITUTION
 c
-      do 90 ila=1,jl
+      do ila=1,jl
         il=(jl+1)-ila
         ics=il+1
         aaa=0.0d0
-        if (ics.gt.jl) goto 80
-        do 70 ic=ics,jl
-   70     aaa=aaa+(a(ic,il)*x(ic))
-   80   dx=(a(jc,il)-aaa)/a(il,il)
+        if (ics.gt.jl) goto 30
+        do ic=ics,jl
+          aaa=aaa+(a(ic,il)*x(ic))
+        enddo
+   30   dx=(a(jc,il)-aaa)/a(il,il)
         x(il)=x(il)+dx
-   90 continue
+      enddo
 c
       return
       end
@@ -135,63 +140,66 @@ c
 c
       jc=jl+1
       jca=jc+1
-      do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
-   20 continue
+      do il=1,jl
+        do ic=1,jca
+          a(ic,il)=alph(ic,il)
+        enddo
+      enddo
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
-      do 30 il=1,jl
+      do il=1,jl
         aa=aa+dabs(a(il,il))
         x(il)=0.0d0
-   30 continue
-      do 50 il=1,jl
-        do 40 ic=1,jc
+      enddo
+      do il=1,jl
+        do ic=1,jc
           a(ic,il)=a(ic,il)/aa
           b(ic,il)=a(ic,il)
-   40   continue
+        enddo
         a(jca,il)=a(jc,il)
         b(jca,il)=a(jc,il)
-   50 continue
+      enddo
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 110 il=1,jl
+      do il=1,jl
         do 70 kl=il,jl
           rab=a(il,kl)
           ra=dabs(rab)
           if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
+          do kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   60     continue
+          enddo
    70   continue
 c
-        do 80 kl=il,jl
+        do kl=il,jl
           r(kl)=a(il,kl)
-   80   continue
+        enddo
         do 100 kl=1,jl
           if (kl.eq.il) goto 100
           ra=dabs(r(kl))
           if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
+          do kc=1,jc
+            a(kc,kl)=a(kc,kl)-a(kc,il)
+          enddo
   100   continue
-  110 continue
+      enddo
 c
 c    ***BACK SUBSTITUTION
 c
-      do 140 ila=1,jl
+      do ila=1,jl
         il=(jl+1)-ila
         ics=il+1
         aaa=0.0d0
         if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
+        do ic=ics,jl
+          aaa=aaa+(a(ic,il)*x(ic))
+        enddo
   130   dx=(a(jc,il)-aaa)/a(il,il)
         x(il)=x(il)+dx
-  140 continue
+      enddo
 c
       return
       end
@@ -227,63 +235,66 @@ c
 c
       jc=jl+1
       jca=jc+1
-      do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
-   20 continue
+      do il=1,jl
+        do ic=1,jca
+          a(ic,il)=alph(ic,il)
+        enddo
+      enddo
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
-      do 30 il=1,jl
+      do il=1,jl
         aa=aa+dabs(a(il,il))
         x(il)=0.0d0
-   30 continue
-      do 50 il=1,jl
-        do 40 ic=1,jc
+      enddo
+      do il=1,jl
+        do ic=1,jc
           a(ic,il)=a(ic,il)/aa
           b(ic,il)=a(ic,il)
-   40   continue
+        enddo
         a(jca,il)=a(jc,il)
         b(jca,il)=a(jc,il)
-   50 continue
+      enddo
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 110 il=1,jl
+      do il=1,jl
         do 70 kl=il,jl
           rab=a(il,kl)
           ra=dabs(rab)
           if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
+          do kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   60     continue
+          enddo
    70   continue
 c
-        do 80 kl=il,jl
+        do kl=il,jl
           r(kl)=a(il,kl)
-   80   continue
+        enddo
         do 100 kl=1,jl
           if (kl.eq.il) goto 100
           ra=dabs(r(kl))
           if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
+          do kc=1,jc
+            a(kc,kl)=a(kc,kl)-a(kc,il)
+          enddo
   100   continue
-  110 continue
+      enddo
 c
 c    ***BACK SUBSTITUTION
 c
-      do 140 ila=1,jl
+      do ila=1,jl
         il=(jl+1)-ila
         ics=il+1
         aaa=0.0d0
         if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
+        do ic=ics,jl
+          aaa=aaa+(a(ic,il)*x(ic))
+        enddo
   130   dx=(a(jc,il)-aaa)/a(il,il)
         x(il)=x(il)+dx
-  140 continue
+      enddo
 c
       return
       end
@@ -319,63 +330,66 @@ c
 c
       jc=jl+1
       jca=jc+1
-      do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
-   20 continue
+      do il=1,jl
+        do ic=1,jca
+          a(ic,il)=alph(ic,il)
+        enddo
+      enddo
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
-      do 30 il=1,jl
+      do il=1,jl
         aa=aa+dabs(a(il,il))
         x(il)=0.0d0
-   30 continue
-      do 50 il=1,jl
-        do 40 ic=1,jc
+      enddo
+      do il=1,jl
+        do ic=1,jc
           a(ic,il)=a(ic,il)/aa
           b(ic,il)=a(ic,il)
-   40   continue
+        enddo
         a(jca,il)=a(jc,il)
         b(jca,il)=a(jc,il)
-   50 continue
+      enddo
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 110 il=1,jl
+      do il=1,jl
         do 70 kl=il,jl
           rab=a(il,kl)
           ra=dabs(rab)
           if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
+          do kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   60     continue
+          enddo
    70   continue
 c
-        do 80 kl=il,jl
+        do kl=il,jl
           r(kl)=a(il,kl)
-   80   continue
+        enddo
         do 100 kl=1,jl
           if (kl.eq.il) goto 100
           ra=dabs(r(kl))
           if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
+          do kc=1,jc
+            a(kc,kl)=a(kc,kl)-a(kc,il)
+          enddo
   100   continue
-  110 continue
+       enddo
 c
 c    ***BACK SUBSTITUTION
 c
-      do 140 ila=1,jl
+      do ila=1,jl
         il=(jl+1)-ila
         ics=il+1
         aaa=0.0d0
         if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
+        do ic=ics,jl
+          aaa=aaa+(a(ic,il)*x(ic))
+        enddo
   130   dx=(a(jc,il)-aaa)/a(il,il)
         x(il)=x(il)+dx
-  140 continue
+      enddo
 c
       return
       end
@@ -410,10 +424,11 @@ c
       jl=16
       jc=jl+1
       jca=jc+1
-      do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
-   20 continue
+      do il=1,jl
+        do ic=1,jca
+          a(ic,il)=alph(ic,il)
+        enddo
+      enddo
 c
 c    ***RENORMALISATION OF MATRIX
 c
@@ -505,63 +520,66 @@ c
 c
       jc=jl+1
       jca=jc+1
-      do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
-   20 continue
+      do il=1,jl
+        do ic=1,jca
+          a(ic,il)=alph(ic,il)
+        enddo
+      enddo
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
-      do 30 il=1,jl
+      do il=1,jl
         aa=aa+dabs(a(il,il))
         x(il)=0.0d0
-   30 continue
-      do 50 il=1,jl
-        do 40 ic=1,jc
+      enddo
+      do il=1,jl
+        do ic=1,jc
           a(ic,il)=a(ic,il)/aa
           b(ic,il)=a(ic,il)
-   40   continue
+        enddo
         a(jca,il)=a(jc,il)
         b(jca,il)=a(jc,il)
-   50 continue
+      enddo
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 110 il=1,jl
+      do il=1,jl
         do 70 kl=il,jl
           rab=a(il,kl)
           ra=dabs(rab)
           if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
+          do kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   60     continue
+          enddo
    70   continue
 c
-        do 80 kl=il,jl
+        do kl=il,jl
           r(kl)=a(il,kl)
-   80   continue
+        enddo
         do 100 kl=1,jl
           if (kl.eq.il) goto 100
           ra=dabs(r(kl))
           if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
+          do kc=1,jc
+            a(kc,kl)=a(kc,kl)-a(kc,il)
+          enddo
   100   continue
-  110 continue
+      enddo
 c
 c    ***BACK SUBSTITUTION
 c
-      do 140 ila=1,jl
+      do ila=1,jl
         il=(jl+1)-ila
         ics=il+1
         aaa=0.0d0
         if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
+        do ic=ics,jl
+          aaa=aaa+(a(ic,il)*x(ic))
+        enddo
   130   dx=(a(jc,il)-aaa)/a(il,il)
         x(il)=x(il)+dx
-  140 continue
+      enddo
 c
       return
       end
@@ -599,63 +617,66 @@ c
 c
       jc=jl+1
       jca=jc+1
-      do 20 il=1,jl
-        do 10 ic=1,jca
-   10     a(ic,il)=alph(ic,il)
-   20 continue
+      do il=1,jl
+        do ic=1,jca
+          a(ic,il)=alph(ic,il)
+        enddo
+      enddo
 c
 c    ***RENORMALISATION OF MATRIX
 c
       aa=0.0d0
-      do 30 il=1,jl
+      do il=1,jl
         aa=aa+dabs(a(il,il))
         x(il)=0.0d0
-   30 continue
-      do 50 il=1,jl
-        do 40 ic=1,jc
+      enddo
+      do il=1,jl
+        do ic=1,jc
           a(ic,il)=a(ic,il)/aa
           b(ic,il)=a(ic,il)
-   40   continue
+        enddo
         a(jca,il)=a(jc,il)
         b(jca,il)=a(jc,il)
-   50 continue
+      enddo
 c
 c    ***GAUSSIAN REDUCTION TO TRIANGULAR FORM
 c
-      do 110 il=1,jl
+      do il=1,jl
         do 70 kl=il,jl
           rab=a(il,kl)
           ra=dabs(rab)
           if (ra.lt.epsilon) goto 70
-          do 60 kc=1,jc
+          do kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   60     continue
+   60     enddo
    70   continue
 c
-        do 80 kl=il,jl
+        do kl=il,jl
           r(kl)=a(il,kl)
-   80   continue
+        enddo
         do 100 kl=1,jl
           if (kl.eq.il) goto 100
           ra=dabs(r(kl))
           if (ra.lt.epsilon) goto 100
-          do 90 kc=1,jc
-   90       a(kc,kl)=a(kc,kl)-a(kc,il)
+          do kc=1,jc
+            a(kc,kl)=a(kc,kl)-a(kc,il)
+          enddo
   100   continue
-  110 continue
+      enddo
 c
 c    ***BACK SUBSTITUTION
 c
-      do 140 ila=1,jl
+      do ila=1,jl
         il=(jl+1)-ila
         ics=il+1
         aaa=0.0d0
         if (ics.gt.jl) goto 130
-        do 120 ic=ics,jl
-  120     aaa=aaa+(a(ic,il)*x(ic))
+        do ic=ics,jl
+           aaa=aaa+(a(ic,il)*x(ic))
+        enddo
   130   dx=(a(jc,il)-aaa)/a(il,il)
         x(il)=x(il)+dx
-  140 continue
+      enddo
 c
       return
       end

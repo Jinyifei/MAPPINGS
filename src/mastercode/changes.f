@@ -321,14 +321,13 @@ c
           read (unit=numstring,fmt='(I3,I3)') nentries,numtype
           if (numtype.lt.0) numtype=0
           if (nentries.lt.atypes) then
-            write (*,*) '   WARNING: abundance file with fewer entries'
-            write (*,*) '   than current atom types, some elements will'
-            write (*,*) '   not be set as expected.'
-            write (*,*) '   Entries:',nentries,' Atoms:',atypes
-            write (*,*) '   If entries is unexpectedly small there may b
-     &e'
-            write (*,*) '   a file format error, leading spaces are not'
-            write (*,*) '   permitted.'
+            write (*,*) 'WARNING: abundance file with fewer entries'
+            write (*,*) 'than current atom types, some elements will'
+            write (*,*) 'not be set as expected.'
+            write (*,*) 'Entries:',nentries,' Atoms:',atypes
+            write (*,*) 'If entries is unexpectedly small there may be'
+            write (*,*) 'a file format error, leading spaces are not'
+            write (*,*) 'permitted.'
           endif
 c
           if (numtype.eq.0) then

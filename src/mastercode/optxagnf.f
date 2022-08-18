@@ -551,14 +551,14 @@ c use internally Thomson optical depth
 c
       pi=4.d0*datan(1.0d0)
 c clear arrays (important for repeated calls)
-      do 10 j=1,900
+      do j=1,900
         dphesc(j)=0.d0
         dphdot(j)=0.d0
         rel(j)=0.d0
         bet(j)=0.d0
         c2(j)=0.d0
         sptot(j)=0.d0
-   10 continue
+      enddo
 c
 c JMAX - # OF PHOTON ENERGIES
 c
@@ -571,9 +571,9 @@ c delta is the 10-log interval of the photon array.
 c
 c X - ARRAY FOR PHOTON ENERGIES
 c
-      do 20 j=1,jmax+1
+      do j=1,jmax+1
         x(j)=xmin*10.d0**(dble(j-1)*delta)
-   20 continue
+      enddo
 c
 c compute c2(x), and rel(x) arrays
 c c2(x) is the relativistic correction to Kompaneets equation
@@ -685,7 +685,7 @@ c
 c determine u
 c define coefficients going into equation
 c a(j)*u(j+1)+b(j)*u(j)+c(j)*u(j-1)=d(j)
-      do 10 j=2,jmax-1
+      do j=2,jmax-1
         w1=dsqrt(x(j)*x(j+1))
         w2=dsqrt(x(j-1)*x(j))
 c  w1 is x(j+1/2)
@@ -697,7 +697,7 @@ c  w2 is x(j-1/2)
         b(j)=t1+t2+t3
         c(j)=c20*c2(j-1)*(0.5d0-theta/deltal/w2)
         d(j)=x(j)*dphdot(j)
-   10 continue
+      enddo
 c define constants going into boundary terms
 c u(1)=aa*u(2) (zero flux at lowest energy)
 c u(jx2) given from region 2 above
@@ -710,26 +710,26 @@ c
 c invert tridiagonal matrix
       alp(2)=b(2)+c(2)*aa
       gam(2)=a(2)/alp(2)
-      do 20 j=3,jmax-1
+      do j=3,jmax-1
         alp(j)=b(j)-c(j)*gam(j-1)
         gam(j)=a(j)/alp(j)
-   20 continue
+      enddo
       g(2)=d(2)/alp(2)
-      do 30 j=3,jmax-2
+      do j=3,jmax-2
         g(j)=(d(j)-c(j)*g(j-1))/alp(j)
-   30 continue
+      enddo
       g(jmax-1)=(d(jmax-1)-a(jmax-1)*u(jmax)-c(jmax-1)*g(jmax-2))/
      &alp(jmax-1)
       u(jmax-1)=g(jmax-1)
-      do 40 j=3,jmax-1
+      do j=3,jmax-1
         jj=jmax+1-j
         u(jj)=g(jj)-gam(jj)*u(jj+1)
-   40 continue
+      enddo
       u(1)=aa*u(2)
 c compute new value of dph(x) and new value of dphesc(x)
-      do 50 j=1,jmax
+      do j=1,jmax
         dphesc(j)=x(j)*x(j)*u(j)*bet(j)*tautom
-   50 continue
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -759,14 +759,14 @@ c use internally Thomson optical depth
 c
       pi=4.d0*datan(1.d0)
 c clear arrays (important for repeated calls)
-      do 10 j=1,900
+      do j=1,900
         dphesc(j)=0.0d0
         dphdot(j)=0.0d0
         rel(j)=0.0d0
         bet(j)=0.0d0
         c2(j)=0.0d0
         sptot(j)=0.0d0
-   10 continue
+      enddo
 c
 c JMAX - # OF PHOTON ENERGIES
 c
@@ -779,15 +779,15 @@ c delta is the 10-log interval of the photon array.
 c
 c X - ARRAY FOR PHOTON ENERGIES
 c
-      do 20 j=1,jmax+1
+      do j=1,jmax+1
         x(j)=xmin*10.d0**((j-1)*delta)
-   20 continue
+      enddo
 c
 c compute c2(x), and rel(x) arrays
 c c2(x) is the relativistic correction to Kompaneets equation
 c rel(x) is the Klein-Nishina cross section
 c divided by the Thomson crossection
-      do 30 j=1,jmax
+      do j=1,jmax
         w=x(j)
 c c2 is the Cooper's coefficient calculated at w1
 c w1 is x(j+1/2) (x(i) defined up to jmax+1)
@@ -805,7 +805,7 @@ c use asymptotic limit for rel(x) for x less than 0.05
           z6=(1.d0+3.d0*w)/z2/z2
           rel(j)=(0.75d0*(z1*(z4-z3)+z5-z6))
         endif
-   30 continue
+      enddo
 c the thermal emission spectrum
       jmaxth=min(900,int(dlog10(50*tempbb/xmin)/delta))
       if (jmaxth.gt.jmax) then
@@ -839,34 +839,34 @@ c eliminate spatial diffusion
       jrel=min(jrel,jmax)
       xnr=x(jnr)
       xr=x(jrel)
-      do 40 j=1,jnr-1
+      do j=1,jnr-1
         taukn=tautom*rel(j)
         bet(j)=1.d0/tautom/(1.d0+taukn/3.d0)
-   40 continue
-      do 50 j=jnr,jrel
+      enddo
+      do j=jnr,jrel
         taukn=tautom*rel(j)
         arg=(x(j)-xnr)/(xr-xnr)
         flz=1.d0-arg
         bet(j)=1.d0/tautom/(1.d0+taukn/3.d0*flz)
-   50 continue
-      do 60 j=jrel+1,jmax
+      enddo
+      do j=jrel+1,jmax
         bet(j)=1/tautom
-   60 continue
+      enddo
 c
       call thermlc (tautom, theta, deltal, x, jmax, dphesc, dphdot, bet,
      & c2)
 c
 c     the spectrum in E F_E
-      do 70 j=1,jmax-1
+      do j=1,jmax-1
         sptot(j)=dphesc(j)*x(j)**2
 c          write(1,*) x(j), sptot(j)
-   70 continue
+      enddo
 c      print *,'jmax: ',jmax,jmaxth
 c      open(33,file='spec.dat')
 cc     the input spectrum
-c      do 498 j=1,min(jmaxth,jmax-1)
+c      do j=1,min(jmaxth,jmax-1)
 c         write(33,*) 511*x(j), dphdot(j)*x(j), dphesc(j)*x(j)
-c 498  continue
+c      enddo
 c      close(33)
       return
       end
@@ -935,17 +935,17 @@ c this model has no errors
         photer(i)=0.0d0
       enddo
       tin=dble(param(1))
-      do 20 i=1,ne
-        xn=(ear(i)-ear(i-1))/2.0d0
+      do i=1,ne
+        xn=(ear(i)-ear(i-1))*0.5d0
         photar(i)=0.0d0
         xh=xn+ear(i-1)
-        do 10 j=1,5
+        do j=1,5
           e=dble(xn)*gauss(j,2)+dble(xh)
           call mcdspc (e, tin, 1.0d0, photon)
           photar(i)=photar(i)+dble(gauss(j,1)*photon)
-   10   continue
+        enddo
         photar(i)=photar(i)*xn
-   20 continue
+      enddo
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1273,14 +1273,14 @@ c*** End of declarations inserted by SPAG
       argg=dble(a2+a3+2.d0)
       db=gamln(argg)
       yyit2=0.d0
-      do 10 i=1,10
+      do i=1,10
         v=w(i)*dexp(a2n*dlog(ro*x+z(i))+alfa*dlog(z(i))-db)
 c          write(*,*) 'alfa x z a2 ',alfa,x,z(i),a2
 c          write(*,*) alfa*((x+z(i)) - a2)
         v1=v/alfa*((x+z(i))-a2)
 c            v = w(i)*DEXP(a2*DLOG(ro*x+z(i))+a3*Dlog(z(i))-db)
         yyit2=yyit2+v1
-   10 continue
+      enddo
       yyit2=yyit2
       return
       end
@@ -1308,9 +1308,9 @@ c
       z=az
 c      write(*,*) 'gamln : az  z = ',az,z
       s=z
-      do 10 i=1,6
+      do i=1,6
         s=z+a(8-i)/s
-   10 continue
+      enddo
       s=a(1)/s
       s=s-z+(z-0.5d0)*dlog(z)+0.5d0*dlog(2.d0*pi)
       gamln=s
@@ -1359,12 +1359,12 @@ c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
       ap=a
       sum=1.d0/a
       del=sum
-      do 10 n=1,itmax
+      do n=1,itmax
         ap=ap+1.d0
         del=del*x/ap
         sum=sum+del
         if (abs(del).lt.abs(sum)*eps) goto 20
-   10 continue
+      enddo
       write (*,*) 'Warning: Inc. Gamma Fn. GSERR did not converge for A
      &= ',a
    20 gamser=sum*dexp(-x+a*log(x)-gln)
@@ -1393,7 +1393,7 @@ c      write(*,*) 'gcff: a  x  logx',a,x,log(x)
       b1=1.d0
       fac=1.d0
       g=0.0d0
-      do 10 n=1,itmax
+      do n=1,itmax
         an=dble(n)
         ana=an-a
         a0=(a1+a0*ana)*fac
@@ -1408,7 +1408,7 @@ c            write(*,*) 'gcff: a1 = ',a1
           if (dabs((g-gold)/g).lt.eps) goto 20
           gold=g
         endif
-   10 continue
+      enddo
       write (*,*) 'Warning: Inc. Gamma Fn. GCFF did not converge for A =
      & ',a
    20 gammcf=dexp(-x+a*dlog(x)-gln)*g

@@ -85,10 +85,9 @@ c
       real*8 dh
 c
       densnum=0.0d0
-c
-      do 10 i=1,atypes
+      do i=1,atypes
         densnum=densnum+zion(i)
-   10 continue
+      enddo
 c
       densnum=dh*densnum
 c
@@ -116,7 +115,6 @@ c
       enddo
 c
       denstot=dh*d
-c
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1271,14 +1269,12 @@ c
         enddo
       enddo
 c
-      do 20 i=1,atypes
-c
-        do 10 j=1,maxion(i)-1
+      do i=1,atypes
+        do j=1,maxion(i)-1
           wei=pop(j,i)*zion(i)
           rcol=rcol+(wei*(col(j,i)*de+epsilon))
-   10   continue
-c
-   20 continue
+        enddo
+      enddo
 c
       fcietim=totn/(rcol+epsilon)
 c
@@ -1473,12 +1469,12 @@ c
       mm=min0(2,max0(1,neio))
       ane=0.0d0
       ael=0.0d0
-      do 20 i=1,atypes
-        do 10 j=mm,maxion(i)
+      do i=1,atypes
+        do j=mm,maxion(i)
           ane=ane+(zion(i)*popul(j,i))
           ael=ael+((zion(i)*popul(j,i))*(j-1.0d0))
-   10   continue
-   20 continue
+        enddo
+      enddo
       if (mm.eq.1) then
         felneur=ael/ane
       elseif ((ael+ane).gt.0.0d0) then
@@ -1834,25 +1830,28 @@ c     Complete ln(Gamma) version 1
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       implicit none
-      real*8 z , a(7) , s , pi
+      real*8 z , a(7) , s, pi
+      real*8 a_1, a_2, a_3, a_4, a_5, a_6, a_7
       real*8 az
       integer i
-      pi=4.d0*datan(1.d0)
-      a(1)=1.d0/12.d0
-      a(2)=1.d0/30.d0
-      a(3)=53.d0/210.d0
-      a(4)=195.d0/371.d0
-      a(5)=22999.d0/22737.d0
-      a(6)=29944523.d0/19733142.d0
-      a(7)=109535241009.d0/48264275462.d0
-      z=0.d0
+      parameter(pi=4.d0*datan(1.d0))
+      parameter(a_1=1.d0/12.d0)
+      parameter(a_2=1.d0/30.d0)
+      parameter(a_3=53.d0/210.d0)
+      parameter(a_4=195.d0/371.d0)
+      parameter(a_5=22999.d0/22737.d0)
+      parameter(a_6=29944523.d0/19733142.d0)
+      parameter(a_7=109535241009.d0/48264275462.d0)
+      z=0.0d0
       z=az
-c      write(*,*) 'gamln : az  z = ',az,z
       s=z
-      do 10 i=1,6
-        s=z+a(8-i)/s
-   10 continue
-      s=a(1)/s
+      s=z+a_7/s
+      s=z+a_6/s
+      s=z+a_5/s
+      s=z+a_4/s
+      s=z+a_3/s
+      s=z+a_2/s
+      s=a_1/s
       s=s-z+(z-0.5d0)*dlog(z)+0.5d0*dlog(2.d0*pi)
       fgamln=s
       return
@@ -1870,7 +1869,6 @@ c
       real*8 fgamln
       integer itmax , n
       parameter (itmax=10000,eps=3.d-12)
-c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
       gln=fgamln(a)
       if (x.le.0.0d0) then
         fgserr=0.d0
@@ -1879,12 +1877,12 @@ c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
       ap=a
       sum=1.d0/a
       del=sum
-      do 10 n=1,itmax
+      do n=1,itmax
         ap=ap+1.d0
         del=del*x/ap
         sum=sum+del
         if (abs(del).lt.abs(sum)*eps) goto 20
-   10 continue
+      enddo
       write (*,*) 'Warning: Inc. Gamma Fn. fgserr did not converge for A
      & = ',a
    20 fgserr=sum*dexp(-x+a*log(x)-gln)
@@ -1899,12 +1897,12 @@ c CONTINUED FRACTION METHOD FOR INCOMPLETE GAMMA FUNCTION
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       implicit none
-      real*8 a0 , b0 , a1 , b1 , gln , eps , a , x , anf , g ,
-     &     gold , fac , ana , an
+      real*8 a0 , b0 , a1 , b1 , gln
+      real*8 eps , a , x , anf , g
+      real*8 gold , fac , ana , an
       integer itmax , n
       real*8 fgamln
       parameter (itmax=10000,eps=3.d-12)
-c      write(*,*) 'gcff: a  x  logx',a,x,log(x)
       gln=fgamln(a)
       gold=0.0d0
       a0=1.d0
@@ -1913,7 +1911,7 @@ c      write(*,*) 'gcff: a  x  logx',a,x,log(x)
       b1=1.d0
       fac=1.d0
       g=0.0d0
-      do 10 n=1,itmax
+      do n=1,itmax
         an=dble(n)
         ana=an-a
         a0=(a1+a0*ana)*fac
@@ -1922,16 +1920,15 @@ c      write(*,*) 'gcff: a  x  logx',a,x,log(x)
         a1=x*a0+anf*a1
         b1=x*b0+anf*b1
         if (a1.ne.0.0d0) then
-c            write(*,*) 'gcff: a1 = ',a1
           fac=1.d0/a1
           g=b1*fac
-          if (dabs((g-gold)/g).lt.eps) goto 20
+          if (dabs((g-gold)/g).lt.eps) goto 10
           gold=g
         endif
-   10 continue
+      enddo
       write (*,*) 'Warning: Inc. Gamma Fn. GCFF did not converge for A =
      & ',a
-   20 fgcff=dexp(-x+a*dlog(x)-gln)*g
+   10 fgcff=dexp(-x+a*dlog(x)-gln)*g
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1957,10 +1954,10 @@ c
       tmp=x+5.5d0
       tmp=(x+0.5d0)*log(tmp)-tmp
       ser=1.000000000190015d0
-      do 10 j=1,6
+      do j=1,6
         y=y+1.d0
         ser=ser+cof(j)/y
-   10 continue
+      enddo
       fgammln=tmp+dlog(stp*ser/x)
       return
       end
@@ -2077,12 +2074,12 @@ c
       weito=0.0d0
 c
       fioncha=0.0d0
-      do 20 i=1,atypes
-        do 10 j=2,maxion(i)
+      do i=1,atypes
+        do j=2,maxion(i)
           weito=weito+(zion(i)*popul(j,i))
           fioncha=fioncha+((zion(i)*popul(j,i))*dble((j-1)**iek))
-   10   continue
-   20 continue
+        enddo
+      enddo
       if (weito.gt.0.0d0) then
         fioncha=(fioncha/weito)**(1.d0/dble(iek))
       else
@@ -2592,10 +2589,10 @@ c
       rain=0.0d0
       weito=0.0d0
 c
-      do 20 i=1,atypes
+      do i=1,atypes
         mif=0
         mij=2
-        do 10 j=mij,maxion(i)
+        do j=mij,maxion(i)
           recab(j)=0.0d0
           ar=arad(j,i)
           if (ar.gt.0.0d0) then
@@ -2616,7 +2613,7 @@ c
           else
             mij=j+1
           endif
-   10   continue
+        enddo
 c
         if (mif.ge.mij) then
           wei=1.0d0
@@ -2627,7 +2624,7 @@ c
             enddo
           enddo
         endif
-   20 continue
+      enddo
 c
       frectim=rain/(((de*dh)*weito)+(1.d-36*rain))
 c

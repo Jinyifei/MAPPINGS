@@ -1,5 +1,5 @@
 #!/bin/tcsh
-# v5.1.21
+# v5.1.21b
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 set d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`

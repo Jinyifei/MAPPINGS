@@ -156,7 +156,8 @@ c
 c
         call copypop (popi, popf)
 c
-        do 60 l=1,10
+        do l=1,10
+c
           u=frta
           wei=fr(u,ct)
           call averinto (wei, popf, popi, pop)
@@ -178,11 +179,11 @@ c
           call copypop (pop, popf)
 c
           qused=0.d0
-          do 40 i=1,atypes
-            do 30 j=1,maxion(i)
+          do i=1,atypes
+            do j=1,maxion(i)
               qused=qused+((zion(i)*0.5d0)*dabs(popf(j,i)-popi(j,i)))
-   30       continue
-   40     continue
+            enddo
+          enddo
 c
           qused=(((dh*fi)*drta)*qused)*fr(u,ct)
           qavail=qtot*tstep
@@ -205,21 +206,22 @@ c
      &     goto 70
           if ((l.gt.1).and.(dqva.lt.(dqmi/2.0))) goto 70
           if ((l.gt.3).and.(dt.lt.(2.0*tmi))) goto 70
-   60   continue
+        enddo
+c
    70 continue
 c
       if (dabs(dq).gt.(4.0*dqmi)) then
         if (luop.gt.0) write (luop,80)
         if (lterm.gt.0) write (lterm,80)
-   80 format(/'$$$$$$$$$$$$$$$$ CONVERGENCE WAS NOT REACHED ' ,
-     &'DURING DETERMINATION OF PREIONISATION' /)
+   80 format(/'$$$$$$$$$$$$$$$$ Convergence Was Not Reached ' ,
+     &'During Determination Of Preionisation' /)
       endif
 c
    90 if (tstep.lt.tsm) goto 110
       if (luop.gt.0) write (luop,100) tsm
       if (lterm.gt.0) write (lterm,100) tsm
 c
-  100 format(/' [[[[[[[[[[[[[[[ TIME STEP LIMITED BY MAXIMUM ' ,
+  100 format(/' [[[[[[[[[[[[[[[ Time Step Limited By Maximum ' ,
      &'VALUE :',1pg10.3)
   110 continue
       jspot=jsp

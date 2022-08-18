@@ -52,15 +52,16 @@ c
       trea=1.d-5
       nff='ALL'
       zm=0.0d0
-      do 10 idx=3,atypes
-   10   zm=zm+zion(idx)
+      do idx=3,atypes
+        zm=zm+zion(idx)
+      enddo
 c
 c
 c    ***ITERATES TO FIND IONIC POPULATIONS AT EQUILIBRIUM
 c
-      do 40 m=1,7
+      do m=1,7
         call copypop (pop, popzero)
-        do 20 n=1,nf
+        do n=1,nf
 c
           call iohyd (dh, xhy, t, tstep, de, xhyf, mod)
 c
@@ -84,7 +85,7 @@ c
           if ((dift.lt.difm1).and.(nel.eq.'HE')) goto 30
           if ((dift.lt.difm2).and.(nel.eq.'ALL')) goto 30
 c
-   20   continue
+        enddo
 c
    30   if (((nel.eq.'ALL').and.(dif1.lt.difma)).and.(dift.lt.difm2))
      &   goto 50
@@ -96,16 +97,11 @@ c
         call difpop (pop, popzero, trea, atypes, dift)
         if ((dif1.le.difma).and.(dift.le.difm2)) goto 50
 c
-   40 continue
+      enddo
 c
       if ((dif1.le.difma).and.(dift.le.difm2)) goto 50
       dfh=dif1/difma
       dft=dift/difm2
-c      if (dmax1(dfh,dft).gt.5.d0) then
-c      write (*,50) dfh,dft
-c   50 format(' Slow convergence for equil. ionisation:','DFH:'
-c     &     ,1pg9.2,'   DFT:',1pg9.2)
-c      endif
 c
    50 continue
       return

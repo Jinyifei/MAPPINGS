@@ -99,7 +99,7 @@ c /rv2 scale to normalise numbers in cubic root finder better
         a(1)=(0.5d0-g)
 c
         x1=0.5d0
-        x2=gammaeosx
+        x2=gammaEOSx
 c
 c find the two positive roots near x1 and x2  for the cubic in a
 c
@@ -153,7 +153,7 @@ c
       real*8 frho
 c
       cmp=1.d0
-      gam=gammaeos
+      gam=gammaEOS
 c
 c     set globals
 c
@@ -615,27 +615,32 @@ c      write(*,*) 'ROOTS: init guess:',root
 c
       u(1)=1.d0
       u(2)=1.d0/root
-      do 10 j=3,ncoef
-   10   u(j)=0.d0
+      do j=3,ncoef
+        u(j)=0.d0
+      enddo
       iter=0
-   20 unew=0.d0
+   10 unew=0.d0
       iter=iter+1
       mcoef=ncoef-1
-      do 30 j=1,mcoef
-   30   unew=unew-(a(j+1)*u(j))
+      do j=1,mcoef
+        unew=unew-(a(j+1)*u(j))
+      enddo
       anew=dabs(unew)
-      if (anew.lt.1.0d20) goto 50
+      if (anew.lt.1.0d20) goto 20
 c
 c    ***RENORMALISATION OF COEFF. IF TOO LARGE
 c
-      do 40 j=1,ncoef
-   40   u(j)=u(j)/unew
+      do j=1,ncoef
+        u(j)=u(j)/unew
+      enddo
       unew=1.d0
-   50 continue
 c
-      do 60 j=2,ncoef
+   20 continue
+c
+      do j=2,ncoef
         m=(ncoef-j)+1
-   60   u(m+1)=u(m)
+        u(m+1)=u(m)
+      enddo
 c
 c    ***EXTRACTION OF ROOT ; TEST FOR CONVERGENCE
 c
@@ -644,7 +649,7 @@ c
       root=u(1)/u(2)
       fract=dabs((root-roota)/root)
       if (iter.gt.150) return
-      if (fract.gt.1.0d-7) goto 20
+      if (fract.gt.1.0d-7) goto 10
 c
       return
       end
@@ -676,12 +681,12 @@ c
       en0=zen*dh0+de0
       pr0=en0*rkb*te0
       humag=(hmag*hmag)*iepi
-      u0=gammaeosu*en0*rkb*te0
+      u0=gammaEOSU*en0*rkb*te0
       lambda=tl*tstep
       u1=dmax1(epsilon,(u0-lambda))
       cmpf=u1/u0
       te1=te0*cmpf
-c     constantmachnumber
+c     constant Mach number
       vel1=vel0*cmpf
       rho1=rho0
       dh1=dh0
@@ -722,7 +727,7 @@ c
       en0=zen*dh0+de0
       pr0=en0*rkb*te0
       humag=(hmag*hmag)*iepi
-      u0=gammaeosu*en0*rkb*te0
+      u0=gammaEOSU*en0*rkb*te0
       lambda=tl*tstep
       u1=dmax1(epsilon,(u0-lambda))
       cmpf=u1/u0

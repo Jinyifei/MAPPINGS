@@ -119,10 +119,10 @@ c
 c
 c       write(*,*) 'Totphot:',t, dh, rad, dr, dv, wd, lmod
 c
-      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP').and.(lmod(1:3)
-     &.ne.'ALL').and.(lmod(1:2).ne.'SO').and.(lmod(1:4).ne.'LOCL')
-     &.and.(lmod(1:3).ne.'NEB').and.(lmod(1:4).ne.'CONT').and.(lmod(1:3)
-     &.ne.'CAB')) then
+      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP')
+     &.and.(lmod(1:3).ne.'ALL').and.(lmod(1:2).ne.'SO')
+     &.and.(lmod(1:4).ne.'LOCL').and.(lmod(1:3).ne.'NEB')
+     &.and.(lmod(1:4).ne.'CONT').and.(lmod(1:3).ne.'CAB')) then
         write (*,10) lmod(1:4)
    10     format(//,
      & 'MODE IMPROPERLY DEFINED IN TOTPHOT :',a4)
@@ -167,8 +167,8 @@ c
               if ((z*p.ge.pzlimit)) then
                 f=xr3lines_gf(line)
                 es=xr3lines_egij(line)
-                xr3lines_emilin(2,line)=fdismul(t,dh,drh,dvh,atom,ion,
-     &           es,f)
+            xr3lines_emilin(2,line) =
+     &       fdismul(t,dh,drh,dvh,atom,ion,es,f)
               endif
             endif
           endif
@@ -188,8 +188,8 @@ c
               if ((z*p.ge.pzlimit)) then
                 f=xrllines_gf(line)
                 es=xrllines_egij(line)
-                xrllines_emilin(2,line)=fdismul(t,dh,drh,dvh,atom,ion,
-     &           es,f)
+            xrllines_emilin(2,line) =
+     &       fdismul(t,dh,drh,dvh,atom,ion,es,f)
               endif
             endif
           endif
@@ -1041,10 +1041,10 @@ c
 c
 c       write(*,*) 'Totphot:',t, dh, rad, dr, dv, wd, lmod
 c
-      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP').and.(lmod(1:3)
-     &.ne.'ALL').and.(lmod(1:2).ne.'SO').and.(lmod(1:4).ne.'LOCL')
-     &.and.(lmod(1:3).ne.'NEB').and.(lmod(1:4).ne.'CONT').and.(lmod(1:3)
-     &.ne.'CAB')) then
+      if ((lmod(1:2).ne.'DW').and.(lmod(1:2).ne.'UP')
+     &.and.(lmod(1:3).ne.'ALL').and.(lmod(1:2).ne.'SO')
+     &.and.(lmod(1:4).ne.'LOCL').and.(lmod(1:3).ne.'NEB')
+     &.and.(lmod(1:4).ne.'CONT').and.(lmod(1:3).ne.'CAB')) then
         write (*,10) lmod(1:4)
    10     format(//,
      & 'MODE IMPROPERLY DEFINED IN TOTPHOT :',a4)

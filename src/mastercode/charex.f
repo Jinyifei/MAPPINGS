@@ -68,18 +68,19 @@ c
 c     original calcs
 c
         do 30 j=1,nchxold
-          do 10 jn=1,5
-   10       charte(jn,j)=0.0d0
+          do jn=1,5
+            charte(jn,j)=0.0d0
+          enddo
 c
           if (charco(1,j).le.0.0d0) goto 30
           charte(5,j)=charco(7,j)
-          do 20 i=1,2
+          do i=1,2
             charte(i,j)=charco(i,j)
             sigma=charco(2+i,j)
             alph=charco(4+i,j)
             if (alph.lt.20.0d0) charte(2+i,j)=fonct1(tl,alph)
             if (alph.ge.20.0d0) charte(2+i,j)=fonct2(tt,alph)
-   20     continue
+          enddo
    30   continue
 c
 c     end old mappings exchange reactions

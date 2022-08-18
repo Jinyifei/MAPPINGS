@@ -75,7 +75,7 @@ c
       if (((ifi-ini).ge.4).and.((bufpho(inl-1)+bufpho(inl+1)).lt.(he/
      &7.0d0))) goto 50
 c
-      do 10 n=ini,ifi
+      do n=ini,ifi
         n1=(inl+n)-3
         hemi=bufpho(n1)
         if ((hemi.gt.(he/200.0d0)).and.(hemi.lt.(he*200.0d0))) then
@@ -85,13 +85,13 @@ c
           if (n.lt.3) modg=3
           if (n.gt.3) modd=2
         endif
-   10 continue
+      enddo
 c
       if (modg.gt.modd) goto 50
-      do 20 n=modg,modd
+      do n=modg,modd
         al(n)=(yy(n+1)-yy(n))/(xx(n+1)-xx(n))
         cc(n)=((yy(n)*xx(n+1))-(yy(n+1)*xx(n)))/(xx(n+1)-xx(n))
-   20 continue
+      enddo
 c
       if ((modg.eq.3).or.(modd.eq.2)) goto 30
       yc=cc(5)

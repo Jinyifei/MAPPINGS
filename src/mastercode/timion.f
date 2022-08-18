@@ -89,13 +89,13 @@ c
       call copypop (popp0, pop)
 c
       dt=tstep/(dble(num))
-      do 10 i=1,num
+      do i=1,num
         fhii0=pop(2,1)
         call iohyd (dh, xhy, t, dt, de, fhii, mod)
         fhiiav=(0.3d0*fhii0)+(0.7d0*fhii)
-c     WRITE (6,*) DT,POP(1,1),POP(2,1),POPP0(1,1),POPP0(2,1)
         call iobal (mod, nel, de, dh, fhiiav, t, dt)
-   10 continue
+      enddo
+c
    20 continue
 c
       fhiif=fhii

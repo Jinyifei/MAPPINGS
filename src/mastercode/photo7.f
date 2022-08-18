@@ -84,12 +84,12 @@ c
    20    format(a)
         carac(1:33)='   '
         j=1
-        do 30 i=3,atypes
+        do i=3,atypes
           j=1+index(carac(1:33),'   ')
           caract='   '
           if (ipote(1,i).lt.epotmi) write (caract,20) elem(i)
           carac(j:j+2)=caract//'   '
-   30   continue
+   30   enddo
         i=j+2
    40   write (*,50) carac(1:i)
         ilgg='    '

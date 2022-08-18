@@ -42,9 +42,11 @@ c
       include 'cblocks.inc'
       real*8 popin(mxion, mxelem), popout(mxion, mxelem)
       integer*4 at, ion
-      do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(ion,at)=popin(ion,at)
+      do at=1,atypes
+        do ion=1,mxion
+          popout(ion,at)=popin(ion,at)
+        enddo
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -56,9 +58,11 @@ c
       include 'cblocks.inc'
       real*8 popin(mxion, mxelem), popout(mxion, mxelem)
       integer*4 at, ion
-      do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(ion,at)=popin(ion,at)+popout(ion,at)
+      do at=1,atypes
+        do ion=1,mxion
+          popout(ion,at)=popin(ion,at)+popout(ion,at)
+        enddo
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -70,9 +74,11 @@ c
       include 'cblocks.inc'
       real*8 popin(mxion, mxelem)
       integer*4 at, ion
-      do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popin(ion,at)=0.0d0
+      do at=1,atypes
+        do ion=1,mxion
+          popin(ion,at)=0.0d0
+        enddo
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -84,9 +90,11 @@ c
       include 'cblocks.inc'
       real*8 popin(mxion, mxelem),x
       integer*4 at, ion
-      do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popin(ion,at)=popin(ion,at)*x
+      do at=1,atypes
+        do ion=1,mxion
+           popin(ion,at)=popin(ion,at)*x
+        enddo
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -102,9 +110,11 @@ c
       include 'cblocks.inc'
       real*8 popin(mxifsteps, mxion, mxelem), popout(mxion, mxelem)
       integer*4 step,at, ion
-      do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(ion,at)=popin(step,ion,at)
+      do at=1,atypes
+        do ion=1,mxion
+          popout(ion,at)=popin(step,ion,at)
+        enddo
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -116,9 +126,11 @@ c
       include 'cblocks.inc'
       real*8 popin(mxion, mxelem), popout(mxifsteps, mxion, mxelem)
       integer*4 step,at, ion
-      do 10 at=1,atypes
-        do 10 ion=1,mxion
-   10   popout(step,ion,at)=popin(ion,at)
+      do at=1,atypes
+        do ion=1,mxion
+           popout(step,ion,at)=popin(ion,at)
+        enddo
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -142,10 +154,11 @@ c
       weiw=dmax1(0.0d0,dmin1(1.0d0,wei))
       weico=dmax1(0.d0,1.d0-weiw)
 c
-      do 10 i=1,atypes
-        do 10 j=1,maxion(i)
-        popout(j,i)=(weiw*popw(j,i))+(weico*popco(j,i))
-   10 continue
+      do i=1,atypes
+        do j=1,maxion(i)
+          popout(j,i)=(weiw*popw(j,i))+(weico*popco(j,i))
+        enddo
+      enddo
 c
       return
       end

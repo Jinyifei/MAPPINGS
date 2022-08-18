@@ -123,10 +123,10 @@ c
 c     Arnaud and Rothenflug rates (previous default)
 c
         ktev=telec*rkb/ev
-        do 30 atom=1,atypes
-          do 20 ion=1,maxion(atom)-1
+        do atom=1,atypes
+          do ion=1,maxion(atom)-1
             sig=0.d0
-            do 10 shell=1,nshells(ion,atom)
+            do shell=1,nshells(ion,atom)
               a=aar(shell,ion,atom)
               b=bar(shell,ion,atom)
               c=car(shell,ion,atom)
@@ -142,13 +142,13 @@ c
                 f0=a*(1.d0-x*f1)+b*(1.d0+x-x*(2.d0+x)*f1)+c*f1+d*x*f2
                 sig=sig+(dexp(-x)/x)*f0*rateenhance
               endif
-   10       continue
+            enddo
             cdi=((6.69d-7)/(ktev**1.5d0))*sig
             cai=fautoi(telec,atom,ion)
             col(ion,atom)=dmax1(cdi+cai,0.d0)
-   20     continue
+          enddo
           col(maxion(atom),atom)=0.0d0
-   30   continue
+        enddo
 c
       endif
 c
@@ -161,8 +161,8 @@ c
         t=telec+1.d-1
         f=dsqrt(t)
         ktev=t*rkb/ev
-        do 50 atom=1,atypes
-          do 40 ion=1,maxion(atom)-1
+        do atom=1,atypes
+          do ion=1,maxion(atom)-1
             is=mapz(atom)-ion+1
             cdi=0.d0
             if (is.gt.1) then
@@ -188,8 +188,8 @@ c
               endif
             endif
             col(ion,atom)=cdi
-   40     continue
-   50   continue
+          enddo
+        enddo
 c
       endif
 c

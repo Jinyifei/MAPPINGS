@@ -391,7 +391,7 @@ c
       real*8 den,dif,dift,ho,hp,w,c(nmax),d(nmax)
       ns=1
       dif=abs(x-xa(1))
-      do 10 i=1,n
+      do i=1,n
         dift=abs(x-xa(i))
         if (dift.lt.dif) then
           ns=i
@@ -399,11 +399,11 @@ c
         endif
         c(i)=ya(i)
         d(i)=ya(i)
-   10 continue
+      enddo
       y=ya(ns)
       ns=ns-1
-      do 30 m=1,n-1
-        do 20 i=1,n-m
+      do m=1,n-1
+        do i=1,n-m
           ho=xa(i)-x
           hp=xa(i+m)-x
           w=c(i+1)-d(i)
@@ -415,7 +415,7 @@ c
           den=w/den
           d(i)=hp*den
           c(i)=ho*den
-   20   continue
+        enddo
         if (2*ns.lt.n-m) then
           dy=c(ns+1)
         else
@@ -423,7 +423,7 @@ c
           ns=ns-1
         endif
         y=y+dy
-   30 continue
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

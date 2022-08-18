@@ -238,8 +238,11 @@ c
       read (*,10) mtype
       call toup (mtype(1:1), mtype)
 c
-      if ((mtype.ne.'A').and.(mtype.ne.'B').and.(mtype.ne.'C')
-     &.and.(mtype.ne.'M').and.(mtype.ne.'R')) goto 70
+      if ((mtype.ne.'A').and.
+     &    (mtype.ne.'B').and.
+     &    (mtype.ne.'C').and.
+     &    (mtype.ne.'M').and.
+     &    (mtype.ne.'R')) goto 70
 c
       if (mtype.eq.'B') then
 c       Preshock magnetic field at shockfront in uG
@@ -553,10 +556,10 @@ c
       pgas=pr0
       pram=rho0*vel0*vel0
 c
-      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
       alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
       malpha=pmag/pgas
-      gaseta=gammaeos*pgas/pram
+      gaseta=gammaEOS*pgas/pram
       mageta=2.d0*pmag/pram
 c
       call shocksummary (6)
@@ -665,9 +668,14 @@ c
       read (*,10) jend
       call toup (jend(1:1), jend)
 c
-      if ((jend.ne.'A').and.(jend.ne.'B').and.(jend.ne.'C')
-     &.and.(jend.ne.'D').and.(jend.ne.'E').and.(jend.ne.'F')
-     &.and.(jend.ne.'G').and.(jend.ne.'S')) goto 230
+      if ((jend.ne.'A')
+     &.and.(jend.ne.'B')
+     &.and.(jend.ne.'C')
+     &.and.(jend.ne.'D')
+     &.and.(jend.ne.'E')
+     &.and.(jend.ne.'F')
+     &.and.(jend.ne.'G')
+     &.and.(jend.ne.'S')) goto 230
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -861,10 +869,17 @@ c
 c
       if (ilgg.eq.'Q') ilgg='X'
 c
-      if ((ilgg.ne.'A').and.(ilgg.ne.'B').and.(ilgg.ne.'C')
-     &.and.(ilgg.ne.'D').and.(ilgg.ne.'E').and.(ilgg.ne.'F')
-     &.and.(ilgg.ne.'H').and.(ilgg.ne.'K').and.(ilgg.ne.'L')
-     &.and.(ilgg.ne.'R').and.(ilgg.ne.'X')) goto 350
+      if ((ilgg.ne.'A')
+     &.and.(ilgg.ne.'B')
+     &.and.(ilgg.ne.'C')
+     &.and.(ilgg.ne.'D')
+     &.and.(ilgg.ne.'E')
+     &.and.(ilgg.ne.'F')
+     &.and.(ilgg.ne.'H')
+     &.and.(ilgg.ne.'K')
+     &.and.(ilgg.ne.'L')
+     &.and.(ilgg.ne.'R')
+     &.and.(ilgg.ne.'X')) goto 350
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1517,10 +1532,10 @@ c
       pmag=bp0
       pram=rh_pre*vs_pre*vs_pre
 c
-      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
       alfvennumber=vel0/dsqrt(2.d0*pmag/rho0)
       malpha=pmag/pgas
-      gaseta=gammaeos*pgas/pram
+      gaseta=gammaEOS*pgas/pram
       mageta=2.d0*pmag/pram
 c
    10   format(/
@@ -1562,7 +1577,7 @@ c
       en=zen*dh0
       pr0=fpresse(te0,de0,dh0)
       rho0=frho(de0,dh0)
-      cspd=dsqrt(gammaeos*pr0/rho0)
+      cspd=dsqrt(gammaEOS*pr0/rho0)
       wmol=rho0/(en+de0)
       mu=fmua(de0,dh0)
 c
@@ -1570,10 +1585,10 @@ c
       pmag=(bm0*bm0)/epi
       pram=rho0*vel0*vel0
 c
-      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
       alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
       malpha=pmag/pgas
-      gaseta=gammaeos*pgas/pram
+      gaseta=gammaEOS*pgas/pram
       mageta=2.d0*pmag/pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,
@@ -1775,9 +1790,9 @@ c
       pgas=pr0
       pram=rho0*vel0*vel0
 c
-      machnumber=vel0/dsqrt(gammaeos*pr0/rho0)
+      machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
       malpha=pmag/pgas
-      gaseta=gammaeos*pgas/pram
+      gaseta=gammaEOS*pgas/pram
       mageta=2.d0*pmag/pram
 c
       return
@@ -2214,25 +2229,34 @@ c
    70 format(i5.3,14(a1,1pg13.6))
 c
       if (vmod.ne.'NONE') then
-        write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',tab,'Time (s)
-     &',tab,'dt (s)',tab,'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',tab,'X
-     &HI',tab,'XHII',tab,'<abs>',tab,'XOI',tab,'XOII',tab,'XOIII'
-        do i=nfs,1,-1
-          call copysteppop (i, popintfr, p1)
-          write (*,70) i,tab,x(i),tab,predr(i),tab,x(i)/vshoc,tab,
-     &     predr(i)/vshoc,tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
-     &     tab,fh(i),tab,fra(i),tab,foi(i),tab,foii(i),tab,foiii(i)
-        enddo
+        write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',
+     &   tab,'Time (s)',tab,'dt (s)',
+     &   tab, 'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',
+     &   tab,'XHI',tab,'XHII',tab,'<abs>',
+     &   tab,'XOI',tab,'XOII',tab,'XOIII'
+      do i=nfs,1,-1
+        call copysteppop (i, popintfr, p1)
+        write (*,70) i,tab,x(i),tab,dr,
+     &    tab,x(i)/vshoc,tab,dr/vshoc,
+     &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
+     &    tab,fh(i),tab,fra(i),
+     &    tab,foi(i),tab,foii(i),tab,foiii(i)
+      enddo
       endif
+c
       if (vmod.eq.'NONE') then
-        write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',tab,'Time (s)
-     &',tab,'dt (s)',tab,'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',tab,'X
-     &HI',tab,'XHII',tab,'<abs>',tab,'XOI',tab,'XOII',tab,'XOIII'
+        write (*,60) ' Step',tab,'Dist.(cm)',tab,'dx (cm)',
+     &   tab,'Time (s)',tab,'dt (s)',
+     &   tab, 'Te (K)',tab,'ne(cm^-3)',tab,'nH(cm^-2)',
+     &   tab,'XHI',tab,'XHII',tab,'<abs>',
+     &   tab,'XOI',tab,'XOII',tab,'XOIII'
         i=1
         call copysteppop (i, popintfr, p1)
-        write (*,70) i,tab,x(i),tab,predr(i),tab,x(i)/vshoc,tab,predr(i)
-     &   /vshoc,tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),tab,fh(i),
-     &   tab,fra(i),tab,foi(i),tab,foii(i),tab,foiii(i)
+        write (*,70) i,tab,x(i),tab,dr,
+     &    tab,x(i)/vshoc,tab,dr/vshoc,
+     &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
+     &    tab,fh(i),tab,fra(i),
+     &    tab,foi(i),tab,foii(i),tab,foiii(i)
       endif
 c
 c get post precursor outward field
@@ -2650,7 +2674,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       call copypop (pop_neu, pop)
       en=zen*dh_neu
-      cspd=dsqrt(gammaeos*pr_neu/rh_neu)
+      cspd=dsqrt(gammaEOS*pr_neu/rh_neu)
       wmol=rh_neu/(en+de_neu)
       mu=fmua(de_neu,dh_neu)
       t=te_neu
@@ -2661,7 +2685,7 @@ c
 c
       netloss=flocallosses(t,de,dh,pop_neu,1.d38,0.d0,0.d0,wdil)
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=tloss/((en+de)*(en+de))
 c
       if (finalit.gt.0) then
@@ -2682,7 +2706,7 @@ c
       call copypop (pop_pre, pop)
       call copypop (pop_pre, pop0)
       en=zen*dh_pre
-      cspd=dsqrt(gammaeos*pr_pre/rh_pre)
+      cspd=dsqrt(gammaEOS*pr_pre/rh_pre)
       wmol=rh_pre/(en+de_pre)
       mu=fmua(de_pre,dh_pre)
       t=te_pre
@@ -2693,7 +2717,7 @@ c
 c
       netloss=flocallosses(t,de,dh,pop_pre,1.d38,0.d0,0.d0,wdil)
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
       rhotot=frho(de,dh)
@@ -2714,7 +2738,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       step=0
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c for later step^2 5x5=25, 25*0.04=1.0
       tscale=0.04d0
@@ -2748,7 +2772,7 @@ c
       dv=vel1-vel0
 c
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
       tscale=0.04d0
@@ -2794,7 +2818,7 @@ c
 c
       netloss=flocallosses(t,de,dh,pop_pre,1.d38,0.d0,0.d0,wdil)
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
       if (finalit.gt.0) then
@@ -3028,10 +3052,10 @@ c
 c
       en=zen*dh
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       tnloss=netloss/((en+de)*(en+de))
 c
-      cspd=dsqrt(gammaeos*(pr1+pr0)/(rho1+rho0))
+      cspd=dsqrt(gammaEOS*(pr1+pr0)/(rho1+rho0))
       wmol=(rho1+rho0)/(2.d0*(en+de))
       mu=fmua(de,dh)
 c
@@ -3558,7 +3582,7 @@ c
       de=feldens(dh,p)
       en=zen*dh+de
       pr=en*rkb*t
-      ue=gammaeosu*pr
+      ue=gammaEOSU*pr
 c
 c initial cooling rate for initial timestep guess
 c
@@ -3624,7 +3648,7 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
 c
       en=zen*dh_neu
-      cspd=dsqrt(gammaeos*pr_neu/rh_neu)
+      cspd=dsqrt(gammaEOS*pr_neu/rh_neu)
       wmol=rh_neu/(en+de_neu)
       mu=fmua(de_neu,dh_neu)
 c
@@ -3632,10 +3656,10 @@ c
       pgas=pr_neu
       pmag=(bm_neu*bm_neu)/epi
 c
-      machnumber=vel0/dsqrt(gammaeos*pr_neu/rh_neu)
+      machnumber=vel0/dsqrt(gammaEOS*pr_neu/rh_neu)
       alfvennumber=vel0/dsqrt(2.0d0*pmag/rh_neu)
       malpha=pmag/pgas
-      gaseta=gammaeos*pgas/pram
+      gaseta=gammaEOS*pgas/pram
       mageta=2.d0*pmag/pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,

@@ -53,11 +53,11 @@ c
       emin=iph
 c
       zshull=1.1d0
-      do 20 i=1,atypes
-        do 10 j=1,3
+      do i=1,atypes
+        do j=1,3
           rasec(j,i)=0.0d0
-   10   continue
-   20 continue
+        enddo
+      enddo
 c
       if ((anr(1,1,1).le.0.0d0).and.(wnr(1,1,1).le.0.0d0)) goto 70
       wth=0.0d0
@@ -65,15 +65,15 @@ c
       ath=0.0d0
       atx=0.0d0
 c
-      do 40 i=1,atypes
-        do 30 j=1,maxion(i)-1
+      do i=1,atypes
+        do j=1,maxion(i)-1
           abr=zion(i)*pop(j,i)
           ath=ath+(abr*anr(1,j,i))
           atx=atx+(abr*anr(2,j,i))
           wth=wth+(abr*wnr(1,j,i))
           wtx=wtx+(abr*wnr(2,j,i))
-   30   continue
-   40 continue
+        enddo
+      enddo
 c
       if (ath.le.0.0d0) goto 70
       eah=(ath/(wth+1.d-38))/ev

@@ -203,7 +203,7 @@ c
       endif
       bmag=bmag*1.d-6
 c
-      ve=dsqrt(gammaeos*pgas/rho0)*machnumber
+      ve=dsqrt(gammaEOS*pgas/rho0)*machnumber
 c
 c set compsh5 gobals
 c

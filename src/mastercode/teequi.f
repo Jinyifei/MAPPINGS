@@ -115,12 +115,11 @@ c
       varf=0.02d0+(dabs(dl1)**0.70d0)
       jok=0
 c
-c
 c     ***USING 2 TEMP. (TM1,T2)  AND 2 FRACT. RESID. (DLOS1,DLOS2)
 c     IT FITS THE FUNCTION : ARCTANH(DLOS)=B+A*LN(T)
 c     NEXT VALUE OF T=DEXP(-B/A)
 c
-      do 20 n=1,nf
+      do n=1,nf
         dlpr=dlos
         if (nmod.eq.'TIM') then
           call copypop (popul, pop)
@@ -167,30 +166,13 @@ c
      &     dmin1(1.d0,dvv/varf))**0.2d0)))
         endif
 c
-c     *PRINT OUT WHEN TESTED BY SUBR. TESTI
-c       if (ntest.ne.'Y') goto 70
-c       if (n.ne.1) goto 40
-c       write (luop,20)
-c       write (luty,20)
-c  20 format('0',t4,'TM1',t14,'DLOS',t27,'T2',t39,'A',t49,'B',t58,'C1'
-c    &        ,t68,'C2')
-c       write (luty,30) teinit,dl1,tti
-c       write (luop,30) teinit,dl1,tti
-c  30 format(' ',1pg12.5,g10.3,g12.5)
-c  40   write (luty,50) tm1,dlos,t2,a,b,cc,c2,isis
-c       write (luop,50) tm1,dlos,t2,a,b,cc,c2,isis,varf
-c  50 format(' ',1pg12.5,g10.3,g12.5,4g10.3,i4,1pg10.3)
-c       write (luop,60) tloss,hloss,rloss,fslos,fmloss,feloss,fflos,
-c    &   colos,pgain,rngain
-c  60 format(' ',10(1pg10.2))
-c  70   continue
-c
         fadl=dmin1(100.0d0,dmax1(0.5d0,dabs(dlpr)/(dabs(dlos)+1.d-4)))
         delexi=7.0d-4+(2.0d-4*dmin1(5.d0,6.d-1*fadl))
         if (dabs(dlos).lt.2.d-3) jok=jok+1
         if (((dabs(dlos).lt.delexi).or.(t2.lt.tmin)).or.((jok.gt.3)
      &   .and.(dabs(dlos).lt.(dble(jok)*1.3d-4)))) goto 30
-   20 continue
+c
+      enddo
 c
 c     ***IF CONVERGENCE POOR , USES TEMP. WITH MIN. ABS(DLOS)
 c
@@ -213,12 +195,8 @@ c
         call equion (tef, edens, hdens)
       endif
 c
-c      if (tef.lt.200.d0) write (*,*)
-c     & 'WARNING: temperature may be unrealistic'
-c
-c      WRITE(*,*) N,DL1,TEinit,DLODEF,TDEF,DLOS,TEF
-c
       call cool (tef, edens, hdens)
+c
    70 continue
 c
 c
