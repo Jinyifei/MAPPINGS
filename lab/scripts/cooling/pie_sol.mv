@@ -1,7 +1,7 @@
-y     : yes change asbundances
+y     : yes change abundances
 solar.txt
 n     : no more changes
-n     : no ooffsets
+n     : no offsets
 n     : no dust
 pp    : PIE Photoionization curves
 b     : fixed density vary field

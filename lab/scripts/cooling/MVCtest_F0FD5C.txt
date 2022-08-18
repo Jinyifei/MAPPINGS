@@ -1,9 +1,0 @@
- Mon  8 Aug 2022 22:11:08 AEST
- menzel.local
- 139.235u 0.985s 2:20.32 99.9%
- Mon  8 Aug 2022 22:13:29 AEST
- menzel.local
- 96.544u 0.947s 1:37.60 99.8%
- Mon  8 Aug 2022 22:15:06 AEST
- menzel.local
- 12.750u 0.163s 0:12.95 99.6%
