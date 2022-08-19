@@ -219,8 +219,6 @@ cc
 c     ome1s12s3=6.87d-2 !
 c     ome1s12s1=3.61d-2 !
 c     ome1s12p3=2.27d-2 !
-c     omep1=2.57d0 ! wrong
-c     omes1=0.55d0*omep1
 c
 c     chianti8
       a2s31s1=1.73d-04

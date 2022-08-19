@@ -66,34 +66,21 @@ c
       real*8 alphaheb
       real*8 mintemp
 c
-c      15/6
-      integer*4 mxnhlines,mxnhs
-c      15/6
-      integer*4 mxnhelines,mxnhes
-c      10/2
-      integer*4 mxnxhlines,mxnxhs
+      integer*4 mxnhlines,mxnhs   ! 15/6
+      integer*4 mxnhelines,mxnhes ! 15/6
+      integer*4 mxnxhlines,mxnxhs ! 10/2
 c
-c      abs hbeta
-      integer*4 mxh42linete
-c      abs hbeta
-      integer*4 mxh42linede
-c      ratios to hbeta
-      integer*4 mxhlinete
-c      ratios to hbeta
-      integer*4 mxhlinede
-c      ratios to hbeta hires
-      integer*4 mxhlinetehr
-c      ratios to hbeta hires
-      integer*4 mxhlinedehr
+      integer*4 mxh42linete       ! abs hbeta
+      integer*4 mxh42linede       ! abs hbeta
+      integer*4 mxhlinete         ! ratios to hbeta
+      integer*4 mxhlinede         ! ratios to hbeta
+      integer*4 mxhlinetehr       ! ratios to hbeta hires
+      integer*4 mxhlinedehr       ! ratios to hbeta hires
 c
-c      abs hbeta
-      integer*4 mxhe43linete
-c      abs hbeta
-      integer*4 mxhe43linede
-c      ratios to h4686
-      integer*4 mxhelinete
-c      ratios to h4686
-      integer*4 mxhelinede
+      integer*4 mxhe43linete      ! abs hbeta
+      integer*4 mxhe43linede      ! abs hbeta
+      integer*4 mxhelinete        ! ratios to h4686
+      integer*4 mxhelinede        ! ratios to h4686
 c
 c V3 HHe Resonance Collisions data
 c

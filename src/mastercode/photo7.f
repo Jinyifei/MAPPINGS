@@ -2023,7 +2023,8 @@ c
 c inner edge, rad pres = 0.0, iterate on nh only for
 c pres0, used subsequently
 c
-c     iteratetogetinitialpress
+c     iterate to get initial pressure
+c
           pres0=fpressu(te0,dhn,pop)
           if (jpres.eq.'A') dhn=dhn*(ponk*rkb/pres0)
           if (jpres.eq.'F') then
