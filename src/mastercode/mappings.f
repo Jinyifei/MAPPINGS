@@ -82,26 +82,26 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (photonmode.eq.0) then
-       write (*,*) ' ***********************************************'
-       write (*,*) ' *                                             *'
-       write (*,*) ' *   WARNING: PHOTON FIELD DISABLED.           *'
-       write (*,*) ' *                                             *'
-       write (*,*) ' ***********************************************'
+        write (*,*) ' ***********************************************'
+        write (*,*) ' *                                             *'
+        write (*,*) ' *   WARNING: PHOTON FIELD DISABLED.           *'
+        write (*,*) ' *                                             *'
+        write (*,*) ' ***********************************************'
       endif
       if ((photofraction.gt.0.d0).and.(photofraction.lt.1.d0)) then
-       write (*,*) ' ***********************************************'
-       write (*,*) ' *                                             *'
-       write (*,*) ' *   WARNING: PARTIAL PHOTON FIELD ENABLED.    *'
-       write (*,*) ' *                                             *'
-       write (*,*) ' ***********************************************'
+        write (*,*) ' ***********************************************'
+        write (*,*) ' *                                             *'
+        write (*,*) ' *   WARNING: PARTIAL PHOTON FIELD ENABLED.    *'
+        write (*,*) ' *                                             *'
+        write (*,*) ' ***********************************************'
       endif
 c
       if (alphacoolmode.eq.1) then
-       write (*,*) ' ***********************************************'
-       write (*,*) ' *                                             *'
-       write (*,*) ' *   WARNING: POWERLAW COOLING ENABLED.        *'
-       write (*,*) ' *                                             *'
-       write (*,*) ' ***********************************************'
+        write (*,*) ' ***********************************************'
+        write (*,*) ' *                                             *'
+        write (*,*) ' *   WARNING: POWERLAW COOLING ENABLED.        *'
+        write (*,*) ' *                                             *'
+        write (*,*) ' ***********************************************'
 c
       endif
 c
@@ -162,17 +162,17 @@ c
       call dispabundances (6, zion, abundtitle)
       modeltype=' '
       if (usekappa) then
-       if (grainmode.eq.1) then
-        modeltype='Dust, Kappa'
-       else
-        modeltype='Kappa On'
-       endif
+        if (grainmode.eq.1) then
+          modeltype='Dust, Kappa'
+        else
+          modeltype='Kappa On'
+        endif
       else
-       if (grainmode.eq.1) then
-        modeltype='Dust Enabled'
-       else
-        modeltype=' '
-       endif
+        if (grainmode.eq.1) then
+          modeltype='Dust Enabled'
+        else
+          modeltype=' '
+        endif
       endif
 c
    50 write (*,60) theversion,modeltype

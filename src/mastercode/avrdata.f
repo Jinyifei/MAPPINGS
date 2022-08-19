@@ -37,12 +37,12 @@ c    ***AVERAGES IONIC POP,TEMP.,DISTANCES AND DENSITIES
 c
       rno=1.d17
       do j=1,atypes
-       do i=1,maxion(j)
-        teav(i,j)=teav(i,j)/(epsilon+pam(i,j))
-        deam(i,j)=deam(i,j)/(epsilon+pam(i,j))
-        rdisa(i,j)=(rdisa(i,j)/(epsilon+pam(i,j)))*rno
-        pam(i,j)=pam(i,j)/(epsilon+deav)
-       enddo
+        do i=1,maxion(j)
+          teav(i,j)=teav(i,j)/(epsilon+pam(i,j))
+          deam(i,j)=deam(i,j)/(epsilon+pam(i,j))
+          rdisa(i,j)=(rdisa(i,j)/(epsilon+pam(i,j)))*rno
+          pam(i,j)=pam(i,j)/(epsilon+deav)
+        enddo
       enddo
 c
       deav=dhav/deav
@@ -66,89 +66,89 @@ c    ***FORM RATIO OF EMISSION LINES RELATIVE TO  H-BETA
 c
       invbeta=1.d0/(epsilon+fhbeta)
       do i=1,nfmions
-       do j=1,nfmtrans(i)
-        fluxm(j,i)=fluxm(j,i)*invbeta
-       enddo
+        do j=1,nfmtrans(i)
+          fluxm(j,i)=fluxm(j,i)*invbeta
+        enddo
       enddo
 c
       do i=1,nfeions
-       do j=1,nfetrans(i)
-        fluxfe(j,i)=fluxfe(j,i)*invbeta
-       enddo
+        do j=1,nfetrans(i)
+          fluxfe(j,i)=fluxfe(j,i)*invbeta
+        enddo
       enddo
 c
       do i=1,nf3ions
-       do j=1,nf3trans
-        fluxf3(j,i)=fluxf3(j,i)*invbeta
-       enddo
+        do j=1,nf3trans
+          fluxf3(j,i)=fluxf3(j,i)*invbeta
+        enddo
       enddo
 c
       do j=1,10
-       fluxh(j)=fluxh(j)*invbeta
+        fluxh(j)=fluxh(j)*invbeta
       enddo
       do j=1,nheilines
-       fluxhei(j)=fluxhei(j)*invbeta
+        fluxhei(j)=fluxhei(j)*invbeta
       enddo
       do j=1,nheislines
-       fluxheis(j)=fluxheis(j)*invbeta
+        fluxheis(j)=fluxheis(j)*invbeta
       enddo
       do j=1,nheitlines
-       fluxheit(j)=fluxheit(j)*invbeta
+        fluxheit(j)=fluxheit(j)*invbeta
       enddo
 c CII
       do j=1,nrccii
-       fluxrccii_a(j)=fluxrccii_a(j)*invbeta
-       fluxrccii_b(j)=fluxrccii_b(j)*invbeta
+        fluxrccii_a(j)=fluxrccii_a(j)*invbeta
+        fluxrccii_b(j)=fluxrccii_b(j)*invbeta
       enddo
 c NII
       do j=1,nrcnii
-       fluxrcnii_a(j)=fluxrcnii_a(j)*invbeta
-       fluxrcnii_b(j)=fluxrcnii_b(j)*invbeta
+        fluxrcnii_a(j)=fluxrcnii_a(j)*invbeta
+        fluxrcnii_b(j)=fluxrcnii_b(j)*invbeta
       enddo
 c OI
       do j=1,nrcoi_q
-       fluxrcoi_qa(j)=fluxrcoi_qa(j)*invbeta
-       fluxrcoi_qb(j)=fluxrcoi_qb(j)*invbeta
+        fluxrcoi_qa(j)=fluxrcoi_qa(j)*invbeta
+        fluxrcoi_qb(j)=fluxrcoi_qb(j)*invbeta
       enddo
       do j=1,nrcoi_t
-       fluxrcoi_ta(j)=fluxrcoi_ta(j)*invbeta
-       fluxrcoi_tb(j)=fluxrcoi_tb(j)*invbeta
+        fluxrcoi_ta(j)=fluxrcoi_ta(j)*invbeta
+        fluxrcoi_tb(j)=fluxrcoi_tb(j)*invbeta
       enddo
 c OII
       do j=1,nrcoii
-       fluxrcoii_a(j)=fluxrcoii_a(j)*invbeta
-       fluxrcoii_b(j)=fluxrcoii_b(j)*invbeta
-       fluxrcoii_c(j)=fluxrcoii_c(j)*invbeta
+        fluxrcoii_a(j)=fluxrcoii_a(j)*invbeta
+        fluxrcoii_b(j)=fluxrcoii_b(j)*invbeta
+        fluxrcoii_c(j)=fluxrcoii_c(j)*invbeta
       enddo
 c
 c NeII
 c
       do j=1,nrcneii
-       fluxrcneii_a(j)=fluxrcneii_a(j)*invbeta
-       fluxrcneii_b(j)=fluxrcneii_b(j)*invbeta
+        fluxrcneii_a(j)=fluxrcneii_a(j)*invbeta
+        fluxrcneii_b(j)=fluxrcneii_b(j)*invbeta
       enddo
 c
       heiioiiibfsum=heiioiiibfsum*invbeta
 c
       do series=1,nhseries
-       do line=1,nhlines
-        hydroflux(line,series)=hydroflux(line,series)*invbeta
-       enddo
+        do line=1,nhlines
+          hydroflux(line,series)=hydroflux(line,series)*invbeta
+        enddo
       enddo
 c
       do series=1,nheseries
-       do line=1,nhelines
-        heliflux(line,series)=heliflux(line,series)*invbeta
-       enddo
+        do line=1,nhelines
+          heliflux(line,series)=heliflux(line,series)*invbeta
+        enddo
       enddo
 c
       do i=1,atypes
-       do series=1,nxhseries
-        do line=1,nxhlines
-         xhydroflux(line,series,i)=xhydroflux(line,series,i)/(epsilon+
-     &    fhbeta)
+        do series=1,nxhseries
+          do line=1,nxhlines
+            xhydroflux(line,series,i)=xhydroflux(line,series,i)/
+     &       (epsilon+fhbeta)
+          enddo
         enddo
-       enddo
       enddo
 c
 c     do j=1,nlines
@@ -156,15 +156,15 @@ c       fluxr(j)=fluxr(j)*invbeta
 c     enddo
 c
       do j=1,mlines
-       fluxi(j)=fluxi(j)*invbeta
+        fluxi(j)=fluxi(j)*invbeta
       enddo
 c
       do j=1,nxr3lines
-       xr3lines_flux(j)=xr3lines_flux(j)*invbeta
+        xr3lines_flux(j)=xr3lines_flux(j)*invbeta
       enddo
 c
       do j=1,nxrllines
-       xrllines_flux(j)=xrllines_flux(j)*invbeta
+        xrllines_flux(j)=xrllines_flux(j)*invbeta
       enddo
 c
       h2qav=h2qav*invbeta
@@ -172,7 +172,7 @@ c
       heii2qa=heii2qa*invbeta
 c
       do i=1,atypes
-       h2qflux(i)=h2qflux(i)*invbeta
+        h2qflux(i)=h2qflux(i)*invbeta
       enddo
 c
       return

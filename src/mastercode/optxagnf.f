@@ -79,7 +79,7 @@ c     always returns the total
 c     no need for inefficient repeated -ve parameter calls
 c
       do i=1,10,1
-       optxparam(i)=param(i)
+        optxparam(i)=param(i)
       enddo
       optxparam(11)=0.0d0
       optxparam(12)=0.0d0
@@ -107,12 +107,12 @@ c
 c
       dloge=dlog10(optxear(neoptx)/optxear(0))/dble(neoptx)
       do i=1,neoptx,1
-       optxear(i)=10.d0**(dlog10(optxear(0))+dloge*dble(i))
-       optxtotal(i)=0.d0
-       optxdisk(i)=0.d0
-       optxcoro(i)=0.d0
-       optxnont(i)=0.d0
-       phots(i)=0.d0
+        optxear(i)=10.d0**(dlog10(optxear(0))+dloge*dble(i))
+        optxtotal(i)=0.d0
+        optxdisk(i)=0.d0
+        optxcoro(i)=0.d0
+        optxnont(i)=0.d0
+        phots(i)=0.d0
       enddo
 c
 c optxear(i), in keV , is the energy at the right of the bin:
@@ -135,12 +135,15 @@ c
 c   convert photons/cm^2/s/bin to Inu at bin centres
 c
       do i=1,neoptx,1
-       ew=(optxear(i)-optxear(i-1))*1.0d3!ev
-       ewhz=ew*ev/plk
-       ec(i)=0.5d0*(optxear(i)+optxear(i-1))*1.0d3!ev
-       ecergs=ec(i)*ev
+c      eV
+        ew=(optxear(i)-optxear(i-1))*1.0d3
+        ewhz=ew*ev/plk
+c      eV
+        ec(i)=0.5d0*(optxear(i)+optxear(i-1))*1.0d3
+        ecergs=ec(i)*ev
 c phots/cm2/s/bin.  *photon energy, / bin width / pi -> Hnu
-       optxhnu(i)=phots(i)*ecergs/(pi*ewhz)!bincentremeaninu
+c      bin centre mean Inu
+        optxhnu(i)=phots(i)*ecergs/(pi*ewhz)
       enddo
 c
 c     actually call with Inu in flux...
@@ -179,8 +182,10 @@ c     system parameters
 c
       ne=neoptx
 c
-      m=param(1)!insolarunits
-      d=param(2)!incmnow,notmpc
+c     in solar units
+      m=param(1)
+c     in cm now, not Mpc
+      d=param(2)
       lonledd=10.d0**(param(3))
       mdotedd=10.d0**(param(3))
       bhastar=param(4)
@@ -198,30 +203,32 @@ c
 c      mdot in g/s Ledd=1.2572e38 m and c2=8.98755e20
       mdot=lonledd*ledd*m/(cls*cls*eff)
 c     disc parameters
-      rcor=dabs(param(5))!inrin/rg
-      logrout=param(6)!log10rout/rg
+c     in rin/rg
+      rcor=dabs(param(5))
+c     log10rout/rg
+      logrout=param(6)
 c     iv -ve then calculate rout=rsg from laor & netzer 1989
       if (param(6).lt.0.0d0) then
-       logrout=((m/1.d9)**(-2.d0/9.d0))*((mdotedd)**(4.d0/9.d0))
-       logrout=2150.d0*logrout*(alpha**(2.d0/9.d0))
-       logrout=dlog10(logrout)
+        logrout=((m/1.d9)**(-2.d0/9.d0))*((mdotedd)**(4.d0/9.d0))
+        logrout=2150.d0*logrout*(alpha**(2.d0/9.d0))
+        logrout=dlog10(logrout)
       endif
       rsg=10.d0**logrout
       fpl=dabs(param(10))
 c     initialise
       do n=1,ne,1
-       optxtotal(n)=0.0d0
-       optxdisk(n)=0.0d0
-       optxcoro(n)=0.0d0
-       optxnont(n)=0.0d0
-       flux(n)=0.0d0
-       phots(n)=0.d0
+        optxtotal(n)=0.0d0
+        optxdisk(n)=0.0d0
+        optxcoro(n)=0.0d0
+        optxnont(n)=0.0d0
+        flux(n)=0.0d0
+        phots(n)=0.d0
       enddo
       if (rcor.gt.rms) then
-       iin=50
+        iin=50
       else
-       iin=0
-       rcor=rms
+        iin=0
+        rcor=rms
       endif
       imax=1000
       first=.true.
@@ -230,81 +237,81 @@ c     initialise
       disc=0.0d0
       discu=0.0d0
       do i=1,iin+imax,1
-       if (i.le.iin) then
-        dlogr=dlog10(rcor/rms)/dble(iin-1)
-        r=10.d0**(dlog10(rms)+dble(i-1)*dlogr+dlogr/2.d0)
-       else
-        dlogr=dlog10(rsg/rcor)/dble(imax-1)
-        r=10.d0**(dlog10(rcor)+dble(i-iin-1)*dlogr+dlogr/2.d0)
-       endif
-       dr=10.d0**(dlog10(r)+dlogr/2.d0)-10.d0**(dlog10(r)-dlogr/2.d0)
-c
-       da=4.d0*pi*r*dr*rgcm*rgcm
-c
-       t=mytemp(m,bhastar,mdot,rms,r)
-       if (t.gt.1.0d5) then
-        fcol=(72.d0/(t/kkev))
-        fcol=fcol**(1.d0/9.d0)
-       else
-        if (t.gt.3.0d4) then
-c              linear from 1 to 2.7 between 4e4 and 1e5
-         fcol=(t/3.0d4)**0.82d0
+        if (i.le.iin) then
+          dlogr=dlog10(rcor/rms)/dble(iin-1)
+          r=10.d0**(dlog10(rms)+dble(i-1)*dlogr+dlogr/2.d0)
         else
-         fcol=1.d0
+          dlogr=dlog10(rsg/rcor)/dble(imax-1)
+          r=10.d0**(dlog10(rcor)+dble(i-iin-1)*dlogr+dlogr/2.d0)
         endif
-       endif
-       if (i.le.iin) then
+        dr=10.d0**(dlog10(r)+dlogr/2.d0)-10.d0**(dlog10(r)-dlogr/2.d0)
+c
+        da=4.d0*pi*r*dr*rgcm*rgcm
+c
+        t=mytemp(m,bhastar,mdot,rms,r)
+        if (t.gt.1.0d5) then
+          fcol=(72.d0/(t/kkev))
+          fcol=fcol**(1.d0/9.d0)
+        else
+          if (t.gt.3.0d4) then
+c              linear from 1 to 2.7 between 4e4 and 1e5
+            fcol=(t/3.0d4)**0.82d0
+          else
+            fcol=1.d0
+          endif
+        endif
+        if (i.le.iin) then
 c            discu=discu+4.d0*pi*r*dr*rgcm*rgcm*5.67d-5*(t**4)
-        discu=discu+da*stefan*(t**4)
-       else
-        if (first) then
-         wt0=t*fcol/kkev
+          discu=discu+da*stefan*(t**4)
+        else
+          if (first) then
+            wt0=t*fcol/kkev
 c             write(*,*) 'seed photon',t,wt0*kkev
-         first=.false.
+            first=.false.
+          endif
         endif
-       endif
 c         disc=disc+4.d0*pi*r*dr*rgcm*rgcm*5.67d-5*(t**4)
-       disc=disc+da*stefan*(t**4)
-       t=t/kkev
+        disc=disc+da*stefan*(t**4)
+        t=t/kkev
 c        go over each photon energy - 3rd order ppm integral average
-       do n=1,ne,1
+        do n=1,ne,1
 c          en=0.5d0*(dlog10(optxear(n))+dlog10(optxear(n-1)))
 c          en=10.d0**en
-        el=optxear(n-1)
-        ec=0.5d0*(optxear(n-1)+optxear(n))
-        er=optxear(n)
+          el=optxear(n-1)
+          ec=0.5d0*(optxear(n-1)+optxear(n))
+          er=optxear(n)
 c
 c           do blackbody spectrum left edge
 c
-        if ((el.lt.30.d0*t*fcol).and.(r.gt.rcor)) then
+          if ((el.lt.30.d0*t*fcol).and.(r.gt.rcor)) then
 c               dflux=pi*2.d0*plk*((en*kevhz)**3)/9.0d20
-         dfluxl=pi*2.d0*plk*((el*kevhz)**3)/(cls*cls)
-         dfluxl=dfluxl*da/(dexp(el/(t*fcol))-1.d0)
-         dfluxl=dfluxl/(fcol**4)
-        else
-         dfluxl=0.0d0
-        endif
+            dfluxl=pi*2.d0*plk*((el*kevhz)**3)/(cls*cls)
+            dfluxl=dfluxl*da/(dexp(el/(t*fcol))-1.d0)
+            dfluxl=dfluxl/(fcol**4)
+          else
+            dfluxl=0.0d0
+          endif
 c           do blackbody spectrum center
-        if ((ec.lt.30.d0*t*fcol).and.(r.gt.rcor)) then
+          if ((ec.lt.30.d0*t*fcol).and.(r.gt.rcor)) then
 c               dflux=pi*2.d0*plk*((en*kevhz)**3)/9.0d20
-         dfluxc=pi*2.d0*plk*((ec*kevhz)**3)/(cls*cls)
-         dfluxc=dfluxc*da/(dexp(ec/(t*fcol))-1.d0)
-         dfluxc=dfluxc/(fcol**4)
-        else
-         dfluxc=0.0d0
-        endif
+            dfluxc=pi*2.d0*plk*((ec*kevhz)**3)/(cls*cls)
+            dfluxc=dfluxc*da/(dexp(ec/(t*fcol))-1.d0)
+            dfluxc=dfluxc/(fcol**4)
+          else
+            dfluxc=0.0d0
+          endif
 c           do blackbody spectrum right edge
-        if ((er.lt.30.d0*t*fcol).and.(r.gt.rcor)) then
+          if ((er.lt.30.d0*t*fcol).and.(r.gt.rcor)) then
 c               dflux=pi*2.d0*plk*((en*kevhz)**3)/9.0d20
-         dfluxr=pi*2.d0*plk*((er*kevhz)**3)/(cls*cls)
-         dfluxr=dfluxr*da/(dexp(er/(t*fcol))-1.d0)
-         dfluxr=dfluxr/(fcol**4)
-        else
-         dfluxr=0.0d0
-        endif
-        dflux=(dfluxl+4.d0*dfluxc+dfluxr)/6.d0
-        flux(n)=flux(n)+(dflux)
-       enddo
+            dfluxr=pi*2.d0*plk*((er*kevhz)**3)/(cls*cls)
+            dfluxr=dfluxr*da/(dexp(er/(t*fcol))-1.d0)
+            dfluxr=dfluxr/(fcol**4)
+          else
+            dfluxr=0.0d0
+          endif
+          dflux=(dfluxl+4.d0*dfluxc+dfluxr)/6.d0
+          flux(n)=flux(n)+(dflux)
+        enddo
       enddo
 c
       fcor=discu/(disc-discu)
@@ -315,12 +322,12 @@ c
       do n=1,ne,1
 c         dsk=dsk+flux(n)*(optxear(n)-optxear(n-1))*kevhz
 c        this is ergs cm^2 s-1 Hz^-1
-       ec=0.5d0*(optxear(n-1)+optxear(n))
-       flux(n)=flux(n)/(4.d0*pi*d*d)
+        ec=0.5d0*(optxear(n-1)+optxear(n))
+        flux(n)=flux(n)/(4.d0*pi*d*d)
 c        photons is flux/hv - photons cm^2 s-1 Hz^-1
-       flux(n)=flux(n)/(plk*kevhz*ec)
+        flux(n)=flux(n)/(plk*kevhz*ec)
 c        now multiply by energy band in Hz
-       optxdisk(n)=flux(n)*(optxear(n)-optxear(n-1))*kevhz
+        optxdisk(n)=flux(n)*(optxear(n)-optxear(n-1))*kevhz
       enddo
 c
 c      write(*,*) 'd',dsk, dsk*fcor, dsk*(1.d0+fcor)
@@ -329,7 +336,8 @@ c     now add low temcomptonised emission with comptt
       lpar(1)=0.d0
       lpar(2)=wt0
       lpar(3)=param(7)
-      lpar(4)=dabs(param(8))!if-veplotcomp
+c     if-veplotcomp
+      lpar(4)=dabs(param(8))
       lpar(5)=1
       call xstitg (optxear, neoptx, lpar, lphot, lphote)
 c
@@ -345,10 +353,10 @@ c
       pow=0.d0
       dsk=0.d0
       do n=1,ne,1
-       ec=0.5d0*(optxear(n-1)+optxear(n))
-       cor=cor+lphot(n)*ec
-       pow=pow+hphot(n)*ec
-       dsk=dsk+optxdisk(n)*ec
+        ec=0.5d0*(optxear(n-1)+optxear(n))
+        cor=cor+lphot(n)*ec
+        pow=pow+hphot(n)*ec
+        dsk=dsk+optxdisk(n)*ec
       enddo
 c
 c      write(*,*) 't2',dsk*kev*(4.d0*pi*d*d)
@@ -359,28 +367,28 @@ c
       hfrac=(dsk/pow)*fcor*fpl
 c      write(*,*) lfrac,hfrac
       do n=1,ne,1
-       optxcoro(n)=lphot(n)*lfrac
-       optxnont(n)=hphot(n)*hfrac
+        optxcoro(n)=lphot(n)*lfrac
+        optxnont(n)=hphot(n)*hfrac
       enddo
 c
 c renormalise to total spectrum to recover L/Ledd
 c
       tot=0.d0
       do n=1,ne,1
-       optxtotal(n)=(optxdisk(n)+optxcoro(n)+optxnont(n))
-       ec=0.5d0*(optxear(n-1)+optxear(n))
-       tot=tot+optxtotal(n)*ec
+        optxtotal(n)=(optxdisk(n)+optxcoro(n)+optxnont(n))
+        ec=0.5d0*(optxear(n-1)+optxear(n))
+        tot=tot+optxtotal(n)*ec
       enddo
       renorm=(lonledd*ledd*m)/(tot*(4.d0*pi*d*d)*kev)
 c
 c now safe to rescale even partial spectra
 c
       do n=1,ne,1
-       optxtotal(n)=optxtotal(n)*renorm
-       optxdisk(n)=optxdisk(n)*renorm
-       optxcoro(n)=optxcoro(n)*renorm
-       optxnont(n)=optxnont(n)*renorm
-       phots(n)=optxtotal(n)
+        optxtotal(n)=optxtotal(n)*renorm
+        optxdisk(n)=optxdisk(n)*renorm
+        optxcoro(n)=optxcoro(n)*renorm
+        optxnont(n)=optxnont(n)*renorm
+        phots(n)=optxtotal(n)
       enddo
 c
       return
@@ -462,7 +470,7 @@ c
       data pa0/5*9999.d0/
 c this model does not calculate errors
       do i=1,ne
-       photer(i)=0.d0
+        photer(i)=0.d0
       enddo
 c     xtot is the energy array (units m_e c^2)
 c     spnth is the nonthermal spectrum alone (E F_E)
@@ -473,51 +481,51 @@ c  calculate internal source spectrum if input parameters have changed
       np=5
       recalc=.false.
       do n=1,np
-       if (param(n).ne.pa0(n)) recalc=.true.
+        if (param(n).ne.pa0(n)) recalc=.true.
       enddo
       if (recalc) then
-       if (param(4).lt.0.5d0) then
-        call thcompton (param(3)/511.d0, param(2)/511.d0, param(1), xth,
-     &    nth, spt)
-       else
-        call thdscompton (param(3)/511.d0, param(2)/511.d0, param(1),
-     &   xth, nth, spt)
-       endif
-       xninv=511.d0/zfactor
-       normfac=1.d0/spp(xninv,xth,nth,spt)
-c Calculate luminosity normalization  (used in another model!)
-       normlum=0.d0
-       do i=2,nth-1
-        normlum=normlum+0.5d0*(spt(i)/xth(i)+spt(i-1)/xth(i-1))*(xth(i)-
-     &   xth(i-1))
-       enddo
-       normlum=normlum*normfac
+        if (param(4).lt.0.5d0) then
+          call thcompton (param(3)/511.d0, param(2)/511.d0, param(1),
+     &     xth, nth, spt)
+        else
+          call thdscompton (param(3)/511.d0, param(2)/511.d0, param(1),
+     &     xth, nth, spt)
+        endif
+        xninv=511.d0/zfactor
+        normfac=1.d0/spp(xninv,xth,nth,spt)
+c Calculate luminosity normalization  (used in another model)
+        normlum=0.d0
+        do i=2,nth-1
+          normlum=normlum+0.5d0*(spt(i)/xth(i)+spt(i-1)/xth(i-1))*
+     &     (xth(i)-xth(i-1))
+        enddo
+        normlum=normlum*normfac
       endif
 c     zero arrays
       do i=1,ne
-       photar(i)=0.0d0
-       prim(i)=0.0d0
+        photar(i)=0.0d0
+        prim(i)=0.0d0
       enddo
       prim(0)=0.0d0
 c     put primary into final array only if scale >= 0.
       j=1
       do i=0,ne
-       do while (j.le.nth.and.511.d0*xth(j).lt.ear(i)*zfactor)
-        j=j+1
-       enddo
-       if (j.le.nth) then
-        if (j.gt.1) then
-         jl=j-1
-         prim(i)=spt(jl)+(ear(i)/511.d0*zfactor-xth(jl))*(spt(jl+1)-
-     &    spt(jl))/(xth(jl+1)-xth(jl))
-        else
-         prim(i)=spt(1)
+        do while (j.le.nth.and.511.d0*xth(j).lt.ear(i)*zfactor)
+          j=j+1
+        enddo
+        if (j.le.nth) then
+          if (j.gt.1) then
+            jl=j-1
+            prim(i)=spt(jl)+(ear(i)/511.d0*zfactor-xth(jl))*(spt(jl+1)-
+     &       spt(jl))/(xth(jl+1)-xth(jl))
+          else
+            prim(i)=spt(1)
+          endif
         endif
-       endif
       enddo
       do i=1,ne
-       photar(i)=0.5d0*(prim(i)/ear(i)**2+prim(i-1)/ear(i-1)**2)*(ear(i)
-     &  -ear(i-1))*normfac
+        photar(i)=0.5d0*(prim(i)/ear(i)**2+prim(i-1)/ear(i-1)**2)*
+     &   (ear(i)-ear(i-1))*normfac
       enddo
       return
       end
@@ -543,14 +551,14 @@ c use internally Thomson optical depth
 c
       pi=4.d0*datan(1.0d0)
 c clear arrays (important for repeated calls)
-      do 10 j=1,900
-       dphesc(j)=0.d0
-       dphdot(j)=0.d0
-       rel(j)=0.d0
-       bet(j)=0.d0
-       c2(j)=0.d0
-       sptot(j)=0.d0
-   10 continue
+      do j=1,900
+        dphesc(j)=0.d0
+        dphdot(j)=0.d0
+        rel(j)=0.d0
+        bet(j)=0.d0
+        c2(j)=0.d0
+        sptot(j)=0.d0
+      enddo
 c
 c JMAX - # OF PHOTON ENERGIES
 c
@@ -563,42 +571,42 @@ c delta is the 10-log interval of the photon array.
 c
 c X - ARRAY FOR PHOTON ENERGIES
 c
-      do 20 j=1,jmax+1
-       x(j)=xmin*10.d0**(dble(j-1)*delta)
-   20 continue
+      do j=1,jmax+1
+        x(j)=xmin*10.d0**(dble(j-1)*delta)
+      enddo
 c
 c compute c2(x), and rel(x) arrays
 c c2(x) is the relativistic correction to Kompaneets equation
 c rel(x) is the Klein-Nishina cross section
 c  divided by the Thomson crossection
       do 30 j=1,jmax
-       w=x(j)
+        w=x(j)
 c c2 is the Cooper's coefficient calculated at w1
 c w1 is x(j+1/2) (x(i) defined up to jmax+1)
-       w1=dsqrt(x(j)*x(j+1))
-       c2(j)=(w1**4/(1.d0+4.6d0*w1+1.1d0*w1*w1))
-       if (w.le.0.05d0) then
+        w1=dsqrt(x(j)*x(j+1))
+        c2(j)=(w1**4/(1.d0+4.6d0*w1+1.1d0*w1*w1))
+        if (w.le.0.05d0) then
 c use asymptotic limit for rel(x) for x less than 0.05
-        rel(j)=(1.d0-2.d0*w+26.d0*w*w*0.2d0)
-       else
-        z1=(1.d0+w)/w**3
-        z2=1.d0+2.d0*w
-        z3=dlog(z2)
-        z4=2.d0*w*(1.d0+w)/z2
-        z5=z3/2.d0/w
-        z6=(1.d0+3.d0*w)/z2/z2
-        rel(j)=(0.75d0*(z1*(z4-z3)+z5-z6))
-       endif
+          rel(j)=(1.d0-2.d0*w+26.d0*w*w*0.2d0)
+        else
+          z1=(1.d0+w)/w**3
+          z2=1.d0+2.d0*w
+          z3=dlog(z2)
+          z4=2.d0*w*(1.d0+w)/z2
+          z5=z3/2.d0/w
+          z6=(1.d0+3.d0*w)/z2/z2
+          rel(j)=(0.75d0*(z1*(z4-z3)+z5-z6))
+        endif
    30 continue
 c the thermal emission spectrum
       jmaxth=min(900,int(dlog10(50*tempbb/xmin)/delta))
       if (jmaxth.gt.jmax) then
 c           print *,'thcomp: ',jmaxth,jmax
-       jmaxth=jmax
+        jmaxth=jmax
       endif
       planck=15.d0/(pi*tempbb)**4
       do 40 j=1,jmaxth
-       dphdot(j)=planck*x(j)**2/(dexp(x(j)/tempbb)-1)
+        dphdot(j)=planck*x(j)**2/(dexp(x(j)/tempbb)-1)
    40 continue
 c
 c compute beta array, the probability of escape per Thomson time.
@@ -614,17 +622,17 @@ c
       xnr=x(jnr)
       xr=x(jrel)
       do 50 j=1,jnr-1
-       taukn=tautom*rel(j)
-       bet(j)=1.d0/tautom/(1.d0+taukn/3.d0)
+        taukn=tautom*rel(j)
+        bet(j)=1.d0/tautom/(1.d0+taukn/3.d0)
    50 continue
       do 60 j=jnr,jrel
-       taukn=tautom*rel(j)
-       arg=(x(j)-xnr)/(xr-xnr)
-       flz=1-arg
-       bet(j)=1.d0/tautom/(1.d0+taukn/3.d0*flz)
+        taukn=tautom*rel(j)
+        arg=(x(j)-xnr)/(xr-xnr)
+        flz=1-arg
+        bet(j)=1.d0/tautom/(1.d0+taukn/3.d0*flz)
    60 continue
       do 70 j=jrel+1,jmax
-       bet(j)=1.d0/tautom
+        bet(j)=1.d0/tautom
    70 continue
 c
       call thermlc (tautom, theta, deltal, x, jmax, dphesc, dphdot, bet,
@@ -632,7 +640,7 @@ c
 c
 c     the spectrum in E F_E
       do 80 j=1,jmax-1
-       sptot(j)=dphesc(j)*x(j)**2
+        sptot(j)=dphesc(j)*x(j)**2
 c          write(1,*) x(j), sptot(j)
    80 continue
 c     the input spectrum
@@ -677,19 +685,19 @@ c
 c determine u
 c define coefficients going into equation
 c a(j)*u(j+1)+b(j)*u(j)+c(j)*u(j-1)=d(j)
-      do 10 j=2,jmax-1
-       w1=dsqrt(x(j)*x(j+1))
-       w2=dsqrt(x(j-1)*x(j))
+      do j=2,jmax-1
+        w1=dsqrt(x(j)*x(j+1))
+        w2=dsqrt(x(j-1)*x(j))
 c  w1 is x(j+1/2)
 c  w2 is x(j-1/2)
-       a(j)=-c20*c2(j)*(theta/deltal/w1+0.5d0)
-       t1=-c20*c2(j)*(0.5d0-theta/deltal/w1)
-       t2=c20*c2(j-1)*(theta/deltal/w2+0.5d0)
-       t3=x(j)**3*(tautom*bet(j))
-       b(j)=t1+t2+t3
-       c(j)=c20*c2(j-1)*(0.5d0-theta/deltal/w2)
-       d(j)=x(j)*dphdot(j)
-   10 continue
+        a(j)=-c20*c2(j)*(theta/deltal/w1+0.5d0)
+        t1=-c20*c2(j)*(0.5d0-theta/deltal/w1)
+        t2=c20*c2(j-1)*(theta/deltal/w2+0.5d0)
+        t3=x(j)**3*(tautom*bet(j))
+        b(j)=t1+t2+t3
+        c(j)=c20*c2(j-1)*(0.5d0-theta/deltal/w2)
+        d(j)=x(j)*dphdot(j)
+      enddo
 c define constants going into boundary terms
 c u(1)=aa*u(2) (zero flux at lowest energy)
 c u(jx2) given from region 2 above
@@ -702,26 +710,26 @@ c
 c invert tridiagonal matrix
       alp(2)=b(2)+c(2)*aa
       gam(2)=a(2)/alp(2)
-      do 20 j=3,jmax-1
-       alp(j)=b(j)-c(j)*gam(j-1)
-       gam(j)=a(j)/alp(j)
-   20 continue
+      do j=3,jmax-1
+        alp(j)=b(j)-c(j)*gam(j-1)
+        gam(j)=a(j)/alp(j)
+      enddo
       g(2)=d(2)/alp(2)
-      do 30 j=3,jmax-2
-       g(j)=(d(j)-c(j)*g(j-1))/alp(j)
-   30 continue
+      do j=3,jmax-2
+        g(j)=(d(j)-c(j)*g(j-1))/alp(j)
+      enddo
       g(jmax-1)=(d(jmax-1)-a(jmax-1)*u(jmax)-c(jmax-1)*g(jmax-2))/
      &alp(jmax-1)
       u(jmax-1)=g(jmax-1)
-      do 40 j=3,jmax-1
-       jj=jmax+1-j
-       u(jj)=g(jj)-gam(jj)*u(jj+1)
-   40 continue
+      do j=3,jmax-1
+        jj=jmax+1-j
+        u(jj)=g(jj)-gam(jj)*u(jj+1)
+      enddo
       u(1)=aa*u(2)
 c compute new value of dph(x) and new value of dphesc(x)
-      do 50 j=1,jmax
-       dphesc(j)=x(j)*x(j)*u(j)*bet(j)*tautom
-   50 continue
+      do j=1,jmax
+        dphesc(j)=x(j)*x(j)*u(j)*bet(j)*tautom
+      enddo
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -751,14 +759,14 @@ c use internally Thomson optical depth
 c
       pi=4.d0*datan(1.d0)
 c clear arrays (important for repeated calls)
-      do 10 j=1,900
-       dphesc(j)=0.0d0
-       dphdot(j)=0.0d0
-       rel(j)=0.0d0
-       bet(j)=0.0d0
-       c2(j)=0.0d0
-       sptot(j)=0.0d0
-   10 continue
+      do j=1,900
+        dphesc(j)=0.0d0
+        dphdot(j)=0.0d0
+        rel(j)=0.0d0
+        bet(j)=0.0d0
+        c2(j)=0.0d0
+        sptot(j)=0.0d0
+      enddo
 c
 c JMAX - # OF PHOTON ENERGIES
 c
@@ -771,51 +779,51 @@ c delta is the 10-log interval of the photon array.
 c
 c X - ARRAY FOR PHOTON ENERGIES
 c
-      do 20 j=1,jmax+1
-       x(j)=xmin*10.d0**((j-1)*delta)
-   20 continue
+      do j=1,jmax+1
+        x(j)=xmin*10.d0**((j-1)*delta)
+      enddo
 c
 c compute c2(x), and rel(x) arrays
 c c2(x) is the relativistic correction to Kompaneets equation
 c rel(x) is the Klein-Nishina cross section
 c divided by the Thomson crossection
-      do 30 j=1,jmax
-       w=x(j)
+      do j=1,jmax
+        w=x(j)
 c c2 is the Cooper's coefficient calculated at w1
 c w1 is x(j+1/2) (x(i) defined up to jmax+1)
-       w1=dsqrt(x(j)*x(j+1))
-       c2(j)=(w1**4/(1.0d0+4.6d0*w1+1.1d0*w1*w1))
-       if (w.le.0.05d0) then
+        w1=dsqrt(x(j)*x(j+1))
+        c2(j)=(w1**4/(1.0d0+4.6d0*w1+1.1d0*w1*w1))
+        if (w.le.0.05d0) then
 c use asymptotic limit for rel(x) for x less than 0.05
-        rel(j)=(1.d0-2.d0*w+26.d0*w*w*0.2d0)
-       else
-        z1=(1+w)/w**3
-        z2=1.d0+2.d0*w
-        z3=dlog(z2)
-        z4=2.d0*w*(1.d0+w)/z2
-        z5=z3/2.d0/w
-        z6=(1.d0+3.d0*w)/z2/z2
-        rel(j)=(0.75d0*(z1*(z4-z3)+z5-z6))
-       endif
-   30 continue
+          rel(j)=(1.d0-2.d0*w+26.d0*w*w*0.2d0)
+        else
+          z1=(1+w)/w**3
+          z2=1.d0+2.d0*w
+          z3=dlog(z2)
+          z4=2.d0*w*(1.d0+w)/z2
+          z5=z3/2.d0/w
+          z6=(1.d0+3.d0*w)/z2/z2
+          rel(j)=(0.75d0*(z1*(z4-z3)+z5-z6))
+        endif
+      enddo
 c the thermal emission spectrum
       jmaxth=min(900,int(dlog10(50*tempbb/xmin)/delta))
       if (jmaxth.gt.jmax) then
-       print *,'thcomp: ',jmaxth,jmax
-       jmaxth=jmax
+        print *,'thcomp: ',jmaxth,jmax
+        jmaxth=jmax
       endif
 c        planck=15/(pi*tempbb)**4
 c        do 5 j=1,jmaxth
 c          dphdot(j)=planck*x(j)**2/(exp(x(j)/tempbb)-1)
 c  5     continue
       do j=1,jmaxth-1
-       ear(j-1)=511.d0*dsqrt(x(j)*x(j+1))
+        ear(j-1)=511.d0*dsqrt(x(j)*x(j+1))
       enddo
       parth(1)=tempbb*511
       ne=jmaxth-2
       call xsdskb (ear, ne, parth, ifl, photar, photer)
       do j=1,ne
-       dphdot(j+1)=511.d0*photar(j)/(ear(j)-ear(j-1))
+        dphdot(j+1)=511.d0*photar(j)/(ear(j)-ear(j-1))
       enddo
       jmaxth=ne+1
       dphdot(1)=dphdot(2)
@@ -831,34 +839,34 @@ c eliminate spatial diffusion
       jrel=min(jrel,jmax)
       xnr=x(jnr)
       xr=x(jrel)
-      do 40 j=1,jnr-1
-       taukn=tautom*rel(j)
-       bet(j)=1.d0/tautom/(1.d0+taukn/3.d0)
-   40 continue
-      do 50 j=jnr,jrel
-       taukn=tautom*rel(j)
-       arg=(x(j)-xnr)/(xr-xnr)
-       flz=1.d0-arg
-       bet(j)=1.d0/tautom/(1.d0+taukn/3.d0*flz)
-   50 continue
-      do 60 j=jrel+1,jmax
-       bet(j)=1/tautom
-   60 continue
+      do j=1,jnr-1
+        taukn=tautom*rel(j)
+        bet(j)=1.d0/tautom/(1.d0+taukn/3.d0)
+      enddo
+      do j=jnr,jrel
+        taukn=tautom*rel(j)
+        arg=(x(j)-xnr)/(xr-xnr)
+        flz=1.d0-arg
+        bet(j)=1.d0/tautom/(1.d0+taukn/3.d0*flz)
+      enddo
+      do j=jrel+1,jmax
+        bet(j)=1/tautom
+      enddo
 c
       call thermlc (tautom, theta, deltal, x, jmax, dphesc, dphdot, bet,
      & c2)
 c
 c     the spectrum in E F_E
-      do 70 j=1,jmax-1
-       sptot(j)=dphesc(j)*x(j)**2
+      do j=1,jmax-1
+        sptot(j)=dphesc(j)*x(j)**2
 c          write(1,*) x(j), sptot(j)
-   70 continue
+      enddo
 c      print *,'jmax: ',jmax,jmaxth
 c      open(33,file='spec.dat')
 cc     the input spectrum
-c      do 498 j=1,min(jmaxth,jmax-1)
+c      do j=1,min(jmaxth,jmax-1)
 c         write(33,*) 511*x(j), dphdot(j)*x(j), dphesc(j)*x(j)
-c 498  continue
+c      enddo
 c      close(33)
       return
       end
@@ -880,7 +888,7 @@ c
       xx=1.d0/y
       if (xx.lt.xnonth(ih)) ih=2
       do while (ih.lt.nnonth.and.xx.gt.xnonth(ih))
-       ih=ih+1
+        ih=ih+1
       enddo
       il=ih-1
       spp=spnth(il)+(spnth(ih)-spnth(il))*(xx-xnonth(il))/(xnonth(ih)-
@@ -924,20 +932,20 @@ c suppress a warning message from the compiler
       i=idt
 c this model has no errors
       do i=1,ne
-       photer(i)=0.0d0
+        photer(i)=0.0d0
       enddo
       tin=dble(param(1))
-      do 20 i=1,ne
-       xn=(ear(i)-ear(i-1))/2.0d0
-       photar(i)=0.0d0
-       xh=xn+ear(i-1)
-       do 10 j=1,5
-        e=dble(xn)*gauss(j,2)+dble(xh)
-        call mcdspc (e, tin, 1.0d0, photon)
-        photar(i)=photar(i)+dble(gauss(j,1)*photon)
-   10  continue
-       photar(i)=photar(i)*xn
-   20 continue
+      do i=1,ne
+        xn=(ear(i)-ear(i-1))*0.5d0
+        photar(i)=0.0d0
+        xh=xn+ear(i-1)
+        do j=1,5
+          e=dble(xn)*gauss(j,2)+dble(xh)
+          call mcdspc (e, tin, 1.0d0, photon)
+          photar(i)=photar(i)+dble(gauss(j,1)*photon)
+        enddo
+        photar(i)=photar(i)*xn
+      enddo
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -964,8 +972,8 @@ c  Flux = photon flux, photons/sec/cm^2/keV
       real*8 et
       real*8 value
       if (tin.eq.0.0d0) then
-       flux=0.0d0
-       return
+        flux=0.0d0
+        return
       endif
       et=e/tin
       call mcdint (et, value)
@@ -1025,17 +1033,17 @@ c
       pos=(loget-dlog10(et0))/step+1
       j=int(pos)
       if (j.lt.1) then
-       resfact=res(1)
+        resfact=res(1)
       elseif (j.ge.nres) then
-       resfact=res(nres)
+        resfact=res(nres)
       else
-       pos=pos-j
-       resfact=res(j)*(1.0d0-pos)+res(j+1)*pos
+        pos=pos-j
+        resfact=res(j)*(1.0d0-pos)+res(j+1)*pos
       endif
       gaufact=1.0d0
       do j=1,3
-       z=(loget-gc(j))/gw(j)
-       gaufact=gaufact+gn(j)*dexp(-z*z/2.0d0)
+        z=(loget-gc(j))/gw(j)
+        gaufact=gaufact+gn(j)*dexp(-z*z/2.0d0)
       enddo
       value=value0*(et/et0)**beki*(1.0d0+a*et**b)*dexp(-et)*gaufact*
      &(1.0d0+resfact)
@@ -1088,7 +1096,7 @@ c suppress a warning message from the compiler
       pi=4.d0*datan(1.d0)
 c this model has no errors
       do i=1,npts
-       photer(i)=0.0d0
+        photer(i)=0.0d0
       enddo
       ro=1.d0
       bol2i=0.0d0
@@ -1109,41 +1117,41 @@ c dimensionless soft photon energy
       beta=0.0d0
       if (dabs(apprx).gt.1.0d0) then
 c BETA FOR SPHERE
-       if (taup.le.0.1d0) then
-        beta=dlog(1.d0/0.75d0/taup)
-       elseif (taup.ge.10.d0.or.apprx.ge.0.0d0) then
-        tb1=pi*pi*(1.d0-dexp(-0.7d0*taup))/3.d0/t23/t23
-        tb2=dexp(-1.4d0*taup)*dlog(4.d0/(3.d0*taup))
-        beta=tb1+tb2
-       elseif (taup.gt.0.1d0.and.taup.lt.10.d0.and.apprx.lt.0.0d0)
-     &  then
-        beta=betaint(taup,apprx)
-       endif
+        if (taup.le.0.1d0) then
+          beta=dlog(1.d0/0.75d0/taup)
+        elseif (taup.ge.10.d0.or.apprx.ge.0.0d0) then
+          tb1=pi*pi*(1.d0-dexp(-0.7d0*taup))/3.d0/t23/t23
+          tb2=dexp(-1.4d0*taup)*dlog(4.d0/(3.d0*taup))
+          beta=tb1+tb2
+        elseif (taup.gt.0.1d0.and.taup.lt.10.d0.and.apprx.lt.0.0d0)
+     &   then
+          beta=betaint(taup,apprx)
+        endif
 c                 write(*,*) 'tau & beta = ',taup,beta
-       if (taue.lt.0.01d0) then
-        rdel=taue/2.d0
-       else
-        rdel=1.0-3.d0/taue*(1.d0-2.d0/taue+2.d0/taue/taue*(1d0-dexp(-
-     &   taue)))
-       endif
+        if (taue.lt.0.01d0) then
+          rdel=taue/2.d0
+        else
+          rdel=1.0-3.d0/taue*(1.d0-2.d0/taue+2.d0/taue/taue*(1d0-dexp(-
+     &     taue)))
+        endif
       elseif (dabs(apprx).le.1.0d0) then
 c BETA FOR DISK
-       if (taup.le.0.1d0) then
-        beta=dlog(1.d0/taup/dlog(1.53d0/taup))
-       elseif (taup.ge.10.d0.or.apprx.ge.0.0d0) then
-        tb1=pi*pi*(1.d0-exp(-1.35d0*taup))/12.d0/t23/t23
-        tb2=0.45d0*dexp(-3.7d0*taup)*dlog(10.d0/(3.d0*taup))
-        beta=tb1+tb2
-       elseif (taup.gt.0.1d0.and.taup.lt.10.d0.and.apprx.lt.0.0d0)
-     &  then
-        beta=betaint(taup,apprx)
-       endif
+        if (taup.le.0.1d0) then
+          beta=dlog(1.d0/taup/dlog(1.53d0/taup))
+        elseif (taup.ge.10.d0.or.apprx.ge.0.0d0) then
+          tb1=pi*pi*(1.d0-exp(-1.35d0*taup))/12.d0/t23/t23
+          tb2=0.45d0*dexp(-3.7d0*taup)*dlog(10.d0/(3.d0*taup))
+          beta=tb1+tb2
+        elseif (taup.gt.0.1d0.and.taup.lt.10.d0.and.apprx.lt.0.0d0)
+     &   then
+          beta=betaint(taup,apprx)
+        endif
 c       write(*,*) 'tau beta = ',taup,beta
-       if (taue.lt.0.01d0) then
-        rdel=taue/2.d0
-       else
-        rdel=1.0d0-(1.0d0-dexp(-taue))/taue
-       endif
+        if (taue.lt.0.01d0) then
+          rdel=taue/2.d0
+        else
+          rdel=1.0d0-(1.0d0-dexp(-taue))/taue
+        endif
       endif
       f0theta=2.5d0*t5+1.875d0*t5*t5*(1.0d0-t5)
       gam0=beta/t5
@@ -1156,11 +1164,11 @@ c     the convergence criterium is looser.  Finally, the corrected
 c     expression using COMPD0 has been replaced.
       if (tal0.gt.10.d0) tal0=10.d0
       do ii=1,50
-       bola=1.d0+(tal0+3.d0)*t5/(1.d0+t5)+4.d0*compd0(tal0)**(1.d0/tal0)
-     &  *t5*t5
-       tal=beta/dlog(bola)
-       if (dabs(tal-tal0).le.1.0d-4) goto 10
-       tal0=tal
+        bola=1.d0+(tal0+3.d0)*t5/(1.d0+t5)+4.d0*compd0(tal0)**(1.d0/
+     &   tal0)*t5*t5
+        tal=beta/dlog(bola)
+        if (dabs(tal-tal0).le.1.0d-4) goto 10
+        tal0=tal
       enddo
    10 continue
       alfax0=tal
@@ -1183,35 +1191,35 @@ c      alfax0 = SQRT(2.25+Gamx0) - 1.5
       phot=0.d0
       ophot=0.d0
       do 20 i=0,npts
-       ens=ear(i)*zfac
-       if (ens.gt.0.0d0) then
-        xt=ens/temp
-        x=xt
-        z=xt*t5
+        ens=ear(i)*zfac
+        if (ens.gt.0.0d0) then
+          xt=ens/temp
+          x=xt
+          z=xt*t5
 c            write(*,*) 'z x =',z,x
-        xr=x*xrfac
+          xr=x*xrfac
 c            write(*,*) 'xr = ',xr
-        bol3=x*aa
+          bol3=x*aa
 c            write(*,*) 'bol3 = ',bol3
-        bol3g=dble(bol3)
+          bol3g=dble(bol3)
 c             write(*,*) 'bol3g = ',bol3g
 c see if fx is going to overflow
-        tfx=(-1.d0-alfax0)*dlog10(bol3)-x*0.4343d0+dlog10(algx0)
+          tfx=(-1.d0-alfax0)*dlog10(bol3)-x*0.4343d0+dlog10(algx0)
 c      write(*,*) 'tfx = ',tfx
-        if (dabs(tfx).lt.27.d0) then
-         fx=bol3**(-alfax0-1.d0)*dexp(-x)*algx0
-        else
-         fx=0.0d0
-        endif
+          if (dabs(tfx).lt.27.d0) then
+            fx=bol3**(-alfax0-1.d0)*dexp(-x)*algx0
+          else
+            fx=0.0d0
+          endif
 c           write(*,*) 'arg1 bol3g gammi = ',arg1,bol3g,gammi(arg1,bol3g)
 c         write(*,*) ' gamln exp(gamln)= ',gamln(arg1),exp(gamln(arg1))
-        bol2i=gammi(arg1,bol3g)*dexp(gamln(arg1))
+          bol2i=gammi(arg1,bol3g)*dexp(gamln(arg1))
 c         write(*,*) 'bol2i =',bol2i
 c         write(*,*) 'fx yyit2',fx,yyit2(xr,alfax0,ro)
-        bol7i=yyit2(xr,alfax0,ro)*fx*bol2i
+          bol7i=yyit2(xr,alfax0,ro)*fx*bol2i
 c         write(*,*) 'bol7i = ',bol7i
-        bol6=bol3**2.d0*dexp(-bol3)/(alfax0+3.d0)
-        phot=dble(al3x0*(bol7i+bol6)*aa)
+          bol6=bol3**2.d0*dexp(-bol3)/(alfax0+3.d0)
+          phot=dble(al3x0*(bol7i+bol6)*aa)
 c      if (i.eq.0) then
 c        write(*,*) 'beta = ',beta
 c        write(*,*) 'f0theta = ',f0theta
@@ -1226,15 +1234,15 @@ c        write(*,*) 'bol7i bol6 ',bol7i,bol6
 c        write(*,*) 'gamma(arg) ',exp(gamln(arg1))
 c        write(*,*) 'igamma   ',gammi(arg1,bol3g)
 c      endif
-       else
-        phot=0.0d0
-       endif
+        else
+          phot=0.0d0
+        endif
 c            write(2,*) ens(i),bol7i,bol6,bol6+bol7i
-       if (i.gt.0) then
-        photar(i)=0.5d0*(phot+ophot)*(ens-oens)/zfac
-       endif
-       oens=ens
-       ophot=phot
+        if (i.gt.0) then
+          photar(i)=0.5d0*(phot+ophot)*(ens-oens)/zfac
+        endif
+        oens=ens
+        ophot=phot
    20 continue
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1265,14 +1273,14 @@ c*** End of declarations inserted by SPAG
       argg=dble(a2+a3+2.d0)
       db=gamln(argg)
       yyit2=0.d0
-      do 10 i=1,10
-       v=w(i)*dexp(a2n*dlog(ro*x+z(i))+alfa*dlog(z(i))-db)
+      do i=1,10
+        v=w(i)*dexp(a2n*dlog(ro*x+z(i))+alfa*dlog(z(i))-db)
 c          write(*,*) 'alfa x z a2 ',alfa,x,z(i),a2
 c          write(*,*) alfa*((x+z(i)) - a2)
-       v1=v/alfa*((x+z(i))-a2)
+        v1=v/alfa*((x+z(i))-a2)
 c            v = w(i)*DEXP(a2*DLOG(ro*x+z(i))+a3*Dlog(z(i))-db)
-       yyit2=yyit2+v1
-   10 continue
+        yyit2=yyit2+v1
+      enddo
       yyit2=yyit2
       return
       end
@@ -1300,9 +1308,9 @@ c
       z=az
 c      write(*,*) 'gamln : az  z = ',az,z
       s=z
-      do 10 i=1,6
-       s=z+a(8-i)/s
-   10 continue
+      do i=1,6
+        s=z+a(8-i)/s
+      enddo
       s=a(1)/s
       s=s-z+(z-0.5d0)*dlog(z)+0.5d0*dlog(2.d0*pi)
       gamln=s
@@ -1319,15 +1327,15 @@ c CODED FROM NUMERICAL RECIPIES
 c INCOMPLETE GAMMA FUNCTION
       real*8 a , x , gln , gammcf , gamser
       if (x.lt.0.d0.or.a.le.0.d0) then
-       write (*,*) 'Inc. Gamma Fn. called with x < 0 or A <= 0'
+        write (*,*) 'Inc. Gamma Fn. called with x < 0 or A <= 0'
       endif
 c USE THE SERIES REPRESENTATION
       if (x.lt.(a+1.d0)) then
-       call gserr (gamser, a, x, gln)
-       gammi=gamser
+        call gserr (gamser, a, x, gln)
+        gammi=gamser
       else
-       call gcff (gammcf, a, x, gln)
-       gammi=1.d0-gammcf
+        call gcff (gammcf, a, x, gln)
+        gammi=1.d0-gammcf
       endif
       return
       end
@@ -1345,19 +1353,19 @@ c
 c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
       gln=gamln(a)
       if (x.le.0.0d0) then
-       gamser=0.d0
-       return
+        gamser=0.d0
+        return
       endif
       ap=a
       sum=1.d0/a
       del=sum
-      do 10 n=1,itmax
-       ap=ap+1.d0
-       del=del*x/ap
-       sum=sum+del
-       if (abs(del).lt.abs(sum)*eps) goto 20
-   10 continue
-      write (*,*) 'Warning: Inc. Gamma Fn. GSERR did not converge for A 
+      do n=1,itmax
+        ap=ap+1.d0
+        del=del*x/ap
+        sum=sum+del
+        if (abs(del).lt.abs(sum)*eps) goto 20
+      enddo
+      write (*,*) 'Warning: Inc. Gamma Fn. GSERR did not converge for A
      &= ',a
    20 gamser=sum*dexp(-x+a*log(x)-gln)
       return
@@ -1385,22 +1393,22 @@ c      write(*,*) 'gcff: a  x  logx',a,x,log(x)
       b1=1.d0
       fac=1.d0
       g=0.0d0
-      do 10 n=1,itmax
-       an=dble(n)
-       ana=an-a
-       a0=(a1+a0*ana)*fac
-       b0=(b1+b0*ana)*fac
-       anf=an*fac
-       a1=x*a0+anf*a1
-       b1=x*b0+anf*b1
-       if (a1.ne.0.0d0) then
+      do n=1,itmax
+        an=dble(n)
+        ana=an-a
+        a0=(a1+a0*ana)*fac
+        b0=(b1+b0*ana)*fac
+        anf=an*fac
+        a1=x*a0+anf*a1
+        b1=x*b0+anf*b1
+        if (a1.ne.0.0d0) then
 c            write(*,*) 'gcff: a1 = ',a1
-        fac=1.d0/a1
-        g=b1*fac
-        if (dabs((g-gold)/g).lt.eps) goto 20
-        gold=g
-       endif
-   10 continue
+          fac=1.d0/a1
+          g=b1*fac
+          if (dabs((g-gold)/g).lt.eps) goto 20
+          gold=g
+        endif
+      enddo
       write (*,*) 'Warning: Inc. Gamma Fn. GCFF did not converge for A =
      & ',a
    20 gammcf=dexp(-x+a*dlog(x)-gln)*g
@@ -1422,11 +1430,11 @@ c
       argg=(2.d0*x1)
       db=gamln(argg)
       if (db.lt.-70.d0) then
-       compd0=0.0d0
+        compd0=0.0d0
       elseif (db.gt.70.d0) then
-       compd0=1.d34
+        compd0=1.d34
       else
-       compd0=3.d0*bol*dexp(db)/x3/x2/x2
+        compd0=3.d0*bol*dexp(db)/x3/x2/x2
       endif
       return
       end
@@ -1477,11 +1485,11 @@ c get look-up index
       b1=sbetal(ix)
       b2=sbetah(ix)
       if (abs(apprx).gt.1.0d0) then
-       b1=sbetal(ix)
-       b2=sbetah(ix)
+        b1=sbetal(ix)
+        b2=sbetah(ix)
       elseif (abs(apprx).le.1.0d0) then
-       b1=dbetal(ix)
-       b2=dbetah(ix)
+        b1=dbetal(ix)
+        b2=dbetah(ix)
       endif
 c      write(*,*) 'tau = ',tau
       call dinter (tau, tau1, tau2, b3, b1, b2)
@@ -1500,24 +1508,24 @@ c
       implicit none
       real*8 x0 , x1 , x2 , y0 , y1 , y2 , tn , tn1 , t0
       if (x1.ne.x2) then
-       if (y1.gt.0.0d0) then
-        tn=-dlog10(y1)
-       else
-        tn=36.0d0
-       endif
-       if (y2.gt.0.0d0) then
-        tn1=-dlog10(y2)
-       else
-        tn1=36.0d0
-       endif
-       t0=(tn*(x2-x0)+tn1*(x0-x1))/(x2-x1)
-       if (tn.ge.36.d0.and.tn1.ge.36.d0) then
-        y0=0.0d0
-       else
-        y0=10.0d0**(-t0)
-       endif
+        if (y1.gt.0.0d0) then
+          tn=-dlog10(y1)
+        else
+          tn=36.0d0
+        endif
+        if (y2.gt.0.0d0) then
+          tn1=-dlog10(y2)
+        else
+          tn1=36.0d0
+        endif
+        t0=(tn*(x2-x0)+tn1*(x0-x1))/(x2-x1)
+        if (tn.ge.36.d0.and.tn1.ge.36.d0) then
+          y0=0.0d0
+        else
+          y0=10.0d0**(-t0)
+        endif
       else
-       y0=y1
+        y0=y1
       endif
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -77,7 +77,7 @@ c     1e-4 saves a lot of paper
 c
       chklim=epsilon
       if (mode.eq.'REL') then
-       chklim=1.d-5
+        chklim=1.d-5
       endif
 c
 c     Top Twenty Five Lines - ie rough spectrum,
@@ -105,7 +105,7 @@ c
       write (lunt,200)
 c
       do i=1,nhlines
-       if (hydroflux(i,1).lt.chklim) hydroflux(i,1)=0.d0
+        if (hydroflux(i,1).lt.chklim) hydroflux(i,1)=0.d0
       enddo
 c
       write (lunt,150) elem(1),rom(1)
@@ -214,7 +214,7 @@ c
       if (zmap(2).ne.0) then
 c
 c        write (lunt,260) heii2qa,h2qflux(2)
-       write (lunt,260) h2qflux(2)
+        write (lunt,260) h2qflux(2)
   260 format(//,
      & ' Helium II Spectrum, includes collisons:'/
      & ' ==============================================='/
@@ -224,201 +224,201 @@ c
      & ' n = 1 Series'/
      & ' ============='/
      & ' Bowen Total :', 1pg10.3)
-       write (lunt,270) heiioiiibfsum
+        write (lunt,270) heiioiiibfsum
 c
-       do i=1,10
-        if (heliflux(i,1).lt.chklim) heliflux(i,1)=0.d0
-       enddo
+        do i=1,10
+          if (heliflux(i,1).lt.chklim) heliflux(i,1)=0.d0
+        enddo
 c
-       write (lunt,150) elem(2),rom(2)
-       write (lunt,130)
-       write (lunt,10) (helambda(j,1)/fnair(helambda(j,1)),j=1,5)
-       write (lunt,30) (heliflux(j,1),j=1,5)
+        write (lunt,150) elem(2),rom(2)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,1)/fnair(helambda(j,1)),j=1,5)
+        write (lunt,30) (heliflux(j,1),j=1,5)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,1)/fnair(helambda(j,1)),j=6,10)
-       write (lunt,30) (heliflux(j,1),j=6,10)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,1)/fnair(helambda(j,1)),j=6,10)
+        write (lunt,30) (heliflux(j,1),j=6,10)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,1)/fnair(helambda(j,1)),j=11,15)
-       write (lunt,30) (heliflux(j,1),j=11,15)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,1)/fnair(helambda(j,1)),j=11,15)
+        write (lunt,30) (heliflux(j,1),j=11,15)
 c
   280 format(/,
      & ' n = 2 Series'/
      & ' ============')
-       write (lunt,280)
+        write (lunt,280)
 c
-       write (lunt,150) elem(2),rom(2)
-       write (lunt,130)
-       write (lunt,10) (helambda(j,2)/fnair(helambda(j,2)),j=1,5)
-       write (lunt,30) (heliflux(j,2),j=1,5)
+        write (lunt,150) elem(2),rom(2)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,2)/fnair(helambda(j,2)),j=1,5)
+        write (lunt,30) (heliflux(j,2),j=1,5)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,2)/fnair(helambda(j,2)),j=6,10)
-       write (lunt,30) (heliflux(j,2),j=6,10)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,2)/fnair(helambda(j,2)),j=6,10)
+        write (lunt,30) (heliflux(j,2),j=6,10)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,2)/fnair(helambda(j,2)),j=11,15)
-       write (lunt,30) (heliflux(j,2),j=11,15)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,2)/fnair(helambda(j,2)),j=11,15)
+        write (lunt,30) (heliflux(j,2),j=11,15)
 c
   290 format(/,
      & ' n = 3 Series'/
      & ' ============')
-       write (lunt,290)
+        write (lunt,290)
 c
-       write (lunt,150) elem(2),rom(2)
-       write (lunt,130)
-       write (lunt,10) (helambda(j,3)/fnair(helambda(j,3)),j=1,5)
-       write (lunt,30) (heliflux(j,3),j=1,5)
+        write (lunt,150) elem(2),rom(2)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,3)/fnair(helambda(j,3)),j=1,5)
+        write (lunt,30) (heliflux(j,3),j=1,5)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,3)/fnair(helambda(j,3)),j=6,10)
-       write (lunt,30) (heliflux(j,3),j=6,10)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,3)/fnair(helambda(j,3)),j=6,10)
+        write (lunt,30) (heliflux(j,3),j=6,10)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,3)/fnair(helambda(j,3)),j=11,15)
-       write (lunt,30) (heliflux(j,3),j=11,15)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,3)/fnair(helambda(j,3)),j=11,15)
+        write (lunt,30) (heliflux(j,3),j=11,15)
 c
   300 format(/,
      & ' Pickering Series'/
      & ' ================')
-       write (lunt,300)
+        write (lunt,300)
 c
-       write (lunt,150) elem(2),rom(2)
-       write (lunt,130)
-       write (lunt,10) (helambda(j,4)/fnair(helambda(j,4)),j=1,5)
-       write (lunt,30) (heliflux(j,4),j=1,5)
+        write (lunt,150) elem(2),rom(2)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,4)/fnair(helambda(j,4)),j=1,5)
+        write (lunt,30) (heliflux(j,4),j=1,5)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,4)/fnair(helambda(j,4)),j=6,10)
-       write (lunt,30) (heliflux(j,4),j=6,10)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,4)/fnair(helambda(j,4)),j=6,10)
+        write (lunt,30) (heliflux(j,4),j=6,10)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,4)/fnair(helambda(j,4)),j=11,15)
-       write (lunt,30) (heliflux(j,4),j=11,15)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,4)/fnair(helambda(j,4)),j=11,15)
+        write (lunt,30) (heliflux(j,4),j=11,15)
 c
   310 format(/,
      & ' n = 5 Series'/
      & ' ============')
-       write (lunt,310)
+        write (lunt,310)
 c
-       write (lunt,150) elem(2),rom(2)
-       write (lunt,130)
-       write (lunt,10) (helambda(j,5)/fnair(helambda(j,5)),j=1,5)
-       write (lunt,30) (heliflux(j,5),j=1,5)
+        write (lunt,150) elem(2),rom(2)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,5)/fnair(helambda(j,5)),j=1,5)
+        write (lunt,30) (heliflux(j,5),j=1,5)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,5)/fnair(helambda(j,5)),j=6,10)
-       write (lunt,30) (heliflux(j,5),j=6,10)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,5)/fnair(helambda(j,5)),j=6,10)
+        write (lunt,30) (heliflux(j,5),j=6,10)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,5)/fnair(helambda(j,5)),j=11,15)
-       write (lunt,30) (heliflux(j,5),j=11,15)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,5)/fnair(helambda(j,5)),j=11,15)
+        write (lunt,30) (heliflux(j,5),j=11,15)
 c
   320 format(/,
      & ' n = 6 Series'/
      & ' ============')
-       write (lunt,320)
+        write (lunt,320)
 c
-       write (lunt,150) elem(2),rom(2)
-       write (lunt,130)
+        write (lunt,150) elem(2),rom(2)
+        write (lunt,130)
 c
-       write (lunt,10) (helambda(j,6)/fnair(helambda(j,6)),j=1,5)
-       write (lunt,30) (heliflux(j,6),j=1,5)
-       write (lunt,130)
+        write (lunt,10) (helambda(j,6)/fnair(helambda(j,6)),j=1,5)
+        write (lunt,30) (heliflux(j,6),j=1,5)
+        write (lunt,130)
 c
-       write (lunt,10) (helambda(j,6)/fnair(helambda(j,6)),j=6,10)
-       write (lunt,30) (heliflux(j,6),j=6,10)
-       write (lunt,130)
+        write (lunt,10) (helambda(j,6)/fnair(helambda(j,6)),j=6,10)
+        write (lunt,30) (heliflux(j,6),j=6,10)
+        write (lunt,130)
 c
-       write (lunt,130)
-       write (lunt,10) (helambda(j,6)/fnair(helambda(j,6)),j=11,15)
-       write (lunt,30) (heliflux(j,6),j=11,15)
+        write (lunt,130)
+        write (lunt,10) (helambda(j,6)/fnair(helambda(j,6)),j=11,15)
+        write (lunt,30) (heliflux(j,6),j=11,15)
 c
-       write (lunt,330)
+        write (lunt,330)
   330 format(//,
      & ' Helium I Singlet Spectrum: HBeta = 1.000'/
      & ' ==============================================='/)
-       write (lunt,90) (heislamid(j),j=1,5)
-       write (lunt,10) (heislam(j)/fnair(heislam(j)),j=1,5)
-       write (lunt,30) (fluxheis(j),j=1,5)
-       write (lunt,130)
-       write (lunt,90) (heislamid(j),j=6,10)
-       write (lunt,10) (heislam(j)/fnair(heislam(j)),j=6,10)
-       write (lunt,30) (fluxheis(j),j=6,10)
-       write (lunt,130)
-       write (lunt,90) (heislamid(j),j=11,15)
-       write (lunt,10) (heislam(j)/fnair(heislam(j)),j=11,15)
-       write (lunt,30) (fluxheis(j),j=11,15)
-       write (lunt,130)
+        write (lunt,90) (heislamid(j),j=1,5)
+        write (lunt,10) (heislam(j)/fnair(heislam(j)),j=1,5)
+        write (lunt,30) (fluxheis(j),j=1,5)
+        write (lunt,130)
+        write (lunt,90) (heislamid(j),j=6,10)
+        write (lunt,10) (heislam(j)/fnair(heislam(j)),j=6,10)
+        write (lunt,30) (fluxheis(j),j=6,10)
+        write (lunt,130)
+        write (lunt,90) (heislamid(j),j=11,15)
+        write (lunt,10) (heislam(j)/fnair(heislam(j)),j=11,15)
+        write (lunt,30) (fluxheis(j),j=11,15)
+        write (lunt,130)
 c
-       write (lunt,340)
+        write (lunt,340)
   340 format(//,
      & ' Helium I Triplet Spectrum: HBeta = 1.000'/
      & ' ==============================================='/)
-       write (lunt,90) (heitlamid(j),j=1,5)
-       write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=1,5)
-       write (lunt,30) (fluxheit(j),j=1,5)
-       write (lunt,130)
-       write (lunt,90) (heitlamid(j),j=6,10)
-       write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=6,10)
-       write (lunt,30) (fluxheit(j),j=6,10)
-       write (lunt,130)
-       write (lunt,90) (heitlamid(j),j=11,15)
-       write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=11,15)
-       write (lunt,30) (fluxheit(j),j=11,15)
-       write (lunt,130)
-       write (lunt,90) (heitlamid(j),j=16,18)
-       write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=16,18)
-       write (lunt,30) (fluxheit(j),j=16,18)
+        write (lunt,90) (heitlamid(j),j=1,5)
+        write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=1,5)
+        write (lunt,30) (fluxheit(j),j=1,5)
+        write (lunt,130)
+        write (lunt,90) (heitlamid(j),j=6,10)
+        write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=6,10)
+        write (lunt,30) (fluxheit(j),j=6,10)
+        write (lunt,130)
+        write (lunt,90) (heitlamid(j),j=11,15)
+        write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=11,15)
+        write (lunt,30) (fluxheit(j),j=11,15)
+        write (lunt,130)
+        write (lunt,90) (heitlamid(j),j=16,18)
+        write (lunt,10) (heitlam(j)/fnair(heitlam(j)),j=16,18)
+        write (lunt,30) (fluxheit(j),j=16,18)
 c
-       write (lunt,350) hei2qa
+        write (lunt,350) hei2qa
   350 format(//,
      & ' Legacy Helium I Spectrum: HBeta = 1.000'/
      & ' ==============================================='/
      & ' HeI Two-Photon emission :',1pg10.3)
 c
-       write (lunt,150) elem(2),rom(1)
-       write (lunt,130)
-       write (lunt,10) ((heilam(j)*1.d8)/fnair(heilam(j)*1.d8),j=1,5)
-       write (lunt,30) (fluxhei(j),j=1,5)
-       write (lunt,130)
-       write (lunt,10) ((heilam(j)*1.d8)/fnair(heilam(j)*1.d8),j=6,10)
-       write (lunt,30) (fluxhei(j),j=6,10)
-       write (lunt,130)
-       write (lunt,10) ((heilam(j)*1.d8)/fnair(heilam(j)*1.d8),j=11,15)
-       write (lunt,30) (fluxhei(j),j=11,15)
+        write (lunt,150) elem(2),rom(1)
+        write (lunt,130)
+        write (lunt,10) ((heilam(j)*1.d8)/fnair(heilam(j)*1.d8),j=1,5)
+        write (lunt,30) (fluxhei(j),j=1,5)
+        write (lunt,130)
+        write (lunt,10) ((heilam(j)*1.d8)/fnair(heilam(j)*1.d8),j=6,10)
+        write (lunt,30) (fluxhei(j),j=6,10)
+        write (lunt,130)
+        write (lunt,10) ((heilam(j)*1.d8)/fnair(heilam(j)*1.d8),j=11,15)
+        write (lunt,30) (fluxhei(j),j=11,15)
 c
       endif
 c
       if (atypes.gt.2) then
-       write (lunt,360)
+        write (lunt,360)
   360    format(//,
      & ' Heavy Atom Two Photon Continuum: HBeta = 1.000'/
      & ' ===============================================')
-       idx=0
-       do atom=3,atypes
-        if (h2qflux(atom).gt.chklim) idx=idx+1
-       enddo
-       if (idx.gt.0) then
+        idx=0
         do atom=3,atypes
-         if (h2qflux(atom).gt.chklim) then
+          if (h2qflux(atom).gt.chklim) idx=idx+1
+        enddo
+        if (idx.gt.0) then
+          do atom=3,atypes
+            if (h2qflux(atom).gt.chklim) then
   370          format(' ',a2,' Two-Photon emission :',1pg10.3)
-          write (lunt,370) elem(atom),h2qflux(atom)
-         endif
-        enddo
-       endif
+              write (lunt,370) elem(atom),h2qflux(atom)
+            endif
+          enddo
+        endif
 c
-       idx=0
-       do atom=3,atypes
-        do series=1,nxhseries
-         do line=1,nxhlines
-          if (xhydroflux(line,series,atom).gt.chklim) idx=idx+1
-         enddo
+        idx=0
+        do atom=3,atypes
+          do series=1,nxhseries
+            do line=1,nxhlines
+              if (xhydroflux(line,series,atom).gt.chklim) idx=idx+1
+            enddo
+          enddo
         enddo
-       enddo
-       if (idx.gt.0) then
-        write (lunt,380)
+        if (idx.gt.0) then
+          write (lunt,380)
   380 format(//,
      & ' Heavy Atom Hydrogenic Spectrum, pure recomb.',/
      & ' (Collision components in Collisonal Cascade below)',/
@@ -430,44 +430,44 @@ c
   400 format(/,a2,' n = 2 Series'/
      & ' ============')
 c
-        do atom=3,atypes
+          do atom=3,atypes
 c
-         if (xhydroflux(1,1,atom).gt.chklim) then
+            if (xhydroflux(1,1,atom).gt.chklim) then
 c
-          write (lunt,390) elem(atom)
+              write (lunt,390) elem(atom)
 c
-          write (lunt,130)
-          write (lunt,150) elem(atom),rom(mapz(atom))
-          write (lunt,130)
-          write (lunt,10) (xhlambda(j,1,atom)/fnair(xhlambda(j,1,atom)),
-     &     j=1,5)
-          write (lunt,30) (xhydroflux(j,1,atom),j=1,5)
+              write (lunt,130)
+              write (lunt,150) elem(atom),rom(mapz(atom))
+              write (lunt,130)
+              write (lunt,10) (xhlambda(j,1,atom)/fnair(xhlambda(j,1,
+     &         atom)),j=1,5)
+              write (lunt,30) (xhydroflux(j,1,atom),j=1,5)
 c
-          write (lunt,130)
-          write (lunt,10) (xhlambda(j,1,atom)/fnair(xhlambda(j,1,atom)),
-     &     j=6,10)
-          write (lunt,30) (xhydroflux(j,1,atom),j=6,10)
+              write (lunt,130)
+              write (lunt,10) (xhlambda(j,1,atom)/fnair(xhlambda(j,1,
+     &         atom)),j=6,10)
+              write (lunt,30) (xhydroflux(j,1,atom),j=6,10)
 c
-          write (lunt,130)
-          write (lunt,400) elem(atom)
+              write (lunt,130)
+              write (lunt,400) elem(atom)
 c
-          write (lunt,150) elem(atom),rom(mapz(atom))
-          write (lunt,130)
-          write (lunt,10) (xhlambda(j,2,atom)/fnair(xhlambda(j,2,atom)),
-     &     j=1,5)
-          write (lunt,30) (xhydroflux(j,2,atom),j=1,5)
+              write (lunt,150) elem(atom),rom(mapz(atom))
+              write (lunt,130)
+              write (lunt,10) (xhlambda(j,2,atom)/fnair(xhlambda(j,2,
+     &         atom)),j=1,5)
+              write (lunt,30) (xhydroflux(j,2,atom),j=1,5)
 c
-          write (lunt,130)
-          write (lunt,10) (xhlambda(j,2,atom)/fnair(xhlambda(j,2,atom)),
-     &     j=6,10)
-          write (lunt,30) (xhydroflux(j,2,atom),j=6,10)
+              write (lunt,130)
+              write (lunt,10) (xhlambda(j,2,atom)/fnair(xhlambda(j,2,
+     &         atom)),j=6,10)
+              write (lunt,30) (xhydroflux(j,2,atom),j=6,10)
 c
-         endif
+            endif
 c
 c     end atom loop
 c
-        enddo
-       endif
+          enddo
+        endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -475,33 +475,33 @@ c CII   CIII->CII recombination spectrum
 c
       idx=0
       do j=1,nrccii
-       if (fluxrccii_a(j).gt.chklim) idx=idx+1
-       if (fluxrccii_b(j).gt.chklim) idx=idx+1
+        if (fluxrccii_a(j).gt.chklim) idx=idx+1
+        if (fluxrccii_b(j).gt.chklim) idx=idx+1
       enddo
       if (idx.gt.0) then
-       write (lunt,410)
+        write (lunt,410)
   410 format(//,
      & ' C II Doublet Recomb. Spectrum: HBeta = 1.000'/
      & ' ============================================'/)
-       nr=5
-       do idx=0,nrccii,5
-        if ((idx+nr).gt.nrccii) nr=nrccii-idx
-        if (nr.ge.1) then
-         lj=0
-         do j=1,nr
-          if (fluxrccii_a(j).gt.chklim) lj=lj+1
-          if (fluxrccii_b(j).gt.chklim) lj=lj+1
-         enddo
-         if (lj.gt.0) then
-          write (lunt,100) (rccii_tr(idx+j),j=1,nr)
-          write (lunt,10) (rccii_lam(idx+j)/fnair(rccii_lam(idx+j)),j=1,
-     &     nr)
-          write (lunt,40) (fluxrccii_a(idx+j),j=1,nr)
-          write (lunt,50) (fluxrccii_b(idx+j),j=1,nr)
-          write (lunt,130)
-         endif
-        endif
-       enddo
+        nr=5
+        do idx=0,nrccii,5
+          if ((idx+nr).gt.nrccii) nr=nrccii-idx
+          if (nr.ge.1) then
+            lj=0
+            do j=1,nr
+              if (fluxrccii_a(j).gt.chklim) lj=lj+1
+              if (fluxrccii_b(j).gt.chklim) lj=lj+1
+            enddo
+            if (lj.gt.0) then
+              write (lunt,100) (rccii_tr(idx+j),j=1,nr)
+              write (lunt,10) (rccii_lam(idx+j)/fnair(rccii_lam(idx+j)),
+     &         j=1,nr)
+              write (lunt,40) (fluxrccii_a(idx+j),j=1,nr)
+              write (lunt,50) (fluxrccii_b(idx+j),j=1,nr)
+              write (lunt,130)
+            endif
+          endif
+        enddo
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -509,33 +509,33 @@ c NII   NIII->NII recombination spectrum
 c
       idx=0
       do j=1,nrcnii
-       if (fluxrcnii_a(j).gt.chklim) idx=idx+1
-       if (fluxrcnii_b(j).gt.chklim) idx=idx+1
+        if (fluxrcnii_a(j).gt.chklim) idx=idx+1
+        if (fluxrcnii_b(j).gt.chklim) idx=idx+1
       enddo
       if (idx.gt.0) then
-       write (lunt,420)
+        write (lunt,420)
   420 format(//,
      & ' N II Recombination Spectrum: HBeta = 1.000'/
      & ' ============================================'/)
-       nr=5
-       do idx=0,nrcnii,5
-        if ((idx+nr).gt.nrcnii) nr=nrcnii-idx
-        if (nr.ge.1) then
-         lj=0
-         do j=1,nr
-          if (fluxrcnii_a(j).gt.chklim) lj=lj+1
-          if (fluxrcnii_b(j).gt.chklim) lj=lj+1
-         enddo
-         if (lj.gt.0) then
-          write (lunt,110) (rcnii_tr(idx+j),j=1,nr)
-          write (lunt,10) (rcnii_lam(idx+j)/fnair(rcnii_lam(idx+j)),j=1,
-     &     nr)
-          write (lunt,40) (fluxrcnii_a(idx+j),j=1,nr)
-          write (lunt,50) (fluxrcnii_b(idx+j),j=1,nr)
-          write (lunt,130)
-         endif
-        endif
-       enddo
+        nr=5
+        do idx=0,nrcnii,5
+          if ((idx+nr).gt.nrcnii) nr=nrcnii-idx
+          if (nr.ge.1) then
+            lj=0
+            do j=1,nr
+              if (fluxrcnii_a(j).gt.chklim) lj=lj+1
+              if (fluxrcnii_b(j).gt.chklim) lj=lj+1
+            enddo
+            if (lj.gt.0) then
+              write (lunt,110) (rcnii_tr(idx+j),j=1,nr)
+              write (lunt,10) (rcnii_lam(idx+j)/fnair(rcnii_lam(idx+j)),
+     &         j=1,nr)
+              write (lunt,40) (fluxrcnii_a(idx+j),j=1,nr)
+              write (lunt,50) (fluxrcnii_b(idx+j),j=1,nr)
+              write (lunt,130)
+            endif
+          endif
+        enddo
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -544,64 +544,64 @@ c
 c
       idx=0
       do j=1,nrcoi_q
-       if (fluxrcoi_qa(j).gt.chklim) idx=idx+1
-       if (fluxrcoi_qa(j).gt.chklim) idx=idx+1
+        if (fluxrcoi_qa(j).gt.chklim) idx=idx+1
+        if (fluxrcoi_qa(j).gt.chklim) idx=idx+1
       enddo
       if (idx.gt.0) then
-       write (lunt,430)
+        write (lunt,430)
   430 format(//,
      & ' O I Quintet Recomb. Spectrum: HBeta = 1.000'/
      & ' ============================================'/)
-       nr=5
-       do idx=0,nrcoi_q,5
-        if ((idx+nr).gt.nrcoi_q) nr=nrcoi_q-idx
-        if (nr.ge.1) then
-         lj=0
-         do j=1,nr
-          if (fluxrcoi_qa(j).gt.chklim) lj=lj+1
-          if (fluxrcoi_qb(j).gt.chklim) lj=lj+1
-         enddo
-         if (lj.gt.0) then
-          write (lunt,110) (rcoi_qtr(idx+j),j=1,nr)
-          write (lunt,10) (rcoi_qlam(idx+j)/fnair(rcoi_qlam(idx+j)),j=1,
-     &     nr)
-          write (lunt,40) (fluxrcoi_qa(idx+j),j=1,nr)
-          write (lunt,50) (fluxrcoi_qa(idx+j),j=1,nr)
-          write (lunt,130)
-         endif
-        endif
-       enddo
+        nr=5
+        do idx=0,nrcoi_q,5
+          if ((idx+nr).gt.nrcoi_q) nr=nrcoi_q-idx
+          if (nr.ge.1) then
+            lj=0
+            do j=1,nr
+              if (fluxrcoi_qa(j).gt.chklim) lj=lj+1
+              if (fluxrcoi_qb(j).gt.chklim) lj=lj+1
+            enddo
+            if (lj.gt.0) then
+              write (lunt,110) (rcoi_qtr(idx+j),j=1,nr)
+              write (lunt,10) (rcoi_qlam(idx+j)/fnair(rcoi_qlam(idx+j)),
+     &         j=1,nr)
+              write (lunt,40) (fluxrcoi_qa(idx+j),j=1,nr)
+              write (lunt,50) (fluxrcoi_qa(idx+j),j=1,nr)
+              write (lunt,130)
+            endif
+          endif
+        enddo
       endif
 c
       idx=0
       do j=1,nrcoi_t
-       if (fluxrcoi_qa(j).gt.chklim) idx=idx+1
-       if (fluxrcoi_qb(j).gt.chklim) idx=idx+1
+        if (fluxrcoi_qa(j).gt.chklim) idx=idx+1
+        if (fluxrcoi_qb(j).gt.chklim) idx=idx+1
       enddo
       if (idx.gt.0) then
-       write (lunt,440)
+        write (lunt,440)
   440 format(//,
      & ' O I Triplet Recomb. Spectrum: HBeta = 1.000'/
      & ' ============================================'/)
-       nr=5
-       do idx=0,nrcoi_t,5
-        if ((idx+nr).gt.nrcoi_t) nr=nrcoi_t-idx
-        if (nr.ge.1) then
-         lj=0
-         do j=1,nr
-          if (fluxrcoi_ta(j).gt.chklim) lj=lj+1
-          if (fluxrcoi_tb(j).gt.chklim) lj=lj+1
-         enddo
-         if (lj.gt.0) then
-          write (lunt,110) (rcoi_ttr(idx+j),j=1,nr)
-          write (lunt,10) (rcoi_tlam(idx+j)/fnair(rcoi_tlam(idx+j)),j=1,
-     &     nr)
-          write (lunt,40) (fluxrcoi_ta(idx+j),j=1,nr)
-          write (lunt,50) (fluxrcoi_qb(idx+j),j=1,nr)
-          write (lunt,130)
-         endif
-        endif
-       enddo
+        nr=5
+        do idx=0,nrcoi_t,5
+          if ((idx+nr).gt.nrcoi_t) nr=nrcoi_t-idx
+          if (nr.ge.1) then
+            lj=0
+            do j=1,nr
+              if (fluxrcoi_ta(j).gt.chklim) lj=lj+1
+              if (fluxrcoi_tb(j).gt.chklim) lj=lj+1
+            enddo
+            if (lj.gt.0) then
+              write (lunt,110) (rcoi_ttr(idx+j),j=1,nr)
+              write (lunt,10) (rcoi_tlam(idx+j)/fnair(rcoi_tlam(idx+j)),
+     &         j=1,nr)
+              write (lunt,40) (fluxrcoi_ta(idx+j),j=1,nr)
+              write (lunt,50) (fluxrcoi_qb(idx+j),j=1,nr)
+              write (lunt,130)
+            endif
+          endif
+        enddo
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -610,36 +610,36 @@ c OII   OIII->OII recombination spectrum
 c
       idx=0
       do j=1,nrcoii
-       if (fluxrcoii_a(j).gt.chklim) idx=idx+1
-       if (fluxrcoii_b(j).gt.chklim) idx=idx+1
-       if (fluxrcoii_c(j).gt.chklim) idx=idx+1
+        if (fluxrcoii_a(j).gt.chklim) idx=idx+1
+        if (fluxrcoii_b(j).gt.chklim) idx=idx+1
+        if (fluxrcoii_c(j).gt.chklim) idx=idx+1
       enddo
       if (idx.gt.0) then
-       write (lunt,450)
+        write (lunt,450)
   450 format(//,
      & ' O II Recomb. Spectrum: HBeta = 1.000'/
      & ' ============================================'/)
-       nr=5
-       do idx=0,nrcoii,5
-        if ((idx+nr).gt.nrcoii) nr=nrcoii-idx
-        if (nr.ge.1) then
-         lj=0
-         do j=1,nr
-          if (fluxrcoii_a(j).gt.chklim) lj=lj+1
-          if (fluxrcoii_b(j).gt.chklim) lj=lj+1
-          if (fluxrcoii_c(j).gt.chklim) lj=lj+1
-         enddo
-         if (lj.gt.0) then
-          write (lunt,120) (rcoii_tr(idx+j),j=1,nr)
-          write (lunt,10) (rcoii_lam(idx+j)/fnair(rcoii_lam(idx+j)),j=1,
-     &     nr)
-          write (lunt,40) (fluxrcoii_a(idx+j),j=1,nr)
-          write (lunt,50) (fluxrcoii_b(idx+j),j=1,nr)
-          write (lunt,60) (fluxrcoii_c(idx+j),j=1,nr)
-          write (lunt,130)
-         endif
-        endif
-       enddo
+        nr=5
+        do idx=0,nrcoii,5
+          if ((idx+nr).gt.nrcoii) nr=nrcoii-idx
+          if (nr.ge.1) then
+            lj=0
+            do j=1,nr
+              if (fluxrcoii_a(j).gt.chklim) lj=lj+1
+              if (fluxrcoii_b(j).gt.chklim) lj=lj+1
+              if (fluxrcoii_c(j).gt.chklim) lj=lj+1
+            enddo
+            if (lj.gt.0) then
+              write (lunt,120) (rcoii_tr(idx+j),j=1,nr)
+              write (lunt,10) (rcoii_lam(idx+j)/fnair(rcoii_lam(idx+j)),
+     &         j=1,nr)
+              write (lunt,40) (fluxrcoii_a(idx+j),j=1,nr)
+              write (lunt,50) (fluxrcoii_b(idx+j),j=1,nr)
+              write (lunt,60) (fluxrcoii_c(idx+j),j=1,nr)
+              write (lunt,130)
+            endif
+          endif
+        enddo
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -648,277 +648,278 @@ c                    resolved into lines
 c
       idx=0
       do j=1,nrcneii
-       if (fluxrcneii_a(j).gt.chklim) idx=idx+1
-       if (fluxrcneii_b(j).gt.chklim) idx=idx+1
+        if (fluxrcneii_a(j).gt.chklim) idx=idx+1
+        if (fluxrcneii_b(j).gt.chklim) idx=idx+1
       enddo
       if (idx.gt.0) then
-       write (lunt,460)
+        write (lunt,460)
   460 format(//,
      & ' Ne II Recomb. Spectrum: HBeta = 1.000'/
      & ' ============================================'/)
-       nr=5
-       do idx=0,nrcneii,5
-        if ((idx+nr).gt.nrcneii) nr=nrcneii-idx
-        if (nr.ge.1) then
-         lj=0
-         do j=1,nr
-          if (fluxrcneii_a(j).gt.chklim) lj=lj+1
-          if (fluxrcneii_b(j).gt.chklim) lj=lj+1
-         enddo
-         if (lj.gt.0) then
-          write (lunt,110) (rcneii_tr(idx+j),j=1,nr)
-          write (lunt,10) (rcneii_lam(idx+j)/fnair(rcneii_lam(idx+j)),j=
-     &     1,nr)
-          write (lunt,40) (fluxrcneii_a(idx+j),j=1,nr)
-          write (lunt,50) (fluxrcneii_b(idx+j),j=1,nr)
-          write (lunt,130)
-         endif
-        endif
-       enddo
+        nr=5
+        do idx=0,nrcneii,5
+          if ((idx+nr).gt.nrcneii) nr=nrcneii-idx
+          if (nr.ge.1) then
+            lj=0
+            do j=1,nr
+              if (fluxrcneii_a(j).gt.chklim) lj=lj+1
+              if (fluxrcneii_b(j).gt.chklim) lj=lj+1
+            enddo
+            if (lj.gt.0) then
+              write (lunt,110) (rcneii_tr(idx+j),j=1,nr)
+              write (lunt,10) (rcneii_lam(idx+j)/fnair(rcneii_lam(idx+j)
+     &         ),j=1,nr)
+              write (lunt,40) (fluxrcneii_a(idx+j),j=1,nr)
+              write (lunt,50) (fluxrcneii_b(idx+j),j=1,nr)
+              write (lunt,130)
+            endif
+          endif
+        enddo
       endif
 c
       if (nfmions.ne.0) then
 c
-       write (lunt,470)
+        write (lunt,470)
   470 format(//,
      & ' Multi-Level Atom Models: HBeta = 1.000'/
      & ' ============================================'/)
-       chcksum=0.0d0
-       do i=1,nfmions
-        do j=1,nfmtrans(i)
-         chcksum=chcksum+fluxm(j,i)
+        chcksum=0.0d0
+        do i=1,nfmions
+          do j=1,nfmtrans(i)
+            chcksum=chcksum+fluxm(j,i)
+          enddo
         enddo
-       enddo
   480 format(/,' Total Multi-Level Line Int/H-Beta:',1pg14.6)
-       write (lunt,480) chcksum
-       chcksum=0.0d0
-       do i=1,nfmions
-        do j=1,nfmtrans(i)
-         if (fmlam(j,i).lt.(iphlam*1.d-8)) then
-          chcksum=chcksum+fluxm(j,i)
-         endif
+        write (lunt,480) chcksum
+        chcksum=0.0d0
+        do i=1,nfmions
+          do j=1,nfmtrans(i)
+            if (fmlam(j,i).lt.(iphlam*1.d-8)) then
+              chcksum=chcksum+fluxm(j,i)
+            endif
+          enddo
         enddo
-       enddo
   490 format(' Ionizing Multi-Level Lines Int :',1pg14.6)
-       write (lunt,490) chcksum
+        write (lunt,490) chcksum
 c
-       do ionidx=1,nfmions
-        idx=0
-        do j=1,nfmtrans(ionidx)
-         if (fluxm(j,ionidx).gt.0.d0) idx=idx+1
-        enddo
-        if (idx.gt.0) then
-         nl=(idx/5)
-         nr=idx-(nl*5)
-         write (lunt,130)
-         write (lunt,170) elem(fmatom(ionidx)),rom(fmion(ionidx)),
-     &    fmnl(ionidx)
-         jdx=1
-         do nd=1,nl
-          ns=((nd-1)*5)+1
-          ne=ns+4
-          chcksum=0.0d0
+        do ionidx=1,nfmions
+          idx=0
+          do j=1,nfmtrans(ionidx)
+            if (fluxm(j,ionidx).gt.0.d0) idx=idx+1
+          enddo
+          if (idx.gt.0) then
+            nl=(idx/5)
+            nr=idx-(nl*5)
+            write (lunt,130)
+            write (lunt,170) elem(fmatom(ionidx)),rom(fmion(ionidx)),
+     &       fmnl(ionidx)
+            jdx=1
+            do nd=1,nl
+              ns=((nd-1)*5)+1
+              ne=ns+4
+              chcksum=0.0d0
 c
 c get next 5 lines with flux
 c
-          idx=1
-  500     if (fluxm(jdx,ionidx).gt.0.d0) then
-           lineid(idx)=nfmid(jdx,ionidx)
-           lineflx(idx)=fluxm(jdx,ionidx)
-           linelam(idx)=(fmlam(jdx,ionidx)*1.d8)
-           linelam(idx)=linelam(idx)/fnair(linelam(idx))
-           linelo(idx)=nfmlower(jdx,ionidx)
-           linehi(idx)=nfmupper(jdx,ionidx)
-           idx=idx+1
+              idx=1
+  500         if (fluxm(jdx,ionidx).gt.0.d0) then
+                lineid(idx)=nfmid(jdx,ionidx)
+                lineflx(idx)=fluxm(jdx,ionidx)
+                linelam(idx)=(fmlam(jdx,ionidx)*1.d8)
+                linelam(idx)=linelam(idx)/fnair(linelam(idx))
+                linelo(idx)=nfmlower(jdx,ionidx)
+                linehi(idx)=nfmupper(jdx,ionidx)
+                idx=idx+1
+              endif
+              jdx=jdx+1
+              if (idx.gt.5) goto 510
+              goto 500
+  510         continue
+c
+              write (lunt,130)
+              write (lunt,70) (linelo(j),linehi(j),j=1,5)
+              write (lunt,110) (lineid(j),j=1,5)
+              write (lunt,10) (linelam(j),j=1,5)
+              write (lunt,30) (lineflx(j),j=1,5)
+c
+            enddo
+            if (nr.gt.0) then
+              idx=1
+  520         if (fluxm(jdx,ionidx).gt.0.d0) then
+                lineid(idx)=nfmid(jdx,ionidx)
+                lineflx(idx)=fluxm(jdx,ionidx)
+                linelam(idx)=(fmlam(jdx,ionidx)*1.d8)
+                linelam(idx)=linelam(idx)/fnair(linelam(idx))
+                linelo(idx)=nfmlower(jdx,ionidx)
+                linehi(idx)=nfmupper(jdx,ionidx)
+                idx=idx+1
+              endif
+              jdx=jdx+1
+              if (idx.gt.nr) goto 530
+              goto 520
+  530         continue
+c
+              write (lunt,130)
+              write (lunt,70) (linelo(j),linehi(j),j=1,nr)
+              write (lunt,110) (lineid(j),j=1,nr)
+              write (lunt,10) (linelam(j),j=1,nr)
+              write (lunt,30) (lineflx(j),j=1,nr)
+c
+            endif
           endif
-          jdx=jdx+1
-          if (idx.gt.5) goto 510
-          goto 500
-  510     continue
-c
-          write (lunt,130)
-          write (lunt,70) (linelo(j),linehi(j),j=1,5)
-          write (lunt,110) (lineid(j),j=1,5)
-          write (lunt,10) (linelam(j),j=1,5)
-          write (lunt,30) (lineflx(j),j=1,5)
-c
-         enddo
-         if (nr.gt.0) then
-          idx=1
-  520     if (fluxm(jdx,ionidx).gt.0.d0) then
-           lineid(idx)=nfmid(jdx,ionidx)
-           lineflx(idx)=fluxm(jdx,ionidx)
-           linelam(idx)=(fmlam(jdx,ionidx)*1.d8)
-           linelam(idx)=linelam(idx)/fnair(linelam(idx))
-           linelo(idx)=nfmlower(jdx,ionidx)
-           linehi(idx)=nfmupper(jdx,ionidx)
-           idx=idx+1
-          endif
-          jdx=jdx+1
-          if (idx.gt.nr) goto 530
-          goto 520
-  530     continue
-c
-          write (lunt,130)
-          write (lunt,70) (linelo(j),linehi(j),j=1,nr)
-          write (lunt,110) (lineid(j),j=1,nr)
-          write (lunt,10) (linelam(j),j=1,nr)
-          write (lunt,30) (lineflx(j),j=1,nr)
-c
-         endif
-        endif
-       enddo
+        enddo
 c
       endif
 c
       if (nfeions.ne.0) then
 c
-       write (lunt,540)
+        write (lunt,540)
   540 format(//,
      & ' Multi-Level Iron-Like Ions: HBeta = 1.000'/
      & ' ============================================'/)
-       chcksum=0.0d0
-       do i=1,nfeions
-        do j=1,nfetrans(i)
-         chcksum=chcksum+fluxfe(j,i)
+        chcksum=0.0d0
+        do i=1,nfeions
+          do j=1,nfetrans(i)
+            chcksum=chcksum+fluxfe(j,i)
+          enddo
         enddo
-       enddo
   550 format(' Total Iron Lines Int/H-Beta:',1pg14.6)
-       write (lunt,550) chcksum
-       chcksum=0.0d0
-       do i=1,nfeions
-        do j=1,nfetrans(i)
-         if (felam(j,i).lt.3.d-5) then
-          chcksum=chcksum+fluxfe(j,i)
-         endif
+        write (lunt,550) chcksum
+        chcksum=0.0d0
+        do i=1,nfeions
+          do j=1,nfetrans(i)
+            if (felam(j,i).lt.3.d-5) then
+              chcksum=chcksum+fluxfe(j,i)
+            endif
+          enddo
         enddo
-       enddo
   560 format(' UV Total Iron Lines <3000A Int/H-Beta:',1pg14.6)
-       write (lunt,560) chcksum
-       chcksum=0.0d0
-       do i=1,nfeions
-        do j=1,nfetrans(i)
-         if (felam(j,i).ge.7.d-5) then
-          chcksum=chcksum+fluxfe(j,i)
-         endif
+        write (lunt,560) chcksum
+        chcksum=0.0d0
+        do i=1,nfeions
+          do j=1,nfetrans(i)
+            if (felam(j,i).ge.7.d-5) then
+              chcksum=chcksum+fluxfe(j,i)
+            endif
+          enddo
         enddo
-       enddo
   570 format(' IR Total Iron Lines >7000A Int/H-Beta:',1pg14.6)
-       write (lunt,570) chcksum
-       do ionidx=1,nfeions
-        idx=0
-        do j=1,nfetrans(ionidx)
-         if (fluxfe(j,ionidx).gt.chklim) idx=idx+1
-        enddo
-        if (idx.gt.0) then
-         nl=(idx/5)
-         nr=idx-(nl*5)
-         write (lunt,140)
-         write (lunt,170) elem(featom(ionidx)),rom(feion(ionidx)),
-     &    fenl(ionidx)
+        write (lunt,570) chcksum
+        do ionidx=1,nfeions
+          idx=0
+          do j=1,nfetrans(ionidx)
+            if (fluxfe(j,ionidx).gt.chklim) idx=idx+1
+          enddo
+          if (idx.gt.0) then
+            nl=(idx/5)
+            nr=idx-(nl*5)
+            write (lunt,140)
+            write (lunt,170) elem(featom(ionidx)),rom(feion(ionidx)),
+     &       fenl(ionidx)
 c
-         chcksum=0.0d0
-         do j=1,nfetrans(ionidx)
-          chcksum=chcksum+fluxfe(j,ionidx)
-         enddo
+            chcksum=0.0d0
+            do j=1,nfetrans(ionidx)
+              chcksum=chcksum+fluxfe(j,ionidx)
+            enddo
   580 format(/,' Total ',a3,a6,' Lines Int/H-Beta:',1pg14.6)
-         write (lunt,580) elem(featom(ionidx)),rom(feion(ionidx)),
-     &    chcksum
+            write (lunt,580) elem(featom(ionidx)),rom(feion(ionidx)),
+     &       chcksum
 c
-         chcksum=0.0d0
-         do j=1,nfetrans(ionidx)
-          if (felam(j,ionidx).lt.3.d-5) then
-           chcksum=chcksum+fluxfe(j,ionidx)
-          endif
-         enddo
+            chcksum=0.0d0
+            do j=1,nfetrans(ionidx)
+              if (felam(j,ionidx).lt.3.d-5) then
+                chcksum=chcksum+fluxfe(j,ionidx)
+              endif
+            enddo
   590 format(' UV ',a3,a6,' Lines <3000A Int/H-Beta:',1pg14.6)
-         write (lunt,590) elem(featom(ionidx)),rom(feion(ionidx)),
-     &    chcksum
+            write (lunt,590) elem(featom(ionidx)),rom(feion(ionidx)),
+     &       chcksum
 c
-         chcksum=0.0d0
-         do j=1,nfetrans(ionidx)
-          if (felam(j,ionidx).ge.7.d-5) then
-           chcksum=chcksum+fluxfe(j,ionidx)
-          endif
-         enddo
+            chcksum=0.0d0
+            do j=1,nfetrans(ionidx)
+              if (felam(j,ionidx).ge.7.d-5) then
+                chcksum=chcksum+fluxfe(j,ionidx)
+              endif
+            enddo
   600 format(' IR ',a3,a6,' Lines >7000A Int/H-Beta:',1pg14.6)
-         write (lunt,600) elem(featom(ionidx)),rom(feion(ionidx)),
-     &    chcksum
+            write (lunt,600) elem(featom(ionidx)),rom(feion(ionidx)),
+     &       chcksum
 c
-         idx=0
-         nr=0
-         nt=nfetrans(ionidx)
+            idx=0
+            nr=0
+            nt=nfetrans(ionidx)
 c
-         do jdx=1,nt
-          nlo=nfelower(jdx,ionidx)
-          nhi=nfeupper(jdx,ionidx)
-          trdx=nfetridx(nlo,nhi,ionidx)
-          if (fluxfe(jdx,ionidx).gt.chklim) then
+            do jdx=1,nt
+              nlo=nfelower(jdx,ionidx)
+              nhi=nfeupper(jdx,ionidx)
+              trdx=nfetridx(nlo,nhi,ionidx)
+              if (fluxfe(jdx,ionidx).gt.chklim) then
 c
 c get next 5 lines with flux
 c
-           idx=idx+1
-           nr=idx
-           lineid(idx)=nfeid(jdx,ionidx)
-           lineflx(idx)=fluxfe(jdx,ionidx)
-           linelam(idx)=(felam(jdx,ionidx)*1.d8)
-           linelam(idx)=linelam(idx)/fnair(linelam(idx))
-           linelo(idx)=nfelower(jdx,ionidx)
-           linehi(idx)=nfeupper(jdx,ionidx)
-           if ((idx.ge.5).or.((jdx.eq.nt).and.(nr.gt.0))) then
-            write (lunt,140)
-            write (lunt,80) (linelo(j),linehi(j),j=1,nr)
-            write (lunt,110) (lineid(j),j=1,nr)
-            write (lunt,10) (linelam(j),j=1,nr)
-            write (lunt,30) (lineflx(j),j=1,nr)
-            idx=0
-            nr=0
-           endif
-          endif
-          if ((jdx.eq.nt).and.(nr.gt.0)) then
-           write (lunt,140)
-           write (lunt,80) (linelo(j),linehi(j),j=1,nr)
-           write (lunt,110) (lineid(j),j=1,nr)
-           write (lunt,10) (linelam(j),j=1,nr)
-           write (lunt,30) (lineflx(j),j=1,nr)
-           idx=0
-           nr=0
-          endif
-         enddo
+                idx=idx+1
+                nr=idx
+                lineid(idx)=nfeid(jdx,ionidx)
+                lineflx(idx)=fluxfe(jdx,ionidx)
+                linelam(idx)=(felam(jdx,ionidx)*1.d8)
+                linelam(idx)=linelam(idx)/fnair(linelam(idx))
+                linelo(idx)=nfelower(jdx,ionidx)
+                linehi(idx)=nfeupper(jdx,ionidx)
+                if ((idx.ge.5).or.((jdx.eq.nt).and.(nr.gt.0))) then
+                  write (lunt,140)
+                  write (lunt,80) (linelo(j),linehi(j),j=1,nr)
+                  write (lunt,110) (lineid(j),j=1,nr)
+                  write (lunt,10) (linelam(j),j=1,nr)
+                  write (lunt,30) (lineflx(j),j=1,nr)
+                  idx=0
+                  nr=0
+                endif
+              endif
+              if ((jdx.eq.nt).and.(nr.gt.0)) then
+                write (lunt,140)
+                write (lunt,80) (linelo(j),linehi(j),j=1,nr)
+                write (lunt,110) (lineid(j),j=1,nr)
+                write (lunt,10) (linelam(j),j=1,nr)
+                write (lunt,30) (lineflx(j),j=1,nr)
+                idx=0
+                nr=0
+              endif
+            enddo
 c
-        endif
-       enddo
+          endif
+        enddo
 c
       endif
 c
       if (nf3ions.ne.0) then
 c
-       write (lunt,610)
+        write (lunt,610)
   610 format(//,
      & ' Three-Level H/Proton Excitation: HBeta = 1.000'/
      & ' ================================================'/)
 c
-       chcksum=0.0d0
-       do i=1,nf3ions
-        do j=1,nf3trans
-         chcksum=chcksum+fluxf3(j,i)
-        enddo
-       enddo
-  620 format(/,' Total 3LA Lines Int/H-Beta:',1pg14.6)
-       write (lunt,620) chcksum
-c
-       do i=1,nf3ions
         chcksum=0.0d0
-        do j=1,nf3trans
-         chcksum=chcksum+fluxf3(j,i)
+        do i=1,nf3ions
+          do j=1,nf3trans
+            chcksum=chcksum+fluxf3(j,i)
+          enddo
         enddo
-        if (chcksum.ge.chklim) then
-         write (lunt,130)
-         write (lunt,150) elem(f3atom(i)),rom(f3ion(i))
-         write (lunt,20) (f3lam(j,i),j=1,nf3trans)!nocorrection
-         write (lunt,30) (fluxf3(j,i),j=1,nf3trans)
-        endif
-       enddo
+  620 format(/,' Total 3LA Lines Int/H-Beta:',1pg14.6)
+        write (lunt,620) chcksum
+c
+        do i=1,nf3ions
+          chcksum=0.0d0
+          do j=1,nf3trans
+            chcksum=chcksum+fluxf3(j,i)
+          enddo
+          if (chcksum.ge.chklim) then
+            write (lunt,130)
+            write (lunt,150) elem(f3atom(i)),rom(f3ion(i))
+c     no correction
+            write (lunt,20) (f3lam(j,i),j=1,nf3trans)
+            write (lunt,30) (fluxf3(j,i),j=1,nf3trans)
+          endif
+        enddo
 c
       endif
 c
@@ -926,61 +927,61 @@ c
 c      if ((mlines+xilines+xhelines).ne.0) then
       if ((mlines).ne.0) then
 c
-       max=(mlines+4)/5
-       write (lunt,630)
+        max=(mlines+4)/5
+        write (lunt,630)
   630 format(//,
      & ' Two Level FS and Semi-Forbidden: HBeta = 1.000'/
      & ' ================================================'/)
-       chcksum=0.0d0
-       do i=1,mlines
-        chcksum=chcksum+fluxi(i)
-       enddo
+        chcksum=0.0d0
+        do i=1,mlines
+          chcksum=chcksum+fluxi(i)
+        enddo
 c       do i=1,xilines
 c         chcksum=chcksum+fluxxi(i)
 c       enddo
   640 format(/,' Total Semi-Forbidden Line Int/H-Beta:',1pg14.6)
-       write (lunt,640) chcksum
-       chcksum=0.0d0
-       do i=1,mlines
-        if (fslam(i).lt.(iphlam*1.d-8)) then
-         chcksum=chcksum+fluxi(i)
-        endif
-       enddo
+        write (lunt,640) chcksum
+        chcksum=0.0d0
+        do i=1,mlines
+          if (fslam(i).lt.(iphlam*1.d-8)) then
+            chcksum=chcksum+fluxi(i)
+          endif
+        enddo
 c       do i=1,xilines
 c         if (xilam(i).lt.iphlam) then
 c           chcksum=chcksum+fluxxi(i)
 c         endif
 c       enddo
   650 format(/,' Semi-Forbidden Lines < 911A Int/H-Beta:',1pg14.6)
-       write (lunt,650) chcksum
-       do i=1,max
-        jl=5
-        k=(i-1)*5
-        if ((i*5).gt.mlines) jl=mlines-k
-        chcksum=0.0d0
-        do j=1,jl
-         chcksum=chcksum+fluxi(j+k)
-         atom=ielfs(k+j)
-         ion=ionfs(k+j)
-         pad=elem(atom)
-         ionstr=pad(1:3)//rom(ion)
-         l0=rom_len(ion)
-         l1=9-(l0+3)
-         pad='         '
-         if (l1.gt.0) then
-          ionstr=pad(1:l1)//ionstr
-         endif
-         lineion(j)=ionstr(1:9)
-         linelam(j)=fslam(k+j)*1.d8
-         linelam(j)=linelam(j)/fnair(linelam(j))
+        write (lunt,650) chcksum
+        do i=1,max
+          jl=5
+          k=(i-1)*5
+          if ((i*5).gt.mlines) jl=mlines-k
+          chcksum=0.0d0
+          do j=1,jl
+            chcksum=chcksum+fluxi(j+k)
+            atom=ielfs(k+j)
+            ion=ionfs(k+j)
+            pad=elem(atom)
+            ionstr=pad(1:3)//rom(ion)
+            l0=rom_len(ion)
+            l1=9-(l0+3)
+            pad='         '
+            if (l1.gt.0) then
+              ionstr=pad(1:l1)//ionstr
+            endif
+            lineion(j)=ionstr(1:9)
+            linelam(j)=fslam(k+j)*1.d8
+            linelam(j)=linelam(j)/fnair(linelam(j))
+          enddo
+          if (chcksum.ge.chklim) then
+            write (lunt,130)
+            write (lunt,160) (lineion(j),j=1,jl)
+            write (lunt,10) (linelam(j),j=1,jl)
+            write (lunt,30) (fluxi(j+k),j=1,jl)
+          endif
         enddo
-        if (chcksum.ge.chklim) then
-         write (lunt,130)
-         write (lunt,160) (lineion(j),j=1,jl)
-         write (lunt,10) (linelam(j),j=1,jl)
-         write (lunt,30) (fluxi(j+k),j=1,jl)
-        endif
-       enddo
 c
 c
 c       max=(xilines+4)/5
@@ -1050,116 +1051,116 @@ c
       endif
 c
       if ((nxr3lines).ne.0) then
-       max=(nxr3lines+4)/5
-       write (lunt,660)
+        max=(nxr3lines+4)/5
+        write (lunt,660)
   660 format(// ' Cascade Resonance Lines: HBeta = 1.000'/
      & ' ================================================'/)
-       chcksum=0.0d0
-       do i=1,nxr3lines
-        chcksum=chcksum+xr3lines_flux(i)
-       enddo
-  670 format(' Total Cascade Resonance Line   Int/H-Beta:',1pg14.6)
-       write (lunt,670) chcksum
-       chcksum=0.0d0
-       do i=1,nxr3lines
-        if (xr3lines_lam(i).lt.iphlam) then
-         chcksum=chcksum+xr3lines_flux(i)
-        endif
-       enddo
-  680 format(' Cascade Resonance Lines < 911A Int/H-Beta:',1pg14.6)
-       write (lunt,680) chcksum
-       do i=1,max
-        jl=5
-        k=(i-1)*5
-        if ((i*5).gt.nxr3lines) jl=nxr3lines-k
         chcksum=0.0d0
-        do j=1,jl
-         chcksum=chcksum+xr3lines_flux(j+k)
-         atom=xr3lines_at(k+j)
-         ion=xr3lines_ion(k+j)
-         pad=elem(atom)
-         ionstr=pad(1:3)//rom(ion)
-         l0=rom_len(ion)
-         l1=9-(l0+3)
-         pad='         '
-         if (l1.gt.0) then
-          ionstr=pad(1:l1)//ionstr
-         endif
-         lineion(j)=ionstr(1:9)
-         ionstr=xr3lines_tran(j+k)
-         lineid(j)=ionstr(1:18)
-         linelo(j)=xr3lines_imap_i(j+k)
-         linehi(j)=xr3lines_imap_j(j+k)
-         linelam(j)=xr3lines_lam(j+k)
-         linelam(j)=linelam(j)/fnair(linelam(j))
-         lineflx(j)=xr3lines_flux(j+k)
+        do i=1,nxr3lines
+          chcksum=chcksum+xr3lines_flux(i)
         enddo
-        if (chcksum.ge.chklim) then
-         write (lunt,130)
-         write (lunt,160) (lineion(j),j=1,jl)
-         write (lunt,80) (linelo(j),linehi(j),j=1,jl)
-         write (lunt,120) (lineid(j),j=1,jl)
-         write (lunt,10) (linelam(j),j=1,jl)
-         write (lunt,30) (lineflx(j),j=1,jl)
-        endif
-       enddo
+  670 format(' Total Cascade Resonance Line   Int/H-Beta:',1pg14.6)
+        write (lunt,670) chcksum
+        chcksum=0.0d0
+        do i=1,nxr3lines
+          if (xr3lines_lam(i).lt.iphlam) then
+            chcksum=chcksum+xr3lines_flux(i)
+          endif
+        enddo
+  680 format(' Cascade Resonance Lines < 911A Int/H-Beta:',1pg14.6)
+        write (lunt,680) chcksum
+        do i=1,max
+          jl=5
+          k=(i-1)*5
+          if ((i*5).gt.nxr3lines) jl=nxr3lines-k
+          chcksum=0.0d0
+          do j=1,jl
+            chcksum=chcksum+xr3lines_flux(j+k)
+            atom=xr3lines_at(k+j)
+            ion=xr3lines_ion(k+j)
+            pad=elem(atom)
+            ionstr=pad(1:3)//rom(ion)
+            l0=rom_len(ion)
+            l1=9-(l0+3)
+            pad='         '
+            if (l1.gt.0) then
+              ionstr=pad(1:l1)//ionstr
+            endif
+            lineion(j)=ionstr(1:9)
+            ionstr=xr3lines_tran(j+k)
+            lineid(j)=ionstr(1:18)
+            linelo(j)=xr3lines_imap_i(j+k)
+            linehi(j)=xr3lines_imap_j(j+k)
+            linelam(j)=xr3lines_lam(j+k)
+            linelam(j)=linelam(j)/fnair(linelam(j))
+            lineflx(j)=xr3lines_flux(j+k)
+          enddo
+          if (chcksum.ge.chklim) then
+            write (lunt,130)
+            write (lunt,160) (lineion(j),j=1,jl)
+            write (lunt,80) (linelo(j),linehi(j),j=1,jl)
+            write (lunt,120) (lineid(j),j=1,jl)
+            write (lunt,10) (linelam(j),j=1,jl)
+            write (lunt,30) (lineflx(j),j=1,jl)
+          endif
+        enddo
       endif
 c
       if ((nxrllines).ne.0) then
-       max=(nxrllines+4)/5
-       write (lunt,690)
+        max=(nxrllines+4)/5
+        write (lunt,690)
   690 format(//
      & ' Large Atom Cascade Resonance Lines: HBeta = 1.000'/
      & ' =================================================='/)
-       chcksum=0.0d0
-       do i=1,nxrllines
-        chcksum=chcksum+xrllines_flux(i)
-       enddo
-  700 format(' Total Cascade Resonance Line   Int/H-Beta:',1pg14.6)
-       write (lunt,700) chcksum
-       chcksum=0.0d0
-       do i=1,nxrllines
-        if (xrllines_lam(i).lt.iphlam) then
-         chcksum=chcksum+xrllines_flux(i)
-        endif
-       enddo
-  710 format(' Cascade Resonance Lines < 911A Int/H-Beta:',1pg14.6)
-       write (lunt,710) chcksum
-       do i=1,max
-        jl=5
-        k=(i-1)*5
-        if ((i*5).gt.nxrllines) jl=nxrllines-k
         chcksum=0.0d0
-        do j=1,jl
-         chcksum=chcksum+xrllines_flux(j+k)
-         atom=xrllines_at(k+j)
-         ion=xrllines_ion(k+j)
-         pad=elem(atom)
-         ionstr=pad(1:3)//rom(ion)
-         l0=rom_len(ion)
-         l1=9-(l0+3)
-         pad='         '
-         if (l1.gt.0) then
-          ionstr=pad(1:l1)//ionstr
-         endif
-         lineion(j)=ionstr(1:9)
-         ionstr=xrllines_tran(j+k)
-         lineid(j)=ionstr(1:18)
-         linelo(j)=xrllines_imap_i(j+k)
-         linehi(j)=xrllines_imap_j(j+k)
-         linelam(j)=xrllines_lam(j+k)
-         linelam(j)=linelam(j)/fnair(linelam(j))
-         lineflx(j)=xrllines_flux(j+k)
+        do i=1,nxrllines
+          chcksum=chcksum+xrllines_flux(i)
         enddo
-        if (chcksum.ge.chklim) then
-         write (lunt,130)
-         write (lunt,160) (lineion(j),j=1,jl)
-         write (lunt,80) (linelo(j),linehi(j),j=1,jl)
-         write (lunt,120) (lineid(j),j=1,jl)
-         write (lunt,10) (linelam(j),j=1,jl)
-         write (lunt,30) (lineflx(j),j=1,jl)
-        endif
-       enddo
+  700 format(' Total Cascade Resonance Line   Int/H-Beta:',1pg14.6)
+        write (lunt,700) chcksum
+        chcksum=0.0d0
+        do i=1,nxrllines
+          if (xrllines_lam(i).lt.iphlam) then
+            chcksum=chcksum+xrllines_flux(i)
+          endif
+        enddo
+  710 format(' Cascade Resonance Lines < 911A Int/H-Beta:',1pg14.6)
+        write (lunt,710) chcksum
+        do i=1,max
+          jl=5
+          k=(i-1)*5
+          if ((i*5).gt.nxrllines) jl=nxrllines-k
+          chcksum=0.0d0
+          do j=1,jl
+            chcksum=chcksum+xrllines_flux(j+k)
+            atom=xrllines_at(k+j)
+            ion=xrllines_ion(k+j)
+            pad=elem(atom)
+            ionstr=pad(1:3)//rom(ion)
+            l0=rom_len(ion)
+            l1=9-(l0+3)
+            pad='         '
+            if (l1.gt.0) then
+              ionstr=pad(1:l1)//ionstr
+            endif
+            lineion(j)=ionstr(1:9)
+            ionstr=xrllines_tran(j+k)
+            lineid(j)=ionstr(1:18)
+            linelo(j)=xrllines_imap_i(j+k)
+            linehi(j)=xrllines_imap_j(j+k)
+            linelam(j)=xrllines_lam(j+k)
+            linelam(j)=linelam(j)/fnair(linelam(j))
+            lineflx(j)=xrllines_flux(j+k)
+          enddo
+          if (chcksum.ge.chklim) then
+            write (lunt,130)
+            write (lunt,160) (lineion(j),j=1,jl)
+            write (lunt,80) (linelo(j),linehi(j),j=1,jl)
+            write (lunt,120) (lineid(j),j=1,jl)
+            write (lunt,10) (linelam(j),j=1,jl)
+            write (lunt,30) (lineflx(j),j=1,jl)
+          endif
+        enddo
       endif
 c
 c     if ((nlines).ne.0) then
@@ -1381,10 +1382,10 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       chklim=1.0d-5
       if ((mode.eq.'ABS').or.(mode.eq.'TOTL')) then
-       chklim=epsilon
+        chklim=epsilon
       endif
       if (list.eq.'TTWN') then
-       chklim=1.0d-3
+        chklim=1.0d-3
       endif
 c
 c     Copy list into llist (local list) so it can be modified if
@@ -1393,140 +1394,146 @@ c
       llist=list
       if ((llist.ne.'TTWN').and.(llist.ne.'TOTL').and.(llist.ne.'FLUX')
      &.and.(llist.ne.'LAMB').and.(llist.ne.'ALL')) then
-       write (*,*) ' Mode error in SPEC2 : ',list
-       write (*,*) ' Using lambda sorting.'
-       llist='LAMB'
+        write (*,*) ' Mode error in SPEC2 : ',list
+        write (*,*) ' Using lambda sorting.'
+        llist='LAMB'
       endif
 c
       linecount=0
 c
       do series=1,nhseries
-       do line=1,nhlines
-        if (hydroflux(line,series).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=hlambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=hydroflux(line,series)
-         lineid(linecount,1)=1
-         lineid(linecount,2)=1
-         lineacc(linecount)=1
-         linekind(linecount)='RCAB'
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhlines
+          if (hydroflux(line,series).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=hlambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=hydroflux(line,series)
+            lineid(linecount,1)=1
+            lineid(linecount,2)=1
+            lineacc(linecount)=1
+            linekind(linecount)='RCAB'
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
       do series=1,nheseries
-       do line=1,nhelines
-        if (heliflux(line,series).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=helambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=heliflux(line,series)
-         lineid(linecount,1)=2
-         lineid(linecount,2)=2
-         lineacc(linecount)=1
-         linekind(linecount)='RCAB'
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhelines
+          if (heliflux(line,series).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=helambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=heliflux(line,series)
+            lineid(linecount,1)=2
+            lineid(linecount,2)=2
+            lineacc(linecount)=1
+            linekind(linecount)='RCAB'
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
 c
       do i=3,atypes
-       do series=1,nxhseries
-        do line=1,nxhlines
-         if (xhydroflux(line,series,i).gt.chklim) then
-          linecount=linecount+1
-          linelam(linecount)=xhlambda(line,series,i)
-          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
-     &     )
-          linespec(linecount)=xhydroflux(line,series,i)
-          lineid(linecount,1)=i
-          lineid(linecount,2)=mapz(i)
-          lineacc(linecount)=3
+        do series=1,nxhseries
+          do line=1,nxhlines
+            if (xhydroflux(line,series,i).gt.chklim) then
+              linecount=linecount+1
+              linelam(linecount)=xhlambda(line,series,i)
+              linelam(linecount)=linelam(linecount)/
+     &         fnair(linelam(linecount))
+              linespec(linecount)=xhydroflux(line,series,i)
+              lineid(linecount,1)=i
+              lineid(linecount,2)=mapz(i)
+              lineacc(linecount)=3
 c no collisons in these components
-          linekind(linecount)='RA  '
-         endif
+              linekind(linecount)='RA  '
+            endif
+          enddo
         enddo
-       enddo
       enddo
 c
       do ionidx=1,nfmions
-       do nt=1,nfmtrans(ionidx)
-        if (fluxm(nt,ionidx).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(fmlam(nt,ionidx)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=fluxm(nt,ionidx)
-         lineid(linecount,1)=fmatom(ionidx)
-         lineid(linecount,2)=fmion(ionidx)
-         lineacc(linecount)=3
-         linekind(linecount)='CM  '
-         omtype=fmomdatatype(nt,ionidx)
-         if (omtype.eq.0) then
-          j=nfmupper(nt,ionidx)
-          i=nfmlower(nt,ionidx)
-          if (tdepm(j,i,ionidx).eq.0.d0) lineacc(linecount)=4
-         endif
-         if ((omtype.gt.0).and.(fmombtn(nt,ionidx).ge.9)) then
-          lineacc(linecount)=2
-         endif
-        endif
-       enddo
+        do nt=1,nfmtrans(ionidx)
+          if (fluxm(nt,ionidx).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(fmlam(nt,ionidx)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=fluxm(nt,ionidx)
+            lineid(linecount,1)=fmatom(ionidx)
+            lineid(linecount,2)=fmion(ionidx)
+            lineacc(linecount)=3
+            linekind(linecount)='CM  '
+            omtype=fmomdatatype(nt,ionidx)
+            if (omtype.eq.0) then
+              j=nfmupper(nt,ionidx)
+              i=nfmlower(nt,ionidx)
+              if (tdepm(j,i,ionidx).eq.0.d0) lineacc(linecount)=4
+            endif
+            if ((omtype.gt.0).and.(fmombtn(nt,ionidx).ge.9)) then
+              lineacc(linecount)=2
+            endif
+          endif
+        enddo
       enddo
 c
       do ionidx=1,nfeions
-       do nt=1,nfetrans(ionidx)
-        if (fluxfe(nt,ionidx).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(felam(nt,ionidx)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=fluxfe(nt,ionidx)
-         lineid(linecount,1)=featom(ionidx)
-         lineid(linecount,2)=feion(ionidx)
-         lineacc(linecount)=3
-         linekind(linecount)='CM  '
-         omtype=feomdatatype(nt,ionidx)
-         if (omtype.eq.0) then
-          j=nfeupper(nt,ionidx)
-          i=nfelower(nt,ionidx)
-          if (tdepfe(j,i,ionidx).eq.0.d0) lineacc(linecount)=4
-         endif
-         if ((omtype.gt.0).and.(feombtn(nt,ionidx).gt.9)) then
-          lineacc(linecount)=2
-         endif
-        endif
-       enddo
+        do nt=1,nfetrans(ionidx)
+          if (fluxfe(nt,ionidx).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(felam(nt,ionidx)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=fluxfe(nt,ionidx)
+            lineid(linecount,1)=featom(ionidx)
+            lineid(linecount,2)=feion(ionidx)
+            lineacc(linecount)=3
+            linekind(linecount)='CM  '
+            omtype=feomdatatype(nt,ionidx)
+            if (omtype.eq.0) then
+              j=nfeupper(nt,ionidx)
+              i=nfelower(nt,ionidx)
+              if (tdepfe(j,i,ionidx).eq.0.d0) lineacc(linecount)=4
+            endif
+            if ((omtype.gt.0).and.(feombtn(nt,ionidx).gt.9)) then
+              lineacc(linecount)=2
+            endif
+          endif
+        enddo
       enddo
 c
       do i=1,nf3ions
-       do j=1,nf3trans
-        if (fluxf3(j,i).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
-         linespec(linecount)=fluxf3(j,i)
-         lineid(linecount,1)=f3atom(i)
-         lineid(linecount,2)=f3ion(i)
-         lineacc(linecount)=4
-         linekind(linecount)='CHP '
-        endif
-       enddo
+        do j=1,nf3trans
+          if (fluxf3(j,i).gt.chklim) then
+            linecount=linecount+1
+c     no correction
+            linelam(linecount)=(f3lam(j,i)*1.d4)
+            linespec(linecount)=fluxf3(j,i)
+            lineid(linecount,1)=f3atom(i)
+            lineid(linecount,2)=f3ion(i)
+            lineacc(linecount)=4
+            linekind(linecount)='CHP '
+          endif
+        enddo
       enddo
 c
       do i=1,mlines
-       if (fluxi(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(fslam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxi(i)
-        lineid(linecount,1)=ielfs(i)
-        lineid(linecount,2)=ionfs(i)
-        lineacc(linecount)=5
-        linekind(linecount)='C   '
-       endif
+        if (fluxi(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(fslam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxi(i)
+          lineid(linecount,1)=ielfs(i)
+          lineid(linecount,2)=ionfs(i)
+          lineacc(linecount)=5
+          linekind(linecount)='C   '
+        endif
       enddo
 c
 c     do i=1,nlines
@@ -1544,152 +1551,163 @@ c       endif
 c     enddo
 c
       do i=1,nxr3lines
-       if (xr3lines_flux(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xr3lines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xr3lines_flux(i)
-        lineid(linecount,1)=xr3lines_at(i)
-        lineid(linecount,2)=xr3lines_ion(i)
-        lineacc(linecount)=3
-        linekind(linecount)='CC  '
-       endif
+        if (xr3lines_flux(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xr3lines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xr3lines_flux(i)
+          lineid(linecount,1)=xr3lines_at(i)
+          lineid(linecount,2)=xr3lines_ion(i)
+          lineacc(linecount)=3
+          linekind(linecount)='CC  '
+        endif
       enddo
 c
       do i=1,nxrllines
-       if (xrllines_flux(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xrllines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xrllines_flux(i)
-        lineid(linecount,1)=xrllines_at(i)
-        lineid(linecount,2)=xrllines_ion(i)
-        lineacc(linecount)=3
-        linekind(linecount)='CCL '
-       endif
+        if (xrllines_flux(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xrllines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xrllines_flux(i)
+          lineid(linecount,1)=xrllines_at(i)
+          lineid(linecount,2)=xrllines_ion(i)
+          lineacc(linecount)=3
+          linekind(linecount)='CCL '
+        endif
       enddo
 c
 c Original He I lines, just the first two
 c
       do i=1,2
-       if (fluxhei(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heilam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxhei(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-        linekind(linecount)='RCB '
-       endif
+        if (fluxhei(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heilam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxhei(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+          linekind(linecount)='RCB '
+        endif
       enddo
 c
 c New He I singlet lines
 c
       do i=1,nheislines
-       if (fluxheis(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heislam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxheis(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-        linekind(linecount)='RCBS'
-       endif
+        if (fluxheis(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heislam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxheis(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+          linekind(linecount)='RCBS'
+        endif
       enddo
 c
 c New He I triplet lines
 c
       do i=1,nheitlines
-       if (fluxheit(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heitlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxheit(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-        linekind(linecount)='RCBT'
-       endif
+        if (fluxheit(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heitlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxheit(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+          linekind(linecount)='RCBT'
+        endif
       enddo
 c
       do i=1,nrccii
-       if (fluxrccii_b(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rccii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxrccii_b(i)
-        lineid(linecount,1)=zmap(6)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-        linekind(linecount)='RB  '
-       endif
+        if (fluxrccii_b(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rccii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxrccii_b(i)
+          lineid(linecount,1)=zmap(6)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+          linekind(linecount)='RB  '
+        endif
       enddo
 c
       do i=1,nrcnii
-       if (fluxrcnii_b(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcnii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxrcnii_b(i)
-        lineid(linecount,1)=zmap(7)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-        linekind(linecount)='RCB '
-       endif
+        if (fluxrcnii_b(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcnii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxrcnii_b(i)
+          lineid(linecount,1)=zmap(7)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+          linekind(linecount)='RCB '
+        endif
       enddo
 c
       do i=1,nrcoi_q
-       if (fluxrcoi_qb(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_qlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxrcoi_qb(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=4
-        linekind(linecount)='RBQ '
-       endif
+        if (fluxrcoi_qb(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_qlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxrcoi_qb(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=4
+          linekind(linecount)='RBQ '
+        endif
       enddo
 c
       do i=1,nrcoi_t
-       if (fluxrcoi_tb(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_tlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxrcoi_tb(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-        linekind(linecount)='RBT '
-       endif
+        if (fluxrcoi_tb(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_tlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxrcoi_tb(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+          linekind(linecount)='RBT '
+        endif
       enddo
 c
       do i=1,nrcoii
-       if (fluxrcoii_b(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxrcoii_b(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-        linekind(linecount)='RCB '
-       endif
+        if (fluxrcoii_b(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxrcoii_b(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+          linekind(linecount)='RCB '
+        endif
       enddo
 c
       do i=1,nrcneii
-       if (fluxrcneii_b(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcneii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fluxrcneii_b(i)
-        lineid(linecount,1)=zmap(10)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-        linekind(linecount)='RB  '
-       endif
+        if (fluxrcneii_b(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcneii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fluxrcneii_b(i)
+          lineid(linecount,1)=zmap(10)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+          linekind(linecount)='RB  '
+        endif
       enddo
 c
       fhbt=((fhbeta*fpi)+epsilon)*10.0d0**vunilog
@@ -1697,231 +1715,233 @@ c
 c
       if ((llist.eq.'TOTL')) then
 c
-       if (mode.eq.'REL') then
+        if (mode.eq.'REL') then
 c
-        if (jgeo.eq.'S') then
-         write (lunt,40) fhbtlog,fhbt
-        else
-         write (lunt,30) fhbtlog,fhbt
+          if (jgeo.eq.'S') then
+            write (lunt,40) fhbtlog,fhbt
+          else
+            write (lunt,30) fhbtlog,fhbt
+          endif
+c
         endif
 c
-       endif
+        if (mode.eq.'ABS') then
+          write (lunt,70) fhbtlog,fhbt
+        endif
 c
-       if (mode.eq.'ABS') then
-        write (lunt,70) fhbtlog,fhbt
-       endif
+        if (linecount.gt.mxspeclines) then
+          write (*,*) 'ERROR: Spec2 output has too many lines'
+          write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+          write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+          write (*,*) 'and rebuild mappings.'
+          stop
+        endif
 c
-       if (linecount.gt.mxspeclines) then
-        write (*,*) 'ERROR: Spec2 output has too many lines'
-        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-        write (*,*) 'and rebuild mappings.'
-        stop
-       endif
+        call heapindexsort (linecount, linelam, lineidx)
 c
-       call heapindexsort (linecount, linelam, lineidx)
+        totallines=0.d0
+        do i=1,linecount
+          totallines=totallines+linespec(lineidx(i))
+        enddo
+        write (lunt,50) totallines,totallines*fhbt
 c
-       totallines=0.d0
-       do i=1,linecount
-        totallines=totallines+linespec(lineidx(i))
-       enddo
-       write (lunt,50) totallines,totallines*fhbt
+        total2p=hei2qa
+        do i=1,atypes
+          total2p=total2p+h2qflux(i)
+        enddo
+        write (lunt,60) total2p,total2p*fhbt
 c
-       total2p=hei2qa
-       do i=1,atypes
-        total2p=total2p+h2qflux(i)
-       enddo
-       write (lunt,60) total2p,total2p*fhbt
-c
-       write (lunt,80) chklim,linecount
+        write (lunt,80) chklim,linecount
 c
       endif
 c
       if ((llist.eq.'LAMB').or.(llist.eq.'ALL')) then
 c
-       if (mode.eq.'REL') then
+        if (mode.eq.'REL') then
 c
-        if (jgeo.eq.'S') then
-         write (lunt,40) fhbtlog,fhbt
-        else
-         write (lunt,30) fhbtlog,fhbt
+          if (jgeo.eq.'S') then
+            write (lunt,40) fhbtlog,fhbt
+          else
+            write (lunt,30) fhbtlog,fhbt
+          endif
+c
         endif
 c
-       endif
+        if (mode.eq.'ABS') then
+          write (lunt,70) fhbtlog,fhbt
+        endif
 c
-       if (mode.eq.'ABS') then
-        write (lunt,70) fhbtlog,fhbt
-       endif
+        if (linecount.gt.mxspeclines) then
+          write (*,*) 'ERROR: Spec2 output has too many lines'
+          write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+          write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+          write (*,*) 'and rebuild mappings.'
+          stop
+        endif
 c
-       if (linecount.gt.mxspeclines) then
-        write (*,*) 'ERROR: Spec2 output has too many lines'
-        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-        write (*,*) 'and rebuild mappings.'
-        stop
-       endif
+        call heapindexsort (linecount, linelam, lineidx)
 c
-       call heapindexsort (linecount, linelam, lineidx)
+        totallines=0.d0
+        do i=1,linecount
+          totallines=totallines+linespec(lineidx(i))
+        enddo
+        write (lunt,50) totallines,totallines*fhbt
 c
-       totallines=0.d0
-       do i=1,linecount
-        totallines=totallines+linespec(lineidx(i))
-       enddo
-       write (lunt,50) totallines,totallines*fhbt
-c
-       total2p=hei2qa
-       do i=1,atypes
-        total2p=total2p+h2qflux(i)
-       enddo
-       write (lunt,60) total2p,total2p*fhbt
+        total2p=hei2qa
+        do i=1,atypes
+          total2p=total2p+h2qflux(i)
+        enddo
+        write (lunt,60) total2p,total2p*fhbt
 c
 c  Combine dublicates
 c
-       idx=0
-       count=0
-  110  idx=idx+1
-       if (idx.lt.linecount) then
-        if ((lineid(lineidx(idx),1).eq.lineid(lineidx(idx+1),1))
-     &   .and.(lineid(lineidx(idx),2).eq.lineid(lineidx(idx+1),2))
-     &   .and.(linelam(lineidx(idx)).eq.linelam(lineidx(idx+1)))) then
-         count=count+1
-         idx=idx+1
-         goto 110
+        idx=0
+        count=0
+  110   idx=idx+1
+        if (idx.lt.linecount) then
+          if ((lineid(lineidx(idx),1).eq.lineid(lineidx(idx+1),1))
+     &     .and.(lineid(lineidx(idx),2).eq.lineid(lineidx(idx+1),2))
+     &     .and.(linelam(lineidx(idx)).eq.linelam(lineidx(idx+1))))
+     &     then
+            count=count+1
+            idx=idx+1
+            goto 110
+          endif
         endif
-       endif
-       count=count+1
-       if (idx.lt.linecount) goto 110
+        count=count+1
+        if (idx.lt.linecount) goto 110
 c
-       write (lunt,90) chklim,linecount,count
+        write (lunt,90) chklim,linecount,count
 c
-       idx=0
+        idx=0
 c
-  120  idx=idx+1
-       if (idx.lt.linecount) then
-        if ((lineid(lineidx(idx),1).eq.lineid(lineidx(idx+1),1))
-     &   .and.(lineid(lineidx(idx),2).eq.lineid(lineidx(idx+1),2))
-     &   .and.(linelam(lineidx(idx)).eq.linelam(lineidx(idx+1)))) then
-         linespec(lineidx(idx))=linespec(lineidx(idx))+
-     &    linespec(lineidx(idx+1))
-         kind1=linekind(lineidx(idx))
-         kind2=linekind(lineidx(idx+1))
-         write (lunt,20) linelam(lineidx(idx)),lmev/
-     &    (linelam(lineidx(idx))),linespec(lineidx(idx)),
-     &    elem(lineid(lineidx(idx),1)),rom(lineid(lineidx(idx),2)),
-     &    kind1,kind2,lineacc(lineidx(idx))
-         idx=idx+1
-         goto 120
+  120   idx=idx+1
+        if (idx.lt.linecount) then
+          if ((lineid(lineidx(idx),1).eq.lineid(lineidx(idx+1),1))
+     &     .and.(lineid(lineidx(idx),2).eq.lineid(lineidx(idx+1),2))
+     &     .and.(linelam(lineidx(idx)).eq.linelam(lineidx(idx+1))))
+     &     then
+            linespec(lineidx(idx))=linespec(lineidx(idx))+
+     &       linespec(lineidx(idx+1))
+            kind1=linekind(lineidx(idx))
+            kind2=linekind(lineidx(idx+1))
+            write (lunt,20) linelam(lineidx(idx)),lmev/
+     &       (linelam(lineidx(idx))),linespec(lineidx(idx)),
+     &       elem(lineid(lineidx(idx),1)),rom(lineid(lineidx(idx),2)),
+     &       kind1,kind2,lineacc(lineidx(idx))
+            idx=idx+1
+            goto 120
+          endif
         endif
-       endif
 c
-       write (lunt,10) linelam(lineidx(idx)),lmev/(linelam(lineidx(idx))
-     &  ),linespec(lineidx(idx)),elem(lineid(lineidx(idx),1)),
-     &  rom(lineid(lineidx(idx),2)),linekind(lineidx(idx)),
-     &  lineacc(lineidx(idx))
+        write (lunt,10) linelam(lineidx(idx)),lmev/(linelam(lineidx(idx)
+     &   )),linespec(lineidx(idx)),elem(lineid(lineidx(idx),1)),
+     &   rom(lineid(lineidx(idx),2)),linekind(lineidx(idx)),
+     &   lineacc(lineidx(idx))
 c
-       if (idx.lt.linecount) goto 120
+        if (idx.lt.linecount) goto 120
 c
       endif
 c
       if ((llist.eq.'FLUX').or.(llist.eq.'ALL')) then
 c
 c
-       if (mode.eq.'REL') then
+        if (mode.eq.'REL') then
 c
-        if (jgeo.eq.'S') then
-         write (lunt,40) fhbtlog,fhbt
-        else
-         write (lunt,30) fhbtlog,fhbt
+          if (jgeo.eq.'S') then
+            write (lunt,40) fhbtlog,fhbt
+          else
+            write (lunt,30) fhbtlog,fhbt
+          endif
+c
         endif
 c
-       endif
+        if (mode.eq.'ABS') then
+          write (lunt,70) fhbtlog
+        endif
 c
-       if (mode.eq.'ABS') then
-        write (lunt,70) fhbtlog
-       endif
+        if (linecount.gt.mxspeclines) then
+          write (*,*) 'ERROR: Spec2 output has too many lines'
+          write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+          write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+          write (*,*) 'and rebuild mappings.'
+          stop
+        endif
 c
-       if (linecount.gt.mxspeclines) then
-        write (*,*) 'ERROR: Spec2 output has too many lines'
-        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-        write (*,*) 'and rebuild mappings.'
-        stop
-       endif
+        call heapindexsort (linecount, linespec, lineidx)
 c
-       call heapindexsort (linecount, linespec, lineidx)
+        totallines=0.d0
+        do i=1,linecount
+          totallines=totallines+linespec(lineidx(i))
+        enddo
+        write (lunt,50) totallines,totallines*fhbt
 c
-       totallines=0.d0
-       do i=1,linecount
-        totallines=totallines+linespec(lineidx(i))
-       enddo
-       write (lunt,50) totallines,totallines*fhbt
+        total2p=hei2qa
+        do i=1,atypes
+          total2p=total2p+h2qflux(i)
+        enddo
+        write (lunt,60) total2p,total2p*fhbt
 c
-       total2p=hei2qa
-       do i=1,atypes
-        total2p=total2p+h2qflux(i)
-       enddo
-       write (lunt,60) total2p,total2p*fhbt
+        write (lunt,100) chklim
 c
-       write (lunt,100) chklim
-c
-       do i=linecount,1,-1
-        write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i))),
-     &   linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
-     &   rom(lineid(lineidx(i),2)),linekind(lineidx(i)),
-     &   lineacc(lineidx(i))
-       enddo
+        do i=linecount,1,-1
+          write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i)))
+     &     ,linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
+     &     rom(lineid(lineidx(i),2)),linekind(lineidx(i)),
+     &     lineacc(lineidx(i))
+        enddo
 c
       endif
 c
       if (llist.eq.'TTWN') then
 c
-       if (mode.eq.'REL') then
+        if (mode.eq.'REL') then
 c
-        if (jgeo.eq.'S') then
-         write (lunt,40) fhbtlog,fhbt
-        else
-         write (lunt,30) fhbtlog,fhbt
+          if (jgeo.eq.'S') then
+            write (lunt,40) fhbtlog,fhbt
+          else
+            write (lunt,30) fhbtlog,fhbt
+          endif
+c
         endif
 c
-       endif
+        if (mode.eq.'ABS') then
+          write (lunt,70) fhbtlog,fhbt
+        endif
 c
-       if (mode.eq.'ABS') then
-        write (lunt,70) fhbtlog,fhbt
-       endif
-c
-       if (linecount.gt.mxspeclines) then
-        write (*,*) 'ERROR: Spec2 output has too many lines'
-        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-        write (*,*) 'and rebuild mappings.'
-        stop
-       endif
+        if (linecount.gt.mxspeclines) then
+          write (*,*) 'ERROR: Spec2 output has too many lines'
+          write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+          write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+          write (*,*) 'and rebuild mappings.'
+          stop
+        endif
 c
 c sort on line flux:
 c
 c        call heapindexsort (linecount, linespec, lineidx)
-       call heapindexsort (linecount, linelam, lineidx)
+        call heapindexsort (linecount, linelam, lineidx)
 c
-       totallines=0.d0
-       do i=1,linecount
-        totallines=totallines+linespec(lineidx(i))
-       enddo
-       write (lunt,50) totallines,totallines*fhbt
+        totallines=0.d0
+        do i=1,linecount
+          totallines=totallines+linespec(lineidx(i))
+        enddo
+        write (lunt,50) totallines,totallines*fhbt
 c
-       total2p=hei2qa
-       do i=1,atypes
-        total2p=total2p+h2qflux(i)
-       enddo
-       write (lunt,60) total2p,total2p*fhbt
+        total2p=hei2qa
+        do i=1,atypes
+          total2p=total2p+h2qflux(i)
+        enddo
+        write (lunt,60) total2p,total2p*fhbt
 c
-       write (lunt,80) chklim,linecount
+        write (lunt,80) chklim,linecount
 c
-       do i=1,linecount
-        write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i))),
-     &   linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
-     &   rom(lineid(lineidx(i),2)),linekind(lineidx(i)),
-     &   lineacc(lineidx(i))
-       enddo
+        do i=1,linecount
+          write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i)))
+     &     ,linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
+     &     rom(lineid(lineidx(i),2)),linekind(lineidx(i)),
+     &     lineacc(lineidx(i))
+        enddo
 c
       endif
 c
@@ -1941,7 +1961,7 @@ c
       real*8  rra
 c
       do i=1,n
-       idx(i)=i
+        idx(i)=i
       enddo
 c
       if (n.lt.2) return
@@ -1950,34 +1970,34 @@ c
       ir=n
 c
    10 if (l.gt.1) then
-       l=l-1
-       itmp=idx(l)
-       rra=ra(itmp)
+        l=l-1
+        itmp=idx(l)
+        rra=ra(itmp)
       else
-       itmp=idx(ir)
-       rra=ra(itmp)
-       idx(ir)=idx(1)
-       ir=ir-1
-       if (ir.eq.1) then
-        idx(1)=itmp
-        return
-       endif
+        itmp=idx(ir)
+        rra=ra(itmp)
+        idx(ir)=idx(1)
+        ir=ir-1
+        if (ir.eq.1) then
+          idx(1)=itmp
+          return
+        endif
       endif
 c
       i=l
       j=l+l
    20 if (j.le.ir) then
-       if (j.lt.ir) then
-        if (ra(idx(j)).lt.ra(idx(j+1))) j=j+1
-       endif
-       if (rra.lt.ra(idx(j))) then
-        idx(i)=idx(j)
-        i=j
-        j=j+j
-       else
-        j=ir+1
-       endif
-       goto 20
+        if (j.lt.ir) then
+          if (ra(idx(j)).lt.ra(idx(j+1))) j=j+1
+        endif
+        if (rra.lt.ra(idx(j))) then
+          idx(i)=idx(j)
+          i=j
+          j=j+j
+        else
+          j=ir+1
+        endif
+        goto 20
       endif
 c
       idx(i)=itmp
@@ -2045,13 +2065,13 @@ c
 c tp in Jnu 1/4pi for intvec
 c
       do i=1,infph-1
-       fx=widbinnu(i)*tp(i)
-       pt=fx/cphote(i)
-       blum=blum+fx
-       qall=qall+pt
-       if (photev(i).ge.iph) ilum=ilum+fx
-       if (photev(i).ge.100.d0) xlum=xlum+fx
-       if (photev(i).ge.3.51211d+01) qoii=qoii+pt
+        fx=widbinnu(i)*tp(i)
+        pt=fx/cphote(i)
+        blum=blum+fx
+        qall=qall+pt
+        if (photev(i).ge.iph) ilum=ilum+fx
+        if (photev(i).ge.100.d0) xlum=xlum+fx
+        if (photev(i).ge.3.51211d+01) qoii=qoii+pt
       enddo
 c
       blum=fpi*blum
@@ -2073,9 +2093,9 @@ c
       qht=q4
 c
       if (screen.le.0) then
-       write (lunt,10) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
+        write (lunt,10) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
       else
-       write (lunt,20) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
+        write (lunt,20) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
       endif
 c
       return
@@ -2135,13 +2155,13 @@ c
 c tp in Jnu 1/4pi for intvec
 c
       do i=1,infph-1
-       fx=widbinnu(i)*sp(i)
-       pt=fx/cphote(i)
-       blum=blum+fx
-       qall=qall+pt
-       if (photev(i).ge.iph) ilum=ilum+fx
-       if (photev(i).ge.100.d0) xlum=xlum+fx
-       if (photev(i).ge.3.51211d+01) qoii=qoii+pt
+        fx=widbinnu(i)*sp(i)
+        pt=fx/cphote(i)
+        blum=blum+fx
+        qall=qall+pt
+        if (photev(i).ge.iph) ilum=ilum+fx
+        if (photev(i).ge.100.d0) xlum=xlum+fx
+        if (photev(i).ge.3.51211d+01) qoii=qoii+pt
       enddo
 c
       blum=pi*blum
@@ -2163,9 +2183,9 @@ c
       qht=q4
 c
       if (screen.le.0) then
-       write (lunt,10) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
+        write (lunt,10) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
       else
-       write (lunt,20) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
+        write (lunt,20) blum,qall,ilum,qht,xlum,qhi,qhei,qheii,qoii
       endif
 c
       return
@@ -2287,7 +2307,7 @@ c      chklim = epsilon
 c
       chklim=1.0d-6*(hbeta+epsilon)
       if (mode.eq.'ABS') then
-       chklim=epsilon
+        chklim=epsilon
       endif
 c
 c     Copy list into llist (local list) so it can be modified if
@@ -2296,114 +2316,121 @@ c
       llist=list
       if ((llist.ne.'TTWN').and.(llist.ne.'FLUX').and.(llist.ne.'LAMB')
      &.and.(llist.ne.'ALL')) then
-       write (*,*) ' Mode error in speclocal : ',list
-       write (*,*) ' Using lambda sorting.'
-       llist='LAMB'
+        write (*,*) ' Mode error in speclocal : ',list
+        write (*,*) ' Using lambda sorting.'
+        llist='LAMB'
       endif
 c
       linecount=0
 c
       do series=1,nhseries
-       do line=1,nhlines
-        if (hydrobri(line,series).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=hlambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=hydrobri(line,series)/(hbeta+epsilon)
-         lineid(linecount,1)=1
-         lineid(linecount,2)=1
-         lineacc(linecount)=1
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhlines
+          if (hydrobri(line,series).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=hlambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=hydrobri(line,series)/(hbeta+epsilon)
+            lineid(linecount,1)=1
+            lineid(linecount,2)=1
+            lineacc(linecount)=1
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
 c
       do series=1,nheseries
-       do line=1,nhelines
-        if (helibri(line,series).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=helambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=helibri(line,series)/(hbeta+epsilon)
-         lineid(linecount,1)=2
-         lineid(linecount,2)=2
-         lineacc(linecount)=1
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhelines
+          if (helibri(line,series).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=helambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=helibri(line,series)/(hbeta+epsilon)
+            lineid(linecount,1)=2
+            lineid(linecount,2)=2
+            lineacc(linecount)=1
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
 c
       do i=3,atypes
-       do series=1,nxhseries
-        do line=1,nxhlines
-         if (xhydrobri(line,series,i).gt.chklim) then
-          linecount=linecount+1
-          linelam(linecount)=xhlambda(line,series,i)
-          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
-     &     )
-          linespec(linecount)=xhydrobri(line,series,i)/(hbeta+epsilon)
-          lineid(linecount,1)=i
-          lineid(linecount,2)=mapz(i)
-          lineacc(linecount)=2
-         endif
+        do series=1,nxhseries
+          do line=1,nxhlines
+            if (xhydrobri(line,series,i).gt.chklim) then
+              linecount=linecount+1
+              linelam(linecount)=xhlambda(line,series,i)
+              linelam(linecount)=linelam(linecount)/
+     &         fnair(linelam(linecount))
+              linespec(linecount)=xhydrobri(line,series,i)/(hbeta+
+     &         epsilon)
+              lineid(linecount,1)=i
+              lineid(linecount,2)=mapz(i)
+              lineacc(linecount)=2
+            endif
+          enddo
         enddo
-       enddo
       enddo
 c
       do i=1,nfmions
-       do j=1,nfmtrans(i)
-        if (fluxm(j,i).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(fmlam(j,i)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=fluxm(j,i)
-         lineid(linecount,1)=fmatom(i)
-         lineid(linecount,2)=fmion(i)
-         lineacc(linecount)=2
-        endif
-       enddo
+        do j=1,nfmtrans(i)
+          if (fluxm(j,i).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(fmlam(j,i)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=fluxm(j,i)
+            lineid(linecount,1)=fmatom(i)
+            lineid(linecount,2)=fmion(i)
+            lineacc(linecount)=2
+          endif
+        enddo
       enddo
 c
       do i=1,nfeions
-       do j=1,nfetrans(i)
-        if (fluxfe(j,i).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(felam(j,i)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=fluxfe(j,i)
-         lineid(linecount,1)=featom(i)
-         lineid(linecount,2)=feion(i)
-         lineacc(linecount)=2
-        endif
-       enddo
+        do j=1,nfetrans(i)
+          if (fluxfe(j,i).gt.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(felam(j,i)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=fluxfe(j,i)
+            lineid(linecount,1)=featom(i)
+            lineid(linecount,2)=feion(i)
+            lineacc(linecount)=2
+          endif
+        enddo
       enddo
 c
       do i=1,nf3ions
-       do j=1,nf3trans
-        if (f3bri(j,i).gt.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
-         linespec(linecount)=f3bri(j,i)/(hbeta+epsilon)
-         lineid(linecount,1)=f3atom(i)
-         lineid(linecount,2)=f3ion(i)
-         lineacc(linecount)=3
-        endif
-       enddo
+        do j=1,nf3trans
+          if (f3bri(j,i).gt.chklim) then
+            linecount=linecount+1
+c     no correction
+            linelam(linecount)=(f3lam(j,i)*1.d4)
+            linespec(linecount)=f3bri(j,i)/(hbeta+epsilon)
+            lineid(linecount,1)=f3atom(i)
+            lineid(linecount,2)=f3ion(i)
+            lineacc(linecount)=3
+          endif
+        enddo
       enddo
 c
       do i=1,mlines
-       if (fsbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(fslam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fsbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=ielfs(i)
-        lineid(linecount,2)=ionfs(i)
-        lineacc(linecount)=3
+        if (fsbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(fslam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fsbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=ielfs(i)
+          lineid(linecount,2)=ionfs(i)
+          lineacc(linecount)=3
 c
 c   Special case more accurate lines: CII, NeII, SIV
 c
@@ -2416,7 +2443,7 @@ c         endif
 c         if ((xrat(i).eq.zmap(16)).and.(xion(i).eq.4)) then
 c           lineacc(linecount)=2
 c         endif
-       endif
+        endif
       enddo
 c
 c     do i=1,xilines
@@ -2472,141 +2499,152 @@ c       endif
 c     enddo
 c
       do i=1,nxr3lines
-       if (xr3lines_bri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xr3lines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xr3lines_bri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=xr3lines_at(i)
-        lineid(linecount,2)=xr3lines_ion(i)
-        lineacc(linecount)=3
-       endif
+        if (xr3lines_bri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xr3lines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xr3lines_bri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=xr3lines_at(i)
+          lineid(linecount,2)=xr3lines_ion(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
       do i=1,nxrllines
-       if (xrllines_bri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xrllines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xrllines_bri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=xrllines_at(i)
-        lineid(linecount,2)=xrllines_ion(i)
-        lineacc(linecount)=3
-       endif
+        if (xrllines_bri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xrllines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xrllines_bri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=xrllines_at(i)
+          lineid(linecount,2)=xrllines_ion(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c Original He I lines, just the first two
 c
       do i=1,2
-       if (heibri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heilam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heibri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-       endif
+        if (heibri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heilam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heibri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+        endif
       enddo
 c
 c New He I singlet lines
 c
       do i=1,nheislines
-       if (heisbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heislam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heisbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-       endif
+        if (heisbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heislam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heisbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c New He I triplet lines
 c
       do i=1,nheitlines
-       if (heitbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heitlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heitbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-       endif
+        if (heitbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heitlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heitbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+        endif
       enddo
 c
       do i=1,nrccii
-       if (rccii_bbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rccii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rccii_bbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(6)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rccii_bbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rccii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rccii_bbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(6)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcnii
-       if (rcnii_bbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcnii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcnii_bbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(7)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcnii_bbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcnii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcnii_bbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(7)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcoi_q
-       if (rcoi_qbbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_qlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoi_qbbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=4
-       endif
+        if (rcoi_qbbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_qlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoi_qbbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcoi_t
-       if (rcoi_tbbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_tlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoi_tbbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-       endif
+        if (rcoi_tbbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_tlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoi_tbbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+        endif
       enddo
 c
       do i=1,nrcoii
-       if (rcoii_bbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoii_bbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcoii_bbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoii_bbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcneii
-       if (rcneii_bbri(i).gt.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcneii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcneii_bbri(i)/(hbeta+epsilon)
-        lineid(linecount,1)=zmap(10)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcneii_bbri(i).gt.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcneii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcneii_bbri(i)/(hbeta+epsilon)
+          lineid(linecount,1)=zmap(10)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
 c includes 4pis cvt to total loss
@@ -2616,109 +2654,109 @@ c
 c
       if ((llist.eq.'LAMB').or.(llist.eq.'ALL')) then
 c
-       if (mode.eq.'REL') then
+        if (mode.eq.'REL') then
 c
 c these have 4pi already, luminosities from total losses/cooling
 c
-        if (jgeo.eq.'S') then
-         write (lunt,70) fhbtlog,eloslog
-        else
-         write (lunt,60) fhbtlog,eloslog
+          if (jgeo.eq.'S') then
+            write (lunt,70) fhbtlog,eloslog
+          else
+            write (lunt,60) fhbtlog,eloslog
+          endif
+c
         endif
 c
-       endif
+        if (mode.eq.'ABS') then
+          write (lunt,80) fhbtlog
+        endif
 c
-       if (mode.eq.'ABS') then
-        write (lunt,80) fhbtlog
-       endif
+        write (lunt,90) chklim,linecount
 c
-       write (lunt,90) chklim,linecount
+        if (linecount.gt.mxspeclines) then
+          write (*,*) 'ERROR: Spectrum output has too many lines'
+          write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+          write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+          write (*,*) 'and rebuild mappings.'
+          stop
+        endif
 c
-       if (linecount.gt.mxspeclines) then
-        write (*,*) 'ERROR: Spectrum output has too many lines'
-        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-        write (*,*) 'and rebuild mappings.'
-        stop
-       endif
+        call heapindexsort (linecount, linelam, lineidx)
 c
-       call heapindexsort (linecount, linelam, lineidx)
-c
-       do i=1,linecount
-        write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i))),
-     &   linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
-     &   rom(lineid(lineidx(i),2)),lineacc(lineidx(i))
-       enddo
+        do i=1,linecount
+          write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i)))
+     &     ,linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
+     &     rom(lineid(lineidx(i),2)),lineacc(lineidx(i))
+        enddo
 c
       endif
 c
       if ((llist.eq.'FLUX').or.(llist.eq.'ALL')) then
 c
-       if (mode.eq.'REL') then
+        if (mode.eq.'REL') then
 c
 c these have 4pi already, luminosities from total losses/cooling
 c
-        if (jgeo.eq.'S') then
-         write (lunt,70) fhbtlog,eloslog
-        else
-         write (lunt,60) fhbtlog,eloslog
+          if (jgeo.eq.'S') then
+            write (lunt,70) fhbtlog,eloslog
+          else
+            write (lunt,60) fhbtlog,eloslog
+          endif
+c
         endif
 c
-       endif
+        if (mode.eq.'ABS') then
+          write (lunt,80) fhbtlog
+        endif
 c
-       if (mode.eq.'ABS') then
-        write (lunt,80) fhbtlog
-       endif
+        write (lunt,100) chklim,linecount
 c
-       write (lunt,100) chklim,linecount
+        if (linecount.gt.mxspeclines) then
+          write (*,*) 'ERROR: Speclocal output has too many lines'
+          write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+          write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+          write (*,*) 'and rebuild mappings.'
+          stop
+        endif
 c
-       if (linecount.gt.mxspeclines) then
-        write (*,*) 'ERROR: Speclocal output has too many lines'
-        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-        write (*,*) 'and rebuild mappings.'
-        stop
-       endif
+        call heapindexsort (linecount, linespec, lineidx)
 c
-       call heapindexsort (linecount, linespec, lineidx)
-c
-       do i=linecount,1,-1
-        write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i))),
-     &   linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
-     &   rom(lineid(lineidx(i),2)),lineacc(lineidx(i))
-       enddo
+        do i=linecount,1,-1
+          write (lunt,10) linelam(lineidx(i)),lmev/(linelam(lineidx(i)))
+     &     ,linespec(lineidx(i)),elem(lineid(lineidx(i),1)),
+     &     rom(lineid(lineidx(i),2)),lineacc(lineidx(i))
+        enddo
 c
       endif
 c
 c
       if (llist.eq.'TTWN') then
 c
-       write (lunt,110) linecount
+        write (lunt,110) linecount
 c
-       call heapindexsort (linecount, linespec, lineidx)
+        call heapindexsort (linecount, linespec, lineidx)
 c
-       j=1
-       if (linecount.gt.50) j=linecount-49
+        j=1
+        if (linecount.gt.50) j=linecount-49
 c
 c     Copy top 50 lines into short array for lambda sorting
 c
-       shortcount=linecount-j+1
-       do i=j,linecount
-        shortlineid(i-j+1,1)=lineid(lineidx(i),1)
-        shortlineid(i-j+1,2)=lineid(lineidx(i),2)
-        shortlam(i-j+1)=linelam(lineidx(i))
-        shortspec(i-j+1)=linespec(lineidx(i))
-        shortacc(i-j+1)=lineacc(lineidx(i))
-       enddo
+        shortcount=linecount-j+1
+        do i=j,linecount
+          shortlineid(i-j+1,1)=lineid(lineidx(i),1)
+          shortlineid(i-j+1,2)=lineid(lineidx(i),2)
+          shortlam(i-j+1)=linelam(lineidx(i))
+          shortspec(i-j+1)=linespec(lineidx(i))
+          shortacc(i-j+1)=lineacc(lineidx(i))
+        enddo
 c
-       call heapindexsort (shortcount, shortlam, shortidx)
+        call heapindexsort (shortcount, shortlam, shortidx)
 c
-       do i=1,shortcount
-        write (lunt,20) elem(shortlineid(shortidx(i),1)),
-     &   rom(shortlineid(shortidx(i),2)),shortlam(shortidx(i)),lmev/
-     &   (shortlam(shortidx(i))),shortspec(shortidx(i)),
-     &   shortacc(shortidx(i))
-       enddo
+        do i=1,shortcount
+          write (lunt,20) elem(shortlineid(shortidx(i),1)),
+     &     rom(shortlineid(shortidx(i),2)),shortlam(shortidx(i)),lmev/
+     &     (shortlam(shortidx(i))),shortspec(shortidx(i)),
+     &     shortacc(shortidx(i))
+        enddo
 c
       endif
 c
@@ -2757,7 +2795,7 @@ c
       chklim=0.d0
 c
       do i=1,mxmonlines
-       fluxes(i)=0.d0
+        fluxes(i)=0.d0
       enddo
 c
       if (njlines.le.0) return
@@ -2765,107 +2803,113 @@ c
       linecount=0
 c
       do series=1,nhseries
-       do line=1,nhlines
-        if (hydrobri(line,series).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=hlambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=hydrobri(line,series)
-         lineid(linecount,1)=1
-         lineid(linecount,2)=1
-         lineacc(linecount)=1
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhlines
+          if (hydrobri(line,series).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=hlambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=hydrobri(line,series)
+            lineid(linecount,1)=1
+            lineid(linecount,2)=1
+            lineacc(linecount)=1
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
 c
       do series=1,nheseries
-       do line=1,nhelines
-        if (helibri(line,series).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=helambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=helibri(line,series)
-         lineid(linecount,1)=2
-         lineid(linecount,2)=2
-         lineacc(linecount)=1
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhelines
+          if (helibri(line,series).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=helambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=helibri(line,series)
+            lineid(linecount,1)=2
+            lineid(linecount,2)=2
+            lineacc(linecount)=1
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
 c
       do i=3,atypes
-       do series=1,nxhseries
-        do line=1,nxhlines
-         if (xhydrobri(line,series,i).ge.chklim) then
-          linecount=linecount+1
-          linelam(linecount)=xhlambda(line,series,i)
-          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
-     &     )
-          linespec(linecount)=xhydrobri(line,series,i)
-          lineid(linecount,1)=i
-          lineid(linecount,2)=mapz(i)
-          lineacc(linecount)=2
-         endif
+        do series=1,nxhseries
+          do line=1,nxhlines
+            if (xhydrobri(line,series,i).ge.chklim) then
+              linecount=linecount+1
+              linelam(linecount)=xhlambda(line,series,i)
+              linelam(linecount)=linelam(linecount)/
+     &         fnair(linelam(linecount))
+              linespec(linecount)=xhydrobri(line,series,i)
+              lineid(linecount,1)=i
+              lineid(linecount,2)=mapz(i)
+              lineacc(linecount)=2
+            endif
+          enddo
         enddo
-       enddo
       enddo
 c
       do i=1,nfmions
-       do j=1,nfmtrans(i)
-        if (fmbri(j,i).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(fmlam(j,i)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=fmbri(j,i)
-         lineid(linecount,1)=fmatom(i)
-         lineid(linecount,2)=fmion(i)
-         lineacc(linecount)=2
-        endif
-       enddo
+        do j=1,nfmtrans(i)
+          if (fmbri(j,i).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(fmlam(j,i)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=fmbri(j,i)
+            lineid(linecount,1)=fmatom(i)
+            lineid(linecount,2)=fmion(i)
+            lineacc(linecount)=2
+          endif
+        enddo
       enddo
 c
       do i=1,nfeions
-       do j=1,nfetrans(i)
-        if (febri(j,i).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(felam(j,i)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=febri(j,i)
-         lineid(linecount,1)=featom(i)
-         lineid(linecount,2)=feion(i)
-         lineacc(linecount)=2
-        endif
-       enddo
+        do j=1,nfetrans(i)
+          if (febri(j,i).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(felam(j,i)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=febri(j,i)
+            lineid(linecount,1)=featom(i)
+            lineid(linecount,2)=feion(i)
+            lineacc(linecount)=2
+          endif
+        enddo
       enddo
 c
       do i=1,nf3ions
-       do j=1,nf3trans
-        if (f3bri(j,i).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
-         linespec(linecount)=f3bri(j,i)
-         lineid(linecount,1)=f3atom(i)
-         lineid(linecount,2)=f3ion(i)
-         lineacc(linecount)=3
-        endif
-       enddo
+        do j=1,nf3trans
+          if (f3bri(j,i).ge.chklim) then
+            linecount=linecount+1
+c     nocorrection
+            linelam(linecount)=(f3lam(j,i)*1.d4)
+            linespec(linecount)=f3bri(j,i)
+            lineid(linecount,1)=f3atom(i)
+            lineid(linecount,2)=f3ion(i)
+            lineacc(linecount)=3
+          endif
+        enddo
       enddo
 c
       do i=1,mlines
-       if (fsbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(fslam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fsbri(i)
-        lineid(linecount,1)=ielfs(i)
-        lineid(linecount,2)=ionfs(i)
-        lineacc(linecount)=3
-       endif
+        if (fsbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(fslam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fsbri(i)
+          lineid(linecount,1)=ielfs(i)
+          lineid(linecount,2)=ionfs(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c     do i=1,nlines
@@ -2882,162 +2926,173 @@ c       endif
 c     enddo
 c
       do i=1,nxr3lines
-       if (xr3lines_bri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xr3lines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xr3lines_bri(i)
-        lineid(linecount,1)=xr3lines_at(i)
-        lineid(linecount,2)=xr3lines_ion(i)
-        lineacc(linecount)=3
-       endif
+        if (xr3lines_bri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xr3lines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xr3lines_bri(i)
+          lineid(linecount,1)=xr3lines_at(i)
+          lineid(linecount,2)=xr3lines_ion(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
       do i=1,nxrllines
-       if (xrllines_bri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xrllines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xrllines_bri(i)
-        lineid(linecount,1)=xrllines_at(i)
-        lineid(linecount,2)=xrllines_ion(i)
-        lineacc(linecount)=3
-       endif
+        if (xrllines_bri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xrllines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xrllines_bri(i)
+          lineid(linecount,1)=xrllines_at(i)
+          lineid(linecount,2)=xrllines_ion(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c Original He I lines, just the first two
 c
       do i=1,2
-       if (heibri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heilam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heibri(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-       endif
+        if (heibri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heilam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heibri(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+        endif
       enddo
 c
 c New He I singlet lines
 c
       do i=1,nheislines
-       if (heisbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heislam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heisbri(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-       endif
+        if (heisbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heislam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heisbri(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c New He I triplet lines
 c
       do i=1,nheitlines
-       if (heitbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heitlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heitbri(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-       endif
+        if (heitbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heitlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heitbri(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+        endif
       enddo
 c
       do i=1,nrccii
-       if (rccii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rccii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rccii_bbri(i)
-        lineid(linecount,1)=zmap(6)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rccii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rccii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rccii_bbri(i)
+          lineid(linecount,1)=zmap(6)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcnii
-       if (rcnii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcnii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcnii_bbri(i)
-        lineid(linecount,1)=zmap(7)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcnii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcnii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcnii_bbri(i)
+          lineid(linecount,1)=zmap(7)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcoi_q
-       if (rcoi_qbbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_qlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoi_qbbri(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=4
-       endif
+        if (rcoi_qbbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_qlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoi_qbbri(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcoi_t
-       if (rcoi_tbbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_tlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoi_tbbri(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-       endif
+        if (rcoi_tbbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_tlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoi_tbbri(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+        endif
       enddo
 c
       do i=1,nrcoii
-       if (rcoii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoii_bbri(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcoii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoii_bbri(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcneii
-       if (rcneii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcneii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcneii_bbri(i)
-        lineid(linecount,1)=zmap(10)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcneii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcneii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcneii_bbri(i)
+          lineid(linecount,1)=zmap(10)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
 c      write (*,*) chklim,linecount
 c
       if (linecount.gt.mxspeclines) then
-       write (*,*) 'ERROR: Spectrum output has too many lines'
-       write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-       write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-       write (*,*) 'and rebuild mappings.'
-       stop
+        write (*,*) 'ERROR: Spectrum output has too many lines'
+        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+        write (*,*) 'and rebuild mappings.'
+        stop
       endif
 c
       call heapindexsort (linecount, linelam, lineidx)
 c
       do i=1,linecount
-       do j=1,njlines
-        delta=dabs(linelam(lineidx(i))-emlinlist(j))
-        if (delta.le.emlindeltas(j)) then
-         fluxes(j)=fluxes(j)+linespec(lineidx(i))
-        endif
-       enddo
+        do j=1,njlines
+          delta=dabs(linelam(lineidx(i))-emlinlist(j))
+          if (delta.le.emlindeltas(j)) then
+            fluxes(j)=fluxes(j)+linespec(lineidx(i))
+          endif
+        enddo
       enddo
 c
       return
@@ -3074,8 +3129,8 @@ c
       chklim=0.d0
 c
       do i=1,mxmonlines
-       lineat(i)=1
-       lineion(i)=1
+        lineat(i)=1
+        lineion(i)=1
       enddo
 c
       if (njlines.le.0) return
@@ -3083,107 +3138,113 @@ c
       linecount=0
 c
       do series=1,nhseries
-       do line=1,nhlines
-        if (hydrobri(line,series).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=hlambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=hydrobri(line,series)
-         lineid(linecount,1)=1
-         lineid(linecount,2)=1
-         lineacc(linecount)=1
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhlines
+          if (hydrobri(line,series).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=hlambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=hydrobri(line,series)
+            lineid(linecount,1)=1
+            lineid(linecount,2)=1
+            lineacc(linecount)=1
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
 c
       do series=1,nheseries
-       do line=1,nhelines
-        if (helibri(line,series).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=helambda(line,series)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=helibri(line,series)
-         lineid(linecount,1)=2
-         lineid(linecount,2)=2
-         lineacc(linecount)=1
-         if (series.eq.1) then
-          lineacc(linecount)=3
-         endif
-        endif
-       enddo
+        do line=1,nhelines
+          if (helibri(line,series).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=helambda(line,series)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=helibri(line,series)
+            lineid(linecount,1)=2
+            lineid(linecount,2)=2
+            lineacc(linecount)=1
+            if (series.eq.1) then
+              lineacc(linecount)=3
+            endif
+          endif
+        enddo
       enddo
 c
       do i=3,atypes
-       do series=1,nxhseries
-        do line=1,nxhlines
-         if (xhydrobri(line,series,i).ge.chklim) then
-          linecount=linecount+1
-          linelam(linecount)=xhlambda(line,series,i)
-          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
-     &     )
-          linespec(linecount)=xhydrobri(line,series,i)
-          lineid(linecount,1)=i
-          lineid(linecount,2)=mapz(i)
-          lineacc(linecount)=2
-         endif
+        do series=1,nxhseries
+          do line=1,nxhlines
+            if (xhydrobri(line,series,i).ge.chklim) then
+              linecount=linecount+1
+              linelam(linecount)=xhlambda(line,series,i)
+              linelam(linecount)=linelam(linecount)/
+     &         fnair(linelam(linecount))
+              linespec(linecount)=xhydrobri(line,series,i)
+              lineid(linecount,1)=i
+              lineid(linecount,2)=mapz(i)
+              lineacc(linecount)=2
+            endif
+          enddo
         enddo
-       enddo
       enddo
 c
       do i=1,nfmions
-       do j=1,nfmtrans(i)
-        if (fmbri(j,i).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(fmlam(j,i)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=fmbri(j,i)
-         lineid(linecount,1)=fmatom(i)
-         lineid(linecount,2)=fmion(i)
-         lineacc(linecount)=2
-        endif
-       enddo
+        do j=1,nfmtrans(i)
+          if (fmbri(j,i).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(fmlam(j,i)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=fmbri(j,i)
+            lineid(linecount,1)=fmatom(i)
+            lineid(linecount,2)=fmion(i)
+            lineacc(linecount)=2
+          endif
+        enddo
       enddo
 c
       do i=1,nfeions
-       do j=1,nfetrans(i)
-        if (febri(j,i).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(felam(j,i)*1.d8)
-         linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-         linespec(linecount)=febri(j,i)
-         lineid(linecount,1)=featom(i)
-         lineid(linecount,2)=feion(i)
-         lineacc(linecount)=2
-        endif
-       enddo
+        do j=1,nfetrans(i)
+          if (febri(j,i).ge.chklim) then
+            linecount=linecount+1
+            linelam(linecount)=(felam(j,i)*1.d8)
+            linelam(linecount)=linelam(linecount)/
+     &       fnair(linelam(linecount))
+            linespec(linecount)=febri(j,i)
+            lineid(linecount,1)=featom(i)
+            lineid(linecount,2)=feion(i)
+            lineacc(linecount)=2
+          endif
+        enddo
       enddo
 c
       do i=1,nf3ions
-       do j=1,nf3trans
-        if (f3bri(j,i).ge.chklim) then
-         linecount=linecount+1
-         linelam(linecount)=(f3lam(j,i)*1.d4)!nocorrection
-         linespec(linecount)=f3bri(j,i)
-         lineid(linecount,1)=f3atom(i)
-         lineid(linecount,2)=f3ion(i)
-         lineacc(linecount)=3
-        endif
-       enddo
+        do j=1,nf3trans
+          if (f3bri(j,i).ge.chklim) then
+            linecount=linecount+1
+c     nocorrection
+            linelam(linecount)=(f3lam(j,i)*1.d4)
+            linespec(linecount)=f3bri(j,i)
+            lineid(linecount,1)=f3atom(i)
+            lineid(linecount,2)=f3ion(i)
+            lineacc(linecount)=3
+          endif
+        enddo
       enddo
 c
       do i=1,mlines
-       if (fsbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(fslam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=fsbri(i)
-        lineid(linecount,1)=ielfs(i)
-        lineid(linecount,2)=ionfs(i)
-        lineacc(linecount)=3
-       endif
+        if (fsbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(fslam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=fsbri(i)
+          lineid(linecount,1)=ielfs(i)
+          lineid(linecount,2)=ionfs(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c     do i=1,nlines
@@ -3200,164 +3261,175 @@ c       endif
 c     enddo
 c
       do i=1,nxr3lines
-       if (xr3lines_bri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xr3lines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xr3lines_bri(i)
-        lineid(linecount,1)=xr3lines_at(i)
-        lineid(linecount,2)=xr3lines_ion(i)
-        lineacc(linecount)=3
-       endif
+        if (xr3lines_bri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xr3lines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xr3lines_bri(i)
+          lineid(linecount,1)=xr3lines_at(i)
+          lineid(linecount,2)=xr3lines_ion(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
       do i=1,nxrllines
-       if (xrllines_bri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=xrllines_lam(i)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=xrllines_bri(i)
-        lineid(linecount,1)=xrllines_at(i)
-        lineid(linecount,2)=xrllines_ion(i)
-        lineacc(linecount)=3
-       endif
+        if (xrllines_bri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=xrllines_lam(i)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=xrllines_bri(i)
+          lineid(linecount,1)=xrllines_at(i)
+          lineid(linecount,2)=xrllines_ion(i)
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c Original He I lines, just the first two
 c
       do i=1,2
-       if (heibri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heilam(i)*1.d8)
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heibri(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-       endif
+        if (heibri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heilam(i)*1.d8)
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heibri(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+        endif
       enddo
 c
 c New He I singlet lines
 c
       do i=1,nheislines
-       if (heisbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heislam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heisbri(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-       endif
+        if (heisbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heislam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heisbri(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+        endif
       enddo
 c
 c New He I triplet lines
 c
       do i=1,nheitlines
-       if (heitbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(heitlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=heitbri(i)
-        lineid(linecount,1)=zmap(2)
-        lineid(linecount,2)=1
-        lineacc(linecount)=3
-       endif
+        if (heitbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(heitlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=heitbri(i)
+          lineid(linecount,1)=zmap(2)
+          lineid(linecount,2)=1
+          lineacc(linecount)=3
+        endif
       enddo
 c
       do i=1,nrccii
-       if (rccii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rccii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rccii_bbri(i)
-        lineid(linecount,1)=zmap(6)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rccii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rccii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rccii_bbri(i)
+          lineid(linecount,1)=zmap(6)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcnii
-       if (rcnii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcnii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcnii_bbri(i)
-        lineid(linecount,1)=zmap(7)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcnii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcnii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcnii_bbri(i)
+          lineid(linecount,1)=zmap(7)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcoi_q
-       if (rcoi_qbbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_qlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoi_qbbri(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=4
-       endif
+        if (rcoi_qbbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_qlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoi_qbbri(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcoi_t
-       if (rcoi_tbbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoi_tlam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoi_tbbri(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=1
-        lineacc(linecount)=5
-       endif
+        if (rcoi_tbbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoi_tlam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoi_tbbri(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=1
+          lineacc(linecount)=5
+        endif
       enddo
 c
       do i=1,nrcoii
-       if (rcoii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcoii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcoii_bbri(i)
-        lineid(linecount,1)=zmap(8)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcoii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcoii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcoii_bbri(i)
+          lineid(linecount,1)=zmap(8)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
       do i=1,nrcneii
-       if (rcneii_bbri(i).ge.chklim) then
-        linecount=linecount+1
-        linelam(linecount)=(rcneii_lam(i))
-        linelam(linecount)=linelam(linecount)/fnair(linelam(linecount))
-        linespec(linecount)=rcneii_bbri(i)
-        lineid(linecount,1)=zmap(10)
-        lineid(linecount,2)=2
-        lineacc(linecount)=4
-       endif
+        if (rcneii_bbri(i).ge.chklim) then
+          linecount=linecount+1
+          linelam(linecount)=(rcneii_lam(i))
+          linelam(linecount)=linelam(linecount)/fnair(linelam(linecount)
+     &     )
+          linespec(linecount)=rcneii_bbri(i)
+          lineid(linecount,1)=zmap(10)
+          lineid(linecount,2)=2
+          lineacc(linecount)=4
+        endif
       enddo
 c
 c      write (*,*) chklim,linecount
 c
       if (linecount.gt.mxspeclines) then
-       write (*,*) 'ERROR: Spectrum output has too many lines'
-       write (*,*) linecount,' exceeds',mxspeclines,' limit.'
-       write (*,*) 'Edit const.inc, increase mxspeclines parameter'
-       write (*,*) 'and rebuild mappings.'
-       stop
+        write (*,*) 'ERROR: Spectrum output has too many lines'
+        write (*,*) linecount,' exceeds',mxspeclines,' limit.'
+        write (*,*) 'Edit const.inc, increase mxspeclines parameter'
+        write (*,*) 'and rebuild mappings.'
+        stop
       endif
 c
       call heapindexsort (linecount, linelam, lineidx)
 c
       do i=1,linecount
-       do j=1,njlines
-        delta=dabs(linelam(lineidx(i))-emlinlist(j))
-        if (delta.le.emlindeltas(j)) then
-         lineat(j)=lineid(lineidx(i),1)
-         lineion(j)=lineid(lineidx(i),2)
+        do j=1,njlines
+          delta=dabs(linelam(lineidx(i))-emlinlist(j))
+          if (delta.le.emlindeltas(j)) then
+            lineat(j)=lineid(lineidx(i),1)
+            lineion(j)=lineid(lineidx(i),2)
 c        write (*,*) i,j,lineid(lineidx(i),1), lineat(j), lineion(j)
-        endif
-       enddo
+          endif
+        enddo
       enddo
 c
       return

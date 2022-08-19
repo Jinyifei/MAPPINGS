@@ -43,58 +43,59 @@ c
 c
 c     new reactions being used
 c
-       e4e=(rkb*1.0d4)
+        e4e=(rkb*1.0d4)
 c
-       do i=1,nchxr
-        if ((chxr(i).gt.0.d0).and.(chxrde(i).ne.0.d0)) then
-         rat=chxrx(i)
-         at=chxrat(i)
-         ion=chxrio(i)
-         delta=chxrde(i)*e4e
-         ab=dh*zion(at)*pop(ion,at)*dh*zion(rat)*pop(1,rat)
-         if (ab.ge.pzlimit) then
-          chxheat=chxr(i)*ab*delta
-          chgain=chgain+chxheat
-          heatz(at)=heatz(at)+chxheat
-          heatzion(ion,at)=heatzion(ion,at)+chxheat
-         endif
-        endif
-       enddo
-       do i=1,nchxi
-        if ((chxi(i).gt.0.d0).and.(chxide(i).ne.0.d0)) then
-         at=chxiat(i)
-         rat=chxix(i)
-         ion=chxiio(i)
-         delta=chxide(i)*e4e
-         ab=dh*zion(at)*pop(ion,at)*dh*zion(rat)*pop(2,rat)
-         if (ab.ge.pzlimit) then
-          chxheat=chxi(i)*ab*delta
-          chgain=chgain+chxheat
-          heatz(at)=heatz(at)+chxheat
-          heatzion(ion,at)=heatzion(ion,at)+chxheat
-         endif
-        endif
-       enddo
+        do i=1,nchxr
+          if ((chxr(i).gt.0.d0).and.(chxrde(i).ne.0.d0)) then
+            rat=chxrx(i)
+            at=chxrat(i)
+            ion=chxrio(i)
+            delta=chxrde(i)*e4e
+            ab=dh*zion(at)*pop(ion,at)*dh*zion(rat)*pop(1,rat)
+            if (ab.ge.pzlimit) then
+              chxheat=chxr(i)*ab*delta
+              chgain=chgain+chxheat
+              heatz(at)=heatz(at)+chxheat
+              heatzion(ion,at)=heatzion(ion,at)+chxheat
+            endif
+          endif
+        enddo
+        do i=1,nchxi
+          if ((chxi(i).gt.0.d0).and.(chxide(i).ne.0.d0)) then
+            at=chxiat(i)
+            rat=chxix(i)
+            ion=chxiio(i)
+            delta=chxide(i)*e4e
+            ab=dh*zion(at)*pop(ion,at)*dh*zion(rat)*pop(2,rat)
+            if (ab.ge.pzlimit) then
+              chxheat=chxi(i)*ab*delta
+              chgain=chgain+chxheat
+              heatz(at)=heatz(at)+chxheat
+              heatzion(ion,at)=heatzion(ion,at)+chxheat
+            endif
+          endif
+        enddo
       endif
 c
       if (chargemode.eq.1) then
 c
 c     legacy A&R reactions being used
 c
-       do i=1,nlegacychxi
-        if (chxilegacy(i).gt.0.d0) then
-         at=chxilegacyat(i)
-         rat=chxilegacyx(i)
-         ion=chxilegacyio(i)
-         delta=chxilegacycos(4,i)
-         ab=dh*zion(at)*pop(ion,at)*dh*pop(2,rat)
-         if (ab.ge.pzlimit) then
-          chgain=chgain+chxilegacy(i)*ab*ev*delta
-          heatz(at)=heatz(at)+chxilegacy(i)*ab*ev*delta
-          heatzion(ion,at)=heatzion(ion,at)+chxilegacy(i)*ab*ev*delta
-         endif
-        endif
-       enddo
+        do i=1,nlegacychxi
+          if (chxilegacy(i).gt.0.d0) then
+            at=chxilegacyat(i)
+            rat=chxilegacyx(i)
+            ion=chxilegacyio(i)
+            delta=chxilegacycos(4,i)
+            ab=dh*zion(at)*pop(ion,at)*dh*pop(2,rat)
+            if (ab.ge.pzlimit) then
+              chgain=chgain+chxilegacy(i)*ab*ev*delta
+              heatz(at)=heatz(at)+chxilegacy(i)*ab*ev*delta
+              heatzion(ion,at)=heatzion(ion,at)+chxilegacy(i)*ab*ev*
+     &         delta
+            endif
+          endif
+        enddo
 c
       endif
 c

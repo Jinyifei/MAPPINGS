@@ -61,65 +61,65 @@ c
 c
 c     only calculate abundant ions
 c
-       do j=1,nf3trans
-        f3bri(j,i)=0.d0
-       enddo
-c
-       atom=f3atom(i)
-       ion=f3ion(i)
-       po=pop(ion,atom)
-       zi=zion(atom)
-c
-       if (po*zi.ge.pzlimit) then
-c
-c
-        dhi=pop(1,zmap(1))*dh
-        dhii=pop(2,zmap(1))*dh
-c
-        do j=1,nl
-         w(j)=wi3(j,i)
+        do j=1,nf3trans
+          f3bri(j,i)=0.d0
         enddo
+c
+        atom=f3atom(i)
+        ion=f3ion(i)
+        po=pop(ion,atom)
+        zi=zion(atom)
+c
+        if (po*zi.ge.pzlimit) then
+c
+c
+          dhi=pop(1,zmap(1))*dh
+          dhii=pop(2,zmap(1))*dh
+c
+          do j=1,nl
+            w(j)=wi3(j,i)
+          enddo
 c
 c     clear arrays
 c
-        do k=1,nl
-         do l=1,nl
-          a(k,l)=0.d0
-          om(k,l)=0.d0
-          tk3(k,l)=0.d0
-          e(k,l)=0.d0
-         enddo
-        enddo
+          do k=1,nl
+            do l=1,nl
+              a(k,l)=0.d0
+              om(k,l)=0.d0
+              tk3(k,l)=0.d0
+              e(k,l)=0.d0
+            enddo
+          enddo
 c
 c     gaps
 c
-        tk3(1,2)=ei3(1,i)
-        tk3(1,3)=ei3(2,i)
-        tk3(2,3)=ei3(3,i)
-        e(1,2)=ei3(1,i)*rkb
-        e(1,3)=ei3(2,i)*rkb
-        e(2,3)=ei3(3,i)*rkb
+          tk3(1,2)=ei3(1,i)
+          tk3(1,3)=ei3(2,i)
+          tk3(2,3)=ei3(3,i)
+          e(1,2)=ei3(1,i)*rkb
+          e(1,3)=ei3(2,i)*rkb
+          e(2,3)=ei3(3,i)*rkb
 c
 c     and symmetrically for the algorithm used here
 c
-        tk3(2,1)=tk3(1,2)
-        tk3(3,1)=tk3(1,3)
-        tk3(3,2)=tk3(2,3)
-        e(2,1)=e(1,2)
-        e(3,1)=e(1,3)
-        e(3,2)=e(2,3)
+          tk3(2,1)=tk3(1,2)
+          tk3(3,1)=tk3(1,3)
+          tk3(3,2)=tk3(2,3)
+          e(2,1)=e(1,2)
+          e(3,1)=e(1,3)
+          e(3,2)=e(2,3)
 c
 c     trans probs upper triangle
 c
-        a(2,1)=ai3(1,i)
-        a(3,1)=ai3(2,i)
-        a(3,2)=ai3(3,i)
+          a(2,1)=ai3(1,i)
+          a(3,1)=ai3(2,i)
+          a(3,2)=ai3(3,i)
 c
 c     calculate oms from de-exitaion rates
 c     again symmetrical for algorithm
-        om(1,2)=0.d0
-        om(1,3)=0.d0
-        om(2,3)=0.d0
+          om(1,2)=0.d0
+          om(1,3)=0.d0
+          om(2,3)=0.d0
 c
 c     type 1 uses 100s of K and proton (electron for ions)
 c          + hydrogen rates
@@ -129,84 +129,84 @@ c
 c     add rates proportionally, so multiply by dhi later will scale..
 c
 c
-        if (f3type(i).eq.1) then
+          if (f3type(i).eq.1) then
 c
-         if (f3ion(i).eq.1) then
+            if (f3ion(i).eq.1) then
 c
 c     proton rates for neutrals
 c
-          if (dhi.gt.0.d0) then
-           om(1,2)=dhii/dhi*gam3(1,1,i)*(t2**pow3(1,1,i))
-           om(1,3)=dhii/dhi*gam3(1,2,i)*(t2**pow3(1,2,i))
-           om(2,3)=dhii/dhi*gam3(1,3,i)*(t2**pow3(1,3,i))
-          endif
+              if (dhi.gt.0.d0) then
+                om(1,2)=dhii/dhi*gam3(1,1,i)*(t2**pow3(1,1,i))
+                om(1,3)=dhii/dhi*gam3(1,2,i)*(t2**pow3(1,2,i))
+                om(2,3)=dhii/dhi*gam3(1,3,i)*(t2**pow3(1,3,i))
+              endif
 c
-         else
+            else
 c
 c     electron rate for ions
 c
-          if (dhi.gt.0.d0) then
-           om(1,2)=de/dhi*gam3(1,1,i)*(t2**pow3(1,1,i))
-           om(1,3)=de/dhi*gam3(1,2,i)*(t2**pow3(1,2,i))
-           om(2,3)=de/dhi*gam3(1,3,i)*(t2**pow3(1,3,i))
-          endif
+              if (dhi.gt.0.d0) then
+                om(1,2)=de/dhi*gam3(1,1,i)*(t2**pow3(1,1,i))
+                om(1,3)=de/dhi*gam3(1,2,i)*(t2**pow3(1,2,i))
+                om(2,3)=de/dhi*gam3(1,3,i)*(t2**pow3(1,3,i))
+              endif
 c
-         endif
+            endif
 c
 c     add hydrogen proportionally, so multiply by dhi later will scale..
 c
-         om(1,2)=om(1,2)+gam3(2,1,i)*(t2**pow3(2,1,i))
-         om(1,3)=om(1,3)+gam3(2,2,i)*(t2**pow3(2,2,i))
-         om(2,3)=om(2,3)+gam3(2,3,i)*(t2**pow3(2,3,i))
+            om(1,2)=om(1,2)+gam3(2,1,i)*(t2**pow3(2,1,i))
+            om(1,3)=om(1,3)+gam3(2,2,i)*(t2**pow3(2,2,i))
+            om(2,3)=om(2,3)+gam3(2,3,i)*(t2**pow3(2,3,i))
 c
 c     and symmetrically for the algorithm used here
 c
-         om(2,1)=om(1,2)
-         om(3,1)=om(1,3)
-         om(3,2)=om(2,3)
+            om(2,1)=om(1,2)
+            om(3,1)=om(1,3)
+            om(3,2)=om(2,3)
 c
-        endif
-c
-        if (f3type(i).eq.2) then
-c
-         if (dhi.gt.0.d0) then
-          if (t4.le.1.d0) then
-           om(1,2)=de/dhi*gam3(1,1,i)*(t4**pow3(1,1,i))
-           om(1,3)=de/dhi*gam3(1,2,i)*(t4**pow3(1,2,i))
-           om(2,3)=de/dhi*gam3(1,3,i)*(t4**pow3(1,3,i))
           endif
-          if (t4.gt.1.d0) then
-           om(1,2)=de/dhi*gam3(2,1,i)*(t4**pow3(2,1,i))
-           om(1,3)=de/dhi*gam3(2,2,i)*(t4**pow3(2,2,i))
-           om(2,3)=de/dhi*gam3(2,3,i)*(t4**pow3(2,3,i))
-          endif
-         endif
 c
-        endif
+          if (f3type(i).eq.2) then
+c
+            if (dhi.gt.0.d0) then
+              if (t4.le.1.d0) then
+                om(1,2)=de/dhi*gam3(1,1,i)*(t4**pow3(1,1,i))
+                om(1,3)=de/dhi*gam3(1,2,i)*(t4**pow3(1,2,i))
+                om(2,3)=de/dhi*gam3(1,3,i)*(t4**pow3(1,3,i))
+              endif
+              if (t4.gt.1.d0) then
+                om(1,2)=de/dhi*gam3(2,1,i)*(t4**pow3(2,1,i))
+                om(1,3)=de/dhi*gam3(2,2,i)*(t4**pow3(2,2,i))
+                om(2,3)=de/dhi*gam3(2,3,i)*(t4**pow3(2,3,i))
+              endif
+            endif
+c
+          endif
 c
 c     convert to effective omegas, so the old routine it can convert
 c     back...
 c
-        do j=1,nl
-         do m=1,nl
-          om(m,j)=om(m,j)/(rka*f)
-          ratekappa(m,j)=1.d0
-          if (usekappa) then
-           if (m.ne.j) then
-            tkappa(m,j)=tk3(m,j)/t
-           else
-            tkappa(m,j)=0.0d0
-           endif
-           ratekappa(m,j)=fkenhance(kappa,tkappa(m,j))
-          endif
-         enddo
-        enddo
+          do j=1,nl
+            do m=1,nl
+              om(m,j)=om(m,j)/(rka*f)
+              ratekappa(m,j)=1.d0
+              if (usekappa) then
+                if (m.ne.j) then
+                  tkappa(m,j)=tk3(m,j)/t
+                else
+                  tkappa(m,j)=0.0d0
+                endif
+                ratekappa(m,j)=fkenhance(kappa,tkappa(m,j))
+              endif
+            enddo
+          enddo
 c
 c     and symmetrically for the algorithm used here
 c
-        om(2,1)=om(1,2)
-        om(3,1)=om(1,3)
-        om(3,2)=om(2,3)
+          om(2,1)=om(1,2)
+          om(3,1)=om(1,3)
+          om(3,2)=om(2,3)
 c
 c     if ((mapz(f3atom(i)).eq.8).and.(f3ion(i).eq.1)) then
 c     c
@@ -244,54 +244,54 @@ c
 c     ***SET UP COLL. EXCIT. AND DEEXCIT. MATRIX
 c
 c
-        do jl=1,nl
-         do jc=1,nl
-          rd(jc,jl)=0.0d0
-          if (jc.gt.jl) then
-           rd(jc,jl)=((rka*f)*om(jc,jl))/w(jc)
-           rd(jc,jl)=rd(jc,jl)*ratekappa(jc,jl)
-          endif
-          re(jc,jl)=0.0d0
-          aa=e(jc,jl)/(rkb*t)
-          if (aa.lt.maxdekt) then
-           if (jc.lt.jl) then
-            re(jc,jl)=(((rka*f)*om(jc,jl))*dexp(-aa))/w(jc)
-            re(jc,jl)=re(jc,jl)*ratekappa(jc,jl)
-           endif
-          endif
-         enddo
-        enddo
+          do jl=1,nl
+            do jc=1,nl
+              rd(jc,jl)=0.0d0
+              if (jc.gt.jl) then
+                rd(jc,jl)=((rka*f)*om(jc,jl))/w(jc)
+                rd(jc,jl)=rd(jc,jl)*ratekappa(jc,jl)
+              endif
+              re(jc,jl)=0.0d0
+              aa=e(jc,jl)/(rkb*t)
+              if (aa.lt.maxdekt) then
+                if (jc.lt.jl) then
+                  re(jc,jl)=(((rka*f)*om(jc,jl))*dexp(-aa))/w(jc)
+                  re(jc,jl)=re(jc,jl)*ratekappa(jc,jl)
+                endif
+              endif
+            enddo
+          enddo
 c
 c     ***SET UP MATRIX ELEMENTS
 c
-        do 50 jl=1,nl
-         do 40 jc=1,nl
-          if (jl.eq.1) goto 10
-          if (jl.eq.jc) goto 20
-          alph(jc,jl)=(dhi*(rd(jc,jl)+re(jc,jl)))+a(jc,jl)
-          goto 40
-   10     alph(jc,jl)=1.0d0
-          goto 40
-   20     alph(jc,jl)=0.0d0
-          do 30 jll=1,nl
-           if (jc.eq.jll) goto 30
-           alph(jc,jl)=alph(jc,jl)-(dhi*(rd(jc,jll)+re(jc,jll))+a(jc,
-     &      jll))
-   30     continue
-   40    continue
-   50   continue
+          do 50 jl=1,nl
+            do 40 jc=1,nl
+              if (jl.eq.1) goto 10
+              if (jl.eq.jc) goto 20
+              alph(jc,jl)=(dhi*(rd(jc,jl)+re(jc,jl)))+a(jc,jl)
+              goto 40
+   10         alph(jc,jl)=1.0d0
+              goto 40
+   20         alph(jc,jl)=0.0d0
+              do 30 jll=1,nl
+                if (jc.eq.jll) goto 30
+                alph(jc,jl)=alph(jc,jl)-(dhi*(rd(jc,jll)+re(jc,jll))+
+     &           a(jc,jll))
+   30         continue
+   40       continue
+   50     continue
 c
-        do jl=1,nl
-         alph(4,jl)=0.0d0
-        enddo
-        alph(4,1)=1.0d0
+          do jl=1,nl
+            alph(4,jl)=0.0d0
+          enddo
+          alph(4,1)=1.0d0
 c
 c     ***SOLVE FOR LEVEL POPULATIONS  X
 c
-        jl=3
+          jl=3
 c
 c          call mdiag3 (jl, alph, x)
-        call matsolve (alph, x, 3, 3)
+          call matsolve (alph, x, 3, 3)
 c
 c     ***CHECK ON NORMALISATION
 c
@@ -306,22 +306,22 @@ c         enddo
 cc
 c     ***GET ION COOLING
 c
-        aion=zi*po*dh
-        il=1
-        do jl=1,nl-1
-         do jc=jl+1,nl
-          bion=x(jc)*e(jc,jl)*aion*a(jc,jl)
-          f3bri(il,i)=bion*ifpi
-          il=il+1
-          coolz(atom)=coolz(atom)+bion
-          coolzion(ion,atom)=coolzion(ion,atom)+bion
-          f3loss=f3loss+bion
-         enddo
-        enddo
+          aion=zi*po*dh
+          il=1
+          do jl=1,nl-1
+            do jc=jl+1,nl
+              bion=x(jc)*e(jc,jl)*aion*a(jc,jl)
+              f3bri(il,i)=bion*ifpi
+              il=il+1
+              coolz(atom)=coolz(atom)+bion
+              coolzion(ion,atom)=coolzion(ion,atom)+bion
+              f3loss=f3loss+bion
+            enddo
+          enddo
 c
 c     end abundant ion
 c
-       endif
+        endif
 c
 c     next ion..
 c

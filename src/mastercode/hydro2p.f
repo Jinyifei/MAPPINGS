@@ -43,7 +43,8 @@ c
 c
       qpr(u)=4.74d-4*(u**(-0.151d0))
       qel(u)=0.57d-4*(u**(-0.373d0))
-      reff(u)=0.838d-13*(u**(-0.721d0))!x*alpha(t)b
+c     X*alpha(T)B
+      reff(u)=0.838d-13*(u**(-0.721d0))
       x1(u)=0.7179d0*(u**(-0.0584d0))
       fr(u)=0.588d0*(u**(-0.234d0))
 c
@@ -58,20 +59,20 @@ c
 c    ***COMPUTES COLLISIONAL EXCITATION
 c
       do nz=1,2
-       abde=((de*dh)*zion(nz))*pop(nz,nz)
-       do n=2,ml
+        abde=((de*dh)*zion(nz))*pop(nz,nz)
+        do n=2,ml
 c
-        ll=((nz-1)*(ml-1))+(n-1)
-        call ratec (nz, n, t, rate, ey)
-        rt=abde*rate
-        hherat(ll)=rt
-        hheen(ll)=ey
+          ll=((nz-1)*(ml-1))+(n-1)
+          call ratec (nz, n, t, rate, ey)
+          rt=abde*rate
+          hherat(ll)=rt
+          hheen(ll)=ey
 c
 c      if (nz.eq.1) then
 c      write(*,*) t,n,rate
 c      endif
 c
-       enddo
+        enddo
       enddo
 c
 c    ***CALCULATES HI RECOMB. LINES IN HBRI(5)  (CASE B)
@@ -82,15 +83,15 @@ c
 c    ***ADDS CONTRIBUTION BY COLLIS. EXCITATION (CASE B)
 c
       do l=1,5
-       hbcol=0.0d0
-       do k=l,ml-2
-        frab=(caseab(1)*hbemb(l,k))+((1.0d0-caseab(1))*hbema(l,k))
-        hbcol=hbcol+(frab*hherat(k+1))
-       enddo
+        hbcol=0.0d0
+        do k=l,ml-2
+          frab=(caseab(1)*hbemb(l,k))+((1.0d0-caseab(1))*hbema(l,k))
+          hbcol=hbcol+(frab*hherat(k+1))
+        enddo
 c
 c  recorded for comparison with the new hydro lines, not used otherwise
 c
-       hbri(l)=hbri(l)+((hbcol*(hheen(l+1)-hheen(1)))/(4.d0*pi))
+        hbri(l)=hbri(l)+((hbcol*(hheen(l+1)-hheen(1)))/(4.d0*pi))
 c
       enddo
 c

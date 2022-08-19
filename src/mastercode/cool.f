@@ -50,20 +50,20 @@ c
 c clear element/ion cooling totals
 c
       do j=1,atypes
-       coolz(j)=0.d0
-       heatz(j)=0.d0
-       do i=1,maxion(j)
-        coolzion(i,j)=0.d0
-        heatzion(i,j)=0.d0
-       enddo
+        coolz(j)=0.d0
+        heatz(j)=0.d0
+        do i=1,maxion(j)
+          coolzion(i,j)=0.d0
+          heatzion(i,j)=0.d0
+        enddo
       enddo
       oiii5007loss=0.d0
 c
 c    ***COMPUTES NEW RATES IF TEMP. OR PHOTON FIELD HAVE CHANGED
 c
       if ((t.le.mintemp).or.(dh.le.0.d0)) then
-       write (*,*) 'Cool out of range',t,de,dh
-       stop
+        write (*,*) 'Cool out of range',t,de,dh
+        stop
       endif
 c
       jjmod='ALL'
@@ -136,7 +136,8 @@ c
 c    ***COLLISIONAL IONISATION LOSSES
 c
       cmplos=0.d0
-      call coloss (de, dh)!colos
+c     colos
+      call coloss (de, dh)
       tll=tll+colos
 c
 c      tll=hloss+rloss+fslos+fmloss+xrloss+xr3loss+xrlloss+xiloss
@@ -159,7 +160,7 @@ c
 c    ***PHOTOIONISATION HEATING
 c
       pgain=0.d0
-      call pheat (de, dh)!pgain
+      call pheat (de, dh)
       tgg=tgg+pgain
 c
 c grain / pah heating and cooling
@@ -218,33 +219,33 @@ c
       egg=tgg
 c
       if (rngain.lt.0.0d0) then
-       ell=ell-rngain
+        ell=ell-rngain
       else
-       egg=egg+rngain
+        egg=egg+rngain
       endif
 c
       if (chgain.lt.0.0d0) then
-       ell=ell-chgain
+        ell=ell-chgain
       else
-       egg=egg+chgain
+        egg=egg+chgain
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       ett=ell+egg
       if (ett.gt.0.d0) then
-       dlos=(ell-egg)/ett
+        dlos=(ell-egg)/ett
       else
-       dlos=1.0d0
+        dlos=1.0d0
       endif
 c
       csum=0.d0
       do j=1,atypes
-       do i=1,maxion(j)
-        if (dabs(coolzion(i,j)).lt.epsilon) coolzion(i,j)=0.d0
-       enddo
-       if (dabs(coolz(j)).lt.epsilon) coolz(j)=0.d0
-       csum=csum+coolz(j)
+        do i=1,maxion(j)
+          if (dabs(coolzion(i,j)).lt.epsilon) coolzion(i,j)=0.d0
+        enddo
+        if (dabs(coolz(j)).lt.epsilon) coolz(j)=0.d0
+        csum=csum+coolz(j)
       enddo
 c
       tloss=tll
@@ -253,10 +254,10 @@ c
       eloss=ell
 c
       if (alphacoolmode.eq.1) then
-       tloss=de*de*alphac0*((1.0d-6*t)**alphaclaw)
-       tgain=0.d0
-       egain=0.d0
-       eloss=tloss
+        tloss=de*de*alphac0*((1.0d-6*t)**alphaclaw)
+        tgain=0.d0
+        egain=0.d0
+        eloss=tloss
       endif
 c
       if (dabs(tloss).lt.epsilon) tloss=0.d0

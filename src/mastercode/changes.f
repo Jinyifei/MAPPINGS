@@ -42,13 +42,13 @@ c
       zmt=0.d0
 c
       do i=4,atypes
-       zmt=zmt+zelem(i)/zsol(i)
+        zmt=zmt+zelem(i)/zsol(i)
       enddo
 c
       if (atypes.gt.3) then
-       zmt=zmt/(atypes-3)
+        zmt=zmt/(atypes-3)
       else
-       zmt=zsol(2)/zelem(2)
+        zmt=zsol(2)/zelem(2)
       endif
 c
       zgas=zmt
@@ -66,10 +66,10 @@ c
       zsum=0.0d0
 c
       do i=1,atypes
-       nsum=nsum+zelem(i)
-       nsum2=nsum2+zelem(i)*mapz(i)
-       msum=msum+zelem(i)*atwei(i)
-       msum2=msum2+zelem(i)*mapz(i)*5.485799e-04
+        nsum=nsum+zelem(i)
+        nsum2=nsum2+zelem(i)*mapz(i)
+        msum=msum+zelem(i)*atwei(i)
+        msum2=msum2+zelem(i)*mapz(i)*5.485799e-04
       enddo
 c
       mu_neu=msum/nsum
@@ -78,7 +78,7 @@ c
       zen=nsum
 c
       do i=1,atypes
-       xi(i)=zelem(i)*atwei(i)/msum
+        xi(i)=zelem(i)*atwei(i)/msum
       enddo
 c
       np=lenv(title)
@@ -149,16 +149,16 @@ c
       m=lenv(fnam)
       inquire (file=fnam(1:m),exist=iexi)
       if (iexi) then
-       abdir='abund/'
+        abdir='abund/'
       else
-       fnam='/usr/local/share/mappings/abund/solar.txt'
-       m=lenv(fnam)
-       inquire (file=fnam(1:m),exist=iexi)
-       if (iexi) then
-        abdir='/usr/local/share/mappings/abund/'
-       else
-        abdir='/opt/local/share/mappings/abund/'
-       endif
+        fnam='/usr/local/share/mappings/abund/solar.txt'
+        m=lenv(fnam)
+        inquire (file=fnam(1:m),exist=iexi)
+        if (iexi) then
+          abdir='/usr/local/share/mappings/abund/'
+        else
+          abdir='/opt/local/share/mappings/abund/'
+        endif
       endif
 c
       l=lenv(abdir)
@@ -172,54 +172,54 @@ c
 c     if the file is not present the
 c     just put zion0 in zsol
 c
-       luf=99
-       open (unit=luf,file=fnam(1:m),status='OLD')
-   30  read (unit=luf,fmt=10) (ibuf(j),j=1,19)
-       ilgg=ibuf(1)
-       if (ilgg(1:1).eq.'%') goto 30
-       numtype=0
-       read (luf,fmt='(a80)') numstring
+        luf=99
+        open (unit=luf,file=fnam(1:m),status='OLD')
+   30   read (unit=luf,fmt=10) (ibuf(j),j=1,19)
+        ilgg=ibuf(1)
+        if (ilgg(1:1).eq.'%') goto 30
+        numtype=0
+        read (luf,fmt='(a80)') numstring
 c
 c read up to two integers from the single line, using type = 0
 c if numtype is *not found*
 c
-       read (unit=numstring,fmt='(I2,x,I2)') nentries,numtype
-       if (numtype.lt.0) numtype=0
+        read (unit=numstring,fmt='(I2,x,I2)') nentries,numtype
+        if (numtype.lt.0) numtype=0
 c
-       if (numtype.eq.0) write (*,*) ' Reading mixed values...'
-       if (numtype.eq.1) write (*,*) ' Reading log values...'
-       if (numtype.eq.2) write (*,*) ' Reading linear values...'
-       if (numtype.eq.3) write (*,*) ' Reading base 12 log values...'
+        if (numtype.eq.0) write (*,*) ' Reading mixed values...'
+        if (numtype.eq.1) write (*,*) ' Reading log values...'
+        if (numtype.eq.2) write (*,*) ' Reading linear values...'
+        if (numtype.eq.3) write (*,*) ' Reading base 12 log values...'
 c
-       do i=1,nentries
-        read (luf,*) at,zi
-        if (zmap(at).ne.0) then
-         atom=zmap(at)
-         if (numtype.eq.0) then
-          if (zi.le.0.d0) zi=10.d0**zi
-         endif
-         if (numtype.eq.1) then
-          zi=10.d0**zi
-         endif
-         if (numtype.eq.3) then
-          zi=10.d0**(zi-12.d0)
-         endif
-         zsol(atom)=zi
-        endif
-       enddo
-       close (unit=luf)
+        do i=1,nentries
+          read (luf,*) at,zi
+          if (zmap(at).ne.0) then
+            atom=zmap(at)
+            if (numtype.eq.0) then
+              if (zi.le.0.d0) zi=10.d0**zi
+            endif
+            if (numtype.eq.1) then
+              zi=10.d0**zi
+            endif
+            if (numtype.eq.3) then
+              zi=10.d0**(zi-12.d0)
+            endif
+            zsol(atom)=zi
+          endif
+        enddo
+        close (unit=luf)
       else
-       do i=1,atypes
-        zsol(i)=zion0(i)
-       enddo
+        do i=1,atypes
+          zsol(i)=zion0(i)
+        enddo
       endif
 c
 cc
       abnfile='Solar/Asplund 2009 Abundances'
 c
       do i=1,atypes
-       deltazion(i)=1.0d0
-       zion(i)=zion0(i)*deltazion(i)
+        deltazion(i)=1.0d0
+        zion(i)=zion0(i)*deltazion(i)
       enddo
 c
       abundtitle=' Total Abundances :'
@@ -246,48 +246,48 @@ c
 c
 c     Read an abundance file
 c
-   70  fnam=' '
-       write (*,80)
+   70   fnam=' '
+        write (*,80)
    80    format(/' Enter abundance file name : ',$)
-       read (*,90) fnam
+        read (*,90) fnam
    90   format(a)
-       write (*,*)
+        write (*,*)
 c
 c look locally and in share
 c
-       m=lenv(fnam)
-       abnfile=fnam(1:m)
+        m=lenv(fnam)
+        abnfile=fnam(1:m)
 c abnfile
-       iexi=.false.
-       inquire (file=abnfile(1:m),exist=iexi)
-       if (iexi.eqv..false.) then
-        abdir='abund/'
-        l=lenv(abdir)
+        iexi=.false.
+        inquire (file=abnfile(1:m),exist=iexi)
+        if (iexi.eqv..false.) then
+          abdir='abund/'
+          l=lenv(abdir)
 c look in local abund/
-        write (*,*) abnfile(1:m),' NOT FOUND.'
-        write (*,*) ' Looking in abund/...'
-        abnfile=abdir(1:l)//fnam(1:m)
-        n=lenv(abnfile)
-        inquire (file=abnfile(1:n),exist=iexi) 
-       endif
-       if (iexi.eqv..false.) then
+          write (*,*) abnfile(1:m),' NOT FOUND.'
+          write (*,*) ' Looking in abund/...'
+          abnfile=abdir(1:l)//fnam(1:m)
+          n=lenv(abnfile)
+          inquire (file=abnfile(1:n),exist=iexi)
+        endif
+        if (iexi.eqv..false.) then
 c look in shared abndir
-        write (*,*) abnfile(1:m),' NOT FOUND.'
-        abdir='/usr/local/share/mappings/abund/'
-        l=lenv(abdir)
-        write (*,*) ' Looking in ',abdir(1:l),'...'
-        abnfile=abdir(1:l)//fnam(1:m)
-        n=lenv(abnfile)
-        inquire (file=abnfile(1:n),exist=iexi)
-       endif
+          write (*,*) abnfile(1:m),' NOT FOUND.'
+          abdir='/usr/local/share/mappings/abund/'
+          l=lenv(abdir)
+          write (*,*) ' Looking in ',abdir(1:l),'...'
+          abnfile=abdir(1:l)//fnam(1:m)
+          n=lenv(abnfile)
+          inquire (file=abnfile(1:n),exist=iexi)
+        endif
 c
-       if (iexi) then
+        if (iexi) then
 c
 c     found the file...
 c
-        m=lenv(abnfile)
+          m=lenv(abnfile)
 c
-        write (*,*) 'FOUND: ',abnfile(1:m)
+          write (*,*) 'FOUND: ',abnfile(1:m)
 c
 c     FORMAT REQUIRED:
 c
@@ -304,76 +304,76 @@ c     a) Element Z, if Z not allowed in ATDAT then entry skipped
 c     b) Abundance, if mixed -ve: log abundance by number
 c                            +ve: mean number abundance
 c
-        luf=99
-        open (unit=luf,file=abnfile(1:m),status='OLD')
-  100   read (unit=luf,fmt=10) (ibuf(j),j=1,19)
-        ilgg=ibuf(1)
-        if (ilgg(1:1).eq.'%') goto 100
-        write (*,*) ' Read abundances from :'
-        write (*,20) (ibuf(j),j=1,19)
-        numtype=0
-        read (luf,fmt='(a80)') numstring
+          luf=99
+          open (unit=luf,file=abnfile(1:m),status='OLD')
+  100     read (unit=luf,fmt=10) (ibuf(j),j=1,19)
+          ilgg=ibuf(1)
+          if (ilgg(1:1).eq.'%') goto 100
+          write (*,*) ' Read abundances from :'
+          write (*,20) (ibuf(j),j=1,19)
+          numtype=0
+          read (luf,fmt='(a80)') numstring
 c
 c read up to two integers from the single line, using type = 0
 c is numtype is not found
 c
-        numtype=-1
-        read (unit=numstring,fmt='(I3,I3)') nentries,numtype
-        if (numtype.lt.0) numtype=0
-        if (nentries.lt.atypes) then
-         write (*,*) '   WARNING: abundance file with fewer entries'
-         write (*,*) '   than current atom types, some elements will'
-         write (*,*) '   not be set as expected.'
-         write (*,*) '   Entries:',nentries,' Atoms:',atypes
-         write (*,*) '   If entries is unexpectedly small there may be'
-         write (*,*) '   a file format error, leading spaces are not'
-         write (*,*) '   permitted.'
-        endif
+          numtype=-1
+          read (unit=numstring,fmt='(I3,I3)') nentries,numtype
+          if (numtype.lt.0) numtype=0
+          if (nentries.lt.atypes) then
+            write (*,*) 'WARNING: abundance file with fewer entries'
+            write (*,*) 'than current atom types, some elements will'
+            write (*,*) 'not be set as expected.'
+            write (*,*) 'Entries:',nentries,' Atoms:',atypes
+            write (*,*) 'If entries is unexpectedly small there may be'
+            write (*,*) 'a file format error, leading spaces are not'
+            write (*,*) 'permitted.'
+          endif
 c
-        if (numtype.eq.0) then
-         write (*,*) ' Reading ',nentries,' mixed values...'
-        endif
-        if (numtype.eq.1) then
-         write (*,*) ' Reading ',nentries,' log values...'
-        endif
-        if (numtype.eq.2) then
-         write (*,*) ' Reading ',nentries,' linear values...'
-        endif
-        if (numtype.eq.3) then
-         write (*,*) ' Reading ',nentries,' base 12 log values...'
-        endif
-c
-        do i=1,nentries
-         read (luf,*) at,zi
-         if (zmap(at).ne.0) then
-          atom=zmap(at)
           if (numtype.eq.0) then
-           if (zi.le.0.d0) zi=10.d0**zi
+            write (*,*) ' Reading ',nentries,' mixed values...'
           endif
           if (numtype.eq.1) then
-           zi=10.d0**zi
+            write (*,*) ' Reading ',nentries,' log values...'
+          endif
+          if (numtype.eq.2) then
+            write (*,*) ' Reading ',nentries,' linear values...'
           endif
           if (numtype.eq.3) then
-           zi=10.d0**(zi-12.d0)
+            write (*,*) ' Reading ',nentries,' base 12 log values...'
           endif
-          zion(atom)=zi
-         endif
-        enddo
-        close (unit=luf)
 c
-       else
-        write (*,110) fnam(1:m)
+          do i=1,nentries
+            read (luf,*) at,zi
+            if (zmap(at).ne.0) then
+              atom=zmap(at)
+              if (numtype.eq.0) then
+                if (zi.le.0.d0) zi=10.d0**zi
+              endif
+              if (numtype.eq.1) then
+                zi=10.d0**zi
+              endif
+              if (numtype.eq.3) then
+                zi=10.d0**(zi-12.d0)
+              endif
+              zion(atom)=zi
+            endif
+          enddo
+          close (unit=luf)
+c
+        else
+          write (*,110) fnam(1:m)
   110      format(' File: ',a,' NOT FOUND...'/
      &              'Try again? or cancel? (a/c) : ',$)
-        read (*,120) ilgg
+          read (*,120) ilgg
   120       format(a)
-        ilgg=ilgg(1:1)
-        write (*,*)
+          ilgg=ilgg(1:1)
+          write (*,*)
 c
-        if (ilgg.eq.'a') ilgg='A'
+          if (ilgg.eq.'a') ilgg='A'
 c
-        if (ilgg.eq.'A') goto 70
-       endif
+          if (ilgg.eq.'A') goto 70
+        endif
       endif
 c
 c     loop back to abundance display
@@ -387,17 +387,17 @@ c
       zmt=0.d0
       zen=0.0d0
       do i=1,atypes
-       zion0(i)=zion(i)
-       zen=zen+zion(i)
-       if (i.gt.3) then
-        zmt=zmt+zion(i)/zsol(i)
-       endif
+        zion0(i)=zion(i)
+        zen=zen+zion(i)
+        if (i.gt.3) then
+          zmt=zmt+zion(i)/zsol(i)
+        endif
       enddo
 c
       if (atypes.gt.3) then
-       zmt=zmt/(atypes-3)
+        zmt=zmt/(atypes-3)
       else
-       zmt=zsol(2)/zion(2)
+        zmt=zsol(2)/zion(2)
       endif
 c
       zgas=zmt
@@ -440,8 +440,8 @@ c
    10 format(19a4)
    20 format(' ',19a4)
       do i=1,atypes
-       deltazion(i)=1.0d0
-       zion(i)=zion0(i)*deltazion(i)
+        deltazion(i)=1.0d0
+        zion(i)=zion0(i)*deltazion(i)
       enddo
 c
       deltafile='Default Zero Offsets'
@@ -480,69 +480,69 @@ c
 c
       if (ilgg.eq.'F') then
 c
-       fnam='abund/solar.txt'
-       m=lenv(fnam)
-       inquire (file=fnam(1:m),exist=iexi)
-       if (iexi) then
-        abdir='abund/'
-       else
-        abdir='/usr/local/share/mappings/abund/'
-       endif
-       l=lenv(abdir)
+        fnam='abund/solar.txt'
+        m=lenv(fnam)
+        inquire (file=fnam(1:m),exist=iexi)
+        if (iexi) then
+          abdir='abund/'
+        else
+          abdir='/usr/local/share/mappings/abund/'
+        endif
+        l=lenv(abdir)
 c
 c     Read an abundance offsets file
 c
-  120  fnam=' '
-       write (*,130)
+  120   fnam=' '
+        write (*,130)
   130    format(' Enter abundance offsets file name : ',$)
 c
-       read (*,140) fnam
+        read (*,140) fnam
   140   format(a)
-       write (*,*)
+        write (*,*)
 c
 c look locally
 c
-       iexi=.false.
-       m=lenv(fnam)
-       deltafile=fnam(1:m)
+        iexi=.false.
+        m=lenv(fnam)
+        deltafile=fnam(1:m)
 c deltafile
-       inquire (file=deltafile(1:m),exist=iexi)
+        inquire (file=deltafile(1:m),exist=iexi)
 c
 c look locally and in share
 c
-       m=lenv(fnam)
-       abnfile=fnam(1:m)
+        m=lenv(fnam)
+        abnfile=fnam(1:m)
 c abnfile
-       iexi=.false.
-       inquire (file=abnfile(1:m),exist=iexi)
-       if (iexi.eqv..false.) then
-        abdir='abund/'
-        l=lenv(abdir)
+        iexi=.false.
+        inquire (file=abnfile(1:m),exist=iexi)
+        if (iexi.eqv..false.) then
+          abdir='abund/'
+          l=lenv(abdir)
 c look in local abund/
-        write (*,*) abnfile(1:m),' NOT FOUND.'
-        write (*,*) ' Looking in abund/...'
-        deltafile=abdir(1:l)//fnam(1:m)
-        n=lenv(deltafile)
-        inquire (file=deltafile(1:n),exist=iexi)
-       endif
-       if (iexi.eqv..false.) then
+          write (*,*) abnfile(1:m),' NOT FOUND.'
+          write (*,*) ' Looking in abund/...'
+          deltafile=abdir(1:l)//fnam(1:m)
+          n=lenv(deltafile)
+          inquire (file=deltafile(1:n),exist=iexi)
+        endif
+        if (iexi.eqv..false.) then
 c look in shared abndir
-        write (*,*) abnfile(1:m),' NOT FOUND.'
-        abdir='/usr/local/share/mappings/abund/'
-        l=lenv(abdir)
-        write (*,*) ' Looking in ',abdir(1:l),'...'
-        abnfile=abdir(1:l)//fnam(1:m)
-        n=lenv(deltafile)
-        inquire (file=deltafile(1:n),exist=iexi)
-       endif
+          write (*,*) abnfile(1:m),' NOT FOUND.'
+          abdir='/usr/local/share/mappings/abund/'
+          l=lenv(abdir)
+          write (*,*) ' Looking in ',abdir(1:l),'...'
+          abnfile=abdir(1:l)//fnam(1:m)
+          n=lenv(deltafile)
+          inquire (file=deltafile(1:n),exist=iexi)
+        endif
 c
-       if (iexi) then
+        if (iexi) then
 c
 c     found the file...
 c
-        n=lenv(deltafile)
+          n=lenv(deltafile)
 c
-        write (*,*) 'FOUND: ',deltafile(1:n)
+          write (*,*) 'FOUND: ',deltafile(1:n)
 c
 c     FORMAT REQUIRED:
 c
@@ -559,59 +559,59 @@ c     a) Element Z, if Z not allowed in ATDAT then entry skipped
 c     b) Abundance, if mixed -ve: log abundance by number
 c                            +ve: mean number abundance
 c
-        luf=99
-        open (unit=luf,file=deltafile(1:n),status='OLD')
-  150   read (unit=luf,fmt=10) (ibuf(j),j=1,19)
-        ilgg=ibuf(1)
-        if (ilgg(1:1).eq.'%') goto 150
-        write (*,*) ' Read offsets from :'
-        write (*,20) (ibuf(j),j=1,19)
-        numtype=0
-        read (luf,fmt='(a80)') numstring
+          luf=99
+          open (unit=luf,file=deltafile(1:n),status='OLD')
+  150     read (unit=luf,fmt=10) (ibuf(j),j=1,19)
+          ilgg=ibuf(1)
+          if (ilgg(1:1).eq.'%') goto 150
+          write (*,*) ' Read offsets from :'
+          write (*,20) (ibuf(j),j=1,19)
+          numtype=0
+          read (luf,fmt='(a80)') numstring
 c
 c read up to two integers from the single line, using type = 0
 c if numtype is not found
 c
-        read (unit=numstring,fmt='(I2,x,I2)') nentries,numtype
-        if (numtype.lt.0) numtype=0
-        if (numtype.gt.2) numtype=0
+          read (unit=numstring,fmt='(I2,x,I2)') nentries,numtype
+          if (numtype.lt.0) numtype=0
+          if (numtype.gt.2) numtype=0
 c
-        if (numtype.eq.0) write (*,*) ' Reading mixed values...'
-        if (numtype.eq.1) write (*,*) ' Reading log values...'
-        if (numtype.eq.2) write (*,*) ' Reading linear values...'
-        if (numtype.eq.3) write (*,*) ' Reading base 12 log values...'
+          if (numtype.eq.0) write (*,*) ' Reading mixed values...'
+          if (numtype.eq.1) write (*,*) ' Reading log values...'
+          if (numtype.eq.2) write (*,*) ' Reading linear values...'
+          if (numtype.eq.3) write (*,*) ' Reading base 12 log values...'
 c
-        do i=1,nentries
-         read (luf,*) at,del
-         if (zmap(at).ne.0) then
-          atom=zmap(at)
-          if (numtype.eq.0) then
-           if (del.le.0.d0) del=10.d0**del
-          endif
-          if (numtype.eq.1) then
-           del=10.d0**del
-          endif
-          if (numtype.eq.3) then
-           del=10.d0**(del-12.d0)
-          endif
-          deltazion(atom)=del
-         endif
-        enddo
-        close (unit=luf)
+          do i=1,nentries
+            read (luf,*) at,del
+            if (zmap(at).ne.0) then
+              atom=zmap(at)
+              if (numtype.eq.0) then
+                if (del.le.0.d0) del=10.d0**del
+              endif
+              if (numtype.eq.1) then
+                del=10.d0**del
+              endif
+              if (numtype.eq.3) then
+                del=10.d0**(del-12.d0)
+              endif
+              deltazion(atom)=del
+            endif
+          enddo
+          close (unit=luf)
 c
-       else
-        write (*,160) fnam(1:m)
+        else
+          write (*,160) fnam(1:m)
   160      format(' File: ',a,' NOT FOUND...'/
      &              'Try again? or cancel? (a/c) : ',$)
-        read (*,170) ilgg
+          read (*,170) ilgg
   170       format(a)
-        ilgg=ilgg(1:1)
-        write (*,*)
+          ilgg=ilgg(1:1)
+          write (*,*)
 c
-        if (ilgg.eq.'a') ilgg='A'
+          if (ilgg.eq.'a') ilgg='A'
 c
-        if (ilgg.eq.'A') goto 120
-       endif
+          if (ilgg.eq.'A') goto 120
+        endif
       endif
 c
 c     loop back to offsets display
@@ -625,17 +625,17 @@ c
       zmt=0.d0
       zen=0.0d0
       do i=1,atypes
-       zion(i)=zion0(i)*deltazion(i)
-       zen=zen+zion(i)
-       if (i.gt.3) then
-        zmt=zmt+zion(i)/zsol(i)
-       endif
+        zion(i)=zion0(i)*deltazion(i)
+        zen=zen+zion(i)
+        if (i.gt.3) then
+          zmt=zmt+zion(i)/zsol(i)
+        endif
       enddo
 c
       if (atypes.gt.3) then
-       zmt=zmt/(atypes-3)
+        zmt=zmt/(atypes-3)
       else
-       zmt=zsol(2)/zion(2)
+        zmt=zsol(2)/zion(2)
       endif
 c
       zgas=zmt
@@ -709,58 +709,58 @@ c
 c
       if (ilgg.eq.'F') then
 c
-       fnam='abund/solar.txt'
-       m=lenv(fnam)
-       inquire (file=fnam(1:m),exist=iexi)
-       if (iexi) then
-        abdir='abund/'
-       else
-        abdir='/usr/local/share/mappings/abund/'
-       endif
-       l=lenv(abdir)
+        fnam='abund/solar.txt'
+        m=lenv(fnam)
+        inquire (file=fnam(1:m),exist=iexi)
+        if (iexi) then
+          abdir='abund/'
+        else
+          abdir='/usr/local/share/mappings/abund/'
+        endif
+        l=lenv(abdir)
 c
 c     read depletion file
 c
-  120  fnam=' '
-       write (*,130)
+  120   fnam=' '
+        write (*,130)
   130   format(/' Enter dust depletion file name : ',$)
 c
   140   format(a)
-       read (*,140) fnam
-       m=lenv(fnam)
-       depfile=fnam(1:m)
+        read (*,140) fnam
+        m=lenv(fnam)
+        depfile=fnam(1:m)
 c deltafile
-       inquire (file=depfile(1:m),exist=iexi)
-       if (iexi.eqv..false.) then
-        abdir='abund/'
-        l=lenv(abdir)
+        inquire (file=depfile(1:m),exist=iexi)
+        if (iexi.eqv..false.) then
+          abdir='abund/'
+          l=lenv(abdir)
 c look in local abund/
-        write (*,*) abnfile(1:m),' NOT FOUND.'
-        write (*,*) ' Looking in ',abdir(1:l),'...'
-        depfile=abdir(1:l)//fnam(1:m)
-        n=lenv(depfile)
-        inquire (file=depfile(1:n),exist=iexi)
-       endif
-       if (iexi.eqv..false.) then
+          write (*,*) abnfile(1:m),' NOT FOUND.'
+          write (*,*) ' Looking in ',abdir(1:l),'...'
+          depfile=abdir(1:l)//fnam(1:m)
+          n=lenv(depfile)
+          inquire (file=depfile(1:n),exist=iexi)
+        endif
+        if (iexi.eqv..false.) then
 c look in shared abndir
-        write (*,*) abnfile(1:m),' NOT FOUND.'
-        abdir='/usr/local/share/mappings/abund/'
-        l=lenv(abdir)
-        write (*,*) ' Looking in ',abdir(1:l),'...'
-        depfile=abdir(1:l)//fnam(1:m)
-        n=lenv(depfile)
-        inquire (file=depfile(1:n),exist=iexi)
-       endif
+          write (*,*) abnfile(1:m),' NOT FOUND.'
+          abdir='/usr/local/share/mappings/abund/'
+          l=lenv(abdir)
+          write (*,*) ' Looking in ',abdir(1:l),'...'
+          depfile=abdir(1:l)//fnam(1:m)
+          n=lenv(depfile)
+          inquire (file=depfile(1:n),exist=iexi)
+        endif
 c
-       if (iexi) then
+        if (iexi) then
 c
 c     found the file...
 c
 c     FORMAT REQUIRED:
 c
-        n=lenv(depfile)
+          n=lenv(depfile)
 c
-        write (*,*) 'FOUND: ',depfile(1:n)
+          write (*,*) 'FOUND: ',depfile(1:n)
 c
 c     otherwise, simply:
 c
@@ -773,58 +773,58 @@ c     b) Depletion Factor, le 0, -ve means log depletion
 c     +ve mean linear scaling factors
 c
 c
-        luf=99
-        open (unit=luf,file=depfile(1:n),status='OLD')
-  150   read (unit=luf,fmt=10) (ibuf(j),j=1,19)
-        ilgg=ibuf(1)
-        if (ilgg(1:1).eq.'%') goto 150
-        write (*,*)
-        write (*,*) ' Read depletion from :'
-        write (*,20) (ibuf(j),j=1,19)
-        numtype=0
-        read (luf,fmt='(a80)') numstring
+          luf=99
+          open (unit=luf,file=depfile(1:n),status='OLD')
+  150     read (unit=luf,fmt=10) (ibuf(j),j=1,19)
+          ilgg=ibuf(1)
+          if (ilgg(1:1).eq.'%') goto 150
+          write (*,*)
+          write (*,*) ' Read depletion from :'
+          write (*,20) (ibuf(j),j=1,19)
+          numtype=0
+          read (luf,fmt='(a80)') numstring
 c
 c read up to two integers from the single line, using type = 0
 c if numtype is *not found*
 c
-        read (unit=numstring,fmt='(I2,x,I2)') nentries,numtype
-        if (numtype.lt.0) numtype=0
+          read (unit=numstring,fmt='(I2,x,I2)') nentries,numtype
+          if (numtype.lt.0) numtype=0
 c
-        if (numtype.eq.0) write (*,*) ' Reading mixed values...'
-        if (numtype.eq.1) write (*,*) ' Reading log values...'
-        if (numtype.eq.2) write (*,*) ' Reading linear values...'
-        if (numtype.eq.3) write (*,*) ' Reading base 12 log values...'
+          if (numtype.eq.0) write (*,*) ' Reading mixed values...'
+          if (numtype.eq.1) write (*,*) ' Reading log values...'
+          if (numtype.eq.2) write (*,*) ' Reading linear values...'
+          if (numtype.eq.3) write (*,*) ' Reading base 12 log values...'
 c
-        do i=1,nentries
-         read (luf,*) at,zi
-         if (zmap(at).ne.0) then
-          atom=zmap(at)
-          if (numtype.eq.0) then
-           if (zi.le.0.d0) zi=10.d0**zi
-          endif
-          if (numtype.eq.1) then
-           zi=10.d0**zi
-          endif
-          if (numtype.eq.3) then
-           zi=10.d0**(zi-12.d0)
-          endif
-          dion0(atom)=zi
-         endif
-        enddo
-        close (unit=luf) 
+          do i=1,nentries
+            read (luf,*) at,zi
+            if (zmap(at).ne.0) then
+              atom=zmap(at)
+              if (numtype.eq.0) then
+                if (zi.le.0.d0) zi=10.d0**zi
+              endif
+              if (numtype.eq.1) then
+                zi=10.d0**zi
+              endif
+              if (numtype.eq.3) then
+                zi=10.d0**(zi-12.d0)
+              endif
+              dion0(atom)=zi
+            endif
+          enddo
+          close (unit=luf)
 c
-       else
-        write (*,160) depfile(1:m)
+        else
+          write (*,160) depfile(1:m)
   160       format(' File: ',a,' NOT FOUND...'/
      &           'Try again? or cancel? (a/c) : ',$)
-        read (*,170) ilgg
+          read (*,170) ilgg
   170       format(a)
-        ilgg=ilgg(1:1)
+          ilgg=ilgg(1:1)
 c
-        if (ilgg.eq.'a') ilgg='A'
+          if (ilgg.eq.'a') ilgg='A'
 c
-        if (ilgg.eq.'A') goto 120
-       endif
+          if (ilgg.eq.'A') goto 120
+        endif
       endif
 c
 c     loop back to display
@@ -838,9 +838,9 @@ c
 c     Finally calculate invdion
 c
       do j=1,atypes
-       dion(j)=dion0(j)
-       zion(j)=zion0(j)*deltazion(j)*dion(j)
-       invdion(j)=1.d0/dion(j)
+        dion(j)=dion0(j)
+        zion(j)=zion0(j)*deltazion(j)*dion(j)
+        invdion(j)=1.d0/dion(j)
       enddo
 c
 c
@@ -1039,14 +1039,14 @@ c
       epotmi=iphe
 c
       do i=1,atypes
-       do j=3,maxion(i)
-        pop(j,i)=0.0d0
-       enddo
-       pop(1,i)=0.990d0
-       if (ipote(1,i).lt.epotmi) then
-        pop(1,i)=1.d-2
-       endif
-       pop(2,i)=1.0d0-pop(1,i)
+        do j=3,maxion(i)
+          pop(j,i)=0.0d0
+        enddo
+        pop(1,i)=0.990d0
+        if (ipote(1,i).lt.epotmi) then
+          pop(1,i)=1.d-2
+        endif
+        pop(2,i)=1.0d0-pop(1,i)
       enddo
 c
       ionsetup='Default ionisation'
@@ -1085,61 +1085,61 @@ c
       if (ilgg.eq.'D') goto 440
       if (ilgg.eq.'E') goto 180
       if (ilgg.eq.'S') then
-       luf=99
-   60  fnam=' '
-       write (*,70)
+        luf=99
+   60   fnam=' '
+        write (*,70)
    70   format(/' File name to save: ',$)
-       read (*,80,err=60) fnam
+        read (*,80,err=60) fnam
    80   format(a)
 c
-       m=lenv(fnam)
-       open (luf,file=fnam(1:m),status='NEW')
-       write (luf,'("%")')
-       write (luf,'("% Ionisation Balance File")')
-       write (luf,'("%")')
-       write (luf,'("%")')
-       write (luf,*) 'Ionisation balance by :MAPPINGS V ',theversion
-       nentries=0
+        m=lenv(fnam)
+        open (luf,file=fnam(1:m),status='NEW')
+        write (luf,'("%")')
+        write (luf,'("% Ionisation Balance File")')
+        write (luf,'("%")')
+        write (luf,'("%")')
+        write (luf,*) 'Ionisation balance by :MAPPINGS V ',theversion
+        nentries=0
 c
-       do i=1,atypes
-        do j=1,maxion(i)
-         nentries=nentries+1
+        do i=1,atypes
+          do j=1,maxion(i)
+            nentries=nentries+1
+          enddo
         enddo
-       enddo
 c
-       write (luf,*) nentries
+        write (luf,*) nentries
 c
-       do i=1,atypes
-        do j=1,maxion(i)
+        do i=1,atypes
+          do j=1,maxion(i)
    90        format(i2,1x,i2,1x,1pg14.6)
-         write (luf,90) mapz(i),j,pop(j,i)
+            write (luf,90) mapz(i),j,pop(j,i)
+          enddo
         enddo
-       enddo
-       close (luf)
-       goto 40
+        close (luf)
+        goto 40
       endif
 c
       if (ilgg.eq.'F') then
 c
 c     Read balance file
 c
-  100  fnam=' '
-       write (*,110)
+  100   fnam=' '
+        write (*,110)
   110    format(/' Enter file name : ',$)
-       read (*,120,err=100) fnam
+        read (*,120,err=100) fnam
   120    format(a)
-       m=lenv(fnam)
-       inquire (file=fnam(1:m),exist=iexi)
-       if (iexi.eqv..false.) then
-        write (*,*) fnam(1:m),' NOT FOUND.'
-        write (*,*) ' Looking in ',datadir(1:dtlen)
-        fnam=datadir(1:dtlen)//fnam(1:m)
         m=lenv(fnam)
         inquire (file=fnam(1:m),exist=iexi)
-       endif
+        if (iexi.eqv..false.) then
+          write (*,*) fnam(1:m),' NOT FOUND.'
+          write (*,*) ' Looking in ',datadir(1:dtlen)
+          fnam=datadir(1:dtlen)//fnam(1:m)
+          m=lenv(fnam)
+          inquire (file=fnam(1:m),exist=iexi)
+        endif
 c
 c
-       if (iexi) then
+        if (iexi) then
 c
 c     Found the file...
 c
@@ -1157,56 +1157,56 @@ c
 c
 c     first zero arrays
 c
-        do i=1,atypes
-         do j=1,maxion(i)
-          pop(j,i)=0.0d0
-         enddo
-        enddo
+          do i=1,atypes
+            do j=1,maxion(i)
+              pop(j,i)=0.0d0
+            enddo
+          enddo
 c
   130       format(19a4)
   140       format(' ',19a4)
 c
-        luf=99
-        open (unit=luf,file=fnam(1:m),status='OLD')
-  150   read (unit=luf,fmt=130) (ibuf(j),j=1,19)
-        ilgg=ibuf(1)
-        if (ilgg(1:1).eq.'%') goto 150
-        write (*,*) ' Read ion balance from :'
-        write (*,140) (ibuf(j),j=1,19)
-        ionsetup=fnam(1:m)
-        read (luf,fmt=*) nentries
-        do i=1,nentries
-         read (luf,*) at,io,fr
-         if (zmap(at).ne.0) then
-          atom=zmap(at)
-          if (fr.lt.0.d0) fr=10.d0**fr
-          pop(io,atom)=fr
-         endif
-        enddo
-        close (unit=luf)
-        call copypop (pop, pop0)
+          luf=99
+          open (unit=luf,file=fnam(1:m),status='OLD')
+  150     read (unit=luf,fmt=130) (ibuf(j),j=1,19)
+          ilgg=ibuf(1)
+          if (ilgg(1:1).eq.'%') goto 150
+          write (*,*) ' Read ion balance from :'
+          write (*,140) (ibuf(j),j=1,19)
+          ionsetup=fnam(1:m)
+          read (luf,fmt=*) nentries
+          do i=1,nentries
+            read (luf,*) at,io,fr
+            if (zmap(at).ne.0) then
+              atom=zmap(at)
+              if (fr.lt.0.d0) fr=10.d0**fr
+              pop(io,atom)=fr
+            endif
+          enddo
+          close (unit=luf)
+          call copypop (pop, pop0)
 c
-       else
-        write (*,160) fnam(1:m)
+        else
+          write (*,160) fnam(1:m)
   160       format(' File: ',a,' NOT FOUND...'/
      &           'Try again? or cancel? (a/c) : ',$)
-        read (*,170) ilgg
+          read (*,170) ilgg
   170       format(a)
-        ilgg=ilgg(1:1)
+          ilgg=ilgg(1:1)
 c
-        if (ilgg.eq.'a') ilgg='A'
+          if (ilgg.eq.'a') ilgg='A'
 c
-        if (ilgg.eq.'A') goto 100
-       endif
+          if (ilgg.eq.'A') goto 100
+        endif
 c
-       goto 40
+        goto 40
       endif
 c
       if (ilgg.eq.'C') then
-       call sinsla (model)
-       call copypop (pop, pop0)
-       ionsetup='Calculated at start'
-       goto 40
+        call sinsla (model)
+        call copypop (pop, pop0)
+        ionsetup='Calculated at start'
+        goto 40
       endif
 c
       if (ilgg.eq.'X') goto 450
@@ -1233,86 +1233,86 @@ c
       i2=in
 c
       if (in.eq.99) then
-       i1=1
-       i2=atypes
+        i1=1
+        i2=atypes
       endif
 c
       do 430 i=i1,i2
-       iflag=0
+        iflag=0
 c
   220 format(//' Species versus ionisation fraction for element ',
      &' : ',a2,'  @@@@@@@')
-  230  write (*,220) elem(i)
+  230   write (*,220) elem(i)
 c
-       do j=1,maxion(i)
+        do j=1,maxion(i)
   240     format(' ',a2,a6,1x,':',3x,1pg13.6)
-        write (*,240) elem(i),rom(j),pop(j,i)
-       enddo
+          write (*,240) elem(i),rom(j),pop(j,i)
+        enddo
 c
-       if (iflag.eq.0) goto 280
+        if (iflag.eq.0) goto 280
 c
-  250  write (*,260)
+  250   write (*,260)
   260 format(' ::::::::::    Alter?(y/n) : ',$)
-       read (*,270,err=250) ilgg
+        read (*,270,err=250) ilgg
   270 format(a)
-       call toup (ilgg(1:1), ilgg)
+        call toup (ilgg(1:1), ilgg)
 c
-       if (ilgg.eq.'N') goto 430
-       if (ilgg.ne.'Y') goto 250
+        if (ilgg.eq.'N') goto 430
+        if (ilgg.ne.'Y') goto 250
 c
 c
 c    ***ALTERING OF INITIAL VALUES
 c
-  280  write (*,290)
+  280   write (*,290)
   290 format(' Enter new values (number <= 0.0 as log, number 0-1,',
      &  ' C=conserve, X=eXit)')
 c
-       iflag=1
-  300  do 330 j=1,maxion(i)
+        iflag=1
+  300   do 330 j=1,maxion(i)
 c
   310 format(' ',a2,a6,1x,':',3x,1pg13.6,2x,': ',$)
-        write (*,310) elem(i),rom(j),pop(j,i)
+          write (*,310) elem(i),rom(j),pop(j,i)
 c
   320 format(a)
-        read (*,320) blanc
-        ilgg=blanc(1:1)
-        if (ilgg.eq.'x') ilgg='X'
-        if (ilgg.eq.'c') ilgg='C'
+          read (*,320) blanc
+          ilgg=blanc(1:1)
+          if (ilgg.eq.'x') ilgg='X'
+          if (ilgg.eq.'c') ilgg='C'
 c
-        if (ilgg.eq.'C') goto 330
-        if (ilgg.eq.'X') goto 340
+          if (ilgg.eq.'C') goto 330
+          if (ilgg.eq.'X') goto 340
 c
-        read (blanc,*,err=410) p
+          read (blanc,*,err=410) p
 c
-        if (p.lt.0.d0) p=10.d0**p
-        if (p.gt.1.d0) p=1.0d0
+          if (p.lt.0.d0) p=10.d0**p
+          if (p.gt.1.d0) p=1.0d0
 c
-        pop(j,i)=p
+          pop(j,i)=p
 c
-  330  continue
+  330   continue
 c
 c    ***CHECK ON NORMALISATION
 c
-  340  fr=0.d0
-       do 350 j=1,maxion(i)
-  350   fr=fr+pop(j,i)
-       if (dabs(fr-1.d0).gt.0.1d0) goto 370
-       do 360 j=1,maxion(i)
-  360   pop(j,i)=pop(j,i)/fr
-       goto 390
-  370  write (*,380) fr,ibell
+  340   fr=0.d0
+        do 350 j=1,maxion(i)
+  350     fr=fr+pop(j,i)
+        if (dabs(fr-1.d0).gt.0.1d0) goto 370
+        do 360 j=1,maxion(i)
+  360     pop(j,i)=pop(j,i)/fr
+        goto 390
+  370   write (*,380) fr,ibell
   380  format(' Normalisation error.',
      & ' ERRNO :',1pg9.2,a1)
-       goto 280
-  390  write (*,400) elem(i)
+        goto 280
+  390   write (*,400) elem(i)
   400  format(/' New normalised values for element #',' : ',a2)
 c
 c
-       goto 230
-  410  write (*,420) ibell
+        goto 230
+  410   write (*,420) ibell
   420 format(' ERROR *******************************',a1)
 c
-       goto 300
+        goto 300
 c
   430 continue
 c
@@ -1331,14 +1331,14 @@ c
   440 epotmi=iphe
 c
       do i=1,atypes
-       do j=3,maxion(i)
-        pop(j,i)=0.0d0
-       enddo
-       pop(1,i)=0.990d0
-       if (ipote(1,i).lt.(0.99d0*epotmi)) then
-        pop(1,i)=1.d-2
-       endif
-       pop(2,i)=1.0d0-pop(1,i)
+        do j=3,maxion(i)
+          pop(j,i)=0.0d0
+        enddo
+        pop(1,i)=0.990d0
+        if (ipote(1,i).lt.(0.99d0*epotmi)) then
+          pop(1,i)=1.d-2
+        endif
+        pop(2,i)=1.0d0-pop(1,i)
       enddo
 c
       ionsetup='Default ionisation'
@@ -1348,6 +1348,7 @@ c
       goto 450
 c
 c
+c      clear any residual radiation
   450 call zeroemiss ()
 c
       return
@@ -1385,11 +1386,11 @@ c
 c setup all singly ionised
 c
       do i=1,atypes
-       do j=1,maxion(i)
-        pop(j,i)=0.0d0
-       enddo
-       pop(1,i)=1.0d-2
-       pop(2,i)=1.0d0-pop(1,i)
+        do j=1,maxion(i)
+          pop(j,i)=0.0d0
+        enddo
+        pop(1,i)=1.0d-2
+        pop(2,i)=1.0d0-pop(1,i)
       enddo
       call copypop (pop, popcie)
       call copypop (pop, pop0)

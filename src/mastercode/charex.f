@@ -47,10 +47,10 @@ c
 c
 c
       do i=1,nchxr
-       chxr(i)=0.d0
+        chxr(i)=0.d0
       enddo
       do i=1,nchxi
-       chxi(i)=0.d0
+        chxi(i)=0.d0
       enddo
 c
       if (chargemode.ge.3) return
@@ -62,25 +62,26 @@ c
 c
       if (chargemode.eq.2) then
 c
-       tlim=6.0d4
-       tl=dmin1(tt,tlim)
+        tlim=6.0d4
+        tl=dmin1(tt,tlim)
 c
 c     original calcs
 c
-       do 30 j=1,nchxold
-        do 10 jn=1,5
-   10    charte(jn,j)=0.0d0
+        do 30 j=1,nchxold
+          do jn=1,5
+            charte(jn,j)=0.0d0
+          enddo
 c
-        if (charco(1,j).le.0.0d0) goto 30
-        charte(5,j)=charco(7,j)
-        do 20 i=1,2
-         charte(i,j)=charco(i,j)
-         sigma=charco(2+i,j)
-         alph=charco(4+i,j)
-         if (alph.lt.20.0d0) charte(2+i,j)=fonct1(tl,alph)
-         if (alph.ge.20.0d0) charte(2+i,j)=fonct2(tt,alph)
-   20   continue
-   30  continue
+          if (charco(1,j).le.0.0d0) goto 30
+          charte(5,j)=charco(7,j)
+          do i=1,2
+            charte(i,j)=charco(i,j)
+            sigma=charco(2+i,j)
+            alph=charco(4+i,j)
+            if (alph.lt.20.0d0) charte(2+i,j)=fonct1(tl,alph)
+            if (alph.ge.20.0d0) charte(2+i,j)=fonct2(tt,alph)
+          enddo
+   30   continue
 c
 c     end old mappings exchange reactions
 c
@@ -88,76 +89,77 @@ c
 c
       if (chargemode.eq.1) then
 c
-       do i=1,nlegacychxr
-        chxrlegacy(i)=0.d0
-       enddo
-       do i=1,nlegacychxi
-        chxilegacy(i)=0.d0
-       enddo
+        do i=1,nlegacychxr
+          chxrlegacy(i)=0.d0
+        enddo
+        do i=1,nlegacychxi
+          chxilegacy(i)=0.d0
+        enddo
 c
 c     legacy A&R 1985 calcs,
 c     returns rates in chxrlegacy and chxilegacy
 c
-       tt=t+1.d0
-       t4=tt*1.d-4
+        tt=t+1.d0
+        t4=tt*1.d-4
 c
 c     first recombination rates
 c
-       do i=1,nlegacychxr
+        do i=1,nlegacychxr
 c
-        tl0=dlog10(chxrlegacytemp(1,i))-0.5d0
-        tl1=dlog10(chxrlegacytemp(2,i))+0.5d0
-        tl=dlog10(t)
+          tl0=dlog10(chxrlegacytemp(1,i))-0.5d0
+          tl1=dlog10(chxrlegacytemp(2,i))+0.5d0
+          tl=dlog10(t)
 c
-        if ((tl.gt.tl0).and.(tl.lt.tl1)) then
-         chxrlegacy(i)=(chxrlegacycos(1,i)*(t4)**chxrlegacycos(2,i))*
-     &    (1.d0+chxrlegacycos(3,i)*dexp(t4*chxrlegacycos(4,i)))
+          if ((tl.gt.tl0).and.(tl.lt.tl1)) then
+            chxrlegacy(i)=(chxrlegacycos(1,i)*(t4)**chxrlegacycos(2,i))*
+     &       (1.d0+chxrlegacycos(3,i)*dexp(t4*chxrlegacycos(4,i)))
 c
 c Allow for hard fields by entering constant adiabatic limit
 c
-        elseif (tl.lt.tl0) then
-         lowt=10**(tl0-4)
-         chxrlegacy(i)=(chxrlegacycos(1,i)*(lowt)**chxrlegacycos(2,i))*
-     &    (1.d0+chxrlegacycos(3,i)*dexp(lowt*chxrlegacycos(4,i)))
+          elseif (tl.lt.tl0) then
+            lowt=10**(tl0-4)
+            chxrlegacy(i)=(chxrlegacycos(1,i)*(lowt)**chxrlegacycos(2,i)
+     &       )*(1.d0+chxrlegacycos(3,i)*dexp(lowt*chxrlegacycos(4,i)))
 c
-        else
-         chxrlegacy(i)=0.0d0
-        endif
+          else
+            chxrlegacy(i)=0.0d0
+          endif
 c
-       enddo
+        enddo
 c
 c     then ionising rates
 c
-       do i=1,nlegacychxi
+        do i=1,nlegacychxi
 c
-        tl0=dlog10(chxilegacytemp(1,i))-0.5d0
-        tl1=dlog10(chxilegacytemp(2,i))+0.5d0
-        tl=dlog10(tt)
+          tl0=dlog10(chxilegacytemp(1,i))-0.5d0
+          tl1=dlog10(chxilegacytemp(2,i))+0.5d0
+          tl=dlog10(tt)
 c
-        if ((tl.gt.tl0).and.(tl.lt.tl1)) then
+          if ((tl.gt.tl0).and.(tl.lt.tl1)) then
 c
-         ktev=rkb*tt/ev
+            ktev=rkb*tt/ev
 c
 c     special case for OI-HII reaction
 c
-         if (chxilegacyat(i).eq.zmap(8)) then
-          chxilegacy(i)=chxilegacycos(1,i)*dexp(-1.d0*chxilegacycos(4,i)
-     &     /ktev)*(1.d0-(0.93d0*dexp(-1.d0*chxilegacycos(3,i)*t4)))
+            if (chxilegacyat(i).eq.zmap(8)) then
+              chxilegacy(i)=chxilegacycos(1,i)*dexp(-1.d0*
+     &         chxilegacycos(4,i)/ktev)*(1.d0-(0.93d0*dexp(-1.d0*
+     &         chxilegacycos(3,i)*t4)))
 c
-         else
+            else
 c
 c     the rest of the reactions
 c
-          chxilegacy(i)=(chxilegacycos(1,i)*((t4)**chxilegacycos(2,i)))*
-     &     dexp(-1.d0*chxilegacycos(3,i)*t4)*dexp(-1.d0*chxilegacycos(4,
-     &     i)/ktev)
+              chxilegacy(i)=(chxilegacycos(1,i)*((t4)**chxilegacycos(2,
+     &         i)))*dexp(-1.d0*chxilegacycos(3,i)*t4)*dexp(-1.d0*
+     &         chxilegacycos(4,i)/ktev)
 c
-         endif
-        else
-         chxilegacy(i)=0.0d0
-        endif
+            endif
+          else
+            chxilegacy(i)=0.0d0
+          endif
 c
-       enddo
+        enddo
 c
       endif
 c
@@ -167,100 +169,100 @@ c     new calcs, returns rates in chxr and chxi
 c
 c     first recombination rates
 c
-       do i=1,nchxr
-        chxr(i)=0.d0
+        do i=1,nchxr
+          chxr(i)=0.d0
 c
-        nft=chxrnfit(i)
-        id=chxrfitid(i)
+          nft=chxrnfit(i)
+          id=chxrfitid(i)
 c
-        a=chxrcos(1,i)
-        b=chxrcos(2,i)
-        c=chxrcos(3,i)
-        d=chxrcos(4,i)
-        e=0.0d0
+          a=chxrcos(1,i)
+          b=chxrcos(2,i)
+          c=chxrcos(3,i)
+          d=chxrcos(4,i)
+          e=0.0d0
 c
-        tl0=chxrtemp(1,i)
-        tl1=chxrtemp(2,i)
+          tl0=chxrtemp(1,i)
+          tl1=chxrtemp(2,i)
 c
-        if ((tl.ge.tl0).and.(tl.lt.tl1)) then
-         chxr(i)=a*(t4**b)*(1.d0+c*dexp(d*t4))
-        endif
+          if ((tl.ge.tl0).and.(tl.lt.tl1)) then
+            chxr(i)=a*(t4**b)*(1.d0+c*dexp(d*t4))
+          endif
 c
-        if ((tl.lt.tl0).and.(id.eq.1)) then
-         tlo4=10.d0**(tl0-4.d0)
-         chxr(i)=a*(tlo4**b)*(1.d0+c*dexp(d*tlo4))
-        endif
-        if ((tl.ge.tl1).and.(id.eq.nft)) then
-         thi4=10.d0**(tl1-4.d0)
-         chxr(i)=a*(thi4**b)*(1.d0+c*dexp(d*thi4))
-         chxr(i)=chxr(i)*(t4/thi4)**(-0.5d0)
-        endif
+          if ((tl.lt.tl0).and.(id.eq.1)) then
+            tlo4=10.d0**(tl0-4.d0)
+            chxr(i)=a*(tlo4**b)*(1.d0+c*dexp(d*tlo4))
+          endif
+          if ((tl.ge.tl1).and.(id.eq.nft)) then
+            thi4=10.d0**(tl1-4.d0)
+            chxr(i)=a*(thi4**b)*(1.d0+c*dexp(d*thi4))
+            chxr(i)=chxr(i)*(t4/thi4)**(-0.5d0)
+          endif
 c
-        chxr(i)=dmax1(chxr(i),0.d0)
-        if (chxr(i).le.1.d-17) chxr(i)=0.d0
+          chxr(i)=dmax1(chxr(i),0.d0)
+          if (chxr(i).le.1.d-17) chxr(i)=0.d0
 c
 c
-       enddo
+        enddo
 c
 c     then ionising rates
 c
-       do i=1,nchxi
+        do i=1,nchxi
 c
-        chxi(i)=0.d0
+          chxi(i)=0.d0
 c
-        nft=chxinfit(i)
-        id=chxifitid(i)
+          nft=chxinfit(i)
+          id=chxifitid(i)
 c
-        a=chxicos(1,i)
-        b=chxicos(2,i)
-        c=chxicos(3,i)
-        d=chxicos(4,i)
-        e=dmax1(0.d0,chxicos(5,i))
+          a=chxicos(1,i)
+          b=chxicos(2,i)
+          c=chxicos(3,i)
+          d=chxicos(4,i)
+          e=dmax1(0.d0,chxicos(5,i))
 c
-        tl0=chxitemp(1,i)
-        tl1=chxitemp(2,i)
+          tl0=chxitemp(1,i)
+          tl1=chxitemp(2,i)
 c
-        if (chxix(i).eq.zmap(1)) then
-         if ((tl.ge.tl0).and.(tl.lt.tl1)) then
-          chxi(i)=a*(t4**b)*(1.d0+c*dexp(d*t4))*dexp(-e*invt4)
-         endif
-        endif
+          if (chxix(i).eq.zmap(1)) then
+            if ((tl.ge.tl0).and.(tl.lt.tl1)) then
+              chxi(i)=a*(t4**b)*(1.d0+c*dexp(d*t4))*dexp(-e*invt4)
+            endif
+          endif
 c
-        if (chxix(i).eq.zmap(2)) then
-         if ((tl.ge.tl0).and.(tl.lt.tl1)) then
+          if (chxix(i).eq.zmap(2)) then
+            if ((tl.ge.tl0).and.(tl.lt.tl1)) then
 c A&R1985 formula note -c, and we use E4 not eV
-          chxi(i)=a*(t4**b)*dexp(-c*t4)*dexp(-e*invt4)
-         endif
-        endif
+              chxi(i)=a*(t4**b)*dexp(-c*t4)*dexp(-e*invt4)
+            endif
+          endif
 c
-        if (chxix(i).eq.zmap(1)) then
-         if ((tl.lt.tl0).and.(id.eq.1)) then
-          tlo4=10.d0**(tl0-4.d0)
-          chxi(i)=a*(tlo4**b)*(1.d0+c*dexp(tlo4))*dexp(-e/tlo4)
-         endif
-         if ((tl.ge.tl1).and.(id.eq.nft)) then
-          thi4=10.d0**(tl1-4.d0)
-          chxi(i)=a*(thi4**b)*(1.d0+c*dexp(d*thi4))*dexp(-e/thi4)
-          chxi(i)=chxi(i)*(t4/thi4)**(-0.5d0)
-         endif
-        endif
+          if (chxix(i).eq.zmap(1)) then
+            if ((tl.lt.tl0).and.(id.eq.1)) then
+              tlo4=10.d0**(tl0-4.d0)
+              chxi(i)=a*(tlo4**b)*(1.d0+c*dexp(tlo4))*dexp(-e/tlo4)
+            endif
+            if ((tl.ge.tl1).and.(id.eq.nft)) then
+              thi4=10.d0**(tl1-4.d0)
+              chxi(i)=a*(thi4**b)*(1.d0+c*dexp(d*thi4))*dexp(-e/thi4)
+              chxi(i)=chxi(i)*(t4/thi4)**(-0.5d0)
+            endif
+          endif
 c
-        if (chxix(i).eq.zmap(2)) then
-         if ((tl.lt.tl0).and.(id.eq.1)) then
-          tlo4=10.d0**(tl0-4.d0)
-          chxi(i)=a*(tlo4**b)*dexp(-c*tlo4)*dexp(-e/tlo4)
-         endif
-         if ((tl.ge.tl1).and.(id.eq.nft)) then
-          thi4=10.d0**(tl1-4.d0)
-          chxi(i)=a*(thi4**b)*dexp(-c*thi4)*dexp(-e/thi4)
-          chxi(i)=chxi(i)*(t4/thi4)**(-0.5d0)
-         endif
-        endif
+          if (chxix(i).eq.zmap(2)) then
+            if ((tl.lt.tl0).and.(id.eq.1)) then
+              tlo4=10.d0**(tl0-4.d0)
+              chxi(i)=a*(tlo4**b)*dexp(-c*tlo4)*dexp(-e/tlo4)
+            endif
+            if ((tl.ge.tl1).and.(id.eq.nft)) then
+              thi4=10.d0**(tl1-4.d0)
+              chxi(i)=a*(thi4**b)*dexp(-c*thi4)*dexp(-e/thi4)
+              chxi(i)=chxi(i)*(t4/thi4)**(-0.5d0)
+            endif
+          endif
 c
-        chxi(i)=dmax1(chxi(i),0.d0)
-        if (chxi(i).le.1.d-17) chxi(i)=0.d0
+          chxi(i)=dmax1(chxi(i),0.d0)
+          if (chxi(i).le.1.d-17) chxi(i)=0.d0
 c
-       enddo
+        enddo
 c
       endif
 c

@@ -44,69 +44,69 @@ c
       xmi=2.d-5
       ztot=1.0d0
       do i=2,atypes
-       ztot=ztot+zion(i)
+        ztot=ztot+zion(i)
       enddo
 c
 c    ***USES INTERPOLATION , xe < 1.0
 c
       xe=dmin1(1.0d0,dmax1((de/dh)/ztot,xmi))
       if (xe.lt.0.999d0) then
-       xlo=dlog10(xe+epsilon)
-       xlast=-4.0d0
-       x1=dint(xlo)
-       xc=x1
-       if (xc.lt.xlast) xc=xlast
-       if (x1.lt.-2.0d0) x1=-2.0d0
+        xlo=dlog10(xe+epsilon)
+        xlast=-4.0d0
+        x1=dint(xlo)
+        xc=x1
+        if (xc.lt.xlast) xc=xlast
+        if (x1.lt.-2.0d0) x1=-2.0d0
 c
-       del=x1-xlo
+        del=x1-xlo
 c
-       i1=idnint(1.0d0+dabs(x1))
-       i1=min(3,max(1,i1))
-       i2=i1+1
-       i3=i1+2
-       ic=idnint(1.0d0+dabs(xc))
-       do idx=1,atypes
-        do ion=1,maxion(idx)-1
-         pz=zion(idx)*pop(ion,idx)
-         if (pz.gt.pzlimit) then
-          aa=heaph(i1,ion,idx)
-          bb=heaph(i2,ion,idx)
-          cc=heaph(i3,ion,idx)
-          temp=0.d0
-          if (cc.gt.0.0d0) then
-           qval=dexp(quad(del,dlog(aa),dlog(bb),dlog(cc)))
-           val=dmax1(0.0d0,dmin1(qval,heaph(ic,ion,idx)))
-           temp=(dh*pz*val)
-          elseif (aa.gt.0.0d0) then
-           qval=quad(del,aa,bb,cc)
-           val=dmax1(0.0d0,dmin1(qval,heaph(ic,ion,idx)))
-           temp=(dh*pz*val)
-          endif
-          pgain=pgain+temp
-          heatz(idx)=heatz(idx)+temp
-          heatzion(ion,idx)=heatzion(ion,idx)+temp
-         endif
+        i1=idnint(1.0d0+dabs(x1))
+        i1=min(3,max(1,i1))
+        i2=i1+1
+        i3=i1+2
+        ic=idnint(1.0d0+dabs(xc))
+        do idx=1,atypes
+          do ion=1,maxion(idx)-1
+            pz=zion(idx)*pop(ion,idx)
+            if (pz.gt.pzlimit) then
+              aa=heaph(i1,ion,idx)
+              bb=heaph(i2,ion,idx)
+              cc=heaph(i3,ion,idx)
+              temp=0.d0
+              if (cc.gt.0.0d0) then
+                qval=dexp(quad(del,dlog(aa),dlog(bb),dlog(cc)))
+                val=dmax1(0.0d0,dmin1(qval,heaph(ic,ion,idx)))
+                temp=(dh*pz*val)
+              elseif (aa.gt.0.0d0) then
+                qval=quad(del,aa,bb,cc)
+                val=dmax1(0.0d0,dmin1(qval,heaph(ic,ion,idx)))
+                temp=(dh*pz*val)
+              endif
+              pgain=pgain+temp
+              heatz(idx)=heatz(idx)+temp
+              heatzion(ion,idx)=heatzion(ion,idx)+temp
+            endif
 c           if (heatzion(ion,iel).gt.0.d0) then
 c           write(*,*)'pheat:',mapz(iel),ion,heatzion(ion,iel)
 c           endif
+          enddo
         enddo
-       enddo
 c
       else
 c
 c    ***NO INTERPOLATION BECAUSE XHII ~1.0
 c
-       do idx=1,atypes
-        do ion=1,maxion(idx)-1
-         pz=zion(idx)*pop(ion,idx)
-         if (pz.gt.pzlimit) then
-          temp=dh*pz*heaph(1,ion,idx)
-          pgain=pgain+temp
-          heatz(idx)=heatz(idx)+temp
-          heatzion(ion,idx)=heatzion(ion,idx)+temp
-         endif
+        do idx=1,atypes
+          do ion=1,maxion(idx)-1
+            pz=zion(idx)*pop(ion,idx)
+            if (pz.gt.pzlimit) then
+              temp=dh*pz*heaph(1,ion,idx)
+              pgain=pgain+temp
+              heatz(idx)=heatz(idx)+temp
+              heatzion(ion,idx)=heatzion(ion,idx)+temp
+            endif
+          enddo
         enddo
-       enddo
       endif
 c
       if (dabs(pgain).lt.epsilon) pgain=0.d0

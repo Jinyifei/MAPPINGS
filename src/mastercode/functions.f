@@ -32,7 +32,8 @@ c
       real*8 trg,  x_sec, abfrac
       integer*4 line,series,nz,atom
 c
-c     casab=0.d0 ! test always case A for all elements-
+c      test always case A for all elements-
+c     casab=0.d0
 c     return
 c
 c     currently only line=3,series=1 considered
@@ -42,15 +43,16 @@ c
       atom=zmap(nz)
       x_sec=0.d0
       if (nz.eq.1) then
-       x_sec=hydlin(2,line,series)-1.0d0
+        x_sec=hydlin(2,line,series)-1.0d0
       endif
       if (nz.eq.2) then
-       x_sec=hellin(2,line,series)-1.0d0
+        x_sec=hellin(2,line,series)-1.0d0
       endif
       if ((nz.gt.2).and.(atom.gt.0)) then
 c        x_sec=xhydlin(2,line,series,atom)-1.0d0
-       casab=0.d0!alwayscaseaforheavyelements
-       return
+c      always case A for heavy elements
+        casab=0.d0
+        return
       endif
 c
       abfrac=0.0
@@ -58,7 +60,7 @@ c
       x_sec=dmax1(x_sec,0.0d0)
 c
       if (x_sec.lt.42.d0) then
-       abfrac=dexp(trg*x_sec)
+        abfrac=dexp(trg*x_sec)
       endif
 c
       casab=1.0d0-abfrac
@@ -83,10 +85,9 @@ c
       real*8 dh
 c
       densnum=0.0d0
-c
-      do 10 i=1,atypes
-       densnum=densnum+zion(i)
-   10 continue
+      do i=1,atypes
+        densnum=densnum+zion(i)
+      enddo
 c
       densnum=dh*densnum
 c
@@ -110,11 +111,10 @@ c
 c
       d=0.0d0
       do i=1,atypes
-       d=d+(zion(i)*atwei(i))
+        d=d+(zion(i)*atwei(i))
       enddo
 c
       denstot=dh*d
-c
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -148,44 +148,44 @@ c
       sa1=sa+1.0d0
 c
       if (sa1.lt.12.0d0) then
-       if (sa.eq.0.0d0) then
-        da=bet*(((b2**sa1)/sa1)-((b1**sa1)/sa1))
-        db=(1.0d0-bet)*(dlog(b2)-dlog(b1))
-       elseif (sa1.eq.0.0d0) then
-        da=bet*(dlog(b2)-dlog(b1))
-        db=(1.0d0-bet)*(((b2**sa)/sa)-((b1**sa)/sa))
-       else
-        da=bet*(((b2**sa1)/sa1)-((b1**sa1)/sa1))
-        db=(1.0d0-bet)*(((b2**sa)/sa)-((b1**sa)/sa))
-       endif
-c
-       dl=da+db
-c
-       if (dl.le.0.d0) then
-        df=0.0d0
-       else
-        aldl=(alo+dlog(dl))
-        if (dabs(aldl).lt.logkhuge) then
-         df=dexp(aldl)
+        if (sa.eq.0.0d0) then
+          da=bet*(((b2**sa1)/sa1)-((b1**sa1)/sa1))
+          db=(1.0d0-bet)*(dlog(b2)-dlog(b1))
+        elseif (sa1.eq.0.0d0) then
+          da=bet*(dlog(b2)-dlog(b1))
+          db=(1.0d0-bet)*(((b2**sa)/sa)-((b1**sa)/sa))
+        else
+          da=bet*(((b2**sa1)/sa1)-((b1**sa1)/sa1))
+          db=(1.0d0-bet)*(((b2**sa)/sa)-((b1**sa)/sa))
         endif
-       endif
-      else
-       lb1=dlog(b1)
-       lb2=dlog(b2)
-       lsa=dlog(dabs((sa)))
-       lsa1=dlog(dabs((sa1)))
-       da=(alo+(sa1*lb2))-lsa1
-       db=(alo+(sa1*lb1))-lsa1
-       dc=(alo+(sa*lb2))-lsa
-       dd=(alo+(sa*lb1))-lsa
-       if ((dabs(da).lt.logkhuge).and.(dabs(db).lt.logkhuge)) then
-        dl=(bet*(dexp(da)-dexp(db)))*dsign(1.0d0,sa1)
-       endif
-       if ((dabs(dc).lt.maxdekt).and.(dabs(dd).lt.maxdekt)) then
-        dk=((1.0d0-bet)*(dexp(dc)-dexp(dd)))*dsign(1.0d0,sa)
-       endif
 c
-       df=dmax1(0.d0,dl+dk)
+        dl=da+db
+c
+        if (dl.le.0.d0) then
+          df=0.0d0
+        else
+          aldl=(alo+dlog(dl))
+          if (dabs(aldl).lt.logkhuge) then
+            df=dexp(aldl)
+          endif
+        endif
+      else
+        lb1=dlog(b1)
+        lb2=dlog(b2)
+        lsa=dlog(dabs((sa)))
+        lsa1=dlog(dabs((sa1)))
+        da=(alo+(sa1*lb2))-lsa1
+        db=(alo+(sa1*lb1))-lsa1
+        dc=(alo+(sa*lb2))-lsa
+        dd=(alo+(sa*lb1))-lsa
+        if ((dabs(da).lt.logkhuge).and.(dabs(db).lt.logkhuge)) then
+          dl=(bet*(dexp(da)-dexp(db)))*dsign(1.0d0,sa1)
+        endif
+        if ((dabs(dc).lt.maxdekt).and.(dabs(dd).lt.maxdekt)) then
+          dk=((1.0d0-bet)*(dexp(dc)-dexp(dd)))*dsign(1.0d0,sa)
+        endif
+c
+        df=dmax1(0.d0,dl+dk)
 c
       endif
 c
@@ -271,49 +271,49 @@ c
 c only compute above any edge, returns 0.0 below the edge
 c
 c
-       l=lquantpho(ion)
-       do j=1,5
-        p1(j)=ph1pho(j,ion)
-       enddo
-       cx=vernerph1(e,l,p1)
-       if (ph2mode.eq.0) then
-c
-        do j=1,7
-         p2(j)=ph2pho(j,ion)
+        l=lquantpho(ion)
+        do j=1,5
+          p1(j)=ph1pho(j,ion)
         enddo
-        ph2limit=ph2limitpho(ion)
+        cx=vernerph1(e,l,p1)
+        if (ph2mode.eq.0) then
+c
+          do j=1,7
+            p2(j)=ph2pho(j,ion)
+          enddo
+          ph2limit=ph2limitpho(ion)
 c
 c most using ph1 H-S cross sections, except outer shell and
 c some shells masked off.  All use ph1 fit above ph2limit.
 c
 c outer ground level uses ph2 up to ph2limit and ph1 beyond that
 c
-        if (ph2limit.gt.0.d0) then
-         if (hasph2(ion).eq.1) then
-          if (e.lt.ph2limit) then
-           cx=vernerph2(e,p2)
+          if (ph2limit.gt.0.d0) then
+            if (hasph2(ion).eq.1) then
+              if (e.lt.ph2limit) then
+                cx=vernerph2(e,p2)
+              else
+                cx=vernerph1(e,l,p1)
+              endif
+            else
+              if (e.ge.ph2limit) then
+                cx=vernerph1(e,l,p1)
+              endif
+            endif
           else
-           cx=vernerph1(e,l,p1)
+            if (hasph2(ion).eq.1) then
+              cx=vernerph2(e,p2)
+            else
+              cx=vernerph1(e,l,p1)
+            endif
           endif
-         else
-          if (e.ge.ph2limit) then
-           cx=vernerph1(e,l,p1)
-          endif
-         endif
         else
-         if (hasph2(ion).eq.1) then
-          cx=vernerph2(e,p2)
-         else
-          cx=vernerph1(e,l,p1)
-         endif
-        endif
-       else
 c
 c all using ph1 H-S cross sections
 c
-        cx=vernerph1(e,l,p1)
+          cx=vernerph1(e,l,p1)
 c
-       endif
+        endif
       endif
 c  Mb -> cm^2
       vernerphoto=cx*1.d-18
@@ -348,22 +348,22 @@ c    Fast version
       data nx / 0.d0 /
 c
       if (x.le.0.d0) then
-       fe1=(0.d0/nx)
-       return
+        fe1=(0.d0/nx)
+        return
       endif
 c
 c     evaluate E1(x) = integral(1 to inf)(e^-xt)/t dt
 c
       f=0.d0
       if (x.lt.700.d0) then
-       if (x.lt.1.d0) then
+        if (x.lt.1.d0) then
 c     A&S Eqn 5.1.53 pg231
-        f=a(0)+x*(a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5)))))-dlog(x)
-       else
+          f=a(0)+x*(a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5)))))-dlog(x)
+        else
 c     A&S Eqn 5.1.56 pg 231
-        f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
-        f=f*dexp(-x)/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
-       endif
+          f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
+          f=f*dexp(-x)/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
+        endif
       endif
       fe1=f
       return
@@ -396,8 +396,8 @@ c
       data nx / 0.d0 /
 c
       if (x.le.0.d0) then
-       fexpe1=(0.d0/nx)
-       return
+        fexpe1=(0.d0/nx)
+        return
       endif
 c
 c     evaluate exp(x)*E1(x) = exp(x)*integral(1 to inf)(e^-xt)/t dt
@@ -405,12 +405,12 @@ c
       f=0.d0
       if (x.lt.1.d0) then
 c     A&S Eqn 5.1.53 pg231
-       f=a(0)+x*(a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5)))))-dlog(x)
-       f=f*dexp(x)
+        f=a(0)+x*(a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5)))))-dlog(x)
+        f=f*dexp(x)
       else
 c     A&S Eqn 5.1.56 pg 231
-       f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
-       f=f/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
+        f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
+        f=f/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
       endif
       fexpe1=f
       return
@@ -544,45 +544,45 @@ c----------------------------------------------------------------------
 c return IEEE infinty for 0.d0 or less
 c----------------------------------------------------------------------
       if (x.le.0.d0) then
-       fcodye1=(0.d0/zero)
-       return
+        fcodye1=(0.d0/zero)
+        return
       endif
 c----------------------------------------------------------------------
 c calculate E1.
 c----------------------------------------------------------------------
       ei=0.d0
       if (x.le.one) then
-       sump=a(7)*x+a(1)
-       sumq=x+b(1)
-       do i=2,6
-        sump=sump*x+a(i)
-        sumq=sumq*x+b(i)
-       enddo
-       ei=dlog(x)-sump/sumq
-      elseif (x.le.four) then
-       w=one/x
-       sump=c(1)
-       sumq=d(1)
-       do i=2,9
-        sump=sump*w+c(i)
-        sumq=sumq*w+d(i)
-       enddo
-       ei=-sump/sumq
-       ei=ei*dexp(-x)
-      else
-       if (x.gt.xbig) then
-        ei=zero
-       else
-        w=one/x
-        sump=e(1)
-        sumq=f(1)
-        do i=2,10
-         sump=sump*w+e(i)
-         sumq=sumq*w+f(i)
+        sump=a(7)*x+a(1)
+        sumq=x+b(1)
+        do i=2,6
+          sump=sump*x+a(i)
+          sumq=sumq*x+b(i)
         enddo
-        ei=-w*(one-w*sump/sumq)
+        ei=dlog(x)-sump/sumq
+      elseif (x.le.four) then
+        w=one/x
+        sump=c(1)
+        sumq=d(1)
+        do i=2,9
+          sump=sump*w+c(i)
+          sumq=sumq*w+d(i)
+        enddo
+        ei=-sump/sumq
         ei=ei*dexp(-x)
-       endif
+      else
+        if (x.gt.xbig) then
+          ei=zero
+        else
+          w=one/x
+          sump=e(1)
+          sumq=f(1)
+          do i=2,10
+            sump=sump*w+e(i)
+            sumq=sumq*w+f(i)
+          enddo
+          ei=-w*(one-w*sump/sumq)
+          ei=ei*dexp(-x)
+        endif
       endif
       fcodye1=-ei
       return
@@ -714,39 +714,39 @@ c return IEEE infinty for 0.d0 or less
 c----------------------------------------------------------------------
       x=arg
       if (x.le.0.d0) then
-       fcodyexpe1=(0.d0/zero)
-       return
+        fcodyexpe1=(0.d0/zero)
+        return
       endif
 c----------------------------------------------------------------------
 c calculate exp(x)*E1.
 c----------------------------------------------------------------------
       ei=0.d0
       if (x.le.one) then
-       sump=a(7)*x+a(1)
-       sumq=x+b(1)
-       do i=2,6
-        sump=sump*x+a(i)
-        sumq=sumq*x+b(i)
-       enddo
-       ei=dexp(x)*(dlog(x)-sump/sumq)
+        sump=a(7)*x+a(1)
+        sumq=x+b(1)
+        do i=2,6
+          sump=sump*x+a(i)
+          sumq=sumq*x+b(i)
+        enddo
+        ei=dexp(x)*(dlog(x)-sump/sumq)
       elseif (x.le.four) then
-       w=one/x
-       sump=c(1)
-       sumq=d(1)
-       do i=2,9
-        sump=sump*w+c(i)
-        sumq=sumq*w+d(i)
-       enddo
-       ei=-sump/sumq
+        w=one/x
+        sump=c(1)
+        sumq=d(1)
+        do i=2,9
+          sump=sump*w+c(i)
+          sumq=sumq*w+d(i)
+        enddo
+        ei=-sump/sumq
       else
-       w=one/x
-       sump=e(1)
-       sumq=f(1)
-       do i=2,10
-        sump=sump*w+e(i)
-        sumq=sumq*w+f(i)
-       enddo
-       ei=-w*(one-w*sump/sumq)
+        w=one/x
+        sump=e(1)
+        sumq=f(1)
+        do i=2,10
+          sump=sump*w+e(i)
+          sumq=sumq*w+f(i)
+        enddo
+        ei=-w*(one-w*sump/sumq)
       endif
       fcodyexpe1=-ei
       return
@@ -801,7 +801,7 @@ c
 c
 c     evaluate f1(x) = e^x integral(1 to inf)(e^-xt)/t dt
 c
-       fint=fcodyexpe1(x)
+        fint=fcodyexpe1(x)
 c
       else
 c
@@ -810,16 +810,16 @@ c
 c     evaluate f2(x) = e^x integral(1 to inf) (e^-xt)ln(t)/t dt
 c    (Note: *not* E_2)
 c
-       p=0.d0
-       q=0.d0
-       xp=1.d0
-       xinv=1.d0/x
-       do j=0,14
-        p=p+xp*pj(j)
-        q=q+xp*qj(j)
-        xp=xp*xinv
-       enddo
-       fint=xinv*xinv*p/q
+        p=0.d0
+        q=0.d0
+        xp=1.d0
+        xinv=1.d0/x
+        do j=0,14
+          p=p+xp*pj(j)
+          q=q+xp*qj(j)
+          xp=xp*xinv
+        enddo
+        fint=xinv*xinv*p/q
 c
       endif
 c
@@ -872,36 +872,36 @@ c
 c
 c     Lithium iso series
 c
-       term1=(zr-0.835d0)*(zr-0.835d0)
-       term2=(zr-1.62d0)*(zr-1.62d0)
-       iea=r_inf*term1-0.25d0*term2
-       b=1.d0/(1.d0+2.d-4*zr*zr*zr)
+        term1=(zr-0.835d0)*(zr-0.835d0)
+        term2=(zr-1.62d0)*(zr-1.62d0)
+        iea=r_inf*term1-0.25d0*term2
+        b=1.d0/(1.d0+2.d-4*zr*zr*zr)
 c
 c     an effective z due to screening?
 c
-       zr=zr-0.43d0
+        zr=zr-0.43d0
 c
 c     yet another gaunt factor
 c
-       y=iea/ktev
+        y=iea/ktev
 c
-       cea=0.d0
-       if (y.le.maxdekt) then
+        cea=0.d0
+        if (y.le.maxdekt) then
 c
-        f1=farint(1,y)
-        g=2.22d0*f1+0.67d0*(1.d0-y*f1)+0.49d0*y*f1+1.2d0*y*(1.d0-y*f1)
+          f1=farint(1,y)
+          g=2.22d0*f1+0.67d0*(1.d0-y*f1)+0.49d0*y*f1+1.2d0*y*(1.d0-y*f1)
 c
 c     see ref for explanation of 1.2 factor (Appendix A)
 c
-        cea=1.2d0*(1.60d-7*b*dexp(-y)*g/(zr*zr*dsqrt(ktev)))
+          cea=1.2d0*(1.60d-7*b*dexp(-y)*g/(zr*zr*dsqrt(ktev)))
 c
-       endif
+        endif
 c
 c     correct for some particular species
 c
-       if (z.eq.6) cea=cea*0.6d0
-       if (z.eq.7) cea=cea*0.8d0
-       if (z.eq.8) cea=cea*1.25d0
+        if (z.eq.6) cea=cea*0.6d0
+        if (z.eq.7) cea=cea*0.8d0
+        if (z.eq.8) cea=cea*1.25d0
 c
       endif
 c
@@ -909,32 +909,32 @@ c
 c
 c     Sodium iso series
 c
-       if (z.le.16) then
+        if (z.le.16) then
 c
-        iea=26.d0*(zr-10.d0)
-        y=iea/ktev
-        cea=0.d0
-        if (y.le.maxdekt) then
-         f1=farint(1,y)
-         a=2.8d-17*(zr-10.d0)**(-0.7d0)
-         cea=6.69d7*a*iea*dexp(-y)*(1.d0-y*f1)/dsqrt(ktev)
-         if (cea.lt.0.d0) cea=0.d0
-        endif
+          iea=26.d0*(zr-10.d0)
+          y=iea/ktev
+          cea=0.d0
+          if (y.le.maxdekt) then
+            f1=farint(1,y)
+            a=2.8d-17*(zr-10.d0)**(-0.7d0)
+            cea=6.69d7*a*iea*dexp(-y)*(1.d0-y*f1)/dsqrt(ktev)
+            if (cea.lt.0.d0) cea=0.d0
+          endif
 c
-       else
+        else
 c     (16 <z <28)
 c
-        iea=11.d0*(zr-10.d0)**1.5d0
-        y=iea/ktev
-        cea=0.d0
-        if (y.le.maxdekt) then
-         f1=farint(1,y)
-         a=1.3d-14*(zr-10.d0)**(-3.73d0)
-         cea=6.69d7*a*iea*dexp(-y)*(1.d0-(y-y*y+y*y*y*f1)/2.d0)/
-     &    dsqrt(ktev)
-        endif
+          iea=11.d0*(zr-10.d0)**1.5d0
+          y=iea/ktev
+          cea=0.d0
+          if (y.le.maxdekt) then
+            f1=farint(1,y)
+            a=1.3d-14*(zr-10.d0)**(-3.73d0)
+            cea=6.69d7*a*iea*dexp(-y)*(1.d0-(y-y*y+y*y*y*f1)/2.d0)/
+     &       dsqrt(ktev)
+          endif
 c
-       endif
+        endif
       endif
 c
 c
@@ -942,21 +942,21 @@ c
 c
 c     magnesium through sulphur series for heavy elements
 c
-       iea=0.d0
-       if (isos.eq.12) iea=10.3d0*(zr-10.d0)**1.52d0
-       if (isos.eq.13) iea=18.0d0*(zr-11.d0)**1.33d0
-       if (isos.eq.14) iea=18.4d0*(zr-12.d0)**1.36d0
-       if (isos.eq.15) iea=23.7d0*(zr-13.d0)**1.29d0
-       if (isos.eq.16) iea=40.1d0*(zr-14.d0)**1.10d0
+        iea=0.d0
+        if (isos.eq.12) iea=10.3d0*(zr-10.d0)**1.52d0
+        if (isos.eq.13) iea=18.0d0*(zr-11.d0)**1.33d0
+        if (isos.eq.14) iea=18.4d0*(zr-12.d0)**1.36d0
+        if (isos.eq.15) iea=23.7d0*(zr-13.d0)**1.29d0
+        if (isos.eq.16) iea=40.1d0*(zr-14.d0)**1.10d0
 c
-       y=iea/ktev
-       cea=0.d0
-       if (y.le.maxdekt) then
-        f1=farint(1,y)
-        a=(4.d-13/(zr*zr))/iea
-        cea=6.69d7*a*iea*dexp(-y)*(1.d0-(y-y*y+y*y*y*f1)/2.d0)/
-     &   dsqrt(ktev)
-       endif
+        y=iea/ktev
+        cea=0.d0
+        if (y.le.maxdekt) then
+          f1=farint(1,y)
+          a=(4.d-13/(zr*zr))/iea
+          cea=6.69d7*a*iea*dexp(-y)*(1.d0-(y-y*y+y*y*y*f1)/2.d0)/
+     &     dsqrt(ktev)
+        endif
 c
       endif
 c
@@ -964,18 +964,18 @@ c
 c
 c     calcium I and II
 c
-       iea=25.d0+4.d0*dble(ion-1)
+        iea=25.d0+4.d0*dble(ion-1)
 c
-       a=6.0d-17+3.8d-17*dble(ion-1)
-       b=1.12d0
+        a=6.0d-17+3.8d-17*dble(ion-1)
+        b=1.12d0
 c
-       y=iea/ktev
+        y=iea/ktev
 c
-       cea=0.d0
-       if (y.le.maxdekt) then
-        f1=farint(1,y)
-        cea=6.69d7*a*iea*dexp(-y)*(1.d0+b*f1)/dsqrt(ktev)
-       endif
+        cea=0.d0
+        if (y.le.maxdekt) then
+          f1=farint(1,y)
+          cea=6.69d7*a*iea*dexp(-y)*(1.d0+b*f1)/dsqrt(ktev)
+        endif
 c
       endif
 c
@@ -983,21 +983,21 @@ c
 c
 c     Fe IV and V
 c
-       iea=60.d0+13.d0*dble(ion-4)
+        iea=60.d0+13.d0*dble(ion-4)
 c
-       a=1.8d-17-1.3d-17*dble(ion-4)
-       b=1.00d0
+        a=1.8d-17-1.3d-17*dble(ion-4)
+        b=1.00d0
 c
-       y=iea/ktev
+        y=iea/ktev
 c
-       cea=0.d0
-       if (y.le.maxdekt) then
+        cea=0.d0
+        if (y.le.maxdekt) then
 c
-        f1=farint(1,y)
+          f1=farint(1,y)
 c
-        cea=6.69d7*a*iea*dexp(-y)*(1.d0+b*f1)/dsqrt(ktev)
+          cea=6.69d7*a*iea*dexp(-y)*(1.d0+b*f1)/dsqrt(ktev)
 c
-       endif
+        endif
 c
       endif
 c
@@ -1035,11 +1035,11 @@ c
       weito=0.0d0
 c lin
       do i=1,atypes
-       wei=zion(i)
-       weito=weito+wei
-       do j=2,maxion(i)
-        fne=fne+((wei*(j-1))*popul(j,i))
-       enddo
+        wei=zion(i)
+        weito=weito+wei
+        do j=2,maxion(i)
+          fne=fne+((wei*(j-1))*popul(j,i))
+        enddo
       enddo
 c
       favcha=(fne/weito)
@@ -1072,11 +1072,11 @@ c
       weito=0.0d0
 c rms
       do i=1,atypes
-       wei=zion(i)
-       weito=weito+wei
-       do j=2,maxion(i)
-        fne=fne+((wei*((j-1)*(j-1)))*popul(j,i))
-       enddo
+        wei=zion(i)
+        weito=weito+wei
+        do j=2,maxion(i)
+          fne=fne+((wei*((j-1)*(j-1)))*popul(j,i))
+        enddo
       enddo
 c
       favcha2=dsqrt(fne/weito)
@@ -1141,20 +1141,20 @@ c
 c     this is only valid for  x > -3.75
 c
       if (x.ge.-3.75d0) then
-       if (x.le.3.75d0) then
-        x3=x/3.75d0
-        x32=x3*x3
-        i0=1.d0+x32*(a1+x32*(a2+x32*(a3+x32*(a4+x32*(a5+x32*a6)))))
-       else
-        x3=3.75d0/x
-        i0=b1+x3*(b2+x3*(b3+x3*(b4+x3*(b5+x3*(b6+x3*(b7+x3*(b8+x3*b9))))
-     &   )))
-        i0=i0/(dsqrt(x)*dexp(-x))
-       endif
+        if (x.le.3.75d0) then
+          x3=x/3.75d0
+          x32=x3*x3
+          i0=1.d0+x32*(a1+x32*(a2+x32*(a3+x32*(a4+x32*(a5+x32*a6)))))
+        else
+          x3=3.75d0/x
+          i0=b1+x3*(b2+x3*(b3+x3*(b4+x3*(b5+x3*(b6+x3*(b7+x3*(b8+x3*b9))
+     &     )))))
+          i0=i0/(dsqrt(x)*dexp(-x))
+        endif
       else
-       write (*,*) 'Error in fbessi, x argument too small'
-       write (*,*) ' x = ',x
-       stop
+        write (*,*) 'Error in fbessi, x argument too small'
+        write (*,*) ' x = ',x
+        stop
       endif
 c
       fbessi=i0
@@ -1220,21 +1220,21 @@ c
 c     this is only valid for positive x
 c
       if (x.ge.0.0d0) then
-       if (x.le.2.0d0) then
-        x2=x/2.0d0
-        x22=x2*x2
-        k0=-dlog(x2)*fbessi(x)-euler
-        k0=k0+(x22*(a1+x22*(a2+x22*(a3+x22*(a4+x22*(a5+x22*a6))))))
-        k0=k0*dexp(x)
-       else
-        x2=2.0d0/x
-        k0=b1+x2*(b2+x2*(b3+x2*(b4+x2*(b5+x2*(b6+x2*b7)))))
-        k0=k0/dsqrt(x)
-       endif
+        if (x.le.2.0d0) then
+          x2=x/2.0d0
+          x22=x2*x2
+          k0=-dlog(x2)*fbessi(x)-euler
+          k0=k0+(x22*(a1+x22*(a2+x22*(a3+x22*(a4+x22*(a5+x22*a6))))))
+          k0=k0*dexp(x)
+        else
+          x2=2.0d0/x
+          k0=b1+x2*(b2+x2*(b3+x2*(b4+x2*(b5+x2*(b6+x2*b7)))))
+          k0=k0/dsqrt(x)
+        endif
       else
-       write (*,*) 'Error in fbessk, negative x argument'
-       write (*,*) ' x = ',x
-       stop
+        write (*,*) 'Error in fbessk, negative x argument'
+        write (*,*) ' x = ',x
+        stop
       endif
 c
       fbessk=k0
@@ -1264,19 +1264,17 @@ c
       de=feldens(dh,pop)
 c
       do i=1,atypes
-       do j=1,maxion(i)-1
-        totn=totn+pop(j,i)*zion(i)
-       enddo
+        do j=1,maxion(i)-1
+          totn=totn+pop(j,i)*zion(i)
+        enddo
       enddo
 c
-      do 20 i=1,atypes
-c
-       do 10 j=1,maxion(i)-1
-        wei=pop(j,i)*zion(i)
-        rcol=rcol+(wei*(col(j,i)*de+epsilon))
-   10  continue
-c
-   20 continue
+      do i=1,atypes
+        do j=1,maxion(i)-1
+          wei=pop(j,i)*zion(i)
+          rcol=rcol+(wei*(col(j,i)*de+epsilon))
+        enddo
+      enddo
 c
       fcietim=totn/(rcol+epsilon)
 c
@@ -1306,15 +1304,15 @@ c
       fcolltim=0.d0
 c
       do i=1,atypes
-       totn=totn+zion(i)
+        totn=totn+zion(i)
       enddo
 c
       do i=1,atypes
 c
-       do j=1,maxion(i)-1
-        wei=pop(j,i)*zion(i)
-        rcol=rcol+(wei*col(j,i))
-       enddo
+        do j=1,maxion(i)-1
+          wei=pop(j,i)*zion(i)
+          rcol=rcol+(wei*col(j,i))
+        enddo
 c
       enddo
 c
@@ -1365,51 +1363,51 @@ c
       gdilf=1.0d0
 c
       if (jgeo.eq.'P') then
-       gdilf=0.5d0
+        gdilf=0.5d0
       endif
 c
       if (jgeo.eq.'S') then
 c
 c     spherical geometry
 c
-       if (rad.le.rsou) then
-        gdilf=1.d0
-       else
-        rio=(rsou)/rad
-        if (rio.gt.4.0d-4) then
+        if (rad.le.rsou) then
+          gdilf=1.d0
+        else
+          rio=(rsou)/rad
+          if (rio.gt.4.0d-4) then
 c
 c     real*8 trig functions work
 c
-         rsou2=rsou*rsou
-         rad2=rad*rad
-         phi=dasin(rio)
-         cphi=dcos(phi)
-         gdilf=(rsou2-rad2*(1.0d0-cphi))/(rad2*cphi)
-        else
-         gdilf=(0.5d0*rio*rio)
+            rsou2=rsou*rsou
+            rad2=rad*rad
+            phi=dasin(rio)
+            cphi=dcos(phi)
+            gdilf=(rsou2-rad2*(1.0d0-cphi))/(rad2*cphi)
+          else
+            gdilf=(0.5d0*rio*rio)
+          endif
         endif
-       endif
       endif
 c
       if (jgeo.eq.'F') then
 c
 c     finite plane parallel
 c
-       if (rad.le.0.d0) then
-        gdilf=1.d0
-       else
-        rio=(rsou)/rad
-        if (rio.gt.4.0d-4) then
+        if (rad.le.0.d0) then
+          gdilf=1.d0
+        else
+          rio=(rsou)/rad
+          if (rio.gt.4.0d-4) then
 c
 c     real*8 trig functions work
 c
-         phi=datan(rio)
-         cphi=dcos(phi)
-         gdilf=(1.0d0-cphi)
-        else
-         gdilf=(0.5d0*rio*rio)
+            phi=datan(rio)
+            cphi=dcos(phi)
+            gdilf=(1.0d0-cphi)
+          else
+            gdilf=(0.5d0*rio*rio)
+          endif
         endif
-       endif
       endif
 c
       fdilu=fdilf*gdilf
@@ -1437,11 +1435,11 @@ c
 c
       ne=0.0d0
       do i=1,atypes
-       z=zion(i)
-       do j=1,maxion(i)-1
-        pz=z*popul(j+1,i)
-        if (pz.gt.pzlimit) ne=ne+(dble(j)*pz)
-       enddo
+        z=zion(i)
+        do j=1,maxion(i)-1
+          pz=z*popul(j+1,i)
+          if (pz.gt.pzlimit) ne=ne+(dble(j)*pz)
+        enddo
       enddo
 c
       feldens=dh*ne
@@ -1471,18 +1469,18 @@ c
       mm=min0(2,max0(1,neio))
       ane=0.0d0
       ael=0.0d0
-      do 20 i=1,atypes
-       do 10 j=mm,maxion(i)
-        ane=ane+(zion(i)*popul(j,i))
-        ael=ael+((zion(i)*popul(j,i))*(j-1.0d0))
-   10  continue
-   20 continue
+      do i=1,atypes
+        do j=mm,maxion(i)
+          ane=ane+(zion(i)*popul(j,i))
+          ael=ael+((zion(i)*popul(j,i))*(j-1.0d0))
+        enddo
+      enddo
       if (mm.eq.1) then
-       felneur=ael/ane
+        felneur=ael/ane
       elseif ((ael+ane).gt.0.0d0) then
-       felneur=ael/ane
+        felneur=ael/ane
       else
-       felneur=1.d0
+        felneur=1.d0
       endif
 c
       return
@@ -1508,13 +1506,13 @@ c
       klo=1
       khi=n
    10 if (khi-klo.gt.1) then
-       k=(khi+klo)/2
-       if (xa(k).gt.x) then
-        khi=k
-       else
-        klo=k
-       endif
-       goto 10
+        k=(khi+klo)/2
+        if (xa(k).gt.x) then
+          khi=k
+        else
+          klo=k
+        endif
+        goto 10
       endif
       dx=xa(khi)-xa(klo)
       a=(xa(khi)-x)/dx
@@ -1523,25 +1521,25 @@ c
       if (a.lt.0.0d0) then
 c linear extrapolate from spline derivs
 c set A=0 and get 1st deriv
-       dy=ya(khi)-ya(klo)
+        dy=ya(khi)-ya(klo)
 c A=0,B=1
-       dydx=(dy/dx)+sixth*dx*y2a(klo)+2.d0*sixth*dx*y2a(khi)
-       y=ya(khi)+dydx*(x-xa(khi))
-       fsplint=y
-       return
+        dydx=(dy/dx)+sixth*dx*y2a(klo)+2.d0*sixth*dx*y2a(khi)
+        y=ya(khi)+dydx*(x-xa(khi))
+        fsplint=y
+        return
       elseif (b.lt.0.0d0) then
 c linear extrapolate from spline derivs
-       dy=ya(khi)-ya(klo)
+        dy=ya(khi)-ya(klo)
 c set B=0 and get 1st deriv
 c A=1,B=0
-       dydx=(dy/dx)-2.d0*sixth*dx*y2a(klo)-sixth*dx*y2a(khi)
-       y=ya(klo)-dydx*(xa(klo)-x)
-       fsplint=y
-       return
+        dydx=(dy/dx)-2.d0*sixth*dx*y2a(klo)-sixth*dx*y2a(khi)
+        y=ya(klo)-dydx*(xa(klo)-x)
+        fsplint=y
+        return
       else
-       c=sixth*(a*(a*a-1.d0))*(dx*dx)
-       d=sixth*(b*(b*b-1.d0))*(dx*dx)
-       y=y+c*y2a(klo)+d*y2a(khi)
+        c=sixth*(a*(a*a-1.d0))*(dx*dx)
+        d=sixth*(b*(b*b-1.d0))*(dx*dx)
+        y=y+c*y2a(klo)+d*y2a(khi)
       endif
       fsplint=y
       return
@@ -1566,33 +1564,33 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       klo=1
       khi=n
    10 if (khi-klo.gt.1) then
-       k=(khi+klo)/2
-       if (xa(k).gt.x) then
-        khi=k
-       else
-        klo=k
-       endif
-       goto 10
+        k=(khi+klo)/2
+        if (xa(k).gt.x) then
+          khi=k
+        else
+          klo=k
+        endif
+        goto 10
       endif
       dx=xa(khi)-xa(klo)
       a=(xa(khi)-x)/dx
       b=1.d0-a
       y=a*ya(klo)+b*ya(khi)
       if (a.lt.0.0d0) then
-       dy=ya(khi)-ya(klo)
-       dydx=(dy/dx)+sixth*dx*y2a(klo)+2.0*sixth*dx*y2a(khi)
-       y=ya(khi)+dydx*(x-xa(khi))
-       return
+        dy=ya(khi)-ya(klo)
+        dydx=(dy/dx)+sixth*dx*y2a(klo)+2.0*sixth*dx*y2a(khi)
+        y=ya(khi)+dydx*(x-xa(khi))
+        return
       elseif (b.lt.0.0d0) then
-       dy=ya(khi)-ya(klo)
-       dydx=(dy/dx)-2.0*sixth*dx*y2a(klo)-sixth*dx*y2a(khi)
-       y=ya(klo)-dydx*(xa(klo)-x)
-       return
+        dy=ya(khi)-ya(klo)
+        dydx=(dy/dx)-2.0*sixth*dx*y2a(klo)-sixth*dx*y2a(khi)
+        y=ya(klo)-dydx*(xa(klo)-x)
+        return
 c     else if ((a.ge.0.d0).and.(b.ge.0.d0)) then
       else
-       c=sixth*(a*(a*a-1.d0))*(dx*dx)
-       d=sixth*(b*(b*b-1.d0))*(dx*dx)
-       y=y+c*y2a(klo)+d*y2a(khi)
+        c=sixth*(a*(a*a-1.d0))*(dx*dx)
+        d=sixth*(b*(b*b-1.d0))*(dx*dx)
+        y=y+c*y2a(klo)+d*y2a(khi)
       endif
       return
       end
@@ -1611,8 +1609,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       yp1=0.0d0
       ypn=0.0d0
       if (n.gt.1) then
-       yp1=(y(2)-y(1))/(x(2)-x(1))
-       ypn=(y(n)-y(n-1))/(x(n)-x(n-1))
+        yp1=(y(2)-y(1))/(x(2)-x(1))
+        ypn=(y(n)-y(n-1))/(x(n)-x(n-1))
       endif
       return
       end
@@ -1631,33 +1629,33 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       integer*4 i,k
       real*8  p,qn,sig,un,u(nmax)
       if (n.gt.nmax) then
-       write (*,*) 'Too many points in spline:',n
-       stop
+        write (*,*) 'Too many points in spline:',n
+        stop
       endif
       if (yp1.gt.0.99e30) then
-       y2(1)=0.d0
-       u(1)=0.d0
+        y2(1)=0.d0
+        u(1)=0.d0
       else
-       y2(1)=-0.5d0
-       u(1)=(3.d0/(x(2)-x(1)))*((y(2)-y(1))/(x(2)-x(1))-yp1)
+        y2(1)=-0.5d0
+        u(1)=(3.d0/(x(2)-x(1)))*((y(2)-y(1))/(x(2)-x(1))-yp1)
       endif
       do i=2,n-1
-       sig=(x(i)-x(i-1))/(x(i+1)-x(i-1))
-       p=sig*y2(i-1)+2.d0
-       y2(i)=(sig-1.d0)/p
-       u(i)=(6.d0*((y(i+1)-y(i))/(x(i+1)-x(i))-(y(i)-y(i-1))/(x(i)-x(i-
-     &  1)))/(x(i+1)-x(i-1))-sig*u(i-1))/p
+        sig=(x(i)-x(i-1))/(x(i+1)-x(i-1))
+        p=sig*y2(i-1)+2.d0
+        y2(i)=(sig-1.d0)/p
+        u(i)=(6.d0*((y(i+1)-y(i))/(x(i+1)-x(i))-(y(i)-y(i-1))/(x(i)-x(i-
+     &   1)))/(x(i+1)-x(i-1))-sig*u(i-1))/p
       enddo
       if (ypn.gt.0.99d30) then
-       qn=0.d0
-       un=0.d0
+        qn=0.d0
+        un=0.d0
       else
-       qn=0.5d0
-       un=(3.0d0/(x(n)-x(n-1)))*(ypn-(y(n)-y(n-1))/(x(n)-x(n-1)))
+        qn=0.5d0
+        un=(3.0d0/(x(n)-x(n-1)))*(ypn-(y(n)-y(n-1))/(x(n)-x(n-1)))
       endif
       y2(n)=(un-qn*u(n-1))/(qn*y2(n-1)+1.d0)
       do k=n-1,1,-1
-       y2(k)=y2(k)*y2(k+1)+u(k)
+        y2(k)=y2(k)*y2(k+1)+u(k)
       enddo
       return
       end
@@ -1680,22 +1678,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       y2(1)=0.d0
       u(1)=0.d0
       do i=2,n-1
-       xm=x(i-1)
-       x0=x(i)
-       xp=x(i+1)
-       dx=xp-xm
-       ym=y(i-1)
-       y0=y(i)
-       yp=y(i+1)
-       sig=(x0-xm)/(dx)
-       p=sig*y2(i-1)+2.d0
-       y2(i)=(sig-1.d0)/p
-       u(i)=(6.d0*((yp-y0)/(xp-x0)-(y0-ym)/(x0-xm))/(dx)-sig*u(i-1))/p
+        xm=x(i-1)
+        x0=x(i)
+        xp=x(i+1)
+        dx=xp-xm
+        ym=y(i-1)
+        y0=y(i)
+        yp=y(i+1)
+        sig=(x0-xm)/(dx)
+        p=sig*y2(i-1)+2.d0
+        y2(i)=(sig-1.d0)/p
+        u(i)=(6.d0*((yp-y0)/(xp-x0)-(y0-ym)/(x0-xm))/(dx)-sig*u(i-1))/p
       enddo
       y2(n)=0.d0
       u(n)=0.d0
       do k=n-1,1,-1
-       y2(k)=y2(k)*y2(k+1)+u(k)
+        y2(k)=y2(k)*y2(k+1)+u(k)
       enddo
       return
       end
@@ -1717,11 +1715,11 @@ cU    USES spline,splint
       integer*4 j,k
       real*8  y2tmp(nn),ytmp(nn),yytmp(nn)
       do j=1,m
-       do k=1,n
-        ytmp(k)=ya(j,k)
-        y2tmp(k)=y2a(j,k)
-       enddo
-       call splint (x2a, ytmp, y2tmp, n, x2, yytmp(j))
+        do k=1,n
+          ytmp(k)=ya(j,k)
+          y2tmp(k)=y2a(j,k)
+        enddo
+        call splint (x2a, ytmp, y2tmp, n, x2, yytmp(j))
       enddo
       call endgrads (x1a, yytmp, m, yp1, ypn)
       call spline (x1a, yytmp, m, yp1, ypn, y2tmp)
@@ -1789,9 +1787,9 @@ c
 c    ***NEUTRAL SPECIES (ION=1)
 c
       if (xsi.lt.0.5d0) then
-       fgaunt=0.276d0*fue1(xsi,xsi)
+        fgaunt=0.276d0*fue1(xsi,xsi)
       else
-       fgaunt=(0.066d0/dsqrt(xsi))+(0.033d0/xsi)
+        fgaunt=(0.066d0/dsqrt(xsi))+(0.033d0/xsi)
       endif
 c
       if (ndel.le.0) fgaunt=2.5d0*fgaunt
@@ -1832,25 +1830,28 @@ c     Complete ln(Gamma) version 1
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       implicit none
-      real*8 z , a(7) , s , pi
+      real*8 z , a(7) , s, pi
+      real*8 a_1, a_2, a_3, a_4, a_5, a_6, a_7
       real*8 az
       integer i
-      pi=4.d0*datan(1.d0)
-      a(1)=1.d0/12.d0
-      a(2)=1.d0/30.d0
-      a(3)=53.d0/210.d0
-      a(4)=195.d0/371.d0
-      a(5)=22999.d0/22737.d0
-      a(6)=29944523.d0/19733142.d0
-      a(7)=109535241009.d0/48264275462.d0
-      z=0.d0
+      parameter(pi=4.d0*datan(1.d0))
+      parameter(a_1=1.d0/12.d0)
+      parameter(a_2=1.d0/30.d0)
+      parameter(a_3=53.d0/210.d0)
+      parameter(a_4=195.d0/371.d0)
+      parameter(a_5=22999.d0/22737.d0)
+      parameter(a_6=29944523.d0/19733142.d0)
+      parameter(a_7=109535241009.d0/48264275462.d0)
+      z=0.0d0
       z=az
-c      write(*,*) 'gamln : az  z = ',az,z
       s=z
-      do 10 i=1,6
-       s=z+a(8-i)/s
-   10 continue
-      s=a(1)/s
+      s=z+a_7/s
+      s=z+a_6/s
+      s=z+a_5/s
+      s=z+a_4/s
+      s=z+a_3/s
+      s=z+a_2/s
+      s=a_1/s
       s=s-z+(z-0.5d0)*dlog(z)+0.5d0*dlog(2.d0*pi)
       fgamln=s
       return
@@ -1868,21 +1869,20 @@ c
       real*8 fgamln
       integer itmax , n
       parameter (itmax=10000,eps=3.d-12)
-c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
       gln=fgamln(a)
       if (x.le.0.0d0) then
-       fgserr=0.d0
-       return
+        fgserr=0.d0
+        return
       endif
       ap=a
       sum=1.d0/a
       del=sum
-      do 10 n=1,itmax
-       ap=ap+1.d0
-       del=del*x/ap
-       sum=sum+del
-       if (abs(del).lt.abs(sum)*eps) goto 20
-   10 continue
+      do n=1,itmax
+        ap=ap+1.d0
+        del=del*x/ap
+        sum=sum+del
+        if (abs(del).lt.abs(sum)*eps) goto 20
+      enddo
       write (*,*) 'Warning: Inc. Gamma Fn. fgserr did not converge for A
      & = ',a
    20 fgserr=sum*dexp(-x+a*log(x)-gln)
@@ -1897,12 +1897,12 @@ c CONTINUED FRACTION METHOD FOR INCOMPLETE GAMMA FUNCTION
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       implicit none
-      real*8 a0 , b0 , a1 , b1 , gln , eps , a , x , anf , g ,
-     &     gold , fac , ana , an
+      real*8 a0 , b0 , a1 , b1 , gln
+      real*8 eps , a , x , anf , g
+      real*8 gold , fac , ana , an
       integer itmax , n
       real*8 fgamln
       parameter (itmax=10000,eps=3.d-12)
-c      write(*,*) 'gcff: a  x  logx',a,x,log(x)
       gln=fgamln(a)
       gold=0.0d0
       a0=1.d0
@@ -1911,25 +1911,24 @@ c      write(*,*) 'gcff: a  x  logx',a,x,log(x)
       b1=1.d0
       fac=1.d0
       g=0.0d0
-      do 10 n=1,itmax
-       an=dble(n)
-       ana=an-a
-       a0=(a1+a0*ana)*fac
-       b0=(b1+b0*ana)*fac
-       anf=an*fac
-       a1=x*a0+anf*a1
-       b1=x*b0+anf*b1
-       if (a1.ne.0.0d0) then
-c            write(*,*) 'gcff: a1 = ',a1
-        fac=1.d0/a1
-        g=b1*fac
-        if (dabs((g-gold)/g).lt.eps) goto 20
-        gold=g
-       endif
-   10 continue
+      do n=1,itmax
+        an=dble(n)
+        ana=an-a
+        a0=(a1+a0*ana)*fac
+        b0=(b1+b0*ana)*fac
+        anf=an*fac
+        a1=x*a0+anf*a1
+        b1=x*b0+anf*b1
+        if (a1.ne.0.0d0) then
+          fac=1.d0/a1
+          g=b1*fac
+          if (dabs((g-gold)/g).lt.eps) goto 10
+          gold=g
+        endif
+      enddo
       write (*,*) 'Warning: Inc. Gamma Fn. GCFF did not converge for A =
      & ',a
-   20 fgcff=dexp(-x+a*dlog(x)-gln)*g
+   10 fgcff=dexp(-x+a*dlog(x)-gln)*g
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1955,10 +1954,10 @@ c
       tmp=x+5.5d0
       tmp=(x+0.5d0)*log(tmp)-tmp
       ser=1.000000000190015d0
-      do 10 j=1,6
-       y=y+1.d0
-       ser=ser+cof(j)/y
-   10 continue
+      do j=1,6
+        y=y+1.d0
+        ser=ser+cof(j)/y
+      enddo
       fgammln=tmp+dlog(stp*ser/x)
       return
       end
@@ -1976,9 +1975,9 @@ c
       real*8 fgammln
       calc=0.0d0
       if (x.ge.1.d0) then
-       calc=fgammln(x)
+        calc=fgammln(x)
       else
-       calc=fgammln(x+1.d0)-dlog(x)
+        calc=fgammln(x+1.d0)-dlog(x)
       endif
       fgamma=dexp(calc)
       return
@@ -1995,16 +1994,16 @@ c
       real*8 a , x , gln , gammcf , gamser
       real*8 fgserr,fgcff
       if (x.lt.0.d0.or.a.le.0.d0) then
-       write (*,*) 'fincgamma called with x < 0 or A <= 0'
+        write (*,*) 'fincgamma called with x < 0 or A <= 0'
       endif
 c USE THE SERIES REPRESENTATION
       if (x.lt.(a+1.d0)) then
-       gamser=fgserr(a,x,gln)
-       fincgamma=gamser
+        gamser=fgserr(a,x,gln)
+        fincgamma=gamser
       else
 c USE THE CONTINUED FRACTION METHOD
-       gammcf=fgcff(a,x,gln)
-       fincgamma=1.d0-gammcf
+        gammcf=fgcff(a,x,gln)
+        fincgamma=1.d0-gammcf
       endif
       return
       end
@@ -2029,25 +2028,25 @@ c
       real*8 rat
 c
       if (.not.(usekappa)) then
-       fkenhance=1.d0
-       return
+        fkenhance=1.d0
+        return
       endif
 c
       gam1=1.d0
       rat=1.d0
 c
       if (k.le.100.d0) then
-       if (k.ge.1.5d0) then
-        g1=fgamma(k+1.0d0)
-        g2=fgamma(k-0.5d0)
-        r1=(1.0d0-3.d0/(2.d0*k))
-        r2=((k-1.5d0)**(1.5d0))
-        gam1=(r1*g1)/(r2*g2)
-        ratm=dexp(-x)
-        ratk=(1.d0+x/(k-1.5d0))**(-k)
-        rat=ratk/ratm
+        if (k.ge.1.5d0) then
+          g1=fgamma(k+1.0d0)
+          g2=fgamma(k-0.5d0)
+          r1=(1.0d0-3.d0/(2.d0*k))
+          r2=((k-1.5d0)**(1.5d0))
+          gam1=(r1*g1)/(r2*g2)
+          ratm=dexp(-x)
+          ratk=(1.d0+x/(k-1.5d0))**(-k)
+          rat=ratk/ratm
 c      write(*,*) k,x, min( gam1*rat, 1000.d0)
-       endif
+        endif
       endif
       fkenhance=min(gam1*rat,1000.d0)
       return
@@ -2075,16 +2074,16 @@ c
       weito=0.0d0
 c
       fioncha=0.0d0
-      do 20 i=1,atypes
-       do 10 j=2,maxion(i)
-        weito=weito+(zion(i)*popul(j,i))
-        fioncha=fioncha+((zion(i)*popul(j,i))*dble((j-1)**iek))
-   10  continue
-   20 continue
+      do i=1,atypes
+        do j=2,maxion(i)
+          weito=weito+(zion(i)*popul(j,i))
+          fioncha=fioncha+((zion(i)*popul(j,i))*dble((j-1)**iek))
+        enddo
+      enddo
       if (weito.gt.0.0d0) then
-       fioncha=(fioncha/weito)**(1.d0/dble(iek))
+        fioncha=(fioncha/weito)**(1.d0/dble(iek))
       else
-       fioncha=1.0d0
+        fioncha=1.0d0
       endif
 c
       return
@@ -2124,9 +2123,9 @@ c
 c     Check that the ion is really hydrogenic
 c
       if ((mapz(atom)-ion+1).ne.0) then
-       write (*,*) 'Warning, incorrect ion in fkramer'
-       write (*,*) elem(atom),rom(ion)
-       stop
+        write (*,*) 'Warning, incorrect ion in fkramer'
+        write (*,*) elem(atom),rom(ion)
+        stop
       endif
 c
 c     OK, we are recombining to a H ion
@@ -2151,14 +2150,14 @@ c     subtract Spline fit to N=1 level to get otspot rates
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-       a=fsplint(hreclgt,hreclga1,hreclga12,nhrec,ltz2)
-       raten1=z*dmax1((10.d0**a),0.d0)
+        a=fsplint(hreclgt,hreclga1,hreclga12,nhrec,ltz2)
+        raten1=z*dmax1((10.d0**a),0.d0)
 c
-       rate2=rate-raten1
-       if (rate2.lt.0.d0) rate2=0.d0
+        rate2=rate-raten1
+        if (rate2.lt.0.d0) rate2=0.d0
 c
-       if (mapz(atom).eq.1) rec(3,1)=rate2
-       if (mapz(atom).eq.2) rec(5,2)=rate2
+        if (mapz(atom).eq.1) rec(3,1)=rate2
+        if (mapz(atom).eq.2) rec(5,2)=rate2
 c
       endif
 c
@@ -2204,9 +2203,9 @@ c
 c     Check that the ion is really helium1
 c
       if (((mapz(atom)-ion+1).ne.1).or.(mapz(atom).ne.2)) then
-       write (*,*) 'Warning, incorrect ion in fhe1rec'
-       write (*,*) elem(atom),rom(ion)
-       stop
+        write (*,*) 'Warning, incorrect ion in fhe1rec'
+        write (*,*) elem(atom),rom(ion)
+        stop
       endif
 c
 c     OK, we are recombining to a He I atom
@@ -2270,9 +2269,9 @@ c     Check that the ion is really NORAD ion
 c
       id=noradid(ion,atom)
       if (id.eq.0) then
-       write (*,*) 'Warning, incorrect ion in fnoradrec'
-       write (*,*) elem(atom),rom(ion)
-       stop
+        write (*,*) 'Warning, incorrect ion in fnoradrec'
+        write (*,*) elem(atom),rom(ion)
+        stop
       endif
 c
       nd=nodesndrec(id)
@@ -2281,9 +2280,9 @@ c     OK, we are recombining to a NORAD atom
 c
       lt=dlog10(t)
       do i=1,nd
-       lx(i)=tendrec(i,id)
-       ly(i)=andrec(i,id)
-       ly2(i)=a2ndrec(i,id)
+        lx(i)=tendrec(i,id)
+        ly(i)=andrec(i,id)
+        ly2(i)=a2ndrec(i,id)
       enddo
       a=fsplint(lx,ly,ly2,nd,lt)
       rate=dmax1((10.d0**a),0.d0)
@@ -2370,16 +2369,16 @@ c
 c     this is only valid for 0<= x <=1.0
 c
       if ((x.ge.0.0d0).and.(x.le.1.0d0)) then
-       if (x.gt.0.5d0) then
-        x2=1.0d0-x
-        p0=(x2*(a1+x2*(a2+x2*(a3+x2*(a4+x2*(a5+x2*a6))))))
-       else
-        p0=(x*(a1+x*(a2+x*(a3+x*(a4+x*(a5+x*a6))))))
-       endif
+        if (x.gt.0.5d0) then
+          x2=1.0d0-x
+          p0=(x2*(a1+x2*(a2+x2*(a3+x2*(a4+x2*(a5+x2*a6))))))
+        else
+          p0=(x*(a1+x*(a2+x*(a3+x*(a4+x*(a5+x*a6))))))
+        endif
       else
-       write (*,*) 'Error in fpsiy, x argument out of range 0-1'
-       write (*,*) 'x = ',x
-       stop
+        write (*,*) 'Error in fpsiy, x argument out of range 0-1'
+        write (*,*) 'x = ',x
+        stop
       endif
 c
       fpsiy=p0*0.2652871733651678d0
@@ -2411,15 +2410,15 @@ c
       fphotim=0.d0
 c
       do i=1,atypes
-       totn=totn+zion(i)
+        totn=totn+zion(i)
       enddo
 c
       do i=1,atypes
 c
-       do j=1,maxion(i)-1
-        wei=pop(j,i)*zion(i)
-        rpho=rpho+wei*rphot(j,i)
-       enddo
+        do j=1,maxion(i)-1
+          wei=pop(j,i)*zion(i)
+          rpho=rpho+wei*rphot(j,i)
+        enddo
 c
       enddo
 c
@@ -2454,15 +2453,15 @@ c
 c Jnu in tphot
       blum=0.d0
       do i=ionstartbin,infph-1
-       if (xsec(i).gt.0.d0) then
-        wid=widbinnu(i)
-        tau=dabs(dr*xsec(i))
-        if (tau.gt.1.d-8) then
-         blum=blum+tphot(i)*wid*(1.d0-dexp(-tau))
-        else
-         blum=blum+tphot(i)*wid*tau
+        if (xsec(i).gt.0.d0) then
+          wid=widbinnu(i)
+          tau=dabs(dr*xsec(i))
+          if (tau.gt.1.d-8) then
+            blum=blum+tphot(i)*wid*(1.d0-dexp(-tau))
+          else
+            blum=blum+tphot(i)*wid*tau
+          endif
         endif
-       endif
       enddo
       ionradp=fpi*blum/cls
 c
@@ -2470,25 +2469,25 @@ c
       dustradp=0.d0
 c
       if (grainmode.eq.1) then
-       do dtype=1,numtypes
-        do k=mindust(dtype),maxdust(dtype)
-         do i=1,infph-1
-          if (absorp(i,k,dtype).gt.0.0d0) then
-           wid=widbinnu(i)
-           dgrad=gradedge(k+1)-gradedge(k)
-           grainf=(absorp(i,k,dtype)+(1-gcos(i,k,dtype))*scatter(i,k,
-     &      dtype))*dustsig(k,dtype)*dgrad
-           tau=dabs(dr*grainf*dh)
-           if (tau.gt.1.d-8) then
-            dustf=dustf+tphot(i)*wid*(1.d0-dexp(-tau))
-           else
-            dustf=dustf+tphot(i)*wid*tau
-           endif
-          endif
-         enddo
+        do dtype=1,numtypes
+          do k=mindust(dtype),maxdust(dtype)
+            do i=1,infph-1
+              if (absorp(i,k,dtype).gt.0.0d0) then
+                wid=widbinnu(i)
+                dgrad=gradedge(k+1)-gradedge(k)
+                grainf=(absorp(i,k,dtype)+(1-gcos(i,k,dtype))*scatter(i,
+     &           k,dtype))*dustsig(k,dtype)*dgrad
+                tau=dabs(dr*grainf*dh)
+                if (tau.gt.1.d-8) then
+                  dustf=dustf+tphot(i)*wid*(1.d0-dexp(-tau))
+                else
+                  dustf=dustf+tphot(i)*wid*tau
+                endif
+              endif
+            enddo
+          enddo
         enddo
-       enddo
-       dustradp=fpi*dustf/cls
+        dustradp=fpi*dustf/cls
       endif
 c      write(*,'(" Ion, Dust  Rad Pressure: ",2(1pg12.5))')
 c     &  blum, dustf
@@ -2590,42 +2589,42 @@ c
       rain=0.0d0
       weito=0.0d0
 c
-      do 20 i=1,atypes
-       mif=0
-       mij=2
-       do 10 j=mij,maxion(i)
-        recab(j)=0.0d0
-        ar=arad(j,i)
-        if (ar.gt.0.0d0) then
-         ad=adi(j,i)
-         et=xrad(j,i)
-         ta=t0(j,i)
-         bd=bdi(j,i)
-         tb=t1(j,i)
-         a=adilt(j,i)
-         b=bdilt(j,i)
-         c=cdilt(j,i)
-         d=ddilt(j,i)
-         f=fdilt(j,i)
-         adlt=adltf(u4,a,b,c,d,f)
-         if (adlt.lt.0.0) adlt=0.0d0
-         recab(j)=(arf(u,ar,et)+adf(u,ad,bd,ta,tb))+adlt
-         mif=j
-        else
-         mij=j+1
-        endif
-   10  continue
-c
-       if (mif.ge.mij) then
-        wei=1.0d0
-        weito=weito+(zion(i)*wei)
-        do j=mij,mif
-         do jj=mij,j
-          rain=rain+(wei/(recab(jj)+1.d-36))
-         enddo
+      do i=1,atypes
+        mif=0
+        mij=2
+        do j=mij,maxion(i)
+          recab(j)=0.0d0
+          ar=arad(j,i)
+          if (ar.gt.0.0d0) then
+            ad=adi(j,i)
+            et=xrad(j,i)
+            ta=t0(j,i)
+            bd=bdi(j,i)
+            tb=t1(j,i)
+            a=adilt(j,i)
+            b=bdilt(j,i)
+            c=cdilt(j,i)
+            d=ddilt(j,i)
+            f=fdilt(j,i)
+            adlt=adltf(u4,a,b,c,d,f)
+            if (adlt.lt.0.0) adlt=0.0d0
+            recab(j)=(arf(u,ar,et)+adf(u,ad,bd,ta,tb))+adlt
+            mif=j
+          else
+            mij=j+1
+          endif
         enddo
-       endif
-   20 continue
+c
+        if (mif.ge.mij) then
+          wei=1.0d0
+          weito=weito+(zion(i)*wei)
+          do j=mij,mif
+            do jj=mij,j
+              rain=rain+(wei/(recab(jj)+1.d-36))
+            enddo
+          enddo
+        endif
+      enddo
 c
       frectim=rain/(((de*dh)*weito)+(1.d-36*rain))
 c
@@ -2657,15 +2656,15 @@ c
       frectim2=0.d0
 c
       do i=1,atypes
-       totn=totn+zion(i)
+        totn=totn+zion(i)
       enddo
 c
       do i=1,atypes
 c
-       do j=2,maxion(i)
-        wei=pop(j,i)*zion(i)
-        rrec=rrec+(wei*rec(j,i))
-       enddo
+        do j=2,maxion(i)
+          wei=pop(j,i)*zion(i)
+          rrec=rrec+(wei*rec(j,i))
+        enddo
 c
       enddo
 c
@@ -2702,15 +2701,15 @@ c
       frectim3=0.d0
 c
       do i=1,atypes
-       totn=totn+zion(i)
+        totn=totn+zion(i)
       enddo
 c
       do i=1,atypes
 c
-       do j=2,maxion(i)
-        wei=pop(j-1,i)*zion(i)
-        rrec=rrec+(wei*rec(j,i))
-       enddo
+        do j=2,maxion(i)
+          wei=pop(j-1,i)*zion(i)
+          rrec=rrec+(wei*rec(j,i))
+        enddo
 c
       enddo
 c
@@ -2887,15 +2886,15 @@ c
 c
       zg=0.d0
       do i=3,atypes
-       zg=zg+zion(i)/zsol(i)
+        zg=zg+zion(i)/zsol(i)
       enddo
 c
       if (atypes.gt.2) then
-       zg=zg/(atypes-2)
+        zg=zg/(atypes-2)
       elseif (atypes.eq.2) then
-       zg=zion(2)/zsol(2)
+        zg=zion(2)/zsol(2)
       else
-       zg=1.d0
+        zg=1.d0
       endif
 c
       fzgas=zg
@@ -2914,8 +2913,9 @@ c     ref: Krolick and McKee 1978 ApJS 37,459
 c
 c     from: Johnston and Dawson 1973, Phys Fluids 16 722 (not sighted)
 c
-c    TODO: needs update!! Try NRL plasma handbook, not urgent as not
-c    used anywhere atm!
+c    TODO: needs update
+c    Try NRL plasma handbook, not urgent as not
+c    used anywhere atm
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
@@ -3018,9 +3018,9 @@ c
 c
       n=1.d0
       if ((lamvac.ge.2.d3).and.(lamvac.lt.4.d4)) then
-       s=1.d4/lamvac
-       n=1.0d0+(8060.51d0+2480990.d0/(132.274d0-s*s)+17455.7d0/
-     &  (39.32957d0-s*s))*1.0d-8
+        s=1.d4/lamvac
+        n=1.0d0+(8060.51d0+2480990.d0/(132.274d0-s*s)+17455.7d0/
+     &   (39.32957d0-s*s))*1.0d-8
       endif
       fnair=n
       return
@@ -3146,13 +3146,13 @@ c
       sigx2y=0.0d0
 c
       do i=1,n
-       sigx=sigx+x(i)
-       sigx2=sigx2+(x(i)*x(i))
-       sigx3=sigx3+(x(i)*x(i)*x(i))
-       sigx4=sigx4+(x(i)*x(i)*x(i)*x(i))
-       sigy=sigy+y(i)
-       sigxy=sigxy+(x(i)*y(i))
-       sigx2y=sigx2y+(x(i)*x(i)*y(i))
+        sigx=sigx+x(i)
+        sigx2=sigx2+(x(i)*x(i))
+        sigx3=sigx3+(x(i)*x(i)*x(i))
+        sigx4=sigx4+(x(i)*x(i)*x(i)*x(i))
+        sigy=sigy+y(i)
+        sigxy=sigxy+(x(i)*y(i))
+        sigx2y=sigx2y+(x(i)*x(i)*y(i))
       enddo
 c
       sxx=sigx2-(sigx*sigx)*invn

@@ -46,14 +46,15 @@ c
       vel0=vpr
       te0=tpr
       dh0=dhpr
-      de0=delpr!feldens(dhpr,pop)
+c     feldens(dhpr,pop)
+      de0=delpr
       bm0=bmag
       pb0=(bm0*bm0)/epi
 c
       if (vel0.lt.0.d0) then
-       write (*,*) 'ERROR in RankHug: vel0 <= 0'
-       write (*,*) vel0
-       stop
+        write (*,*) 'ERROR in RankHug: vel0 <= 0'
+        write (*,*) vel0
+        stop
       endif
 c
 c     get pressure and density terms
@@ -86,26 +87,27 @@ c
 c       MHD shock only quadratic solution, discards x=1 root so cant be
 c       used in general flow with cooling, here for validaton purposes
 c
-       lambda=tl*tstep
+        lambda=tl*tstep
 c       g=(gammaEOS)/(gammaEOS-1.d0)
-       beta=pb0*2.d0
-       pram=rv2!forclarityandcomparedtopaper
+        beta=pb0*2.d0
+c      for clarity and compared to paper
+        pram=rv2
 c /rv2 scale to normalise numbers in cubic root finder better
-       a(4)=(pb0*(2.d0-g))/rv2
-       a(3)=-(g*pr0+0.5d0*pram+2.d0*pb0-lambda)/rv2
-       a(2)=g*(pr0+pram+pb0)/rv2
-       a(1)=(0.5d0-g)
+        a(4)=(pb0*(2.d0-g))/rv2
+        a(3)=-(g*pr0+0.5d0*pram+2.d0*pb0-lambda)/rv2
+        a(2)=g*(pr0+pram+pb0)/rv2
+        a(1)=(0.5d0-g)
 c
-       x1=0.5d0
-       x2=gammaeosx
+        x1=0.5d0
+        x2=gammaEOSx
 c
 c find the two positive roots near x1 and x2  for the cubic in a
 c
-       call cubic (a, x1, x2, r1, r2)
+        call cubic (a, x1, x2, r1, r2)
 c       for S5 this is the root we always need
-       cmpfnew=dmax1(r1,r2)
+        cmpfnew=dmax1(r1,r2)
 c
-       cmpf=cmpfnew
+        cmpf=cmpfnew
 c
       endif
 c
@@ -151,7 +153,7 @@ c
       real*8 frho
 c
       cmp=1.d0
-      gam=gammaeos
+      gam=gammaEOS
 c
 c     set globals
 c
@@ -170,9 +172,12 @@ c
       rho=rho0
       pram=rho*v*v
 c
-      c2=2.d0*pbm*(2.d0-gam)!ax^2
-      c1=(gam-1.d0)*pram+2.d0*gam*(pbm+pr)!bx
-      c0=-(gam+1.d0)*pram!c
+c      a x^2
+      c2=2.d0*pbm*(2.d0-gam)
+c      b x
+      c1=(gam-1.d0)*pram+2.d0*gam*(pbm+pr)
+c      c
+      c0=-(gam+1.d0)*pram
 c
       delta=(c1*c1)-(4.d0*(c2*c0))
 c
@@ -180,9 +185,9 @@ c
       r1=1.0d0
       r2=1.0d0
       if (delta.ge.0.d0) then
-       q=-0.5d0*(c1+dsign(1.d0,c1)*dsqrt(delta))
-       if (q.ne.0.d0) r1=c0/q
-       if (c2.ne.0.d0) r2=q/c2
+        q=-0.5d0*(c1+dsign(1.d0,c1)*dsqrt(delta))
+        if (q.ne.0.d0) r1=c0/q
+        if (c2.ne.0.d0) r2=q/c2
       endif
 c
       cmp=dmax1(r1,r2)
@@ -227,24 +232,24 @@ c      x1=0.d0
 c
       if (rmod.eq.'FAR') then
 c search for 1st -ve down from x2
-       dx=(x1-x2)*0.01d0
-       x=x2-dx*100
-       do i=1,200
-        x=x+dx
-        f=a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5))))
+        dx=(x1-x2)*0.01d0
+        x=x2-dx*100
+        do i=1,200
+          x=x+dx
+          f=a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5))))
 c          write(*,*) x,f
-        if (f.lt.0.0d0) goto 10
-       enddo
+          if (f.lt.0.0d0) goto 10
+        enddo
       else
 c search for -ve up from x1
-       dx=(x2-x1)*0.01d0
-       x=x1
-       do i=1,200
-        x=x+dx
-        f=a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5))))
+        dx=(x2-x1)*0.01d0
+        x=x1
+        do i=1,200
+          x=x+dx
+          f=a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5))))
 c          write(*,*) x,f
-        if (f.lt.0.d0) goto 10
-       enddo
+          if (f.lt.0.d0) goto 10
+        enddo
       endif
 c
 c
@@ -254,18 +259,18 @@ c     get derivative
 c
       d(5)=0.d0
       do i=1,4
-       d(i)=a(i+1)*dble(i)
+        d(i)=a(i+1)*dble(i)
       enddo
 c
       itmax=20
 c
       do i=1,itmax
-       f=a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5))))
-       df=d(1)+x*(d(2)+x*(d(3)+x*d(4)))
-       dx=f/df
-       x=x-dx
-       eps=dabs(x*1.d-10)
-       if (dabs(dx).lt.(eps)) goto 20
+        f=a(1)+x*(a(2)+x*(a(3)+x*(a(4)+x*a(5))))
+        df=d(1)+x*(d(2)+x*(d(3)+x*d(4)))
+        dx=f/df
+        x=x-dx
+        eps=dabs(x*1.d-10)
+        if (dabs(dx).lt.(eps)) goto 20
       enddo
 c
    20 root=x
@@ -292,7 +297,8 @@ c
 c find the two positive roots near x1 and x2  for the cubic in a
 c
 c Solve characterisitc cubic for R-H flow with cooling
-c !!!! modifies a, by normalising.
+c      modifies a, by normalising.
+c !!!
 c returns both roots if possible, may the the same.
 c
 c
@@ -307,16 +313,17 @@ c
 c find the value at x=0 for normalising the
 c polynomial.
 c
-      invk=dabs(1.d0/a(1))!preservesignofpoly
+c      preserve sign of poly
+      invk=dabs(1.d0/a(1))
       do i=1,4
-       a(i)=invk*a(i)
+        a(i)=invk*a(i)
       enddo
 c
 c     get derivative
 c
       d(4)=0.d0
       do i=1,3
-       d(i)=a(i+1)*dble(i)
+        d(i)=a(i+1)*dble(i)
       enddo
 c
       mxx=dmax1(x1,x2)*1.1d0
@@ -327,44 +334,44 @@ c         write(*,*) mxx,mnx,dx
 c search for 1st sign change down from mxx
       f0=a(1)+mxx*(a(2)+mxx*(a(3)+mxx*a(4)))
       do i=0,200
-       x2=mxx-dx*dble(i)
-       f2=a(1)+x2*(a(2)+x2*(a(3)+x2*a(4)))
+        x2=mxx-dx*dble(i)
+        f2=a(1)+x2*(a(2)+x2*(a(3)+x2*a(4)))
 c          write(*,*) x2,f2
-       if (f2.ne.dsign(f2,f0)) goto 10
-       f0=f2
+        if (f2.ne.dsign(f2,f0)) goto 10
+        f0=f2
       enddo
    10 continue
 c search for 1st sign change up from mnx
       f0=a(1)+mnx*(a(2)+mnx*(a(3)+mnx*a(4)))
       do i=0,200
-       x1=mnx+dx*dble(i)
-       f1=a(1)+x1*(a(2)+x1*(a(3)+x1*a(4)))
+        x1=mnx+dx*dble(i)
+        f1=a(1)+x1*(a(2)+x1*(a(3)+x1*a(4)))
 c          write(*,*) x1,f1
-       if (f1.ne.dsign(f1,f0)) goto 20
-       f0=f1
+        if (f1.ne.dsign(f1,f0)) goto 20
+        f0=f1
       enddo
    20 continue
 c
       itmax=20
 c
       do i=1,itmax
-       f1=a(1)+x1*(a(2)+x1*(a(3)+x1*a(4)))
-       df=d(1)+x1*(d(2)+x1*d(3))
-       dx=f1/df
-       x1=x1-dx
-       eps=dabs(x1*1.d-10)
-       if (dabs(dx).lt.(eps)) goto 30
+        f1=a(1)+x1*(a(2)+x1*(a(3)+x1*a(4)))
+        df=d(1)+x1*(d(2)+x1*d(3))
+        dx=f1/df
+        x1=x1-dx
+        eps=dabs(x1*1.d-10)
+        if (dabs(dx).lt.(eps)) goto 30
       enddo
 c
    30 r1=x1
 c
       do i=1,itmax
-       f2=a(1)+x2*(a(2)+x2*(a(3)+x2*a(4)))
-       df=d(1)+x2*(d(2)+x2*d(3))
-       dx=f2/df
-       x2=x2-dx
-       eps=dabs(x2*1.d-10)
-       if (dabs(dx).lt.(eps)) goto 40
+        f2=a(1)+x2*(a(2)+x2*(a(3)+x2*a(4)))
+        df=d(1)+x2*(d(2)+x2*d(3))
+        dx=f2/df
+        x2=x2-dx
+        eps=dabs(x2*1.d-10)
+        if (dabs(dx).lt.(eps)) goto 40
       enddo
 c
    40 r2=x2
@@ -382,7 +389,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c estimate shock velocity to 1 in 10^7 for given shock temperature.
 c using bisection.  Mindlessly solid in the face of
-c terrible instability at high B!  Performance is not an issue, this
+c terrible instability at high B, Performance is not an issue, this
 c routine is only used in setup, not in running  models.
 c
 c **** assumes tpo is a monotonic function of vin ****
@@ -417,10 +424,10 @@ c enough for 30,000 km/s
 c find first 100km/s too fast
 c
       do idx=1,300
-       vin=dble(idx)*dv
-       call rankhug (t, de, dh, vin, binit, 0.d0, 0.d0)
-       write (*,*) 'init',idx,vin*1.d-5,te1,tinit
-       if ((te1+epsilon).gt.tinit) goto 10
+        vin=dble(idx)*dv
+        call rankhug (t, de, dh, vin, binit, 0.d0, 0.d0)
+        write (*,*) 'init',idx,vin*1.d-5,te1,tinit
+        if ((te1+epsilon).gt.tinit) goto 10
       enddo
 c Make sure people going over 30,000km/s know what they are doing...
       write (*,*) 'ERROR: shock too fast in velshock2, tepo too large'
@@ -436,17 +443,17 @@ c
    20 v2=0.5d0*(v0+v1)
       call rankhug (t, de, dh, v2, binit, 0.d0, 0.d0)
       if (te1.gt.tinit) then
-       v1=v2
+        v1=v2
       else
-       v0=v2
+        v0=v2
       endif
       itdivs=itdivs+1
       eps=dabs(2.d0*(v1-v0)/(v1+v0))
 c        write(*,*) itdivs,v0,v1,v2,vel0,te1,tinit
       if (itdivs.gt.maxits) then
-       write (*,*) 'ERROR: in velshock2, to many iterations'
-       write (*,*) itdivs,v0,v1,v2,vel0,te1,tinit
-       stop
+        write (*,*) 'ERROR: in velshock2, to many iterations'
+        write (*,*) itdivs,v0,v1,v2,vel0,te1,tinit
+        stop
       endif
       if (eps.gt.tol) goto 20
 c
@@ -608,27 +615,32 @@ c      write(*,*) 'ROOTS: init guess:',root
 c
       u(1)=1.d0
       u(2)=1.d0/root
-      do 10 j=3,ncoef
-   10  u(j)=0.d0
+      do j=3,ncoef
+        u(j)=0.d0
+      enddo
       iter=0
-   20 unew=0.d0
+   10 unew=0.d0
       iter=iter+1
       mcoef=ncoef-1
-      do 30 j=1,mcoef
-   30  unew=unew-(a(j+1)*u(j))
+      do j=1,mcoef
+        unew=unew-(a(j+1)*u(j))
+      enddo
       anew=dabs(unew)
-      if (anew.lt.1.0d20) goto 50
+      if (anew.lt.1.0d20) goto 20
 c
 c    ***RENORMALISATION OF COEFF. IF TOO LARGE
 c
-      do 40 j=1,ncoef
-   40  u(j)=u(j)/unew
+      do j=1,ncoef
+        u(j)=u(j)/unew
+      enddo
       unew=1.d0
-   50 continue
 c
-      do 60 j=2,ncoef
-       m=(ncoef-j)+1
-   60  u(m+1)=u(m)
+   20 continue
+c
+      do j=2,ncoef
+        m=(ncoef-j)+1
+        u(m+1)=u(m)
+      enddo
 c
 c    ***EXTRACTION OF ROOT ; TEST FOR CONVERGENCE
 c
@@ -637,7 +649,7 @@ c
       root=u(1)/u(2)
       fract=dabs((root-roota)/root)
       if (iter.gt.150) return
-      if (fract.gt.1.0d-7) goto 20
+      if (fract.gt.1.0d-7) goto 10
 c
       return
       end
@@ -662,18 +674,20 @@ c
       vel0=vpr
       te0=tpr
       dh0=dhpr
-      de0=delpr!feldens(dhpr,pop)
+c      feldens(dhpr,pop)
+      de0=delpr
       bm0=hmag
 c
       en0=zen*dh0+de0
       pr0=en0*rkb*te0
       humag=(hmag*hmag)*iepi
-      u0=gammaeosu*en0*rkb*te0
+      u0=gammaEOSU*en0*rkb*te0
       lambda=tl*tstep
       u1=dmax1(epsilon,(u0-lambda))
       cmpf=u1/u0
       te1=te0*cmpf
-      vel1=vel0*cmpf!constantmachnumber
+c     constant Mach number
+      vel1=vel0*cmpf
       rho1=rho0
       dh1=dh0
       de1=de0
@@ -706,18 +720,20 @@ c
       vel0=vpr
       te0=tpr
       dh0=dhpr
-      de0=delpr!feldens(dhpr,pop)
+c      feldens(dhpr,pop)
+      de0=delpr
       bm0=hmag
 c
       en0=zen*dh0+de0
       pr0=en0*rkb*te0
       humag=(hmag*hmag)*iepi
-      u0=gammaeosu*en0*rkb*te0
+      u0=gammaEOSU*en0*rkb*te0
       lambda=tl*tstep
       u1=dmax1(epsilon,(u0-lambda))
       cmpf=u1/u0
       te1=te0*cmpf
-      vel1=vel0*cmpf!constantmachnumber
+c     constant mach number
+      vel1=vel0*cmpf
       rho1=rho0/cmpf
       dh1=dh0/cmpf
       de1=de0/cmpf

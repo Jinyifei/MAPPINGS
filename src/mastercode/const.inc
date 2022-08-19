@@ -312,18 +312,25 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c astro quantities, IAU2012, IAU2015
 c
-      parameter ( aunit = 1.49597870700d+13)  !cm exact IAU2012
-      parameter ( pars  = 3.085677581491368d+18) !cm exact IAU2012
-      parameter ( rsun  = 6.957d+10)       !cm  exact IAU2015
-      parameter ( msun  = 1.988409870698051d+33 )   !g derived from IAU2015 GMsun
-      parameter ( lsun  = 3.828d+33 )      !ergs/s exact  IAU2015
-      parameter ( GMsun = 1.3271244d26 ) ! m^3/s^2 exact IAU2015
+c     cm exact IAU2012
+      parameter ( aunit = 1.49597870700d+13)
+c     cm exact IAU2012
+      parameter ( pars  = 3.085677581491368d+18)
+c     cm  exact IAU2015
+      parameter ( rsun  = 6.957d+10)
+c     g derived from IAU2015 GMsun
+      parameter ( msun  = 1.988409870698051d+33 )
+c     ergs/s exact  IAU2015
+      parameter ( lsun  = 3.828d+33 )
+c      m^3/s^2 exact IAU2015
+      parameter ( GMsun = 1.3271244d26 )
 c
 c L = (4*pi*rsun^2stefan*tsun^4):
 c tsun = (lsun/(4*pi*rsun^2*stefan))^0.25
 c 5772 K IAU2015 + CODATA2018 rounded
 c
-      parameter ( tsun = 5772.00d+00 ) ! K
+c      K
+      parameter ( tsun = 5772.00d+00 )
 c
 c universal gravity constant not exact
 c
@@ -350,7 +357,8 @@ c
       parameter ( twopi = 2.d0*pi        , itwopi = 1.d0/(2.d0*pi) )
       parameter (   fpi = 4.d0*pi          , ifpi =  1.d0/(4.d0*pi))
       parameter (   epi = 8.d0*pi          , iepi =  1.d0/(8.d0*pi))
-      parameter ( pi8rt3=epi*0.5773502691896258d0) ! 8pi/sqrt(3)
+c      8pi/sqrt(3)
+      parameter ( pi8rt3=epi*0.5773502691896258d0)
 
 c
 c   Euler' constant to 20 places
@@ -381,7 +389,8 @@ c     limit for abundant ions: ab * pop
 c
       parameter ( pzlimit = 1.0d-12 )
       parameter ( log10pz = dlog10(pzlimit) )
-      parameter ( maxdekt = 40.d0 ) ! 50 max DeltaE/kt for collisions
+c      50 max DeltaE/kt for collisions
+      parameter ( maxdekt = 40.d0 )
 c
 c     maximum number of atoms (elements)
 c
@@ -512,10 +521,14 @@ c     equiv numbers for Fe like multi-level atoms
 c     new solver can handle up to 322 level fe 3 tested.
 c     old mdiag gave up around 50-60 levels
 c
-      parameter (mxfespecs = 6    ) ! 6
-      parameter (mxfenl    = 108  ) ! 108 std density 217 high for fe3
-      parameter (mxfetr    = 5778 ) ! 5778 std, 23436 high. per ion
-      parameter (mxfenspl  = 11   ) ! 11 point BT type 3 splines
+c      6
+      parameter (mxfespecs = 6    )
+c      108 std density 217 high for fe3
+      parameter (mxfenl    = 108  )
+c      5778 std, 23436 high. per ion
+      parameter (mxfetr    = 5778 )
+c      11 point BT type 3 splines
+      parameter (mxfenspl  = 11   )
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -532,8 +545,10 @@ c
       parameter (mxh42linede  =  9 )
       parameter (mxhlinete    = 10 )
       parameter (mxhlinede    =  9 )
-      parameter (mxhlinetehr  = 41 ) ! hires
-      parameter (mxhlinedehr  = 19 ) ! hires
+c      hires
+      parameter (mxhlinetehr  = 41 )
+c      hires
+      parameter (mxhlinedehr  = 19 )
 c
       parameter (mxhe43linete = 12 )
       parameter (mxhe43linede =  9 )
@@ -544,12 +559,18 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Resonance line cascades - khuge memory.
 c
-      parameter (mxxr3ions=189)     ! 126 std, 189 Full, max ions
-      parameter (mxxr3lvls= 86)     !  86 max levels per ion
-      parameter (mxxr3cols=504)     ! 504 max collisions per ion
-      parameter (mxxr3casc= 72)     !  72 max lines in single cascade
-      parameter (mxxr3lines=18522)  ! 18522 full 13990 std prefs
-      parameter (mxxr3nspl= 11)     !  11 point BT type 3 splines
+c      126 std, 189 Full, max ions
+      parameter (mxxr3ions=189)
+c       86 max levels per ion
+      parameter (mxxr3lvls= 86)
+c      504 max collisions per ion
+      parameter (mxxr3cols=504)
+c       72 max lines in single cascade
+      parameter (mxxr3casc= 72)
+c      18522 full 13990 std prefs
+      parameter (mxxr3lines=18522)
+c       11 point BT type 3 splines
+      parameter (mxxr3nspl= 11)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Resonance line cascades - khuge memory, was split into
@@ -567,35 +588,48 @@ c   58747 full prefs std density
 c   57728 std prefs high density
 c   59757 full prefs high density
 c
-      parameter (mxxrlions=45  )   ! 40 std 45 Full ions
-      parameter (mxxrllvls=668 )   ! 668 std max lvls per ion
-      parameter (mxxrlcols=5532)   ! 5532/4389 max coll. per ion
-      parameter (mxxrlcasc=86  )   ! 86 std max lines in single cascade
-      parameter (mxxrllines=58747) ! 56718 ss 58747 fs prefs, 59757 fh
-      parameter (mxxrlnspl=11)     ! 11 point BT type 3 splines
+c      40 std 45 Full ions
+      parameter (mxxrlions=45  )
+c      668 std max lvls per ion
+      parameter (mxxrllvls=668 )
+c      5532/4389 max coll. per ion
+      parameter (mxxrlcols=5532)
+c      86 std max lines in single cascade
+      parameter (mxxrlcasc=86  )
+c      56718 ss 58747 fs prefs, 59757 fh
+      parameter (mxxrllines=58747)
+c      11 point BT type 3 splines
+      parameter (mxxrlnspl=11)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c HI and HeII collisional cooling (not cascades)
 c
-      parameter (mxhheions=2 ) ! 2
-      parameter (mxhhelvls=25) ! 25
-      parameter (mxhhecols=24) ! 24
-      parameter (mxhhenspl=11) ! h like colls
+c      2
+      parameter (mxhheions=2 )
+c      25
+      parameter (mxhhelvls=25)
+c      24
+      parameter (mxhhecols=24)
+c      h like colls
+      parameter (mxhhenspl=11)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Legacy line data array sizes
 c
-c      parameter (mxxlines=4) ! 920
-c      parameter (mxxilines=9) ! 32
-c      parameter (mxxhelines=26) ! 26
+c      920
+c      parameter (mxxlines=4)
+c      32
+c      parameter (mxxilines=9)
+c      26
+c      parameter (mxxhelines=26)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c buffer size to read in all atmospheres, can be reduced to
 c 25000 if not using CMFGEN inputs.  A major memory hog!
 c
-c! up to 560000 bins - CMFGEN!
+c      up to 560000 bins - CMFGEN!
 c
       parameter( mxflxbins = 25000)
 c

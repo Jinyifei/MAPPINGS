@@ -69,11 +69,11 @@ c
       if (te0.lt.(3.d0*tmin)) te0=3.d0*tmin
       tm1=te0
       tl1=dlog(tm1)
-      do 20 idx=1,atypes
-       do 10 ion=1,maxion(idx)
-        popp0(ion,idx)=pop(ion,idx)
-   10  continue
-   20 continue
+      do idx=1,atypes
+        do ion=1,maxion(idx)
+          popp0(ion,idx)=pop(ion,idx)
+        enddo
+      enddo
 c
       call timion (tm1, edens, hdens, xhyf, tstep)
 c
@@ -91,59 +91,60 @@ c     if (dabs(dlos).lt.(delmin/4.d0)) goto 200
 c
 c
       dl1=dlos
-      do 110 n=1,nf
-       do 40 idx=1,atypes
-        do 30 ion=1,maxion(idx)
-         pop(ion,idx)=popp0(ion,idx)
-   30   continue
-   40  continue
+      do n=1,nf
+        do idx=1,atypes
+          do ion=1,maxion(idx)
+            pop(ion,idx)=popp0(ion,idx)
+          enddo
+        enddo
 c
-       call timion (t2, edens, hdens, xhyf, tstep)
+        call timion (t2, edens, hdens, xhyf, tstep)
 c
-       call cool (t2, edens, hdens)
-       if (dabs(dabs(dlos)-1.d0).lt.1.d-6) dlos=(1.0d0-1.d-6)*
-     &  dsign(1.d0,dlos)
-       c2=arctanh(dlos)
-       csub=c2-c1
-       tsub=tl2-tl1
-       if (dabs(tsub).lt.1.d-36) tsub=1.d-36*dsign(1.0d0,tsub)
-       if (tsub.eq.0.d0) tsub=1.d-36*dsign(1.0d0,csub)
-       a=csub/tsub
-       b=c1-(a*tl1)
-       if ((80.d0*dabs(a)).lt.dabs(b)) a=(dabs(b)/80.d0)*dsign(1.0d0,a)
-       b=c1-(a*tl1)
-       cc=c1
-       c1=c2
-       tl1=tl2
-       tm1=t2
-       tl2=-(b/a)
-       t2=dexp(tl2)
-       if ((t2.le.(tm1*emul)).and.(t2.ge.(tm1/emul))) goto 50
-       if (t2.gt.(tm1*emul)) t2=tm1*emul
-       if (t2.lt.(tm1/emul)) t2=tm1/emul
-       km=km+1
-       tl2=dlog(t2)
-       emul=1.d0+(cof*(emul-1.d0))
-   50  continue
+        call cool (t2, edens, hdens)
+        if (dabs(dabs(dlos)-1.d0).lt.1.d-6) dlos=(1.0d0-1.d-6)*
+     &   dsign(1.d0,dlos)
+        c2=arctanh(dlos)
+        csub=c2-c1
+        tsub=tl2-tl1
+        if (dabs(tsub).lt.1.d-36) tsub=1.d-36*dsign(1.0d0,tsub)
+        if (tsub.eq.0.d0) tsub=1.d-36*dsign(1.0d0,csub)
+        a=csub/tsub
+        b=c1-(a*tl1)
+        if ((80.d0*dabs(a)).lt.dabs(b)) a=(dabs(b)/80.d0)*dsign(1.0d0,a)
+        b=c1-(a*tl1)
+        cc=c1
+        c1=c2
+        tl1=tl2
+        tm1=t2
+        tl2=-(b/a)
+        t2=dexp(tl2)
+        if ((t2.le.(tm1*emul)).and.(t2.ge.(tm1/emul))) goto 50
+        if (t2.gt.(tm1*emul)) t2=tm1*emul
+        if (t2.lt.(tm1/emul)) t2=tm1/emul
+        km=km+1
+        tl2=dlog(t2)
+        emul=1.d0+(cof*(emul-1.d0))
+   50   continue
 c
 c      *PRINT OUT WHEN TESTED BY SUBR. TESTI
 c
-       if (t2.lt.tmin) goto 130
-       if (ntest.ne.'Y') goto 100
-       if (n.ne.1) goto 80
-       write (luop,60)
-       write (*,60)
+        if (t2.lt.tmin) goto 130
+        if (ntest.ne.'Y') goto 100
+        if (n.ne.1) goto 80
+        write (luop,60)
+        write (*,60)
    60 format(' ',t4,'T1',t14,'DLOS',t27,'T2',t39,'A',t49,'B',t58,'C1'
      &,t68,'C2')
-       write (*,70) te0,dl1,tti,dinc
-       write (luop,70) te0,dl1,tti,dinc
+        write (*,70) te0,dl1,tti,dinc
+        write (luop,70) te0,dl1,tti,dinc
    70 format(' ',1pg12.5,g10.3,g12.5,5x,'(DINC:',g10.3,')')
-   80  write (*,90) tm1,dlos,t2,a,b,cc,c2,km
-       write (luop,90) tm1,dlos,t2,a,b,cc,c2,km,emul
+   80   write (*,90) tm1,dlos,t2,a,b,cc,c2,km
+        write (luop,90) tm1,dlos,t2,a,b,cc,c2,km,emul
 c
    90 format(' ',1pg12.5,g10.3,g12.5,4g10.3,i4,1pg10.3)
-  100  if ((dabs(dlos).lt.(delmin*5.d0)).or.(km.ge.3)) goto 130
-  110 continue
+  100   if ((dabs(dlos).lt.(delmin*5.d0)).or.(km.ge.3)) goto 130
+c
+      enddo
 c
       write (*,120) dlos,t2
   120 format(' CONVERGENCE FOR EQUIL. TEMP. IS TOO SLOW   ' ,'DL:'
@@ -151,11 +152,11 @@ c
   130 continue
       if (t2.lt.tmin) t2=tmin
       tef=t2
-      do 150 idx=1,atypes
-       do 140 ion=1,maxion(idx)
-        pop(ion,idx)=popp0(ion,idx)
-  140  continue
-  150 continue
+      do idx=1,atypes
+        do ion=1,maxion(idx)
+          pop(ion,idx)=popp0(ion,idx)
+        enddo
+      enddo
 c
       call timion (tef, edens, hdens, xhyf, tstep)
 c

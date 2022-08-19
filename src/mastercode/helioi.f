@@ -219,14 +219,14 @@ cc
 c     ome1s12s3=6.87d-2 !
 c     ome1s12s1=3.61d-2 !
 c     ome1s12p3=2.27d-2 !
-c     omep1=2.57d0 ! wrong!!
-c     omes1=0.55d0*omep1 ! ditto
-cc
 c
-      a2s31s1=1.73d-04!chianti8
-      a2p31s1=2.33d+02+3.93000d-01!chianti8
+c     chianti8
+      a2s31s1=1.73d-04
+c     chianti8
+      a2p31s1=2.33d+02+3.93000d-01
       at1s=a2p31s1+a2s31s1
-      a2s11s1=5.094d+01!2photonchianti8
+c     2photonchianti8
+      a2s11s1=5.094d+01
 c
       beta=(t/(t+5e4))
       omep1=fsplint(s_x,s17_y,s17_y2,11,beta)
@@ -244,8 +244,10 @@ c
       xs1=heien(2)/(rkb*t)
       xp1=heien(3)/(rkb*t)
 c
-      cos1=(ara*omes1*dexp(-xs1))!*fgaunt(1,1,xs1)omes1iscomplete
-      cop1=(ara*omep1*dexp(-xp1))!*fgaunt(1,1,xp1)omep1iscomplete
+c      *fgaunt(1,1,xs1) omes1 is complete
+      cos1=(ara*omes1*dexp(-xs1))
+c      *fgaunt(1,1,xp1) omep1 is complete
+      cop1=(ara*omep1*dexp(-xp1))
 c
       collrate2phe(atom)=cos1/abup
       ee2phe(atom)=heien(2)
@@ -291,101 +293,101 @@ c
       coolf=0.d0
 c
       do idx=1,nheislines
-       heisbri(idx)=0.d0
+        heisbri(idx)=0.d0
       enddo
 c
       do idx=1,nheitlines
-       heitbri(idx)=0.d0
+        heitbri(idx)=0.d0
       enddo
 c
       if (zion(atom)*pop(2,atom).gt.pzlimit) then
 c
 c First, collision contributions
 c
-       t4=1.0d-4*t
-       if (t4.lt.0.01d0) t4=0.01d0
-       if (t4.gt.5.0d0) t4=5.0d0
+        t4=1.0d-4*t
+        if (t4.lt.0.01d0) t4=0.01d0
+        if (t4.gt.5.0d0) t4=5.0d0
 c
-       do idx=1,nheis
-        n=nheiscr(idx)
-        cr(idx)=0.d0
-        if (n.gt.0) then
-         sum=0.d0
-         do i=1,n
-          ai=heiscra(i,idx)
-          bi=heiscrb(i,idx)
-          ci=heiscrc(i,idx)
-          sum=sum+(ai*(t4**bi)*dexp(ci/t4))
-         enddo
-         cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
-         cr(idx)=cr(idx)*sum
-        endif
+        do idx=1,nheis
+          n=nheiscr(idx)
+          cr(idx)=0.d0
+          if (n.gt.0) then
+            sum=0.d0
+            do i=1,n
+              ai=heiscra(i,idx)
+              bi=heiscrb(i,idx)
+              ci=heiscrc(i,idx)
+              sum=sum+(ai*(t4**bi)*dexp(ci/t4))
+            enddo
+            cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
+            cr(idx)=cr(idx)*sum
+          endif
 c
 c collisions of He I are now all in XR3DATA collisional cascades
 c          cr(idx)=cr(idx)+1.d0
-        cr(idx)=1.d0
+          cr(idx)=1.d0
 c      write(*,*) t,idx,cr(idx)
-       enddo
-       abde=de*dh*zion(atom)*pop(2,atom)
-       lnte=dlog(t)
-       invt=1.d0/(epsilon+t)
+        enddo
+        abde=de*dh*zion(atom)*pop(2,atom)
+        lnte=dlog(t)
+        invt=1.d0/(epsilon+t)
 c
 c then singlet recomb
 c
-       do idx=1,nheislines
-        a=heisreccoef(1,idx)
-        b=heisreccoef(2,idx)
-        c=heisreccoef(3,idx)
-        d=heisreccoef(4,idx)
-        emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
-        emiss=dmax1(0.d0,emiss)
-        heisbri(idx)=abde*emiss*ifpi
-        upid=heisupid(idx)
-        if (cr(upid).gt.1.0d0) then
-         heisbri(idx)=heisbri(idx)*cr(upid)
-         coolf=coolf+heisbri(idx)*(cr(upid)-1.d0)
-        endif
-       enddo
+        do idx=1,nheislines
+          a=heisreccoef(1,idx)
+          b=heisreccoef(2,idx)
+          c=heisreccoef(3,idx)
+          d=heisreccoef(4,idx)
+          emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
+          emiss=dmax1(0.d0,emiss)
+          heisbri(idx)=abde*emiss*ifpi
+          upid=heisupid(idx)
+          if (cr(upid).gt.1.0d0) then
+            heisbri(idx)=heisbri(idx)*cr(upid)
+            coolf=coolf+heisbri(idx)*(cr(upid)-1.d0)
+          endif
+        enddo
 c
 c then triplet colls
 c
-       do idx=1,nheit
-        n=nheitcr(idx)
-        cr(idx)=0.d0
-        if (n.gt.0) then
-         sum=0.d0
-         do i=1,n
-          ai=heitcra(i,idx)
-          bi=heitcrb(i,idx)
-          ci=heitcrc(i,idx)
-          sum=sum+(ai*(t4**bi)*dexp(ci/t4))
-         enddo
-         cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
-         cr(idx)=cr(idx)*sum
-        endif
+        do idx=1,nheit
+          n=nheitcr(idx)
+          cr(idx)=0.d0
+          if (n.gt.0) then
+            sum=0.d0
+            do i=1,n
+              ai=heitcra(i,idx)
+              bi=heitcrb(i,idx)
+              ci=heitcrc(i,idx)
+              sum=sum+(ai*(t4**bi)*dexp(ci/t4))
+            enddo
+            cr(idx)=1.d0/(1.d0+((3552.d0*(t4**(-0.55d0)))/de))
+            cr(idx)=cr(idx)*sum
+          endif
 c
 c collisions of He I are now all in XR3DATA collisional cascades
 c          cr(idx)=cr(idx)+1.d0
-        cr(idx)=1.d0
+          cr(idx)=1.d0
 c      write(*,*) t,idx,cr(idx)
-       enddo
+        enddo
 c
 c then triplet recomb
 c
-       do idx=1,nheitlines
-        a=heitreccoef(1,idx)
-        b=heitreccoef(2,idx)
-        c=heitreccoef(3,idx)
-        d=heitreccoef(4,idx)
-        emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
-        emiss=dmax1(0.d0,emiss)
-        heitbri(idx)=abde*emiss*ifpi
-        upid=heitupid(idx)
-        if (cr(upid).gt.1.0d0) then
-         heitbri(idx)=heitbri(idx)*cr(upid)
-         coolf=coolf+heitbri(idx)*(cr(upid)-1.d0)
-        endif
-       enddo
+        do idx=1,nheitlines
+          a=heitreccoef(1,idx)
+          b=heitreccoef(2,idx)
+          c=heitreccoef(3,idx)
+          d=heitreccoef(4,idx)
+          emiss=(a+(b*lnte*lnte)+(c*lnte)+(d/lnte))*invt*1.0d-25
+          emiss=dmax1(0.d0,emiss)
+          heitbri(idx)=abde*emiss*ifpi
+          upid=heitupid(idx)
+          if (cr(upid).gt.1.0d0) then
+            heitbri(idx)=heitbri(idx)*cr(upid)
+            coolf=coolf+heitbri(idx)*(cr(upid)-1.d0)
+          endif
+        enddo
 c
 c      write(*,*) 'HeI coll losses: ',helos, coolf
 c

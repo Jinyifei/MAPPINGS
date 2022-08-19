@@ -52,60 +52,56 @@ c
       trea=1.d-5
       nff='ALL'
       zm=0.0d0
-      do 10 idx=3,atypes
-   10  zm=zm+zion(idx)
+      do idx=3,atypes
+        zm=zm+zion(idx)
+      enddo
 c
 c
 c    ***ITERATES TO FIND IONIC POPULATIONS AT EQUILIBRIUM
 c
-      do 40 m=1,7
-       call copypop (pop, popzero)
-       do 20 n=1,nf
-c
-        call iohyd (dh, xhy, t, tstep, de, xhyf, mod)
-c
-        call difpop (pop, popzero, treh, 1, dif1)
-c
-        dia=dmax1(0.0d0,dlog(5.0d0/(zm+1.d-5))/20.0d0)*pop(2,1)
-        if (dif1.ge.dia) then
-         nel='ALL'
-        elseif ((m.eq.1).and.(n.lt.nf)) then
-         nel='HE'
-        elseif (m.gt.2) then
-         nel='ALL'
-        endif
-c
-        if (de.lt.pzlimit) de=pzlimit
-        call iobal (mod, nel, de, dh, xhyf, t, tstep)
-        call difpop (pop, popzero, trea, atypes, dift)
-c
+      do m=1,7
         call copypop (pop, popzero)
+        do n=1,nf
 c
-        if ((dift.lt.difm1).and.(nel.eq.'HE')) goto 30
-        if ((dift.lt.difm2).and.(nel.eq.'ALL')) goto 30
+          call iohyd (dh, xhy, t, tstep, de, xhyf, mod)
 c
-   20  continue
+          call difpop (pop, popzero, treh, 1, dif1)
 c
-   30  if (((nel.eq.'ALL').and.(dif1.lt.difma)).and.(dift.lt.difm2))
-     &  goto 50
-       call iohyd (dh, xhy, t, tstep, de, xhyf, mod)
-       call iobal (mod, nff, de, dh, xhyf, t, tstep)
-       inttemp=1
-       call difpop (pop, popzero, treh, inttemp, dif1)
+          dia=dmax1(0.0d0,dlog(5.0d0/(zm+1.d-5))/20.0d0)*pop(2,1)
+          if (dif1.ge.dia) then
+            nel='ALL'
+          elseif ((m.eq.1).and.(n.lt.nf)) then
+            nel='HE'
+          elseif (m.gt.2) then
+            nel='ALL'
+          endif
 c
-       call difpop (pop, popzero, trea, atypes, dift)
-       if ((dif1.le.difma).and.(dift.le.difm2)) goto 50
+          if (de.lt.pzlimit) de=pzlimit
+          call iobal (mod, nel, de, dh, xhyf, t, tstep)
+          call difpop (pop, popzero, trea, atypes, dift)
 c
-   40 continue
+          call copypop (pop, popzero)
+c
+          if ((dift.lt.difm1).and.(nel.eq.'HE')) goto 30
+          if ((dift.lt.difm2).and.(nel.eq.'ALL')) goto 30
+c
+        enddo
+c
+   30   if (((nel.eq.'ALL').and.(dif1.lt.difma)).and.(dift.lt.difm2))
+     &   goto 50
+        call iohyd (dh, xhy, t, tstep, de, xhyf, mod)
+        call iobal (mod, nff, de, dh, xhyf, t, tstep)
+        inttemp=1
+        call difpop (pop, popzero, treh, inttemp, dif1)
+c
+        call difpop (pop, popzero, trea, atypes, dift)
+        if ((dif1.le.difma).and.(dift.le.difm2)) goto 50
+c
+      enddo
 c
       if ((dif1.le.difma).and.(dift.le.difm2)) goto 50
       dfh=dif1/difma
       dft=dift/difm2
-c      if (dmax1(dfh,dft).gt.5.d0) then
-c      write (*,50) dfh,dft
-c   50 format(' Slow convergence for equil. ionisation:','DFH:'
-c     &     ,1pg9.2,'   DFT:',1pg9.2)
-c      endif
 c
    50 continue
       return

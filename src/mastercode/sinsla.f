@@ -81,15 +81,15 @@ c
       if ((ilgg.lt.'B').or.(ilgg.gt.'F')) goto 10
 c
       do 50 i=1,atypes
-       do 40 j=1,maxion(i)
-   40   pop(j,i)=0.0d0
+        do 40 j=1,maxion(i)
+   40     pop(j,i)=0.0d0
 c
-       if ((ilgg.eq.'C').or.(ilgg.eq.'B')) pop(l,i)=1.0d0
-       if (((ilgg.eq.'D').or.(ilgg.eq.'E')).or.(ilgg.eq.'F')) then
-        l=1
-        if (ipote(1,i).lt.epotmi) l=2
-        pop(l,i)=1.0d0
-       endif
+        if ((ilgg.eq.'C').or.(ilgg.eq.'B')) pop(l,i)=1.0d0
+        if (((ilgg.eq.'D').or.(ilgg.eq.'E')).or.(ilgg.eq.'F')) then
+          l=1
+          if (ipote(1,i).lt.epotmi) l=2
+          pop(l,i)=1.0d0
+        endif
    50 continue
 c
       call photsou (model)
@@ -132,28 +132,28 @@ c
       call zetaeff (dh)
 c
       if (ilgg.eq.'B') then
-       call equion (t, de, dh)
+        call equion (t, de, dh)
 c
-       i=0
+        i=0
 c
-       trea=1.d-12
-       dift=0.d0
+        trea=1.d-12
+        dift=0.d0
 c
 c
-   80  call copypop (pop, popz)
+   80   call copypop (pop, popz)
 c
-       call localem (t, de, dh)
-       call totphot (t, dh, rad, dr, dv, wdil, lmod)
-       call zetaeff (dh)
-       call equion (t, de, dh)
+        call localem (t, de, dh)
+        call totphot (t, dh, rad, dr, dv, wdil, lmod)
+        call zetaeff (dh)
+        call equion (t, de, dh)
 c
-       call difpop (pop, popz, trea, atypes, dift)
+        call difpop (pop, popz, trea, atypes, dift)
 c
-       call copypop (pop, popz)
+        call copypop (pop, popz)
 c
-       i=i+1
+        i=i+1
 c
-       if ((dift.ge.1.0d-4).or.(i.le.4)) goto 80
+        if ((dift.ge.1.0d-4).or.(i.le.4)) goto 80
 c
 c         write (*,*) i,dift
 c
@@ -162,63 +162,63 @@ c
       trec=frectim(t,de,dh)
 c
       if (ilgg.gt.'B') then
-       if (ilgg.eq.'C') then
-        nmod='EQUI'
-       else
-        if (ilgg.ne.'F') then
-         nmod='TIM'
-   90    write (*,100) zetae,qhdh
+        if (ilgg.eq.'C') then
+          nmod='EQUI'
+        else
+          if (ilgg.ne.'F') then
+            nmod='TIM'
+   90       write (*,100) zetae,qhdh
   100       format(/' ZETAE :',1pg10.3,4x,'QHDH :',1pg10.3/
      &      'Give time step (s): ',$)
-         read (*,*) tstep1
+            read (*,*) tstep1
 c
-         if (tstep1.lt.0.d0) goto 90
-        else
-         nmod='TIM'
-  110    write (*,120) zetae,qhdh
+            if (tstep1.lt.0.d0) goto 90
+          else
+            nmod='TIM'
+  110       write (*,120) zetae,qhdh
   120       format(/' ZETAE :',1pg10.3,4x,'QHDH :',1pg10.3/
      &      ' Give age of nebula and source life-time (s, s): ',$)
-         read (*,*) tst,tsl
-         if (tst.le.0.d0) goto 110
-         fron=0.d0
-         tstep3=dmax1(0.d0,tst-tsl)
-         tstep1=fron*dmin1(tsl,tst)
-         tstep2=dmax1(0.0d0,dmin1(tsl,tst)-tstep1)
+            read (*,*) tst,tsl
+            if (tst.le.0.d0) goto 110
+            fron=0.d0
+            tstep3=dmax1(0.d0,tst-tsl)
+            tstep1=fron*dmin1(tsl,tst)
+            tstep2=dmax1(0.0d0,dmin1(tsl,tst)-tstep1)
 c
-  130    write (*,140)
+  130       write (*,140)
   140    format(' Density behaviour, Isochoric or Isobaric (C/B): ',$)
-         read (*,30) jden
-         if ((jden.ne.'C').and.(jden.ne.'B')) goto 130
+            read (*,30) jden
+            if ((jden.ne.'C').and.(jden.ne.'B')) goto 130
+          endif
+          if (ill.eq.'N') then
+            call copypop (pop0, pop)
+          else
+            call copypop (pop, pop0)
+          endif
         endif
-        if (ill.eq.'N') then
-         call copypop (pop0, pop)
+        if (ilgg.lt.'E') then
+          call teequi (t, tf, de, dh, tstep1, nmod)
+          trec=frectim(tf,de,dh)
+        elseif (ilgg.eq.'E') then
+          call timion (t, de, dh, xhyf, tstep1)
+          call cool (t, de, dh)
+          trec=frectim(t,de,dh)
         else
-         call copypop (pop, pop0)
+          write (*,*) ' Time Dependent Cooling and Recombination'
+          wd00=0.0d0
+          tex=100.d0
+          exl=1.d-20
+          if (tstep1.gt.0.d0) call teequi (t, tf, de, dh, tstep1, nmod)
+          prescc=fpressu(t,dh,pop)
+          call evoltem (tf, tf, de, dh, prescc, tstep2, 0.0d0, 0.0d0,
+     &     luop)
+          trec=frectim(tf,de,dh)
+          call localem (t, de, dh)
+          call totphot (t, dh, rad, dr, dv, wd00, lmod)
+          call evoltem (tf, tf, de, dh, prescc, tstep3, exl, tex, luop)
         endif
-       endif
-       if (ilgg.lt.'E') then
-        call teequi (t, tf, de, dh, tstep1, nmod)
-        trec=frectim(tf,de,dh)
-       elseif (ilgg.eq.'E') then
-        call timion (t, de, dh, xhyf, tstep1)
-        call cool (t, de, dh)
-        trec=frectim(t,de,dh)
-       else
-        write (*,*) ' Time Dependent Cooling and Recombination'
-        wd00=0.0d0
-        tex=100.d0
-        exl=1.d-20
-        if (tstep1.gt.0.d0) call teequi (t, tf, de, dh, tstep1, nmod)
-        prescc=fpressu(t,dh,pop)
-        call evoltem (tf, tf, de, dh, prescc, tstep2, 0.0d0, 0.0d0,
-     &   luop)
-        trec=frectim(tf,de,dh)
-        call localem (t, de, dh)
-        call totphot (t, dh, rad, dr, dv, wd00, lmod)
-        call evoltem (tf, tf, de, dh, prescc, tstep3, exl, tex, luop)
-       endif
-       call difpop (pop, pop0, trea, atypes, dift)
-       t=tf
+        call difpop (pop, pop0, trea, atypes, dift)
+        t=tf
       endif
 c
   150 continue

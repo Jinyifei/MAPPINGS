@@ -68,25 +68,26 @@ c surrender. Added /opt/local for tosca cluster
 c
       inquire (file='data/ATDAT.txt',exist=iexi)
       if (iexi) then
-       datadir='./'
+        datadir='./'
       else
-       datadir='/opt/local/share/mappings/'
+        datadir='/opt/local/share/mappings/'
       endif
       dtlen=lenv(datadir)
       inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
       if (iexi.eqv..false.) then
-       datadir='/usr/local/share/mappings/'
-       dtlen=lenv(datadir)
-       filename=datadir(1:dtlen)//'data/ATDAT.txt'
-       if (iexi.eqv..false.) then
-        m=lenv(filename)
-        write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
-        write (*,*) ' MV requires a valid local data/ directory or'
-        write (*,*) ' a valid shared /usr/local/share/mappings/data/'
-        write (*,*) ' or a valid shared /opt/local/share/mappings/data/'
-        write (*,*) ' directory.  '
-        stop
-       endif
+        datadir='/usr/local/share/mappings/'
+        dtlen=lenv(datadir)
+        filename=datadir(1:dtlen)//'data/ATDAT.txt'
+        if (iexi.eqv..false.) then
+          m=lenv(filename)
+          write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
+          write (*,*) ' MV requires a valid local data/ directory or'
+          write (*,*) ' a valid shared /usr/local/share/mappings/data/'
+          write (*,*) ' or a valid shared /opt/local/share/mappings/data
+     &/'
+          write (*,*) ' directory.  '
+          stop
+        endif
       endif
 c
       filename=''
@@ -99,9 +100,9 @@ c
      & '     DATA DIR.: ',a,/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
       if ((dtlen.eq.2).and.(datadir(1:dtlen).eq.'./')) then
-       write (*,10) 'Local = data/'
+        write (*,10) 'Local = data/'
       else
-       write (*,10) 'Shared = '//datadir(1:dtlen)//'data/'
+        write (*,10) 'Shared = '//datadir(1:dtlen)//'data/'
       endif
 c
 c     formats for reading files
@@ -175,8 +176,8 @@ c
       rom_len(31)=4
 c
       do 40 i=1,30
-       zmap(i)=0
-       mapz(i)=0
+        zmap(i)=0
+        mapz(i)=0
    40 continue
 c
       jiel='N'
@@ -186,10 +187,10 @@ c
 c
       inquire (file='map.prefs',exist=iexi)
       if (iexi) then
-       open (luin,file='map.prefs',status='OLD')
+        open (luin,file='map.prefs',status='OLD')
       else
-       filename=datadir(1:dtlen)//'data/ATDAT.txt'
-       open (luin,file=filename,status='OLD')
+        filename=datadir(1:dtlen)//'data/ATDAT.txt'
+        open (luin,file=filename,status='OLD')
       endif
 c
    50 read (luin,fmt=20) (ibuf(j),j=1,19)
@@ -199,30 +200,30 @@ c
       zen=0.d0
       read (luin,fmt=*) atypes
       do 60 i=1,atypes
-       read (luin,*) j,elem(i),k,atwei(i),zion0(i),dion0(i),maxion(i)
-       zion(i)=zion0(i)
-       deltazion(i)=1.d0
-       zen=zen+zion0(i)
-       dion(i)=dion0(i)
-       invdion(i)=1.d0/dion(i)
-       zmap(k)=j
-       mapz(j)=k
-       if (i.ne.j) goto 340
+        read (luin,*) j,elem(i),k,atwei(i),zion0(i),dion0(i),maxion(i)
+        zion(i)=zion0(i)
+        deltazion(i)=1.d0
+        zen=zen+zion0(i)
+        dion(i)=dion0(i)
+        invdion(i)=1.d0/dion(i)
+        zmap(k)=j
+        mapz(j)=k
+        if (i.ne.j) goto 340
    60 continue
 c
       do i=1,atypes
-       j=mapz(i)
-       elem_len(i)=2
-       if (j.eq.1) elem_len(i)=1
-       if (j.eq.5) elem_len(i)=1
-       if (j.eq.6) elem_len(i)=1
-       if (j.eq.7) elem_len(i)=1
-       if (j.eq.8) elem_len(i)=1
-       if (j.eq.9) elem_len(i)=1
-       if (j.eq.15) elem_len(i)=1
-       if (j.eq.16) elem_len(i)=1
-       if (j.eq.19) elem_len(i)=1
-       if (j.eq.23) elem_len(i)=1
+        j=mapz(i)
+        elem_len(i)=2
+        if (j.eq.1) elem_len(i)=1
+        if (j.eq.5) elem_len(i)=1
+        if (j.eq.6) elem_len(i)=1
+        if (j.eq.7) elem_len(i)=1
+        if (j.eq.8) elem_len(i)=1
+        if (j.eq.9) elem_len(i)=1
+        if (j.eq.15) elem_len(i)=1
+        if (j.eq.16) elem_len(i)=1
+        if (j.eq.19) elem_len(i)=1
+        if (j.eq.23) elem_len(i)=1
       enddo
 c
       close (luin)
@@ -265,142 +266,142 @@ c
       filename=datadir(1:dtlen)//'data/switches.txt'
       inquire (file=filename,exist=iexi)
       if (iexi) then
-       open (luin,file=filename,status='OLD')
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
+        open (luin,file=filename,status='OLD')
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) collmode
-       if (collmode.lt.0) collmode=0
-       if (collmode.gt.2) collmode=0
-       write (*,*) '*** collmode     :',collmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) collmode
+        if (collmode.lt.0) collmode=0
+        if (collmode.gt.2) collmode=0
+        write (*,*) '*** collmode     :',collmode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) phionmode
-       if (phionmode.lt.0) phionmode=0
-       if (phionmode.gt.1) phionmode=0
-       write (*,*) '*** phionmode    :',phionmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) phionmode
+        if (phionmode.lt.0) phionmode=0
+        if (phionmode.gt.1) phionmode=0
+        write (*,*) '*** phionmode    :',phionmode
 c
-       ph2mode=0
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) ph2mode
-       if (ph2mode.lt.0) ph2mode=0
-       if (ph2mode.gt.1) ph2mode=0
-       write (*,*) '*** ph2mode      :',ph2mode
+        ph2mode=0
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) ph2mode
+        if (ph2mode.lt.0) ph2mode=0
+        if (ph2mode.gt.1) ph2mode=0
+        write (*,*) '*** ph2mode      :',ph2mode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) recommode
-       if (recommode.lt.0) recommode=0
-       if (recommode.gt.2) recommode=0
-       write (*,*) '*** recommode    :',recommode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) recommode
+        if (recommode.lt.0) recommode=0
+        if (recommode.gt.2) recommode=0
+        write (*,*) '*** recommode    :',recommode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) drrecmode
-       if (drrecmode.lt.0) recommode=0
-       if (drrecmode.gt.3) drrecmode=0
-       write (*,*) '*** drrecmode    :',drrecmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) drrecmode
+        if (drrecmode.lt.0) recommode=0
+        if (drrecmode.gt.3) drrecmode=0
+        write (*,*) '*** drrecmode    :',drrecmode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) chargemode
-       if (chargemode.lt.0) chargemode=0
-       if (chargemode.gt.3) chargemode=0
-       write (*,*) '*** chargexfermode   :',chargemode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) chargemode
+        if (chargemode.lt.0) chargemode=0
+        if (chargemode.gt.3) chargemode=0
+        write (*,*) '*** chargexfermode   :',chargemode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) chargeheatmode
-       if (chargeheatmode.lt.0) chargeheatmode=1
-       if (chargeheatmode.gt.1) chargeheatmode=1
-       write (*,*) '*** chargexfer heating   :',chargeheatmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) chargeheatmode
+        if (chargeheatmode.lt.0) chargeheatmode=1
+        if (chargeheatmode.gt.1) chargeheatmode=1
+        write (*,*) '*** chargexfer heating   :',chargeheatmode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) freefreemode
-       if (freefreemode.lt.0) freefreemode=1
-       if (freefreemode.gt.1) freefreemode=1
-       if (freefreemode.eq.1) x=fgfflog(-1,0.0d0,0.0d0,1,1)
-       write (*,*) '*** freefreemode :',freefreemode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) freefreemode
+        if (freefreemode.lt.0) freefreemode=1
+        if (freefreemode.gt.1) freefreemode=1
+        if (freefreemode.eq.1) x=fgfflog(-1,0.0d0,0.0d0,1,1)
+        write (*,*) '*** freefreemode :',freefreemode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) photonmode
-       if (photonmode.lt.0) photonmode=1
-       if (photonmode.gt.1) photonmode=1
-       if (photonmode.gt.0) photofraction=1.0d0
-       if (photonmode.le.0) photofraction=0.0d0
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) photonmode
+        if (photonmode.lt.0) photonmode=1
+        if (photonmode.gt.1) photonmode=1
+        if (photonmode.gt.0) photofraction=1.0d0
+        if (photonmode.le.0) photofraction=0.0d0
 c
-       crate=0.d0
-       write (*,*) '*** photonmode   :',photonmode,crate
+        crate=0.d0
+        write (*,*) '*** photonmode   :',photonmode,crate
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) hhecollmode
-       if (hhecollmode.le.0) hhecollmode=0
-       if (hhecollmode.gt.1) hhecollmode=0
-       write (*,*) '*** hhecollmode  :',hhecollmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) hhecollmode
+        if (hhecollmode.le.0) hhecollmode=0
+        if (hhecollmode.gt.1) hhecollmode=0
+        write (*,*) '*** hhecollmode  :',hhecollmode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) linecoolmode
-       if (linecoolmode.le.0) linecoolmode=0
-       if (linecoolmode.gt.1) linecoolmode=0
-       write (*,*) '*** linecoolmode:',linecoolmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) linecoolmode
+        if (linecoolmode.le.0) linecoolmode=0
+        if (linecoolmode.gt.1) linecoolmode=0
+        write (*,*) '*** linecoolmode:',linecoolmode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) alphacoolmode
-       if (alphacoolmode.le.0) alphacoolmode=0
-       if (alphacoolmode.gt.1) alphacoolmode=0
-       write (*,*) '*** alphacoolmode:',alphacoolmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) alphacoolmode
+        if (alphacoolmode.le.0) alphacoolmode=0
+        if (alphacoolmode.gt.1) alphacoolmode=0
+        write (*,*) '*** alphacoolmode:',alphacoolmode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) turbheatmode
-       if (turbheatmode.le.0) turbheatmode=0
-       if (turbheatmode.gt.1) turbheatmode=0
-       admach=0.0d0
-       write (*,*) '*** turbheatmode :',turbheatmode,admach
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) turbheatmode
+        if (turbheatmode.le.0) turbheatmode=0
+        if (turbheatmode.gt.1) turbheatmode=0
+        admach=0.0d0
+        write (*,*) '*** turbheatmode :',turbheatmode,admach
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) radpressmode
-       if (radpressmode.le.0) radpressmode=0
-       if (radpressmode.gt.1) radpressmode=0
-       write (*,*) '*** radiation pressure mode :',radpressmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) radpressmode
+        if (radpressmode.le.0) radpressmode=0
+        if (radpressmode.gt.1) radpressmode=0
+        write (*,*) '*** radiation pressure mode :',radpressmode
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) kappamode
-       if (kappamode.le.0) kappamode=0
-       if (kappamode.gt.1) kappamode=0
-       write (*,*) '*** kappa electron mode :',kappamode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) kappamode
+        if (kappamode.le.0) kappamode=0
+        if (kappamode.gt.1) kappamode=0
+        write (*,*) '*** kappa electron mode :',kappamode
 c
 c     expert mode triggers many more detailed questions,
 c     useful for testing and program design.  NOT DOCUMENTED
 c     SO THERE.  Contact Ralph Sutherland (Ralph.Sutherland@anu.edu.au)
 c     for details if you are programming and modifying mappings.
 c
-       read (luin,20) (ibuf(j),j=1,19)
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) expertmode
-       if (expertmode.le.0) expertmode=0
-       if (expertmode.gt.1) expertmode=0
-       write (*,*) '*** expertmode   :',expertmode
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) expertmode
+        if (expertmode.le.0) expertmode=0
+        if (expertmode.gt.1) expertmode=0
+        write (*,*) '*** expertmode   :',expertmode
 c
       endif
 c
       close (luin)
 c
       do atom=1,mxelem
-       do ion=1,mxion
-        nialines(ion,atom)=0
-       enddo
+        do ion=1,mxion
+          nialines(ion,atom)=0
+        enddo
       enddo
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -453,22 +454,22 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & '  MAPPINGS V : Line Counts by Ion and Element',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-       write (*,70)
+        write (*,70)
    80 format(/t9,30(2x,a2,1x))
-       write (*,80) (elem(i),i=1,atypes)
+        write (*,80) (elem(i),i=1,atypes)
    90 format(' ',a6,30(i5))
-       do j=1,mxion
-        checksum=0
-        do i=1,atypes
-         checksum=checksum+nialines(j,i)
+        do j=1,mxion
+          checksum=0
+          do i=1,atypes
+            checksum=checksum+nialines(j,i)
+          enddo
+          if (checksum.gt.0) then
+            write (*,90) rom(j),(nialines(j,i),i=1,atypes)
+          endif
         enddo
-        if (checksum.gt.0) then
-         write (*,90) rom(j),(nialines(j,i),i=1,atypes)
-        endif
-       enddo
   100 format(
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-       write (*,100)
+        write (*,100)
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -496,8 +497,8 @@ c
 c test badnell 2015 recom variations
 c
       do i=0,150
-       logte=1.0d0+dble(i)*0.05d0
-       call recom (10.d0**logte)
+        logte=1.0d0+dble(i)*0.05d0
+        call recom (10.d0**logte)
       enddo
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -520,33 +521,33 @@ c for ions without primary atomic data. Potential scale for H
 c poly fit correction for He.
 c
       do atom=1,atypes
-       nz=mapz(atom)
-       ez=0.75d0*ipote(nz,atom)
-       if (ee2p(atom).le.0.d0) ee2p(atom)=ez
-       nz=mapz(atom)-1
-       if (nz.gt.0) then
-        ez=xe*(0.75d0*ipote(nz,atom))
-        lz=dlog10(dble(nz))
-        efit=(1.d0+lz*(1.5688838763d-01+lz*(-5.8259412168d-02+lz*(-
-     &   8.1946404393d-03+lz*7.0718088682d-03))))
-        if (ee2phe(atom).le.0.d0) ee2phe(atom)=ez/efit
-       endif
+        nz=mapz(atom)
+        ez=0.75d0*ipote(nz,atom)
+        if (ee2p(atom).le.0.d0) ee2p(atom)=ez
+        nz=mapz(atom)-1
+        if (nz.gt.0) then
+          ez=xe*(0.75d0*ipote(nz,atom))
+          lz=dlog10(dble(nz))
+          efit=(1.d0+lz*(1.5688838763d-01+lz*(-5.8259412168d-02+lz*(-
+     &     8.1946404393d-03+lz*7.0718088682d-03))))
+          if (ee2phe(atom).le.0.d0) ee2phe(atom)=ez/efit
+        endif
 c         write(*,*) mapz(atom),ee2p(atom),ee2phe(atom)
       enddo
 c
 c     Find bin to start phion loops
 c
       do i=1,ionum
-       photbinstart(i)=1
-       en=ipotpho(i)
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         if (i.eq.1) ionstartbin=j
-         photbinstart(i)=j
-         goto 130
-        endif
-       enddo
-  130  continue
+        photbinstart(i)=1
+        en=ipotpho(i)
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            if (i.eq.1) ionstartbin=j
+            photbinstart(i)=j
+            goto 130
+          endif
+        enddo
+  130   continue
       enddo
 c
 c      *FIND CORRESPONDING ENERGY BINS IN EPHOT(N) FOR
@@ -554,31 +555,31 @@ c      V3 resonance lines
 c
       xr3minxbin=infph-1
       do i=1,nxr3lines
-       en=xr3lines_egij(i)/ev
-       xr3lines_bin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         xr3lines_bin(i)=j
-         if (j.le.xr3minxbin) xr3minxbin=j
-         goto 140
-        endif
-       enddo
-  140  continue
+        en=xr3lines_egij(i)/ev
+        xr3lines_bin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            xr3lines_bin(i)=j
+            if (j.le.xr3minxbin) xr3minxbin=j
+            goto 140
+          endif
+        enddo
+  140   continue
       enddo
 c
 c
       xrlminxbin=infph-1
       do i=1,nxrllines
-       en=xrllines_egij(i)/ev
-       xrllines_bin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         xrllines_bin(i)=j
-         if (j.le.xrlminxbin) xrlminxbin=j
-         goto 150
-        endif
-       enddo
-  150  continue
+        en=xrllines_egij(i)/ev
+        xrllines_bin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            xrllines_bin(i)=j
+            if (j.le.xrlminxbin) xrlminxbin=j
+            goto 150
+          endif
+        enddo
+  150   continue
       enddo
 c
 c      minxbin=infph-1
@@ -598,103 +599,103 @@ c
 c     Hydrogen
 c
       do line=1,nhlines
-       do series=1,nhseries
-        en=lmev/hlambda(line,series)
-        hbin(line,series)=0
-        do j=1,infph-1
-         if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-          hbin(line,series)=j
-          goto 160
-         endif
+        do series=1,nhseries
+          en=lmev/hlambda(line,series)
+          hbin(line,series)=0
+          do j=1,infph-1
+            if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+              hbin(line,series)=j
+              goto 160
+            endif
+          enddo
+  160     continue
         enddo
-  160   continue
-       enddo
       enddo
 c
 c helium ii
 c
       do line=1,nhelines
-       do series=1,nheseries
-        en=lmev/helambda(line,series)
-        hebin(line,series)=0
-        do j=1,infph-1
-         if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-          hebin(line,series)=j
-          goto 170
-         endif
+        do series=1,nheseries
+          en=lmev/helambda(line,series)
+          hebin(line,series)=0
+          do j=1,infph-1
+            if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+              hebin(line,series)=j
+              goto 170
+            endif
+          enddo
+  170     continue
         enddo
-  170   continue
-       enddo
       enddo
 c
 c     Heavy Hydrogenic ions
 c
       do atom=1,atypes
-       do series=1,nxhseries
-        do line=1,nxhlines
-         xhlambda(line,series,atom)=hlambda(line,series)/(mapz(atom)*
-     &    mapz(atom))
-         en=lmev/xhlambda(line,series,atom)
-         xhbin(line,series,atom)=0
-         do j=1,infph-1
-          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-           xhbin(line,series,atom)=j
-           goto 180
-          endif
-         enddo
-  180    continue
+        do series=1,nxhseries
+          do line=1,nxhlines
+            xhlambda(line,series,atom)=hlambda(line,series)/(mapz(atom)*
+     &       mapz(atom))
+            en=lmev/xhlambda(line,series,atom)
+            xhbin(line,series,atom)=0
+            do j=1,infph-1
+              if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+                xhbin(line,series,atom)=j
+                goto 180
+              endif
+            enddo
+  180       continue
+          enddo
         enddo
-       enddo
       enddo
 c
 c     Three Level Ions
 c
       do ion=1,nf3ions
-       do trans=1,nf3trans
+        do trans=1,nf3trans
 c             en = 1.985940d-16/f3lam(trans,ion)
-        en=(plk*cls/ev)/f3lam(trans,ion)
-        f3bin(trans,ion)=0
-        do j=1,infph-1
-         if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-          f3bin(trans,ion)=j
-          goto 190
-         endif
+          en=(plk*cls/ev)/f3lam(trans,ion)
+          f3bin(trans,ion)=0
+          do j=1,infph-1
+            if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+              f3bin(trans,ion)=j
+              goto 190
+            endif
+          enddo
+  190     continue
         enddo
-  190   continue
-       enddo
       enddo
 c
 c     Multi-Level Ions
 c
       do ionindex=1,nfmions
-       do trans=1,nfmtrans(ionindex)
-        en=(plk*cls/ev)/fmlam(trans,ionindex)
-        fmbin(trans,ionindex)=0
-        do j=1,infph-1
-         if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-          fmbin(trans,ionindex)=j
-          goto 200
-         endif
+        do trans=1,nfmtrans(ionindex)
+          en=(plk*cls/ev)/fmlam(trans,ionindex)
+          fmbin(trans,ionindex)=0
+          do j=1,infph-1
+            if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+              fmbin(trans,ionindex)=j
+              goto 200
+            endif
+          enddo
+  200     continue
         enddo
-  200   continue
-       enddo
       enddo
 cc
 c
 c     Multi-Level Fe Ions
 c
       do ionindex=1,nfeions
-       do trans=1,nfetrans(ionindex)
-        en=(plk*cls/ev)/felam(trans,ionindex)
-        febin(trans,ionindex)=0
-        do j=1,infph-1
-         if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-          febin(trans,ionindex)=j
-          goto 210
-         endif
+        do trans=1,nfetrans(ionindex)
+          en=(plk*cls/ev)/felam(trans,ionindex)
+          febin(trans,ionindex)=0
+          do j=1,infph-1
+            if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+              febin(trans,ionindex)=j
+              goto 210
+            endif
+          enddo
+  210     continue
         enddo
-  210   continue
-       enddo
       enddo
 cc
 c     do i=1,xilines
@@ -734,116 +735,116 @@ c 220   continue
 c     enddo
 c
       do i=1,nheilines
-       en=(lmev/(heilam(i)*1.d8))
-       heibin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         heibin(i)=j
-         goto 220
-        endif
-       enddo
-  220  continue
+        en=(lmev/(heilam(i)*1.d8))
+        heibin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            heibin(i)=j
+            goto 220
+          endif
+        enddo
+  220   continue
       enddo
 c New HeI lines
       do i=1,nheislines
-       en=(lmev/heislam(i))
-       heisbin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         heisbin(i)=j
-         goto 230
-        endif
-       enddo
-  230  continue
+        en=(lmev/heislam(i))
+        heisbin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            heisbin(i)=j
+            goto 230
+          endif
+        enddo
+  230   continue
       enddo
       do i=1,nheitlines
-       en=(lmev/heitlam(i))
-       heitbin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         heitbin(i)=j
-         goto 240
-        endif
-       enddo
-  240  continue
+        en=(lmev/heitlam(i))
+        heitbin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            heitbin(i)=j
+            goto 240
+          endif
+        enddo
+  240   continue
       enddo
 c heavy element recomb lines
       do i=1,nrccii
-       en=(lmev/rccii_lam(i))
-       rccii_bin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         rccii_bin(i)=j
-         goto 250
-        endif
-       enddo
-  250  continue
+        en=(lmev/rccii_lam(i))
+        rccii_bin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            rccii_bin(i)=j
+            goto 250
+          endif
+        enddo
+  250   continue
       enddo
       do i=1,nrcnii
-       en=(lmev/rcnii_lam(i))
-       rcnii_bin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         rcnii_bin(i)=j
-         goto 260
-        endif
-       enddo
-  260  continue
+        en=(lmev/rcnii_lam(i))
+        rcnii_bin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            rcnii_bin(i)=j
+            goto 260
+          endif
+        enddo
+  260   continue
       enddo
       do i=1,nrcoi_q
-       en=(lmev/rcoi_qlam(i))
-       rcoi_qbin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         rcoi_qbin(i)=j
-         goto 270
-        endif
-       enddo
-  270  continue
+        en=(lmev/rcoi_qlam(i))
+        rcoi_qbin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            rcoi_qbin(i)=j
+            goto 270
+          endif
+        enddo
+  270   continue
       enddo
       do i=1,nrcoi_t
-       en=(lmev/rcoi_tlam(i))
-       rcoi_tbin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         rcoi_tbin(i)=j
-         goto 280
-        endif
-       enddo
-  280  continue
+        en=(lmev/rcoi_tlam(i))
+        rcoi_tbin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            rcoi_tbin(i)=j
+            goto 280
+          endif
+        enddo
+  280   continue
       enddo
       do i=1,nrcoii
-       en=(lmev/rcoii_lam(i))
-       rcoii_bin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         rcoii_bin(i)=j
-         goto 290
-        endif
-       enddo
-  290  continue
+        en=(lmev/rcoii_lam(i))
+        rcoii_bin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            rcoii_bin(i)=j
+            goto 290
+          endif
+        enddo
+  290   continue
       enddo
       do i=1,nrcneii
-       en=(lmev/rcneii_lam(i))
-       rcoii_bin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         rcneii_bin(i)=j
-         goto 300
-        endif
-       enddo
-  300  continue
+        en=(lmev/rcneii_lam(i))
+        rcoii_bin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            rcneii_bin(i)=j
+            goto 300
+          endif
+        enddo
+  300   continue
       enddo
       do i=1,mlines
-       en=e12fs(i)/ev
-       lcbin(i)=0
-       do j=1,infph-1
-        if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
-         lcbin(i)=j
-         goto 310
-        endif
-       enddo
-  310  continue
+        en=e12fs(i)/ev
+        lcbin(i)=0
+        do j=1,infph-1
+          if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
+            lcbin(i)=j
+            goto 310
+          endif
+        enddo
+  310   continue
       enddo
 c
 c     npre=0
@@ -883,8 +884,8 @@ c
 c      *FINDS IONISATIONS CROSS SECTION NUMBER FOR HEII
 c
       do 320 i=1,ionum
-       jhe2p=i
-       if ((atpho(i).eq.2).and.(ionpho(i).eq.2)) goto 330
+        jhe2p=i
+        if ((atpho(i).eq.2).and.(ionpho(i).eq.2)) goto 330
   320 continue
   330 continue
 c
@@ -933,25 +934,25 @@ c     and convert to ergs
 c
       read (luin,fmt=*) nions
       do i=1,nions
-       read (luin,fmt=*) at,io,ep
-       if (zmap(at).ne.0) then
+        read (luin,fmt=*) at,io,ep
+        if (zmap(at).ne.0) then
 c
 c     Check to see if the atom type is one chosen in ATDAT
 c
-        atom=zmap(at)
-        if (io.le.maxion(atom)) then
-         ion=io
-         ipotev(ion,atom)=ep
-         ipote(ion,atom)=ep*ev
+          atom=zmap(at)
+          if (io.le.maxion(atom)) then
+            ion=io
+            ipotev(ion,atom)=ep
+            ipote(ion,atom)=ep*ev
+          endif
         endif
-       endif
       enddo
 c
       close (luin)
 c
       do atom=1,atypes
-       ee2p(atom)=0.0d0
-       ee2phe(atom)=0.0d0
+        ee2p(atom)=0.0d0
+        ee2phe(atom)=0.0d0
       enddo
 c
       return
@@ -992,138 +993,138 @@ c
 c
       if (phionmode.eq.1) then
 c
-       filename=datadir(1:dtlen)//'data/ionisation/PHIONDAT.txt'
-       open (luin,file=filename,status='OLD')
-   30  read (luin,fmt=10) (ibuf(j),j=1,19)
-       ilgg=ibuf(1)
-       if (ilgg(1:1).eq.'%') goto 30
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       ionum=0
-       den=0.0d0
-       do 50 i=1,nentries
-        atom=0
-        ion=0
-        read (luin,*) z,io,ni,ep,au,si,be,s,g
+        filename=datadir(1:dtlen)//'data/ionisation/PHIONDAT.txt'
+        open (luin,file=filename,status='OLD')
+   30   read (luin,fmt=10) (ibuf(j),j=1,19)
+        ilgg=ibuf(1)
+        if (ilgg(1:1).eq.'%') goto 30
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        ionum=0
+        den=0.0d0
+        do 50 i=1,nentries
+          atom=0
+          ion=0
+          read (luin,*) z,io,ni,ep,au,si,be,s,g
 c
 c     Check to see if the atom type is one chosen in ATDAT
 c
-        if (zmap(z).ne.0) then
-         atom=zmap(z)
+          if (zmap(z).ne.0) then
+            atom=zmap(z)
 c
 c     Check to see if the ion is within the limits set in ATDAT
 c
-         if (io.le.maxion(atom)) then
+            if (io.le.maxion(atom)) then
 c
-          ion=io
-          ionum=ionum+1
+              ion=io
+              ionum=ionum+1
 c
-          atpho(ionum)=atom
-          ionpho(ionum)=ion
-          ipotpho(ionum)=ep
-          augpho(ionum)=au
-          sigpho(ionum)=si*1.0d-18
-          betpho(ionum)=be
-          spho(ionum)=s
-          stwtpho(ionum)=g
-          if (ipotpho(ionum).ge.den) goto 40
-          write (*,*) ' INCOMPATIBLE data/ionisation/PHIONDAT'
-          write (*,*) ionum,ipotpho(ionum),den
-          error=.true.
-          stop
-   40     den=ipotpho(ionum)
-         endif
-        endif
-   50  continue
+              atpho(ionum)=atom
+              ionpho(ionum)=ion
+              ipotpho(ionum)=ep
+              augpho(ionum)=au
+              sigpho(ionum)=si*1.0d-18
+              betpho(ionum)=be
+              spho(ionum)=s
+              stwtpho(ionum)=g
+              if (ipotpho(ionum).ge.den) goto 40
+              write (*,*) ' INCOMPATIBLE data/ionisation/PHIONDAT'
+              write (*,*) ionum,ipotpho(ionum),den
+              error=.true.
+              stop
+   40         den=ipotpho(ionum)
+            endif
+          endif
+   50   continue
 c
-       close (luin)
+        close (luin)
 c
       endif
 c
       if (phionmode.eq.0) then
 c new verner photo fits and new auger data
-       filename=datadir(1:dtlen)//'data/ionisation/PHIONDAT2.txt'
-       open (luin,file=filename,status='OLD')
-   60  read (luin,fmt=10) (ibuf(j),j=1,19)
-       ilgg=ibuf(1)
-       if (ilgg(1:1).eq.'%') goto 60
-       write (*,20) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       ionum=0
-       den=0.0d0
-       do i=1,nentries
+        filename=datadir(1:dtlen)//'data/ionisation/PHIONDAT2.txt'
+        open (luin,file=filename,status='OLD')
+   60   read (luin,fmt=10) (ibuf(j),j=1,19)
+        ilgg=ibuf(1)
+        if (ilgg(1:1).eq.'%') goto 60
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        ionum=0
+        den=0.0d0
+        do i=1,nentries
 c
-        atom=0
-        ion=0
+          atom=0
+          ion=0
 c
-        read (luin,*) z,io,ni,ph2,shell,ne,fb,wr,wi,rt,ep,pl,au,(p1(j),
-     &   j=1,5),(p2(k),k=1,7)
+          read (luin,*) z,io,ni,ph2,shell,ne,fb,wr,wi,rt,ep,pl,au,(p1(j)
+     &     ,j=1,5),(p2(k),k=1,7)
 c
 c     Check to see if the atom type is one chosen in ATDAT
 c
-        if (zmap(z).ne.0) then
+          if (zmap(z).ne.0) then
 c
-         atom=zmap(z)
+            atom=zmap(z)
 c
 c     Check to see if the ion is within the limits set in ATDAT
 c
-         if (io.le.maxion(atom)) then
+            if (io.le.maxion(atom)) then
 c
-          ion=io
-          ionum=ionum+1
-          if (ionum.gt.mxnegdes) then
-           write (*,*) 'ERROR in PHIONDAT2.txt'
-           write (*,*) 'Max number of edges exceeded.'
-           write (*,*) 'Change parameter mxnegdes in const.inc'
-           write (*,*) 'eg: 696 for 16 elements'
-           write (*,*) '    1696 for 30 elements'
-           write (*,*) 'rebuild and try again.'
-           write (*,*) ionum,' Edges.'
-           stop
-          endif
+              ion=io
+              ionum=ionum+1
+              if (ionum.gt.mxnegdes) then
+                write (*,*) 'ERROR in PHIONDAT2.txt'
+                write (*,*) 'Max number of edges exceeded.'
+                write (*,*) 'Change parameter mxnegdes in const.inc'
+                write (*,*) 'eg: 696 for 16 elements'
+                write (*,*) '    1696 for 30 elements'
+                write (*,*) 'rebuild and try again.'
+                write (*,*) ionum,' Edges.'
+                stop
+              endif
 c
-          atpho(ionum)=atom
-          ionpho(ionum)=ion
-          ipotpho(ionum)=ep
-          ph2limitpho(ionum)=pl
-          augpho(ionum)=au
+              atpho(ionum)=atom
+              ionpho(ionum)=ion
+              ipotpho(ionum)=ep
+              ph2limitpho(ionum)=pl
+              augpho(ionum)=au
 c
-          wrpho(ionum)=wr
-          wipho(ionum)=wi
-          rt=dble(wr)/dble(wi)
-          stwtpho(ionum)=rt
+              wrpho(ionum)=wr
+              wipho(ionum)=wi
+              rt=dble(wr)/dble(wi)
+              stwtpho(ionum)=rt
 c
-          shellpho(ionum)=shell
-          lquantpho(ionum)=lnumber(shell)
+              shellpho(ionum)=shell
+              lquantpho(ionum)=lnumber(shell)
 c            write(*,*)shell,lnumber(shell)
-          nelecpho(ionum)=ne
-          hasph2(ionum)=ph2
-          isfbpho(ionum)=fb
+              nelecpho(ionum)=ne
+              hasph2(ionum)=ph2
+              isfbpho(ionum)=fb
 c
-          do j=1,5
-           ph1pho(j,ionum)=p1(j)
-          enddo
+              do j=1,5
+                ph1pho(j,ionum)=p1(j)
+              enddo
 c
-          do j=1,7
-           ph2pho(j,ionum)=p2(j)
-          enddo
+              do j=1,7
+                ph2pho(j,ionum)=p2(j)
+              enddo
 c fill in old sigma with new crossection for tau end calculations
-          sigpho(ionum)=vernerphoto(ep,ionum)
+              sigpho(ionum)=vernerphoto(ep,ionum)
 c              betpho(ionum)=0.d0
 c              spho(ionum)=0.d0
 c
-          if (ipotpho(ionum).ge.den) goto 70
-          write (*,*) ' INCOMPATIBLE data/ionisation/PHIONDAT2'
-          write (*,*) ' Not in ascending energy order:'
-          write (*,*) ionum,ipotpho(ionum),den
-          error=.true.
-          stop
-   70     den=ipotpho(ionum)
-         endif
-        endif
-       enddo
+              if (ipotpho(ionum).ge.den) goto 70
+              write (*,*) ' INCOMPATIBLE data/ionisation/PHIONDAT2'
+              write (*,*) ' Not in ascending energy order:'
+              write (*,*) ionum,ipotpho(ionum),den
+              error=.true.
+              stop
+   70         den=ipotpho(ionum)
+            endif
+          endif
+        enddo
 c
-       close (luin)
+        close (luin)
 c
       endif
 c
@@ -1132,21 +1133,21 @@ c
 c Synch phion data with ipotev
 c
       do i=1,ionum
-       found(i)=.false.
+        found(i)=.false.
       enddo
 c
       do i=1,ionum
 c
-       atom=atpho(i)
-       ion=ionpho(i)
-       ep=ipotpho(i)
+        atom=atpho(i)
+        ion=ionpho(i)
+        ep=ipotpho(i)
 c
-       edge=dabs(ep-ipotev(ion,atom))/ipotev(ion,atom)
+        edge=dabs(ep-ipotev(ion,atom))/ipotev(ion,atom)
 c
-       if ((edge.lt.5.0d-3).and.(found(i).eqv..false.)) then
-        ipotpho(i)=ipotev(ion,atom)
-        found(i)=.true.
-       endif
+        if ((edge.lt.5.0d-3).and.(found(i).eqv..false.)) then
+          ipotpho(i)=ipotev(ion,atom)
+          found(i)=.true.
+        endif
 c
       enddo
 c
@@ -1193,109 +1194,109 @@ c
 c
       do 50 i=1,nions
 c
-       atom=0
-       ion=0
+        atom=0
+        ion=0
 c
-       read (luin,*) at,io,is,ni,ep,tp,(a(l),l=1,20)
+        read (luin,*) at,io,is,ni,ep,tp,(a(l),l=1,20)
 c
-       if (zmap(at).ne.0) then
+        if (zmap(at).ne.0) then
 c
-        atom=zmap(at)
+          atom=zmap(at)
 c
-        if (io.lt.maxion(atom)) then
+          if (io.lt.maxion(atom)) then
 c
-         ncol=ncol+1
+            ncol=ncol+1
 c
-         if (ncol.gt.mxncol) then
-          write (*,*) 'ERROR in COLLDAT2.txt'
-          write (*,*) 'Max number of ions exceeded.'
-          write (*,*) 'Change parameter mxncol in const.inc'
-          write (*,*) 'eg: 209 for 16 elements'
-          write (*,*) '    465 for 30 elements'
-          write (*,*) 'rebuild and try again.'
-          write (*,*) ncol,' ions.'
-          stop
-         endif
+            if (ncol.gt.mxncol) then
+              write (*,*) 'ERROR in COLLDAT2.txt'
+              write (*,*) 'Max number of ions exceeded.'
+              write (*,*) 'Change parameter mxncol in const.inc'
+              write (*,*) 'eg: 209 for 16 elements'
+              write (*,*) '    465 for 30 elements'
+              write (*,*) 'rebuild and try again.'
+              write (*,*) ncol,' ions.'
+              stop
+            endif
 c
 c ionisation rates belong to the lower ion, un like recombinations
 c
-         ion=io
+            ion=io
 c
-         atcol(ncol)=atom
-         ioncol(ncol)=ion
-         diffe=(2.d0*(ep-ipotev(ion,atom))/(ep+ipotev(ion,atom)))
-         if (dabs(diffe).gt.1e-3) then
-          write (*,*) 'ERROR; bad potential in COLLDAT2.txt'
-          write (*,*) 'LINE:',i
-          write (*,*) 'Atom Ion:',at,io,atom,ion
-          write (*,*) 'EP ipotev:',ep,ipotev(ion,atom)
-          write (*,*) 'Make it consistent with IONDAT.txt'
-          error=.true.
-          stop
-         endif
+            atcol(ncol)=atom
+            ioncol(ncol)=ion
+            diffe=(2.d0*(ep-ipotev(ion,atom))/(ep+ipotev(ion,atom)))
+            if (dabs(diffe).gt.1e-3) then
+              write (*,*) 'ERROR; bad potential in COLLDAT2.txt'
+              write (*,*) 'LINE:',i
+              write (*,*) 'Atom Ion:',at,io,atom,ion
+              write (*,*) 'EP ipotev:',ep,ipotev(ion,atom)
+              write (*,*) 'Make it consistent with IONDAT.txt'
+              error=.true.
+              stop
+            endif
 c
-         ipotcol(ncol)=ipotev(ion,atom)
+            ipotcol(ncol)=ipotev(ion,atom)
 c
 c  convert ipotcol from eV to scaled inverse version for computing x
 c  and speeding up main code
 c
-         tmin=tp*rkb/(ipotcol(ncol)*ev)
-         tmax=1.0d9*rkb/(ipotcol(ncol)*ev)
-         dx=1.d0/20.d0
-         f=2.d0
+            tmin=tp*rkb/(ipotcol(ncol)*ev)
+            tmax=1.0d9*rkb/(ipotcol(ncol)*ev)
+            dx=1.d0/20.d0
+            f=2.d0
 c
-         xmin=1.d0-(dlog(f)/dlog(tmin+f))
-         xmax=1.d0-(dlog(f)/dlog(tmax+f))
+            xmin=1.d0-(dlog(f)/dlog(tmin+f))
+            xmax=1.d0-(dlog(f)/dlog(tmax+f))
 c
 c create x coords array with ni entries
 c
-         k=1
+            k=1
 c 0.d0 - 1.d0 loop, in 0.05 steps, incl 0 and 1
-         do j=1,21
-          x0=dx*(j-1)
-          x1=dx*j
-          if (x0.lt.xmin) then
-           x(k)=xmin
-          elseif (x0.gt.xmax) then
-           x(k)=xmax
-           goto 40
-          else
-           x(k)=x0
-          endif
-          if (x1.ge.xmin) k=k+1
-         enddo
-   40    continue
+            do j=1,21
+              x0=dx*(j-1)
+              x1=dx*j
+              if (x0.lt.xmin) then
+                x(k)=xmin
+              elseif (x0.gt.xmax) then
+                x(k)=xmax
+                goto 40
+              else
+                x(k)=x0
+              endif
+              if (x1.ge.xmin) k=k+1
+            enddo
+   40       continue
 c
 c debug check on x(i) construction
 c
-         if (k.ne.ni) then
-          write (*,*) 'ERROR; bad x vector '
-          write (*,*) 'LINE:',i
-          write (*,*) 'Atom Ion:',at,io
-          write (*,*) k,ni
-          do j=1,k
-           write (*,*) j,x(j)
-          enddo
-          error=.true.
-          stop
-         endif
+            if (k.ne.ni) then
+              write (*,*) 'ERROR; bad x vector '
+              write (*,*) 'LINE:',i
+              write (*,*) 'Atom Ion:',at,io
+              write (*,*) k,ni
+              do j=1,k
+                write (*,*) j,x(j)
+              enddo
+              error=.true.
+              stop
+            endif
 c
 c get y values and make free splines
 c
-         nsplcol(ncol)=ni
-         do k=1,ni
-          y(k)=a(k)
-         enddo
-         call spline00 (x, y, ni, y2)
+            nsplcol(ncol)=ni
+            do k=1,ni
+              y(k)=a(k)
+            enddo
+            call spline00 (x, y, ni, y2)
 c save..
-         do k=1,ni
-          xcol(k,ncol)=x(k)
-          ycol(k,ncol)=y(k)
-          y2col(k,ncol)=y2(k)
-         enddo
+            do k=1,ni
+              xcol(k,ncol)=x(k)
+              ycol(k,ncol)=y(k)
+              y2col(k,ncol)=y2(k)
+            enddo
 c
+          endif
         endif
-       endif
    50 continue
 c
       close (luin)
@@ -1341,51 +1342,51 @@ c
 c
       do 40 i=1,nions
 c
-       atom=0
-       ion=0
-       read (luin,*) at,io,ni,tp,a1,a2,a3,a4,a5,a6
-       if (zmap(at).ne.0) then
+        atom=0
+        ion=0
+        read (luin,*) at,io,ni,tp,a1,a2,a3,a4,a5,a6
+        if (zmap(at).ne.0) then
 c
-        atom=zmap(at)
+          atom=zmap(at)
 c
-        if (io.lt.maxion(atom)) then
+          if (io.lt.maxion(atom)) then
 c
-         nrec=nrec+1
+            nrec=nrec+1
 c
-         ion=io+1
-         if (nrec.gt.mxnrec) then
-          write (*,*) 'ERROR in RRECOMDAT.txt'
-          write (*,*) 'Max number of ions exceeded.'
-          write (*,*) 'Change parameter mxnrec in const.inc'
-          write (*,*) 'eg: 209 for 16 elements'
-          write (*,*) '    465 for 30 elements'
-          write (*,*) 'rebuild and try again.'
-          write (*,*) nrec,' ions.'
-          stop
-         endif
+            ion=io+1
+            if (nrec.gt.mxnrec) then
+              write (*,*) 'ERROR in RRECOMDAT.txt'
+              write (*,*) 'Max number of ions exceeded.'
+              write (*,*) 'Change parameter mxnrec in const.inc'
+              write (*,*) 'eg: 209 for 16 elements'
+              write (*,*) '    465 for 30 elements'
+              write (*,*) 'rebuild and try again.'
+              write (*,*) nrec,' ions.'
+              stop
+            endif
 c
-         atrec(nrec)=atom
-         ionrec(nrec)=ion
-         typerrec(nrec)=tp
+            atrec(nrec)=atom
+            ionrec(nrec)=ion
+            typerrec(nrec)=tp
 c
-         arrec(1,nrec)=a1
-         arrec(2,nrec)=a2
-         arrec(3,nrec)=a3
-         arrec(4,nrec)=a4
-         arrec(5,nrec)=a5
-         arrec(6,nrec)=a6
+            arrec(1,nrec)=a1
+            arrec(2,nrec)=a2
+            arrec(3,nrec)=a3
+            arrec(4,nrec)=a4
+            arrec(5,nrec)=a5
+            arrec(6,nrec)=a6
 c
+          endif
         endif
-       endif
    40 continue
 c
       close (luin)
 c
       nnorad=0
       do i=1,mxion
-       do j=1,mxelem
-        noradid(i,j)=0
-       enddo
+        do j=1,mxelem
+          noradid(i,j)=0
+        enddo
       enddo
 c
 c      if (recommode.eq.2) then
@@ -1399,39 +1400,39 @@ c      if (recommode.eq.2) then
 c
       do 60 i=1,nions
 c
-       atom=0
-       ion=0
-       read (luin,*) at,io,tp,ni
-       if (zmap(at).ne.0) then
+        atom=0
+        ion=0
+        read (luin,*) at,io,tp,ni
+        if (zmap(at).ne.0) then
 c
-        atom=zmap(at)
+          atom=zmap(at)
 c
-        if (io.lt.maxion(atom)) then
+          if (io.lt.maxion(atom)) then
 c
-         nnorad=nnorad+1
+            nnorad=nnorad+1
 c
-         ion=io+1
+            ion=io+1
 c
-         atndrec(nnorad)=atom
-         ionndrec(nnorad)=ion
-         noradid(ion,atom)=nnorad
-         typendrec(nnorad)=tp
-         nodesndrec(nnorad)=ni
+            atndrec(nnorad)=atom
+            ionndrec(nnorad)=ion
+            noradid(ion,atom)=nnorad
+            typendrec(nnorad)=tp
+            nodesndrec(nnorad)=ni
 c
-         read (luin,*) (tendrec(j,nnorad),j=1,ni)
-         read (luin,*) (andrec(j,nnorad),j=1,ni)
-         read (luin,*) (a2ndrec(j,nnorad),j=1,ni)
+            read (luin,*) (tendrec(j,nnorad),j=1,ni)
+            read (luin,*) (andrec(j,nnorad),j=1,ni)
+            read (luin,*) (a2ndrec(j,nnorad),j=1,ni)
 c
+          else
+            read (luin,10) (ibuf(j),j=1,19)
+            read (luin,10) (ibuf(j),j=1,19)
+            read (luin,10) (ibuf(j),j=1,19)
+          endif
         else
-         read (luin,10) (ibuf(j),j=1,19)
-         read (luin,10) (ibuf(j),j=1,19)
-         read (luin,10) (ibuf(j),j=1,19)
+          read (luin,10) (ibuf(j),j=1,19)
+          read (luin,10) (ibuf(j),j=1,19)
+          read (luin,10) (ibuf(j),j=1,19)
         endif
-       else
-        read (luin,10) (ibuf(j),j=1,19)
-        read (luin,10) (ibuf(j),j=1,19)
-        read (luin,10) (ibuf(j),j=1,19)
-       endif
    60 continue
 c
       close (luin)
@@ -1474,60 +1475,62 @@ c
       ndr=0
       do 40 i=1,nions
 c
-       atom=0
-       ion=0
-       read (luin,*) at,io,ni,tp,(c(l),l=1,8),(en(m),m=1,8)
+        atom=0
+        ion=0
+        read (luin,*) at,io,ni,tp,(c(l),l=1,8),(en(m),m=1,8)
 c
-       if (zmap(at).ne.0) then
+        if (zmap(at).ne.0) then
 c
-        atom=zmap(at)
+          atom=zmap(at)
 c
-        if (io.lt.maxion(atom)) then
+          if (io.lt.maxion(atom)) then
 c
-         ion=io+1
-         ndr=ndr+1
+            ion=io+1
+            ndr=ndr+1
 c
-         if (ndr.gt.mxnrec) then
-          write (*,*) 'ERROR in DRECOMDAT.txt'
-          write (*,*) 'Max number of ions exceeded.'
-          write (*,*) 'Change parameter mxnrec in const.inc'
-          write (*,*) 'eg: 209 for 16 elements'
-          write (*,*) '    465 for 30 elements'
-          write (*,*) 'rebuild and try again.'
-          write (*,*) ndr,' ions.'
-          stop
-         endif
+            if (ndr.gt.mxnrec) then
+              write (*,*) 'ERROR in DRECOMDAT.txt'
+              write (*,*) 'Max number of ions exceeded.'
+              write (*,*) 'Change parameter mxnrec in const.inc'
+              write (*,*) 'eg: 209 for 16 elements'
+              write (*,*) '    465 for 30 elements'
+              write (*,*) 'rebuild and try again.'
+              write (*,*) ndr,' ions.'
+              stop
+            endif
 c
-         if (atrec(ndr).ne.atom) then
-          write (*,*) 'ERROR: data/ionisation/RRECOMDAT and DRECOMDAT'
-          write (*,*) '      inconsistent ion in DRECOMDAT'
-          write (*,*) 'Line :',i,' atom',at,' ion',io
-          stop
-         endif
-         if (ionrec(ndr).ne.ion) then
-          write (*,*) 'ERROR: data/ionisation/RRECOMDAT and DRECOMDAT'
-          write (*,*) '      inconsistent ion in DRECOMDAT'
-          write (*,*) 'Line :',i,' atom',at,' ion',io
-          stop
-         endif
-         atrec(ndr)=atom
-         ionrec(ndr)=ion
-         typedrec(ndr)=tp
+            if (atrec(ndr).ne.atom) then
+              write (*,*) 'ERROR: data/ionisation/RRECOMDAT and DRECOMDA
+     &T'
+              write (*,*) '      inconsistent ion in DRECOMDAT'
+              write (*,*) 'Line :',i,' atom',at,' ion',io
+              stop
+            endif
+            if (ionrec(ndr).ne.ion) then
+              write (*,*) 'ERROR: data/ionisation/RRECOMDAT and DRECOMDA
+     &T'
+              write (*,*) '      inconsistent ion in DRECOMDAT'
+              write (*,*) 'Line :',i,' atom',at,' ion',io
+              stop
+            endif
+            atrec(ndr)=atom
+            ionrec(ndr)=ion
+            typedrec(ndr)=tp
 c
-         do j=1,8
-          adrec(j,ndr)=c(j)
-          bdrec(j,ndr)=en(j)
-         enddo
+            do j=1,8
+              adrec(j,ndr)=c(j)
+              bdrec(j,ndr)=en(j)
+            enddo
 c
+          endif
         endif
-       endif
    40 continue
 c
       close (luin)
 c
       if (ndr.ne.nrec) then
-       write (*,*) 'ERROR: data/ionisation/RRECOMDAT and DRECOMDAT'
-       stop
+        write (*,*) 'ERROR: data/ionisation/RRECOMDAT and DRECOMDAT'
+        stop
       endif
 c
       return
@@ -1581,72 +1584,72 @@ c
 c
       do i=1,nions
 c
-       atom=0
-       ion=0
-       read (luin,*) at,io,ni,tp,nt,nl
+        atom=0
+        ion=0
+        read (luin,*) at,io,ni,tp,nt,nl
 c
 c note io is ion+1 already. 3 = 3->2 recomb
 c
-       if (zmap(at).ne.0) then
+        if (zmap(at).ne.0) then
 c
-        atom=zmap(at)
+          atom=zmap(at)
 c
-        if (io.lt.maxion(atom)) then
+          if (io.lt.maxion(atom)) then
 c
-         ndrr=ndrr+1
+            ndrr=ndrr+1
 c
-         if (ndrr.gt.mxnrec) then
-          write (*,*) 'ERROR in RECOMDAT2.txt'
-          write (*,*) 'Max number of ions exceeded.'
-          write (*,*) 'Change parameter mxnrec in const.inc'
-          write (*,*) 'eg: 209 for 16 elements'
-          write (*,*) '    465 for 30 elements'
-          write (*,*) 'rebuild and try again.'
-          write (*,*) ndrr,' ions.'
-          stop
-         endif
+            if (ndrr.gt.mxnrec) then
+              write (*,*) 'ERROR in RECOMDAT2.txt'
+              write (*,*) 'Max number of ions exceeded.'
+              write (*,*) 'Change parameter mxnrec in const.inc'
+              write (*,*) 'eg: 209 for 16 elements'
+              write (*,*) '    465 for 30 elements'
+              write (*,*) 'rebuild and try again.'
+              write (*,*) ndrr,' ions.'
+              stop
+            endif
 c
-         atbdrec(ndrr)=at
-         ionbdrec(ndrr)=io
-         typerrec(ndrr)=tp
-         ntbdrec(ndrr)=nt
-         nlbdrec(ndrr)=nl
+            atbdrec(ndrr)=at
+            ionbdrec(ndrr)=io
+            typerrec(ndrr)=tp
+            ntbdrec(ndrr)=nt
+            nlbdrec(ndrr)=nl
 c
 c DR coeffs first, SIII with 3 ground terms first
 c
-         do j=1,nl
-          read (luin,*) m,c1,c2,c3,c4,c5,c6,c7
-          cdr_bd15(1,j)=c1
-          cdr_bd15(2,j)=c2
-          cdr_bd15(3,j)=c3
-          cdr_bd15(4,j)=c4
-          cdr_bd15(5,j)=c5
-          cdr_bd15(6,j)=c6
-          cdr_bd15(7,j)=c7
-         enddo
+            do j=1,nl
+              read (luin,*) m,c1,c2,c3,c4,c5,c6,c7
+              cdr_bd15(1,j)=c1
+              cdr_bd15(2,j)=c2
+              cdr_bd15(3,j)=c3
+              cdr_bd15(4,j)=c4
+              cdr_bd15(5,j)=c5
+              cdr_bd15(6,j)=c6
+              cdr_bd15(7,j)=c7
+            enddo
 c
-         do j=1,nl
-          read (luin,*) m,e1,e2,e3,e4,e5,e6,e7
-          edr_bd15(1,j)=e1
-          edr_bd15(2,j)=e2
-          edr_bd15(3,j)=e3
-          edr_bd15(4,j)=e4
-          edr_bd15(5,j)=e5
-          edr_bd15(6,j)=e6
-          edr_bd15(7,j)=e7
-         enddo
+            do j=1,nl
+              read (luin,*) m,e1,e2,e3,e4,e5,e6,e7
+              edr_bd15(1,j)=e1
+              edr_bd15(2,j)=e2
+              edr_bd15(3,j)=e3
+              edr_bd15(4,j)=e4
+              edr_bd15(5,j)=e5
+              edr_bd15(6,j)=e6
+              edr_bd15(7,j)=e7
+            enddo
 c
 c RR Rates - preserve paper odd order to make checking easier
 c
-         read (luin,*) a_rr,b_rr,t1_rr,t2_rr,c_rr,t3_rr
-         rr_bd15(1)=a_rr
-         rr_bd15(2)=b_rr
-         rr_bd15(3)=t1_rr
-         rr_bd15(4)=t2_rr
-         rr_bd15(5)=c_rr
-         rr_bd15(6)=t3_rr
+            read (luin,*) a_rr,b_rr,t1_rr,t2_rr,c_rr,t3_rr
+            rr_bd15(1)=a_rr
+            rr_bd15(2)=b_rr
+            rr_bd15(3)=t1_rr
+            rr_bd15(4)=t2_rr
+            rr_bd15(5)=c_rr
+            rr_bd15(6)=t3_rr
+          endif
         endif
-       endif
       enddo
 c
       close (luin)
@@ -1697,9 +1700,9 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nhipx
       do i=1,nhipx
-       read (luin,*) lge,lgs
-       hipxlge(i)=lge
-       hipxlgs(i)=lgs
+        read (luin,*) lge,lgs
+        hipxlge(i)=lge
+        hipxlgs(i)=lgs
       enddo
 c
 c    create spline coeffs once
@@ -1719,7 +1722,7 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nhrec
       do i=1,nhrec
-       read (luin,*) hreclgt(i),hreclga(i),hreclga1(i)
+        read (luin,*) hreclgt(i),hreclga(i),hreclga1(i)
       enddo
 c
 c    create spline coeffs once
@@ -1744,7 +1747,7 @@ c
       read (luin,*) nd
       read (luin,*) (rhhe(k),k=1,nd)
       do k=1,nd
-       rhhe(k)=dlog10(rhhe(k))
+        rhhe(k)=dlog10(rhhe(k))
       enddo
 c
 c   Case A Hydrogen Hbeta
@@ -1752,10 +1755,10 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) th42(i),(h42a(i,k),k=1,nd)
-       do k=1,nd
-        h42a(i,k)=dlog10(h42a(i,k)+epsilon)
-       enddo
+        read (luin,*) th42(i),(h42a(i,k),k=1,nd)
+        do k=1,nd
+          h42a(i,k)=dlog10(h42a(i,k)+epsilon)
+        enddo
       enddo
 c
 c   Case B Hydrogen Hbeta
@@ -1763,31 +1766,31 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) th42(i),(h42b(i,k),k=1,nd)
-       do k=1,nd
-        h42b(i,k)=dlog10(h42b(i,k)+epsilon)
-       enddo
+        read (luin,*) th42(i),(h42b(i,k),k=1,nd)
+        do k=1,nd
+          h42b(i,k)=dlog10(h42b(i,k)+epsilon)
+        enddo
       enddo
 c
       do i=1,ni
-       th42(i)=dlog10(th42(i))
+        th42(i)=dlog10(th42(i))
       enddo
 c
       do k=1,nd
-       do i=1,ni
-        y(i)=h42a(i,k)
-       enddo
-       call spline00 (th42, y, ni, y2)
-       do i=1,ni
-        h42a2(i,k)=y2(i)
-       enddo
-       do i=1,ni
-        y(i)=h42b(i,k)
-       enddo
-       call spline00 (th42, y, ni, y2)
-       do i=1,ni
-        h42b2(i,k)=y2(i)
-       enddo
+        do i=1,ni
+          y(i)=h42a(i,k)
+        enddo
+        call spline00 (th42, y, ni, y2)
+        do i=1,ni
+          h42a2(i,k)=y2(i)
+        enddo
+        do i=1,ni
+          y(i)=h42b(i,k)
+        enddo
+        call spline00 (th42, y, ni, y2)
+        do i=1,ni
+          h42b2(i,k)=y2(i)
+        enddo
       enddo
 c
 c   Case A Helium II 4686
@@ -1795,10 +1798,10 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) the43(i),(he43a(i,k),k=1,nd)
-       do k=1,nd
-        he43a(i,k)=dlog10(he43a(i,k)+epsilon)
-       enddo
+        read (luin,*) the43(i),(he43a(i,k),k=1,nd)
+        do k=1,nd
+          he43a(i,k)=dlog10(he43a(i,k)+epsilon)
+        enddo
       enddo
 c
 c   Case B Helium II
@@ -1806,31 +1809,31 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) the43(i),(he43b(i,k),k=1,nd)
-       do k=1,nd
-        he43b(i,k)=dlog10(he43b(i,k)+epsilon)
-       enddo
+        read (luin,*) the43(i),(he43b(i,k),k=1,nd)
+        do k=1,nd
+          he43b(i,k)=dlog10(he43b(i,k)+epsilon)
+        enddo
       enddo
 c
       do i=1,ni
-       the43(i)=dlog10(the43(i))
+        the43(i)=dlog10(the43(i))
       enddo
 c
       do k=1,nd
-       do i=1,ni
-        y(i)=he43a(i,k)
-       enddo
-       call spline00 (the43, y, ni, y2)
-       do i=1,ni
-        he43a2(i,k)=y2(i)
-       enddo
-       do i=1,ni
-        y(i)=he43b(i,k)
-       enddo
-       call spline00 (the43, y, ni, y2)
-       do i=1,ni
-        he43b2(i,k)=y2(i)
-       enddo
+        do i=1,ni
+          y(i)=he43a(i,k)
+        enddo
+        call spline00 (the43, y, ni, y2)
+        do i=1,ni
+          he43a2(i,k)=y2(i)
+        enddo
+        do i=1,ni
+          y(i)=he43b(i,k)
+        enddo
+        call spline00 (the43, y, ni, y2)
+        do i=1,ni
+          he43b2(i,k)=y2(i)
+        enddo
       enddo
 c
 c   Hydrogen wavelengths by line, series: Hbeta = 2,2
@@ -1838,15 +1841,15 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nhlines,nhseries
       if (nhlines.gt.mxnhlines) then
-       write (*,*) 'ERROR: too many hydrogen spectral lines',nhlines
-       stop
+        write (*,*) 'ERROR: too many hydrogen spectral lines',nhlines
+        stop
       endif
       if (nhseries.gt.mxnhs) then
-       write (*,*) 'ERROR: too many hydrogen spectral series',nhseries
-       stop
+        write (*,*) 'ERROR: too many hydrogen spectral series',nhseries
+        stop
       endif
       do i=1,nhlines
-       read (luin,*) (hlambda(i,k),k=1,nhseries)
+        read (luin,*) (hlambda(i,k),k=1,nhseries)
       enddo
       nialines(1,zmap(1))=nialines(1,zmap(1))+(nhlines*nhseries)
 c
@@ -1857,15 +1860,15 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nhelines,nheseries
       if (nhelines.gt.mxnhelines) then
-       write (*,*) 'ERROR: too many HeII spectral lines',nhelines
-       stop
+        write (*,*) 'ERROR: too many HeII spectral lines',nhelines
+        stop
       endif
       if (nheseries.gt.mxnhes) then
-       write (*,*) 'ERROR: too many HeII spectral series',nheseries
-       stop
+        write (*,*) 'ERROR: too many HeII spectral series',nheseries
+        stop
       endif
       do i=1,nhelines
-       read (luin,*) (helambda(i,k),k=1,nheseries)
+        read (luin,*) (helambda(i,k),k=1,nheseries)
       enddo
       nialines(2,zmap(2))=nialines(2,zmap(2))+(nhelines*nheseries)
 c
@@ -1875,7 +1878,7 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni,nj
       do i=1,ni
-       read (luin,*) (hydrogf(i,k),k=1,nj)
+        read (luin,*) (hydrogf(i,k),k=1,nj)
       enddo
 c
       close (luin)
@@ -1883,7 +1886,7 @@ c
       nxhlines=mxnxhlines
       nxhseries=mxnxhs
       do at=1,atypes
-       nialines(at,at)=nialines(at,at)+nxhlines*nxhseries
+        nialines(at,at)=nialines(at,at)+nxhlines*nxhseries
       enddo
 c
       filename=datadir(1:dtlen)//'data/hydrogenic/HELIORECDAT.txt'
@@ -1898,20 +1901,22 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nheis
       do j=1,nheis
-       read (luin,*) id,heisej(j),heislvl(j)
-       if (id.ne.j) then
-        write (*,*) 'ERROR reading HELIORECDAT.txt singlet levels',i,j
-        stop
-       endif
+        read (luin,*) id,heisej(j),heislvl(j)
+        if (id.ne.j) then
+          write (*,*) 'ERROR reading HELIORECDAT.txt singlet levels',i,
+     &     j
+          stop
+        endif
       enddo
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nheit
       do j=1,nheit
-       read (luin,*) id,heitej(j),heitlvl(j)
-       if (id.ne.j) then
-        write (*,*) 'ERROR reading HELIORECDAT.txt triplet levels',i,j
-        stop
-       endif
+        read (luin,*) id,heitej(j),heitlvl(j)
+        if (id.ne.j) then
+          write (*,*) 'ERROR reading HELIORECDAT.txt triplet levels',i,
+     &     j
+          stop
+        endif
       enddo
 c
 c effective recombination rate coeffs
@@ -1921,33 +1926,34 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nheislines
       do j=1,nheislines
-       read (luin,*) upid,loid,lam,a,b,c,d
+        read (luin,*) upid,loid,lam,a,b,c,d
 c
-       heiseij(j)=(heisej(upid)-heisej(loid))*cls*plk
-       heislam(j)=1.0d8/(heisej(upid)-heisej(loid))!vacritz
-       heisupid(j)=upid
-       heisloid(j)=loid
-       heisreccoef(1,j)=a
-       heisreccoef(2,j)=b
-       heisreccoef(3,j)=c
-       heisreccoef(4,j)=d
-       s1=heislvl(upid)
-       l1=0
-       do idx=1,16
-        if (s1(idx:idx).ne.' ') then
-         l1=l1+1
-        endif
-       enddo
-       if (l1.lt.1) l1=1
-       s2=heislvl(loid)
-       l2=0
-       do idx=1,16
-        if (s2(idx:idx).ne.' ') then
-         l2=l2+1
-        endif
-       enddo
-       if (l2.lt.1) l2=1
-       heislamid(j)=s1(1:l1)//'-'//s2(1:l2)
+        heiseij(j)=(heisej(upid)-heisej(loid))*cls*plk
+c     vacritz
+        heislam(j)=1.0d8/(heisej(upid)-heisej(loid))
+        heisupid(j)=upid
+        heisloid(j)=loid
+        heisreccoef(1,j)=a
+        heisreccoef(2,j)=b
+        heisreccoef(3,j)=c
+        heisreccoef(4,j)=d
+        s1=heislvl(upid)
+        l1=0
+        do idx=1,16
+          if (s1(idx:idx).ne.' ') then
+            l1=l1+1
+          endif
+        enddo
+        if (l1.lt.1) l1=1
+        s2=heislvl(loid)
+        l2=0
+        do idx=1,16
+          if (s2(idx:idx).ne.' ') then
+            l2=l2+1
+          endif
+        enddo
+        if (l2.lt.1) l2=1
+        heislamid(j)=s1(1:l1)//'-'//s2(1:l2)
 c        write(*,*) trim(heislamid(j))
       enddo
       nialines(1,zmap(2))=nialines(1,zmap(2))+nheislines
@@ -1957,32 +1963,33 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nheitlines
       do j=1,nheitlines
-       read (luin,*) upid,loid,lam,a,b,c,d
-       heiteij(j)=(heitej(upid)-heitej(loid))*cls*plk
-       heitlam(j)=1.0d8/(heitej(upid)-heitej(loid))!vacritz
-       heitupid(j)=upid
-       heitloid(j)=loid
-       heitreccoef(1,j)=a
-       heitreccoef(2,j)=b
-       heitreccoef(3,j)=c
-       heitreccoef(4,j)=d
-       s1=heitlvl(upid)
-       l1=0
-       do idx=1,16
-        if (s1(idx:idx).ne.' ') then
-         l1=l1+1
-        endif
-       enddo
-       if (l1.lt.1) l1=1
-       s2=heitlvl(loid)
-       l2=0
-       do idx=1,16
-        if (s2(idx:idx).ne.' ') then
-         l2=l2+1
-        endif
-       enddo
-       if (l2.lt.1) l2=1
-       heitlamid(j)=s1(1:l1)//'-'//s2(1:l2)
+        read (luin,*) upid,loid,lam,a,b,c,d
+        heiteij(j)=(heitej(upid)-heitej(loid))*cls*plk
+c     vacritz
+        heitlam(j)=1.0d8/(heitej(upid)-heitej(loid))
+        heitupid(j)=upid
+        heitloid(j)=loid
+        heitreccoef(1,j)=a
+        heitreccoef(2,j)=b
+        heitreccoef(3,j)=c
+        heitreccoef(4,j)=d
+        s1=heitlvl(upid)
+        l1=0
+        do idx=1,16
+          if (s1(idx:idx).ne.' ') then
+            l1=l1+1
+          endif
+        enddo
+        if (l1.lt.1) l1=1
+        s2=heitlvl(loid)
+        l2=0
+        do idx=1,16
+          if (s2(idx:idx).ne.' ') then
+            l2=l2+1
+          endif
+        enddo
+        if (l2.lt.1) l2=1
+        heitlamid(j)=s1(1:l1)//'-'//s2(1:l2)
 c        write(*,*) trim(heitlamid(j))
       enddo
       nialines(1,zmap(2))=nialines(1,zmap(2))+nheitlines
@@ -1993,21 +2000,22 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nentries
       if (nentries.ne.nheis) then
-       write (*,*) 'ERROR: HELIORECDAT.txt singlet coll. data',nentries
-       stop
+        write (*,*) 'ERROR: HELIORECDAT.txt singlet coll. data',
+     &   nentries
+        stop
       endif
       do j=1,nheis
-       read (luin,*) id,n,(coeffs(i),i=1,18)
-       nheitcr(j)=n
-       do i=1,6
-        heiscra(i,j)=coeffs(i)
-        heiscrb(i,j)=coeffs(i+6)
-        heiscrc(i,j)=coeffs(i+12)
-       enddo
-       if (id.ne.j) then
-        write (*,*) 'ERROR: HELIORECDAT.txt singlet coll. data',id,j
-        stop
-       endif
+        read (luin,*) id,n,(coeffs(i),i=1,18)
+        nheitcr(j)=n
+        do i=1,6
+          heiscra(i,j)=coeffs(i)
+          heiscrb(i,j)=coeffs(i+6)
+          heiscrc(i,j)=coeffs(i+12)
+        enddo
+        if (id.ne.j) then
+          write (*,*) 'ERROR: HELIORECDAT.txt singlet coll. data',id,j
+          stop
+        endif
       enddo
 c
 c triplet levels, collisional contribution to upper levels
@@ -2016,21 +2024,22 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nentries
       if (nentries.ne.nheit) then
-       write (*,*) 'ERROR: HELIORECDAT.txt triplet coll. data',nentries
-       stop
+        write (*,*) 'ERROR: HELIORECDAT.txt triplet coll. data',
+     &   nentries
+        stop
       endif
       do j=1,nheit
-       read (luin,*) id,n,(coeffs(i),i=1,18)
-       nheitcr(j)=n
-       do i=1,6
-        heitcra(i,j)=coeffs(i)
-        heitcrb(i,j)=coeffs(i+6)
-        heitcrc(i,j)=coeffs(i+12)
-       enddo
-       if (id.ne.j) then
-        write (*,*) 'ERROR: HELIORECDAT.txt triplet coll. data',id,j
-        stop
-       endif
+        read (luin,*) id,n,(coeffs(i),i=1,18)
+        nheitcr(j)=n
+        do i=1,6
+          heitcra(i,j)=coeffs(i)
+          heitcrb(i,j)=coeffs(i+6)
+          heitcrc(i,j)=coeffs(i+12)
+        enddo
+        if (id.ne.j) then
+          write (*,*) 'ERROR: HELIORECDAT.txt triplet coll. data',id,j
+          stop
+        endif
       enddo
 c
       close (luin)
@@ -2045,27 +2054,27 @@ c
       line=1
       series=1
       do j=1,nentries
-       read (luin,*) nu,nl,nuref,nlref
-       line=nu-nl
-       series=nl
-       read (luin,*) ni,nj
-       do i=1,ni
-        read (luin,*) ti,(hylratsa(line,series,i,k),k=1,nj)
-        do k=1,nj
-         hylratsa(line,series,i,k)=dlog10(hylratsa(line,series,i,k)+
-     &    epsilon)
+        read (luin,*) nu,nl,nuref,nlref
+        line=nu-nl
+        series=nl
+        read (luin,*) ni,nj
+        do i=1,ni
+          read (luin,*) ti,(hylratsa(line,series,i,k),k=1,nj)
+          do k=1,nj
+            hylratsa(line,series,i,k)=dlog10(hylratsa(line,series,i,k)+
+     &       epsilon)
+          enddo
         enddo
-       enddo
 c precompute orthogonal splines
-       do k=1,nj
-        do i=1,ni
-         y(i)=hylratsa(line,series,i,k)
+        do k=1,nj
+          do i=1,ni
+            y(i)=hylratsa(line,series,i,k)
+          enddo
+          call spline00 (th42, y, ni, y2)
+          do i=1,ni
+            hylratsa2(line,series,i,k)=y2(i)
+          enddo
         enddo
-        call spline00 (th42, y, ni, y2)
-        do i=1,ni
-         hylratsa2(line,series,i,k)=y2(i)
-        enddo
-       enddo
       enddo
 cc
       close (luin)
@@ -2082,27 +2091,27 @@ c
       series=1
       do j=1,nentries
 c        read (luin,10) (ibuf(k),k=1,19)
-       read (luin,*) nu,nl,nuref,nlref
-       line=nu-nl
-       series=nl
-       read (luin,*) ni,nj
-       do i=1,ni
-        read (luin,*) ti,(hylratsb(line,series,i,k),k=1,nj)
-        do k=1,nj
-         hylratsb(line,series,i,k)=dlog10(hylratsb(line,series,i,k)+
-     &    epsilon)
+        read (luin,*) nu,nl,nuref,nlref
+        line=nu-nl
+        series=nl
+        read (luin,*) ni,nj
+        do i=1,ni
+          read (luin,*) ti,(hylratsb(line,series,i,k),k=1,nj)
+          do k=1,nj
+            hylratsb(line,series,i,k)=dlog10(hylratsb(line,series,i,k)+
+     &       epsilon)
+          enddo
         enddo
-       enddo
 c precompute orthogonal splines
-       do k=1,nj
-        do i=1,ni
-         y(i)=hylratsb(line,series,i,k)
+        do k=1,nj
+          do i=1,ni
+            y(i)=hylratsb(line,series,i,k)
+          enddo
+          call spline00 (th42, y, ni, y2)
+          do i=1,ni
+            hylratsb2(line,series,i,k)=y2(i)
+          enddo
         enddo
-        call spline00 (th42, y, ni, y2)
-        do i=1,ni
-         hylratsb2(line,series,i,k)=y2(i)
-        enddo
-       enddo
       enddo
 c
       close (luin)
@@ -2117,7 +2126,7 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nherec
       do i=1,nherec
-       read (luin,*) hereclgt(i),hereclga(i),hereclga1(i)
+        read (luin,*) hereclgt(i),hereclga(i),hereclga1(i)
       enddo
 c
 c    create spline coeffs once
@@ -2146,27 +2155,27 @@ c
       series=1
       do j=1,nentries
 c        read (luin,10) (ibuf(k),k=1,19)
-       read (luin,*) nu,nl,nuref,nlref
-       line=nu-nl
-       series=nl
-       read (luin,*) ni,nj
-       do i=1,ni
-        read (luin,*) ti,(helratsa(line,series,i,k),k=1,nj)
-        do k=1,nj
-         helratsa(line,series,i,k)=dlog10(helratsa(line,series,i,k)+
-     &    epsilon)
+        read (luin,*) nu,nl,nuref,nlref
+        line=nu-nl
+        series=nl
+        read (luin,*) ni,nj
+        do i=1,ni
+          read (luin,*) ti,(helratsa(line,series,i,k),k=1,nj)
+          do k=1,nj
+            helratsa(line,series,i,k)=dlog10(helratsa(line,series,i,k)+
+     &       epsilon)
+          enddo
         enddo
-       enddo
 c precompute orthogonal splines
-       do k=1,nj
-        do i=1,ni
-         y(i)=helratsa(line,series,i,k)
+        do k=1,nj
+          do i=1,ni
+            y(i)=helratsa(line,series,i,k)
+          enddo
+          call spline00 (the43, y, ni, y2)
+          do i=1,ni
+            helratsa2(line,series,i,k)=y2(i)
+          enddo
         enddo
-        call spline00 (the43, y, ni, y2)
-        do i=1,ni
-         helratsa2(line,series,i,k)=y2(i)
-        enddo
-       enddo
       enddo
 c
       close (luin)
@@ -2183,27 +2192,27 @@ c
       series=1
       do j=1,nentries
 c        read (luin,10) (ibuf(k),k=1,19)
-       read (luin,*) nu,nl,nuref,nlref
-       line=nu-nl
-       series=nl
-       read (luin,*) ni,nj
-       do i=1,ni
-        read (luin,*) ti,(helratsb(line,series,i,k),k=1,nj)
-        do k=1,nj
-         helratsb(line,series,i,k)=dlog10(helratsb(line,series,i,k)+
-     &    epsilon)
+        read (luin,*) nu,nl,nuref,nlref
+        line=nu-nl
+        series=nl
+        read (luin,*) ni,nj
+        do i=1,ni
+          read (luin,*) ti,(helratsb(line,series,i,k),k=1,nj)
+          do k=1,nj
+            helratsb(line,series,i,k)=dlog10(helratsb(line,series,i,k)+
+     &       epsilon)
+          enddo
         enddo
-       enddo
 c precompute orthogonal splines
-       do k=1,nj
-        do i=1,ni
-         y(i)=helratsb(line,series,i,k)
+        do k=1,nj
+          do i=1,ni
+            y(i)=helratsb(line,series,i,k)
+          enddo
+          call spline00 (the43, y, ni, y2)
+          do i=1,ni
+            helratsb2(line,series,i,k)=y2(i)
+          enddo
         enddo
-        call spline00 (the43, y, ni, y2)
-        do i=1,ni
-         helratsb2(line,series,i,k)=y2(i)
-        enddo
-       enddo
       enddo
 c
       close (luin)
@@ -2217,8 +2226,8 @@ c
       write (*,20) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,30) (colid(j,i),i=1,4),(ccoln(j,k),k=1,4),(dcoln(j,l),
-     &  l=1,4)
+        read (luin,30) (colid(j,i),i=1,4),(ccoln(j,k),k=1,4),(dcoln(j,l)
+     &   ,l=1,4)
       enddo
 c
 c
@@ -2232,8 +2241,8 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) line,series,level,frac
-       collha(line,series,level)=frac
+        read (luin,*) line,series,level,frac
+        collha(line,series,level)=frac
       enddo
 c
 c     case B
@@ -2241,8 +2250,8 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) line,series,level,frac
-       collhb(line,series,level)=frac
+        read (luin,*) line,series,level,frac
+        collhb(line,series,level)=frac
       enddo
 c
       close (luin)
@@ -2260,67 +2269,74 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do 140 j=1,5
-       read (luin,*) m,(balcoe(j,i),i=1,5)
-       if (m.eq.j) goto 140
-       write (*,*) 'Error Reading HYDRODAT'
-       error=.true.
-       stop
+        read (luin,*) m,(balcoe(j,i),i=1,5)
+        if (m.eq.j) goto 140
+        write (*,*) 'Error Reading HYDRODAT'
+        error=.true.
+        stop
   140 continue
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do 150 j=1,5
-       read (luin,*) m,(balcoe(j,i),i=6,11)
-       if (m.eq.j) goto 150
-       write (*,*) 'Error Reading HYDRODAT'
-       error=.true.
-       stop
+        read (luin,*) m,(balcoe(j,i),i=6,11)
+        if (m.eq.j) goto 150
+        write (*,*) 'Error Reading HYDRODAT'
+        error=.true.
+        stop
   150 continue
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do 160 j=1,5
-       read (luin,*) m,(hbema(j,i),i=1,6)
-       if (m.eq.j) goto 160
-       write (*,*) 'Error Reading HYDRODAT'
-       error=.true.
-       stop
+        read (luin,*) m,(hbema(j,i),i=1,6)
+        if (m.eq.j) goto 160
+        write (*,*) 'Error Reading HYDRODAT'
+        error=.true.
+        stop
   160 continue
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do 170 j=1,5
-       read (luin,*) m,(hbemb(j,i),i=1,6)
-       if (m.eq.j) goto 170
-       write (*,*) 'Error Reading HYDRODAT'
-       error=.true.
-       stop
+        read (luin,*) m,(hbemb(j,i),i=1,6)
+        if (m.eq.j) goto 170
+        write (*,*) 'Error Reading HYDRODAT'
+        error=.true.
+        stop
   170 continue
 c
 c Legacy He I recob data, input changed to cm^-1 and A, reconvert here
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,fmt=10) (ibuf(j),j=1,19)
-      read (luin,*) (heien(i),i=1,4)!newreadincm^-1
-      heilam(1)=1.0d0/heien(1)!vacritzlambda,cm
+c     newreadincm^-1
+      read (luin,*) (heien(i),i=1,4)
+c     vacritzlambda,cm
+      heilam(1)=1.0d0/heien(1)
       heilam(2)=1.0d0/heien(3)
       heilam(3)=1.0d0/heien(4)
-      heien(1)=heien(1)*plk*cls!nowinbackinergs
+c     nowinbackinergs
+      heien(1)=heien(1)*plk*cls
       heien(2)=heien(2)*plk*cls
       heien(3)=heien(3)*plk*cls
       heien(4)=heien(4)*plk*cls
       read (luin,fmt=10) (ibuf(j),j=1,19)
-      read (luin,*) (qren(i),i=1,4)!newreadincm^-1
-      qren(1)=qren(1)*plk*cls!nowinbackinergs
+c     newreadincm^-1
+      read (luin,*) (qren(i),i=1,4)
+c     nowinbackinergs
+      qren(1)=qren(1)*plk*cls
       qren(2)=qren(2)*plk*cls
       qren(3)=qren(3)*plk*cls
       qren(4)=qren(4)*plk*cls
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do j=1,12
-       read (luin,*) (hel0(i,j),i=1,5)
-       hel0(1,j)=hel0(1,j)*1.0d-8!nowvacritzcm
-       heilam(j+3)=hel0(1,j)!nowvacritzcm
+        read (luin,*) (hel0(i,j),i=1,5)
+c     nowvacritzcm
+        hel0(1,j)=hel0(1,j)*1.0d-8
+c     nowvacritzcm
+        heilam(j+3)=hel0(1,j)
       enddo
       nheilines=15
-      close (luin) 
+      close (luin)
 c
       filename=datadir(1:dtlen)//'data/hydrogenic/HYDROFBDAT.txt'
       open (luin,file=filename,status='OLD')
@@ -2332,7 +2348,7 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nfbe
       do j=1,nfbe
-       read (luin,*) nfbenu(j),fbenu(j),fben(j)
+        read (luin,*) nfbenu(j),fbenu(j),fben(j)
       enddo
 c
       read (luin,10) (ibuf(k),k=1,19)
@@ -2343,13 +2359,13 @@ c
       read (luin,*) ni,nj
 c
       do j=1,nj
-       read (luin,*) (fbloggamma(i,j),i=1,ni)
+        read (luin,*) (fbloggamma(i,j),i=1,ni)
       enddo
 c
       do j=1,nj
-       do i=1,ni
-        fbloggamma(i,j)=dlog10(fbloggamma(i,j))
-       enddo
+        do i=1,ni
+          fbloggamma(i,j)=dlog10(fbloggamma(i,j))
+        enddo
       enddo
 c
       close (luin)
@@ -2365,7 +2381,7 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) nhefbe
       do j=1,nhefbe
-       read (luin,*) nhefbenu(j),hefbenu(j),hefben(j)
+        read (luin,*) nhefbenu(j),hefbenu(j),hefben(j)
       enddo
 c
       read (luin,10) (ibuf(k),k=1,19)
@@ -2376,13 +2392,13 @@ c
       read (luin,*) ni,nj
 c
       do j=1,nj
-       read (luin,*) (hefbloggamma(i,j),i=1,ni)
+        read (luin,*) (hefbloggamma(i,j),i=1,ni)
       enddo
 c
       do j=1,nj
-       do i=1,ni
-        hefbloggamma(i,j)=dlog10(hefbloggamma(i,j))
-       enddo
+        do i=1,ni
+          hefbloggamma(i,j)=dlog10(hefbloggamma(i,j))
+        enddo
       enddo
 c
       close (luin)
@@ -2390,11 +2406,11 @@ c
       j108m=0
       k=6
       do j=1,12
-       if ((dabs(hel0(1,j)-10830d-8)/hel0(1,j)).lt.3.d-2) j108m=j
-       if ((hel0(2,j).gt.0.d0).and.(j108m.ne.j)) then
-        hlam(k)=hel0(1,j)
-        k=min0(10,k+1)
-       endif
+        if ((dabs(hel0(1,j)-10830d-8)/hel0(1,j)).lt.3.d-2) j108m=j
+        if ((hel0(2,j).gt.0.d0).and.(j108m.ne.j)) then
+          hlam(k)=hel0(1,j)
+          k=min0(10,k+1)
+        endif
       enddo
 c
       return
@@ -2421,7 +2437,8 @@ c
       character*24 termi
       integer*4 nc,idc,tp,nspl,ids
 c
-c      real*8 hheeij (mxhhelvls,mxhhelvls)  ! cm^-1
+c      cm^-1
+c      real*8 hheeij (mxhhelvls,mxhhelvls)
 c      real*8 hheaji (mxhhelvls,mxhhelvls)
 c      real*8 hhegfij(mxhhelvls,mxhhelvls)
 c
@@ -2444,53 +2461,53 @@ c
       write (*,20) (ibuf(j),j=1,19)
 c
       do idx=1,mxelem
-       ishheion(idx)=0
+        ishheion(idx)=0
       enddo
 c
       nhheions=0
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) id
-       read (luin,*) at,io
-       if (id.ne.idx) then
-        write (*,*) 'ERROR READING HCOLLDATA ION: ',idx,id
-        stop
-       endif
+        read (luin,*) id
+        read (luin,*) at,io
+        if (id.ne.idx) then
+          write (*,*) 'ERROR READING HCOLLDATA ION: ',idx,id
+          stop
+        endif
 c       atom=zmap(na)
 c       if (atom.ne.0) then
 c         if (ion.le.maxion(atom)) then
-       nhheions=nentries
-       hheat(idx)=zmap(at)
-       hheion(idx)=io
-       ishheion(zmap(at))=1
+        nhheions=nentries
+        hheat(idx)=zmap(at)
+        hheion(idx)=io
+        ishheion(zmap(at))=1
 c
 c get level energies, gs and names
 c
-       read (luin,*) nl
-       if (nl.gt.mxhhelvls) then
-        write (*,*) 'ERROR IN HCOLLDATA Level Limit Exceeded: '
-        write (*,*) idx,nl,mxhhelvls
-        write (*,*) mapz(hheat(idx)),hheion(idx)
-        stop
-       endif
-       hheni(idx)=nl
-       do i=1,nl
-        read (luin,*) j,ni,ei,gi,termi
-        if (i.ne.j) then
-         write (*,*) 'ERROR IN HCOLLDATA LVLS: ',idx,i,j
-         stop
+        read (luin,*) nl
+        if (nl.gt.mxhhelvls) then
+          write (*,*) 'ERROR IN HCOLLDATA Level Limit Exceeded: '
+          write (*,*) idx,nl,mxhhelvls
+          write (*,*) mapz(hheat(idx)),hheion(idx)
+          stop
         endif
-        hheei(i,idx)=ei
-        hhen(i,idx)=ni
-        hhegi(i,idx)=gi
-        hheinvgi(i,idx)=1.d0/gi
-        hheid(i,idx)=termi(1:16)
+        hheni(idx)=nl
+        do i=1,nl
+          read (luin,*) j,ni,ei,gi,termi
+          if (i.ne.j) then
+            write (*,*) 'ERROR IN HCOLLDATA LVLS: ',idx,i,j
+            stop
+          endif
+          hheei(i,idx)=ei
+          hhen(i,idx)=ni
+          hhegi(i,idx)=gi
+          hheinvgi(i,idx)=1.d0/gi
+          hheid(i,idx)=termi(1:16)
 c
-        if (i.eq.2) then
-         ee2p(hheat(idx))=ei*plk*cls
-        endif
+          if (i.eq.2) then
+            ee2p(hheat(idx))=ei*plk*cls
+          endif
 c
-       enddo
+        enddo
 c
 c i lower, j upper
 c       do i=1,nl
@@ -2501,40 +2518,40 @@ c       enddo
 c
 c get collisions
 c
-       read (luin,*) nc
-       if (nc.gt.mxhhecols) then
-        write (*,*) 'ERROR IN HCOLLDATA Collisions Limit Exceeded: '
-        write (*,*) idx,nc,mxhhecols
-        write (*,*) mapz(hheat(idx)),hheion(idx)
-        stop
-       endif
-       nhheioncol(idx)=nc
-       do idc=1,nc
-c          read (luin,*) id,i,j,tp,nspl,tc
-        read (luin,*) id,i,j,tp,nspl,aij,gfij,tc
-        if (id.ne.idc) then
-         write (*,*) 'ERROR IN HCOLLDATA COLL: ',idx,id,idc
-         stop
+        read (luin,*) nc
+        if (nc.gt.mxhhecols) then
+          write (*,*) 'ERROR IN HCOLLDATA Collisions Limit Exceeded: '
+          write (*,*) idx,nc,mxhhecols
+          write (*,*) mapz(hheat(idx)),hheion(idx)
+          stop
         endif
-        hhecol_i(idc,idx)=i
-        hhecol_j(idc,idx)=j
-        hhecol_tc(idc,idx)=tc
-        hhecol_typespl(idc,idx)=tp
-        hhecol_nspl(idc,idx)=nspl
-        read (luin,*) (bty(ids),ids=1,nspl)
-        do ids=1,nspl
-         btx(ids)=(1.d0/(nspl-1))*(ids-1)
-         bty2(ids)=0.d0
-        enddo
+        nhheioncol(idx)=nc
+        do idc=1,nc
+c          read (luin,*) id,i,j,tp,nspl,tc
+          read (luin,*) id,i,j,tp,nspl,aij,gfij,tc
+          if (id.ne.idc) then
+            write (*,*) 'ERROR IN HCOLLDATA COLL: ',idx,id,idc
+            stop
+          endif
+          hhecol_i(idc,idx)=i
+          hhecol_j(idc,idx)=j
+          hhecol_tc(idc,idx)=tc
+          hhecol_typespl(idc,idx)=tp
+          hhecol_nspl(idc,idx)=nspl
+          read (luin,*) (bty(ids),ids=1,nspl)
+          do ids=1,nspl
+            btx(ids)=(1.d0/(nspl-1))*(ids-1)
+            bty2(ids)=0.d0
+          enddo
 c
-        call spline00 (btx, bty, nspl, bty2)
+          call spline00 (btx, bty, nspl, bty2)
 c
-        do ids=1,nspl
-         hhecol_x(ids)=btx(ids)
-         hhecol_y(ids,idc,idx)=bty(ids)
-         hhecol_y2(ids,idc,idx)=bty2(ids)
+          do ids=1,nspl
+            hhecol_x(ids)=btx(ids)
+            hhecol_y(ids,idc,idx)=bty(ids)
+            hhecol_y2(ids,idc,idx)=bty2(ids)
+          enddo
         enddo
-       enddo
       enddo
       close (luin)
 c
@@ -2582,7 +2599,7 @@ c
 c
       error=.false.
       do i=1,ionum
-       found(i)=.false.
+        found(i)=.false.
       enddo
       filename=datadir(1:dtlen)//'data/PHOTDAT.txt'
       open (luin,file=filename,status='OLD')
@@ -2595,22 +2612,22 @@ c
       ionstartbin=1
       read (luin,*) nentries
       if (nentries.lt.0) then
-       fieldversion=nentries
-       read (luin,*) nentries
+        fieldversion=nentries
+        read (luin,*) nentries
       endif
 c
       if (nentries.gt.mxinfph) then
-       write (*,*) ' INCOMPATIBLE data/PHOTDAT.txt, need',mxinfph,' bins
-     & or less.'
-       error=.true.
-       stop
+        write (*,*) ' INCOMPATIBLE data/PHOTDAT.txt, need',mxinfph,' bin
+     &s or less.'
+        error=.true.
+        stop
       endif
 c
       infph=nentries
 c
       do j=1,infph
-       read (luin,*) photev(j)
-       phote(j)=photev(j)*ev
+        read (luin,*) photev(j)
+        phote(j)=photev(j)*ev
       enddo
 c
       close (luin)
@@ -2620,162 +2637,162 @@ c photev is synchronized with ipotpho, which was synched with ipotev
 c the reference
 c
       do j=1,infph
-       do i=1,ionum
+        do i=1,ionum
 c
 c          atom=atpho(i)
 c          ion=ionpho(i)
-        ep=ipotpho(i)
+          ep=ipotpho(i)
 c
-        if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
-         edge1=dabs(ep-photev(j))/photev(j)
-         edge2=dabs(ep-photev(j+1))/photev(j+1)
+          if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
+            edge1=dabs(ep-photev(j))/photev(j)
+            edge2=dabs(ep-photev(j+1))/photev(j+1)
 c
-         if (edge1.le.edge2) then
-          if ((edge1.lt.5.0d-6).and.(found(i).eqv..false.)) then
-           photev(j)=ep
-           phote(j)=ep*ev
-           found(i)=.true.
-          endif
-         endif
+            if (edge1.le.edge2) then
+              if ((edge1.lt.5.0d-6).and.(found(i).eqv..false.)) then
+                photev(j)=ep
+                phote(j)=ep*ev
+                found(i)=.true.
+              endif
+            endif
 c
-         if (edge2.lt.edge1) then
-          if ((edge2.lt.5.0d-6).and.(found(i).eqv..false.)) then
+            if (edge2.lt.edge1) then
+              if ((edge2.lt.5.0d-6).and.(found(i).eqv..false.)) then
 c              write(*,*) mapz(atom),ion,photev(j+1),ep,edge2
-           photev(j+1)=ep
-           phote(j+1)=ep*ev
-           found(i)=.true.
+                photev(j+1)=ep
+                phote(j+1)=ep*ev
+                found(i)=.true.
+              endif
+            endif
+c
           endif
-         endif
 c
-        endif
-c
-       enddo
+        enddo
       enddo
 c
       do j=1,infph
-       do i=1,ionum
+        do i=1,ionum
 c          atom=atpho(i)
 c          ion=ionpho(i)
-        ep=ipotpho(i)
-        if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
-         edge1=dabs(ep-photev(j))/photev(j)
-         edge2=dabs(ep-photev(j+1))/photev(j+1)
+          ep=ipotpho(i)
+          if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
+            edge1=dabs(ep-photev(j))/photev(j)
+            edge2=dabs(ep-photev(j+1))/photev(j+1)
 c
-         if (edge1.le.edge2) then
-          if ((edge1.lt.5.0d-5).and.(found(i).eqv..false.)) then
+            if (edge1.le.edge2) then
+              if ((edge1.lt.5.0d-5).and.(found(i).eqv..false.)) then
 c              write(*,*) mapz(atom),ion,photev(j),ep,edge1
-           photev(j)=ep
-           phote(j)=ep*ev
-           found(i)=.true.
-          endif
-         endif
+                photev(j)=ep
+                phote(j)=ep*ev
+                found(i)=.true.
+              endif
+            endif
 c
-         if (edge2.lt.edge1) then
-          if ((edge2.lt.5.0d-5).and.(found(i).eqv..false.)) then
+            if (edge2.lt.edge1) then
+              if ((edge2.lt.5.0d-5).and.(found(i).eqv..false.)) then
 c              write(*,*) mapz(atom),ion,photev(j+1),ep,edge2
-           photev(j+1)=ep
-           phote(j+1)=ep*ev
-           found(i)=.true.
+                photev(j+1)=ep
+                phote(j+1)=ep*ev
+                found(i)=.true.
+              endif
+            endif
+c
           endif
-         endif
 c
-        endif
-c
-       enddo
+        enddo
       enddo
 c
       do j=1,infph
-       do i=1,ionum
+        do i=1,ionum
 c          atom=atpho(i)
 c          ion=ionpho(i)
-        ep=ipotpho(i)
-        if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
-         edge1=dabs(ep-photev(j))/photev(j)
-         edge2=dabs(ep-photev(j+1))/photev(j+1)
+          ep=ipotpho(i)
+          if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
+            edge1=dabs(ep-photev(j))/photev(j)
+            edge2=dabs(ep-photev(j+1))/photev(j+1)
 c
-         if (edge1.le.edge2) then
-          if ((edge1.lt.5.0d-4).and.(found(i).eqv..false.)) then
+            if (edge1.le.edge2) then
+              if ((edge1.lt.5.0d-4).and.(found(i).eqv..false.)) then
 c              write(*,*) mapz(atom),ion,photev(j),ep,edge1
-           photev(j)=ep
-           phote(j)=ep*ev
-           found(i)=.true.
-          endif
-         endif
+                photev(j)=ep
+                phote(j)=ep*ev
+                found(i)=.true.
+              endif
+            endif
 c
-         if (edge2.lt.edge1) then
-          if ((edge2.lt.5.0d-4).and.(found(i).eqv..false.)) then
+            if (edge2.lt.edge1) then
+              if ((edge2.lt.5.0d-4).and.(found(i).eqv..false.)) then
 c              write(*,*) mapz(atom),ion,photev(j+1),ep,edge2
-           photev(j+1)=ep
-           phote(j+1)=ep*ev
-           found(i)=.true.
+                photev(j+1)=ep
+                phote(j+1)=ep*ev
+                found(i)=.true.
+              endif
+            endif
+c
           endif
-         endif
 c
-        endif
-c
-       enddo
+        enddo
       enddo
 c
       do j=1,infph
-       do i=1,ionum
+        do i=1,ionum
 c          atom=atpho(i)
 c          ion=ionpho(i)
-        ep=ipotpho(i)
-        if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
-         edge1=dabs(ep-photev(j))/photev(j)
-         edge2=dabs(ep-photev(j+1))/photev(j+1)
+          ep=ipotpho(i)
+          if ((ep.ge.photev(j)).and.(ep.lt.photev(j+1))) then
+            edge1=dabs(ep-photev(j))/photev(j)
+            edge2=dabs(ep-photev(j+1))/photev(j+1)
 c
-         if (edge1.le.edge2) then
-          if ((edge1.lt.5.0d-3).and.(found(i).eqv..false.)) then
+            if (edge1.le.edge2) then
+              if ((edge1.lt.5.0d-3).and.(found(i).eqv..false.)) then
 c              write(*,*) mapz(atom),ion,photev(j),ep,edge1
-           photev(j)=ep
-           phote(j)=ep*ev
-           found(i)=.true.
-          endif
-         endif
+                photev(j)=ep
+                phote(j)=ep*ev
+                found(i)=.true.
+              endif
+            endif
 c
-         if (edge2.lt.edge1) then
-          if ((edge2.lt.5.0d-3).and.(found(i).eqv..false.)) then
+            if (edge2.lt.edge1) then
+              if ((edge2.lt.5.0d-3).and.(found(i).eqv..false.)) then
 c              write(*,*) mapz(atom),ion,photev(j+1),ep,edge2
-           photev(j+1)=ep
-           phote(j+1)=ep*ev
-           found(i)=.true.
+                photev(j+1)=ep
+                phote(j+1)=ep*ev
+                found(i)=.true.
+              endif
+            endif
+c
           endif
-         endif
 c
-        endif
-c
-       enddo
+        enddo
       enddo
 c
       do i=1,ionum
-       atom=atpho(i)
-       ion=ionpho(i)
-       ep=ipotpho(i)
-       if (found(i).eqv..false.) then
-        write (*,*) 'WARNING IN FILE : PHOTDAT'
-        write (*,*) 'Potential Not found',mapz(atom),ion,ep
-        write (*,*) 'Using nearest bin edge...'
-       endif
+        atom=atpho(i)
+        ion=ionpho(i)
+        ep=ipotpho(i)
+        if (found(i).eqv..false.) then
+          write (*,*) 'WARNING IN FILE : PHOTDAT'
+          write (*,*) 'Potential Not found',mapz(atom),ion,ep
+          write (*,*) 'Using nearest bin edge...'
+        endif
       enddo
 c
       do 50 j=1,infph-1
-       if (photev(j).lt.photev(j+1)) goto 50
+        if (photev(j).lt.photev(j+1)) goto 50
    40 format(//'ERROR IN FILE : PHOTDAT @#',i4,2(x,1pg14.7))
-       write (*,40) j,photev(j-1),photev(j),photev(j+1)
-       error=.true.
-       stop
+        write (*,40) j,photev(j-1),photev(j),photev(j+1)
+        error=.true.
+        stop
    50 continue
 c
       do j=1,infph-1
-       lgphotev(j)=dlog10(photev(j))
-       lgphote(j)=dlog10(phote(j))
-       cphotev(j)=0.5d0*(photev(j)+photev(j+1))
-       cphote(j)=cphotev(j)*ev
-       lgcphotev(j)=dlog10(cphotev(j))
-       lgcphote(j)=dlog10(cphote(j))
-       widbinev(j)=photev(j+1)-photev(j)
-       widbinnu(j)=widbinev(j)*evplk
+        lgphotev(j)=dlog10(photev(j))
+        lgphote(j)=dlog10(phote(j))
+        cphotev(j)=0.5d0*(photev(j)+photev(j+1))
+        cphote(j)=cphotev(j)*ev
+        lgcphotev(j)=dlog10(cphotev(j))
+        lgcphote(j)=dlog10(cphote(j))
+        widbinev(j)=photev(j+1)-photev(j)
+        widbinnu(j)=widbinev(j)*evplk
       enddo
       lgphotev(infph)=dlog10(photev(infph))
       lgphote(infph)=dlog10(phote(infph))
@@ -2785,96 +2802,96 @@ c
 c     initialise skipbin
 c
       do i=1,infph
-       skipbin(i)=.true.
+        skipbin(i)=.true.
       enddo
 c
 c     precompute photo cross sections
 c
       if (phionmode.eq.0) then
 c
-       do i=1,ionum
-        ep=ipotpho(i)
-        invpot=1.d0/ipotpho(i)
-        atom=atpho(i)
-        ion=ionpho(i)
-        is=(mapz(atom)-ion+1)
-        do j=1,infph-1
-         eleft=photev(j)
-         eright=photev(j+1)
-         e=cphotev(j)
-         x=0.d0
-         if (eright.gt.ep) then
-          if (eleft.lt.ep) then
-           eleft=ep
-           e=0.5d0*(eleft+eright)
-          endif
+        do i=1,ionum
+          ep=ipotpho(i)
+          invpot=1.d0/ipotpho(i)
+          atom=atpho(i)
+          ion=ionpho(i)
+          is=(mapz(atom)-ion+1)
+          do j=1,infph-1
+            eleft=photev(j)
+            eright=photev(j+1)
+            e=cphotev(j)
+            x=0.d0
+            if (eright.gt.ep) then
+              if (eleft.lt.ep) then
+                eleft=ep
+                e=0.5d0*(eleft+eright)
+              endif
 c
-          c0=vernerphoto(eleft,i)
-          c1=vernerphoto(e,i)
-          c2=vernerphoto(eright,i)
+              c0=vernerphoto(eleft,i)
+              c1=vernerphoto(e,i)
+              c2=vernerphoto(eright,i)
 c
-          x=0.d0
-          if ((c0.gt.0.d0).and.(c1.gt.0.d0).and.(c2.gt.0.d0)) then
+              x=0.d0
+              if ((c0.gt.0.d0).and.(c1.gt.0.d0).and.(c2.gt.0.d0)) then
 c  3rd order PPM/Simpsons integral average over bin
-           x=(c0+(4.d0*c1)+c2)/6.d0
-          endif
-          if (is.eq.1) then
+                x=(c0+(4.d0*c1)+c2)/6.d0
+              endif
+              if (is.eq.1) then
 c
 c                Hydrogenic Cross Sections from spline
 c                cubic pline in log s - logE/E0 space
 c
-           lge=dlog10(eleft/ipotpho(i))
-           c0=fsplint(hipxlge,hipxlgs,hipxlgs2,nhipx,lge)
-           c0=10.d0**(c0)
-           lge=dlog10(e/ipotpho(i))
-           c1=fsplint(hipxlge,hipxlgs,hipxlgs2,nhipx,lge)
-           c1=10.d0**(c1)
-           lge=dlog10(eright/ipotpho(i))
-           c2=fsplint(hipxlge,hipxlgs,hipxlgs2,nhipx,lge)
-           c2=10.d0**(c2)
+                lge=dlog10(eleft/ipotpho(i))
+                c0=fsplint(hipxlge,hipxlgs,hipxlgs2,nhipx,lge)
+                c0=10.d0**(c0)
+                lge=dlog10(e/ipotpho(i))
+                c1=fsplint(hipxlge,hipxlgs,hipxlgs2,nhipx,lge)
+                c1=10.d0**(c1)
+                lge=dlog10(eright/ipotpho(i))
+                c2=fsplint(hipxlge,hipxlgs,hipxlgs2,nhipx,lge)
+                c2=10.d0**(c2)
 c  3rd order PPM/Simpsons integral average over bin
-           x=1.0d-18*(c0+(4.d0*c1)+c2)/(ion*ion*6.d0)
-          endif
-          if (x.lt.1.0d-36) x=0.d0
-         endif
-         photxsec(i,j)=x
+                x=1.0d-18*(c0+(4.d0*c1)+c2)/(ion*ion*6.d0)
+              endif
+              if (x.lt.1.0d-36) x=0.d0
+            endif
+            photxsec(i,j)=x
+          enddo
+          photxsec(i,infph)=0.0d0
         enddo
-        photxsec(i,infph)=0.0d0
-       enddo
       endif
 c
       if (phionmode.eq.1) then
 c
-       do 70 i=1,ionum
-        be=betpho(i)
-        si=sigpho(i)
-        s=spho(i)
-        atom=atpho(i)
-        ion=ionpho(i)
-        invpot=1.d0/ipotpho(i)
-        do 60 j=1,infph-1
-         eleft=photev(j)*invpot
-         eright=photev(j+1)*invpot
-         e=cphotev(j)*invpot
-         x=0.d0
-         if (eright.gt.1.d0) then
-          if (eleft.lt.1.d0) then
-           eleft=1.d0
-           e=0.5d0*(eleft+eright)
-          endif
-          c0=acrs(eleft,si,be,s)
-          c1=acrs(e,si,be,s)
-          c2=acrs(eright,si,be,s)
+        do 70 i=1,ionum
+          be=betpho(i)
+          si=sigpho(i)
+          s=spho(i)
+          atom=atpho(i)
+          ion=ionpho(i)
+          invpot=1.d0/ipotpho(i)
+          do 60 j=1,infph-1
+            eleft=photev(j)*invpot
+            eright=photev(j+1)*invpot
+            e=cphotev(j)*invpot
+            x=0.d0
+            if (eright.gt.1.d0) then
+              if (eleft.lt.1.d0) then
+                eleft=1.d0
+                e=0.5d0*(eleft+eright)
+              endif
+              c0=acrs(eleft,si,be,s)
+              c1=acrs(e,si,be,s)
+              c2=acrs(eright,si,be,s)
 c  3rd order PPM/Simpsons integral average over bin
-          if ((c0.gt.0.d0).and.(c1.gt.0.d0).and.(c2.gt.0.d0)) then
-           x=(c0+(4.d0*c1)+c2)/6.d0
-          endif
-          if (x.lt.1.0d-36) x=0.d0
-         endif
-         photxsec(i,j)=x
-   60   continue
-        photxsec(i,infph)=photxsec(i,infph-1)
-   70  continue
+              if ((c0.gt.0.d0).and.(c1.gt.0.d0).and.(c2.gt.0.d0)) then
+                x=(c0+(4.d0*c1)+c2)/6.d0
+              endif
+              if (x.lt.1.0d-36) x=0.d0
+            endif
+            photxsec(i,j)=x
+   60     continue
+          photxsec(i,infph)=photxsec(i,infph-1)
+   70   continue
       endif
 c
 c prepare free bound n>= 2 edges
@@ -2883,84 +2900,84 @@ c
 c set up energy vector pre-calculated arrays
 c
       do atom=1,atypes
-       z=mapz(atom)
-       ion=z
-c
-c fbee = electron free energy = for exp[-ee/kT] T in K
-c nfb  = n for dominant edge
-c jfb  = lower index for row in fbloggamma table
-c
-       ip=ipotev(ion,atom)
-       enevlo=ip*fbenu(1)
-       enevhi=ip*fbenu(nfbe)
-       do 100 inl=1,infph
-        cevbin=cphotev(inl)
-        jfb(atom,inl)=0
-        if ((cevbin.gt.enevlo).and.(cevbin.lt.enevhi)) then
-         do 80 j=1,(nfbe-1)
-          erow0=ip*fbenu(j)
-          erow1=ip*fbenu(j+1)
-          if ((cevbin.ge.erow0).and.(cevbin.lt.erow1)) then
-c                n=nfbenu(j)
-           jfb(atom,inl)=j
-           fbee(atom,inl)=(cevbin-(ip*fben(j)))*ev
-c  if (atom.eq.1) then
-c  write(*,*) 'HI',inl,cevbin,n,j,(ip*fben(j)),(cevbin-(ip*fben(j)))
-c  write(*,*) 'HI',inl,cevbin,n,j,(ip/dble(n*n)),(cevbin-(ip/dble(n*n)))
-c  endif
-           goto 90
-          endif
-   80    continue
-        endif
-   90   continue
-  100  continue
-c
-      enddo
-c
-      do j=1,nfbe
-       fbenu(j)=dlog10(fbenu(j))
-      enddo
-c
-c
-c set up energy vector pre-calculated arrays
-c
-      do atom=1,atypes
-       z=mapz(atom)
-       ion=z-1
-       if (ion.ge.1) then
+        z=mapz(atom)
+        ion=z
 c
 c fbee = electron free energy = for exp[-ee/kT] T in K
 c nfb  = n for dominant edge
 c jfb  = lower index for row in fbloggamma table
 c
         ip=ipotev(ion,atom)
-        enevlo=ip*hefbenu(1)
-        enevhi=ip*hefbenu(nhefbe)
-        do 130 inl=1,infph
-         cevbin=cphotev(inl)
-         jhefb(atom,inl)=0
-         if ((cevbin.gt.enevlo).and.(cevbin.lt.enevhi)) then
-          do 110 j=1,(nhefbe-1)
-           erow0=ip*hefbenu(j)
-           erow1=ip*hefbenu(j+1)
-           if ((cevbin.ge.erow0).and.(cevbin.lt.erow1)) then
-            jhefb(atom,inl)=j
-            hefbee(atom,inl)=(cevbin-(ip*hefben(j)))*ev
+        enevlo=ip*fbenu(1)
+        enevhi=ip*fbenu(nfbe)
+        do 100 inl=1,infph
+          cevbin=cphotev(inl)
+          jfb(atom,inl)=0
+          if ((cevbin.gt.enevlo).and.(cevbin.lt.enevhi)) then
+            do 80 j=1,(nfbe-1)
+              erow0=ip*fbenu(j)
+              erow1=ip*fbenu(j+1)
+              if ((cevbin.ge.erow0).and.(cevbin.lt.erow1)) then
+c                n=nfbenu(j)
+                jfb(atom,inl)=j
+                fbee(atom,inl)=(cevbin-(ip*fben(j)))*ev
+c  if (atom.eq.1) then
+c  write(*,*) 'HI',inl,cevbin,n,j,(ip*fben(j)),(cevbin-(ip*fben(j)))
+c  write(*,*) 'HI',inl,cevbin,n,j,(ip/dble(n*n)),(cevbin-(ip/dble(n*n)))
+c  endif
+                goto 90
+              endif
+   80       continue
+          endif
+   90     continue
+  100   continue
+c
+      enddo
+c
+      do j=1,nfbe
+        fbenu(j)=dlog10(fbenu(j))
+      enddo
+c
+c
+c set up energy vector pre-calculated arrays
+c
+      do atom=1,atypes
+        z=mapz(atom)
+        ion=z-1
+        if (ion.ge.1) then
+c
+c fbee = electron free energy = for exp[-ee/kT] T in K
+c nfb  = n for dominant edge
+c jfb  = lower index for row in fbloggamma table
+c
+          ip=ipotev(ion,atom)
+          enevlo=ip*hefbenu(1)
+          enevhi=ip*hefbenu(nhefbe)
+          do 130 inl=1,infph
+            cevbin=cphotev(inl)
+            jhefb(atom,inl)=0
+            if ((cevbin.gt.enevlo).and.(cevbin.lt.enevhi)) then
+              do 110 j=1,(nhefbe-1)
+                erow0=ip*hefbenu(j)
+                erow1=ip*hefbenu(j+1)
+                if ((cevbin.ge.erow0).and.(cevbin.lt.erow1)) then
+                  jhefb(atom,inl)=j
+                  hefbee(atom,inl)=(cevbin-(ip*hefben(j)))*ev
 c         if (atom.eq.2) then
 c         write(*,*) 'HeI',inl,cevbin,n,j,(ip*hefben(j)),(cevbin-(ip*hefben(j)))
 c         write(*,*) 'HeI',inl,cevbin,n,j,(ip/dble(n*n)),(cevbin-(ip/dble(n*n)))
 c         endif
-            goto 120
-           endif
-  110     continue
-         endif
-  120    continue
-  130   continue
-       endif
+                  goto 120
+                endif
+  110         continue
+            endif
+  120       continue
+  130     continue
+        endif
       enddo
 c
       do j=1,nhefbe
-       hefbenu(j)=dlog10(hefbenu(j))
+        hefbenu(j)=dlog10(hefbenu(j))
       enddo
 c
       return
@@ -3005,73 +3022,73 @@ c
 c
       read (luin,*) nsequ
       do i=1,nsequ
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do j=1,nentries
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do j=1,nentries
 c
-        atom=0
-        ion=0
+          atom=0
+          ion=0
 c
-        read (luin,*) ni,at,io,nft,id,tl0,tl1,ax,bx,cx,dx,deltae
+          read (luin,*) ni,at,io,nft,id,tl0,tl1,ax,bx,cx,dx,deltae
 c
-        if (zmap(at).ne.0) then
+          if (zmap(at).ne.0) then
 c
 c     Check to see if the atom type is one chosen in ATDAT
 c
-         atom=zmap(at)
-         if (io.le.maxion(atom)) then
+            atom=zmap(at)
+            if (io.le.maxion(atom)) then
 c
 c     Check to see if the ion is within the limits set in ATDAT
 c
-          if (i.lt.3) then
+              if (i.lt.3) then
 c
 c     recombination rates
 c
-           nchxr=nchxr+1
-           chxrx(nchxr)=ni
-           chxrat(nchxr)=atom
-           chxrio(nchxr)=io
-           chxrnfit(nchxr)=nft
-           chxrfitid(nchxr)=id
-           chxrtemp(1,nchxr)=tl0
-           chxrtemp(2,nchxr)=tl1
-           chxrcos(1,nchxr)=ax*1.0d-9
-           chxrcos(2,nchxr)=bx
-           chxrcos(3,nchxr)=cx
-           chxrcos(4,nchxr)=dx
+                nchxr=nchxr+1
+                chxrx(nchxr)=ni
+                chxrat(nchxr)=atom
+                chxrio(nchxr)=io
+                chxrnfit(nchxr)=nft
+                chxrfitid(nchxr)=id
+                chxrtemp(1,nchxr)=tl0
+                chxrtemp(2,nchxr)=tl1
+                chxrcos(1,nchxr)=ax*1.0d-9
+                chxrcos(2,nchxr)=bx
+                chxrcos(3,nchxr)=cx
+                chxrcos(4,nchxr)=dx
 c ev4
-           chxrde(nchxr)=deltae
-           chxr(nchxr)=0.d0
-          else
+                chxrde(nchxr)=deltae
+                chxr(nchxr)=0.d0
+              else
 c
 c     ionisation rates
 c
-           nchxi=nchxi+1
-           chxix(nchxi)=ni
-           chxiat(nchxi)=atom
-           chxiio(nchxi)=io
-           chxinfit(nchxi)=nft
-           chxifitid(nchxi)=id
-           chxitemp(1,nchxi)=tl0
-           chxitemp(2,nchxi)=tl1
-           chxicos(1,nchxi)=ax*1.0d-9
-           chxicos(2,nchxi)=bx
-           chxicos(3,nchxi)=cx
-           chxicos(4,nchxi)=dx
+                nchxi=nchxi+1
+                chxix(nchxi)=ni
+                chxiat(nchxi)=atom
+                chxiio(nchxi)=io
+                chxinfit(nchxi)=nft
+                chxifitid(nchxi)=id
+                chxitemp(1,nchxi)=tl0
+                chxitemp(2,nchxi)=tl1
+                chxicos(1,nchxi)=ax*1.0d-9
+                chxicos(2,nchxi)=bx
+                chxicos(3,nchxi)=cx
+                chxicos(4,nchxi)=dx
 c ev4
-           chxicos(5,nchxi)=deltae
-           chxide(nchxi)=deltae
-           chxi(nchxi)=0.d0
-          endif
+                chxicos(5,nchxi)=deltae
+                chxide(nchxi)=deltae
+                chxi(nchxi)=0.d0
+              endif
 c
 c     end inclusion ifs
 c
-         endif
-        endif
+            endif
+          endif
 c
 c     end nsequ,nentries
 c
-       enddo
+        enddo
       enddo
 c
       close (luin)
@@ -3116,36 +3133,36 @@ c
       read (luin,*) nions
 c
       do 40 j=1,nions
-       atom=0
-       ion=0
-       read (luin,*) at,io,ni,ac,tc,ar,xr,ad,bd,to,ti,aa,ta
-       if (zmap(at).ne.0) then
+        atom=0
+        ion=0
+        read (luin,*) at,io,ni,ac,tc,ar,xr,ad,bd,to,ti,aa,ta
+        if (zmap(at).ne.0) then
 c
 c     Check to see if the atom type is one chosen in ATDAT
 c
-        atom=zmap(at)
-        if (io.le.maxion(atom)) then
+          atom=zmap(at)
+          if (io.le.maxion(atom)) then
 c
 c     Check to see if the ion is within the limits set in ATDAT
 c
-         ion=io
-         acol(ion,atom)=ac
-         tcol(ion,atom)=tc
+            ion=io
+            acol(ion,atom)=ac
+            tcol(ion,atom)=tc
 c
-         ion=io+1
-         arad(ion,atom)=ar
-         xrad(ion,atom)=xr
+            ion=io+1
+            arad(ion,atom)=ar
+            xrad(ion,atom)=xr
 c
 c     watch where you're coming from, not where you're going...
 c     recom rates belong to the n+1 ionisation stage
 c
-         adi(ion,atom)=ad
-         bdi(ion,atom)=bd
-         t0(ion,atom)=to
-         t1(ion,atom)=ti
+            adi(ion,atom)=ad
+            bdi(ion,atom)=bd
+            t0(ion,atom)=to
+            t1(ion,atom)=ti
 c
+          endif
         endif
-       endif
    40 continue
 c
 c     read in misc ionisation rate stuff
@@ -3175,69 +3192,69 @@ c     low T dielec correction
 c      check that non set entries are zero
 c
       do atom=1,atypes
-       do ion=1,maxion(atom)
-        adilt(ion,atom)=0.d0
-        bdilt(ion,atom)=0.d0
-        cdilt(ion,atom)=0.d0
-        ddilt(ion,atom)=0.d0
-        fdilt(ion,atom)=0.d0
-       enddo
+        do ion=1,maxion(atom)
+          adilt(ion,atom)=0.d0
+          bdilt(ion,atom)=0.d0
+          cdilt(ion,atom)=0.d0
+          ddilt(ion,atom)=0.d0
+          fdilt(ion,atom)=0.d0
+        enddo
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) at,(lt(j),j=2,8)
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        do ion=2,8
-         adilt(ion,atom)=lt(ion)
-        enddo
-       endif
+        read (luin,*) at,(lt(j),j=2,8)
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          do ion=2,8
+            adilt(ion,atom)=lt(ion)
+          enddo
+        endif
       enddo
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) at,(lt(j),j=2,8)
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        do ion=2,8
-         bdilt(ion,atom)=lt(ion)
-        enddo
-       endif
+        read (luin,*) at,(lt(j),j=2,8)
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          do ion=2,8
+            bdilt(ion,atom)=lt(ion)
+          enddo
+        endif
       enddo
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) at,(lt(j),j=2,8)
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        do ion=2,8
-         cdilt(ion,atom)=lt(ion)
-        enddo
-       endif
+        read (luin,*) at,(lt(j),j=2,8)
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          do ion=2,8
+            cdilt(ion,atom)=lt(ion)
+          enddo
+        endif
       enddo
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) at,(lt(j),j=2,8)
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        do ion=2,8
-         ddilt(ion,atom)=lt(ion)
-        enddo
-       endif
+        read (luin,*) at,(lt(j),j=2,8)
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          do ion=2,8
+            ddilt(ion,atom)=lt(ion)
+          enddo
+        endif
       enddo
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) at,(lt(j),j=2,8)
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        do ion=2,8
-         fdilt(ion,atom)=lt(ion)
-        enddo
-       endif
+        read (luin,*) at,(lt(j),j=2,8)
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          do ion=2,8
+            fdilt(ion,atom)=lt(ion)
+          enddo
+        endif
       enddo
 c
 c     Ancient and Old charge exchange and secondary ionisation data
@@ -3248,20 +3265,20 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) m,at,io,sg1,sg2,alp1,alp2,hhe
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        if (io.le.maxion(atom)) then
-         nchxold=nchxold+1
-         charco(1,nchxold)=dble(atom)
-         charco(2,nchxold)=dble(io)
-         charco(3,nchxold)=sg1
-         charco(4,nchxold)=sg2
-         charco(5,nchxold)=alp1
-         charco(6,nchxold)=alp2
-         charco(7,nchxold)=dble(hhe)
+        read (luin,*) m,at,io,sg1,sg2,alp1,alp2,hhe
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          if (io.le.maxion(atom)) then
+            nchxold=nchxold+1
+            charco(1,nchxold)=dble(atom)
+            charco(2,nchxold)=dble(io)
+            charco(3,nchxold)=sg1
+            charco(4,nchxold)=sg2
+            charco(5,nchxold)=alp1
+            charco(6,nchxold)=alp2
+            charco(7,nchxold)=dble(hhe)
+          endif
         endif
-       endif
       enddo
 c
 c     read legacy charge exchange reactions, chargemode=1
@@ -3272,64 +3289,64 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nsequ
       do i=1,nsequ
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do j=1,nentries
-        atom=0
-        ion=0
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do j=1,nentries
+          atom=0
+          ion=0
 c
 c     just lazy, reusing some spare locals...
 c
-        read (luin,*) ni,at,io,to,ti,ac,tc,ar,xr
-        if (zmap(at).ne.0) then
+          read (luin,*) ni,at,io,to,ti,ac,tc,ar,xr
+          if (zmap(at).ne.0) then
 c
 c     Check to see if the atom type is one chosen in ATDAT
 c
-         atom=zmap(at)
-         if (io.le.maxion(atom)) then
+            atom=zmap(at)
+            if (io.le.maxion(atom)) then
 c
 c     Check to see if the ion is within the limits set in ATDAT
 c
-          if (i.lt.3) then
+              if (i.lt.3) then
 c
 c     recombination rates
 c
-           nlegacychxr=nlegacychxr+1
-           chxrlegacyx(nlegacychxr)=ni
-           chxrlegacyat(nlegacychxr)=atom
-           chxrlegacyio(nlegacychxr)=io
-           chxrlegacytemp(1,nlegacychxr)=to
-           chxrlegacytemp(2,nlegacychxr)=ti
-           chxrlegacycos(1,nlegacychxr)=ac*1.0d-9
-           chxrlegacycos(2,nlegacychxr)=tc
-           chxrlegacycos(3,nlegacychxr)=ar
-           chxrlegacycos(4,nlegacychxr)=xr
-           chxrlegacy(nlegacychxr)=0.d0
-          else
+                nlegacychxr=nlegacychxr+1
+                chxrlegacyx(nlegacychxr)=ni
+                chxrlegacyat(nlegacychxr)=atom
+                chxrlegacyio(nlegacychxr)=io
+                chxrlegacytemp(1,nlegacychxr)=to
+                chxrlegacytemp(2,nlegacychxr)=ti
+                chxrlegacycos(1,nlegacychxr)=ac*1.0d-9
+                chxrlegacycos(2,nlegacychxr)=tc
+                chxrlegacycos(3,nlegacychxr)=ar
+                chxrlegacycos(4,nlegacychxr)=xr
+                chxrlegacy(nlegacychxr)=0.d0
+              else
 c
 c     ionisation rates
 c
-           nlegacychxi=nlegacychxi+1
-           chxilegacyx(nlegacychxi)=ni
-           chxilegacyat(nlegacychxi)=atom
-           chxilegacyio(nlegacychxi)=io
-           chxilegacytemp(1,nlegacychxi)=to
-           chxilegacytemp(2,nlegacychxi)=ti
-           chxilegacycos(1,nlegacychxi)=ac*1.0d-9
-           chxilegacycos(2,nlegacychxi)=tc
-           chxilegacycos(3,nlegacychxi)=ar
-           chxilegacycos(4,nlegacychxi)=xr
-           chxilegacy(nlegacychxi)=0.d0
-          endif
+                nlegacychxi=nlegacychxi+1
+                chxilegacyx(nlegacychxi)=ni
+                chxilegacyat(nlegacychxi)=atom
+                chxilegacyio(nlegacychxi)=io
+                chxilegacytemp(1,nlegacychxi)=to
+                chxilegacytemp(2,nlegacychxi)=ti
+                chxilegacycos(1,nlegacychxi)=ac*1.0d-9
+                chxilegacycos(2,nlegacychxi)=tc
+                chxilegacycos(3,nlegacychxi)=ar
+                chxilegacycos(4,nlegacychxi)=xr
+                chxilegacy(nlegacychxi)=0.d0
+              endif
 c
 c     end inclusion ifs
 c
-         endif
-        endif
+            endif
+          endif
 c
 c     end nsequ,nentries
 c
-       enddo
+        enddo
       enddo
 c
 c Legacy sec electron rates
@@ -3337,15 +3354,15 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) m,at,io,nsecel
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        if (io.le.maxion(atom)) then
-         secat(i)=atom
-         secio(i)=io
-         secel(i)=nsecel
+        read (luin,*) m,at,io,nsecel
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          if (io.le.maxion(atom)) then
+            secat(i)=atom
+            secio(i)=io
+            secel(i)=nsecel
+          endif
         endif
-       endif
       enddo
 c
       close (luin)
@@ -3390,38 +3407,38 @@ c
 c     read in each sequence
 c
       do 70 i=1,nsequ
-       read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,fmt=10) (ibuf(j),j=1,19)
 c         write(*, 3) (ibuf(j),j = 1, 11)
-       read (luin,*) nions,ns
+        read (luin,*) nions,ns
 c
 c     for each ion in the sequence
 c
-       do 60 j=1,nions
-        do 50 shell=1,ns
-         atom=0
-         ion=0
-         read (luin,30) el,is,sh,at,io,ni,po,aa,bb,cc,dd
-         if (zmap(at).ne.0) then
+        do 60 j=1,nions
+          do 50 shell=1,ns
+            atom=0
+            ion=0
+            read (luin,30) el,is,sh,at,io,ni,po,aa,bb,cc,dd
+            if (zmap(at).ne.0) then
 c
 c     Check to see if the atom type is one chosen in ATDAT
 c
-          atom=zmap(at)
-          if (io.le.maxion(atom)) then
+              atom=zmap(at)
+              if (io.le.maxion(atom)) then
 c
 c     Check to see if the ion is within the limits set in ATDAT
 c
-           ion=io
-           collpot(shell,ion,atom)=po
-           aar(shell,ion,atom)=aa
-           bar(shell,ion,atom)=bb
-           car(shell,ion,atom)=cc
-           dar(shell,ion,atom)=dd
-          endif
-         endif
-   50   continue
-        if ((atom.ne.0).and.(ion.ne.0)) nshells(ion,atom)=ns
-        if ((at.eq.11).and.(ion.eq.1)) nshells(ion,atom)=2
-   60  continue
+                ion=io
+                collpot(shell,ion,atom)=po
+                aar(shell,ion,atom)=aa
+                bar(shell,ion,atom)=bb
+                car(shell,ion,atom)=cc
+                dar(shell,ion,atom)=dd
+              endif
+            endif
+   50     continue
+          if ((atom.ne.0).and.(ion.ne.0)) nshells(ion,atom)=ns
+          if ((at.eq.11).and.(ion.eq.1)) nshells(ion,atom)=2
+   60   continue
    70 continue
       close (luin)
 c
@@ -3461,18 +3478,18 @@ c
       write (*,20) (ibuf(j),j=1,19)
       read (luin,fmt=*) nentries
       do i=1,nentries
-       read (luin,*) at,io,isos,no,zto,zo,e2
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        if (io.le.maxion(atom)) then
-         ion=io
-         fn0(ion,atom)=no
-         zt0(ion,atom)=zto
-         zn0(ion,atom)=zo
-         ipot2ev(ion,atom)=e2
-         ipot2e(ion,atom)=e2*ev
+        read (luin,*) at,io,isos,no,zto,zo,e2
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          if (io.le.maxion(atom)) then
+            ion=io
+            fn0(ion,atom)=no
+            zt0(ion,atom)=zto
+            zn0(ion,atom)=zo
+            ipot2ev(ion,atom)=e2
+            ipot2e(ion,atom)=e2*ev
+          endif
         endif
-       endif
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -3480,51 +3497,51 @@ c
       read (luin,fmt=*) nklgfb,nklfbe
       read (luin,*) (klpxe(j),j=1,nklfbe)
       do i=1,nklgfb
-       do j=1,i
-        read (luin,*) pqn,ll,(klgfb(k,j,i),k=1,nklfbe)
-       enddo
-       do j=i+1,nklgfb
-        do k=1,nklfbe
-         klgfb(k,j,i)=0.0d0
+        do j=1,i
+          read (luin,*) pqn,ll,(klgfb(k,j,i),k=1,nklfbe)
         enddo
-       enddo
+        do j=i+1,nklgfb
+          do k=1,nklfbe
+            klgfb(k,j,i)=0.0d0
+          enddo
+        enddo
       enddo
 c
 c     precalculate row splines
 c
 c
       do i=1,nklfbe
-       tmpgfbx(i)=klpxe(i)
+        tmpgfbx(i)=klpxe(i)
       enddo
       do pqn=1,nklgfb
-       do ll=1,nklgfb
-        do i=1,nklfbe
-         tmpgfby(i)=klgfb(i,ll,pqn)
-         tmpgfby2(i)=0.d0
-        enddo
+        do ll=1,nklgfb
+          do i=1,nklfbe
+            tmpgfby(i)=klgfb(i,ll,pqn)
+            tmpgfby2(i)=0.d0
+          enddo
 c          call endgrads (tmpgfbx, tmpgfby, nklfbe, dydx0, dydxn)
-        call spline00 (tmpgfbx, tmpgfby, nklfbe, tmpgfby2)
-        do i=1,nklfbe
-         klgfby2(i,ll,pqn)=tmpgffy2(i)
+          call spline00 (tmpgfbx, tmpgfby, nklfbe, tmpgfby2)
+          do i=1,nklfbe
+            klgfby2(i,ll,pqn)=tmpgffy2(i)
+          enddo
         enddo
-       enddo
       enddo
 c
 c Two photon, 0.75*Ipot:
 c
       do atom=1,mxelem
-       do ion=1,mxion
-        ezz(ion,atom)=0.d0
-       enddo
+        do ion=1,mxion
+          ezz(ion,atom)=0.d0
+        enddo
       enddo
 c
       do atom=1,atypes
-       ion=mapz(atom)
-       ezz(ion,atom)=ipote(ion,atom)*0.75d0
-       if (mapz(atom).gt.1) then
-        ion=mapz(atom)-1
+        ion=mapz(atom)
         ezz(ion,atom)=ipote(ion,atom)*0.75d0
-       endif
+        if (mapz(atom).gt.1) then
+          ion=mapz(atom)-1
+          ezz(ion,atom)=ipote(ion,atom)*0.75d0
+        endif
       enddo
 c
 c   Read 2S0 effective recombination data
@@ -3538,10 +3555,10 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) th42(i),(r2s1a(i,k),k=1,9)
-       do k=1,9
-        r2s1a(i,k)=dlog10(r2s1a(i,k)+epsilon)
-       enddo
+        read (luin,*) th42(i),(r2s1a(i,k),k=1,9)
+        do k=1,9
+          r2s1a(i,k)=dlog10(r2s1a(i,k)+epsilon)
+        enddo
       enddo
 c
 c   Case B Hydrogen
@@ -3549,13 +3566,13 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) th42(i),(r2s1b(i,k),k=1,9)
-       do k=1,9
-        r2s1b(i,k)=dlog10(r2s1b(i,k)+epsilon)
-       enddo
+        read (luin,*) th42(i),(r2s1b(i,k),k=1,9)
+        do k=1,9
+          r2s1b(i,k)=dlog10(r2s1b(i,k)+epsilon)
+        enddo
       enddo
       do i=1,ni
-       th42(i)=dlog10(th42(i))
+        th42(i)=dlog10(th42(i))
       enddo
 c
 c   Case A Helium II
@@ -3563,10 +3580,10 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) the43(i),(r2s2a(i,k),k=1,9)
-       do k=1,9
-        r2s2a(i,k)=dlog10(r2s2a(i,k)+epsilon)
-       enddo
+        read (luin,*) the43(i),(r2s2a(i,k),k=1,9)
+        do k=1,9
+          r2s2a(i,k)=dlog10(r2s2a(i,k)+epsilon)
+        enddo
       enddo
 c
 c   Case B Helium II
@@ -3574,13 +3591,13 @@ c
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ni
       do i=1,ni
-       read (luin,*) the43(i),(r2s2b(i,k),k=1,9)
-       do k=1,9
-        r2s2b(i,k)=dlog10(r2s2b(i,k)+epsilon)
-       enddo
+        read (luin,*) the43(i),(r2s2b(i,k),k=1,9)
+        do k=1,9
+          r2s2b(i,k)=dlog10(r2s2b(i,k)+epsilon)
+        enddo
       enddo
       do i=1,ni
-       the43(i)=dlog10(the43(i))
+        the43(i)=dlog10(the43(i))
       enddo
 c
 c
@@ -3600,34 +3617,34 @@ c
 c      write(*,'(i4,1x,i4)') ngffg2, ngffu
 c
       do i=1,ngffg2
-       gffg2(i)=g20+dg20*dble(i-1)
+        gffg2(i)=g20+dg20*dble(i-1)
       enddo
 c
       do j=1,ngffu
-       read (luin,*) (gff(i,j),i=1,ngffg2)
-       gffu(j)=gu0+dgu0*dble(j-1)
+        read (luin,*) (gff(i,j),i=1,ngffg2)
+        gffu(j)=gu0+dgu0*dble(j-1)
       enddo
 c
 c    Convert to logs for interpolation
 c
       do j=1,ngffu
-       do i=1,ngffg2
-        gff(i,j)=dlog10(gff(i,j))
-       enddo
+        do i=1,ngffg2
+          gff(i,j)=dlog10(gff(i,j))
+        enddo
       enddo
 c
       do i=1,ngffg2
-       do j=1,ngffu
-        tmpgffx(j)=gffu(j)
-        tmpgffy(j)=gff(i,j)
-        tmpgffy2(j)=0.d0
-        gffy2(i,j)=dlog10(gff(i,j))
-       enddo
+        do j=1,ngffu
+          tmpgffx(j)=gffu(j)
+          tmpgffy(j)=gff(i,j)
+          tmpgffy2(j)=0.d0
+          gffy2(i,j)=dlog10(gff(i,j))
+        enddo
 c        call endgrads (tmpgffx, tmpgffy, ngffu, dydx0, dydxn)
-       call spline00 (tmpgffx, tmpgffy, ngffu, tmpgffy2)
-       do j=1,ngffu
-        gffy2(i,j)=tmpgffy2(j)
-       enddo
+        call spline00 (tmpgffx, tmpgffy, ngffu, tmpgffy2)
+        do j=1,ngffu
+          gffy2(i,j)=tmpgffy2(j)
+        enddo
       enddo
 cc
 c      read(luin, 1) (ibuf(k),k = 1,19)
@@ -3639,7 +3656,7 @@ cc
       read (luin,10) (ibuf(k),k=1,19)
       read (luin,*) ngffint
       do i=1,ngffint
-       read (luin,*) gffintg2(i),gffinty(i)
+        read (luin,*) gffintg2(i),gffinty(i)
       enddo
 c
 c    create spline coeffs once
@@ -3836,8 +3853,10 @@ c
       real*8 bty (mxxr3nspl)
       real*8 bty2(mxxr3nspl)
 c local 2d matrix arrays, converted to line list indices
-      real*8 xr3eij (mxxr3lvls,mxxr3lvls)  ! cm^-1
-      real*8 xr3aji (mxxr3lvls,mxxr3lvls)  ! ^-1
+c      cm^-1
+      real*8 xr3eij (mxxr3lvls,mxxr3lvls)
+c      ^-1
+      real*8 xr3aji (mxxr3lvls,mxxr3lvls)
       real*8 xr3gfij(mxxr3lvls,mxxr3lvls)
       real*8 xr3frij(mxxr3lvls,mxxr3lvls)
 c
@@ -3874,268 +3893,273 @@ c
 c
       idx=0
       do n=1,nentries
-       read (luin,*) id
-       read (luin,*) at,io
+        read (luin,*) id
+        read (luin,*) at,io
 c        write (*,*) 'READING XR3DATA ION: ',n,id
-       if (id.ne.n) then
-        write (*,*) 'ERROR READING XR3DATA ION: ',n,id
-        stop
-       endif
+        if (id.ne.n) then
+          write (*,*) 'ERROR READING XR3DATA ION: ',n,id
+          stop
+        endif
 c
-       atom=zmap(at)
-       ion=io
-       is=at-io+1
+        atom=zmap(at)
+        ion=io
+        is=at-io+1
 c
 c Only add lines for species present
 c
-       if (atom.ne.0) then
-        if (ion.le.maxion(atom)) then
+        if (atom.ne.0) then
+          if (ion.le.maxion(atom)) then
 c
-         idx=idx+1
-         xr3at(idx)=atom
-         xr3ion(idx)=ion
-         nxr3ions=nxr3ions+1
-         xr32s12j(idx)=0
+            idx=idx+1
+            xr3at(idx)=atom
+            xr3ion(idx)=ion
+            nxr3ions=nxr3ions+1
+            xr32s12j(idx)=0
 c
 c get level energies, gs and names
 c
-         read (luin,*) nl
+            read (luin,*) nl
 c        maxlevels=maxlevels+nl
-         if (maxlevels.lt.nl) maxlevels=nl
-         if (nl.gt.mxxr3lvls) then
-          write (*,*) 'ERROR IN  XR3DATA Level Limit Exceeded: '
-          write (*,*) idx,nl,mxxr3lvls
-          write (*,*) mapz(xr3at(idx)),xr3ion(idx)
-          stop
-         endif
+            if (maxlevels.lt.nl) maxlevels=nl
+            if (nl.gt.mxxr3lvls) then
+              write (*,*) 'ERROR IN  XR3DATA Level Limit Exceeded: '
+              write (*,*) idx,nl,mxxr3lvls
+              write (*,*) mapz(xr3at(idx)),xr3ion(idx)
+              stop
+            endif
 c
-         if (expertmode.gt.0) then
-          write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',nl
-         endif
+            if (expertmode.gt.0) then
+              write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',
+     &         nl
+            endif
 c
 c clear local matrices
 c
-         do i=1,nl
-          do j=1,nl
-           xr3eij(i,j)=0.d0
-           xr3aji(i,j)=0.d0
-           xr3gfij(i,j)=0.d0
-           xr3frij(i,j)=0.d0
-          enddo
-         enddo
+            do i=1,nl
+              do j=1,nl
+                xr3eij(i,j)=0.d0
+                xr3aji(i,j)=0.d0
+                xr3gfij(i,j)=0.d0
+                xr3frij(i,j)=0.d0
+              enddo
+            enddo
 c
-         xr3ni(idx)=nl
-         foundh12s2s12=0
-         foundhe12s2s12=0
-         do i=1,nl
-          read (luin,*) j,ei,gi,termi
-          if (i.ne.j) then
-           write (*,*) 'ERROR IN  XR3DATA LVLS: ',idx,i,j
-           stop
-          endif
-          xr3ei(i,idx)=ei
-          xr3gi(i,idx)=gi
-          xr3invgi(i,idx)=1.d0/gi
-          xr3id(i,idx)=termi(1:16)
-          if (is.eq.1) then
+            xr3ni(idx)=nl
+            foundh12s2s12=0
+            foundhe12s2s12=0
+            do i=1,nl
+              read (luin,*) j,ei,gi,termi
+              if (i.ne.j) then
+                write (*,*) 'ERROR IN  XR3DATA LVLS: ',idx,i,j
+                stop
+              endif
+              xr3ei(i,idx)=ei
+              xr3gi(i,idx)=gi
+              xr3invgi(i,idx)=1.d0/gi
+              xr3id(i,idx)=termi(1:16)
+              if (is.eq.1) then
 c
 c find H I like 2s 2S1/2 level for 2photon collisions
 c first level abound ground with gi=02 termi=2S1|2
-           if ((termi(1:5).eq.'2S1|2').and.(gi.eq.2).and.(i.gt.1)
-     &      .and.(foundh12s2s12.eq.0)) then
-            xr32s12j(idx)=i
-            foundh12s2s12=1
-            ee2p(atom)=ei*plk*cls
+                if ((termi(1:5).eq.'2S1|2').and.(gi.eq.2).and.(i.gt.1)
+     &           .and.(foundh12s2s12.eq.0)) then
+                  xr32s12j(idx)=i
+                  foundh12s2s12=1
+                  ee2p(atom)=ei*plk*cls
 c               write(*,*) at, io, is, idx, xr32S12j(idx),termi(1:5)
-           endif
-          endif
-          if (is.eq.2) then
+                endif
+              endif
+              if (is.eq.2) then
 c
 c find He I like  2s 2S1/2 level for 2photon collisions
 c
-           if ((termi(1:3).eq.'1S0').and.(gi.eq.1).and.(i.gt.1)
-     &      .and.(foundhe12s2s12.eq.0)) then
-            xr32s12j(idx)=i
-            foundhe12s2s12=1
-            ee2phe(atom)=ei*plk*cls
+                if ((termi(1:3).eq.'1S0').and.(gi.eq.1).and.(i.gt.1)
+     &           .and.(foundhe12s2s12.eq.0)) then
+                  xr32s12j(idx)=i
+                  foundhe12s2s12=1
+                  ee2phe(atom)=ei*plk*cls
 c               write(*,*) at, io, is, idx, xr32S12j(idx),termi(1:5)
-           endif
-          endif
-         enddo
-         do i=1,nl
-          do j=1,nl
-           xr3eij(i,j)=dabs(xr3ei(j,idx)-xr3ei(i,idx))
-c            xr3egij(i,j,idx)=plk*cls*xr3eij(i,j) ! ergs
-          enddo
-         enddo
+                endif
+              endif
+            enddo
+            do i=1,nl
+              do j=1,nl
+                xr3eij(i,j)=dabs(xr3ei(j,idx)-xr3ei(i,idx))
+c      ergs
+c            xr3egij(i,j,idx)=plk*cls*xr3eij(i,j)
+              enddo
+            enddo
 c
 c get collisions, and tag lines as they appear in the cascades
 c
-         read (luin,*) nc
+            read (luin,*) nc
 c        maxcolls=maxcolls+nc
-         if (maxcolls.lt.nc) maxcolls=nc
-         if (nc.gt.mxxr3cols) then
-          write (*,*) 'ERROR IN  XR3DATA Collisions Limit Exceeded: '
-          write (*,*) idx,nc,mxxr3cols
-          write (*,*) mapz(xr3at(idx)),xr3ion(idx)
-          stop
-         endif
-         nxr3ioncol(idx)=nc
-         do idc=1,nc
-          read (luin,*) id,i,j,tp,nspl,tc,frac
-          if (id.ne.idc) then
-           write (*,*) 'ERROR IN  XR3DATA COLL: ',idx,id,idc
-           stop
-          endif
-          xr3col_i(idc,idx)=i
-          xr3col_j(idc,idx)=j
-          xr3col_fr(idc,idx)=frac
-          xr3col_tc(idc,idx)=tc
-          read (luin,*) (bty(ids),ids=1,nspl)
-          do ids=1,nspl
-           btx(ids)=(1.d0/(nspl-1))*(ids-1)
-           bty2(ids)=0.d0
-          enddo
+            if (maxcolls.lt.nc) maxcolls=nc
+            if (nc.gt.mxxr3cols) then
+              write (*,*) 'ERROR IN  XR3DATA Collisions Limit Exceeded:
+     &'
+              write (*,*) idx,nc,mxxr3cols
+              write (*,*) mapz(xr3at(idx)),xr3ion(idx)
+              stop
+            endif
+            nxr3ioncol(idx)=nc
+            do idc=1,nc
+              read (luin,*) id,i,j,tp,nspl,tc,frac
+              if (id.ne.idc) then
+                write (*,*) 'ERROR IN  XR3DATA COLL: ',idx,id,idc
+                stop
+              endif
+              xr3col_i(idc,idx)=i
+              xr3col_j(idc,idx)=j
+              xr3col_fr(idc,idx)=frac
+              xr3col_tc(idc,idx)=tc
+              read (luin,*) (bty(ids),ids=1,nspl)
+              do ids=1,nspl
+                btx(ids)=(1.d0/(nspl-1))*(ids-1)
+                bty2(ids)=0.d0
+              enddo
 c
-          call spline00 (btx, bty, nspl, bty2)
+              call spline00 (btx, bty, nspl, bty2)
 c
-          do ids=1,nspl
-           xr3col_x(ids)=btx(ids)
-           xr3col_y(ids,idc,idx)=bty(ids)
-           xr3col_y2(ids,idc,idx)=bty2(ids)
-          enddo
-          xr3col_typespl(idc,idx)=tp
-          xr3col_nspl(idc,idx)=nspl
-          read (luin,*) ncasc
+              do ids=1,nspl
+                xr3col_x(ids)=btx(ids)
+                xr3col_y(ids,idc,idx)=bty(ids)
+                xr3col_y2(ids,idc,idx)=bty2(ids)
+              enddo
+              xr3col_typespl(idc,idx)=tp
+              xr3col_nspl(idc,idx)=nspl
+              read (luin,*) ncasc
 c          maxcascade=maxcascade+ncasc
-          if (maxcascade.lt.ncasc) maxcascade=ncasc
-          if (ncasc.gt.mxxr3casc) then
-           write (*,*) 'ERROR IN  XR3DATA Cascade Limit Exceeded: '
-           write (*,*) idx,ncasc,mxxr3casc
-           write (*,*) mapz(xr3at(idx)),xr3ion(idx)
-           stop
-          endif
-          xr3col_nl(idc,idx)=ncasc
-          do idcs=1,ncasc
-           read (luin,*) jj,kk,br,wl,aji,frac
-           xr3col_jj(idcs,idc,idx)=jj
-           xr3col_kk(idcs,idc,idx)=kk
-           xr3col_br(idcs,idc,idx)=br
-           xr3aji(kk,jj)=aji
-           wl=1.0d8/xr3eij(kk,jj)
-           gi=xr3gi(kk,idx)
-           gf=wl*wl*aji*1.49920542e-16*gi
-           xr3gfij(kk,jj)=gf
-           xr3frij(kk,jj)=frac
-          enddo
-         enddo
+              if (maxcascade.lt.ncasc) maxcascade=ncasc
+              if (ncasc.gt.mxxr3casc) then
+                write (*,*) 'ERROR IN  XR3DATA Cascade Limit Exceeded: '
+                write (*,*) idx,ncasc,mxxr3casc
+                write (*,*) mapz(xr3at(idx)),xr3ion(idx)
+                stop
+              endif
+              xr3col_nl(idc,idx)=ncasc
+              do idcs=1,ncasc
+                read (luin,*) jj,kk,br,wl,aji,frac
+                xr3col_jj(idcs,idc,idx)=jj
+                xr3col_kk(idcs,idc,idx)=kk
+                xr3col_br(idcs,idc,idx)=br
+                xr3aji(kk,jj)=aji
+                wl=1.0d8/xr3eij(kk,jj)
+                gi=xr3gi(kk,idx)
+                gf=wl*wl*aji*1.49920542e-16*gi
+                xr3gfij(kk,jj)=gf
+                xr3frij(kk,jj)=frac
+              enddo
+            enddo
 c
 c matrix-linelist maps:
 c
-         nt=nxr3lines
-         do i=1,(nl-1)
-          s1='                        '
-          s1=xr3id(i,idx)
-          do j=(i+1),nl
-           if (xr3gfij(i,j).gt.0.0) then
+            nt=nxr3lines
+            do i=1,(nl-1)
+              s1='                        '
+              s1=xr3id(i,idx)
+              do j=(i+1),nl
+                if (xr3gfij(i,j).gt.0.0) then
 c
-            nt=nt+1
-            if (nt.gt.mxxr3lines) then
-             write (*,*) 'ERROR IN XR3DATA line list Limit Exceeded: '
-             write (*,*) idx,nt,mxxr3lines
-             write (*,*) mapz(xr3at(idx)),xr3ion(idx)
-             stop
-            endif
+                  nt=nt+1
+                  if (nt.gt.mxxr3lines) then
+                    write (*,*) 'ERROR IN XR3DATA line list Limit Exceed
+     &ed: '
+                    write (*,*) idx,nt,mxxr3lines
+                    write (*,*) mapz(xr3at(idx)),xr3ion(idx)
+                    stop
+                  endif
 c
 c map idx,i,j to line number
 c
-            xr3lines_map(i,j,idx)=nt
-            xr3lines_map(j,i,idx)=nt
+                  xr3lines_map(i,j,idx)=nt
+                  xr3lines_map(j,i,idx)=nt
 c
 c inverse map line number to idx,i,j
 c
-            xr3lines_imapidx(nt)=idx
-            xr3lines_imap_i(nt)=i
-            xr3lines_imap_j(nt)=j
+                  xr3lines_imapidx(nt)=idx
+                  xr3lines_imap_i(nt)=i
+                  xr3lines_imap_j(nt)=j
 c
-            xr3lines_at(nt)=atom
-            xr3lines_ion(nt)=ion
-            nialines(ion,atom)=nialines(ion,atom)+1
+                  xr3lines_at(nt)=atom
+                  xr3lines_ion(nt)=ion
+                  nialines(ion,atom)=nialines(ion,atom)+1
 c
 c                  xr3lines_eij(nt)=xr3eij(i,j,idx)
-            xr3lines_egij(nt)=plk*cls*xr3eij(i,j)
+                  xr3lines_egij(nt)=plk*cls*xr3eij(i,j)
 c                  xr3lines_evij(nt)=xr3lines_egij(nt)/ev
 c
-            xr3lines_lam(nt)=1.0d8/xr3eij(i,j)!vacritz
-            xr3lines_aji(nt)=xr3aji(i,j)
-            xr3lines_gf(nt)=xr3gfij(i,j)
-            xr3lines_frac(nt)=xr3frij(i,j)
+c     vacritz
+                  xr3lines_lam(nt)=1.0d8/xr3eij(i,j)
+                  xr3lines_aji(nt)=xr3aji(i,j)
+                  xr3lines_gf(nt)=xr3gfij(i,j)
+                  xr3lines_frac(nt)=xr3frij(i,j)
 c
-            s2='                        '
-            s2=xr3id(j,idx)
-            l1=lenv(s1)
-            l2=lenv(s2)
-            s3=s1(1:l1)//'-'//s2(1:l2)
-            l0=lenv(s3)
-            l0=18-l0
-            s4='                  '
-            if (l0.gt.0) then
-             s3=s4(1:l0)//s3
-            endif
-            xr3lines_tran(nt)=s3(1:18)
-           endif
-          enddo
-         enddo
-         nxr3lines=nt
-        else
+                  s2='                        '
+                  s2=xr3id(j,idx)
+                  l1=lenv(s1)
+                  l2=lenv(s2)
+                  s3=s1(1:l1)//'-'//s2(1:l2)
+                  l0=lenv(s3)
+                  l0=18-l0
+                  s4='                  '
+                  if (l0.gt.0) then
+                    s3=s4(1:l0)//s3
+                  endif
+                  xr3lines_tran(nt)=s3(1:18)
+                endif
+              enddo
+            enddo
+            nxr3lines=nt
+          else
 c
 c skip ion: level energies, gs and names
 c
-         read (luin,*) nl
-         do i=1,nl
-          read (luin,*) j,ei,gi,termi
-         enddo
+            read (luin,*) nl
+            do i=1,nl
+              read (luin,*) j,ei,gi,termi
+            enddo
 c
 c skip collisions
 c
-         read (luin,*) nc
-         do idc=1,nc
-          read (luin,*) id,i,j,tp,nspl,tc,frac
-          read (luin,*) (bty(ids),ids=1,nspl)
-          read (luin,*) ncasc
-          do idcs=1,ncasc
-           read (luin,*) jj,kk,br,wl,aji,frac
-          enddo
-         enddo
-        endif
-       else
+            read (luin,*) nc
+            do idc=1,nc
+              read (luin,*) id,i,j,tp,nspl,tc,frac
+              read (luin,*) (bty(ids),ids=1,nspl)
+              read (luin,*) ncasc
+              do idcs=1,ncasc
+                read (luin,*) jj,kk,br,wl,aji,frac
+              enddo
+            enddo
+          endif
+        else
 c
 c skip atom: level energies, gs and names
 c
-        read (luin,*) nl
-        do i=1,nl
-         read (luin,*) j,ei,gi,termi
-        enddo
+          read (luin,*) nl
+          do i=1,nl
+            read (luin,*) j,ei,gi,termi
+          enddo
 c
 c skip collisions
 c
-        read (luin,*) nc
-        do idc=1,nc
-         read (luin,*) id,i,j,tp,nspl,tc,frac
-         read (luin,*) (bty(ids),ids=1,nspl)
-         read (luin,*) ncasc
-         do idcs=1,ncasc
-          read (luin,*) jj,kk,br,wl,aji,frac
-         enddo
-        enddo
-       endif
+          read (luin,*) nc
+          do idc=1,nc
+            read (luin,*) id,i,j,tp,nspl,tc,frac
+            read (luin,*) (bty(ids),ids=1,nspl)
+            read (luin,*) ncasc
+            do idcs=1,ncasc
+              read (luin,*) jj,kk,br,wl,aji,frac
+            enddo
+          enddo
+        endif
       enddo
       close (luin)
 c
       if (expertmode.gt.0) then
-       write (*,*) 'MaxCascade: ',maxcascade
-       write (*,*) 'MaxLevels : ',maxlevels
-       write (*,*) 'MaxColls  : ',maxcolls
+        write (*,*) 'MaxCascade: ',maxcascade
+        write (*,*) 'MaxLevels : ',maxlevels
+        write (*,*) 'MaxColls  : ',maxcolls
       endif
 c
       write (*,30) nxr3ions,nxr3lines
@@ -4171,8 +4195,10 @@ c
       real*8 bty (mxxr3nspl)
       real*8 bty2(mxxr3nspl)
 c same for large ions
-      real*8 xrleij (mxxrllvls,mxxrllvls)  ! cm^-1
-      real*8 xrlaji (mxxrllvls,mxxrllvls)  ! ^-1
+c      cm^-1
+      real*8 xrleij (mxxrllvls,mxxrllvls)
+c      ^-1
+      real*8 xrlaji (mxxrllvls,mxxrllvls)
       real*8 xrlgfij(mxxrllvls,mxxrllvls)
       real*8 xrlfrij(mxxrllvls,mxxrllvls)
 c
@@ -4210,238 +4236,243 @@ c
 c
       idx=0
       do n=1,nentries
-       read (luin,*) id,at,io
+        read (luin,*) id,at,io
 c       write (*,*) 'READING XRLDATA ION: ',n,id
-       if (id.ne.n) then
-        write (*,*) 'ERROR READING XRLDATA ION: ',n,id
-        stop
-       endif
+        if (id.ne.n) then
+          write (*,*) 'ERROR READING XRLDATA ION: ',n,id
+          stop
+        endif
 c
-       atom=zmap(at)
-       ion=io
+        atom=zmap(at)
+        ion=io
 c
 c Only add lines for species present
 c
-       if (atom.ne.0) then
-        if (ion.le.maxion(atom)) then
+        if (atom.ne.0) then
+          if (ion.le.maxion(atom)) then
 c
-         idx=idx+1
-         xrlat(idx)=atom
-         xrlion(idx)=ion
-         nxrlions=nxrlions+1
+            idx=idx+1
+            xrlat(idx)=atom
+            xrlion(idx)=ion
+            nxrlions=nxrlions+1
 c
 c get level energies, gs and names
 c
-         read (luin,*) nl
+            read (luin,*) nl
 c        maxlevels=maxlevels+nl
-         if (maxlevels.lt.nl) maxlevels=nl
-         if (nl.gt.mxxrllvls) then
-          write (*,*) 'ERROR IN  XRLDATA Level Limit Exceeded: '
-          write (*,*) idx,nl,mxxrllvls
-          write (*,*) mapz(xrlat(idx)),xrlion(idx)
-          stop
-         endif
-         if (expertmode.gt.0) then
-          write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',nl
-         endif
+            if (maxlevels.lt.nl) maxlevels=nl
+            if (nl.gt.mxxrllvls) then
+              write (*,*) 'ERROR IN  XRLDATA Level Limit Exceeded: '
+              write (*,*) idx,nl,mxxrllvls
+              write (*,*) mapz(xrlat(idx)),xrlion(idx)
+              stop
+            endif
+            if (expertmode.gt.0) then
+              write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',
+     &         nl
+            endif
 c
 c clear local matrices
 c
-         do i=1,nl
-          do j=1,nl
-           xrleij(i,j)=0.d0
-           xrlaji(i,j)=0.d0
-           xrlgfij(i,j)=0.d0
-           xrlfrij(i,j)=0.d0
-          enddo
-         enddo
+            do i=1,nl
+              do j=1,nl
+                xrleij(i,j)=0.d0
+                xrlaji(i,j)=0.d0
+                xrlgfij(i,j)=0.d0
+                xrlfrij(i,j)=0.d0
+              enddo
+            enddo
 c
-         xrlni(idx)=nl
-         do i=1,nl
-          read (luin,*) j,ei,gi,termi
-          if (i.ne.j) then
-           write (*,*) 'ERROR IN  XRLDATA LVLS: ',idx,i,j
-           stop
-          endif
-          xrlei(i,idx)=ei
-          xrlgi(i,idx)=gi
-          xrlinvgi(i,idx)=1.d0/gi
-          xrlid(i,idx)=termi(1:16)
-         enddo
-         do i=1,nl
-          do j=1,nl
-           xrleij(i,j)=dabs(xrlei(j,idx)-xrlei(i,idx))
-c            xrlegij(i,j,idx)=plk*cls*xrleij(i,j) ! ergs
-          enddo
-         enddo
+            xrlni(idx)=nl
+            do i=1,nl
+              read (luin,*) j,ei,gi,termi
+              if (i.ne.j) then
+                write (*,*) 'ERROR IN  XRLDATA LVLS: ',idx,i,j
+                stop
+              endif
+              xrlei(i,idx)=ei
+              xrlgi(i,idx)=gi
+              xrlinvgi(i,idx)=1.d0/gi
+              xrlid(i,idx)=termi(1:16)
+            enddo
+            do i=1,nl
+              do j=1,nl
+                xrleij(i,j)=dabs(xrlei(j,idx)-xrlei(i,idx))
+c      ergs
+c            xrlegij(i,j,idx)=plk*cls*xrleij(i,j)
+              enddo
+            enddo
 c
 c get collisions, and tag lines as they appear in the cascades
 c
-         read (luin,*) nc
+            read (luin,*) nc
 c        maxcolls=maxcolls+nc
-         if (maxcolls.lt.nc) maxcolls=nc
-         if (nc.gt.mxxrlcols) then
-          write (*,*) 'ERROR IN  XRLDATA Collisions Limit Exceeded: '
-          write (*,*) idx,nc,mxxrlcols
-          write (*,*) mapz(xrlat(idx)),xrlion(idx)
-          stop
-         endif
-         nxrlioncol(idx)=nc
-         do idc=1,nc
-          read (luin,*) id,i,j,tp,nspl,tc,frac
-          if (id.ne.idc) then
-           write (*,*) 'ERROR IN  XRLDATA COLL: ',idx,id,idc
-           stop
-          endif
-          xrlcol_i(idc,idx)=i
-          xrlcol_j(idc,idx)=j
-          xrlcol_fr(idc,idx)=frac
-          xrlcol_tc(idc,idx)=tc
-          read (luin,*) (bty(ids),ids=1,nspl)
-          do ids=1,nspl
-           btx(ids)=(1.d0/(nspl-1))*(ids-1)
-           bty2(ids)=0.d0
-          enddo
+            if (maxcolls.lt.nc) maxcolls=nc
+            if (nc.gt.mxxrlcols) then
+              write (*,*) 'ERROR IN  XRLDATA Collisions Limit Exceeded:
+     &'
+              write (*,*) idx,nc,mxxrlcols
+              write (*,*) mapz(xrlat(idx)),xrlion(idx)
+              stop
+            endif
+            nxrlioncol(idx)=nc
+            do idc=1,nc
+              read (luin,*) id,i,j,tp,nspl,tc,frac
+              if (id.ne.idc) then
+                write (*,*) 'ERROR IN  XRLDATA COLL: ',idx,id,idc
+                stop
+              endif
+              xrlcol_i(idc,idx)=i
+              xrlcol_j(idc,idx)=j
+              xrlcol_fr(idc,idx)=frac
+              xrlcol_tc(idc,idx)=tc
+              read (luin,*) (bty(ids),ids=1,nspl)
+              do ids=1,nspl
+                btx(ids)=(1.d0/(nspl-1))*(ids-1)
+                bty2(ids)=0.d0
+              enddo
 c
-          call spline00 (btx, bty, nspl, bty2)
+              call spline00 (btx, bty, nspl, bty2)
 c
-          do ids=1,nspl
-           xrlcol_x(ids)=btx(ids)
-           xrlcol_y(ids,idc,idx)=bty(ids)
-           xrlcol_y2(ids,idc,idx)=bty2(ids)
-          enddo
-          xrlcol_typespl(idc,idx)=tp
-          xrlcol_nspl(idc,idx)=nspl
-          read (luin,*) ncasc
+              do ids=1,nspl
+                xrlcol_x(ids)=btx(ids)
+                xrlcol_y(ids,idc,idx)=bty(ids)
+                xrlcol_y2(ids,idc,idx)=bty2(ids)
+              enddo
+              xrlcol_typespl(idc,idx)=tp
+              xrlcol_nspl(idc,idx)=nspl
+              read (luin,*) ncasc
 cc          maxcascade=maxcascade+ncasc
-          if (maxcascade.lt.ncasc) maxcascade=ncasc
-          if (ncasc.gt.mxxrlcasc) then
-           write (*,*) 'ERROR IN  XRLDATA Cascade Limit Exceeded: '
-           write (*,*) idx,ncasc,mxxrlcasc
-           write (*,*) mapz(xrlat(idx)),xrlion(idx)
-           stop
-          endif
-          xrlcol_nl(idc,idx)=ncasc
-          do idcs=1,ncasc
-           read (luin,*) jj,kk,br,wl,aji,frac
-           xrlcol_jj(idcs,idc,idx)=jj
-           xrlcol_kk(idcs,idc,idx)=kk
-           xrlcol_br(idcs,idc,idx)=br
-           xrlaji(kk,jj)=aji
-           wl=1.0d8/xrleij(kk,jj)
-           gi=xrlgi(kk,idx)
-           gf=wl*wl*aji*1.49920542e-16*gi
-           xrlgfij(kk,jj)=gf
-           xrlfrij(kk,jj)=frac
-          enddo
-         enddo
+              if (maxcascade.lt.ncasc) maxcascade=ncasc
+              if (ncasc.gt.mxxrlcasc) then
+                write (*,*) 'ERROR IN  XRLDATA Cascade Limit Exceeded: '
+                write (*,*) idx,ncasc,mxxrlcasc
+                write (*,*) mapz(xrlat(idx)),xrlion(idx)
+                stop
+              endif
+              xrlcol_nl(idc,idx)=ncasc
+              do idcs=1,ncasc
+                read (luin,*) jj,kk,br,wl,aji,frac
+                xrlcol_jj(idcs,idc,idx)=jj
+                xrlcol_kk(idcs,idc,idx)=kk
+                xrlcol_br(idcs,idc,idx)=br
+                xrlaji(kk,jj)=aji
+                wl=1.0d8/xrleij(kk,jj)
+                gi=xrlgi(kk,idx)
+                gf=wl*wl*aji*1.49920542e-16*gi
+                xrlgfij(kk,jj)=gf
+                xrlfrij(kk,jj)=frac
+              enddo
+            enddo
 c
 c matrix-linelist maps:
 c
-         nt=nxrllines
-         do i=1,(nl-1)
-          s1='                        '
-          s1=xrlid(i,idx)
-          do j=(i+1),nl
-           if (xrlgfij(i,j).gt.0.0) then
+            nt=nxrllines
+            do i=1,(nl-1)
+              s1='                        '
+              s1=xrlid(i,idx)
+              do j=(i+1),nl
+                if (xrlgfij(i,j).gt.0.0) then
 c
-            nt=nt+1
-            if (nt.gt.mxxrllines) then
-             write (*,*) 'ERROR IN XRLDATA line list Limit Exceeded:'
-             write (*,*) idx,nt,mxxrllines
-             write (*,*) mapz(xrlat(idx)),xrlion(idx)
-             stop
-            endif
+                  nt=nt+1
+                  if (nt.gt.mxxrllines) then
+                    write (*,*) 'ERROR IN XRLDATA line list Limit Exceed
+     &ed:'
+                    write (*,*) idx,nt,mxxrllines
+                    write (*,*) mapz(xrlat(idx)),xrlion(idx)
+                    stop
+                  endif
 c
 c map idx,i,j to line number
 c
-            xrllines_map(i,j,idx)=nt
-            xrllines_map(j,i,idx)=nt
+                  xrllines_map(i,j,idx)=nt
+                  xrllines_map(j,i,idx)=nt
 c
 c inverse map line number to idx,i,j
 c
-            xrllines_imapidx(nt)=idx
-            xrllines_imap_i(nt)=i
-            xrllines_imap_j(nt)=j
+                  xrllines_imapidx(nt)=idx
+                  xrllines_imap_i(nt)=i
+                  xrllines_imap_j(nt)=j
 c
-            xrllines_at(nt)=atom
-            xrllines_ion(nt)=ion
-            nialines(ion,atom)=nialines(ion,atom)+1
+                  xrllines_at(nt)=atom
+                  xrllines_ion(nt)=ion
+                  nialines(ion,atom)=nialines(ion,atom)+1
 c
 c                  xrllines_eij(nt)=xrleij(i,j,idx)
-            xrllines_egij(nt)=plk*cls*xrleij(i,j)
+                  xrllines_egij(nt)=plk*cls*xrleij(i,j)
 c                  xrllines_evij(nt)=xrllines_egij(nt)/ev
 c
-            xrllines_lam(nt)=1.0d8/xrleij(i,j)!vacritz
-            xrllines_aji(nt)=xrlaji(i,j)
-            xrllines_gf(nt)=xrlgfij(i,j)
-            xrllines_frac(nt)=xrlfrij(i,j)
+c     vacritz
+                  xrllines_lam(nt)=1.0d8/xrleij(i,j)
+                  xrllines_aji(nt)=xrlaji(i,j)
+                  xrllines_gf(nt)=xrlgfij(i,j)
+                  xrllines_frac(nt)=xrlfrij(i,j)
 c
-            s2='                        '
-            s2=xrlid(j,idx)
-            l1=lenv(s1)
-            l2=lenv(s2)
-            s3=s1(1:l1)//'-'//s2(1:l2)
-            l0=lenv(s3)
-            l0=18-l0
-            s4='                  '
-            if (l0.gt.0) then
-             s3=s4(1:l0)//s3
-            endif
-            xrllines_tran(nt)=s3(1:18)
-           endif
-          enddo
-         enddo
-         nxrllines=nt
-        else
+                  s2='                        '
+                  s2=xrlid(j,idx)
+                  l1=lenv(s1)
+                  l2=lenv(s2)
+                  s3=s1(1:l1)//'-'//s2(1:l2)
+                  l0=lenv(s3)
+                  l0=18-l0
+                  s4='                  '
+                  if (l0.gt.0) then
+                    s3=s4(1:l0)//s3
+                  endif
+                  xrllines_tran(nt)=s3(1:18)
+                endif
+              enddo
+            enddo
+            nxrllines=nt
+          else
 c
 c skip ion: level energies, gs and names
 c
-         read (luin,*) nl
-         do i=1,nl
-          read (luin,*) j,ei,gi,termi
-         enddo
+            read (luin,*) nl
+            do i=1,nl
+              read (luin,*) j,ei,gi,termi
+            enddo
 c
 c skip collisions
 c
-         read (luin,*) nc
-         do idc=1,nc
-          read (luin,*) id,i,j,tp,nspl,tc,frac
-          read (luin,*) (bty(ids),ids=1,nspl)
-          read (luin,*) ncasc
-          do idcs=1,ncasc
-           read (luin,*) jj,kk,br,wl,aji,frac
-          enddo
-         enddo
-        endif
-       else
+            read (luin,*) nc
+            do idc=1,nc
+              read (luin,*) id,i,j,tp,nspl,tc,frac
+              read (luin,*) (bty(ids),ids=1,nspl)
+              read (luin,*) ncasc
+              do idcs=1,ncasc
+                read (luin,*) jj,kk,br,wl,aji,frac
+              enddo
+            enddo
+          endif
+        else
 c
 c skip atom: level energies, gs and names
 c
-        read (luin,*) nl
-        do i=1,nl
-         read (luin,*) j,ei,gi,termi
-        enddo
+          read (luin,*) nl
+          do i=1,nl
+            read (luin,*) j,ei,gi,termi
+          enddo
 c
 c skip collisions
 c
-        read (luin,*) nc
-        do idc=1,nc
-         read (luin,*) id,i,j,tp,nspl,tc,frac
-         read (luin,*) (bty(ids),ids=1,nspl)
-         read (luin,*) ncasc
-         do idcs=1,ncasc
-          read (luin,*) jj,kk,br,wl,aji,frac
-         enddo
-        enddo
-       endif
+          read (luin,*) nc
+          do idc=1,nc
+            read (luin,*) id,i,j,tp,nspl,tc,frac
+            read (luin,*) (bty(ids),ids=1,nspl)
+            read (luin,*) ncasc
+            do idcs=1,ncasc
+              read (luin,*) jj,kk,br,wl,aji,frac
+            enddo
+          enddo
+        endif
       enddo
       close (luin)
 c
       if (expertmode.gt.0) then
-       write (*,*) 'MaxCascade: ',maxcascade
-       write (*,*) 'MaxLevels : ',maxlevels
-       write (*,*) 'MaxColls  : ',maxcolls
+        write (*,*) 'MaxCascade: ',maxcascade
+        write (*,*) 'MaxLevels : ',maxlevels
+        write (*,*) 'MaxColls  : ',maxcolls
       endif
 c
       write (*,30) nxrlions,nxrllines
@@ -4594,17 +4625,18 @@ c
       read (luin,*) nentries
       nrccii=nentries
       do j=1,nentries
-       trans='                        '
-       read (luin,*) id,eij,wav,trans
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_CIIDAT ENERGIES: ',id,j
-        stop
-       endif
-       lm=1.0d8/eij!vacritz
-       rccii_eij(j)=eij*plk*cls
-       rccii_lam(j)=lm
-       rccii_tr(j)=trans(1:10)
-       nialines(2,zmap(6))=nialines(2,zmap(6))+1
+        trans='                        '
+        read (luin,*) id,eij,wav,trans
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_CIIDAT ENERGIES: ',id,j
+          stop
+        endif
+c     vacritz
+        lm=1.0d8/eij
+        rccii_eij(j)=eij*plk*cls
+        rccii_lam(j)=lm
+        rccii_tr(j)=trans(1:10)
+        nialines(2,zmap(6))=nialines(2,zmap(6))+1
       enddo
 c
 c Temperature grid for recomb coefs, cvt to log
@@ -4613,7 +4645,7 @@ c
       read (luin,*) ntemps
       read (luin,*) (lgtem(idx),idx=1,ntemps)
       do j=1,ntemps
-       rccii_logte(j)=dlog10(lgtem(j))
+        rccii_logte(j)=dlog10(lgtem(j))
       enddo
 c
 c read coeffs,  cvt to log and make splines
@@ -4623,23 +4655,23 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) id,(coef(idx),idx=1,ntemps)
-       do idx=1,ntemps
-        coef(idx)=dlog10(coef(idx))
-        rccii_coeffy(1,idx,j)=coef(idx)
-       enddo
+        read (luin,*) id,(coef(idx),idx=1,ntemps)
+        do idx=1,ntemps
+          coef(idx)=dlog10(coef(idx))
+          rccii_coeffy(1,idx,j)=coef(idx)
+        enddo
 c
 c compute spline coeffs
 c
-       call spline00 (rccii_logte, coef, ntemps, coef2)
-       do idx=1,ntemps
-        rccii_coeffy2(1,idx,j)=coef2(idx)
-       enddo
+        call spline00 (rccii_logte, coef, ntemps, coef2)
+        do idx=1,ntemps
+          rccii_coeffy2(1,idx,j)=coef2(idx)
+        enddo
 c
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_CIIDAT CASEA: ',id,j,ntemps
-        stop
-       endif
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_CIIDAT CASEA: ',id,j,ntemps
+          stop
+        endif
       enddo
 c
 c Case B
@@ -4647,23 +4679,23 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) id,(coef(idx),idx=1,ntemps)
-       do idx=1,ntemps
-        coef(idx)=dlog10(coef(idx))
-        rccii_coeffy(2,idx,j)=coef(idx)
-       enddo
+        read (luin,*) id,(coef(idx),idx=1,ntemps)
+        do idx=1,ntemps
+          coef(idx)=dlog10(coef(idx))
+          rccii_coeffy(2,idx,j)=coef(idx)
+        enddo
 c
 c compute spline coeffs
 c
-       call spline00 (rccii_logte, coef, ntemps, coef2)
-       do idx=1,ntemps
-        rccii_coeffy2(2,idx,j)=coef2(idx)
-       enddo
+        call spline00 (rccii_logte, coef, ntemps, coef2)
+        do idx=1,ntemps
+          rccii_coeffy2(2,idx,j)=coef2(idx)
+        enddo
 c
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_CIIDAT CASEB: ',id,j,ntemps
-        stop
-       endif
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_CIIDAT CASEB: ',id,j,ntemps
+          stop
+        endif
       enddo
 c end CII
       close (luin)
@@ -4674,7 +4706,7 @@ c NIII->NII NII recombination
 c
       nte=8
       do ite=1,nte
-       niilgte(ite)=dlog10(niite(ite))-4.d0
+        niilgte(ite)=dlog10(niite(ite))-4.d0
       enddo
 c
       nrcnii=0
@@ -4693,30 +4725,31 @@ c
       read (luin,*) nentries
       nrcnii=nentries
       do j=1,nentries
-       trans='                        '
-       read (luin,*) id,mult,eij,wav,trans
-       l0=lenv(trans)
-       l0=16-l0
-       if (l0.lt.0) l0=0
-       s3='                '
-       if (l0.gt.0) then
-        trans=s3(1:l0)//trans
-       endif
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_NIIDAT: ',id,j,trans
-        stop
-       endif
-       lm=1.0d8/eij!vacritz
-       rcnii_eij(j)=eij*plk*cls
-       rcnii_lam(j)=lm
-       rcnii_tr(j)=trans(1:16)
-       nialines(2,zmap(7))=nialines(2,zmap(7))+1
+        trans='                        '
+        read (luin,*) id,mult,eij,wav,trans
+        l0=lenv(trans)
+        l0=16-l0
+        if (l0.lt.0) l0=0
+        s3='                '
+        if (l0.gt.0) then
+          trans=s3(1:l0)//trans
+        endif
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_NIIDAT: ',id,j,trans
+          stop
+        endif
+c     vacritz
+        lm=1.0d8/eij
+        rcnii_eij(j)=eij*plk*cls
+        rcnii_lam(j)=lm
+        rcnii_tr(j)=trans(1:16)
+        nialines(2,zmap(7))=nialines(2,zmap(7))+1
       enddo
 c
 c fits to recomb coeffs, one set for each density and case A + B
 c
       do ite=1,nte
-       splinex(ite)=niilgte(ite)
+        splinex(ite)=niilgte(ite)
       enddo
 c
 c Case A first, must find 4 densities
@@ -4724,84 +4757,84 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       if (nentries.ne.4) then
-       write (*,*) 'ERROR READING RECOMB_NIIDAT: coeffs A',nentries
-       stop
+        write (*,*) 'ERROR READING RECOMB_NIIDAT: coeffs A',nentries
+        stop
       endif
 c for each density
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseA, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin20_y(1,ite,idx)=spliney(ite)
-        rcniin20_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin20_y(1,ite,idx)=spliney(ite)
+          rcniin20_y2(1,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseA, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin30_y(1,ite,idx)=spliney(ite)
-        rcniin30_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin30_y(1,ite,idx)=spliney(ite)
+          rcniin30_y2(1,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseA, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin40_y(1,ite,idx)=spliney(ite)
-        rcniin40_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin40_y(1,ite,idx)=spliney(ite)
+          rcniin40_y2(1,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseA, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin50_y(1,ite,idx)=spliney(ite)
-        rcniin50_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin50_y(1,ite,idx)=spliney(ite)
+          rcniin50_y2(1,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
 c Case B second, must find 4 densities
@@ -4809,84 +4842,84 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       if (nentries.ne.4) then
-       write (*,*) 'ERROR READING RECOMB_NIIDAT: coeffs B',nentries
-       stop
+        write (*,*) 'ERROR READING RECOMB_NIIDAT: coeffs B',nentries
+        stop
       endif
 c for each density
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseB, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin20_y(2,ite,idx)=spliney(ite)
-        rcniin20_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin20_y(2,ite,idx)=spliney(ite)
+          rcniin20_y2(2,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseB, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin30_y(2,ite,idx)=spliney(ite)
-        rcniin30_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin30_y(2,ite,idx)=spliney(ite)
+          rcniin30_y2(2,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseB, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin40_y(2,ite,idx)=spliney(ite)
-        rcniin40_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin40_y(2,ite,idx)=spliney(ite)
+          rcniin40_y2(2,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) (niicoef(ite),ite=1,8)
+        read (luin,*) (niicoef(ite),ite=1,8)
 cc
 cc caseB, coef, line,  case=1 A, case=2 B
 cc
-       do ite=1,nte-1
-        t4=niite(ite)*1.0d-4
-        spliney(ite)=fnii(t4,niicoef)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcniin50_y(2,ite,idx)=spliney(ite)
-        rcniin50_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        do ite=1,nte-1
+          t4=niite(ite)*1.0d-4
+          spliney(ite)=fnii(t4,niicoef)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcniin50_y(2,ite,idx)=spliney(ite)
+          rcniin50_y2(2,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c
 c end NII
@@ -4918,24 +4951,25 @@ c
       read (luin,*) nentries
       nrcoi_q=nentries
       do j=1,nentries
-       trans='                        '
-       read (luin,*) id,idm,ida,idb,eij,wav,trans
-       l0=lenv(trans)
-       l0=16-l0
-       if (l0.lt.0) l0=0
-       s3='                '
-       if (l0.gt.0) then
-        trans=s3(1:l0)//trans
-       endif
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_OIDAT: Q',id,j,trans
-        stop
-       endif
-       lm=1.0d8/eij!vacritz
-       rcoi_qeij(j)=eij*plk*cls
-       rcoi_qlam(j)=lm
-       rcoi_qtr(j)=trans(1:16)
-       nialines(1,zmap(8))=nialines(1,zmap(8))+1
+        trans='                        '
+        read (luin,*) id,idm,ida,idb,eij,wav,trans
+        l0=lenv(trans)
+        l0=16-l0
+        if (l0.lt.0) l0=0
+        s3='                '
+        if (l0.gt.0) then
+          trans=s3(1:l0)//trans
+        endif
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_OIDAT: Q',id,j,trans
+          stop
+        endif
+c     vacritz
+        lm=1.0d8/eij
+        rcoi_qeij(j)=eij*plk*cls
+        rcoi_qlam(j)=lm
+        rcoi_qtr(j)=trans(1:16)
+        nialines(1,zmap(8))=nialines(1,zmap(8))+1
       enddo
 c
 c second order powerlaw fits to recomb coeffs
@@ -4943,20 +4977,20 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) id,aa,ba,ca,ab,bb,cb
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_OIDAT: Q',id,j
-        stop
-       endif
+        read (luin,*) id,aa,ba,ca,ab,bb,cb
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_OIDAT: Q',id,j
+          stop
+        endif
 c
 c case, coef, line,  case=1 A, case=2 B
 c
-       rcoi_qcoef(1,1,j)=aa
-       rcoi_qcoef(1,2,j)=ba
-       rcoi_qcoef(1,3,j)=ca
-       rcoi_qcoef(2,1,j)=ab
-       rcoi_qcoef(2,2,j)=bb
-       rcoi_qcoef(2,3,j)=cb
+        rcoi_qcoef(1,1,j)=aa
+        rcoi_qcoef(1,2,j)=ba
+        rcoi_qcoef(1,3,j)=ca
+        rcoi_qcoef(2,1,j)=ab
+        rcoi_qcoef(2,2,j)=bb
+        rcoi_qcoef(2,3,j)=cb
       enddo
 c
 c Triplets...
@@ -4968,24 +5002,25 @@ c
       read (luin,*) nentries
       nrcoi_t=nentries
       do j=1,nentries
-       trans='                        '
-       read (luin,*) id,idm,ida,idb,eij,wav,trans
-       l0=lenv(trans)
-       l0=16-l0
-       if (l0.lt.0) l0=0
-       s3='                '
-       if (l0.gt.0) then
-        trans=s3(1:l0)//trans
-       endif
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_OIDAT: T',id,j,trans
-        stop
-       endif
-       lm=1.0d8/eij!vacritz
-       rcoi_teij(j)=eij*plk*cls
-       rcoi_tlam(j)=lm
-       rcoi_ttr(j)=trans(1:16)
-       nialines(1,zmap(8))=nialines(1,zmap(8))+1
+        trans='                        '
+        read (luin,*) id,idm,ida,idb,eij,wav,trans
+        l0=lenv(trans)
+        l0=16-l0
+        if (l0.lt.0) l0=0
+        s3='                '
+        if (l0.gt.0) then
+          trans=s3(1:l0)//trans
+        endif
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_OIDAT: T',id,j,trans
+          stop
+        endif
+c     vacritz
+        lm=1.0d8/eij
+        rcoi_teij(j)=eij*plk*cls
+        rcoi_tlam(j)=lm
+        rcoi_ttr(j)=trans(1:16)
+        nialines(1,zmap(8))=nialines(1,zmap(8))+1
       enddo
 c
 c second order powerlaw fits to recomb coeffs
@@ -4993,20 +5028,20 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) id,aa,ba,ca,ab,bb,cb
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_OIDAT: T',id,j
-        stop
-       endif
+        read (luin,*) id,aa,ba,ca,ab,bb,cb
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_OIDAT: T',id,j
+          stop
+        endif
 c
 c case, coef, line,  case=1 A, case=2 B
 c
-       rcoi_tcoef(1,1,j)=aa
-       rcoi_tcoef(1,2,j)=ba
-       rcoi_tcoef(1,3,j)=ca
-       rcoi_tcoef(2,1,j)=ab
-       rcoi_tcoef(2,2,j)=bb
-       rcoi_tcoef(2,3,j)=cb
+        rcoi_tcoef(1,1,j)=aa
+        rcoi_tcoef(1,2,j)=ba
+        rcoi_tcoef(1,3,j)=ca
+        rcoi_tcoef(2,1,j)=ab
+        rcoi_tcoef(2,2,j)=bb
+        rcoi_tcoef(2,3,j)=cb
       enddo
 c end OI
       close (luin)
@@ -5018,7 +5053,7 @@ c
       nrcoii=0
       nte=8
       do ite=1,nte
-       oiilgte(ite)=dlog10(oiite(ite))-4.d0
+        oiilgte(ite)=dlog10(oiite(ite))-4.d0
       enddo
 c
 c OII recomb, 35 brightest multiplets resolved into 200 lines
@@ -5037,25 +5072,27 @@ c
       read (luin,*) nentries
       nrcoii=nentries
       do j=1,nentries
-       trans='                        '
-       read (luin,*) id,mult,eij,wav,trans
-       l0=lenv(trans)
-       l0=18-l0
-       if (l0.lt.0) l0=0
-       s3='                  '
-       if (l0.gt.0) then
-        trans=s3(1:l0)//trans
-       endif
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_OIIDAT ENERGIES: ',id,j,trans
-        stop
-       endif
-       lm=1.0d8/eij!vacritz
-       rcoii_eij(j)=eij*plk*cls
-       rcoii_lam(j)=lm
-       rcoii_mltid(j)=mult
-       rcoii_tr(j)=trans(1:18)
-       nialines(2,zmap(8))=nialines(2,zmap(8))+1
+        trans='                        '
+        read (luin,*) id,mult,eij,wav,trans
+        l0=lenv(trans)
+        l0=18-l0
+        if (l0.lt.0) l0=0
+        s3='                  '
+        if (l0.gt.0) then
+          trans=s3(1:l0)//trans
+        endif
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_OIIDAT ENERGIES: ',id,j,
+     &     trans
+          stop
+        endif
+c     vacritz
+        lm=1.0d8/eij
+        rcoii_eij(j)=eij*plk*cls
+        rcoii_lam(j)=lm
+        rcoii_mltid(j)=mult
+        rcoii_tr(j)=trans(1:18)
+        nialines(2,zmap(8))=nialines(2,zmap(8))+1
       enddo
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -5066,7 +5103,7 @@ c
       ncoefs=7
       ndens=4
       do ite=1,nte
-       splinex(ite)=oiilgte(ite)
+        splinex(ite)=oiilgte(ite)
       enddo
 c
 c Case A first
@@ -5074,71 +5111,71 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) id,(coef(j),j=1,ncoefs)
-       abcd(1)=coef(1)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin20_y(1,ite,idx)=spliney(ite)
-        rcoiin20_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        read (luin,*) id,(coef(j),j=1,ncoefs)
+        abcd(1)=coef(1)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin20_y(1,ite,idx)=spliney(ite)
+          rcoiin20_y2(1,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(2)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin40_y(1,ite,idx)=spliney(ite)
-        rcoiin40_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(2)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin40_y(1,ite,idx)=spliney(ite)
+          rcoiin40_y2(1,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(3)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin50_y(1,ite,idx)=spliney(ite)
-        rcoiin50_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(3)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin50_y(1,ite,idx)=spliney(ite)
+          rcoiin50_y2(1,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(4)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin60_y(1,ite,idx)=spliney(ite)
-        rcoiin60_y2(1,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(4)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin60_y(1,ite,idx)=spliney(ite)
+          rcoiin60_y2(1,ite,idx)=spliney2(ite)
+        enddo
 c
-       if (id.ne.idx) then
-        write (*,*) 'ERROR READING RECOMB_OIIDAT CASEA: ',id,idx
-        stop
-       endif
+        if (id.ne.idx) then
+          write (*,*) 'ERROR READING RECOMB_OIIDAT CASEA: ',id,idx
+          stop
+        endif
 c
       enddo
 c
@@ -5147,71 +5184,71 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) id,(coef(j),j=1,ncoefs)
-       abcd(1)=coef(1)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin20_y(2,ite,idx)=spliney(ite)
-        rcoiin20_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        read (luin,*) id,(coef(j),j=1,ncoefs)
+        abcd(1)=coef(1)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin20_y(2,ite,idx)=spliney(ite)
+          rcoiin20_y2(2,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(2)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin40_y(2,ite,idx)=spliney(ite)
-        rcoiin40_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(2)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin40_y(2,ite,idx)=spliney(ite)
+          rcoiin40_y2(2,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(3)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin50_y(2,ite,idx)=spliney(ite)
-        rcoiin50_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(3)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin50_y(2,ite,idx)=spliney(ite)
+          rcoiin50_y2(2,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(4)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin60_y(2,ite,idx)=spliney(ite)
-        rcoiin60_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(4)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin60_y(2,ite,idx)=spliney(ite)
+          rcoiin60_y2(2,ite,idx)=spliney2(ite)
+        enddo
 c
-       if (id.ne.idx) then
-        write (*,*) 'ERROR READING RECOMB_OIIDAT CASEB: ',id,idx
-        stop
-       endif
+        if (id.ne.idx) then
+          write (*,*) 'ERROR READING RECOMB_OIIDAT CASEB: ',id,idx
+          stop
+        endif
 c
       enddo
 c
@@ -5220,71 +5257,71 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do idx=1,nentries
-       read (luin,*) id,(coef(j),j=1,ncoefs)
-       abcd(1)=coef(1)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin20_y(3,ite,idx)=spliney(ite)
-        rcoiin20_y2(3,ite,idx)=spliney2(ite)
-       enddo
+        read (luin,*) id,(coef(j),j=1,ncoefs)
+        abcd(1)=coef(1)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin20_y(3,ite,idx)=spliney(ite)
+          rcoiin20_y2(3,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(2)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin40_y(3,ite,idx)=spliney(ite)
-        rcoiin40_y2(3,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(2)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin40_y(3,ite,idx)=spliney(ite)
+          rcoiin40_y2(3,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(3)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin50_y(3,ite,idx)=spliney(ite)
-        rcoiin50_y2(3,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(3)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin50_y(3,ite,idx)=spliney(ite)
+          rcoiin50_y2(3,ite,idx)=spliney2(ite)
+        enddo
 c
-       abcd(1)=coef(4)
-       abcd(2)=coef(5)
-       abcd(3)=coef(6)
-       abcd(4)=coef(7)
-       do ite=1,nte-1
-        t4=oiite(ite)*1.0d-4
-        spliney(ite)=foii(t4,abcd)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcoiin60_y(3,ite,idx)=spliney(ite)
-        rcoiin60_y2(3,ite,idx)=spliney2(ite)
-       enddo
+        abcd(1)=coef(4)
+        abcd(2)=coef(5)
+        abcd(3)=coef(6)
+        abcd(4)=coef(7)
+        do ite=1,nte-1
+          t4=oiite(ite)*1.0d-4
+          spliney(ite)=foii(t4,abcd)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcoiin60_y(3,ite,idx)=spliney(ite)
+          rcoiin60_y2(3,ite,idx)=spliney2(ite)
+        enddo
 c
-       if (id.ne.idx) then
-        write (*,*) 'ERROR READING RECOMB_OIIDAT CASEC: ',id,idx
-        stop
-       endif
+        if (id.ne.idx) then
+          write (*,*) 'ERROR READING RECOMB_OIIDAT CASEC: ',id,idx
+          stop
+        endif
 c
       enddo
 c end OII
@@ -5297,7 +5334,7 @@ c
       nrcneii=0
       nte=8
       do ite=1,nte
-       neiilgte(ite)=dlog10(neiite(ite))-4.d0
+        neiilgte(ite)=dlog10(neiite(ite))-4.d0
       enddo
 c
 c NeII recomb, 6 brightest multiplets resolved into 38 lines
@@ -5316,24 +5353,25 @@ c
       read (luin,*) nentries
       nrcneii=nentries
       do j=1,nentries
-       trans='                        '
-       read (luin,*) id,mult,eij,wav,trans
-       l0=lenv(trans)
-       l0=16-l0
-       if (l0.lt.0) l0=0
-       s3='                '
-       if (l0.gt.0) then
-        trans=s3(1:l0)//trans
-       endif
-       if (id.ne.j) then
-        write (*,*) 'ERROR READING RECOMB_NEIIDAT: ',id,j,trans
-        stop
-       endif
-       lm=1.0d8/eij!vacritz
-       rcneii_eij(j)=eij*plk*cls
-       rcneii_lam(j)=lm
-       rcneii_tr(j)=trans(1:16)
-       nialines(2,zmap(10))=nialines(2,zmap(10))+1
+        trans='                        '
+        read (luin,*) id,mult,eij,wav,trans
+        l0=lenv(trans)
+        l0=16-l0
+        if (l0.lt.0) l0=0
+        s3='                '
+        if (l0.gt.0) then
+          trans=s3(1:l0)//trans
+        endif
+        if (id.ne.j) then
+          write (*,*) 'ERROR READING RECOMB_NEIIDAT: ',id,j,trans
+          stop
+        endif
+c     vacritz
+        lm=1.0d8/eij
+        rcneii_eij(j)=eij*plk*cls
+        rcneii_lam(j)=lm
+        rcneii_tr(j)=trans(1:16)
+        nialines(2,zmap(10))=nialines(2,zmap(10))+1
       enddo
 c
 c third order + powerlaw fits to recomb coeffs
@@ -5341,47 +5379,47 @@ c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do ite=1,nte
-       splinex(ite)=neiilgte(ite)
+        splinex(ite)=neiilgte(ite)
       enddo
       do idx=1,nentries
-       read (luin,*) id,mult,aa,ba,ca,da,fa,ab,bb,cb,db,fb
-       if (id.ne.idx) then
-        write (*,*) 'ERROR READING RECOMB_NeIIDAT: ',id,idx
-        stop
-       endif
+        read (luin,*) id,mult,aa,ba,ca,da,fa,ab,bb,cb,db,fb
+        if (id.ne.idx) then
+          write (*,*) 'ERROR READING RECOMB_NeIIDAT: ',id,idx
+          stop
+        endif
 c
 c case, coef, line,  case=1 A, case=2 B
 c
-       abcdf(1)=aa
-       abcdf(2)=ba
-       abcdf(3)=ca
-       abcdf(4)=da
-       abcdf(5)=fa
-       do ite=1,nte-1
-        t4=neiite(ite)*1.0d-4
-        spliney(ite)=fneii(t4,abcdf)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcneii_y(1,ite,idx)=spliney(ite)
-        rcneii_y2(1,ite,idx)=spliney2(ite)
-       enddo
-       abcdf(1)=ab
-       abcdf(2)=bb
-       abcdf(3)=cb
-       abcdf(4)=db
-       abcdf(5)=fb
-       do ite=1,nte-1
-        t4=neiite(ite)*1.0d-4
-        spliney(ite)=fneii(t4,abcdf)
-       enddo
-       spliney(nte)=spliney(nte-1)-1.d0
-       call spline00 (splinex, spliney, nte, spliney2)
-       do ite=1,nte
-        rcneii_y(2,ite,idx)=spliney(ite)
-        rcneii_y2(2,ite,idx)=spliney2(ite)
-       enddo
+        abcdf(1)=aa
+        abcdf(2)=ba
+        abcdf(3)=ca
+        abcdf(4)=da
+        abcdf(5)=fa
+        do ite=1,nte-1
+          t4=neiite(ite)*1.0d-4
+          spliney(ite)=fneii(t4,abcdf)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcneii_y(1,ite,idx)=spliney(ite)
+          rcneii_y2(1,ite,idx)=spliney2(ite)
+        enddo
+        abcdf(1)=ab
+        abcdf(2)=bb
+        abcdf(3)=cb
+        abcdf(4)=db
+        abcdf(5)=fb
+        do ite=1,nte-1
+          t4=neiite(ite)*1.0d-4
+          spliney(ite)=fneii(t4,abcdf)
+        enddo
+        spliney(nte)=spliney(nte-1)-1.d0
+        call spline00 (splinex, spliney, nte, spliney2)
+        do ite=1,nte
+          rcneii_y(2,ite,idx)=spliney(ite)
+          rcneii_y2(2,ite,idx)=spliney2(ite)
+        enddo
       enddo
 c end neII
       close (luin)
@@ -5435,7 +5473,8 @@ c           e12r(nl)=e12
 c           omres(nl)=om
 c           fabsr(nl)=fab
 c           tkexres(nl)=e12/rkb
-c           rlam(nl)=plk*cls/e12r(nl)!vacritz
+c     vacritz
+c           rlam(nl)=plk*cls/e12r(nl)
 c           nialines(io,atom)=nialines(io,atom)+1
 c         endif
 c       endif
@@ -5452,24 +5491,25 @@ c
       mlines=0
       read (luin,*) nentries
       do 40 j=1,nentries
-       read (luin,*) at,io,e12,w1,w2,a21,om
-       if (zmap(at).ne.0) then
-        atom=zmap(at)
-        if (io.le.maxion(atom)) then
-         mlines=mlines+1
-         ml=mlines
-         ielfs(ml)=atom
-         ionfs(ml)=io
-         e12fs(ml)=e12
-         w1fs(ml)=w1
-         w2fs(ml)=w2
-         a21fs(ml)=a21
-         omfs(ml)=om
-         tkexfs(ml)=e12/rkb
-         fslam(ml)=plk*cls/e12fs(ml)!vacritz
-         nialines(io,atom)=nialines(io,atom)+1
+        read (luin,*) at,io,e12,w1,w2,a21,om
+        if (zmap(at).ne.0) then
+          atom=zmap(at)
+          if (io.le.maxion(atom)) then
+            mlines=mlines+1
+            ml=mlines
+            ielfs(ml)=atom
+            ionfs(ml)=io
+            e12fs(ml)=e12
+            w1fs(ml)=w1
+            w2fs(ml)=w2
+            a21fs(ml)=a21
+            omfs(ml)=om
+            tkexfs(ml)=e12/rkb
+c     vacritz
+            fslam(ml)=plk*cls/e12fs(ml)
+            nialines(io,atom)=nialines(io,atom)+1
+          endif
         endif
-       endif
    40 continue
 c
       close (luin)
@@ -5515,30 +5555,31 @@ c
       read (luin,*) nentries
       nentries=nentries/3
       do i=1,nentries
-       do j=1,3
-        read (luin,*) ni,at,io,wl,e12,tlam,a21,g1,p1,g2,p2,m
-        if (zmap(at).ne.0) then
-         atom=zmap(at)
-         if (io.le.maxion(atom)) then
-          if (j.eq.1) then
-           nf3ions=nf3ions+1
-           f3type(nf3ions)=ni
-           f3ion(nf3ions)=io
-           f3atom(nf3ions)=atom
+        do j=1,3
+          read (luin,*) ni,at,io,wl,e12,tlam,a21,g1,p1,g2,p2,m
+          if (zmap(at).ne.0) then
+            atom=zmap(at)
+            if (io.le.maxion(atom)) then
+              if (j.eq.1) then
+                nf3ions=nf3ions+1
+                f3type(nf3ions)=ni
+                f3ion(nf3ions)=io
+                f3atom(nf3ions)=atom
+              endif
+c     vacritz
+              f3lam(j,nf3ions)=tlam
+              nialines(io,atom)=nialines(io,atom)+1
+              wi3(j,nf3ions)=wl
+              tkex3(j,nf3ions)=e12
+              ei3(j,nf3ions)=e12
+              ai3(j,nf3ions)=a21
+              gam3(1,j,nf3ions)=g1
+              gam3(2,j,nf3ions)=g2
+              pow3(1,j,nf3ions)=p1
+              pow3(2,j,nf3ions)=p2
+            endif
           endif
-          f3lam(j,nf3ions)=tlam!vacritz
-          nialines(io,atom)=nialines(io,atom)+1
-          wi3(j,nf3ions)=wl
-          tkex3(j,nf3ions)=e12
-          ei3(j,nf3ions)=e12
-          ai3(j,nf3ions)=a21
-          gam3(1,j,nf3ions)=g1
-          gam3(2,j,nf3ions)=g2
-          pow3(1,j,nf3ions)=p1
-          pow3(2,j,nf3ions)=p2
-         endif
-        endif
-       enddo
+        enddo
       enddo
 c
 c   Now type 2 transitions
@@ -5547,30 +5588,31 @@ c
       read (luin,*) nentries
       nentries=nentries/3
       do i=1,nentries
-       do j=1,3
-        read (luin,*) ni,at,io,wl,e12,tlam,a21,g1,p1,g2,p2,m
-        if (zmap(at).ne.0) then
-         atom=zmap(at)
-         if (io.le.maxion(atom)) then
-          if (j.eq.1) then
-           nf3ions=nf3ions+1
-           f3type(nf3ions)=ni
-           f3ion(nf3ions)=io
-           f3atom(nf3ions)=atom
+        do j=1,3
+          read (luin,*) ni,at,io,wl,e12,tlam,a21,g1,p1,g2,p2,m
+          if (zmap(at).ne.0) then
+            atom=zmap(at)
+            if (io.le.maxion(atom)) then
+              if (j.eq.1) then
+                nf3ions=nf3ions+1
+                f3type(nf3ions)=ni
+                f3ion(nf3ions)=io
+                f3atom(nf3ions)=atom
+              endif
+c     vacritzmicrons
+              f3lam(j,nf3ions)=tlam
+              nialines(io,atom)=nialines(io,atom)+1
+              wi3(j,nf3ions)=wl
+              ei3(j,nf3ions)=e12
+              tkex3(j,nf3ions)=e12
+              ai3(j,nf3ions)=a21
+              gam3(1,j,nf3ions)=g1
+              gam3(2,j,nf3ions)=g2
+              pow3(1,j,nf3ions)=p1
+              pow3(2,j,nf3ions)=p2
+            endif
           endif
-          f3lam(j,nf3ions)=tlam!vacritzmicrons
-          nialines(io,atom)=nialines(io,atom)+1
-          wi3(j,nf3ions)=wl
-          ei3(j,nf3ions)=e12
-          tkex3(j,nf3ions)=e12
-          ai3(j,nf3ions)=a21
-          gam3(1,j,nf3ions)=g1
-          gam3(2,j,nf3ions)=g2
-          pow3(1,j,nf3ions)=p1
-          pow3(2,j,nf3ions)=p2
-         endif
-        endif
-       enddo
+        enddo
       enddo
 c
       close (luin)
@@ -5625,117 +5667,119 @@ c
       nfmions=0
       maxlevels=0
       do i=1,mxion
-       do j=1,mxelem
-        fmspindex(i,j)=0
-       enddo
+        do j=1,mxelem
+          fmspindex(i,j)=0
+        enddo
       enddo
       write (*,20) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do ndata=1,nentries
-       read (luin,*) id
-       read (luin,*) na,ion
-       read (luin,*) nl
+        read (luin,*) id
+        read (luin,*) na,ion
+        read (luin,*) nl
 c          read (luin,*) nl,omtype,btn
-       ntrans=(nl*(nl-1))/2!expectednumber
+c     expectednumber
+        ntrans=(nl*(nl-1))/2
 c
-       if (id.ne.ndata) then
-        write (*,*) ' INCOMPATIBLE data/lines/MULTIDAT, index:',id,
-     &   ndata
-        write (*,*) ' Ion:',na,ion
-        stop
-       endif
+        if (id.ne.ndata) then
+          write (*,*) ' INCOMPATIBLE data/lines/MULTIDAT, index:',id,
+     &     ndata
+          write (*,*) ' Ion:',na,ion
+          stop
+        endif
 c
-       atom=zmap(na)
-       if (atom.ne.0) then
-        if (ion.le.maxion(atom)) then
+        atom=zmap(na)
+        if (atom.ne.0) then
+          if (ion.le.maxion(atom)) then
 c
-         if (nl.gt.maxlevels) maxlevels=nl
+            if (nl.gt.maxlevels) maxlevels=nl
 c
-         nfmions=nfmions+1
-         ni=nfmions
-         fmion(ni)=ion
-         fmatom(ni)=atom
+            nfmions=nfmions+1
+            ni=nfmions
+            fmion(ni)=ion
+            fmatom(ni)=atom
 c            write (*,*) ' MM Ion:',nfmions,mapz(atom),ion,nl
-         fmspindex(ion,atom)=ni
-         fmnl(ni)=nl
-         fmkappaidx(ni)=0
+            fmspindex(ion,atom)=ni
+            fmnl(ni)=nl
+            fmkappaidx(ni)=0
 c  find index of kappa correction data if it exists
-         do i=1,nkappaions
-          if ((kapatom(i).eq.fmatom(ni)).and.(kapion(i).eq.fmion(ni)))
-     &     then
-           fmkappaidx(ni)=i
+            do i=1,nkappaions
+              if ((kapatom(i).eq.fmatom(ni)).and.(kapion(i).eq.fmion(ni)
+     &         )) then
+                fmkappaidx(ni)=i
 c          write(*,*)  " Atom: ", elem(atom),
 c     &                " Ion: ",rom(ion)," Has kappa data idx:", id
-          endif
-         enddo
+              endif
+            enddo
 c
-         do i=1,mxnl
-          do j=1,mxnl
-           nfmtridx(i,j,ni)=0
-          enddo
-         enddo
+            do i=1,mxnl
+              do j=1,mxnl
+                nfmtridx(i,j,ni)=0
+              enddo
+            enddo
 c
 c matrix-linelist maps:
 c
-         nt=0
-         do i=1,(nl-1)
-          do j=(i+1),nl
-           nt=nt+1
-           nfmtridx(i,j,ni)=nt
-           nfmtridx(j,i,ni)=nt
-           nfmlower(nt,ni)=i
-           nfmupper(nt,ni)=j
-          enddo
-         enddo
+            nt=0
+            do i=1,(nl-1)
+              do j=(i+1),nl
+                nt=nt+1
+                nfmtridx(i,j,ni)=nt
+                nfmtridx(j,i,ni)=nt
+                nfmlower(nt,ni)=i
+                nfmupper(nt,ni)=j
+              enddo
+            enddo
 c
-         nfmtrans(ni)=nt
+            nfmtrans(ni)=nt
 c            write(*,*)  " Atom: ", elem(atom),
 c     &                " Ion: ",rom(ion)," Lvls:", nl
 c
-         do i=1,nl
-          read (luin,*) j,eijpercm(i),wim(i,ni),nfmterm(i,ni)
-         enddo
+            do i=1,nl
+              read (luin,*) j,eijpercm(i),wim(i,ni),nfmterm(i,ni)
+            enddo
 c
-         do i=1,nl
-          do j=1,nl
-           eim(i,j,ni)=plk*cls*dabs(eijpercm(i)-eijpercm(j))
-          enddo
-         enddo
-         do i=1,nl
-          do j=1,nl
-           aim(i,j,ni)=0.d0
-           omim(i,j,ni)=0.d0
-           tdepm(i,j,ni)=0.d0
-          enddo
-         enddo
+            do i=1,nl
+              do j=1,nl
+                eim(i,j,ni)=plk*cls*dabs(eijpercm(i)-eijpercm(j))
+              enddo
+            enddo
+            do i=1,nl
+              do j=1,nl
+                aim(i,j,ni)=0.d0
+                omim(i,j,ni)=0.d0
+                tdepm(i,j,ni)=0.d0
+              enddo
+            enddo
 c
 c default values
 c
-         omtype=3
-         btn=5
-         do i=1,nt
-          fmombtc(i,ni)=1.0d4
-          fmomdatatype(i,ni)=omtype
-          fmombtn(i,ni)=btn
-          do m=1,btn
-           fmombsplx(m,i,ni)=(1.d0/(btn-1))*(m-1)
-           fmombsply(m,i,ni)=0.d0
-           fmombsply2(m,i,ni)=0.d0
-          enddo
-         enddo
+            omtype=3
+            btn=5
+            do i=1,nt
+              fmombtc(i,ni)=1.0d4
+              fmomdatatype(i,ni)=omtype
+              fmombtn(i,ni)=btn
+              do m=1,btn
+                fmombsplx(m,i,ni)=(1.d0/(btn-1))*(m-1)
+                fmombsply(m,i,ni)=0.d0
+                fmombsply2(m,i,ni)=0.d0
+              enddo
+            enddo
 c
-         read (luin,*) ntrans
+            read (luin,*) ntrans
 c
-         if (ntrans.gt.nt) then
-          write (*,*) ' INCOMPATIBLE data/lines/MULTIDAT, index:',ndata
-          write (*,*) ' Ion:',na,ion
-          write (*,*) ' ntrans> nt:',ntrans,nt
-          stop
-         endif
+            if (ntrans.gt.nt) then
+              write (*,*) ' INCOMPATIBLE data/lines/MULTIDAT, index:',
+     &         ndata
+              write (*,*) ' Ion:',na,ion
+              write (*,*) ' ntrans> nt:',ntrans,nt
+              stop
+            endif
 c
-         do l=1,ntrans
+            do l=1,ntrans
 c
-          read (luin,*) i,j,omtype,btn,f1,f2,f3
+              read (luin,*) i,j,omtype,btn,f1,f2,f3
 c              if (omtype.eq.0) then
 c              read (luin,*) i,j,f1,f2,f3
 c              else
@@ -5743,10 +5787,10 @@ c              read (luin,*) i,j,f1,f2
 c              f3=0.d0
 c              endif
 c
-          fmombtn(l,ni)=btn
-          la=nfmtridx(i,j,ni)
-          fmombtn(la,ni)=btn
-          fmomdatatype(la,ni)=omtype
+              fmombtn(l,ni)=btn
+              la=nfmtridx(i,j,ni)
+              fmombtn(la,ni)=btn
+              fmomdatatype(la,ni)=omtype
 c
 c  f1 and f2 have different meanings depending on omtype
 c  f3 is only used by omtype 0
@@ -5756,48 +5800,48 @@ c
 c Type 0: MAPPINGS III const or powerlaw at t4 data
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if (omtype.eq.0) then
-           a=f1
-           om=f2
-           td=f3
+              if (omtype.eq.0) then
+                a=f1
+                om=f2
+                td=f3
 c               write(*,'(i2,i2,3(x,1pe11.4))')  i, j, a, om, td
 c  type 0 , old mappings const or power law om data
 c fill sym and non-sym arrays
-           aim(j,i,ni)=a
-           omim(j,i,ni)=om
-           omim(i,j,ni)=om
-           tdepm(j,i,ni)=td
-           tdepm(i,j,ni)=td
-          endif
+                aim(j,i,ni)=a
+                omim(j,i,ni)=om
+                omim(i,j,ni)=om
+                tdepm(j,i,ni)=td
+                tdepm(i,j,ni)=td
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Type 1: n-point linear CHIANTI (Type 2) BT92 spline for omega
 c Type 2: n-point log10  CHIANTI (Type 6) BT92 spline for omega
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.1).or.(omtype.eq.2)) then
+              if ((omtype.eq.1).or.(omtype.eq.2)) then
 c                read (luin,*) i,j,a,bec
-           aife(j,i,ni)=f1
-           tc=f2*eim(i,j,ni)/rkb
+                aife(j,i,ni)=f1
+                tc=f2*eim(i,j,ni)/rkb
 c convert dc to Tc in K
-           fmombtc(l,ni)=tc
-           do m=1,btn
-            btx(m)=(1.d0/(btn-1))*(m-1)
-            bty2(m)=0.d0
-           enddo
-           read (luin,*) (bty(m),m=1,btn)
+                fmombtc(l,ni)=tc
+                do m=1,btn
+                  btx(m)=(1.d0/(btn-1))*(m-1)
+                  bty2(m)=0.d0
+                enddo
+                read (luin,*) (bty(m),m=1,btn)
 c    write(*,'(i2,i2,7(x,1pe11.4))')  i, j, a, tc, (btx(m), m = 1, btn)
 c
 c natural spline with zero endpoint second derivs,
 c
-           call spline00 (btx, bty, btn, bty2)
+                call spline00 (btx, bty, btn, bty2)
 c
-           do m=1,btn
-            fmombsplx(m,l,ni)=btx(m)
-            fmombsply(m,l,ni)=bty(m)
-            fmombsply2(m,l,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  fmombsplx(m,l,ni)=btx(m)
+                  fmombsply(m,l,ni)=bty(m)
+                  fmombsply2(m,l,ni)=bty2(m)
+                enddo
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Type 3..5: up to 17 point generalised BT92 spline for omega
 c precomputed splines, arbitrary scaled x, c in K
@@ -5808,222 +5852,225 @@ c 6: as 3, but log10(y)
 c 7: as 4, but log10(y)
 c 8: as 5, but log10(y)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
+              if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13))
+     &         then
 c
 c n point BT92 spline with TC scaling in K
 c
 c               read (luin,*) i,j,a,btc
-           aim(j,i,ni)=f1
+                aim(j,i,ni)=f1
 c   in K
-           fmombtc(la,ni)=f2
+                fmombtc(la,ni)=f2
 c
-           do m=1,btn
-            btx(m)=(1.d0/(btn-1))*(m-1)
-            bty2(m)=0.d0
-           enddo
+                do m=1,btn
+                  btx(m)=(1.d0/(btn-1))*(m-1)
+                  bty2(m)=0.d0
+                enddo
 c               read(luin,*) (btx (m), m = 1, btn)
-           read (luin,*) (bty(m),m=1,btn)
+                read (luin,*) (bty(m),m=1,btn)
 c               read(luin,*) (bty2(m), m = 1, btn)
 c
-           call spline00 (btx, bty, btn, bty2)
+                call spline00 (btx, bty, btn, bty2)
 c
-           do m=1,btn
-            fmombsplx(m,l,ni)=btx(m)
-            fmombsply(m,l,ni)=bty(m)
-            fmombsply2(m,l,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  fmombsplx(m,l,ni)=btx(m)
+                  fmombsply(m,l,ni)=bty(m)
+                  fmombsply2(m,l,ni)=bty2(m)
+                enddo
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.4).or.(omtype.eq.7)) then
+              if ((omtype.eq.4).or.(omtype.eq.7)) then
 c
 c have C in K, x and y values, allows x to be uneven
 c
 c               read (luin,*) i,j,a,btc
 c
-           aim(j,i,ni)=f1
-           fmombtc(la,ni)=f2
+                aim(j,i,ni)=f1
+                fmombtc(la,ni)=f2
 c
-           do m=1,btn
-            bty2(m)=0.d0
-           enddo
+                do m=1,btn
+                  bty2(m)=0.d0
+                enddo
 c
-           read (luin,*) (btx(m),m=1,btn)
-           read (luin,*) (bty(m),m=1,btn)
+                read (luin,*) (btx(m),m=1,btn)
+                read (luin,*) (bty(m),m=1,btn)
 c               read(luin,*) (bty2(m), m = 1, btn)
 c
-           call spline00 (btx, bty, btn, bty2)
+                call spline00 (btx, bty, btn, bty2)
 c
-           do m=1,btn
-            fmombsplx(m,l,ni)=btx(m)
-            fmombsply(m,l,ni)=bty(m)
-            fmombsply2(m,l,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  fmombsplx(m,l,ni)=btx(m)
+                  fmombsply(m,l,ni)=bty(m)
+                  fmombsply2(m,l,ni)=bty2(m)
+                enddo
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.5).or.(omtype.eq.8)) then
+              if ((omtype.eq.5).or.(omtype.eq.8)) then
 c have C in K, x, y and y2 values, allows full control
 c
 c               read (luin,*) i,j,a,btc
 c
-           aim(j,i,ni)=f1
-           fmombtc(la,ni)=f2
+                aim(j,i,ni)=f1
+                fmombtc(la,ni)=f2
 c
-           do m=1,btn
-            bty2(m)=0.d0
-           enddo
-           read (luin,*) (btx(m),m=1,btn)
-           read (luin,*) (bty(m),m=1,btn)
-           read (luin,*) (bty2(m),m=1,btn)
+                do m=1,btn
+                  bty2(m)=0.d0
+                enddo
+                read (luin,*) (btx(m),m=1,btn)
+                read (luin,*) (bty(m),m=1,btn)
+                read (luin,*) (bty2(m),m=1,btn)
 c
 c               call spline(btx,bty,btn,1.d30,1.d30,bty2)
 c
-           do m=1,btn
-            fmombsplx(m,l,ni)=btx(m)
-            fmombsply(m,l,ni)=bty(m)
-            fmombsply2(m,l,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  fmombsplx(m,l,ni)=btx(m)
+                  fmombsply(m,l,ni)=bty(m)
+                  fmombsply2(m,l,ni)=bty2(m)
+                enddo
+              endif
 c
-         enddo
+            enddo
 c
-         do i=1,nl
-          do j=1,nl
-           tkexm(j,i,ni)=eim(j,i,ni)/rkb
-          enddo
-         enddo
-         n=0
-         do i=1,(nl-1)
-          s1=nfmterm(i,ni)
-          l1=0
-          do idx=1,16
-           if (s1(idx:idx).ne.' ') then
-            l1=l1+1
-           endif
-          enddo
-          if (l1.lt.1) l1=1
-          do j=(i+1),nl
-           n=n+1
-           s2=nfmterm(j,ni)
-           l2=0
-           do idx=1,16
-            if (s2(idx:idx).ne.' ') then
-             l2=l2+1
-            endif
-           enddo
-           if (l2.lt.1) l2=1
-           l0=16-(l1+1+l2)
-           if (l0.lt.0) l0=0
-           s3='                '
-           if (l0.gt.0) then
-            nfmid(n,ni)=s3(1:l0)//s1(1:l1)//'-'//s2(1:l2)
-           else
-            nfmid(n,ni)=s1(1:l1)//'-'//s2(1:l2)
-           endif
-           fmeij(n,ni)=eim(j,i,ni)
-           fmlam(n,ni)=plk*cls/eim(j,i,ni)!vacritzcm
-          enddo
-         enddo
+            do i=1,nl
+              do j=1,nl
+                tkexm(j,i,ni)=eim(j,i,ni)/rkb
+              enddo
+            enddo
+            n=0
+            do i=1,(nl-1)
+              s1=nfmterm(i,ni)
+              l1=0
+              do idx=1,16
+                if (s1(idx:idx).ne.' ') then
+                  l1=l1+1
+                endif
+              enddo
+              if (l1.lt.1) l1=1
+              do j=(i+1),nl
+                n=n+1
+                s2=nfmterm(j,ni)
+                l2=0
+                do idx=1,16
+                  if (s2(idx:idx).ne.' ') then
+                    l2=l2+1
+                  endif
+                enddo
+                if (l2.lt.1) l2=1
+                l0=16-(l1+1+l2)
+                if (l0.lt.0) l0=0
+                s3='                '
+                if (l0.gt.0) then
+                  nfmid(n,ni)=s3(1:l0)//s1(1:l1)//'-'//s2(1:l2)
+                else
+                  nfmid(n,ni)=s1(1:l1)//'-'//s2(1:l2)
+                endif
+                fmeij(n,ni)=eim(j,i,ni)
+c     vacritzcm
+                fmlam(n,ni)=plk*cls/eim(j,i,ni)
+              enddo
+            enddo
 c
-        else
+          else
 c
 c            write(*,*) " 1 - Skipping Ion: ", na,ion
 c            write(*,*) " 1 - Skipping Transitions: ", ntrans
 c
 c skip the levels
 c
-         do l=1,(nl)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         enddo
+            do l=1,(nl)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            enddo
 c
 c skip the transitions
 c
 c               ntrans=(nl*(nl-1))/2
-         read (luin,*) ntrans
-         do l=1,ntrans
+            read (luin,*) ntrans
+            do l=1,ntrans
 c                 if (omtype.eq.0) then
 c                   read (luin,*) i,j,f1,f2,f3
 c                 else
 c                   read (luin,*) i,j,f1,f2
 c                   f3=0.d0
 c                 endif
-          read (luin,*) i,j,omtype,btn,f1,f2,f3
-          if ((omtype.eq.1).or.(omtype.eq.2)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-          if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-          if ((omtype.eq.4).or.(omtype.eq.7)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-          if ((omtype.eq.5).or.(omtype.eq.8)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-         enddo
+              read (luin,*) i,j,omtype,btn,f1,f2,f3
+              if ((omtype.eq.1).or.(omtype.eq.2)) then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+              if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13))
+     &         then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+              if ((omtype.eq.4).or.(omtype.eq.7)) then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+              if ((omtype.eq.5).or.(omtype.eq.8)) then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+            enddo
 c
-        endif
-       else
+          endif
+        else
 c
 c            write(*,*) " 2 - Skipping Ion: ", na,ion,omtype
 c            write(*,*) " 2 - Skipping Transitions: ", ntrans
 c
 c skip the levels
 c
-        do l=1,(nl)
-         read (luin,fmt=10) (ibuf(j),j=1,19)
-        enddo
+          do l=1,(nl)
+            read (luin,fmt=10) (ibuf(j),j=1,19)
+          enddo
 c
 c skip the colls
 c
 c               ntrans=(nl*(nl-1))/2
-        read (luin,*) ntrans
-        do l=1,ntrans
-         read (luin,*) i,j,omtype,btn,f1,f2,f3
-         if ((omtype.eq.1).or.(omtype.eq.2)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-         if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-         if ((omtype.eq.4).or.(omtype.eq.7)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-         if ((omtype.eq.5).or.(omtype.eq.8)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-        enddo
+          read (luin,*) ntrans
+          do l=1,ntrans
+            read (luin,*) i,j,omtype,btn,f1,f2,f3
+            if ((omtype.eq.1).or.(omtype.eq.2)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+            if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+            if ((omtype.eq.4).or.(omtype.eq.7)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+            if ((omtype.eq.5).or.(omtype.eq.8)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+          enddo
 c
-       endif
+        endif
       enddo
 c
       close (luin)
       nt=0
       do ni=1,nfmions
-       ion=fmion(ni)
-       atom=fmatom(ni)
-       nl=fmnl(ni)
-       if (expertmode.gt.0) then
-        write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',nl
-       endif
-       do i=1,nl-1
-        do j=i+1,nl
-         if (aim(j,i,ni).gt.0.0d0) then
-          nt=nt+1
-          nialines(ion,atom)=nialines(ion,atom)+1
-         endif
+        ion=fmion(ni)
+        atom=fmatom(ni)
+        nl=fmnl(ni)
+        if (expertmode.gt.0) then
+          write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',nl
+        endif
+        do i=1,nl-1
+          do j=i+1,nl
+            if (aim(j,i,ni).gt.0.0d0) then
+              nt=nt+1
+              nialines(ion,atom)=nialines(ion,atom)+1
+            endif
+          enddo
         enddo
-       enddo
       enddo
 c
       if (nt.gt.0) then
    40 format(' - Multi-level Data: ',i4,' ions, ',i4,' lines')
-       write (*,40) nfmions,nt
+        write (*,40) nfmions,nt
 c   60 format('                  with  : ',i4,' Max levels')
 c      write (*,60) maxlevels
       endif
@@ -6205,113 +6252,115 @@ c
       nfeions=0
       maxlevels=0
       do i=1,mxion
-       do j=1,mxelem
-        fespindex(i,j)=0
-       enddo
+        do j=1,mxelem
+          fespindex(i,j)=0
+        enddo
       enddo
       write (*,20) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do ndata=1,nentries
-       read (luin,*) i
-       read (luin,*) na,ion
-       read (luin,*) nl
+        read (luin,*) i
+        read (luin,*) na,ion
+        read (luin,*) nl
 c        read (luin,*) nl,omtype,btn
-       ntrans=(nl*(nl-1))/2
+        ntrans=(nl*(nl-1))/2
 c
-       if (i.ne.ndata) then
-        write (*,*) ' INCOMPATIBLE data/lines/FEDAT, index:',i,ndata
-        write (*,*) ' Ion:',na,ion
-        stop
-       endif
+        if (i.ne.ndata) then
+          write (*,*) ' INCOMPATIBLE data/lines/FEDAT, index:',i,ndata
+          write (*,*) ' Ion:',na,ion
+          stop
+        endif
 c
-       atom=zmap(na)
-       if (atom.ne.0) then
-        if (ion.le.maxion(atom)) then
+        atom=zmap(na)
+        if (atom.ne.0) then
+          if (ion.le.maxion(atom)) then
 c
-         if (nl.gt.maxlevels) maxlevels=nl
+            if (nl.gt.maxlevels) maxlevels=nl
 c
-         nfeions=nfeions+1
-         ni=nfeions
-         feion(ni)=ion
-         featom(ni)=atom
-         fespindex(ion,atom)=ni
-         fenl(ni)=nl
+            nfeions=nfeions+1
+            ni=nfeions
+            feion(ni)=ion
+            featom(ni)=atom
+            fespindex(ion,atom)=ni
+            fenl(ni)=nl
 c            fekappaidx(ni)=0
 c
-         do i=1,mxfenl
-          do j=1,mxfenl
-           nfetridx(i,j,ni)=0
-          enddo
-         enddo
+            do i=1,mxfenl
+              do j=1,mxfenl
+                nfetridx(i,j,ni)=0
+              enddo
+            enddo
 c
 c matrix-linelist maps:
 c
-         nt=0
-         do i=1,(nl-1)
-          do j=(i+1),nl
-           nt=nt+1
-           nfetridx(i,j,ni)=nt
-           nfetridx(j,i,ni)=nt
-           nfelower(nt,ni)=i
-           nfeupper(nt,ni)=j
-          enddo
-         enddo
+            nt=0
+            do i=1,(nl-1)
+              do j=(i+1),nl
+                nt=nt+1
+                nfetridx(i,j,ni)=nt
+                nfetridx(j,i,ni)=nt
+                nfelower(nt,ni)=i
+                nfeupper(nt,ni)=j
+              enddo
+            enddo
 c
-         nfetrans(ni)=nt
+            nfetrans(ni)=nt
 c
-         if (nt.ne.ntrans) then
-          write (*,*) ' INCOMPATIBLE data/lines/FEDAT, index:',ndata
-          write (*,*) ' Ion:',na,ion
-          write (*,*) ' Unexected nt:',nt,((nl-1)*nl)/2
-          stop
-         endif
+            if (nt.ne.ntrans) then
+              write (*,*) ' INCOMPATIBLE data/lines/FEDAT, index:',
+     &         ndata
+              write (*,*) ' Ion:',na,ion
+              write (*,*) ' Unexected nt:',nt,((nl-1)*nl)/2
+              stop
+            endif
 c
-         do i=1,nl
-          read (luin,*) j,eijpercm(i),wife(i,ni),nfeterm(i,ni)
-         enddo
+            do i=1,nl
+              read (luin,*) j,eijpercm(i),wife(i,ni),nfeterm(i,ni)
+            enddo
 c
-         do i=1,nl
-          do j=1,nl
-           eife(i,j,ni)=plk*cls*dabs(eijpercm(i)-eijpercm(j))
-          enddo
-         enddo
-         do i=1,nl
-          do j=1,nl
-           aife(i,j,ni)=0.d0
-           omife(i,j,ni)=0.d0
-           tdepfe(i,j,ni)=0.d0
-          enddo
-         enddo
+            do i=1,nl
+              do j=1,nl
+                eife(i,j,ni)=plk*cls*dabs(eijpercm(i)-eijpercm(j))
+              enddo
+            enddo
+            do i=1,nl
+              do j=1,nl
+                aife(i,j,ni)=0.d0
+                omife(i,j,ni)=0.d0
+                tdepfe(i,j,ni)=0.d0
+              enddo
+            enddo
 c
 c default values
 c
-         omtype=3
-         btn=11
-         do i=1,nt
-          feombtc(i,ni)=1.0d4
-          feomdatatype(i,ni)=omtype
-          feombtn(i,ni)=btn
-          do m=1,btn
-           feombsplx(m,i,ni)=(1.d0/(btn-1))*(m-1)
-           feombsply(m,i,ni)=0.d0
-           feombsply2(m,i,ni)=0.d0
-          enddo
-         enddo
+            omtype=3
+            btn=11
+            do i=1,nt
+              feombtc(i,ni)=1.0d4
+              feomdatatype(i,ni)=omtype
+              feombtn(i,ni)=btn
+              do m=1,btn
+                feombsplx(m,i,ni)=(1.d0/(btn-1))*(m-1)
+                feombsply(m,i,ni)=0.d0
+                feombsply2(m,i,ni)=0.d0
+              enddo
+            enddo
 c
 c  Diff from normal multi-level data, missing coll str are skipped, so
 c  read number of coll present and loop over that.
 c  above sets unused colls to 0.0 type 0 with zero splines.
-         read (luin,*) ntrans
+            read (luin,*) ntrans
 c             ntrans = nt
 c
-         if (ntrans.gt.nt) then
-          write (*,*) ' INCOMPATIBLE data/lines/FEDAT, index:',ndata
-          write (*,*) ' Ion:',na,ion
-          write (*,*) ' ntrans> nt:',ntrans,nt
-          stop
-         endif
+            if (ntrans.gt.nt) then
+              write (*,*) ' INCOMPATIBLE data/lines/FEDAT, index:',
+     &         ndata
+              write (*,*) ' Ion:',na,ion
+              write (*,*) ' ntrans> nt:',ntrans,nt
+              stop
+            endif
 c
-         do l=1,ntrans
+            do l=1,ntrans
 c
 c             if (omtype.eq.0) then
 c             read (luin,*) i,j,f1,f2,f3
@@ -6319,11 +6368,11 @@ c             else
 c             read (luin,*) i,j,f1,f2
 c             f3=0.d0
 c             endif
-          read (luin,*) i,j,omtype,btn,f1,f2,f3
+              read (luin,*) i,j,omtype,btn,f1,f2,f3
 c
-          la=nfetridx(i,j,ni)
-          feombtn(la,ni)=btn
-          feomdatatype(la,ni)=omtype
+              la=nfetridx(i,j,ni)
+              feombtn(la,ni)=btn
+              feomdatatype(la,ni)=omtype
 c
 c  f1 and f2 have different meanings depending on omtype
 c  f3 is only used by omtype 0
@@ -6333,49 +6382,49 @@ c
 c  Type 0: MAPPINGS III const or powerlaw at t4 data
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if (omtype.eq.0) then
-           a=f1
-           om=f2
-           td=f3
+              if (omtype.eq.0) then
+                a=f1
+                om=f2
+                td=f3
 c     get actual index even if is or js are being skipped
 c                write(*,'(i2,i2,3(x,1pe11.4))')  i, j, a, om, td
 c   type 0 , old mappings const or power law om data
 c  fill sym and non-sym arrays
-           aife(j,i,ni)=a
-           omife(j,i,ni)=om
-           omife(i,j,ni)=om
-           tdepfe(j,i,ni)=td
-           tdepfe(i,j,ni)=td
-          endif
+                aife(j,i,ni)=a
+                omife(j,i,ni)=om
+                omife(i,j,ni)=om
+                tdepfe(j,i,ni)=td
+                tdepfe(i,j,ni)=td
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Type 1: n-point linear CHIANTI (Type 2) BT92 spline for omega
 c Type 2: n-point log10  CHIANTI (Type 6) BT92 spline for omega
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.1).or.(omtype.eq.2)) then
+              if ((omtype.eq.1).or.(omtype.eq.2)) then
 c               read (luin,*) i,j,a,bec
-           aife(j,i,ni)=f1
-           tc=f2*eim(i,j,ni)/rkb
+                aife(j,i,ni)=f1
+                tc=f2*eim(i,j,ni)/rkb
 c convert dc to Tc in K
-           feombtc(la,ni)=tc
-           do m=1,btn
-            btx(m)=(1.d0/(btn-1))*(m-1)
-            bty2(m)=0.d0
-           enddo
-           read (luin,*) (bty(m),m=1,btn)
+                feombtc(la,ni)=tc
+                do m=1,btn
+                  btx(m)=(1.d0/(btn-1))*(m-1)
+                  bty2(m)=0.d0
+                enddo
+                read (luin,*) (bty(m),m=1,btn)
 c
 c write(*,'(i2,i2,7(x,1pe11.4))')  i, j, a, tc, (btx(m), m = 1, btn)
 c natural spline with zero endpoint second derivs,
 c
-           call spline00 (btx, bty, btn, bty2)
+                call spline00 (btx, bty, btn, bty2)
 c
-           do m=1,btn
-            feombsplx(m,la,ni)=btx(m)
-            feombsply(m,la,ni)=bty(m)
-            feombsply2(m,la,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  feombsplx(m,la,ni)=btx(m)
+                  feombsply(m,la,ni)=bty(m)
+                  feombsply2(m,la,ni)=bty2(m)
+                enddo
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Type 3..5: up to 17 point generalised BT92 spline for omega
 c precomputed splines, arbitrary scaled x, c in K
@@ -6386,205 +6435,208 @@ c 6: as 3, but log10(y)
 c 7: as 4, but log10(y)
 c 8: as 5, but log10(y)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
+              if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13))
+     &         then
 c
 c n point BT92 spline with TC scaling in K
 c
 c               read (luin,*) i,j,a,btc
-           aife(j,i,ni)=f1
+                aife(j,i,ni)=f1
 c   in K
-           feombtc(la,ni)=f2
+                feombtc(la,ni)=f2
 c
-           do m=1,btn
-            btx(m)=(1.d0/(btn-1))*(m-1)
-            bty2(m)=0.d0
-           enddo
+                do m=1,btn
+                  btx(m)=(1.d0/(btn-1))*(m-1)
+                  bty2(m)=0.d0
+                enddo
 c               read(luin,*) (btx (m), m = 1, btn)
-           read (luin,*) (bty(m),m=1,btn)
+                read (luin,*) (bty(m),m=1,btn)
 c               read(luin,*) (bty2(m), m = 1, btn)
 c
-           call spline00 (btx, bty, btn, bty2)
+                call spline00 (btx, bty, btn, bty2)
 c
-           do m=1,btn
-            feombsplx(m,la,ni)=btx(m)
-            feombsply(m,la,ni)=bty(m)
-            feombsply2(m,la,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  feombsplx(m,la,ni)=btx(m)
+                  feombsply(m,la,ni)=bty(m)
+                  feombsply2(m,la,ni)=bty2(m)
+                enddo
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.4).or.(omtype.eq.7)) then
+              if ((omtype.eq.4).or.(omtype.eq.7)) then
 c
 c have C in K, x and y values, allows x to be uneven
 c
 c               read (luin,*) i,j,a,btc
 c
-           aife(j,i,ni)=f1
-           feombtc(la,ni)=f2
+                aife(j,i,ni)=f1
+                feombtc(la,ni)=f2
 c
-           do m=1,btn
-            bty2(m)=0.d0
-           enddo
+                do m=1,btn
+                  bty2(m)=0.d0
+                enddo
 c
-           read (luin,*) (btx(m),m=1,btn)
-           read (luin,*) (bty(m),m=1,btn)
+                read (luin,*) (btx(m),m=1,btn)
+                read (luin,*) (bty(m),m=1,btn)
 c               read(luin,*) (bty2(m), m = 1, btn)
 c
-           call spline00 (btx, bty, btn, bty2)
+                call spline00 (btx, bty, btn, bty2)
 c
-           do m=1,btn
-            feombsplx(m,la,ni)=btx(m)
-            feombsply(m,la,ni)=bty(m)
-            feombsply2(m,la,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  feombsplx(m,la,ni)=btx(m)
+                  feombsply(m,la,ni)=bty(m)
+                  feombsply2(m,la,ni)=bty2(m)
+                enddo
+              endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          if ((omtype.eq.5).or.(omtype.eq.8)) then
+              if ((omtype.eq.5).or.(omtype.eq.8)) then
 c have C in K, x, y and y2 values, allows full control
 c
 c                read (luin,*) i,j,a,btc
 c
-           aife(j,i,ni)=f1
-           feombtc(la,ni)=f2
+                aife(j,i,ni)=f1
+                feombtc(la,ni)=f2
 c
-           do m=1,btn
-            bty2(m)=0.d0
-           enddo
-           read (luin,*) (btx(m),m=1,btn)
-           read (luin,*) (bty(m),m=1,btn)
-           read (luin,*) (bty2(m),m=1,btn)
+                do m=1,btn
+                  bty2(m)=0.d0
+                enddo
+                read (luin,*) (btx(m),m=1,btn)
+                read (luin,*) (bty(m),m=1,btn)
+                read (luin,*) (bty2(m),m=1,btn)
 c
 c               call spline(btx,bty,btn,1.d30,1.d30,bty2)
 c
-           do m=1,btn
-            feombsplx(m,la,ni)=btx(m)
-            feombsply(m,la,ni)=bty(m)
-            feombsply2(m,la,ni)=bty2(m)
-           enddo
-          endif
+                do m=1,btn
+                  feombsplx(m,la,ni)=btx(m)
+                  feombsply(m,la,ni)=bty(m)
+                  feombsply2(m,la,ni)=bty2(m)
+                enddo
+              endif
 c
-         enddo
+            enddo
 c
-         do i=1,nl
-          do j=1,nl
-           tkexfe(j,i,ni)=eife(j,i,ni)/rkb
-          enddo
-         enddo
-         n=0
-         do i=1,(nl-1)
-          s1=nfeterm(i,ni)
-          l1=0
-          do idx=1,16
-           if (s1(idx:idx).ne.' ') then
-            l1=l1+1
-           endif
-          enddo
-          if (l1.lt.1) l1=1
-          do j=(i+1),nl
-           n=n+1
-           s2=nfeterm(j,ni)
-           l2=0
-           do idx=1,16
-            if (s2(idx:idx).ne.' ') then
-             l2=l2+1
-            endif
-           enddo
-           if (l2.lt.1) l2=1
-           l0=16-(l1+1+l2)
-           if (l0.lt.0) l0=0
-           s3='                '
-           if (l0.gt.0) then
-            nfeid(n,ni)=s3(1:l0)//s1(1:l1)//'-'//s2(1:l2)
-           else
-            nfeid(n,ni)=s1(1:l1)//'-'//s2(1:l2)
-           endif
-           feeij(n,ni)=eife(j,i,ni)
-           felam(n,ni)=plk*cls/eife(j,i,ni)!vacritz
+            do i=1,nl
+              do j=1,nl
+                tkexfe(j,i,ni)=eife(j,i,ni)/rkb
+              enddo
+            enddo
+            n=0
+            do i=1,(nl-1)
+              s1=nfeterm(i,ni)
+              l1=0
+              do idx=1,16
+                if (s1(idx:idx).ne.' ') then
+                  l1=l1+1
+                endif
+              enddo
+              if (l1.lt.1) l1=1
+              do j=(i+1),nl
+                n=n+1
+                s2=nfeterm(j,ni)
+                l2=0
+                do idx=1,16
+                  if (s2(idx:idx).ne.' ') then
+                    l2=l2+1
+                  endif
+                enddo
+                if (l2.lt.1) l2=1
+                l0=16-(l1+1+l2)
+                if (l0.lt.0) l0=0
+                s3='                '
+                if (l0.gt.0) then
+                  nfeid(n,ni)=s3(1:l0)//s1(1:l1)//'-'//s2(1:l2)
+                else
+                  nfeid(n,ni)=s1(1:l1)//'-'//s2(1:l2)
+                endif
+                feeij(n,ni)=eife(j,i,ni)
+c     vacritz
+                felam(n,ni)=plk*cls/eife(j,i,ni)
 c
-          enddo
-         enddo
+              enddo
+            enddo
 c
-        else
+          else
 c
 c            write(*,*) " 1 - Skipping Ion: ", na,ion
 c            write(*,*) " 1 - Skipping Transitions: ", ntrans
 c
 c skip the levels
 c
-         do l=1,(nl)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         enddo
+            do l=1,(nl)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            enddo
 c
 c skip the colls
 c
 c              ntrans=(nl*(nl-1))/2
-         read (luin,*) ntrans
-         do l=1,ntrans
+            read (luin,*) ntrans
+            do l=1,ntrans
 c                if (omtype.eq.0) then
 c                   read (luin,*) i,j,f1,f2,f3
 c                else
 c                  read (luin,*) i,j,f1,f2
 c                  f3=0.d0
 c                endif
-          read (luin,*) i,j,omtype,btn,f1,f2,f3
-          if ((omtype.eq.1).or.(omtype.eq.2)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-          if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-          if ((omtype.eq.4).or.(omtype.eq.7)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-          if ((omtype.eq.5).or.(omtype.eq.8)) then
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          endif
-         enddo
+              read (luin,*) i,j,omtype,btn,f1,f2,f3
+              if ((omtype.eq.1).or.(omtype.eq.2)) then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+              if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13))
+     &         then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+              if ((omtype.eq.4).or.(omtype.eq.7)) then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+              if ((omtype.eq.5).or.(omtype.eq.8)) then
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              endif
+            enddo
 c
-        endif
-       else
+          endif
+        else
 c
 c            write(*,*) " 2 - Skipping Ion: ", na,ion
 c            write(*,*) " 2 - Skipping Transitions: ", ntrans
 c
 c skip the levels
 c
-        do l=1,(nl)
-         read (luin,fmt=10) (ibuf(j),j=1,19)
-        enddo
+          do l=1,(nl)
+            read (luin,fmt=10) (ibuf(j),j=1,19)
+          enddo
 c
 c skip the colls
 c
 c              ntrans=(nl*(nl-1))/2
-        read (luin,*) ntrans
-        do l=1,ntrans
+          read (luin,*) ntrans
+          do l=1,ntrans
 c                 if (omtype.eq.0) then
 c                    read (luin,*) i,j,f1,f2,f3
 c                 else
 c                   read (luin,*) i,j,f1,f2
 c                   f3=0.d0
 c                 endif
-         read (luin,*) i,j,omtype,btn,f1,f2,f3
-         if ((omtype.eq.1).or.(omtype.eq.2)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-         if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-         if ((omtype.eq.4).or.(omtype.eq.7)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-         if ((omtype.eq.5).or.(omtype.eq.8)) then
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         endif
-        enddo
+            read (luin,*) i,j,omtype,btn,f1,f2,f3
+            if ((omtype.eq.1).or.(omtype.eq.2)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+            if ((omtype.eq.3).or.(omtype.eq.6).or.(omtype.eq.13)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+            if ((omtype.eq.4).or.(omtype.eq.7)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+            if ((omtype.eq.5).or.(omtype.eq.8)) then
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            endif
+          enddo
 c
-       endif
+        endif
       enddo
 c
       close (luin)
@@ -6593,24 +6645,24 @@ c count actual number of lines with non-zero Aij
 c
       nt=0
       do ni=1,nfeions
-       ion=feion(ni)
-       atom=featom(ni)
-       nl=fenl(ni)
-       if (expertmode.gt.0) then
-        write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',nl
-       endif
-       do i=1,nl-1
-        do j=i+1,nl
-         if (aife(j,i,ni).gt.0.0) then
-          nt=nt+1
-          nialines(ion,atom)=nialines(ion,atom)+1
-         endif
+        ion=feion(ni)
+        atom=featom(ni)
+        nl=fenl(ni)
+        if (expertmode.gt.0) then
+          write (*,*) ' Atom: ',elem(atom),' Ion: ',rom(ion),' nl:',nl
+        endif
+        do i=1,nl-1
+          do j=i+1,nl
+            if (aife(j,i,ni).gt.0.0) then
+              nt=nt+1
+              nialines(ion,atom)=nialines(ion,atom)+1
+            endif
+          enddo
         enddo
-       enddo
       enddo
       if (nt.gt.0) then
    40 format(' - Large Multi-level Data: ',i2,' ions, ',i4,' lines')
-       write (*,40) nfeions,nt
+        write (*,40) nfeions,nt
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -6695,110 +6747,111 @@ c
       kapatom(1)=0
       if (kappamode.eq.1) then
 c
-       filename=datadir(1:dtlen)//'data/lines/KAPPADAT.txt'
-       open (luin,file=filename,status='OLD')
-   30  read (luin,fmt=10) (ibuf(j),j=1,19)
-       ilgg=ibuf(1)
-       if (ilgg(1:1).eq.'%') goto 30
+        filename=datadir(1:dtlen)//'data/lines/KAPPADAT.txt'
+        open (luin,file=filename,status='OLD')
+   30   read (luin,fmt=10) (ibuf(j),j=1,19)
+        ilgg=ibuf(1)
+        if (ilgg(1:1).eq.'%') goto 30
 c
-       nkappaions=0
-       write (*,20) (ibuf(j),j=1,19)
+        nkappaions=0
+        write (*,20) (ibuf(j),j=1,19)
 c     read kappas
-       read (luin,*) nk
-       nkappas=nk
-       read (luin,*) (kaps(m),m=1,nk)
-       do k=1,nk
-        kappas(k)=kaps(k)
-       enddo
+        read (luin,*) nk
+        nkappas=nk
+        read (luin,*) (kaps(m),m=1,nk)
+        do k=1,nk
+          kappas(k)=kaps(k)
+        enddo
 c      loop over ions
-       nkappaions=0
-       read (luin,*) nentries
+        nkappaions=0
+        read (luin,*) nentries
 c      write(*,*) " - Kappa Upsilon Data for : ", nentries, " Species."
-       do ndata=1,nentries
-        read (luin,*) i
-        if (i.ne.ndata) then
-         write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, ion error',i
-         error=.true.
-         stop
-        endif
-        read (luin,fmt=*) na,ion
-        read (luin,fmt=*) nl
-        if (zmap(na).ne.0) then
-         atom=zmap(na)
-         if (ion.le.maxion(atom)) then
+        do ndata=1,nentries
+          read (luin,*) i
+          if (i.ne.ndata) then
+            write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, ion error',
+     &       i
+            error=.true.
+            stop
+          endif
+          read (luin,fmt=*) na,ion
+          read (luin,fmt=*) nl
+          if (zmap(na).ne.0) then
+            atom=zmap(na)
+            if (ion.le.maxion(atom)) then
 c      write(*,*) "   Kappa Upsilon Data for : ", elem(atom), rom(ion)
-          nkappaions=nkappaions+1
-          ni=nkappaions
-          kapion(ni)=ion
-          kapatom(ni)=atom
-          kapnl(ni)=nl
-          do i=1,nl
-           do j=1,nl
-            nkaptridx(i,j,ni)=0
-           enddo
-          enddo
+              nkappaions=nkappaions+1
+              ni=nkappaions
+              kapion(ni)=ion
+              kapatom(ni)=atom
+              kapnl(ni)=nl
+              do i=1,nl
+                do j=1,nl
+                  nkaptridx(i,j,ni)=0
+                enddo
+              enddo
 c
 c matirix-linelist maps:
 c
-          nt=0
-          do i=1,(nl-1)
-           do j=(i+1),nl
-            nt=nt+1
-            nkaptridx(i,j,ni)=nt
-            nkaptridx(j,i,ni)=nt
-            nkaplower(nt,ni)=i
-            nkapupper(nt,ni)=j
-           enddo
-          enddo
-          nkaptrans(ni)=nt
+              nt=0
+              do i=1,(nl-1)
+                do j=(i+1),nl
+                  nt=nt+1
+                  nkaptridx(i,j,ni)=nt
+                  nkaptridx(j,i,ni)=nt
+                  nkaplower(nt,ni)=i
+                  nkapupper(nt,ni)=j
+                enddo
+              enddo
+              nkaptrans(ni)=nt
 c
 c               write(*,*)  nl," Level Atom: ", elem(atom),
 c     &                        " Ion: ",rom(ion),
 c     &                        " Transitions: ",nt
 c
-          do l=1,nt
-           read (luin,*) i,j
-           read (luin,*) ktype
-           kupstype(l,ni)=ktype
-           if (ktype.eq.0) then
-            read (luin,*) btn,btc
-            kupsbtn(l,ni)=btn
-            kupsbtc(l,ni)=btc
-            read (luin,*) (btx(m),m=1,btn)
-            do m=1,btn
-             kupssplx(m,l,ni)=btx(m)
-            enddo
-            do k=1,nkappas
-             read (luin,*) (bty(m),m=1,btn)
-             read (luin,*) (bty2(m),m=1,btn)
-             do m=1,btn
-              kupssply(m,k,l,ni)=bty(m)
-              kupssply2(m,k,l,ni)=bty2(m)
-             enddo
-            enddo
-           else
-            write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, fit type err
-     &or',i
-            error=.true.
-            stop
-           endif
-          enddo
+              do l=1,nt
+                read (luin,*) i,j
+                read (luin,*) ktype
+                kupstype(l,ni)=ktype
+                if (ktype.eq.0) then
+                  read (luin,*) btn,btc
+                  kupsbtn(l,ni)=btn
+                  kupsbtc(l,ni)=btc
+                  read (luin,*) (btx(m),m=1,btn)
+                  do m=1,btn
+                    kupssplx(m,l,ni)=btx(m)
+                  enddo
+                  do k=1,nkappas
+                    read (luin,*) (bty(m),m=1,btn)
+                    read (luin,*) (bty2(m),m=1,btn)
+                    do m=1,btn
+                      kupssply(m,k,l,ni)=bty(m)
+                      kupssply2(m,k,l,ni)=bty2(m)
+                    enddo
+                  enddo
+                else
+                  write (*,*) ' INCOMPATIBLE data/lines/KAPPADAT, fit ty
+     &pe error',i
+                  error=.true.
+                  stop
+                endif
+              enddo
 c
-         else
-          nt=(nl*(nl-1))/2
-          do i=1,nt*(nkappas*2+4)
-           read (luin,fmt=10) (ibuf(j),j=1,19)
-          enddo
-         endif
-        else
-         nt=(nl*(nl-1))/2
-         do i=1,nt*(nkappas*2+4)
-          read (luin,fmt=10) (ibuf(j),j=1,19)
-         enddo
-        endif
-       enddo
+            else
+              nt=(nl*(nl-1))/2
+              do i=1,nt*(nkappas*2+4)
+                read (luin,fmt=10) (ibuf(j),j=1,19)
+              enddo
+            endif
+          else
+            nt=(nl*(nl-1))/2
+            do i=1,nt*(nkappas*2+4)
+              read (luin,fmt=10) (ibuf(j),j=1,19)
+            enddo
+          endif
+        enddo
 c
-       close (luin)
+        close (luin)
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -6833,38 +6886,38 @@ c
 c      write (*,20) (ibuf(j),j=1,19)
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do 30 j=1,8
-       read (luin,*) m
-       read (luin,*) (tmet(j,i),i=1,4)
-       read (luin,*) (tmet(j,i),i=5,8)
-       read (luin,*) (tmet(j,i),i=9,11)
-       if (m.eq.j) goto 30
-       write (*,*) 'Error Reading STARDAT.txt'
-       error=.true.
-       stop
+        read (luin,*) m
+        read (luin,*) (tmet(j,i),i=1,4)
+        read (luin,*) (tmet(j,i),i=5,8)
+        read (luin,*) (tmet(j,i),i=9,11)
+        if (m.eq.j) goto 30
+        write (*,*) 'Error Reading STARDAT.txt'
+        error=.true.
+        stop
    30 continue
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do 40 j=1,16
-       read (luin,*) m
-       read (luin,*) (tno4(j,i),i=1,4)
-       read (luin,*) (tno4(j,i),i=5,8)
-       read (luin,*) (tno4(j,i),i=9,11)
-       if (m.eq.j) goto 40
-       write (*,*) 'Error Reading STARDAT'
-       error=.true.
-       stop
+        read (luin,*) m
+        read (luin,*) (tno4(j,i),i=1,4)
+        read (luin,*) (tno4(j,i),i=5,8)
+        read (luin,*) (tno4(j,i),i=9,11)
+        if (m.eq.j) goto 40
+        write (*,*) 'Error Reading STARDAT'
+        error=.true.
+        stop
    40 continue
 c
       read (luin,fmt=10) (ibuf(j),j=1,19)
       do 50 j=1,16
-       read (luin,*) m
-       read (luin,*) (tno5(j,i),i=1,4)
-       read (luin,*) (tno5(j,i),i=5,8)
-       read (luin,*) (tno5(j,i),i=9,11)
-       if (m.eq.j) goto 50
-       write (*,*) 'Error Reading STARDAT'
-       error=.true.
-       stop
+        read (luin,*) m
+        read (luin,*) (tno5(j,i),i=1,4)
+        read (luin,*) (tno5(j,i),i=5,8)
+        read (luin,*) (tno5(j,i),i=9,11)
+        if (m.eq.j) goto 50
+        write (*,*) 'Error Reading STARDAT'
+        error=.true.
+        stop
    50 continue
       close (luin)
 c
@@ -6932,7 +6985,7 @@ c
       write (*,20) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) pahion(j),pahip(j)
+        read (luin,*) pahion(j),pahip(j)
       enddo
 c
 c   PAH Yield
@@ -6942,58 +6995,58 @@ c
       read (luin,*) nentries
       npahy=nentries
       do j=1,nentries
-       read (luin,*) yield(1,j),yield(2,j)
+        read (luin,*) yield(1,j),yield(2,j)
       enddo
 c
 c     Negative PAHs
 c
       do i=1,2
-       do j=1,infph-1
-        if (photev(j).gt.pahip(i)) then
-         ebinc=cphotev(j)
+        do j=1,infph-1
+          if (photev(j).gt.pahip(i)) then
+            ebinc=cphotev(j)
 c          yesc=1.d0
-         pahyield(j,i)=1.d0
-         do k=1,npahy-1
-          if (ebinc.lt.(pahip(i)+yield(1,k+1))) then
-           y1=pahip(i)+yield(1,k)
-           y2=pahip(i)+yield(1,k+1)
-           ynu=(ebinc-y1)/(y2-y1)
-           y1=yield(2,k)
-           y2=yield(2,k+1)
-           pahyield(j,i)=(y1+(ynu*(y2-y1)))
-           goto 40
+            pahyield(j,i)=1.d0
+            do k=1,npahy-1
+              if (ebinc.lt.(pahip(i)+yield(1,k+1))) then
+                y1=pahip(i)+yield(1,k)
+                y2=pahip(i)+yield(1,k+1)
+                ynu=(ebinc-y1)/(y2-y1)
+                y1=yield(2,k)
+                y2=yield(2,k+1)
+                pahyield(j,i)=(y1+(ynu*(y2-y1)))
+                goto 40
+              endif
+            enddo
+   40       continue
           endif
-         enddo
-   40    continue
-        endif
-       enddo
+        enddo
       enddo
 c
 c     Neutral & positive PAHs
 c
       do i=3,4
-       englow=-(pahion(i)+1)*ec
-       do j=1,infph-1
-        if (photev(j).gt.pahip(i)) then
-         ebinc=cphotev(j)
-         engmax=ebinc-pahip(i)
-         beta=1.d0/(engmax-englow)**2
-         yesc=1.d0-2.d0*beta*englow**2
-         pahyield(j,i)=1.d0
-         do k=1,npahy-1
-          if (ebinc.lt.(pahip(i)+yield(1,k+1))) then
-           y1=pahip(i)+yield(1,k)
-           y2=pahip(i)+yield(1,k+1)
-           ynu=(ebinc-y1)/(y2-y1)
-           y1=yield(2,k)
-           y2=yield(2,k+1)
-           pahyield(j,i)=(y1+(ynu*(y2-y1)))*yesc
-           goto 50
+        englow=-(pahion(i)+1)*ec
+        do j=1,infph-1
+          if (photev(j).gt.pahip(i)) then
+            ebinc=cphotev(j)
+            engmax=ebinc-pahip(i)
+            beta=1.d0/(engmax-englow)**2
+            yesc=1.d0-2.d0*beta*englow**2
+            pahyield(j,i)=1.d0
+            do k=1,npahy-1
+              if (ebinc.lt.(pahip(i)+yield(1,k+1))) then
+                y1=pahip(i)+yield(1,k)
+                y2=pahip(i)+yield(1,k+1)
+                ynu=(ebinc-y1)/(y2-y1)
+                y1=yield(2,k)
+                y2=yield(2,k+1)
+                pahyield(j,i)=(y1+(ynu*(y2-y1)))*yesc
+                goto 50
+              endif
+            enddo
+   50       continue
           endif
-         enddo
-   50    continue
-        endif
-       enddo
+        enddo
       enddo
 c
 c  Read PAH emission data
@@ -7006,31 +7059,31 @@ c
       write (*,20) (ibuf(j),j=1,19)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) x0(j),aa(j),bb(j)
+        read (luin,*) x0(j),aa(j),bb(j)
       enddo
       do inl=1,infph-1
-       ebinc=cphotev(j)
-       do j=1,nentries
-        pahflux(inl)=pahflux(inl)+aa(j)*bb(j)*bb(j)/(bb(j)*bb(j)+(ebinc-
-     &   x0(j))**2)
-       enddo
-       pahflux(inl)=pahflux(inl)*exp(-(ebinc/1.5)**3)*exp(-(0.01/ebinc)*
-     &  *3)
+        ebinc=cphotev(j)
+        do j=1,nentries
+          pahflux(inl)=pahflux(inl)+aa(j)*bb(j)*bb(j)/(bb(j)*bb(j)+
+     &     (ebinc-x0(j))**2)
+        enddo
+        pahflux(inl)=pahflux(inl)*exp(-(ebinc/1.5)**3)*exp(-(0.01/ebinc)
+     &   **3)
       enddo
 c
 c     Normalise energy flux to 1 erg s-1
 c
       pahsum=0.d0
       do i=1,infph-1
-       ebinc=widbinnu(i)
-       pahsum=pahsum+pahflux(i)*ebinc
+        ebinc=widbinnu(i)
+        pahsum=pahsum+pahflux(i)*ebinc
       enddo
 c
 c  convert to photons/s/Hz/Sr
 c
       do i=1,infph-1
-       ebinc=cphote(j)
-       pahflux(i)=pahflux(i)/(fpi*pahsum*ebinc)
+        ebinc=cphote(j)
+        pahflux(i)=pahflux(i)/(fpi*pahsum*ebinc)
       enddo
 c
 c      open(1011,file='pahflux.sou',status='UNKNOWN')
@@ -7052,7 +7105,7 @@ c PAHabs
 c      write(*, 3) (ibuf(j),j = 1, 11)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
+        read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
       enddo
 c
 c     Remap to current binning,use logarithmic extrapolation for
@@ -7062,22 +7115,22 @@ c
       dq=dlog10(aa(2))-dlog10(aa(1))
       dqdx=dq/dx0
       do j=1,infph-1
-       ebinc=cphotev(j)
-       if (ebinc.lt.x0(1)) then
-        pahnabs(j)=pahsigma*10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
-     &   log10(aa(1)))
-       else
-        ii=0
-        do i=1,nentries-1
-         if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-        enddo
-        if (ii.gt.0) then
-         x=ebinc-x0(ii)
-         pahnabs(j)=pahsigma*(aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii))))
+        ebinc=cphotev(j)
+        if (ebinc.lt.x0(1)) then
+          pahnabs(j)=pahsigma*10.d0**((dlog10(ebinc)-dlog10(x0(1)))*
+     &     dqdx+log10(aa(1)))
         else
-         pahnabs(j)=0.d0
+          ii=0
+          do i=1,nentries-1
+            if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+          enddo
+          if (ii.gt.0) then
+            x=ebinc-x0(ii)
+            pahnabs(j)=pahsigma*(aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii))))
+          else
+            pahnabs(j)=0.d0
+          endif
         endif
-       endif
       enddo
 c
 c PAHsca
@@ -7086,7 +7139,7 @@ c PAHsca
 c      write(*, 3) (ibuf(j),j = 1, 11)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
+        read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
       enddo
 c
 c     Remap to current binning,use logarithmic extrapolation for
@@ -7096,25 +7149,25 @@ c
       dq=dlog10(aa(2))-dlog10(aa(1))
       dqdx=dq/dx0
       do j=1,infph-1
-       ebinc=cphotev(j)
-       if (ebinc.lt.x0(1)) then
-        pahnsca(j)=0.d0
+        ebinc=cphotev(j)
+        if (ebinc.lt.x0(1)) then
+          pahnsca(j)=0.d0
 cpahsigma*10.d0**((dlog10(ebinc)-dlog10(x0(1)))
 c     &                *dqdx + log10(aa(1)))
-       else
-        ii=0
-        do i=1,nentries-1
-         if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-        enddo
-        if (ii.gt.0) then
-         x=ebinc-x0(ii)
-         pahnsca(j)=0.d0
+        else
+          ii=0
+          do i=1,nentries-1
+            if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+          enddo
+          if (ii.gt.0) then
+            x=ebinc-x0(ii)
+            pahnsca(j)=0.d0
 cpahsigma*(aa(ii)+x*(bb(ii)+x*(cc(ii)
 c     &                       +x*dd(ii))))
-        else
-         pahnsca(j)=0.d0
+          else
+            pahnsca(j)=0.d0
+          endif
         endif
-       endif
       enddo
 c
 c    PAHcos
@@ -7123,27 +7176,27 @@ c    PAHcos
 c        write(*, 3) (ibuf(j),j = 1, 11)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
       enddo
 c
 c     Remap to current binning
 c
       do j=1,infph-1
-       ebinc=cphotev(j)
-       if (ebinc.lt.x0(1)) then
-        pahncos(j)=aa(1)
-       else
-        ii=0
-        do i=1,nentries-1
-         if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-        enddo
-        if (ii.gt.0) then
-         x=ebinc-x0(ii)
-         pahncos(j)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+        ebinc=cphotev(j)
+        if (ebinc.lt.x0(1)) then
+          pahncos(j)=aa(1)
         else
-         pahncos(j)=0.d0
+          ii=0
+          do i=1,nentries-1
+            if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+          enddo
+          if (ii.gt.0) then
+            x=ebinc-x0(ii)
+            pahncos(j)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+          else
+            pahncos(j)=0.d0
+          endif
         endif
-       endif
       enddo
 c
 c  Read data for ionised PAH
@@ -7158,7 +7211,7 @@ c PAHabs
 c      write(*, 3) (ibuf(j),j = 1, 11)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
+        read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
       enddo
 c
 c     Remap to current binning,use logarithmic extrapolation for
@@ -7168,22 +7221,22 @@ c
       dq=dlog10(aa(2))-dlog10(aa(1))
       dqdx=dq/dx0
       do j=1,infph-1
-       ebinc=cphotev(j)
-       if (ebinc.lt.x0(1)) then
-        pahiabs(j)=pahsigma*10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
-     &   log10(aa(1)))
-       else
-        ii=0
-        do i=1,nentries-1
-         if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-        enddo
-        if (ii.gt.0) then
-         x=ebinc-x0(ii)
-         pahiabs(j)=pahsigma*(aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii))))
+        ebinc=cphotev(j)
+        if (ebinc.lt.x0(1)) then
+          pahiabs(j)=pahsigma*10.d0**((dlog10(ebinc)-dlog10(x0(1)))*
+     &     dqdx+log10(aa(1)))
         else
-         pahiabs(j)=0.d0
+          ii=0
+          do i=1,nentries-1
+            if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+          enddo
+          if (ii.gt.0) then
+            x=ebinc-x0(ii)
+            pahiabs(j)=pahsigma*(aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii))))
+          else
+            pahiabs(j)=0.d0
+          endif
         endif
-       endif
       enddo
 c
 c PAHsca
@@ -7192,7 +7245,7 @@ c PAHsca
 c      write(*, 3) (ibuf(j),j = 1, 11)
       read (luin,*) nentries
       do j=1,nentries
-       read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
+        read (luin,*) x0(j),aa(j),bb(j),cc(j),dd(j)
       enddo
 c
 c     Remap to current binning,use logarithmic extrapolation for
@@ -7202,25 +7255,25 @@ c
       dq=dlog10(aa(2))-dlog10(aa(1))
       dqdx=dq/dx0
       do j=1,infph-1
-       ebinc=cphotev(j)
-       if (ebinc.lt.x0(1)) then
-        pahisca(j)=0.d0
+        ebinc=cphotev(j)
+        if (ebinc.lt.x0(1)) then
+          pahisca(j)=0.d0
 cpahsigma*10.d0**((dlog10(ebinc)-dlog10(x0(1)))
 c     &                 *dqdx + log10(aa(1)))
-       else
-        ii=0
-        do i=1,nentries-1
-         if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-        enddo
-        if (ii.gt.0) then
-         x=ebinc-x0(ii)
-         pahisca(j)=0.d0
+        else
+          ii=0
+          do i=1,nentries-1
+            if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+          enddo
+          if (ii.gt.0) then
+            x=ebinc-x0(ii)
+            pahisca(j)=0.d0
 cpahsigma*(aa(ii)+x*(bb(ii)+x*(cc(ii)
 c     &                       +x*dd(ii))))
-        else
-         pahisca(j)=0.d0
+          else
+            pahisca(j)=0.d0
+          endif
         endif
-       endif
       enddo
 c
 c    PAHcos
@@ -7229,34 +7282,34 @@ c    PAHcos
 c        write(*, 3) (ibuf(j),j = 1, 11)
       read (luin,*) nentries
       do i=1,nentries
-       read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
       enddo
 c
 c     Remap to current binning
 c
       do j=1,infph-1
-       ebinc=cphotev(j)
-       if (ebinc.lt.x0(1)) then
-        pahicos(j)=aa(1)
-       else
-        ii=0
-        do i=1,nentries-1
-         if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-        enddo
-        if (ii.gt.0) then
-         x=ebinc-x0(ii)
-         pahicos(j)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+        ebinc=cphotev(j)
+        if (ebinc.lt.x0(1)) then
+          pahicos(j)=aa(1)
         else
-         pahicos(j)=0.d0
+          ii=0
+          do i=1,nentries-1
+            if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+          enddo
+          if (ii.gt.0) then
+            x=ebinc-x0(ii)
+            pahicos(j)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+          else
+            pahicos(j)=0.d0
+          endif
         endif
-       endif
       enddo
 c
 c     get PAH extinction
 c
       do i=1,infph-1
-       pahnext(i)=pahnabs(i)+pahnsca(i)
-       pahiext(i)=pahiabs(i)+pahisca(i)
+        pahnext(i)=pahnabs(i)+pahnsca(i)
+        pahiext(i)=pahiabs(i)+pahisca(i)
       enddo
       close (luin)
 c
@@ -7277,110 +7330,110 @@ c
       read (luin,*) dustbinmax
 c      write(*,*) dustbinmax
       do 90 drad=1,dustbinmax
-       read (luin,*)
-       read (luin,*) grainrad(drad)
+        read (luin,*)
+        read (luin,*) grainrad(drad)
 c        write(*,*) drad,grainrad(drad)
 c
 c    Spline for Qabs
 c
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do i=1,nentries
-        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
-       enddo
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do i=1,nentries
+          read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        enddo
 c
 c     Remap to current binning,use logarithmic extrapolation for
 c        ebin < min x
 c
-       dx0=dlog10(x0(2))-dlog10(x0(1))
-       dq=dlog10(aa(2))-dlog10(aa(1))
-       dqdx=dq/dx0
-       do j=1,infph-1
-        ebinc=cphotev(j)
-        if (ebinc.lt.x0(1)) then
-         absorp(j,drad,1)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
-     &    log10(aa(1)))
-        else
-         ii=0
-         do i=1,nentries-1
-          if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-         enddo
-         if (ii.gt.0) then
-          x=ebinc-x0(ii)
-          absorp(j,drad,1)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
-         else
-          absorp(j,drad,1)=0.d0
-         endif
-        endif
-       enddo
+        dx0=dlog10(x0(2))-dlog10(x0(1))
+        dq=dlog10(aa(2))-dlog10(aa(1))
+        dqdx=dq/dx0
+        do j=1,infph-1
+          ebinc=cphotev(j)
+          if (ebinc.lt.x0(1)) then
+            absorp(j,drad,1)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
+     &       log10(aa(1)))
+          else
+            ii=0
+            do i=1,nentries-1
+              if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+            enddo
+            if (ii.gt.0) then
+              x=ebinc-x0(ii)
+              absorp(j,drad,1)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+            else
+              absorp(j,drad,1)=0.d0
+            endif
+          endif
+        enddo
 c
 c    Spline for Qsca
 c
-       read (luin,*)
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do i=1,nentries
-        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
-       enddo
+        read (luin,*)
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do i=1,nentries
+          read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        enddo
 c
 c     Remap to current binning
 c
-       dx0=dlog10(x0(2))-dlog10(x0(1))
-       dq=dlog10(aa(2))-dlog10(aa(1))
-       dqdx=dq/dx0
-       do j=1,infph-1
-        ebinc=cphotev(j)
-        if (ebinc.lt.x0(1)) then
-         scatter(j,drad,1)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
-     &    log10(aa(1)))
-        else
-         ii=0
-         do i=1,nentries-1
-          if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-         enddo
-         if (ii.gt.0) then
-          x=ebinc-x0(ii)
-          scatter(j,drad,1)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
-         else
-          scatter(j,drad,1)=0.d0
-         endif
-        endif
-       enddo
+        dx0=dlog10(x0(2))-dlog10(x0(1))
+        dq=dlog10(aa(2))-dlog10(aa(1))
+        dqdx=dq/dx0
+        do j=1,infph-1
+          ebinc=cphotev(j)
+          if (ebinc.lt.x0(1)) then
+            scatter(j,drad,1)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*
+     &       dqdx+log10(aa(1)))
+          else
+            ii=0
+            do i=1,nentries-1
+              if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+            enddo
+            if (ii.gt.0) then
+              x=ebinc-x0(ii)
+              scatter(j,drad,1)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+            else
+              scatter(j,drad,1)=0.d0
+            endif
+          endif
+        enddo
 c
 c    Spline for Gcos
 c
-       read (luin,*)
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do i=1,nentries
-        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
-       enddo
+        read (luin,*)
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do i=1,nentries
+          read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        enddo
 c
 c     Remap to current binning
 c
-       do j=1,infph-1
-        ebinc=cphotev(j)
-        if (ebinc.lt.x0(1)) then
-         gcos(j,drad,1)=aa(1)
-        else
-         ii=0
-         do i=1,nentries-1
-          if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-         enddo
-         if (ii.gt.0) then
-          x=ebinc-x0(ii)
-          gcos(j,drad,1)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
-         else
-          gcos(j,drad,1)=0.d0
-         endif
-        endif
-       enddo
+        do j=1,infph-1
+          ebinc=cphotev(j)
+          if (ebinc.lt.x0(1)) then
+            gcos(j,drad,1)=aa(1)
+          else
+            ii=0
+            do i=1,nentries-1
+              if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+            enddo
+            if (ii.gt.0) then
+              x=ebinc-x0(ii)
+              gcos(j,drad,1)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+            else
+              gcos(j,drad,1)=0.d0
+            endif
+          endif
+        enddo
 c
 c     Determine extinction
 c
-       do j=1,infph-1
-        extinct(j,drad,1)=absorp(j,drad,1)+scatter(j,drad,1)
-       enddo
+        do j=1,infph-1
+          extinct(j,drad,1)=absorp(j,drad,1)+scatter(j,drad,1)
+        enddo
    90 continue
       close (luin)
 c
@@ -7398,116 +7451,116 @@ c
       write (*,20) (ibuf(j),j=1,19)
       read (luin,*) dustbinmax
       do 110 drad=1,dustbinmax
-       read (luin,*)
-       read (luin,*) grainrad(drad)
+        read (luin,*)
+        read (luin,*) grainrad(drad)
 c
 c    Spline for Qabs
 c
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do i=1,nentries
-        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
-       enddo
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do i=1,nentries
+          read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        enddo
 c
 c     Remap to current binning
 c
-       dx0=dlog10(x0(2))-dlog10(x0(1))
-       dq=dlog10(aa(2))-dlog10(aa(1))
-       dqdx=dq/dx0
-       do j=1,infph-1
-        ebinc=cphotev(j)
-        if (ebinc.lt.x0(1)) then
-         absorp(j,drad,2)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
-     &    log10(aa(1)))
-        else
-         ii=0
-         do i=1,nentries-1
-          if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-         enddo
-         if (ii.gt.0) then
-          x=ebinc-x0(ii)
-          absorp(j,drad,2)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
-         else
-          absorp(j,drad,2)=0.d0
-         endif
-        endif
-       enddo
+        dx0=dlog10(x0(2))-dlog10(x0(1))
+        dq=dlog10(aa(2))-dlog10(aa(1))
+        dqdx=dq/dx0
+        do j=1,infph-1
+          ebinc=cphotev(j)
+          if (ebinc.lt.x0(1)) then
+            absorp(j,drad,2)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
+     &       log10(aa(1)))
+          else
+            ii=0
+            do i=1,nentries-1
+              if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+            enddo
+            if (ii.gt.0) then
+              x=ebinc-x0(ii)
+              absorp(j,drad,2)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+            else
+              absorp(j,drad,2)=0.d0
+            endif
+          endif
+        enddo
 c
 c    Spline for Qsca
 c
-       read (luin,*)
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do i=1,nentries
-        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
-       enddo
+        read (luin,*)
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do i=1,nentries
+          read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        enddo
 c
 c     Remap to current binning
 c
-       dx0=dlog10(x0(2))-dlog10(x0(1))
-       dq=dlog10(aa(2))-dlog10(aa(1))
-       dqdx=dq/dx0
-       do j=1,infph-1
-        ebinc=cphotev(j)
-        if (ebinc.lt.x0(1)) then
-         scatter(j,drad,2)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*dqdx+
-     &    log10(aa(1)))
-        else
-         ii=0
-         do i=1,nentries-1
-          if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-         enddo
-         if (ii.gt.0) then
-          x=ebinc-x0(ii)
-          scatter(j,drad,2)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
-         else
-          scatter(j,drad,2)=0.d0
-         endif
-        endif
-       enddo
+        dx0=dlog10(x0(2))-dlog10(x0(1))
+        dq=dlog10(aa(2))-dlog10(aa(1))
+        dqdx=dq/dx0
+        do j=1,infph-1
+          ebinc=cphotev(j)
+          if (ebinc.lt.x0(1)) then
+            scatter(j,drad,2)=10.d0**((dlog10(ebinc)-dlog10(x0(1)))*
+     &       dqdx+log10(aa(1)))
+          else
+            ii=0
+            do i=1,nentries-1
+              if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+            enddo
+            if (ii.gt.0) then
+              x=ebinc-x0(ii)
+              scatter(j,drad,2)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+            else
+              scatter(j,drad,2)=0.d0
+            endif
+          endif
+        enddo
 c
 c    Spline for Gcos
 c
-       read (luin,*)
-       read (luin,fmt=10) (ibuf(j),j=1,19)
-       read (luin,*) nentries
-       do i=1,nentries
-        read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
-       enddo
+        read (luin,*)
+        read (luin,fmt=10) (ibuf(j),j=1,19)
+        read (luin,*) nentries
+        do i=1,nentries
+          read (luin,*) x0(i),aa(i),bb(i),cc(i),dd(i)
+        enddo
 c
 c     Remap to current binning
 c
-       do j=1,infph-1
-        ebinc=cphotev(j)
-        if (ebinc.lt.x0(1)) then
-         gcos(j,drad,2)=aa(1)
-        else
-         ii=0
-         do i=1,nentries-1
-          if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
-         enddo
-         if (ii.gt.0) then
-          x=ebinc-x0(ii)
-          gcos(j,drad,2)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
-         else
-          gcos(j,drad,2)=0.d0
-         endif
-        endif
-       enddo
+        do j=1,infph-1
+          ebinc=cphotev(j)
+          if (ebinc.lt.x0(1)) then
+            gcos(j,drad,2)=aa(1)
+          else
+            ii=0
+            do i=1,nentries-1
+              if ((ebinc.ge.x0(i)).and.(ebinc.lt.x0(i+1))) ii=i
+            enddo
+            if (ii.gt.0) then
+              x=ebinc-x0(ii)
+              gcos(j,drad,2)=aa(ii)+x*(bb(ii)+x*(cc(ii)+x*dd(ii)))
+            else
+              gcos(j,drad,2)=0.d0
+            endif
+          endif
+        enddo
 c
 c     Determine extinction
 c
-       do j=1,infph-1
-        extinct(j,drad,2)=absorp(j,drad,2)+scatter(j,drad,2)
-       enddo
+        do j=1,infph-1
+          extinct(j,drad,2)=absorp(j,drad,2)+scatter(j,drad,2)
+        enddo
   110 continue
 c
 c     Calculate grain radius bin edges (+-0.025 in dex)
 c
       do drad=1,dustbinmax
 c        write(*,*) grainrad(drad)
-       grainrad(drad)=grainrad(drad)*1.0d-04
-       gradedge(drad)=grainrad(drad)*9.440608763d-01
+        grainrad(drad)=grainrad(drad)*1.0d-04
+        gradedge(drad)=grainrad(drad)*9.440608763d-01
       enddo
       gradedge(dustbinmax+1)=grainrad(dustbinmax)*1.059253725d0
       close (luin)

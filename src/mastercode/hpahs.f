@@ -55,7 +55,7 @@ c
 c
 c     assuming coronene (Nc=24)
 c
-       pahnc=468
+        pahnc=468
 c
 c  Use Coronene Nc=24, radius ~ 5.85 A, S.A = (2/pi)* pi*a**2 (2/pi)
 c   due to disc orientation sigma= 6.85E-15
@@ -64,84 +64,67 @@ c     new uses 10A Draine & Li Grain
 c
 c *4.d0*pi??
 c
-       sigma=(2/pi)*(10.d0*10.d0)*1.d-16
+        sigma=(2/pi)*(10.d0*10.d0)*1.d-16
 c
-       pahrad=10.0d-8
+        pahrad=10.0d-8
 c
-       ryd4=4.d0*iph
+        ryd4=4.d0*iph
 c
-       b=pahip(1)
+        b=pahip(1)
 c
-       se=0.5d0
+        se=0.5d0
 c
 c
 c  Maximum electon sticking rate
 c
-       elmax=de*se*dsqrt((8*rkb*t)/(pi*me))*sigma
+        elmax=de*se*dsqrt((8*rkb*t)/(pi*me))*sigma
 c
 c     Note: e^2/C=3.42 eV where C=2a/pi = capacitance of disk
 c
-       ec=(eesu**2*pi)/(2*pahrad)
-       qtmfac=1.d0/(1.d0+(27d-08/pahrad)**0.75)
-       phi=ec/(rkb*t)
-       ec=ec/ev
+        ec=(eesu**2*pi)/(2*pahrad)
+        qtmfac=1.d0/(1.d0+(27d-08/pahrad)**0.75)
+        phi=ec/(rkb*t)
+        ec=ec/ev
 c
-       do j=1,infph-1
+        do j=1,infph-1
 c
-        pahbin(j)=.false.
-        if ((photev(j).gt.b).and.(photev(j).lt.ryd4)) then
+          pahbin(j)=.false.
+          if ((photev(j).gt.b).and.(photev(j).lt.ryd4)) then
 c
-         den=cphote(j)
-         wid=widbinnu(j)
-         phots=fpi*tphot(j)*wid/den
-         photsn(j)=pahnabs(j)*phots
-         photsi(j)=pahiabs(j)*phots
-         if ((photsn(j).gt.0).or.(photsi(j).gt.0)) then
-          pahbin(j)=.true.
-         endif
-        endif
-       enddo
+            den=cphote(j)
+            wid=widbinnu(j)
+            phots=fpi*tphot(j)*wid/den
+            photsn(j)=pahnabs(j)*phots
+            photsi(j)=pahiabs(j)*phots
+            if ((photsn(j).gt.0).or.(photsi(j).gt.0)) then
+              pahbin(j)=.true.
+            endif
+          endif
+        enddo
 c
 c  Calculate electon collision rate and photoionisation rates
 c
 c     Negative PAHs
 c
-       do i=1,2
-        jpe(i)=0.d0
+        do i=1,2
+          jpe(i)=0.d0
 c
 c  Electron capture to that level
-        jec(i+1)=elmax*dexp(pahion(i+1)*phi)
+          jec(i+1)=elmax*dexp(pahion(i+1)*phi)
 c
 c  Photoionisation from that level
-        do j=1,infph-1
-         if (pahbin(j)) then
-          if (photev(j).gt.pahip(i)) then
-           jpe(i)=jpe(i)+photsn(j)*pahyield(j,i)
-          endif
-         endif
+          do j=1,infph-1
+            if (pahbin(j)) then
+              if (photev(j).gt.pahip(i)) then
+                jpe(i)=jpe(i)+photsn(j)*pahyield(j,i)
+              endif
+            endif
+          enddo
         enddo
-       enddo
 c
 c     Neutral PAHs
 c
-       i=3
-       jpe(i)=0.d0
-c
-c  Electron capture to that level
-       jec(i+1)=elmax*(1.d0+(pahion(i+1)*phi))
-c
-c  Photoionisation from that level
-       do j=1,infph-1
-        if (pahbin(j)) then
-         if (photev(j).gt.pahip(i)) then
-          jpe(i)=jpe(i)+photsn(j)*pahyield(j,i)
-         endif
-        endif
-       enddo
-c
-c     Positive PAHs
-c
-       do i=4,4
+        i=3
         jpe(i)=0.d0
 c
 c  Electron capture to that level
@@ -149,37 +132,54 @@ c  Electron capture to that level
 c
 c  Photoionisation from that level
         do j=1,infph-1
-         if (pahbin(j)) then
-          if (photev(j).gt.pahip(i)) then
-           jpe(i)=jpe(i)+photsi(j)*pahyield(j,i)
+          if (pahbin(j)) then
+            if (photev(j).gt.pahip(i)) then
+              jpe(i)=jpe(i)+photsn(j)*pahyield(j,i)
+            endif
           endif
-         endif
         enddo
-       enddo
+c
+c     Positive PAHs
+c
+        do i=4,4
+          jpe(i)=0.d0
+c
+c  Electron capture to that level
+          jec(i+1)=elmax*(1.d0+(pahion(i+1)*phi))
+c
+c  Photoionisation from that level
+          do j=1,infph-1
+            if (pahbin(j)) then
+              if (photev(j).gt.pahip(i)) then
+                jpe(i)=jpe(i)+photsi(j)*pahyield(j,i)
+              endif
+            endif
+          enddo
+        enddo
 c
 c     Solve ionisation state of PAHm, np = 5 levels
 c
-       do i=2,6
-        do j=1,7
-         pahstate(j,i)=0.d0
+        do i=2,6
+          do j=1,7
+            pahstate(j,i)=0.d0
+          enddo
         enddo
-       enddo
 c     sum f(Z)=1.d0
-       do i=1,6
-        pahstate(i,1)=1.d0
-       enddo
+        do i=1,6
+          pahstate(i,1)=1.d0
+        enddo
 c     Jpe-Jec=0
-       do i=2,5
-        pahstate(i-1,i)=jpe(i-1)
-        pahstate(i,i)=-jec(i)
-       enddo
+        do i=2,5
+          pahstate(i-1,i)=jpe(i-1)
+          pahstate(i,i)=-jec(i)
+        enddo
 c solve
 c        call mdiag (5, pahstate, pahsolve)
-       call matsolve (pahstate, pahsolve, 5, 5)
+        call matsolve (pahstate, pahsolve, 5, 5)
 c Calculate (+ve) ionisation fraction
-       do i=1,pahi
-        pahz(i)=pahsolve(i)
-       enddo
+        do i=1,pahi
+          pahz(i)=pahsolve(i)
+        enddo
 c
 c Calculate heating & cooling & energy absorbed
 c
@@ -188,77 +188,77 @@ c and Weingartner & Draine(2001) ApJS 134, 263
 c engesc =average escape energy
 c        = ef(E)/f(E) from W&D
 c
-       pahheat=0.d0
-       pahcool=0.d0
+        pahheat=0.d0
+        pahcool=0.d0
 c Negative PAHs
-       do i=1,2
-        englow=-(pahion(i)+1)*ec*qtmfac
-        do j=1,infph-1
-         den=cphotev(j)
-         wid=widbinnu(j)
-         paheng=paheng+pahz(i)*pahnabs(j)*fpi*tphot(j)*(1.d0-pahyield(j,
-     &    i))*wid
+        do i=1,2
+          englow=-(pahion(i)+1)*ec*qtmfac
+          do j=1,infph-1
+            den=cphotev(j)
+            wid=widbinnu(j)
+            paheng=paheng+pahz(i)*pahnabs(j)*fpi*tphot(j)*(1.d0-
+     &       pahyield(j,i))*wid
 c                 sum=sum+pahZ(i)*pahnabs(j)*tphot(j)*wid*fpi
-         if ((pahbin(j)).and.(photev(j).gt.pahip(i))) then
-          engmax=den-pahip(i)+englow
-          engesc=0.5d0*(engmax+englow)
-          pahheat=pahheat+pahz(i)*photsn(j)*pahyield(j,i)*engesc*ev
-         endif
+            if ((pahbin(j)).and.(photev(j).gt.pahip(i))) then
+              engmax=den-pahip(i)+englow
+              engesc=0.5d0*(engmax+englow)
+              pahheat=pahheat+pahz(i)*photsn(j)*pahyield(j,i)*engesc*ev
+            endif
+          enddo
+          pahcool=pahcool+pahz(i+1)*elmax*rkb*t*(2-pahion(i+1)*phi)*
+     &     dexp(pahion(i+1)*phi)
         enddo
-        pahcool=pahcool+pahz(i+1)*elmax*rkb*t*(2-pahion(i+1)*phi)*
-     &   dexp(pahion(i+1)*phi)
-       enddo
 c Neutral PAHs
-       i=3
-       englow=-(pahion(i)+1)*ec
-       do j=1,infph-1
-        den=cphotev(j)
-        wid=widbinnu(j)
-        paheng=paheng+pahz(i)*pahnabs(j)*fpi*tphot(j)*(1.d0-pahyield(j,
-     &   i))*wid
+        i=3
+        englow=-(pahion(i)+1)*ec
+        do j=1,infph-1
+          den=cphotev(j)
+          wid=widbinnu(j)
+          paheng=paheng+pahz(i)*pahnabs(j)*fpi*tphot(j)*(1.d0-
+     &     pahyield(j,i))*wid
 c                 sum=sum+pahZ(i)*pahnabs(j)*tphot(j)*wid*fpi
-        if ((pahbin(j)).and.(photev(j).gt.pahip(i))) then
-         engmax=den-pahip(i)
+          if ((pahbin(j)).and.(photev(j).gt.pahip(i))) then
+            engmax=den-pahip(i)
 c                beta=1.d0/(engmax-englow)**2
 c                engesc=(engmax+englow-(4.d0*beta*englow**3)/3.d0)
 c     &                  /(2.d0*(1.d0-2.d0*beta*englow**2))
-         engesc=0.5d0*engmax*(engmax-2*englow)/(engmax-3*englow)
-         pahheat=pahheat+pahz(i)*photsn(j)*pahyield(j,i)*engesc*ev
-        endif
-       enddo
-       pahcool=pahcool+pahz(i+1)*elmax*rkb*t*(2+pahion(i+1)*phi)
+            engesc=0.5d0*engmax*(engmax-2*englow)/(engmax-3*englow)
+            pahheat=pahheat+pahz(i)*photsn(j)*pahyield(j,i)*engesc*ev
+          endif
+        enddo
+        pahcool=pahcool+pahz(i+1)*elmax*rkb*t*(2+pahion(i+1)*phi)
 c
 c Positive PAHs
 c
-       i=4
-       englow=-(pahion(i)+1)*ec
-       do j=1,infph-1
-        den=cphotev(j)
-        wid=widbinnu(j)
-        paheng=paheng+pahz(i)*pahiabs(j)*fpi*tphot(j)*(1.d0-pahyield(j,
-     &   i))*wid
+        i=4
+        englow=-(pahion(i)+1)*ec
+        do j=1,infph-1
+          den=cphotev(j)
+          wid=widbinnu(j)
+          paheng=paheng+pahz(i)*pahiabs(j)*fpi*tphot(j)*(1.d0-
+     &     pahyield(j,i))*wid
 c                sum=sum+pahZ(i)*pahiabs(j)*tphot(j)*wid*fpi
-        if ((pahbin(j)).and.(photev(j).gt.pahip(i))) then
-         engmax=den-pahip(i)
+          if ((pahbin(j)).and.(photev(j).gt.pahip(i))) then
+            engmax=den-pahip(i)
 c                beta=1.d0/(engmax-englow)**2
 c                engesc=(engmax+englow-(4.d0*beta*englow**3)/3.d0)
 c     &                /(2.d0*(1.d0-2.d0*beta*englow**2))
-         engesc=0.5d0*engmax*(engmax-2*englow)/(engmax-3*englow)
-         pahheat=pahheat+pahz(i)*photsi(j)*pahyield(j,i)*engesc*ev
+            engesc=0.5d0*engmax*(engmax-2*englow)/(engmax-3*englow)
+            pahheat=pahheat+pahz(i)*photsi(j)*pahyield(j,i)*engesc*ev
 c
-        endif
-       enddo
-       pahcool=pahcool+pahz(i+1)*elmax*rkb*t*(2+pahion(i+1)*phi)
+          endif
+        enddo
+        pahcool=pahcool+pahz(i+1)*elmax*rkb*t*(2+pahion(i+1)*phi)
 c
-       i=5
-       do j=1,infph-1
-        wid=widbinnu(j)
-        paheng=paheng+pahz(i)*pahiabs(j)*fpi*tphot(j)*(1.d0-pahyield(j,
-     &   i))*wid
+        i=5
+        do j=1,infph-1
+          wid=widbinnu(j)
+          paheng=paheng+pahz(i)*pahiabs(j)*fpi*tphot(j)*(1.d0-
+     &     pahyield(j,i))*wid
 c                sum=sum+pahZ(i)*pahiabs(j)*tphot(j)*wid*4.d0*pi
-       enddo
+        enddo
 c
-       paheat=(pahheat-pahcool)*pahfrac*dh
+        paheat=(pahheat-pahcool)*pahfrac*dh
 c
 c  Testing grain charge - print output
 c

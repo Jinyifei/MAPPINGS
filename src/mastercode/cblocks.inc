@@ -746,19 +746,14 @@ c
       integer*4 xr3col_kk(mxxr3casc,mxxr3cols,mxxr3ions)
       real*8 xr3col_fr(mxxr3cols,mxxr3ions)
       real*8 xr3col_tc(mxxr3cols,mxxr3ions)
-      real*8 xr3col_x (mxxr3nspl) ! uniform 11 point splines for all
+c      uniform 11 point splines for all
+      real*8 xr3col_x (mxxr3nspl)
       real*8 xr3col_y (mxxr3nspl,mxxr3cols,mxxr3ions)
       real*8 xr3col_y2(mxxr3nspl,mxxr3cols,mxxr3ions)
       real*8 xr3col_br(mxxr3casc,mxxr3cols,mxxr3ions)
       real*8 xr3ei  (mxxr3lvls,mxxr3ions)
       real*8 xr3gi  (mxxr3lvls,mxxr3ions)
       real*8 xr3invgi(mxxr3lvls,mxxr3ions)
-c
-c      real*8 xr3eij (mxxr3lvls,mxxr3lvls,mxxr3ions) !now local to init
-c      real*8 xr3egij(mxxr3lvls,mxxr3lvls,mxxr3ions) !now local to init
-c      real*8 xr3aji (mxxr3lvls,mxxr3lvls,mxxr3ions) !now local to init
-c      real*8 xr3gfij(mxxr3lvls,mxxr3lvls,mxxr3ions) !now local to init
-c      real*8 xr3frij(mxxr3lvls,mxxr3lvls,mxxr3ions) !now local to init
 c
 c line list data
 c
@@ -773,7 +768,8 @@ c
       integer*4 xr3lines_imap_j(mxxr3lines)
 c
 c      real*8 xr3lines_eij (mxxr3lines) not used
-      real*8 xr3lines_egij(mxxr3lines) ! ergs
+c      ergs
+      real*8 xr3lines_egij(mxxr3lines)
 c      real*8 xr3lines_evij(mxxr3lines) not used
       integer*4 xr3minxbin
       integer*4 xr3lines_bin (mxxr3lines)
@@ -817,7 +813,8 @@ c
       real*8 xrlcol_fr(mxxrlcols,mxxrlions)
       real*8 xrlcol_tc(mxxrlcols,mxxrlions)
 c
-      real*8 xrlcol_x (mxxrlnspl) ! uniform 11 point splines for all
+c      uniform 11 point splines for all
+      real*8 xrlcol_x (mxxrlnspl)
       real*8 xrlcol_y (mxxrlnspl,mxxrlcols,mxxrlions)
       real*8 xrlcol_y2(mxxrlnspl,mxxrlcols,mxxrlions)
 c
@@ -827,11 +824,6 @@ c
       real*8 xrlgi  (mxxrllvls,mxxrlions)
       real*8 xrlinvgi(mxxrllvls,mxxrlions)
 c
-c      real*8 xrleij (mxxrllvls,mxxrllvls,mxxrlions) !now local to init
-c      real*8 xrlegij(mxxrllvls,mxxrllvls,mxxrlions) !now local to init
-c      real*8 xrlaji (mxxrllvls,mxxrllvls,mxxrlions) !now local to init
-c      real*8 xrlgfij(mxxrllvls,mxxrllvls,mxxrlions) !now local to init
-c      real*8 xrlfrij(mxxrllvls,mxxrllvls,mxxrlions) !now local to init
 c
 c line list data
 c
@@ -846,7 +838,8 @@ c
       integer*4 xrllines_imap_j(mxxrllines)
 c
 c      real*8 xrllines_eij (mxxrllines) not used
-      real*8 xrllines_egij(mxxrllines) ! ergs
+c      ergs
+      real*8 xrllines_egij(mxxrllines)
 c      real*8 xrllines_evij(mxxrllines) not used
       integer*4 xrlminxbin
       integer*4 xrllines_bin (mxxrllines)
@@ -875,10 +868,13 @@ c
 c multi level ion data
 c
       integer*4 nhheions
-      integer*4 ishheion(mxelem) ! 0: not a full coll ion, 1: full data
+c      0: not a full coll ion, 1: full data
+      integer*4 ishheion(mxelem)
       integer*4 hheat(mxhheions),hheion(mxhheions)
-      integer*4 hheni(mxhheions) ! # of levels index
-      integer*4 hhen (mxhhelvls,mxhheions) ! index -> quantum n for h
+c      # of levels index
+      integer*4 hheni(mxhheions)
+c      index -> quantum n for h
+      integer*4 hhen (mxhhelvls,mxhheions)
       integer*4 nhheioncol(mxhheions)
       integer*4 hhecol_i(mxhhecols,mxhheions)
       integer*4 hhecol_j(mxhhecols,mxhheions)
@@ -896,8 +892,10 @@ c      real*8 hhecol_br(mxxr3casc,mxxr3cols,mxhheions)
       real*8 hhegi   (mxhhelvls,mxhheions)
       real*8 hheinvgi(mxhhelvls,mxhheions)
 c
-c      real*8 hheeij (mxhhelvls,mxhhelvls,mxhheions) ! cm^-1
-c      real*8 hheegij(mxhhelvls,mxhhelvls,mxhheions) ! ergs
+c      cm^-1
+c      real*8 hheeij (mxhhelvls,mxhhelvls,mxhheions)
+c      ergs
+c      real*8 hheegij(mxhhelvls,mxhhelvls,mxhheions)
 c      real*8 hheaji (mxhhelvls,mxhhelvls,mxhheions)
 c      real*8 hhegfij(mxhhelvls,mxhhelvls,mxhheions)
 c
@@ -1293,32 +1291,49 @@ c
 c
 c new He I effective recomb coeffs plus coll enhancement
 c
-      integer*4 nheis, nheit  ! number of level in singlet and triplets
-      integer*4 nheiscr(14)  ! number of coeffs for collisions
-      integer*4 nheitcr(14)  ! number of coeffs for collisions
-      integer*4 nheislines, nheitlines ! number of lines computed
+c      number of level in singlet and triplets
+      integer*4 nheis, nheit
+c      number of coeffs for collisions
+      integer*4 nheiscr(14)
+c      number of coeffs for collisions
+      integer*4 nheitcr(14)
+c      number of lines computed
+      integer*4 nheislines, nheitlines
       integer*4 heisupid(20), heisloid(20)
       integer*4 heitupid(20), heitloid(20)
       integer*4 heisbin(20), heitbin(20)
 c
-      real*8 heisej(14),heitej(14)    ! levels
-      real*8 heiseij(20),heiteij(20) ! lines
-      real*8 heislam(20),heitlam(20) ! lines
+c      levels
+      real*8 heisej(14),heitej(14)
+c      lines
+      real*8 heiseij(20),heiteij(20)
+c      lines
+      real*8 heislam(20),heitlam(20)
       real*8 heisbri(20),fluxheis(20)
       real*8 heitbri(20),fluxheit(20)
 c
-      real*8 heisreccoef(4,20)    ! singlet line coefs per line
-      real*8 heiscra(6,14)        ! singlet coll coeff per level
-      real*8 heiscrb(6,14)        ! singlet coll coeff per level
-      real*8 heiscrc(6,14)        ! singlet coll coeff per level
+c      singlet line coefs per line
+      real*8 heisreccoef(4,20)
+c      singlet coll coeff per level
+      real*8 heiscra(6,14)
+c      singlet coll coeff per level
+      real*8 heiscrb(6,14)
+c      singlet coll coeff per level
+      real*8 heiscrc(6,14)
 c
-      real*8 heitreccoef(4,20)    ! triplet line coefs per line
-      real*8 heitcra(6,14)        ! triplet coll coeff per level
-      real*8 heitcrb(6,14)        ! triplet coll coeff per level
-      real*8 heitcrc(6,14)        ! triplet coll coeff per level
+c      triplet line coefs per line
+      real*8 heitreccoef(4,20)
+c      triplet coll coeff per level
+      real*8 heitcra(6,14)
+c      triplet coll coeff per level
+      real*8 heitcrb(6,14)
+c      triplet coll coeff per level
+      real*8 heitcrc(6,14)
 c
-      character*8 heislvl(20),heitlvl(20) ! level names
-      character*24 heislamid(20),heitlamid(20) ! transition names
+c      level names
+      character*8 heislvl(20),heitlvl(20)
+c      transition names
+      character*24 heislamid(20),heitlamid(20)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1333,10 +1348,14 @@ c
       integer*4 rccii_bin(20)
       real*8 rccii_eij(20)
       real*8 rccii_lam(20)
-      real*8 rccii_logte(15)        ! log_10 te for rates
-      !case1=a,2=b,coef0-13,lineid
-      real*8 rccii_coeffy (2,15,20) ! log_10 coeffs from tables
-      real*8 rccii_coeffy2(2,15,20) ! 2nd drv of log_10 cs from tables
+c      log_10 te for rates
+      real*8 rccii_logte(15)
+c     case1=a,2=b,coef0-13,lineid
+
+c      log_10 coeffs from tables
+      real*8 rccii_coeffy (2,15,20)
+c      2nd drv of log_10 cs from tables
+      real*8 rccii_coeffy2(2,15,20)
       character*24 rccii_tr(20)
 c
 c lines and fluxes
@@ -1354,13 +1373,15 @@ c
       integer*4 rcoi_qbin(36)
       real*8 rcoi_qeij(36)
       real*8 rcoi_qlam(36)
-      real*8 rcoi_qcoef(2,3,36)  ! case 1=a, 2=b, coef, id
+c      case 1=a, 2=b, coef, id
+      real*8 rcoi_qcoef(2,3,36)
       character*16 rcoi_qtr(36)
       integer*4 nrcoi_t
       integer*4 rcoi_tbin(30)
       real*8 rcoi_teij(30)
       real*8 rcoi_tlam(30)
-      real*8 rcoi_tcoef(2,3,30)  ! case, coef, id
+c      case, coef, id
+      real*8 rcoi_tcoef(2,3,30)
       character*24 rcoi_ttr(30)
 c
 c lines and fluxes
@@ -1385,14 +1406,22 @@ c
       integer*4 rcoii_mltid(200)
       real*8 rcoii_eij(200)
       real*8 rcoii_lam(200)
-      real*8 rcoiin20_y (3,8,200) ! ne=1e2 case 1=a, 2=b, data te, id
-      real*8 rcoiin40_y (3,8,200) ! ne=1e4 case 1=a, 2=b, data te, id
-      real*8 rcoiin50_y (3,8,200) ! ne=1e5 case 1=a, 2=b, data te, id
-      real*8 rcoiin60_y (3,8,200) ! ne=1e6 case 1=a, 2=b, data te, id
-      real*8 rcoiin20_y2(3,8,200) ! ne=1e2 case 1=a, 2=b, spline y2, id
-      real*8 rcoiin40_y2(3,8,200) ! ne=1e4 case 1=a, 2=b, spline y2, id
-      real*8 rcoiin50_y2(3,8,200) ! ne=1e5 case 1=a, 2=b, spline y2, id
-      real*8 rcoiin60_y2(3,8,200) ! ne=1e6 case 1=a, 2=b, spline y2, id
+c      ne=1e2 case 1=a, 2=b, data te, id
+      real*8 rcoiin20_y (3,8,200)
+c      ne=1e4 case 1=a, 2=b, data te, id
+      real*8 rcoiin40_y (3,8,200)
+c      ne=1e5 case 1=a, 2=b, data te, id
+      real*8 rcoiin50_y (3,8,200)
+c      ne=1e6 case 1=a, 2=b, data te, id
+      real*8 rcoiin60_y (3,8,200)
+c      ne=1e2 case 1=a, 2=b, spline y2, id
+      real*8 rcoiin20_y2(3,8,200)
+c      ne=1e4 case 1=a, 2=b, spline y2, id
+      real*8 rcoiin40_y2(3,8,200)
+c      ne=1e5 case 1=a, 2=b, spline y2, id
+      real*8 rcoiin50_y2(3,8,200)
+c      ne=1e6 case 1=a, 2=b, spline y2, id
+      real*8 rcoiin60_y2(3,8,200)
       character*24 rcoii_tr(200)
 c
 c lines and fluxes
@@ -1412,14 +1441,22 @@ c
       integer*4 rcnii_bin(55)
       real*8 rcnii_eij(55)
       real*8 rcnii_lam(55)
-      real*8 rcniin20_y (2,8,55) ! ne=1e2 case 1=a, 2=b, data te, id
-      real*8 rcniin30_y (2,8,55) ! ne=1e3 case 1=a, 2=b, data te, id
-      real*8 rcniin40_y (2,8,55) ! ne=1e4 case 1=a, 2=b, data te, id
-      real*8 rcniin50_y (2,8,55) ! ne=1e5 case 1=a, 2=b, data te, id
-      real*8 rcniin20_y2(2,8,55) ! ne=1e2 case 1=a, 2=b, spline y2, id
-      real*8 rcniin30_y2(2,8,55) ! ne=1e3 case 1=a, 2=b, spline y2, id
-      real*8 rcniin40_y2(2,8,55) ! ne=1e4 case 1=a, 2=b, spline y2, id
-      real*8 rcniin50_y2(2,8,55) ! ne=1e5 case 1=a, 2=b, spline y2, id
+c      ne=1e2 case 1=a, 2=b, data te, id
+      real*8 rcniin20_y (2,8,55)
+c      ne=1e3 case 1=a, 2=b, data te, id
+      real*8 rcniin30_y (2,8,55)
+c      ne=1e4 case 1=a, 2=b, data te, id
+      real*8 rcniin40_y (2,8,55)
+c      ne=1e5 case 1=a, 2=b, data te, id
+      real*8 rcniin50_y (2,8,55)
+c      ne=1e2 case 1=a, 2=b, spline y2, id
+      real*8 rcniin20_y2(2,8,55)
+c      ne=1e3 case 1=a, 2=b, spline y2, id
+      real*8 rcniin30_y2(2,8,55)
+c      ne=1e4 case 1=a, 2=b, spline y2, id
+      real*8 rcniin40_y2(2,8,55)
+c      ne=1e5 case 1=a, 2=b, spline y2, id
+      real*8 rcniin50_y2(2,8,55)
       character*24 rcnii_tr(55)
 c
 c lines and fluxes
@@ -1437,8 +1474,10 @@ c
       integer*4 rcneii_bin(38)
       real*8 rcneii_eij(38)
       real*8 rcneii_lam(38)
-      real*8 rcneii_y (2,8,38)  ! case 1=a, 2=b, spline, id
-      real*8 rcneii_y2(2,8,38)  ! case 1=a, 2=b, spline, id
+c      case 1=a, 2=b, spline, id
+      real*8 rcneii_y (2,8,38)
+c      case 1=a, 2=b, spline, id
+      real*8 rcneii_y2(2,8,38)
       character*24 rcneii_tr(38)
 c
 c lines and fluxes
@@ -1761,8 +1800,10 @@ c      OPTXAGNF agn Done 2012 spectrum model
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      integer*4 neoptx      ! actual number of energy bins
-      real*8 optxparam(12)  ! optxagnf 11 paramters + 1 padding
+c      actual number of energy bins
+      integer*4 neoptx
+c      optxagnf 11 paramters + 1 padding
+      real*8 optxparam(12)
       real*8 optxear(0:mxoptxbins)
       real*8 optxtotal(mxoptxbins),optxdisk(mxoptxbins)
       real*8 optxcoro(mxoptxbins),optxnont(mxoptxbins)

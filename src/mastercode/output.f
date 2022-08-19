@@ -61,18 +61,18 @@ c
       nentries=0
 c
       do i=1,atypes
-       do j=1,maxion(i)
-        nentries=nentries+1
-       enddo
+        do j=1,maxion(i)
+          nentries=nentries+1
+        enddo
       enddo
 c
       write (lunt,*) nentries
 c
       do i=1,atypes
-       do j=1,maxion(i)
+        do j=1,maxion(i)
    20       format(i2,1x,i2,1x,1pg14.6)
-        write (lunt,20) mapz(i),j,p(j,i)
-       enddo
+          write (lunt,20) mapz(i),j,p(j,i)
+        enddo
       enddo
       close (lunt)
 c
@@ -108,17 +108,17 @@ c
 c
       totmass=0.d0
       do i=1,atypes
-       totmass=totmass+zion0(i)*atwei(i)
+        totmass=totmass+zion0(i)*atwei(i)
       enddo
       do i=1,atypes
-       xi(i)=zion0(i)*atwei(i)/totmass
+        xi(i)=zion0(i)*atwei(i)/totmass
       enddo
 c
       do i=1,atypes
-       if (grainmode.eq.0) dion(i)=1.0d0
-       write (lunt,20) elem(i),dlog10(zion0(i)),12.d0+dlog10(zion0(i)),
-     &  dlog10(deltazion(i)),dlog10(dion(i)),dlog10(zion(i)),12.d0+
-     &  dlog10(zion(i)),xi(i)
+        if (grainmode.eq.0) dion(i)=1.0d0
+        write (lunt,20) elem(i),dlog10(zion0(i)),12.d0+dlog10(zion0(i)),
+     &   dlog10(deltazion(i)),dlog10(dion(i)),dlog10(zion(i)),12.d0+
+     &   dlog10(zion(i)),xi(i)
       enddo
 c
       write (lunt,50)
@@ -129,10 +129,10 @@ c
 c
       totmass=0.d0
       do i=1,atypes
-       totmass=totmass+zion(i)*atwei(i)
+        totmass=totmass+zion(i)*atwei(i)
       enddo
       do i=1,atypes
-       xi(i)=zion(i)*atwei(i)/totmass
+        xi(i)=zion(i)*atwei(i)/totmass
       enddo
       write (lunt,40) xi(1),xi(2),(1.d0-(xi(1)+xi(2)))
 c
@@ -166,20 +166,20 @@ c    find highest ionisation
 c
       ionmax=0
       do i=1,atypes
-       if (maxion(i).ge.ionmax) ionmax=maxion(i)
+        if (maxion(i).ge.ionmax) ionmax=maxion(i)
       enddo
       if (ionmax.gt.31) ionmax=31
 c
 c
    20 format(' ',a6,2x,30(1pg10.3))
       do j=1,ionmax
-       chcksum=0.0d0
-       do i=1,atypes
-        chcksum=chcksum+po(j,i)
-       enddo
-       if (chcksum.gt.epsilon) then
-        write (lunt,20) rom(j),(po(j,i),i=1,atypes)
-       endif
+        chcksum=0.0d0
+        do i=1,atypes
+          chcksum=chcksum+po(j,i)
+        enddo
+        if (chcksum.gt.epsilon) then
+          write (lunt,20) rom(j),(po(j,i),i=1,atypes)
+        endif
       enddo
 c
 c
@@ -209,20 +209,20 @@ c    find highest ionisation
 c
       ionmax=0
       do i=1,atypes
-       if (maxion(i).ge.ionmax) ionmax=maxion(i)
+        if (maxion(i).ge.ionmax) ionmax=maxion(i)
       enddo
       if (ionmax.gt.31) ionmax=31
 c
 c
    20 format(' ',a6,2x,30(1pg10.3))
       do j=1,ionmax
-       chcksum=0.0d0
-       do i=1,atypes
-        chcksum=chcksum+po(j,i)
-       enddo
-       if (chcksum.gt.epsilon) then
-        write (lunt,20) rom(j),(po(j,i),i=1,atypes)
-       endif
+        chcksum=0.0d0
+        do i=1,atypes
+          chcksum=chcksum+po(j,i)
+        enddo
+        if (chcksum.gt.epsilon) then
+          write (lunt,20) rom(j),(po(j,i),i=1,atypes)
+        endif
       enddo
 c
 c
@@ -255,19 +255,19 @@ c
       ionmax=0
 c
       do i=1,atypes
-       if (maxion(i).ge.ionmax) ionmax=maxion(i)
+        if (maxion(i).ge.ionmax) ionmax=maxion(i)
       enddo
 c
 c
    20 format(' ',a6,2x,30(1pg10.3))
       do j=1,ionmax
-       chcksum=0.0d0
-       do i=1,atypes
-        chcksum=chcksum+po(j,i)
-       enddo
-       if (chcksum.gt.0.0d0) then
-        write (lunt,20) rom(j),(po(j,i),i=1,atypes)
-       endif
+        chcksum=0.0d0
+        do i=1,atypes
+          chcksum=chcksum+po(j,i)
+        enddo
+        if (chcksum.gt.0.0d0) then
+          write (lunt,20) rom(j),(po(j,i),i=1,atypes)
+        endif
       enddo
 c
 c
@@ -315,8 +315,8 @@ c
      &    '  2Photon',t210,'  Free-Free',t224,'  Coll. Ion',t238,
      &    '  Photo.',t252,'  Recomb.',t266,'  Cosmic',t280,
      &    '  GrainsH-C',t294,'  G.Heat',t308,'  G.Cool',t322,'  PAHs')
-       write (lunt,10)
-       return
+        write (lunt,10)
+        return
       endif
 c
       press=fpresse(t,de,dh)
@@ -330,15 +330,15 @@ c
 c
       q2los=0.d0
       do atom=1,atypes
-       q2los=q2los+h2qbri(atom)
+        q2los=q2los+h2qbri(atom)
       enddo
 c
       en=zen*dh
 c
-      ue=gammaeosu*(en+de)*rkb*t
+      ue=gammaEOSU*(en+de)*rkb*t
       cts=ue/tloss
 c
-      cspd=dsqrt(gammaeos*press/rhotot)
+      cspd=dsqrt(gammaEOS*press/rhotot)
 c
       mag=bm0
       aspd=dsqrt(mag*mag/(fpi*rhotot))
@@ -360,78 +360,78 @@ c       if (dabs(rloss).gt.ioepsilon) a(12)=rloss
 c       if (dabs(xrloss).gt.ioepsilon) a(14)=xrloss
 c       if (dabs(cmplos).gt.ioepsilon) a(16)=cmplos
 c
-       do i=1,24
-        a(i)=0.d0
-       enddo
-       if (dabs(dstep).gt.ioepsilon) a(1)=dstep
-       if (dabs(t).gt.ioepsilon) a(2)=t
-       if (dabs(de).gt.ioepsilon) a(3)=de
-       if (dabs(dh).gt.ioepsilon) a(4)=dh
-       if (dabs(en).gt.ioepsilon) a(5)=en
-       if (dabs(dlos).gt.ioepsilon) a(6)=dlos
-       if (dabs(eloss).gt.ioepsilon) a(7)=eloss
-       if (dabs(egain).gt.ioepsilon) a(8)=egain
-       if (dabs(hloss).gt.ioepsilon) a(9)=hloss
-       if (dabs(chgain).gt.ioepsilon) a(10)=chgain
-       if (dabs(xr3loss+xrlloss).gt.ioepsilon) a(11)=xr3loss+xrlloss
-       if (dabs(fsl).gt.ioepsilon) a(12)=fsl
-       if (dabs(fmloss).gt.ioepsilon) a(13)=fmloss
-       if (dabs(feloss).gt.ioepsilon) a(14)=feloss
-       if (dabs(q2los).gt.ioepsilon) a(15)=q2los
-       if (dabs(fflos).gt.ioepsilon) a(16)=fflos
-       if (dabs(colos).gt.ioepsilon) a(17)=colos
-       if (dabs(pgain).gt.ioepsilon) a(18)=pgain
-       if (dabs(rngain).gt.ioepsilon) a(19)=rngain
-       if (dabs(cosgain).gt.ioepsilon) a(20)=cosgain
-       if (dabs(gheat-gcool).gt.ioepsilon) a(21)=gheat-gcool
-       if (dabs(gheat).gt.ioepsilon) a(22)=gheat
-       if (dabs(gcool).gt.ioepsilon) a(23)=gcool
-       if (dabs(paheat).gt.ioepsilon) a(24)=paheat
+        do i=1,24
+          a(i)=0.d0
+        enddo
+        if (dabs(dstep).gt.ioepsilon) a(1)=dstep
+        if (dabs(t).gt.ioepsilon) a(2)=t
+        if (dabs(de).gt.ioepsilon) a(3)=de
+        if (dabs(dh).gt.ioepsilon) a(4)=dh
+        if (dabs(en).gt.ioepsilon) a(5)=en
+        if (dabs(dlos).gt.ioepsilon) a(6)=dlos
+        if (dabs(eloss).gt.ioepsilon) a(7)=eloss
+        if (dabs(egain).gt.ioepsilon) a(8)=egain
+        if (dabs(hloss).gt.ioepsilon) a(9)=hloss
+        if (dabs(chgain).gt.ioepsilon) a(10)=chgain
+        if (dabs(xr3loss+xrlloss).gt.ioepsilon) a(11)=xr3loss+xrlloss
+        if (dabs(fsl).gt.ioepsilon) a(12)=fsl
+        if (dabs(fmloss).gt.ioepsilon) a(13)=fmloss
+        if (dabs(feloss).gt.ioepsilon) a(14)=feloss
+        if (dabs(q2los).gt.ioepsilon) a(15)=q2los
+        if (dabs(fflos).gt.ioepsilon) a(16)=fflos
+        if (dabs(colos).gt.ioepsilon) a(17)=colos
+        if (dabs(pgain).gt.ioepsilon) a(18)=pgain
+        if (dabs(rngain).gt.ioepsilon) a(19)=rngain
+        if (dabs(cosgain).gt.ioepsilon) a(20)=cosgain
+        if (dabs(gheat-gcool).gt.ioepsilon) a(21)=gheat-gcool
+        if (dabs(gheat).gt.ioepsilon) a(22)=gheat
+        if (dabs(gcool).gt.ioepsilon) a(23)=gcool
+        if (dabs(paheat).gt.ioepsilon) a(24)=paheat
 c
-       write (lunt,20) (a(i),i=1,24)
-       return
+        write (lunt,20) (a(i),i=1,24)
+        return
       endif
       if (wmod.eq.'PROP') then
 c
    30 format(15(1pe13.6,x))
 c
-       do i=1,15
-        a(i)=0.d0
-       enddo
-       if (dabs(dstep).gt.ioepsilon) a(1)=dstep
-       if (dabs(t).gt.ioepsilon) a(2)=t
-       if (dabs(de).gt.ioepsilon) a(3)=de
-       if (dabs(dh).gt.ioepsilon) a(4)=dh
-       if (dabs(en).gt.ioepsilon) a(5)=en
-       if (dabs(pop(1,1)).gt.ioepsilon) a(6)=pop(1,1)
-       if (dabs(rhotot).gt.ioepsilon) a(7)=rhotot
-       if (dabs(press).gt.ioepsilon) a(8)=press
-       if (dabs(vel0).gt.ioepsilon) a(9)=vel0
-       if (dabs(ram).gt.ioepsilon) a(10)=ram
-       if (dabs(cspd).gt.ioepsilon) a(11)=cspd
-       if (dabs(dstep).gt.ioepsilon) a(12)=dstep
-       if (dabs(aspd).gt.ioepsilon) a(13)=aspd
-       if (dabs(bm0).gt.ioepsilon) a(14)=bm0
-       if (dabs((avgpot(1)+avgpot(2))*0.5d0).gt.ioepsilon) a(15)=
-     &  (avgpot(1)+avgpot(2))*0.5d0
-       write (lunt,30) (a(i),i=1,15)
-       return
+        do i=1,15
+          a(i)=0.d0
+        enddo
+        if (dabs(dstep).gt.ioepsilon) a(1)=dstep
+        if (dabs(t).gt.ioepsilon) a(2)=t
+        if (dabs(de).gt.ioepsilon) a(3)=de
+        if (dabs(dh).gt.ioepsilon) a(4)=dh
+        if (dabs(en).gt.ioepsilon) a(5)=en
+        if (dabs(pop(1,1)).gt.ioepsilon) a(6)=pop(1,1)
+        if (dabs(rhotot).gt.ioepsilon) a(7)=rhotot
+        if (dabs(press).gt.ioepsilon) a(8)=press
+        if (dabs(vel0).gt.ioepsilon) a(9)=vel0
+        if (dabs(ram).gt.ioepsilon) a(10)=ram
+        if (dabs(cspd).gt.ioepsilon) a(11)=cspd
+        if (dabs(dstep).gt.ioepsilon) a(12)=dstep
+        if (dabs(aspd).gt.ioepsilon) a(13)=aspd
+        if (dabs(bm0).gt.ioepsilon) a(14)=bm0
+        if (dabs((avgpot(1)+avgpot(2))*0.5d0).gt.ioepsilon) a(15)=
+     &   (avgpot(1)+avgpot(2))*0.5d0
+        write (lunt,30) (a(i),i=1,15)
+        return
       endif
 c
       if (wmod.eq.'FILE') then
-       do i=1,8
-        a(i)=0.d0
-       enddo
-       if (dabs(tloss).gt.ioepsilon) a(1)=tloss
-       if (dabs(tgain).gt.ioepsilon) a(2)=tgain
-       if (dabs(eloss).gt.ioepsilon) a(3)=eloss
-       if (dabs(egain).gt.ioepsilon) a(4)=egain
-       if (dabs(dlos).gt.ioepsilon) a(5)=dlos
-       if (dabs(hloss).gt.ioepsilon) a(6)=hloss
-       if (dabs(chgain).gt.ioepsilon) a(7)=chgain
-       if (dabs(xrlloss+xr3loss).gt.ioepsilon) a(8)=xrlloss+xr3loss
+        do i=1,8
+          a(i)=0.d0
+        enddo
+        if (dabs(tloss).gt.ioepsilon) a(1)=tloss
+        if (dabs(tgain).gt.ioepsilon) a(2)=tgain
+        if (dabs(eloss).gt.ioepsilon) a(3)=eloss
+        if (dabs(egain).gt.ioepsilon) a(4)=egain
+        if (dabs(dlos).gt.ioepsilon) a(5)=dlos
+        if (dabs(hloss).gt.ioepsilon) a(6)=hloss
+        if (dabs(chgain).gt.ioepsilon) a(7)=chgain
+        if (dabs(xrlloss+xr3loss).gt.ioepsilon) a(8)=xrlloss+xr3loss
 c       if (dabs(rloss).gt.ioepsilon) a(9)=rloss
-       write (lunt,40) (a(i),i=1,8)
+        write (lunt,40) (a(i),i=1,8)
 c
    40 format(/
      &'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
@@ -442,37 +442,37 @@ c
      &'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &'% CASC. RES.  :', 1pe12.5,':%%%%%%%%%%%%%%%%%%%%%%%%%%%'/)
 c
-       do i=1,27
-        a(i)=0.d0
-       enddo
-       if (dabs(t).gt.ioepsilon) a(1)=t
-       if (dabs(rhotot).gt.ioepsilon) a(2)=rhotot
-       if (dabs(fsl).gt.ioepsilon) a(3)=fsl
-       if (dabs(f3loss).gt.ioepsilon) a(4)=f3loss
-       if (dabs(en).gt.ioepsilon) a(5)=en
-       if (dabs(de).gt.ioepsilon) a(6)=de
-       if (dabs(fmloss).gt.ioepsilon) a(7)=fmloss
-       if (dabs(feloss).gt.ioepsilon) a(8)=feloss
-       if (dabs(pop(1,1)).gt.ioepsilon) a(9)=pop(1,1)
-       if (dabs(press).gt.ioepsilon) a(10)=press
-       if (dabs(q2los).gt.ioepsilon) a(11)=q2los
-       if (dabs(cmplos).gt.ioepsilon) a(12)=cmplos
-       if (dabs(vel0).gt.ioepsilon) a(13)=vel0
-       if (dabs(ram).gt.ioepsilon) a(14)=ram
-       if (dabs(fflos).gt.ioepsilon) a(15)=fflos
-       if (dabs(colos).gt.ioepsilon) a(16)=colos
-       if (dabs(cspd).gt.ioepsilon) a(17)=cspd
-       if (dabs(dstep).gt.ioepsilon) a(18)=dstep
-       if (dabs(pgain).gt.ioepsilon) a(19)=pgain
-       if (dabs(rngain).gt.ioepsilon) a(20)=rngain
-       if (dabs(aspd).gt.ioepsilon) a(21)=aspd
-       if (dabs(mag).gt.ioepsilon) a(22)=mag
-       if (dabs(cosgain).gt.ioepsilon) a(23)=cosgain
-       if (dabs(paheat).gt.ioepsilon) a(24)=paheat
-       if (dabs(avgpot(1)).gt.ioepsilon) a(25)=avgpot(1)
-       if (dabs(avgpot(2)).gt.ioepsilon) a(26)=avgpot(2)
-       if (dabs(gheat-gcool).gt.ioepsilon) a(27)=(gheat-gcool)
-       write (lunt,50) (a(i),i=1,27)
+        do i=1,27
+          a(i)=0.d0
+        enddo
+        if (dabs(t).gt.ioepsilon) a(1)=t
+        if (dabs(rhotot).gt.ioepsilon) a(2)=rhotot
+        if (dabs(fsl).gt.ioepsilon) a(3)=fsl
+        if (dabs(f3loss).gt.ioepsilon) a(4)=f3loss
+        if (dabs(en).gt.ioepsilon) a(5)=en
+        if (dabs(de).gt.ioepsilon) a(6)=de
+        if (dabs(fmloss).gt.ioepsilon) a(7)=fmloss
+        if (dabs(feloss).gt.ioepsilon) a(8)=feloss
+        if (dabs(pop(1,1)).gt.ioepsilon) a(9)=pop(1,1)
+        if (dabs(press).gt.ioepsilon) a(10)=press
+        if (dabs(q2los).gt.ioepsilon) a(11)=q2los
+        if (dabs(cmplos).gt.ioepsilon) a(12)=cmplos
+        if (dabs(vel0).gt.ioepsilon) a(13)=vel0
+        if (dabs(ram).gt.ioepsilon) a(14)=ram
+        if (dabs(fflos).gt.ioepsilon) a(15)=fflos
+        if (dabs(colos).gt.ioepsilon) a(16)=colos
+        if (dabs(cspd).gt.ioepsilon) a(17)=cspd
+        if (dabs(dstep).gt.ioepsilon) a(18)=dstep
+        if (dabs(pgain).gt.ioepsilon) a(19)=pgain
+        if (dabs(rngain).gt.ioepsilon) a(20)=rngain
+        if (dabs(aspd).gt.ioepsilon) a(21)=aspd
+        if (dabs(mag).gt.ioepsilon) a(22)=mag
+        if (dabs(cosgain).gt.ioepsilon) a(23)=cosgain
+        if (dabs(paheat).gt.ioepsilon) a(24)=paheat
+        if (dabs(avgpot(1)).gt.ioepsilon) a(25)=avgpot(1)
+        if (dabs(avgpot(2)).gt.ioepsilon) a(26)=avgpot(2)
+        if (dabs(gheat-gcool).gt.ioepsilon) a(27)=(gheat-gcool)
+        write (lunt,50) (a(i),i=1,27)
 c
    50 format(
      &'% CASC. RES.  %', 1pe12.5,'% OLD RESON.  %',1pe12.5,' %'/
@@ -492,15 +492,15 @@ c
      &'% PHOT. GRN   %', 1pe12.5,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'//)
-       return
+        return
       endif
 c
       if (wmod.eq.'SCRN') then
 c
-       write (*,60) tloss,tgain,eloss,egain,dlos,t,rhotot,en,de,pop(1,1)
-     &  ,press,vel0,ram,cspd,dstep
-       write (*,70) aspd,mag,avgpot(1),avgpot(2),sint,wdil,teff,alnth,
-     &  turn,cut
+        write (*,60) tloss,tgain,eloss,egain,dlos,t,rhotot,en,de,pop(1,
+     &   1),press,vel0,ram,cspd,dstep
+        write (*,70) aspd,mag,avgpot(1),avgpot(2),sint,wdil,teff,alnth,
+     &   turn,cut
    60 format(/
      &'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &'% TOTAL LOSS %', 1pe12.5,' % EFF. LOSS   %',1pe12.5,' %'/
@@ -519,9 +519,9 @@ c
      &'% STAR TEMP. %', 1pe12.5,' % ALPHA       %',1pe12.5,' %'/
      &'% TURN-ON    %', 1pe12.5,' % CUT-OFF     %',1pe12.5,' %')
 c
-       write (*,80) tloss,hloss,chgain,xr3loss,xrlloss,q2los,f3loss,
-     &  fmloss,feloss,fflos,colos,pgain,rngain,cosgain,paheat,(gheat-
-     &  gcool)
+        write (*,80) tloss,hloss,chgain,xr3loss,xrlloss,q2los,f3loss,
+     &   fmloss,feloss,fflos,colos,pgain,rngain,cosgain,paheat,(gheat-
+     &   gcool)
    80 format(
      &'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &'% TOTAL LOSS%', 1pe12.5,' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
@@ -534,7 +534,7 @@ c
      &'% COSMIC    %', 1pe12.5,' % PHOTO. PAH  %', 1pe12.5,' %'/
      &'% DUST  H-C %', 1pe12.5,' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-       return
+        return
       endif
 c
       return
@@ -598,15 +598,15 @@ c
       write (lunt,30) t,dlog10(de)
 c
       do j=1,infph-1
-       if (scale.gt.0.d0) then
-        widnu=1.d0*evplk
-        tl(j)=(scale*fpi*tp(j)*widnu/dr)
-        if (tl(j).lt.ioepsilon) then
-         tl(j)=0.d0
+        if (scale.gt.0.d0) then
+          widnu=1.d0*evplk
+          tl(j)=(scale*fpi*tp(j)*widnu/dr)
+          if (tl(j).lt.ioepsilon) then
+            tl(j)=0.d0
+          endif
+        else
+          tl(j)=0.d0
         endif
-       else
-        tl(j)=0.d0
-       endif
 c   40   format(1pe14.7,x,1pe14.7)
 c        write (lunt,40) cphotev(j),tl(j)
       enddo
@@ -687,14 +687,14 @@ c     scale units in tl and sum
 c
       do i=1,infph-1
 c
-       tl(i)=0.d0
-       if (tp(i).ge.ioepsilon) then
-        tl(i)=scale*tp(i)
-       endif
+        tl(i)=0.d0
+        if (tp(i).ge.ioepsilon) then
+          tl(i)=scale*tp(i)
+        endif
 c
-       widnu=widbinnu(i)
-       blum=blum+tl(i)*widnu
-       if (photev(i).ge.iph) ilum=ilum+tl(i)*widnu
+        widnu=widbinnu(i)
+        blum=blum+tl(i)*widnu
+        if (photev(i).ge.iph) ilum=ilum+tl(i)*widnu
 c
       enddo
 c
@@ -702,9 +702,9 @@ c
 c
       inquire (file=fname,exist=iexi)
       if (.not.iexi) then
-       open (lunt,file=fname,status='NEW')
-       if (wmod.eq.'LFLM') then
-        write (lunt,10) runname(1:np),wmod,t,de,dh
+        open (lunt,file=fname,status='NEW')
+        if (wmod.eq.'LFLM') then
+          write (lunt,10) runname(1:np),wmod,t,de,dh
    10    format('% LFLAM SPECTRUM '/
      &     '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &     '% RUN :',a45,' %'/
@@ -714,8 +714,8 @@ c
      &     '% TEMP.    :',1pe12.5,'                             %'/
      &     '% El. DENS.:',1pe12.5,'                             %'/
      &     '% H.  DENS.:',1pe12.5,'                             %')
-       elseif (wmod.eq.'NFNU') then
-        write (lunt,20) runname(1:np),wmod,t,de,dh
+        elseif (wmod.eq.'NFNU') then
+          write (lunt,20) runname(1:np),wmod,t,de,dh
    20    format('% NUFNU SPECTRUM '/
      &     '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &     '% RUN :',a45,' %'/
@@ -725,8 +725,8 @@ c
      &     '% TEMP.    :',1pe12.5,'                             %'/
      &     '% El. DENS.:',1pe12.5,'                             %'/
      &     '% H.  DENS.:',1pe12.5,'                             %')
-       elseif (wmod.eq.'NORM') then
-        write (lunt,30) runname(1:np),wmod,t,de,dh
+        elseif (wmod.eq.'NORM') then
+          write (lunt,30) runname(1:np),wmod,t,de,dh
    30    format('% COOLING SPECTRUM '/
      &     '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &     '% RUN :',a45,' %'/
@@ -737,8 +737,8 @@ c
      &     '% TEMP.    %',1pe12.5,'                             %'/
      &     '% El. DENS.%',1pe12.5,'                             %'/
      &     '% H.  DENS.%',1pe12.5,'                             %')
-       elseif (wmod.eq.'XRAY') then
-        write (lunt,40) runname(1:np),wmod,t,de,dh
+        elseif (wmod.eq.'XRAY') then
+          write (lunt,40) runname(1:np),wmod,t,de,dh
    40    format('% CMFGEN XRAY SPECTRUM '/
      &     '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &     '% RUN :',a45,' %'/
@@ -748,8 +748,8 @@ c
      &     '% TEMP.    %',1pe12.5,'                             %'/
      &     '% El. DENS.%',1pe12.5,'                             %'/
      &     '% H.  DENS.%',1pe12.5,'                             %')
-       else
-        write (lunt,50) runname(1:np),wmod
+        else
+          write (lunt,50) runname(1:np),wmod
    50    format('%PHOTON SOURCE FILE '/
      &     '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
      &     '% DIFFUSE FIELD PLUS SOURCE                          %'/
@@ -760,9 +760,9 @@ c
      &     '% 2D source Inu (1/pi) units.                        %'/
      &     '% bin energies are lower/left edge of bins.          %'/
      &     '% fluxes are average over bin.                       %')
-       endif
+        endif
       else
-       open (lunt,file=fname,status='OLD',access='APPEND')
+        open (lunt,file=fname,status='OLD',access='APPEND')
       endif
 c
       call fieldsummary (lunt, 0, tl)
@@ -771,66 +771,66 @@ c
       write (lunt,*) 'Produced by ',caller(1:np),' :MAPPINGS V ',
      &theversion
       if ((wmod.eq.'REAL').or.(wmod.eq.'PSOU')) then
-       write (lunt,*) fieldversion
-       write (lunt,*) infph-1
+        write (lunt,*) fieldversion
+        write (lunt,*) infph-1
       endif
 c
    60  format(1pe14.7,' ',1pe14.7)
 c
       if (wmod.eq.'LFLM') then
-       do j=infph,1,-1
+        do j=infph,1,-1
 c
-        bv=cphotev(j)*evplk
-        clam=1.0d8*cls/(bv*evplk)
-        tl(j)=0.d0
-        tl(j)=fpi*(scale*bv*tp(j)/clam)
-        if (tl(j).lt.ioepsilon) then
-         tl(j)=0.d0
-        endif
-c
-        lambda=1.0d8*cls/(cphotev(j)*evplk)
-        if (lambda.ge.1000.d0) then
-         if (lambda.le.50000.d0) then
-          if (tl(j).gt.0.d0) then
-           lambda=lambda/fnair(lambda)
-           write (lunt,60) lambda,tl(j)
+          bv=cphotev(j)*evplk
+          clam=1.0d8*cls/(bv*evplk)
+          tl(j)=0.d0
+          tl(j)=fpi*(scale*bv*tp(j)/clam)
+          if (tl(j).lt.ioepsilon) then
+            tl(j)=0.d0
           endif
-         endif
-        endif
 c
-       enddo
+          lambda=1.0d8*cls/(cphotev(j)*evplk)
+          if (lambda.ge.1000.d0) then
+            if (lambda.le.50000.d0) then
+              if (tl(j).gt.0.d0) then
+                lambda=lambda/fnair(lambda)
+                write (lunt,60) lambda,tl(j)
+              endif
+            endif
+          endif
+c
+        enddo
       else
-       do j=1,infph-1
+        do j=1,infph-1
 c
-        bv=cphotev(j)*evplk
-        clam=1.0d8*cls/(bv*evplk)
-        tl(j)=0.d0
+          bv=cphotev(j)*evplk
+          clam=1.0d8*cls/(bv*evplk)
+          tl(j)=0.d0
 c
-        if ((tp(j).ge.ioepsilon).and.(dr.gt.0.d0)) then
-         if (wmod.eq.'NORM') tl(j)=fpi*(scale*bv*tp(j)/dr)
-         if (wmod.eq.'XRAY') tl(j)=fpi*(scale*evplk*tp(j)/dr)
-         if (wmod.eq.'REAL') tl(j)=(scale*tp(j))
-         if (wmod.eq.'PSOU') tl(j)=(scale*tp(j))
-         if (wmod.eq.'NFNU') tl(j)=(scale*bv*tp(j))
-        endif
+          if ((tp(j).ge.ioepsilon).and.(dr.gt.0.d0)) then
+            if (wmod.eq.'NORM') tl(j)=fpi*(scale*bv*tp(j)/dr)
+            if (wmod.eq.'XRAY') tl(j)=fpi*(scale*evplk*tp(j)/dr)
+            if (wmod.eq.'REAL') tl(j)=(scale*tp(j))
+            if (wmod.eq.'PSOU') tl(j)=(scale*tp(j))
+            if (wmod.eq.'NFNU') tl(j)=(scale*bv*tp(j))
+          endif
 c
-        if (tl(j).lt.ioepsilon) tl(j)=0.d0
+          if (tl(j).lt.ioepsilon) tl(j)=0.d0
 c
-        if (wmod.eq.'NFNU') then
-         if (tl(j).gt.ioepsilon) then
-          write (lunt,60) photev(j)*evplk,tl(j)
-         endif
-        elseif (wmod.eq.'NORM') then
-         write (lunt,60) photev(j),tl(j)
-        elseif (wmod.eq.'XRAY') then
-         if (tl(j).gt.0.d0) then
-          write (lunt,60) cphotev(j),tl(j)
-         endif
-        else
-         write (lunt,60) photev(j),tl(j)
-        endif
+          if (wmod.eq.'NFNU') then
+            if (tl(j).gt.ioepsilon) then
+              write (lunt,60) photev(j)*evplk,tl(j)
+            endif
+          elseif (wmod.eq.'NORM') then
+            write (lunt,60) photev(j),tl(j)
+          elseif (wmod.eq.'XRAY') then
+            if (tl(j).gt.0.d0) then
+              write (lunt,60) cphotev(j),tl(j)
+            endif
+          else
+            write (lunt,60) photev(j),tl(j)
+          endif
 c
-       enddo
+        enddo
       endif
 c
       close (lunt)
@@ -884,46 +884,46 @@ c
       fps=' '
       if (wmod.eq.'LFLM') then
 c
-       fn=' '
-       sfx='lam'
-       call newfile (pfx, np, sfx, 3, fn)
-       fps=fn(1:(np+3+5))
+        fn=' '
+        sfx='lam'
+        call newfile (pfx, np, sfx, 3, fn)
+        fps=fn(1:(np+3+5))
 c
       elseif (wmod.eq.'NFNU') then
 c
-       fn=' '
-       sfx='nfn'
-       call newfile (pfx, np, sfx, 3, fn)
-       fps=fn(1:(np+3+5))
+        fn=' '
+        sfx='nfn'
+        call newfile (pfx, np, sfx, 3, fn)
+        fps=fn(1:(np+3+5))
 c
       elseif (wmod.eq.'NORM') then
 c
-       fn=' '
-       sfx='emi'
-       call newfile (pfx, np, sfx, 3, fn)
-       fps=fn(1:(np+3+5))
+        fn=' '
+        sfx='emi'
+        call newfile (pfx, np, sfx, 3, fn)
+        fps=fn(1:(np+3+5))
 c
       elseif (wmod.eq.'XRAY') then
 c
-       fn=' '
-       sfx='dat'
-       call newfile (pfx, np, sfx, 3, fn)
-       fps=fn(1:(np+3+5))
+        fn=' '
+        sfx='dat'
+        call newfile (pfx, np, sfx, 3, fn)
+        fps=fn(1:(np+3+5))
 c
       elseif (wmod.eq.'PSOU') then
 c
 c raw file as is
 c
-       fps=pfx(1:np)
+        fps=pfx(1:np)
 c
       else
 c
 c     output upstream field photon source file
 c
-       fn=' '
-       sfx='sou'
-       call newfile (pfx, np, sfx, 3, fn)
-       fps=fn(1:(np+3+5))
+        fn=' '
+        sfx='sou'
+        call newfile (pfx, np, sfx, 3, fn)
+        fps=fn(1:(np+3+5))
 c
       endif
       call wpsoufile (caller, fps, wmod, t, de, dh, dr, scale, tp)

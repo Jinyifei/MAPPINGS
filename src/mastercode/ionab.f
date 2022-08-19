@@ -44,7 +44,7 @@ c     take place), then the ionic abundances at the end of the time
 c     step, n_j, are given in terms of the abundances at the start of
 c     the timestep, n_i, by (Pullman, 1976)
 c
-c         n_j = {exp(Rt)} n_i = {I + Rt + (Rt)^2/2! + (Rt)^3/3! ...} n_i
+c     n_j = {exp(Rt)} n_i = {I + Rt + (Rt)^2/2! + (Rt)^3/3! ...} n_i
 c
 c     For large t, this series is not convergent.  However, this can be
 c     resolved by expressing the solution in the following manner:
@@ -128,8 +128,8 @@ c
       dtotal=0.d0
       ratetotal=0.d0
       do k=1,nde
-       dtotal=ab(k)+dtotal
-       ratetotal=reco(k)+pion(k)+pionau(k)
+        dtotal=ab(k)+dtotal
+        ratetotal=reco(k)+pion(k)+pionau(k)
       enddo
 c
       maxio=nde
@@ -137,44 +137,45 @@ c
 c     ***ZERO MATRICES C,B,S,AS
 c
       do l=1,maxio
-       as(l,1)=0.d0
-       as(l,2)=0.d0
-       do k=1,maxio
-        c(k,l)=0.d0
-        cm(k,l)=0.0d0
-        s(k,l)=0.d0
-        b(k,l)=0.d0
-       enddo
+        as(l,1)=0.d0
+        as(l,2)=0.d0
+        do k=1,maxio
+          c(k,l)=0.d0
+          cm(k,l)=0.0d0
+          s(k,l)=0.d0
+          b(k,l)=0.d0
+        enddo
       enddo
 c
 c     ***PUT INITIAL ABUNDANCES IN AS(K,1)
 c
       do k=1,nde
-       as(k,1)=ab(k)
+        as(k,1)=ab(k)
       enddo
 c
 c     ***FORM MATRIX OF IONISATION RATES IN C
 c
       ndyn='TEST'
+   10 continue
       do k=1,nde-1
-   10  c(k,k+1)=reco(k)
-       c(k+1,k+1)=-c(k,k+1)
+        c(k,k+1)=reco(k)
+        c(k+1,k+1)=-c(k,k+1)
       enddo
       c(1,1)=0.d0
       do k=1,nde-1
-       c(k+1,k)=pion(k)
-       c(k,k)=c(k,k)-c(k+1,k)
+        c(k+1,k)=pion(k)
+        c(k,k)=c(k,k)-c(k+1,k)
       enddo
 c
 c     ***FIND MAX. OF ABS( C )
 c
       do k=1,nde-2
-       c(k+2,k)=pionau(k)
-       c(k,k)=c(k,k)-c(k+2,k)
+        c(k+2,k)=pionau(k)
+        c(k,k)=c(k,k)-c(k+2,k)
       enddo
       da=0.d0
       do k=1,nde
-       da=dmax1(da,dabs(c(k,k)))
+        da=dmax1(da,dabs(c(k,k)))
       enddo
 c
 c     ***FIND INTEGRATION TIME : DELT  (PER STEP)
@@ -200,24 +201,24 @@ c
       j=0
       rm=1.d38
       do 20 i=1,nde-1
-       tr=dlog(pion(i)+1.d-37)-dlog(reco(i)+1.d-37)
-       if (dabs(tr).ge.rm) goto 20
-       j=i
-       rm=tr
+        tr=dlog(pion(i)+1.d-37)-dlog(reco(i)+1.d-37)
+        if (dabs(tr).ge.rm) goto 20
+        j=i
+        rm=tr
    20 continue
 c
       if (j.lt.3) goto 40
       ryn=(reco(j)*dyn)*0.01d0
       repoprate=pion(j)*1.d4
       do i=1,j-2
-       tr=pion(i)
-       cyn=reco(i)*1.d7
-       if (((tr.le.ryn).or.(tr.lt.repoprate)).or.(tr.lt.cyn)) goto 30
-       rm=ryn/pion(i)
-       pion(i)=pion(i)*rm
-       reco(i)=reco(i)*rm
-       if (i.gt.1) pionau(i-1)=pionau(i-1)*rm
-   30  continue
+        tr=pion(i)
+        cyn=reco(i)*1.d7
+        if (((tr.le.ryn).or.(tr.lt.repoprate)).or.(tr.lt.cyn)) goto 30
+        rm=ryn/pion(i)
+        pion(i)=pion(i)*rm
+        reco(i)=reco(i)*rm
+        if (i.gt.1) pionau(i-1)=pionau(i-1)*rm
+   30   continue
       enddo
       ndyn='OK'
       goto 10
@@ -250,17 +251,17 @@ c
 c     ***MULTIPLY MATRIX BY : DELT
 c
       do l=1,nde
-       do k=1,nde
-        cm(k,l)=c(k,l)
-        c(k,l)=c(k,l)*delt
-       enddo
+        do k=1,nde
+          cm(k,l)=c(k,l)
+          c(k,l)=c(k,l)*delt
+        enddo
       enddo
 c
 c     ***SET S AND B AS IDENTITY MATRICES
 c
       do k=1,nde
-       b(k,k)=1.d0
-       s(k,k)=1.d0
+        b(k,k)=1.d0
+        s(k,k)=1.d0
       enddo
 c
 c     ***EACH TERM OF THE DEXPANSION IS FORMED IN B
@@ -269,28 +270,29 @@ c
       rn=0.d0
       da=0.d0
       m1=maxio+1
+   80 continue
       do m=1,10
-   80  rn=rn+1.d0
-       invrn=1.d0/rn
-       do k=1,nde
-        do l=1,nde
-         bm=0.d0
-         do n=1,nde
-          bm=bm+(c(l,n)*b(n,k))
-         enddo
-         b(l,m1)=bm
+        rn=rn+1.d0
+        invrn=1.d0/rn
+        do k=1,nde
+          do l=1,nde
+            bm=0.d0
+            do n=1,nde
+              bm=bm+(c(l,n)*b(n,k))
+            enddo
+            b(l,m1)=bm
+          enddo
+          do l=1,nde
+            b(l,k)=b(l,m1)*invrn
+            s(l,k)=s(l,k)+b(l,k)
+          enddo
         enddo
-        do l=1,nde
-         b(l,k)=b(l,m1)*invrn
-         s(l,k)=s(l,k)+b(l,k)
-        enddo
-       enddo
       enddo
 c
       do k=1,nde
-       do l=1,nde
-        dma=dmax1(dabs(b(l,k)),0.d0)
-       enddo
+        do l=1,nde
+          dma=dmax1(dabs(b(l,k)),0.d0)
+        enddo
       enddo
       da=dmax1(da,dma)
       if (dma.gt.0.d0) goto 80
@@ -299,25 +301,25 @@ c     ***RAISE MATRIX S TO POWER : (NITMI*10)
 c
       if (nitmi.lt.1) goto 90
       do nn=1,nitmi
-       do k=1,nde
-        do l=1,nde
-         c(l,k)=s(l,k)
-        enddo
-       enddo
-       do m=2,10
         do k=1,nde
-         do l=1,nde
-          bm=0.d0
-          do n=1,nde
-           bm=bm+(c(l,n)*s(n,k))
+          do l=1,nde
+            c(l,k)=s(l,k)
           enddo
-          b(l,m1)=bm
-         enddo
-         do l=1,nde
-          s(l,k)=b(l,m1)
-         enddo
         enddo
-       enddo
+        do m=2,10
+          do k=1,nde
+            do l=1,nde
+              bm=0.d0
+              do n=1,nde
+                bm=bm+(c(l,n)*s(n,k))
+              enddo
+              b(l,m1)=bm
+            enddo
+            do l=1,nde
+              s(l,k)=b(l,m1)
+            enddo
+          enddo
+        enddo
       enddo
 c
 c     ***MULTIPLY VECTOR  AS  BY MATRIX  S   (NIT  TIMES)
@@ -325,23 +327,23 @@ c
 c     write (*,*) nit
    90 l=0
       do 120 n=1,nit
-       l=1-l
-       j1=1+l
-       j2=2-l
-       do 110 k=1,nde
-        astem=0.0d0
-        do 100 kk=1,maxio
-         astem=astem+s(k,kk)*as(kk,j2)
-  100   continue
-        as(k,j1)=astem
-  110  continue
+        l=1-l
+        j1=1+l
+        j2=2-l
+        do 110 k=1,nde
+          astem=0.0d0
+          do 100 kk=1,maxio
+            astem=astem+s(k,kk)*as(kk,j2)
+  100     continue
+          as(k,j1)=astem
+  110   continue
   120 continue
 c
 c     FIND NORMALISATION FACTOR : DA
 c
       da=0.d0
       do 130 k=1,nde
-       if (as(k,j1).gt.0.0d0) da=da+as(k,j1)
+        if (as(k,j1).gt.0.0d0) da=da+as(k,j1)
   130 continue
       da=da/dtotal
       dma=100.0d0*dabs(1.d0-da)
@@ -372,19 +374,20 @@ c
 c
   160 continue
       do k=1,nde
-       ab(k)=as(k,j1)/da
-       if (ab(k).lt.1.0d-38) ab(k)=0.0d0
+        ab(k)=as(k,j1)/da
+        if (ab(k).lt.1.0d-38) ab(k)=0.0d0
       enddo
 c
 c     ***CALCULATES DN/DT FOR EACH IONIC SPECIES
 c
       do k=1,nde
-       adndt(k)=0.0d0
-       do n=1,nde
-        adndt(k)=adndt(k)+(ab(n)*cm(k,n))
-       enddo
+        adndt(k)=0.0d0
+        do n=1,nde
+          adndt(k)=adndt(k)+(ab(n)*cm(k,n))
+        enddo
       enddo
 c
       return
       end
+c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

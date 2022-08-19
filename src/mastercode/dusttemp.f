@@ -40,31 +40,31 @@ c
       massatom(1)=12.d0*amu
       massatom(2)=60.0855d0*amu
       do l=1,dustbinmax
-       grainvol(l)=ftpi*(grainrad(l))**3
-       d_rad(l)=gradedge(l+1)-gradedge(l)
-       do dtype=1,numtypes
+        grainvol(l)=ftpi*(grainrad(l))**3
+        d_rad(l)=gradedge(l+1)-gradedge(l)
+        do dtype=1,numtypes
 c    number of atoms in the grain
-        atom_no(dtype,l)=grainvol(l)*graindens(dtype)/massatom(dtype)
-       enddo
+          atom_no(dtype,l)=grainvol(l)*graindens(dtype)/massatom(dtype)
+        enddo
       enddo
 c
 c     setup energy bns for quick calculation
 c
       do inl=1,infph-1
-       dustsigt(inl)=0.d0
-       do dtype=1,numtypes
-        dustsigt(inl)=dustsigt(inl)+dcrosec(inl,dtype)
-       enddo
+        dustsigt(inl)=0.d0
+        do dtype=1,numtypes
+          dustsigt(inl)=dustsigt(inl)+dcrosec(inl,dtype)
+        enddo
       enddo
 c
       dele=photev(infph)/photev(1)
       dele=dlog10(dele)/dble(dinfph-1)
       edphot(1)=photev(1)
       do k=1,dinfph-1
-       edphot(k+1)=photev(1)*10.d0**(k*dele)
-       dengy(k)=0.5d0*(edphot(k+1)+edphot(k))*ev
-       dde(k)=(edphot(k+1)-edphot(k))*ev
-       v_e(k)=dsqrt(2.d0*dengy(k)/me)
+        edphot(k+1)=photev(1)*10.d0**(k*dele)
+        dengy(k)=0.5d0*(edphot(k+1)+edphot(k))*ev
+        dde(k)=(edphot(k+1)-edphot(k))*ev
+        v_e(k)=dsqrt(2.d0*dengy(k)/me)
       enddo
 c
       fi=1.d0
@@ -135,16 +135,16 @@ c
       nlimit=50
 c
       if (irmode.eq.1) then
-       quickir=.true.
-       nlimit=50
+        quickir=.true.
+        nlimit=50
       elseif (irmode.eq.2) then
-       quickir=.true.
-       nlimit=100
+        quickir=.true.
+        nlimit=100
       elseif (irmode.eq.3) then
-       quickir=.false.
+        quickir=.false.
       else
-       write (*,*) 'IR program incorrect'
-       return
+        write (*,*) 'IR program incorrect'
+        return
       endif
 c
 c      if (IRtemp) then
@@ -170,17 +170,17 @@ c
       flxtest1=0.d0
       flxabstot=0.d0
       do inl=1,infph-1
-       wid=widbinnu(inl)
-       phot(inl)=4.d0*pi*dustphot(inl)*wid
+        wid=widbinnu(inl)
+        phot(inl)=4.d0*pi*dustphot(inl)*wid
 c  convert from Jnu (1/4pi) to Fnu.dnu (erg s-1 cm-2)
-       engy(inl)=cphotev(inl)
-       if (engy(inl).gt.bgrain) then
-        phot(inl)=phot(inl)*(1.d0-yinf*(1.d0-bgrain/engy(inl)))
+        engy(inl)=cphotev(inl)
+        if (engy(inl).gt.bgrain) then
+          phot(inl)=phot(inl)*(1.d0-yinf*(1.d0-bgrain/engy(inl)))
 c  losses due to PE effect
-       endif
-       photabs(inl)=phot(inl)
-       flxtest1=flxtest1+phot(inl)
-       engy(inl)=engy(inl)*ev
+        endif
+        photabs(inl)=phot(inl)
+        flxtest1=flxtest1+phot(inl)
+        engy(inl)=engy(inl)*ev
       enddo
 c      write(*,*)  ' dusttemp flux:',flxtest1
 c
@@ -198,19 +198,19 @@ c  set_up collisional heating bins
 c
       do k=1,dinfph-1
 c       v_e=dsqrt(2.d0*dengy(k)/me)
-       collheat(k)=mbdist(t_e,dengy(k))*v_e(k)*dengy(k)*dde(k)
+        collheat(k)=mbdist(t_e,dengy(k))*v_e(k)*dengy(k)*dde(k)
       enddo
 c
       if (t_e.ne.0.0) then
-       e_kt=ev/(rkb*t_e)
+        e_kt=ev/(rkb*t_e)
       else
-       e_kt=0.d0
+        e_kt=0.d0
       endif
 c
 c  Initialise Region Flux output
 c
       do k=1,infph-1
-       irflux(k)=0.d0
+        irflux(k)=0.d0
       enddo
 c
 c  Do for both Silicates and Graphite grains
@@ -220,56 +220,57 @@ c
       do 60 dtype=1,numtypes
 c
 c  Set-up Temp range
-       dtmax=tmax
+        dtmax=tmax
 c
 c  determine temperature for grain sizes considered
 c
-       do l=mindust(dtype),maxdust(dtype)
-        totaldust=totaldust+dustsig(l,dtype)*d_rad(l)
+        do l=mindust(dtype),maxdust(dtype)
+          totaldust=totaldust+dustsig(l,dtype)*d_rad(l)
 c
 c  Calculate sticking factor
 c
-        phi=grainpot(l,dtype)*e_kt
-        if (phi.ge.0.d0) then
-         s_f=0.5d0*(1.d0+phi)
-        else
-         s_f=0.5d0*dexp(phi)
-        endif
+          phi=grainpot(l,dtype)*e_kt
+          if (phi.ge.0.d0) then
+            s_f=0.5d0*(1.d0+phi)
+          else
+            s_f=0.5d0*dexp(phi)
+          endif
 c
 c Areas in sq. microns within Transmatrix
 c
-        grarea=dustsig(l,dtype)*d_rad(l)
-        do inl=1,infph-1
-         cabs(inl)=grarea*absorp(inl,l,dtype)
-         if (cabs(inl).ne.0.d0) absmax=inl
-        enddo
+          grarea=dustsig(l,dtype)*d_rad(l)
+          do inl=1,infph-1
+            cabs(inl)=grarea*absorp(inl,l,dtype)
+            if (cabs(inl).ne.0.d0) absmax=inl
+          enddo
 c
 c     Set up absphot bins
 c
-        flxabs=0.d0
-        j=1
-        do k=1,dinfph-1
-         dabsphot(k)=0.d0
-   10    den=cphotev(j)
-         if (dustsigt(j).eq.0.d0) goto 20
-         if (den.lt.edphot(k+1)) then
+          flxabs=0.d0
+          j=1
+          do k=1,dinfph-1
+            dabsphot(k)=0.d0
+   10       den=cphotev(j)
+            if (dustsigt(j).eq.0.d0) goto 20
+            if (den.lt.edphot(k+1)) then
 c           write(*,*) Cabs(j),dustsigt(j),photabs(j)
 c
 c  determine energy in scaled dust bin
 c  using fraction of absorption due to grain l (ie sigma_l/sigma_tot)
 c
-          dabsphot(k)=dabsphot(k)+(cabs(j)/dustsigt(j))*(photabs(j)/(dr*
-     &     fi*hdens))
-          flxabs=flxabs+(cabs(j)/dustsigt(j))*(photabs(j)/(dr*fi*hdens))
-          if (dabsphot(k).ne.0.d0) dabsmax=k
-          j=j+1
-          if (j.gt.(infph-1)) goto 20
-          goto 10
-         endif
-        enddo
-   20   continue
-        flxabstot=flxabstot+flxabs
-        teq=(flxabs/(grarea*stefan))**(0.25)
+              dabsphot(k)=dabsphot(k)+(cabs(j)/dustsigt(j))*(photabs(j)/
+     &         (dr*fi*hdens))
+              flxabs=flxabs+(cabs(j)/dustsigt(j))*(photabs(j)/(dr*fi*
+     &         hdens))
+              if (dabsphot(k).ne.0.d0) dabsmax=k
+              j=j+1
+              if (j.gt.(infph-1)) goto 20
+              goto 10
+            endif
+          enddo
+   20     continue
+          flxabstot=flxabstot+flxabs
+          teq=(flxabs/(grarea*stefan))**(0.25)
 c          if (IRtemp) then
 c 105              format(i4,2(1pg15.7,1x))
 c           write(15,105) dtype,grainrad(l),Teq
@@ -280,160 +281,161 @@ c
 c  setup initial Temperature & flxmeasures
 c     (maxmimum dTmax in smallest (first) grain)
 c
-        nmax=50
-        nmax0=nmax
-        dtmin=tmin
-        oldflx=1.d2
-        newflx=1.d0
-        flxratio=1.d2
-        tfine=.true.
+          nmax=50
+          nmax0=nmax
+          dtmin=tmin
+          oldflx=1.d2
+          newflx=1.d0
+          flxratio=1.d2
+          tfine=.true.
 c
 c  set P(T) Tlimit
 c
 c        if (grainrad(l).lt.1d-5) then
-        tlimit=1.0d-15
+          tlimit=1.0d-15
 c        else
 c          Tlimit=1.0d-10
 c        endif
-        do while (tfine)
+          do while (tfine)
 c
 c     Clear Flux distribution
 c
-         do k=1,infph-1
-          flxdist(k,l)=0.d0
-         enddo
+            do k=1,infph-1
+              flxdist(k,l)=0.d0
+            enddo
 c
 c recompute Temp grids if either dTmax or dTmin change
 c
-         if ((dtmin.ne.dtmin0).or.(dtmax.ne.dtmax0).or.(nmax.ne.nmax0))
-     &    then
+            if ((dtmin.ne.dtmin0).or.(dtmax.ne.dtmax0)
+     &       .or.(nmax.ne.nmax0)) then
 c
 c  setup Temp grid
 c
-          delta_t=(dtmax-dtmin)/nmax
-          dt=delta_t*0.5d0
+              delta_t=(dtmax-dtmin)/nmax
+              dt=delta_t*0.5d0
 c          write(*,*) 'tmax tmin delt dt', dTmax, dTmin, delta_T, dT
-          t_edge(1)=dtmin
-          do i=1,nmax
-           t_edge(i+1)=dtmin+i*delta_t
-           t_grid(i)=t_edge(i+1)-dt
-          enddo
+              t_edge(1)=dtmin
+              do i=1,nmax
+                t_edge(i+1)=dtmin+i*delta_t
+                t_grid(i)=t_edge(i+1)-dt
+              enddo
 c
 c  Setup grid for Plank spectrum at all dust temp. and photon energies
 c
 c           open(69,file='dcool.dat')
-          do i=1,nmax
-           invkt=1.d0/(rkb*t_grid(i))
-           do k=1,infph-1
-            bbemiss(k,i)=planck(invkt,engy(k))
-           enddo
-          enddo
+              do i=1,nmax
+                invkt=1.d0/(rkb*t_grid(i))
+                do k=1,infph-1
+                  bbemiss(k,i)=planck(invkt,engy(k))
+                enddo
+              enddo
 c
 c record Ts for most recent BB and grid calcs
 c
-          dtmin0=dtmin
-          dtmax0=dtmax
+              dtmin0=dtmin
+              dtmax0=dtmax
 c
-         endif
+            endif
 c
-         call initgrids (dtype, grainvol(l), atom_no(dtype,l), t_grid,
-     &    t_edge, h_grid, hmin, hmax, deltah, nmax, mxtempbin)
-         do j=1,nmax
-          do i=1,nmax
-           invh(i,j)=0.d0
-           if (i.ne.j) invh(i,j)=1.d0/(h_grid(i)-h_grid(j))
-          enddo
-         enddo
+            call initgrids (dtype, grainvol(l), atom_no(dtype,l),
+     &       t_grid, t_edge, h_grid, hmin, hmax, deltah, nmax,
+     &       mxtempbin)
+            do j=1,nmax
+              do i=1,nmax
+                invh(i,j)=0.d0
+                if (i.ne.j) invh(i,j)=1.d0/(h_grid(i)-h_grid(j))
+              enddo
+            enddo
 c
 c     solve for transition matrix
 c
-         if (dabsmax.ne.1) then
-          call transmatrix (grarea, n_e, s_f, nmax, absmax, dabsmax,
-     &     t_e)
+            if (dabsmax.ne.1) then
+              call transmatrix (grarea, n_e, s_f, nmax, absmax, dabsmax,
+     &          t_e)
 c  With transition matrix obtained now solve for P vector
-          call probsolve (tr_matrix, t_prob, nmax, mxtempbin)
-         endif
+              call probsolve (tr_matrix, t_prob, nmax, mxtempbin)
+            endif
 c
 c     Calculate Flux distribution and total flux
 c
-         newflx=0.d0
-         do j=1,nmax
-          if (t_prob(j).ne.0.d0) then
-           do k=1,infph-1
-            if (bbemiss(k,j).lt.1.d-50) goto 30
-            flxdist(k,l)=flxdist(k,l)+t_prob(j)*bbemiss(k,j)*absorp(k,l,
-     &       dtype)*grarea
-           enddo
-   30      continue
-          endif
-         enddo
-         do k=1,infph-1
-          wid=(photev(k+1)-photev(k))*ev
-          newflx=newflx+flxdist(k,l)*4*pi*wid
-         enddo
+            newflx=0.d0
+            do j=1,nmax
+              if (t_prob(j).ne.0.d0) then
+                do k=1,infph-1
+                  if (bbemiss(k,j).lt.1.d-50) goto 30
+                  flxdist(k,l)=flxdist(k,l)+t_prob(j)*bbemiss(k,j)*
+     &             absorp(k,l,dtype)*grarea
+                enddo
+   30           continue
+              endif
+            enddo
+            do k=1,infph-1
+              wid=(photev(k+1)-photev(k))*ev
+              newflx=newflx+flxdist(k,l)*4*pi*wid
+            enddo
 c
 c
-         if (irtemp.eq.1) then
-          t_av(l,dtype)=0.d0
-          do j=1,nmax
-           t_av(l,dtype)=t_av(l,dtype)+t_prob(j)*t_grid(j)
-          enddo
-         endif
+            if (irtemp.eq.1) then
+              t_av(l,dtype)=0.d0
+              do j=1,nmax
+                t_av(l,dtype)=t_av(l,dtype)+t_prob(j)*t_grid(j)
+              enddo
+            endif
 c
 c     QuickIR using only 50 bins for energy conservation
 c
-         if (quickir) then
-          k=nmax
-          do while (t_prob(k).lt.tlimit)
-           dtmax=t_edge(k)
-           k=k-1
-          enddo
-          j=1
-          do while (t_prob(j).lt.tlimit)
-           dtmin=t_edge(j+1)
-           j=j+1
-          enddo
+            if (quickir) then
+              k=nmax
+              do while (t_prob(k).lt.tlimit)
+                dtmax=t_edge(k)
+                k=k-1
+              enddo
+              j=1
+              do while (t_prob(j).lt.tlimit)
+                dtmin=t_edge(j+1)
+                j=j+1
+              enddo
 c  In case hotter than expected
-          if ((k.eq.nmax).and.(dtmax.eq.tmax)) dtmax=tmax+500
-          if ((j.lt.4).and.((nmax-k).lt.4)) then
-           nmax=nmax*2
-          endif
-          if (nmax.gt.nlimit) tfine=.false.
+              if ((k.eq.nmax).and.(dtmax.eq.tmax)) dtmax=tmax+500
+              if ((j.lt.4).and.((nmax-k).lt.4)) then
+                nmax=nmax*2
+              endif
+              if (nmax.gt.nlimit) tfine=.false.
 c
 c  Not quick do full IR for temp distributions
 c
-         else
-          if (nmax.lt.200) then
-           k=nmax
-           do while (t_prob(k).lt.tlimit)
-            dtmax=t_edge(k)
-            k=k-1
-           enddo
-           j=1
-           do while (t_prob(j).lt.tlimit)
-            dtmin=t_edge(j+1)
-            j=j+1
-           enddo
+            else
+              if (nmax.lt.200) then
+                k=nmax
+                do while (t_prob(k).lt.tlimit)
+                  dtmax=t_edge(k)
+                  k=k-1
+                enddo
+                j=1
+                do while (t_prob(j).lt.tlimit)
+                  dtmin=t_edge(j+1)
+                  j=j+1
+                enddo
 c  In case hotter than expected
-           if ((k.eq.nmax).and.(dtmax.eq.tmax)) dtmax=tmax+500
-           if ((j.lt.4).and.((nmax-k).lt.4)) nmax=nmax*2
-          else
-           k=nmax
-           do while (t_prob(k).lt.1.d-15)
-            dtmax=t_edge(k)
-            k=k-1
-           enddo
-           j=1
-           do while (t_prob(j).lt.1.d-15)
-            dtmin=t_edge(j+1)
-            j=j+1
-           enddo
-           if ((j.lt.(nmax/20)).and.((nmax-k).lt.(nmax/20))) nmax=nmax*
-     &      2
-          endif
-          if (nmax.gt.400) tfine=.false.
-         endif
-        enddo
+                if ((k.eq.nmax).and.(dtmax.eq.tmax)) dtmax=tmax+500
+                if ((j.lt.4).and.((nmax-k).lt.4)) nmax=nmax*2
+              else
+                k=nmax
+                do while (t_prob(k).lt.1.d-15)
+                  dtmax=t_edge(k)
+                  k=k-1
+                enddo
+                j=1
+                do while (t_prob(j).lt.1.d-15)
+                  dtmin=t_edge(j+1)
+                  j=j+1
+                enddo
+                if ((j.lt.(nmax/20)).and.((nmax-k).lt.(nmax/20))) nmax=
+     &           nmax*2
+              endif
+              if (nmax.gt.400) tfine=.false.
+            endif
+          enddo
 c
 c       flxtest1=flxtest1+flxabs
 c
@@ -449,29 +451,29 @@ c       write(*,*) grainrad(l),'E IRFlux Diff =',
 c     &    (1.d0 - flxtest2/flxabs)
 c
 c
-       enddo
+        enddo
 c
 c  Finally determine radiation field
 c   (use trapezoidal integration over dust sizes)
 c
-       if (mindust(dtype).ne.maxdust(dtype)) then
-        do l=mindust(dtype),maxdust(dtype)
-         do k=1,infph-1
-          if (flxdist(k,l).lt.1.0d-50) goto 40
+        if (mindust(dtype).ne.maxdust(dtype)) then
+          do l=mindust(dtype),maxdust(dtype)
+            do k=1,infph-1
+              if (flxdist(k,l).lt.1.0d-50) goto 40
 c           IRFlux(k)=IRFlux(k)+0.5d0*d_rad(l)*(flxdist(k,l-1)
 c                  +flxdist(k,l))
-          irflux(k)=irflux(k)+flxdist(k,l)
-         enddo
-   40    continue
-        enddo
-       else
-        l=mindust(dtype)
-        do k=1,infph-1
-         if (flxdist(k,l).lt.1.d-50) goto 50
-         irflux(k)=irflux(k)+flxdist(k,l)
-        enddo
-   50   continue
-       endif
+              irflux(k)=irflux(k)+flxdist(k,l)
+            enddo
+   40       continue
+          enddo
+        else
+          l=mindust(dtype)
+          do k=1,infph-1
+            if (flxdist(k,l).lt.1.d-50) goto 50
+            irflux(k)=irflux(k)+flxdist(k,l)
+          enddo
+   50     continue
+        endif
    60 continue
 c
 c  Detemine IRphot (photons/s/cm^3/Hz)
@@ -480,9 +482,9 @@ c
 c
       flxtest2=0.d0
       do k=1,infph-1
-       wid=(photev(k+1)-photev(k))*ev
-       flxtest2=flxtest2+irflux(k)*4*pi*wid
-       irphot(k)=irflux(k)*hdens*plk/engy(k)
+        wid=(photev(k+1)-photev(k))*ev
+        flxtest2=flxtest2+irflux(k)*4*pi*wid
+        irphot(k)=irflux(k)*hdens*plk/engy(k)
       enddo
       write (*,70) dr*fi*hdens*flxabstot,flxtest1,dr*fi*hdens*flxtest2
    70 format('IRin1=',1pg12.5,' IRin2=',1pg12.5,' IRout=',1pg12.5)
@@ -490,29 +492,29 @@ c
       write (*,80) teq
    80 format('Average Dust Temp: ',1pg14.7)
       if (irtemp.eq.1) then
-       do dtype=1,numtypes
-        norm1=0.d0
-        norm2=0.d0
-        tnorm(dtype)=0.d0
-        tsignorm(dtype)=0.d0
-        do l=mindust(dtype),maxdust(dtype)
-         norm1=norm1+dustnum(l,dtype)*d_rad(l)
-         norm2=norm2+dustsig(l,dtype)*d_rad(l)
+        do dtype=1,numtypes
+          norm1=0.d0
+          norm2=0.d0
+          tnorm(dtype)=0.d0
+          tsignorm(dtype)=0.d0
+          do l=mindust(dtype),maxdust(dtype)
+            norm1=norm1+dustnum(l,dtype)*d_rad(l)
+            norm2=norm2+dustsig(l,dtype)*d_rad(l)
+          enddo
+          do l=mindust(dtype),maxdust(dtype)
+            tnorm(dtype)=tnorm(dtype)+t_av(l,dtype)*dustnum(l,dtype)*
+     &       d_rad(l)
+            tsignorm(dtype)=tsignorm(dtype)+t_av(l,dtype)*dustsig(l,
+     &       dtype)*d_rad(l)
+          enddo
+          tnorm(dtype)=tnorm(dtype)/norm1
+          tsignorm(dtype)=tsignorm(dtype)/norm2
         enddo
-        do l=mindust(dtype),maxdust(dtype)
-         tnorm(dtype)=tnorm(dtype)+t_av(l,dtype)*dustnum(l,dtype)*
-     &    d_rad(l)
-         tsignorm(dtype)=tsignorm(dtype)+t_av(l,dtype)*dustsig(l,dtype)*
-     &    d_rad(l)
-        enddo
-        tnorm(dtype)=tnorm(dtype)/norm1
-        tsignorm(dtype)=tsignorm(dtype)/norm2
-       enddo
-       tempfile='dusttemp.dat'
-       open (15,file=tempfile,status='unknown',access='APPEND')
+        tempfile='dusttemp.dat'
+        open (15,file=tempfile,status='unknown',access='APPEND')
    90      format(i4,2x,2(1pg15.7,2x),2x,2(1pg15.7,2x))
-       write (15,90) ircount,tnorm(1),tsignorm(1),tnorm(2),tsignorm(2)
-       close (15)
+        write (15,90) ircount,tnorm(1),tsignorm(1),tnorm(2),tsignorm(2)
+        close (15)
       endif
       return
       end
@@ -535,19 +537,19 @@ c     external functions
       real*8 sil_enth,gra_enth
 c  calculate enthalpy for each temperature
       if (dtype.eq.1) then
-       do i=1,nmax
-        h_grid(i)=sil_enth(atom_no,v,t_grid(i))
-        hmin(i)=sil_enth(atom_no,v,t_edge(i))
-        hmax(i)=sil_enth(atom_no,v,t_edge(i+1))
-        deltah(i)=hmax(i)-hmin(i)
-       enddo
+        do i=1,nmax
+          h_grid(i)=sil_enth(atom_no,v,t_grid(i))
+          hmin(i)=sil_enth(atom_no,v,t_edge(i))
+          hmax(i)=sil_enth(atom_no,v,t_edge(i+1))
+          deltah(i)=hmax(i)-hmin(i)
+        enddo
       else
-       do i=1,nmax
-        h_grid(i)=gra_enth(atom_no,t_grid(i))
-        hmin(i)=gra_enth(atom_no,t_edge(i))
-        hmax(i)=gra_enth(atom_no,t_edge(i+1))
-        deltah(i)=hmax(i)-hmin(i)
-       enddo
+        do i=1,nmax
+          h_grid(i)=gra_enth(atom_no,t_grid(i))
+          hmin(i)=gra_enth(atom_no,t_edge(i))
+          hmax(i)=gra_enth(atom_no,t_edge(i+1))
+          deltah(i)=hmax(i)-hmin(i)
+        enddo
       endif
       return
       end
@@ -575,22 +577,22 @@ c
       fint3=0.d0
       fint4=0.d0
       if (t.le.50.d0) then
-       fint1=1.40d3*(t*t*t)/3.d0
+        fint1=1.40d3*(t*t*t)/3.d0
       elseif (t.le.150.d0) then
-       fint1=c1
-       t2=50.d0
-       fint2=2.1647d4*((t**2.3d0)-(t2**2.3d0))/2.3d0
+        fint1=c1
+        t2=50.d0
+        fint2=2.1647d4*((t**2.3d0)-(t2**2.3d0))/2.3d0
       elseif (t.le.500.d0) then
-       fint1=c1
-       fint2=c2
-       t2=150.d0
-       fint3=4.8369d5*((t**1.68d0)-(t2**1.68d0))/1.68d0
+        fint1=c1
+        fint2=c2
+        t2=150.d0
+        fint3=4.8369d5*((t**1.68d0)-(t2**1.68d0))/1.68d0
       else
-       fint1=c1
-       fint2=c2
-       fint3=c3
-       t2=500.d0
-       fint4=3.3103d7*(t-t2)
+        fint1=c1
+        fint2=c2
+        fint3=c3
+        t2=500.d0
+        fint4=3.3103d7*(t-t2)
       endif
       sil_enth=f*(fint1+fint2+fint3+fint4)
       return
@@ -695,9 +697,9 @@ c
 c  Initialise
 c
       do j=1,nmax
-       do i=1,nmax
-        tr_matrix(i,j)=0.d0
-       enddo
+        do i=1,nmax
+          tr_matrix(i,j)=0.d0
+        enddo
       enddo
 c
 c  Cooling (#2)
@@ -705,14 +707,14 @@ c  Uses midpoint integration with Qabs energy points
 c  Will improve later
 c
       do i=2,nmax
-       cool=0.d0
-       do k=1,absmax
-        den=cphote(k)
-        wid=(photev(k+1)-photev(k))*ev
-        if (den.gt.h_grid(i)) goto 10
-        cool=cool+bbemiss(k,i)*cabs(k)*wid
-       enddo
-   10  tr_matrix(i-1,i)=(4.d0*pi)*invh(i,i-1)*cool
+        cool=0.d0
+        do k=1,absmax
+          den=cphote(k)
+          wid=(photev(k+1)-photev(k))*ev
+          if (den.gt.h_grid(i)) goto 10
+          cool=cool+bbemiss(k,i)*cabs(k)*wid
+        enddo
+   10   tr_matrix(i-1,i)=(4.d0*pi)*invh(i,i-1)*cool
       enddo
       stick=n_e*grarea*s_f*(segrain*dexp(-t_e/2.0d5))
 c      stick=0.d0
@@ -722,71 +724,71 @@ c  Heating (#3) from l->u (j->i)
 c  Allows for finite width of H bins
 c  Uses midpoint integration with Qabs energy points
 c
-       hmn=hmin(i)
-       hmx=hmax(i)
-       do j=1,i-1
-        w1=hmn-hmax(j)
-        w2=min((hmn-hmin(j)),(hmx-hmax(j)))
-        w3=max((hmn-hmin(j)),(hmx-hmax(j)))
-        w4=hmx-hmin(j)
-        invfac=1.d0/(deltah(i)*deltah(j))
+        hmn=hmin(i)
+        hmx=hmax(i)
+        do j=1,i-1
+          w1=hmn-hmax(j)
+          w2=min((hmn-hmin(j)),(hmx-hmax(j)))
+          w3=max((hmn-hmin(j)),(hmx-hmax(j)))
+          w4=hmx-hmin(j)
+          invfac=1.d0/(deltah(i)*deltah(j))
 c
 c  Photon & Collisional (currently turned off) heating
 c
-        heat=0.d0
-        do k=1,dabsmax
-         if (dengy(k).ge.w1) then
-          if (dengy(k).lt.w2) then
-           gfac=(dengy(k)-w1)*invfac
-          elseif (dengy(k).lt.w3) then
-           gfac=min(deltah(i),deltah(j))*invfac
-          elseif (dengy(k).le.w4) then
-           gfac=(w4-dengy(k))*invfac
-          else
-           goto 20
-          endif
-          heat=heat+gfac*(dabsphot(k)+stick*collheat(k))
-         endif
+          heat=0.d0
+          do k=1,dabsmax
+            if (dengy(k).ge.w1) then
+              if (dengy(k).lt.w2) then
+                gfac=(dengy(k)-w1)*invfac
+              elseif (dengy(k).lt.w3) then
+                gfac=min(deltah(i),deltah(j))*invfac
+              elseif (dengy(k).le.w4) then
+                gfac=(w4-dengy(k))*invfac
+              else
+                goto 20
+              endif
+              heat=heat+gfac*(dabsphot(k)+stick*collheat(k))
+            endif
+          enddo
+   20     continue
+          tr_matrix(i,j)=deltah(i)*invh(i,j)*heat
         enddo
-   20   continue
-        tr_matrix(i,j)=deltah(i)*invh(i,j)*heat
-       enddo
 c  Allow for intrabin absorbtions
-       heat=0.d0
-       dht1=deltah(i-1)
-       invdht1=1.d0/dht1
-       do k=1,dabsmax
-        if (dengy(k).gt.dht1) goto 30
-        heat=heat+(1.d0-(dengy(k)*invdht1))*dabsphot(k)
-       enddo
-   30  continue
-       tr_matrix(i,i-1)=tr_matrix(i,i-1)+invh(i,i-1)*heat
+        heat=0.d0
+        dht1=deltah(i-1)
+        invdht1=1.d0/dht1
+        do k=1,dabsmax
+          if (dengy(k).gt.dht1) goto 30
+          heat=heat+(1.d0-(dengy(k)*invdht1))*dabsphot(k)
+        enddo
+   30   continue
+        tr_matrix(i,i-1)=tr_matrix(i,i-1)+invh(i,i-1)*heat
       enddo
       hmn=hmin(nmax)
       do j=1,nmax-1
-       w1=hmn-hmax(j)
-       w4=hmn-hmin(j)
-       w5=1.d0/(w4-w1)
-       heat=0.d0
+        w1=hmn-hmax(j)
+        w4=hmn-hmin(j)
+        w5=1.d0/(w4-w1)
+        heat=0.d0
 c  Photon & collisional heating
-       do k=1,dabsmax
-        if ((dengy(k).gt.w1).and.(dengy(k).lt.w4)) then
-         heat=heat+(dengy(k)-w1)*w5*(dabsphot(k)+stick*collheat(k))
-        elseif (dengy(k).ge.w4) then
-         heat=heat+dabsphot(k)+stick*collheat(k)
-        endif
-       enddo
-       tr_matrix(nmax,j)=1.d0*invh(nmax,j)*heat
+        do k=1,dabsmax
+          if ((dengy(k).gt.w1).and.(dengy(k).lt.w4)) then
+            heat=heat+(dengy(k)-w1)*w5*(dabsphot(k)+stick*collheat(k))
+          elseif (dengy(k).ge.w4) then
+            heat=heat+dabsphot(k)+stick*collheat(k)
+          endif
+        enddo
+        tr_matrix(nmax,j)=1.d0*invh(nmax,j)*heat
       enddo
       heat=0.d0
       dht1=deltah(nmax-1)
       invdht1=1.d0/dht1
       do k=1,dabsmax
-       if (dengy(k).le.dht1) then
-        heat=heat+(1.d0-dengy(k)*invdht1)*dabsphot(k)
-       else
-        goto 40
-       endif
+        if (dengy(k).le.dht1) then
+          heat=heat+(1.d0-dengy(k)*invdht1)*dabsphot(k)
+        else
+          goto 40
+        endif
       enddo
    40 continue
       tr_matrix(nmax,nmax-1)=tr_matrix(nmax,nmax-1)+invh(nmax,nmax-1)*
@@ -827,36 +829,36 @@ c
       real*8 sum
       integer*4 i,j
       do i=1,nmax
-       bm(nmax,i)=tr_matrix(nmax,i)
-       do j=nmax-1,i,-1
-        bm(j,i)=tr_matrix(j,i)+bm(j+1,i)
-       enddo
+        bm(nmax,i)=tr_matrix(nmax,i)
+        do j=nmax-1,i,-1
+          bm(j,i)=tr_matrix(j,i)+bm(j+1,i)
+        enddo
       enddo
       xo(1)=1.d0
       do j=2,nmax
-       sum=0.d0
-       do i=1,j-1
-        sum=sum+bm(j,i)*xo(i)
-       enddo
-       if (tr_matrix(j-1,j).ne.0.d0) then
-        xo(j)=sum/tr_matrix(j-1,j)
-       else
-        print *,'T(j-1,j)=0. IN trouble'
-        stop
-       endif
+        sum=0.d0
+        do i=1,j-1
+          sum=sum+bm(j,i)*xo(i)
+        enddo
+        if (tr_matrix(j-1,j).ne.0.d0) then
+          xo(j)=sum/tr_matrix(j-1,j)
+        else
+          print *,'T(j-1,j)=0. IN trouble'
+          stop
+        endif
       enddo
       sum=0.d0
       do j=1,nmax
-       sum=sum+xo(j)
+        sum=sum+xo(j)
       enddo
       if (sum.eq.0.d0) then
-       print *,'sum of X=0. IN trouble'
-       stop
+        print *,'sum of X=0. IN trouble'
+        stop
       endif
 c solve for T_prob
       do j=1,nmax
-       t_prob(j)=xo(j)/sum
-       if (t_prob(j).lt.1.0d-20) t_prob(j)=0.d0
+        t_prob(j)=xo(j)/sum
+        if (t_prob(j).lt.1.0d-20) t_prob(j)=0.d0
       enddo
       return
       end

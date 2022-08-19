@@ -35,7 +35,7 @@ c
 c
       tr=t
       if (usekappa) then
-       tr=t*(kappa-1.5d0)/kappa
+        tr=t*(kappa-1.5d0)/kappa
       endif
       t4=tr*1.0d-4
       if (t4.le.0.001d0) t4=0.001d0
@@ -52,41 +52,41 @@ c
       atom=zmap(10)
 c
       do idx=1,nrcneii
-       rcneii_abri(idx)=0.d0
-       rcneii_bbri(idx)=0.d0
+        rcneii_abri(idx)=0.d0
+        rcneii_bbri(idx)=0.d0
       enddo
 c
 c check NeIII population, that is doing the recomb
 c
       if (zion(atom)*pop(3,atom).gt.pzlimit) then
 c
-       nte=8
-       do j=1,nte
-        x(j)=dlog10(neiite(j))-4.d0
-       enddo
+        nte=8
+        do j=1,nte
+          x(j)=dlog10(neiite(j))-4.d0
+        enddo
 c
-       abde=de*dh*zion(atom)*pop(3,atom)
+        abde=de*dh*zion(atom)*pop(3,atom)
 c
 c All quartets and doublets together
 c
-       do idx=1,nrcneii
-        emiss=0.d0
-        do j=1,nte
-         y(j)=rcneii_y(1,j,idx)
-         y2(j)=rcneii_y2(1,j,idx)
+        do idx=1,nrcneii
+          emiss=0.d0
+          do j=1,nte
+            y(j)=rcneii_y(1,j,idx)
+            y2(j)=rcneii_y2(1,j,idx)
+          enddo
+          emiss=10.d0**(fsplint(x,y,y2,nte,logt4)-14.d0)
+          emiss=emiss*rcneii_eij(idx)
+          rcneii_abri(idx)=abde*emiss*ifpi
+          emiss=0.d0
+          do j=1,nte
+            y(j)=rcneii_y(2,j,idx)
+            y2(j)=rcneii_y2(2,j,idx)
+          enddo
+          emiss=10.d0**(fsplint(x,y,y2,nte,logt4)-14.d0)
+          emiss=emiss*rcneii_eij(idx)
+          rcneii_bbri(idx)=abde*emiss*ifpi
         enddo
-        emiss=10.d0**(fsplint(x,y,y2,nte,logt4)-14.d0)
-        emiss=emiss*rcneii_eij(idx)
-        rcneii_abri(idx)=abde*emiss*ifpi
-        emiss=0.d0
-        do j=1,nte
-         y(j)=rcneii_y(2,j,idx)
-         y2(j)=rcneii_y2(2,j,idx)
-        enddo
-        emiss=10.d0**(fsplint(x,y,y2,nte,logt4)-14.d0)
-        emiss=emiss*rcneii_eij(idx)
-        rcneii_bbri(idx)=abde*emiss*ifpi
-       enddo
 c
       endif
 c
@@ -117,53 +117,53 @@ c
       nte=15
 c
       do idx=1,nrccii
-       rccii_abri(idx)=0.d0
-       rccii_bbri(idx)=0.d0
+        rccii_abri(idx)=0.d0
+        rccii_bbri(idx)=0.d0
       enddo
 c
 c check CIII population, that is doing the recomb
 c
       if (zion(atom)*pop(3,atom).gt.pzlimit) then
 c
-       tr=t
-       if (usekappa) then
-        tr=t*(kappa-1.5d0)/kappa
-       endif
-       logte=dlog10(tr)
+        tr=t
+        if (usekappa) then
+          tr=t*(kappa-1.5d0)/kappa
+        endif
+        logte=dlog10(tr)
 c
-       abde=de*dh*zion(atom)*pop(3,atom)
+        abde=de*dh*zion(atom)*pop(3,atom)
 c
 c All lines together
 c
-       do j=1,nte
-        x(j)=rccii_logte(j)
-       enddo
+        do j=1,nte
+          x(j)=rccii_logte(j)
+        enddo
 c
-       do idx=1,nrccii
+        do idx=1,nrccii
 c
 c spline interpolate in log electron density - log emiss space
 c
 c Case A
 c
-        do j=1,nte
-         y(j)=rccii_coeffy(1,j,idx)
-         y2(j)=rccii_coeffy2(1,j,idx)
-        enddo
-        emiss=10.d0**(fsplint(x,y,y2,nte,logte)-14.d0)
-        emiss=emiss*rccii_eij(idx)
-        rccii_abri(idx)=abde*emiss*ifpi
+          do j=1,nte
+            y(j)=rccii_coeffy(1,j,idx)
+            y2(j)=rccii_coeffy2(1,j,idx)
+          enddo
+          emiss=10.d0**(fsplint(x,y,y2,nte,logte)-14.d0)
+          emiss=emiss*rccii_eij(idx)
+          rccii_abri(idx)=abde*emiss*ifpi
 c
 c Case B
 c
-        do j=1,nte
-         y(j)=rccii_coeffy(2,j,idx)
-         y2(j)=rccii_coeffy2(2,j,idx)
-        enddo
-        emiss=10.d0**(fsplint(x,y,y2,nte,logte)-14.d0)
-        emiss=emiss*rccii_eij(idx)
-        rccii_bbri(idx)=abde*emiss*ifpi
+          do j=1,nte
+            y(j)=rccii_coeffy(2,j,idx)
+            y2(j)=rccii_coeffy2(2,j,idx)
+          enddo
+          emiss=10.d0**(fsplint(x,y,y2,nte,logte)-14.d0)
+          emiss=emiss*rccii_eij(idx)
+          rccii_bbri(idx)=abde*emiss*ifpi
 c
-       enddo
+        enddo
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -200,99 +200,99 @@ c
       atom=zmap(7)
 c
       do idx=1,nrcnii
-       rcnii_abri(idx)=0.d0
-       rcnii_bbri(idx)=0.d0
+        rcnii_abri(idx)=0.d0
+        rcnii_bbri(idx)=0.d0
       enddo
 c
 c check NIII population, that is doing the recomb
 c
       if (zion(atom)*pop(3,atom).gt.pzlimit) then
 c
-       nte=8
-       do j=1,nte
-        xdens(j)=dlog10(niite(j))-4.d0
-       enddo
-       tr=t
-       if (usekappa) then
-        tr=t*(kappa-1.5d0)/kappa
-       endif
-       t4=tr*1.0d-4
-       if (t4.le.0.001d0) t4=0.001d0
-       logt4=dlog10(t4)
-       logde=dlog10(de)
+        nte=8
+        do j=1,nte
+          xdens(j)=dlog10(niite(j))-4.d0
+        enddo
+        tr=t
+        if (usekappa) then
+          tr=t*(kappa-1.5d0)/kappa
+        endif
+        t4=tr*1.0d-4
+        if (t4.le.0.001d0) t4=0.001d0
+        logt4=dlog10(t4)
+        logde=dlog10(de)
 c
-       abde=de*dh*zion(atom)*pop(3,atom)
+        abde=de*dh*zion(atom)*pop(3,atom)
 c
 c All lines together
 c
-       do idx=1,nrcnii
+        do idx=1,nrcnii
 c
 c spline interpolate in log electron density - log emiss space
 c
-        do j=1,nte
-         ydens(j)=rcniin20_y(1,j,idx)
-         ydens2(j)=rcniin20_y2(1,j,idx)
-        enddo
-        y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin20_y(1,j,idx)
+            ydens2(j)=rcniin20_y2(1,j,idx)
+          enddo
+          y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcniin30_y(1,j,idx)
-         ydens2(j)=rcniin30_y2(1,j,idx)
-        enddo
-        y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin30_y(1,j,idx)
+            ydens2(j)=rcniin30_y2(1,j,idx)
+          enddo
+          y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcniin40_y(1,j,idx)
-         ydens2(j)=rcniin40_y2(1,j,idx)
-        enddo
-        y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin40_y(1,j,idx)
+            ydens2(j)=rcniin40_y2(1,j,idx)
+          enddo
+          y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcniin50_y(1,j,idx)
-         ydens2(j)=rcniin50_y2(1,j,idx)
-        enddo
-        y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin50_y(1,j,idx)
+            ydens2(j)=rcniin50_y2(1,j,idx)
+          enddo
+          y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
 c
-        ni=4
+          ni=4
 c
 c        call endgrads (x,y,ni,dydx0,dydxn)
-        call spline00 (x, y, ni, y2)
-        emiss=10.d0**(fsplint(x,y,y2,ni,logde)-15.d0)
-        emiss=emiss*rcnii_eij(idx)
-        rcnii_abri(idx)=abde*emiss*ifpi
+          call spline00 (x, y, ni, y2)
+          emiss=10.d0**(fsplint(x,y,y2,ni,logde)-15.d0)
+          emiss=emiss*rcnii_eij(idx)
+          rcnii_abri(idx)=abde*emiss*ifpi
 c        write(*,*)  rcNII_Abri(idx)
 c
-        do j=1,nte
-         ydens(j)=rcniin20_y(2,j,idx)
-         ydens2(j)=rcniin20_y2(2,j,idx)
-        enddo
-        y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin20_y(2,j,idx)
+            ydens2(j)=rcniin20_y2(2,j,idx)
+          enddo
+          y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcniin30_y(2,j,idx)
-         ydens2(j)=rcniin30_y2(2,j,idx)
-        enddo
-        y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin30_y(2,j,idx)
+            ydens2(j)=rcniin30_y2(2,j,idx)
+          enddo
+          y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcniin40_y(2,j,idx)
-         ydens2(j)=rcniin40_y2(2,j,idx)
-        enddo
-        y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin40_y(2,j,idx)
+            ydens2(j)=rcniin40_y2(2,j,idx)
+          enddo
+          y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcniin50_y(2,j,idx)
-         ydens2(j)=rcniin50_y2(2,j,idx)
-        enddo
-        y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcniin50_y(2,j,idx)
+            ydens2(j)=rcniin50_y2(2,j,idx)
+          enddo
+          y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
 c        call endgrads (x,y,ni,dydx0,dydxn)
-        call spline00 (x, y, ni, y2)
-        call spline00 (x, y, ni, y2)
-        emiss=10.d0**(fsplint(x,y,y2,ni,logde)-15.d0)
-        emiss=emiss*rcnii_eij(idx)
-        rcnii_bbri(idx)=abde*emiss*ifpi
+          call spline00 (x, y, ni, y2)
+          call spline00 (x, y, ni, y2)
+          emiss=10.d0**(fsplint(x,y,y2,ni,logde)-15.d0)
+          emiss=emiss*rcnii_eij(idx)
+          rcnii_bbri(idx)=abde*emiss*ifpi
 c
 c        if ( idx .eq. 8 ) then
 c        write(*,*) 'NII Recomb: B'
@@ -304,7 +304,7 @@ c        write(*,'(4(1pg14.7))') fsplint(x,y,y2,ni,logDe),rcNII_eij(idx),
 c     &         abde, emiss
 c        endif
 c
-       enddo
+        enddo
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -352,7 +352,7 @@ c
 c
       tr=t
       if (usekappa) then
-       tr=t*(kappa-1.5d0)/kappa
+        tr=t*(kappa-1.5d0)/kappa
       endif
       t4=tr*1.0d-4
       if (t4.le.0.001d0) t4=0.001d0
@@ -367,56 +367,56 @@ c
       atom=zmap(8)
 c
       do idx=1,nrcoi_q
-       rcoi_qabri(idx)=0.d0
-       rcoi_qbbri(idx)=0.d0
+        rcoi_qabri(idx)=0.d0
+        rcoi_qbbri(idx)=0.d0
       enddo
 c
       do idx=1,nrcoi_t
-       rcoi_tabri(idx)=0.d0
-       rcoi_tbbri(idx)=0.d0
+        rcoi_tabri(idx)=0.d0
+        rcoi_tbbri(idx)=0.d0
       enddo
 c
 c check OII population, that is doing the recomb
 c
       if (zion(atom)*pop(2,atom).gt.pzlimit) then
 c
-       abde=de*dh*zion(atom)*pop(2,atom)
+        abde=de*dh*zion(atom)*pop(2,atom)
 c
 c Quintets....
 c
-       do idx=1,nrcoi_q
-        a=rcoi_qcoef(1,1,idx)
-        b=rcoi_qcoef(1,2,idx)
-        c=rcoi_qcoef(1,3,idx)
-        emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
-        emiss=emiss*rcoi_qeij(idx)
-        rcoi_qabri(idx)=abde*emiss*ifpi
-        a=rcoi_qcoef(2,1,idx)
-        b=rcoi_qcoef(2,2,idx)
-        c=rcoi_qcoef(2,3,idx)
-        emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
-        emiss=dmax1(0.d0,emiss)
-        emiss=emiss*rcoi_qeij(idx)
-        rcoi_qbbri(idx)=abde*emiss*ifpi
-       enddo
+        do idx=1,nrcoi_q
+          a=rcoi_qcoef(1,1,idx)
+          b=rcoi_qcoef(1,2,idx)
+          c=rcoi_qcoef(1,3,idx)
+          emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
+          emiss=emiss*rcoi_qeij(idx)
+          rcoi_qabri(idx)=abde*emiss*ifpi
+          a=rcoi_qcoef(2,1,idx)
+          b=rcoi_qcoef(2,2,idx)
+          c=rcoi_qcoef(2,3,idx)
+          emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
+          emiss=dmax1(0.d0,emiss)
+          emiss=emiss*rcoi_qeij(idx)
+          rcoi_qbbri(idx)=abde*emiss*ifpi
+        enddo
 c
 c Triplets....
 c
-       do idx=1,nrcoi_t
-        a=rcoi_tcoef(1,1,idx)
-        b=rcoi_tcoef(1,2,idx)
-        c=rcoi_tcoef(1,3,idx)
-        emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
-        emiss=emiss*rcoi_teij(idx)
-        rcoi_tabri(idx)=abde*emiss*ifpi
-        a=rcoi_tcoef(2,1,idx)
-        b=rcoi_tcoef(2,2,idx)
-        c=rcoi_tcoef(2,3,idx)
-        emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
-        emiss=dmax1(0.d0,emiss)
-        emiss=emiss*rcoi_teij(idx)
-        rcoi_tbbri(idx)=abde*emiss*ifpi
-       enddo
+        do idx=1,nrcoi_t
+          a=rcoi_tcoef(1,1,idx)
+          b=rcoi_tcoef(1,2,idx)
+          c=rcoi_tcoef(1,3,idx)
+          emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
+          emiss=emiss*rcoi_teij(idx)
+          rcoi_tabri(idx)=abde*emiss*ifpi
+          a=rcoi_tcoef(2,1,idx)
+          b=rcoi_tcoef(2,2,idx)
+          c=rcoi_tcoef(2,3,idx)
+          emiss=(a*(t4**(-b*(1.d0+c*lnt4))))
+          emiss=dmax1(0.d0,emiss)
+          emiss=emiss*rcoi_teij(idx)
+          rcoi_tbbri(idx)=abde*emiss*ifpi
+        enddo
 c
       endif
 c
@@ -446,7 +446,7 @@ c
 c
       tr=t
       if (usekappa) then
-       tr=t*(kappa-1.5d0)/kappa
+        tr=t*(kappa-1.5d0)/kappa
       endif
       t4=tr*1.0d-4
       if (t4.le.0.001d0) t4=0.001d0
@@ -461,116 +461,116 @@ c
       atom=zmap(8)
 c
       do idx=1,nrcoii
-       rcoii_abri(idx)=0.d0
-       rcoii_bbri(idx)=0.d0
-       rcoii_cbri(idx)=0.d0
+        rcoii_abri(idx)=0.d0
+        rcoii_bbri(idx)=0.d0
+        rcoii_cbri(idx)=0.d0
       enddo
 c
 c check OIII population, that is doing the recomb
 c
       if (zion(atom)*pop(3,atom).gt.pzlimit) then
-       nte=8
-       do j=1,nte
-        xdens(j)=dlog10(oiite(j))-4.d0
-       enddo
-       abde=de*dh*zion(atom)*pop(3,atom)
-       do idx=1,nrcoii
-        emiss=0.d0
+        nte=8
         do j=1,nte
-         ydens(j)=rcoiin20_y(1,j,idx)
-         ydens2(j)=rcoiin20_y2(1,j,idx)
+          xdens(j)=dlog10(oiite(j))-4.d0
         enddo
-        y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
+        abde=de*dh*zion(atom)*pop(3,atom)
+        do idx=1,nrcoii
+          emiss=0.d0
+          do j=1,nte
+            ydens(j)=rcoiin20_y(1,j,idx)
+            ydens2(j)=rcoiin20_y2(1,j,idx)
+          enddo
+          y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcoiin40_y(1,j,idx)
-         ydens2(j)=rcoiin40_y2(1,j,idx)
-        enddo
-        y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcoiin40_y(1,j,idx)
+            ydens2(j)=rcoiin40_y2(1,j,idx)
+          enddo
+          y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcoiin50_y(1,j,idx)
-         ydens2(j)=rcoiin50_y2(1,j,idx)
-        enddo
-        y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcoiin50_y(1,j,idx)
+            ydens2(j)=rcoiin50_y2(1,j,idx)
+          enddo
+          y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcoiin60_y(1,j,idx)
-         ydens2(j)=rcoiin60_y2(1,j,idx)
-        enddo
-        y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcoiin60_y(1,j,idx)
+            ydens2(j)=rcoiin60_y2(1,j,idx)
+          enddo
+          y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        ni=4
+          ni=4
 c
-        call spline00 (x, y, ni, y2)
-        emiss=10.d0**(fsplint(x,y,y2,ni,logde)-14.d0)
-        emiss=emiss*rcoii_eij(idx)
-        rcoii_abri(idx)=abde*emiss*ifpi
+          call spline00 (x, y, ni, y2)
+          emiss=10.d0**(fsplint(x,y,y2,ni,logde)-14.d0)
+          emiss=emiss*rcoii_eij(idx)
+          rcoii_abri(idx)=abde*emiss*ifpi
 c caseB
-        emiss=0.d0
-        do j=1,nte
-         ydens(j)=rcoiin20_y(2,j,idx)
-         ydens2(j)=rcoiin20_y2(2,j,idx)
-        enddo
-        y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          emiss=0.d0
+          do j=1,nte
+            ydens(j)=rcoiin20_y(2,j,idx)
+            ydens2(j)=rcoiin20_y2(2,j,idx)
+          enddo
+          y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcoiin40_y(2,j,idx)
-         ydens2(j)=rcoiin40_y2(2,j,idx)
-        enddo
-        y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcoiin40_y(2,j,idx)
+            ydens2(j)=rcoiin40_y2(2,j,idx)
+          enddo
+          y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcoiin50_y(2,j,idx)
-         ydens2(j)=rcoiin50_y2(2,j,idx)
-        enddo
-        y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcoiin50_y(2,j,idx)
+            ydens2(j)=rcoiin50_y2(2,j,idx)
+          enddo
+          y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        do j=1,nte
-         ydens(j)=rcoiin60_y(2,j,idx)
-         ydens2(j)=rcoiin60_y2(2,j,idx)
-        enddo
-        y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
+          do j=1,nte
+            ydens(j)=rcoiin60_y(2,j,idx)
+            ydens2(j)=rcoiin60_y2(2,j,idx)
+          enddo
+          y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
 c
-        ni=4
+          ni=4
 c
-        call spline00 (x, y, ni, y2)
-        emiss=10.d0**(fsplint(x,y,y2,ni,logde)-14.d0)
-        emiss=emiss*rcoii_eij(idx)
-        rcoii_bbri(idx)=abde*emiss*ifpi
+          call spline00 (x, y, ni, y2)
+          emiss=10.d0**(fsplint(x,y,y2,ni,logde)-14.d0)
+          emiss=emiss*rcoii_eij(idx)
+          rcoii_bbri(idx)=abde*emiss*ifpi
 c case C
-        emiss=0.d0
-        do j=1,nte
-         ydens(j)=rcoiin20_y(3,j,idx)
-         ydens2(j)=rcoiin20_y2(3,j,idx)
+          emiss=0.d0
+          do j=1,nte
+            ydens(j)=rcoiin20_y(3,j,idx)
+            ydens2(j)=rcoiin20_y2(3,j,idx)
+          enddo
+          y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
+c
+          do j=1,nte
+            ydens(j)=rcoiin40_y(3,j,idx)
+            ydens2(j)=rcoiin40_y2(3,j,idx)
+          enddo
+          y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
+c
+          do j=1,nte
+            ydens(j)=rcoiin50_y(3,j,idx)
+            ydens2(j)=rcoiin50_y2(3,j,idx)
+          enddo
+          y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
+c
+          do j=1,nte
+            ydens(j)=rcoiin60_y(3,j,idx)
+            ydens2(j)=rcoiin60_y2(3,j,idx)
+          enddo
+          y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
+c
+          ni=4
+c
+          call spline00 (x, y, ni, y2)
+          emiss=10.d0**(fsplint(x,y,y2,ni,logde)-14.d0)
+          emiss=emiss*rcoii_eij(idx)
+          rcoii_cbri(idx)=abde*emiss*ifpi
         enddo
-        y(1)=fsplint(xdens,ydens,ydens2,nte,logt4)
-c
-        do j=1,nte
-         ydens(j)=rcoiin40_y(3,j,idx)
-         ydens2(j)=rcoiin40_y2(3,j,idx)
-        enddo
-        y(2)=fsplint(xdens,ydens,ydens2,nte,logt4)
-c
-        do j=1,nte
-         ydens(j)=rcoiin50_y(3,j,idx)
-         ydens2(j)=rcoiin50_y2(3,j,idx)
-        enddo
-        y(3)=fsplint(xdens,ydens,ydens2,nte,logt4)
-c
-        do j=1,nte
-         ydens(j)=rcoiin60_y(3,j,idx)
-         ydens2(j)=rcoiin60_y2(3,j,idx)
-        enddo
-        y(4)=fsplint(xdens,ydens,ydens2,nte,logt4)
-c
-        ni=4
-c
-        call spline00 (x, y, ni, y2)
-        emiss=10.d0**(fsplint(x,y,y2,ni,logde)-14.d0)
-        emiss=emiss*rcoii_eij(idx)
-        rcoii_cbri(idx)=abde*emiss*ifpi
-       enddo
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

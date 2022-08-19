@@ -62,10 +62,10 @@ c
       tg=ftr(ratio,ao,bo)
 c
       do k=1,kf
-       tgi=tg
-       ra=fde(dens,tg,co)*ratio
-       tg=ftr(ra,ao,bo)
-       if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 10
+        tgi=tg
+        ra=fde(dens,tg,co)*ratio
+        tg=ftr(ra,ao,bo)
+        if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 10
       enddo
    10 toiii=tg
 c
@@ -78,10 +78,10 @@ c
 c
       tg=ftr(ratio,an,bn)
       do k=1,kf
-       tgi=tg
-       ra=fde(dens,tg,cn)*ratio
-       tg=ftr(ra,an,bn)
-       if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 30
+        tgi=tg
+        ra=fde(dens,tg,cn)*ratio
+        tg=ftr(ra,an,bn)
+        if ((dabs(tg-tgi)/tg).lt.0.001d0) goto 30
       enddo
    30 tnii=tg
 c

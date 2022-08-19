@@ -42,25 +42,25 @@ c
       y=1.d0
       idx=fmkappaidx(ionidx)
       if (idx.gt.0) then
-       if (i.ne.j) then
-        tridx=nkaptridx(i,j,idx)
-        nspl=kupsbtn(tridx,idx)
-        do l=1,nspl
-         btx(l)=kupssplx(l,tridx,idx)
-         bty(l)=kupssply(l,kappaidx,tridx,idx)
-         bty2(l)=kupssply2(l,kappaidx,tridx,idx)
-        enddo
-        btc=kupsbtc(tridx,idx)
-        beta=(t/(t+btc))
-        y=fsplint(btx,bty,bty2,nspl,beta)
-        if (usekappainterp) then
-         do l=1,nspl
-          bty(l)=kupssply(l,kappaidx+1,tridx,idx)
-          bty2(l)=kupssply2(l,kappaidx+1,tridx,idx)
-         enddo
-         y=(kappaa*y)+(kappab*fsplint(btx,bty,bty2,nspl,beta))
+        if (i.ne.j) then
+          tridx=nkaptridx(i,j,idx)
+          nspl=kupsbtn(tridx,idx)
+          do l=1,nspl
+            btx(l)=kupssplx(l,tridx,idx)
+            bty(l)=kupssply(l,kappaidx,tridx,idx)
+            bty2(l)=kupssply2(l,kappaidx,tridx,idx)
+          enddo
+          btc=kupsbtc(tridx,idx)
+          beta=(t/(t+btc))
+          y=fsplint(btx,bty,bty2,nspl,beta)
+          if (usekappainterp) then
+            do l=1,nspl
+              bty(l)=kupssply(l,kappaidx+1,tridx,idx)
+              bty2(l)=kupssply2(l,kappaidx+1,tridx,idx)
+            enddo
+            y=(kappaa*y)+(kappab*fsplint(btx,bty,bty2,nspl,beta))
+          endif
         endif
-       endif
       endif
 c
       fkappacol=y
@@ -107,13 +107,13 @@ c Type 0: MAPPINGS III const or powerlaw at t4 data
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (omtype.eq.0) then
-       t4=localt*1.0d-4
-       td=tdepm(j,i,ionidx)
-       if (td.ne.0.d0) then
-        upsilon=omim(j,i,ionidx)*(t4**td)
-       else
-        upsilon=omim(j,i,ionidx)
-       endif
+        t4=localt*1.0d-4
+        td=tdepm(j,i,ionidx)
+        if (td.ne.0.d0) then
+          upsilon=omim(j,i,ionidx)*(t4**td)
+        else
+          upsilon=omim(j,i,ionidx)
+        endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -122,48 +122,48 @@ c Types 1, 3-5 linear, Types 2, 6-8 log10
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if ((omtype.ge.1).and.(omtype.le.8)) then
-       nspl=fmombtn(nt,ionidx)
-       do l=1,nspl
-        btx(l)=fmombsplx(l,nt,ionidx)
-        bty(l)=fmombsply(l,nt,ionidx)
-        bty2(l)=fmombsply2(l,nt,ionidx)
-       enddo
+        nspl=fmombtn(nt,ionidx)
+        do l=1,nspl
+          btx(l)=fmombsplx(l,nt,ionidx)
+          bty(l)=fmombsply(l,nt,ionidx)
+          bty2(l)=fmombsply2(l,nt,ionidx)
+        enddo
 c
 c  All scaling factors are converted to characteristic temperature
 c for CHIANTI and other splines, so can be treated uniformly
 c
-       btc=fmombtc(nt,ionidx)
-       beta=(localt/(localt+btc))
-       upsilon=fsplint(btx,bty,bty2,nspl,beta)
-       if ((omtype.eq.2).or.((omtype.ge.6).and.(omtype.le.8))) then
+        btc=fmombtc(nt,ionidx)
+        beta=(localt/(localt+btc))
+        upsilon=fsplint(btx,bty,bty2,nspl,beta)
+        if ((omtype.eq.2).or.((omtype.ge.6).and.(omtype.le.8))) then
 c
 c spline is actually fit to log(Ups), raise to get Ups..
 c
-        upsilon=dabs(10.d0**upsilon)
-       endif
+          upsilon=dabs(10.d0**upsilon)
+        endif
 c
       endif
 c
       if ((omtype.eq.13)) then
-       nspl=fmombtn(nt,ionidx)
-       do l=1,nspl
-        btx(l)=fmombsplx(l,nt,ionidx)
-        bty(l)=fmombsply(l,nt,ionidx)
-        bty2(l)=fmombsply2(l,nt,ionidx)
-       enddo
+        nspl=fmombtn(nt,ionidx)
+        do l=1,nspl
+          btx(l)=fmombsplx(l,nt,ionidx)
+          bty(l)=fmombsply(l,nt,ionidx)
+          bty2(l)=fmombsply2(l,nt,ionidx)
+        enddo
 c
 c All scaling factors are converted to characteristic temperature
 c for CHIANTI and other splines, so can be treated uniformly
 c
-       btc=fmombtc(nt,ionidx)
-       beta=(localt/(localt+btc))
-       invy=rkb*localt/fmeij(nt,ionidx)
+        btc=fmombtc(nt,ionidx)
+        beta=(localt/(localt+btc))
+        invy=rkb*localt/fmeij(nt,ionidx)
 c     beta = (dx/(dx + btc))   bt92 type 2 scaling, indirect TC
-       upsilon=fsplint(btx,bty,bty2,nspl,beta)
+        upsilon=fsplint(btx,bty,bty2,nspl,beta)
 c
 c spline is actually scaled
 c
-       upsilon=upsilon*dlog(invy+2.71828182845905d0)
+        upsilon=upsilon*dlog(invy+2.71828182845905d0)
 c
       endif
 c
@@ -172,7 +172,7 @@ c maxwell avaeraged upsilons. fkappacol returns 1.0 if no correction
 c is available.
 c
       if (usekappa) then
-       upsilon=upsilon*fkappacol(t,i,j,ionidx)
+        upsilon=upsilon*fkappacol(t,i,j,ionidx)
       endif
 c
       fupsilonij=dabs(upsilon)
@@ -233,16 +233,16 @@ c
       fmloss=0.0d0
       if (nfmions.lt.1) return
       if (t.le.mintemp) then
-       write (*,*) 'min Te in multilevel',t
-       stop
+        write (*,*) 'min Te in multilevel',t
+        stop
       endif
       if (dh.le.0.d0) then
-       write (*,*) 'LE 0.0 nH in multilevel',dh
-       stop
+        write (*,*) 'LE 0.0 nH in multilevel',dh
+        stop
       endif
       if (de.le.0.d0) then
-       write (*,*) 'LE 0.0 ne in multilevel',de
-       stop
+        write (*,*) 'LE 0.0 ne in multilevel',de
+        stop
       endif
 c
       f=dsqrt(1.0d0/t)
@@ -252,106 +252,106 @@ c
 c     only calculate abundant ions
 c
 c
-       atom=fmatom(ionindex)
-       ion=fmion(ionindex)
-       is=mapz(atom)-ion+1
-       nl=fmnl(ionindex)
-       nt=nfmtrans(ionindex)
-       do j=1,nt
-        fmbri(j,ionindex)=0.d0
-       enddo
-       do j=1,nl
-        x(j)=0.d0
-        fmx(j,ionindex)=0.d0
-       enddo
+        atom=fmatom(ionindex)
+        ion=fmion(ionindex)
+        is=mapz(atom)-ion+1
+        nl=fmnl(ionindex)
+        nt=nfmtrans(ionindex)
+        do j=1,nt
+          fmbri(j,ionindex)=0.d0
+        enddo
+        do j=1,nl
+          x(j)=0.d0
+          fmx(j,ionindex)=0.d0
+        enddo
 c
-       po=pop(ion,atom)
-       zi=zion(atom)
-       aion=zi*po*dh
+        po=pop(ion,atom)
+        zi=zion(atom)
+        aion=zi*po*dh
 c
-       if (po*zi.ge.pzlimit) then
+        if (po*zi.ge.pzlimit) then
 c
-        do jl=1,nl
+          do jl=1,nl
 c
 c   upper | lower level depending on symmetry
 c
-         w(jl)=wim(jl,ionindex)
+            w(jl)=wim(jl,ionindex)
 c
 c prepare transtion matrices, in particular fill in E, A, Omega(T)
 c
-         do ju=1,nl
+            do ju=1,nl
 c  upper | lower level depending on symmtry
-          e(ju,jl)=eim(ju,jl,ionindex)
-          a(ju,jl)=aim(ju,jl,ionindex)
+              e(ju,jl)=eim(ju,jl,ionindex)
+              a(ju,jl)=aim(ju,jl,ionindex)
 c note reverse ij:
-          om(ju,jl)=fupsilonij(t,jl,ju,ionindex)
-          ratekappa(ju,jl)=1.d0
-          if (usekappa) then
-           if (ju.ne.jl) then
-            tkappa(ju,jl)=tkexm(ju,jl,ionindex)/t
-           else
-            tkappa(ju,jl)=0.0d0
-           endif
-           ratekappa(ju,jl)=fkenhance(kappa,tkappa(ju,jl))
-          endif
-         enddo
-        enddo
+              om(ju,jl)=fupsilonij(t,jl,ju,ionindex)
+              ratekappa(ju,jl)=1.d0
+              if (usekappa) then
+                if (ju.ne.jl) then
+                  tkappa(ju,jl)=tkexm(ju,jl,ionindex)/t
+                else
+                  tkappa(ju,jl)=0.0d0
+                endif
+                ratekappa(ju,jl)=fkenhance(kappa,tkappa(ju,jl))
+              endif
+            enddo
+          enddo
 c
 c    ***SET UP COLL. EXCIT. AND DEEXCIT. MATRIX
 c
-        maxupper=1
-        do jl=1,nl
-         do ju=1,nl
-          rd(ju,jl)=0.0d0
-          if (ju.gt.jl) then
+          maxupper=1
+          do jl=1,nl
+            do ju=1,nl
+              rd(ju,jl)=0.0d0
+              if (ju.gt.jl) then
 c                 ju = upper, jl = lower
-           rd(ju,jl)=((rka*f)*om(ju,jl))/w(ju)
-           rd(ju,jl)=rd(ju,jl)*ratekappa(ju,jl)
-          endif
-          re(ju,jl)=0.0d0
-          aa=e(ju,jl)/(rkb*t)
-          if (ju.lt.jl) then
-           if (aa.lt.maxdekt) then
+                rd(ju,jl)=((rka*f)*om(ju,jl))/w(ju)
+                rd(ju,jl)=rd(ju,jl)*ratekappa(ju,jl)
+              endif
+              re(ju,jl)=0.0d0
+              aa=e(ju,jl)/(rkb*t)
+              if (ju.lt.jl) then
+                if (aa.lt.maxdekt) then
 c                 ju - lower, jl = upper
-            re(ju,jl)=(((rka*f)*om(ju,jl))*dexp(-aa))/w(ju)
-            re(ju,jl)=re(ju,jl)*ratekappa(ju,jl)
-            if (ju.eq.1) maxupper=max0(jl,maxupper)
-           endif
-          endif
-         enddo
-        enddo
+                  re(ju,jl)=(((rka*f)*om(ju,jl))*dexp(-aa))/w(ju)
+                  re(ju,jl)=re(ju,jl)*ratekappa(ju,jl)
+                  if (ju.eq.1) maxupper=max0(jl,maxupper)
+                endif
+              endif
+            enddo
+          enddo
 c
 c          write(*,*) maxupper, nl
 c          nl=maxupper
 c
 c    ***SET UP MATRIX ELEMENTS
 c
-        do 50 jl=1,nl
-         do 40 ju=1,nl
-          if (jl.eq.1) goto 10
-          if (jl.eq.ju) goto 20
-          alph(ju,jl)=(de*(rd(ju,jl)+re(ju,jl)))+a(ju,jl)
-          goto 40
-   10     alph(ju,jl)=1.0d0
-          goto 40
-   20     alph(ju,jl)=0.0d0
-          do 30 jll=1,nl
-           if (ju.eq.jll) goto 30
-           alph(ju,jl)=alph(ju,jl)-(de*(rd(ju,jll)+re(ju,jll))+a(ju,jll)
-     &      )
-   30     continue
-   40    continue
-   50   continue
-        do jl=1,nl
-         alph(nl+1,jl)=0.0d0
-        enddo
-        alph(nl+1,1)=1.0d0
+          do 50 jl=1,nl
+            do 40 ju=1,nl
+              if (jl.eq.1) goto 10
+              if (jl.eq.ju) goto 20
+              alph(ju,jl)=(de*(rd(ju,jl)+re(ju,jl)))+a(ju,jl)
+              goto 40
+   10         alph(ju,jl)=1.0d0
+              goto 40
+   20         alph(ju,jl)=0.0d0
+              do 30 jll=1,nl
+                if (ju.eq.jll) goto 30
+                alph(ju,jl)=alph(ju,jl)-(de*(rd(ju,jll)+re(ju,jll))+
+     &           a(ju,jll))
+   30         continue
+   40       continue
+   50     continue
+          do jl=1,nl
+            alph(nl+1,jl)=0.0d0
+          enddo
+          alph(nl+1,1)=1.0d0
 c
 c
 c    ***SOLVE FOR LEVEL POPULATIONS  X
 c
 c          call mdiagn (alph, x, nl)
-        call matsolvemulti (alph, x, nl)
+          call matsolvemulti (alph, x, nl)
 c
 c    ***CHECK ON NORMALISATION
 c
@@ -364,37 +364,37 @@ c         enddo
 c
 c  Save pops for resonance exictation
 c
-        do ju=1,nl
+          do ju=1,nl
 c          x(ju)=x(ju)/da
-         fmx(ju,ionindex)=x(ju)
-        enddo
+            fmx(ju,ionindex)=x(ju)
+          enddo
 c
 c    ***GET ION COOLING
 c
-        nl=fmnl(ionindex)
-        lineindex=0
-        do jl=1,nl-1
-         do ju=jl+1,nl
-          lineindex=lineindex+1
-          if (x(ju).gt.0.d0) then
-           bion=x(ju)*e(ju,jl)*aion*a(ju,jl)
-           fmbri(lineindex,ionindex)=bion*ifpi
-           coolz(atom)=coolz(atom)+bion
-           coolzion(ion,atom)=coolzion(ion,atom)+bion
+          nl=fmnl(ionindex)
+          lineindex=0
+          do jl=1,nl-1
+            do ju=jl+1,nl
+              lineindex=lineindex+1
+              if (x(ju).gt.0.d0) then
+                bion=x(ju)*e(ju,jl)*aion*a(ju,jl)
+                fmbri(lineindex,ionindex)=bion*ifpi
+                coolz(atom)=coolz(atom)+bion
+                coolzion(ion,atom)=coolzion(ion,atom)+bion
 c                 fmloss_contrib(ion,atom)=fmloss_contrib(ion,atom)+bion
-           fmloss=fmloss+bion
-           if ((mapz(atom).eq.8).and.(ion.eq.3)) then
-            if (lineindex.eq.8) then
-             oiii5007loss=fmbri(lineindex,ionindex)*fpi
-            endif
-           endif
-          endif
-         enddo
-        enddo
+                fmloss=fmloss+bion
+                if ((mapz(atom).eq.8).and.(ion.eq.3)) then
+                  if (lineindex.eq.8) then
+                    oiii5007loss=fmbri(lineindex,ionindex)*fpi
+                  endif
+                endif
+              endif
+            enddo
+          enddo
 c
 c     end abundant ion
 c
-       endif
+        endif
 c
 c     next ion.. ionindex
 c
@@ -403,7 +403,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c Print out important contributions to fmloss by species
 c Write out all contributions to stdout (lu=6)
 c write (*,*)  'FMLOSS CONTRIBUTIONS'
-c call wionabal2(6, fmloss_contrib)  ! table: col=atom, row=ion
+c      table: col=atom, row=ion
+c call wionabal2(6, fmloss_contrib)
 c Write out the most important contributions on their own line
 c do ionindex=1,nfmions
 c   atom=fmatom(ionindex)
@@ -461,13 +462,13 @@ c Type 0: MAPPINGS III const or powerlaw at t4 data
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (omtype.eq.0) then
-       t4=t*1.0d-4
-       td=tdepfe(j,i,ionidx)
-       if (td.ne.0.d0) then
-        upsilon=omife(j,i,ionidx)*(t4**td)
-       else
-        upsilon=omife(j,i,ionidx)
-       endif
+        t4=t*1.0d-4
+        td=tdepfe(j,i,ionidx)
+        if (td.ne.0.d0) then
+          upsilon=omife(j,i,ionidx)*(t4**td)
+        else
+          upsilon=omife(j,i,ionidx)
+        endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -476,48 +477,48 @@ c Types 1, 3-5 linear, Types 2, 6-8 log10
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if ((omtype.ge.1).and.(omtype.le.8)) then
-       nspl=feombtn(nt,ionidx)
-       do l=1,nspl
-        btx(l)=feombsplx(l,nt,ionidx)
-        bty(l)=feombsply(l,nt,ionidx)
-        bty2(l)=feombsply2(l,nt,ionidx)
-       enddo
+        nspl=feombtn(nt,ionidx)
+        do l=1,nspl
+          btx(l)=feombsplx(l,nt,ionidx)
+          bty(l)=feombsply(l,nt,ionidx)
+          bty2(l)=feombsply2(l,nt,ionidx)
+        enddo
 c
 c All scaling factors are converted to characteristic temperature
 c for CHIANTI and other splines, so can be treated uniformly
 c
-       btc=feombtc(nt,ionidx)
-       beta=(t/(t+btc))
+        btc=feombtc(nt,ionidx)
+        beta=(t/(t+btc))
 c     beta = (dx/(dx + btc))   bt92 type 2 scaling, indirect TC
-       upsilon=fsplint(btx,bty,bty2,nspl,beta)
-       if ((omtype.eq.2).or.((omtype.ge.6).and.(omtype.le.8))) then
+        upsilon=fsplint(btx,bty,bty2,nspl,beta)
+        if ((omtype.eq.2).or.((omtype.ge.6).and.(omtype.le.8))) then
 c
 c spline is actually fit to log(Ups), raise to get Ups..
 c
-        upsilon=dabs(10.d0**upsilon)
-       endif
+          upsilon=dabs(10.d0**upsilon)
+        endif
 c
       endif
       if ((omtype.eq.13)) then
-       nspl=feombtn(nt,ionidx)
-       do l=1,nspl
-        btx(l)=feombsplx(l,nt,ionidx)
-        bty(l)=feombsply(l,nt,ionidx)
-        bty2(l)=feombsply2(l,nt,ionidx)
-       enddo
+        nspl=feombtn(nt,ionidx)
+        do l=1,nspl
+          btx(l)=feombsplx(l,nt,ionidx)
+          bty(l)=feombsply(l,nt,ionidx)
+          bty2(l)=feombsply2(l,nt,ionidx)
+        enddo
 c
 c All scaling factors are converted to characteristic temperature
 c for CHIANTI and other splines, so can be treated uniformly
 c
-       btc=feombtc(nt,ionidx)
-       beta=(t/(t+btc))
-       invy=rkb*t/feeij(nt,ionidx)
+        btc=feombtc(nt,ionidx)
+        beta=(t/(t+btc))
+        invy=rkb*t/feeij(nt,ionidx)
 c     beta = (dx/(dx + btc))   bt92 type 2 scaling, indirect TC
-       upsilon=fsplint(btx,bty,bty2,nspl,beta)
+        upsilon=fsplint(btx,bty,bty2,nspl,beta)
 c
 c spline is actually scaled
 c
-       upsilon=upsilon*dlog(invy+2.71828182845905d0)
+        upsilon=upsilon*dlog(invy+2.71828182845905d0)
 c
       endif
 c
@@ -594,108 +595,108 @@ c
 c
 c     only calculate abundant ions
 c
-       atom=featom(ionindex)
-       ion=feion(ionindex)
-       nl=fenl(ionindex)
-       nt=nfetrans(ionindex)
-       do j=1,nt
-        febri(j,ionindex)=0.d0
-       enddo
-       do j=1,nl
-        x(j)=0.d0
-        fex(j,ionindex)=0.d0
-       enddo
+        atom=featom(ionindex)
+        ion=feion(ionindex)
+        nl=fenl(ionindex)
+        nt=nfetrans(ionindex)
+        do j=1,nt
+          febri(j,ionindex)=0.d0
+        enddo
+        do j=1,nl
+          x(j)=0.d0
+          fex(j,ionindex)=0.d0
+        enddo
 c
-       po=pop(ion,atom)
-       zi=zion(atom)
-       aion=zi*po*dh
+        po=pop(ion,atom)
+        zi=zion(atom)
+        aion=zi*po*dh
 c
-       if (po*zi.ge.pzlimit) then
+        if (po*zi.ge.pzlimit) then
 c
 c
-        do jl=1,nl
+          do jl=1,nl
 c
 c   upper | lower level depending on symmetry
 c
-         w(jl)=wife(jl,ionindex)
+            w(jl)=wife(jl,ionindex)
 c
 c prepare transition matrices, in particular fill in E, A, Omega(T)
 c
-         do ju=1,nl
+            do ju=1,nl
 c  upper | lower level depending on symmetry
-          e(ju,jl)=eife(ju,jl,ionindex)
-          a(ju,jl)=aife(ju,jl,ionindex)
+              e(ju,jl)=eife(ju,jl,ionindex)
+              a(ju,jl)=aife(ju,jl,ionindex)
 c
 c note reverse ij:
 c
-          om(ju,jl)=ffeupsilonij(t,jl,ju,ionindex)
+              om(ju,jl)=ffeupsilonij(t,jl,ju,ionindex)
 c
-          ratekappa(ju,jl)=1.d0
-          if (usekappa) then
-           if (ju.ne.jl) then
-            tkappa(ju,jl)=tkexfe(ju,jl,ionindex)/t
-           else
-            tkappa(ju,jl)=0.0d0
-           endif
-           ratekappa(ju,jl)=fkenhance(kappa,tkappa(ju,jl))
-          endif
-         enddo
-        enddo
+              ratekappa(ju,jl)=1.d0
+              if (usekappa) then
+                if (ju.ne.jl) then
+                  tkappa(ju,jl)=tkexfe(ju,jl,ionindex)/t
+                else
+                  tkappa(ju,jl)=0.0d0
+                endif
+                ratekappa(ju,jl)=fkenhance(kappa,tkappa(ju,jl))
+              endif
+            enddo
+          enddo
 c
 c    ***SET UP COLL. EXCIT. AND DEEXCIT. MATRIX
 c
-        maxupper=1
-        do jl=1,nl
-         do ju=1,nl
-          rd(ju,jl)=0.0d0
-          if (ju.gt.jl) then
+          maxupper=1
+          do jl=1,nl
+            do ju=1,nl
+              rd(ju,jl)=0.0d0
+              if (ju.gt.jl) then
 c                 ju = upper, jl = lower
-           rd(ju,jl)=((rka*f)*om(ju,jl))/w(ju)
-           rd(ju,jl)=rd(ju,jl)*ratekappa(ju,jl)
-          endif
-          re(ju,jl)=0.0d0
-          aa=e(ju,jl)/(rkb*t)
-          if (ju.lt.jl) then
-           if (aa.lt.maxdekt) then
+                rd(ju,jl)=((rka*f)*om(ju,jl))/w(ju)
+                rd(ju,jl)=rd(ju,jl)*ratekappa(ju,jl)
+              endif
+              re(ju,jl)=0.0d0
+              aa=e(ju,jl)/(rkb*t)
+              if (ju.lt.jl) then
+                if (aa.lt.maxdekt) then
 c                   ju - lower, jl = upper
-            re(ju,jl)=(((rka*f)*om(ju,jl))*dexp(-aa))/w(ju)
-            re(ju,jl)=re(ju,jl)*ratekappa(ju,jl)
-            if (ju.eq.1) maxupper=max0(jl,maxupper)
-           endif
-          endif
-         enddo
-        enddo
+                  re(ju,jl)=(((rka*f)*om(ju,jl))*dexp(-aa))/w(ju)
+                  re(ju,jl)=re(ju,jl)*ratekappa(ju,jl)
+                  if (ju.eq.1) maxupper=max0(jl,maxupper)
+                endif
+              endif
+            enddo
+          enddo
 c
 c only compute solution up to maxdekt above ground
 c
-        nl=maxupper
+          nl=maxupper
 c
 c    ***SET UP MATRIX ELEMENTS
 c
-        do 50 jl=1,nl
-         do 40 ju=1,nl
-          if (jl.eq.1) goto 10
-          if (jl.eq.ju) goto 20
-          alph(ju,jl)=(de*(rd(ju,jl)+re(ju,jl)))+a(ju,jl)
-          goto 40
-   10     alph(ju,jl)=1.0d0
-          goto 40
-   20     alph(ju,jl)=0.0d0
-          do 30 jll=1,nl
-           if (ju.eq.jll) goto 30
-           alph(ju,jl)=alph(ju,jl)-(de*(rd(ju,jll)+re(ju,jll))+a(ju,jll)
-     &      )
-   30     continue
-   40    continue
-   50   continue
-        do jl=1,nl
-         alph(nl+1,jl)=0.0d0
-        enddo
-        alph(nl+1,1)=1.0d0
+          do 50 jl=1,nl
+            do 40 ju=1,nl
+              if (jl.eq.1) goto 10
+              if (jl.eq.ju) goto 20
+              alph(ju,jl)=(de*(rd(ju,jl)+re(ju,jl)))+a(ju,jl)
+              goto 40
+   10         alph(ju,jl)=1.0d0
+              goto 40
+   20         alph(ju,jl)=0.0d0
+              do 30 jll=1,nl
+                if (ju.eq.jll) goto 30
+                alph(ju,jl)=alph(ju,jl)-(de*(rd(ju,jll)+re(ju,jll))+
+     &           a(ju,jll))
+   30         continue
+   40       continue
+   50     continue
+          do jl=1,nl
+            alph(nl+1,jl)=0.0d0
+          enddo
+          alph(nl+1,1)=1.0d0
 c
 c    ***SOLVE FOR LEVEL POPULATIONS  X
 c
-        call matsolvefe (alph, x, nl)
+          call matsolvefe (alph, x, nl)
 c
 c          call mdiagfe (alph, x, nl)
 c
@@ -708,29 +709,29 @@ c           if (x(ju).lt.0.0d0) x(ju)=0.0d0
 c           if (x(ju).gt.0.0d0) da=da+x(ju)
 c         enddo
 c          write(*,*) 'fe norm:',da
-        do ju=1,nl
+          do ju=1,nl
 c            x(ju)=x(ju)/da
-         fex(ju,ionindex)=x(ju)
-        enddo
+            fex(ju,ionindex)=x(ju)
+          enddo
 c
-        nl=fenl(ionindex)
-        lineindex=0
-        do jl=1,nl-1
-         do ju=jl+1,nl
-          lineindex=lineindex+1
-          if ((x(ju).gt.0.d0).and.(a(ju,jl).gt.0.d0)) then
-           bion=x(ju)*e(ju,jl)*aion*a(ju,jl)
-           febri(lineindex,ionindex)=bion*ifpi
-           coolz(atom)=coolz(atom)+bion
-           coolzion(ion,atom)=coolzion(ion,atom)+bion
-           feloss=feloss+bion
-          endif
-         enddo
-        enddo
+          nl=fenl(ionindex)
+          lineindex=0
+          do jl=1,nl-1
+            do ju=jl+1,nl
+              lineindex=lineindex+1
+              if ((x(ju).gt.0.d0).and.(a(ju,jl).gt.0.d0)) then
+                bion=x(ju)*e(ju,jl)*aion*a(ju,jl)
+                febri(lineindex,ionindex)=bion*ifpi
+                coolz(atom)=coolz(atom)+bion
+                coolzion(ion,atom)=coolzion(ion,atom)+bion
+                feloss=feloss+bion
+              endif
+            enddo
+          enddo
 c
 c     end abundant ion
 c
-       endif
+        endif
 c
 c     next ion.. ionindex
 c

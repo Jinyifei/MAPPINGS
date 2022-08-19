@@ -65,7 +65,7 @@ c
       lupb=22
 c
       do i=1,atypes
-       luions(i)=22+i
+        luions(i)=22+i
       enddo
 c
       call zer
@@ -126,25 +126,25 @@ c     variable density
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-       fmod='dens'
+        fmod='dens'
 c
-       write (*,10) ' Initial (H) density (low, <=0 as log):'
-       read (*,*) rlow
+        write (*,10) ' Initial (H) density (low, <=0 as log):'
+        read (*,*) rlow
 c
-       if (rlow.le.0.d0) rlow=10.d0**rlow
+        if (rlow.le.0.d0) rlow=10.d0**rlow
 c
-       write (*,10) ' Final (H) density (high, <=0 as log):'
-       read (*,*) rhigh
+        write (*,10) ' Final (H) density (high, <=0 as log):'
+        read (*,*) rhigh
 c
-       if (rhigh.le.0.d0) rhigh=10.d0**rhigh
+        if (rhigh.le.0.d0) rhigh=10.d0**rhigh
 c
 c
-       write (*,10) ' Density step factor (<=1 as log):'
-       read (*,*) rinc
+        write (*,10) ' Density step factor (<=1 as log):'
+        read (*,*) rinc
 c
-       if (rinc.gt.1.d0) rinc=dlog10(rinc)
+        if (rinc.gt.1.d0) rinc=dlog10(rinc)
 c
-       dh=10.d0**(dlog10(rlow)-rinc)
+        dh=10.d0**(dlog10(rlow)-rinc)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -156,34 +156,34 @@ c
 c
       if (ilgg.eq.'B') then
 c
-       fmod='rads'
+        fmod='rads'
 c
 c     variable radiation
 c
-       write (*,10) ' Hydrogen density (<=0 as log):'
-       read (*,*) dh
+        write (*,10) ' Hydrogen density (<=0 as log):'
+        read (*,*) dh
 c
-       if (dh.le.0.d0) dh=10.d0**dh
+        if (dh.le.0.d0) dh=10.d0**dh
 c
-       write (*,10) ' Initial ionisation parameter','(Q low, <=10 as log
-     &):'
-       read (*,*) qlow
-c
-       if (qlow.le.10.d0) qlow=10.d0**qlow
-c
-       write (*,10) ' Final Ionisation parameter',' (Q high, <=100 as lo
+        write (*,10) ' Initial ionisation parameter','(Q low, <=10 as lo
      &g):'
-       read (*,*) qhigh
+        read (*,*) qlow
 c
-       if (qhigh.le.100.d0) qhigh=10.d0**qhigh
+        if (qlow.le.10.d0) qlow=10.d0**qlow
+c
+        write (*,10) ' Final Ionisation parameter',' (Q high, <=100 as l
+     &og):'
+        read (*,*) qhigh
+c
+        if (qhigh.le.100.d0) qhigh=10.d0**qhigh
 c
 c
-       write (*,10) ' Ionisation parameter step factor (<=1 as log):'
-       read (*,*) qinc
+        write (*,10) ' Ionisation parameter step factor (<=1 as log):'
+        read (*,*) qinc
 c
-       if (qinc.gt.1.d0) qinc=dlog10(qinc)
+        if (qinc.gt.1.d0) qinc=dlog10(qinc)
 c
-       qlow=10.d0**(dlog10(qlow)-qinc)
+        qlow=10.d0**(dlog10(qlow)-qinc)
 c
 c     variable radiation
 c
@@ -226,16 +226,16 @@ c     adjust source to give desired Q
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-       sv=qlow*dh/q0
+        sv=qlow*dh/q0
 c
-       do i=1,infph
-        soupho(i)=soupho(i)*sv
-       enddo
+        do i=1,infph
+          soupho(i)=soupho(i)*sv
+        enddo
 c
-       q1=q1*sv
-       q2=q2*sv
-       q3=q3*sv
-       q0=q0*sv
+        q1=q1*sv
+        q2=q2*sv
+        q3=q3*sv
+        q0=q0*sv
 c
       endif
 c
@@ -269,26 +269,26 @@ c
       write (*,*) '  '
 c
       if (jsaveatoms.eq.'Y') then
-       do i=1,atypes
-        j=i
-        fn=' '
-        pfx='IonPIE'//elem(j)
-        np=lenv(pfx)
-        sfx='csv'
-        call newfile (pfx, np, sfx, 3, fn)
-        filn(i)=fn(1:(np+8))
-        open (luions(i),file=filn(i),status='NEW')
-        write (luions(i),'(" Photoionisation Equilibrium Curve : ")')
-        write (luions(i),'(" File       : ",a)') fl(1:13)
-        write (luions(i),'(" Run        : ",a)') runname(1:np)
-        write (luions(i),'(" Element    : ",a2)') elem(i)
-        write (luions(i),'(" Ionisation : ")')
+        do i=1,atypes
+          j=i
+          fn=' '
+          pfx='IonPIE'//elem(j)
+          np=lenv(pfx)
+          sfx='csv'
+          call newfile (pfx, np, sfx, 3, fn)
+          filn(i)=fn(1:(np+8))
+          open (luions(i),file=filn(i),status='NEW')
+          write (luions(i),'(" Photoionisation Equilibrium Curve : ")')
+          write (luions(i),'(" File       : ",a)') fl(1:13)
+          write (luions(i),'(" Run        : ",a)') runname(1:np)
+          write (luions(i),'(" Element    : ",a2)') elem(i)
+          write (luions(i),'(" Ionisation : ")')
    80     format(3x,', ',5(a11,a2),31(3x,a8,a2))
-        write (luions(i),80) '  LogTe   ',tab,'   LogQH  ',tab,'   LogQH
-     &I ',tab,'  LogQHeI ',tab,' LogQHeII ',tab,(rom(j),tab,j=1,
-     &   maxion(i))
-        close (luions(i))
-       enddo
+          write (luions(i),80) '  LogTe   ',tab,'   LogQH  ',tab,'   Log
+     &QHI ',tab,'  LogQHeI ',tab,' LogQHeII ',tab,(rom(j),tab,j=1,
+     &     maxion(i))
+          close (luions(i))
+        enddo
       endif
 c
       l=1
@@ -335,28 +335,28 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
   120 if (fmod.eq.'dens') then
-       dh=10.d0**(dlog10(dh)+rinc)
-       if (dh.gt.rhigh) goto 160
+        dh=10.d0**(dlog10(dh)+rinc)
+        if (dh.gt.rhigh) goto 160
       endif
 c
       if (fmod.eq.'rads') then
 c
-       qlow=10.d0**(dlog10(qlow)+qinc)
+        qlow=10.d0**(dlog10(qlow)+qinc)
 c
 c     adjust source to give desired Q
 c
-       sv=qlow*dh/q0
+        sv=qlow*dh/q0
 c
-       do i=1,infph
-        soupho(i)=soupho(i)*sv
-       enddo
+        do i=1,infph
+          soupho(i)=soupho(i)*sv
+        enddo
 c
-       q1=q1*sv
-       q2=q2*sv
-       q3=q3*sv
-       q0=q0*sv
+        q1=q1*sv
+        q2=q2*sv
+        q3=q3*sv
+        q0=q0*sv
 c
-       if (qlow.gt.(1.01d0*qhigh)) goto 160
+        if (qlow.gt.(1.01d0*qhigh)) goto 160
 c
       endif
 c
@@ -453,17 +453,17 @@ c
       b4=0.d0
       blum=0.d0
       do idx=1,infph-1
-       if (tphot(idx).gt.epsilon) then
-        widnu=widbinnu(idx)
-        pe=photev(idx)
-        binlum=tphot(idx)*fpi*widnu/dr
-        blum=blum+binlum
-        if ((pe.gt.0.0d0).and.(pe.le.100.0d0)) b0=b0+binlum
-        if ((pe.gt.100.0d0).and.(pe.le.500.0d0)) b1=b1+binlum
-        if ((pe.gt.500.0d0).and.(pe.le.1000.0d0)) b2=b2+binlum
-        if ((pe.gt.1000.0d0).and.(pe.le.2000.0d0)) b3=b3+binlum
-        if ((pe.gt.2000.0d0).and.(pe.le.10000.0d0)) b4=b4+binlum
-       endif
+        if (tphot(idx).gt.epsilon) then
+          widnu=widbinnu(idx)
+          pe=photev(idx)
+          binlum=tphot(idx)*fpi*widnu/dr
+          blum=blum+binlum
+          if ((pe.gt.0.0d0).and.(pe.le.100.0d0)) b0=b0+binlum
+          if ((pe.gt.100.0d0).and.(pe.le.500.0d0)) b1=b1+binlum
+          if ((pe.gt.500.0d0).and.(pe.le.1000.0d0)) b2=b2+binlum
+          if ((pe.gt.1000.0d0).and.(pe.le.2000.0d0)) b3=b3+binlum
+          if ((pe.gt.2000.0d0).and.(pe.le.10000.0d0)) b4=b4+binlum
+        endif
       enddo
 c
       b0=b0/tloss
@@ -485,11 +485,11 @@ c
      &b2,tab,b3,tab,b4,tab,blum,tab
 c
       press=(en+de)*rkb*t
-      ue=gammaeosu*press
+      ue=gammaEOSU*press
       tnloss=tloss*invn
 c
       rhotot=frho(de,dh)
-      cspd=dsqrt(gammaeos*press/rhotot)
+      cspd=dsqrt(gammaEOS*press/rhotot)
       wmol=(rhotot/(en+de))/amu
 c
       tauav=0.0d0
@@ -506,19 +506,19 @@ c
 c     ab=zion(i)
 c
       if (jsaveatoms.eq.'Y') then
-       do i=1,atypes
-        open (luions(i),file=filn(i),status='OLD',access='APPEND')
-        do j=1,maxion(i)
-         poplog(j,i)=log10pz
-         if (pop(j,i).gt.pzlimit) then
-          poplog(j,i)=dlog10(pop(j,i))
-         endif
-        enddo
+        do i=1,atypes
+          open (luions(i),file=filn(i),status='OLD',access='APPEND')
+          do j=1,maxion(i)
+            poplog(j,i)=log10pz
+            if (pop(j,i).gt.pzlimit) then
+              poplog(j,i)=dlog10(pop(j,i))
+            endif
+          enddo
   150 format(i3.3,a1,5(1pg12.5,a1),31(0pg12.5,a1))
-        write (luions(i),150) m,tab,tl,tab,qt,tab,qh1,tab,qhe1,tab,qhe2,
-     &   tab,(poplog(j,i),tab,j=1,maxion(i))
-        close (luions(i))
-       enddo
+          write (luions(i),150) m,tab,tl,tab,qt,tab,qh1,tab,qhe1,tab,
+     &     qhe2,tab,(poplog(j,i),tab,j=1,maxion(i))
+          close (luions(i))
+        enddo
       endif
 c
       m=m+1

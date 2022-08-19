@@ -53,11 +53,11 @@ c
       emin=iph
 c
       zshull=1.1d0
-      do 20 i=1,atypes
-       do 10 j=1,3
-        rasec(j,i)=0.0d0
-   10  continue
-   20 continue
+      do i=1,atypes
+        do j=1,3
+          rasec(j,i)=0.0d0
+        enddo
+      enddo
 c
       if ((anr(1,1,1).le.0.0d0).and.(wnr(1,1,1).le.0.0d0)) goto 70
       wth=0.0d0
@@ -65,15 +65,15 @@ c
       ath=0.0d0
       atx=0.0d0
 c
-      do 40 i=1,atypes
-       do 30 j=1,maxion(i)-1
-        abr=zion(i)*pop(j,i)
-        ath=ath+(abr*anr(1,j,i))
-        atx=atx+(abr*anr(2,j,i))
-        wth=wth+(abr*wnr(1,j,i))
-        wtx=wtx+(abr*wnr(2,j,i))
-   30  continue
-   40 continue
+      do i=1,atypes
+        do j=1,maxion(i)-1
+          abr=zion(i)*pop(j,i)
+          ath=ath+(abr*anr(1,j,i))
+          atx=atx+(abr*anr(2,j,i))
+          wth=wth+(abr*wnr(1,j,i))
+          wtx=wtx+(abr*wnr(2,j,i))
+        enddo
+      enddo
 c
       if (ath.le.0.0d0) goto 70
       eah=(ath/(wth+1.d-38))/ev
@@ -89,34 +89,34 @@ c
 c
 c
       do 50 k=1,25
-       atom=secat(k)
-       if (atom.le.0) goto 50
-       ion=secio(k)
-       poij=ipote(ion,atom)/ev
-       poef=dmax1(poij,emin)
-       eij=dexp(a2+(b2*dlog(poef)))+poef
-       aij=dexp(a1+(b1*dlog(poef)))
-       epsij=eij/poij
-       epsh=eij/eau1
-       valel=dble(secel(k))
-       wij=((aij*(valel*((eau1/poij)**2)))*sig(epsij))/sig(epsh)
-       secra(k)=wij
-       ztot=ztot+zion(atom)
-       abwe=zion(atom)*wij
-       ps=ps+(abwe*pop(ion,atom))
-       wei=wei+abwe
+        atom=secat(k)
+        if (atom.le.0) goto 50
+        ion=secio(k)
+        poij=ipote(ion,atom)/ev
+        poef=dmax1(poij,emin)
+        eij=dexp(a2+(b2*dlog(poef)))+poef
+        aij=dexp(a1+(b1*dlog(poef)))
+        epsij=eij/poij
+        epsh=eij/eau1
+        valel=dble(secel(k))
+        wij=((aij*(valel*((eau1/poij)**2)))*sig(epsij))/sig(epsh)
+        secra(k)=wij
+        ztot=ztot+zion(atom)
+        abwe=zion(atom)*wij
+        ps=ps+(abwe*pop(ion,atom))
+        wei=wei+abwe
    50 continue
 c
       fhiieff=dmax1(1.d-20,1.0d0-(ps/(wei+1.d-36)))
       frio=((zshull*beff(fhiieff))/ztot)/ev
 c
       do 60 k=1,25
-       atom=secat(k)
-       if (atom.le.0) goto 60
-       ion=secio(k)
-       rate=dmax1(frio*secra(k),0.d0)
-       if (rate.lt.1.d-28) rate=0.d0
-       rasec(ion,atom)=rate
+        atom=secat(k)
+        if (atom.le.0) goto 60
+        ion=secio(k)
+        rate=dmax1(frio*secra(k),0.d0)
+        if (rate.lt.1.d-28) rate=0.d0
+        rasec(ion,atom)=rate
    60 continue
 c
    70 return

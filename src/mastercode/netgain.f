@@ -72,21 +72,21 @@ c
 c    ***FINDS COOLING/HEATING DUE TO RECOMBINATION
 c
       do 40 i=1,atypes
-       do 30 j=1,maxion(i)-1
-        z=dble(j)
-        uz2=u/(z*z)
-        ab=zion(i)*pop(j+1,i)
-        if (ab.gt.pzlimit) then
-         if ((i.le.2).and.(jspot.eq.'Y')) then
-          rheat=(((de*dh*ab)*rcfb(uz2))*rec(j+maxion(i),i))
-         else
-          rheat=(((de*dh*ab)*rcfa(uz2))*rec(j+1,i))
-         endif
-         heatz(i)=heatz(i)-(en*rheat)
-         heatzion(j+1,i)=heatzion(j+1,i)-(en*rheat)
-         betr=betr+rheat
-        endif
-   30  continue
+        do 30 j=1,maxion(i)-1
+          z=dble(j)
+          uz2=u/(z*z)
+          ab=zion(i)*pop(j+1,i)
+          if (ab.gt.pzlimit) then
+            if ((i.le.2).and.(jspot.eq.'Y')) then
+              rheat=(((de*dh*ab)*rcfb(uz2))*rec(j+maxion(i),i))
+            else
+              rheat=(((de*dh*ab)*rcfa(uz2))*rec(j+1,i))
+            endif
+            heatz(i)=heatz(i)-(en*rheat)
+            heatzion(j+1,i)=heatzion(j+1,i)-(en*rheat)
+            betr=betr+rheat
+          endif
+   30   continue
    40 continue
 c
       rngain=(-(en*betr))+rg
