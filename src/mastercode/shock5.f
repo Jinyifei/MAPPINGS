@@ -82,7 +82,7 @@ c
 c
       endif
 c
-      call closes5files ()
+      call closeS5files ()
 c
       write (*,30)
 c
@@ -144,8 +144,8 @@ c
 c
       mtype='A'
       magparam=0.d0
-      pmag=0.0d0
-      bmag=0.d0
+      Pmag=0.0d0
+      Bmag=0.d0
 c
       vmod='NONE'
       s5pfx='v100sh'
@@ -251,10 +251,10 @@ c       Preshock magnetic field at shockfront in uG
      & ' (microgauss): ', $ )
         write (*,80)
         read (*,*) magparam
-        bmag=dabs(magparam)
-        magparam=bmag
-        bmag=bmag*1e-6
-        pmag=(bmag*bmag)/epi
+        Bmag=dabs(magparam)
+        magparam=Bmag
+        Bmag=Bmag*1e-6
+        Pmag=(Bmag*Bmag)/epi
       endif
 c
       if (mtype.eq.'A') then
@@ -268,9 +268,9 @@ c     Alpha = 0.1 is weak magnetic field. Alpha = 0.0 is no magnetic
         read (*,*) magparam
         malpha=magparam
         if (magparam.lt.0.0d0) then
-          bmag=-magparam
-          bmag=bmag*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=-magparam
+          Bmag=Bmag*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -286,9 +286,9 @@ c
         read (*,*) magparam
         malpha=magparam
         if (magparam.lt.0.0d0) then
-          bmag=-magparam
-          bmag=bmag*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=-magparam
+          Bmag=Bmag*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -306,9 +306,9 @@ c       Preshock magnetic field expressed as magnetic Alfven Mach number
         read (*,*) magparam
         mmach=magparam
         if (magparam.lt.0.0d0) then
-          bmag=-magparam
-          bmag=bmag*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=-magparam
+          Bmag=Bmag*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -328,8 +328,8 @@ c       Pram = rho*vs*vs; Pmag = (B^2)/8pi
         read (*,*) magparam
         mageta=magparam
         if (magparam.lt.0.0d0) then
-          bmag=dabs(magparam)*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=dabs(magparam)*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -366,36 +366,36 @@ c
         if (t.le.10.d0) t=10.d0**t
         if (dh.le.0.d0) dh=10.d0**dh
 c
-        pgas=fpresse(t,de,dh)
+        Pgas=fpresse(t,de,dh)
         de=feldens(dh,pop_neu)
         rh_neu=frho(de,dh)
-        pram=rh_neu*ve*ve
+        Pram=rh_neu*ve*ve
 c
         if (mtype.eq.'B') then
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
         if (mtype.eq.'A') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'C') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'M') then
           va=ve/mmach
-          pmag=(0.5*rh_neu*va*va)
-          bmag=dsqrt(epi*pmag)
+          Pmag=(0.5*rh_neu*va*va)
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'R') then
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         vshoc=ve
 c
-        bm_neu=bmag
+        bm_neu=Bmag
         te_neu=t
         de_neu=de
         dh_neu=dh
@@ -408,7 +408,7 @@ c
         dt=0.d0
         tloss=0.d0
 c
-        call shockcmpf (t, de, dh, ve, bmag)
+        call shockcmpf (t, de, dh, ve, Bmag)
 c
         tm00=te0
 c
@@ -448,44 +448,44 @@ c       Partially set up proto-state
         te_neu=tpr
         dh_neu=dh
         de_neu=feldens(dh_neu,pop_neu)
-        pgas=fpresse(te_neu,de_neu,dh_neu)
+        Pgas=fpresse(te_neu,de_neu,dh_neu)
         rh_neu=frho(de_neu,dh_neu)
 c
         if (mtype.eq.'B') then
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
         if (mtype.eq.'A') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'C') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         vapprox=velshock2(dh_neu,tpr,0.d0,tpo)
         rh_neu=frho(de_neu,dh_neu)
-        pram=rh_neu*vapprox*vapprox
+        Pram=rh_neu*vapprox*vapprox
         if (mtype.eq.'R') then
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
 c       We need to iterate for a consistent solution.  We have the
 c       density and T jump; solve for shock speed and magnetic field.
 c
-  160   bm0=bmag
+  160   bm0=Bmag
 c
-        vshoc=velshock2(dh_neu,tpr,bmag,tpo)
+        vshoc=velshock2(dh_neu,tpr,Bmag,tpo)
         ve=vshoc
-        pram=rh_neu*ve*ve
+        Pram=rh_neu*ve*ve
 c
         if (mtype.eq.'M') then
           va=vshoc/mmach
-          pmag=(0.5*rh_neu*va*va)
-          bmag=dsqrt(epi*pmag)
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          Pmag=(0.5*rh_neu*va*va)
+          Bmag=dsqrt(epi*Pmag)
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
           if (eps.gt.1.0d-6) goto 160
         endif
 c
@@ -493,10 +493,10 @@ c
 c
 c iterate for rampressure/alpha_r
 c
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
 c           write(*,*) vshoc,Pram,Pmag,bm0,Bmag,te1
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
 c         write (*,*) eps,Bmag,bm0
           if (eps.gt.1.0d-6) goto 160
         endif
@@ -504,10 +504,10 @@ c
         dt=0.d0
         tloss=0.d0
 c
-        call shockcmpf (te_neu, de_neu, dh_neu, ve, bmag)
+        call shockcmpf (te_neu, de_neu, dh_neu, ve, Bmag)
 c
         tm00=te0
-        bm_neu=bmag
+        bm_neu=Bmag
         vs_neu=vshoc
         pr_neu=fpresse(te_neu,de_neu,dh_neu)
         rh_neu=frho(de_neu,dh_neu)
@@ -552,15 +552,15 @@ c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
 c
-      pmag=bp0
-      pgas=pr0
-      pram=rho0*vel0*vel0
+      Pmag=bp0
+      Pgas=pr0
+      Pram=rho0*vel0*vel0
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rho0)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       call shocksummary (6)
 c
@@ -1090,7 +1090,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Create User and open main model files
 c
-      call creates5files ()
+      call createS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1119,7 +1119,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Write Headers, open files to write
 c
-      call appends5files ()
+      call appendS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       de=feldens(dh,pop)
@@ -1528,15 +1528,15 @@ c
 c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
-      pgas=pr0
-      pmag=bp0
-      pram=rh_pre*vs_pre*vs_pre
+      Pgas=pr0
+      Pmag=bp0
+      Pram=rh_pre*vs_pre*vs_pre
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.d0*pmag/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.d0*Pmag/rho0)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
    10   format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
@@ -1581,23 +1581,23 @@ c
       wmol=rho0/(en+de0)
       mu=fmua(de0,dh0)
 c
-      pgas=pr0
-      pmag=(bm0*bm0)/epi
-      pram=rho0*vel0*vel0
+      Pgas=pr0
+      Pmag=(bm0*bm0)/epi
+      Pram=rho0*vel0*vel0
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rho0)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,
      &gaseta,mageta,te0,de0,dh0,rho0,pr0,mu,pop(1,zmap(1)),pop(2,zmap(1)
-     &),pop(1,zmap(2)),pop(2,zmap(2)),pop(3,zmap(2)),bm0*1.d6,bp0,pram
+     &),pop(1,zmap(2)),pop(2,zmap(2)),pop(3,zmap(2)),bm0*1.d6,bp0,Pram
 c
-      pram=rho1*vel1*vel1
+      Pram=rho1*vel1*vel1
       write (lunit,20) cmpf,te1,de1,dh1,vel1*1d-5,rho1,pr1,bm1*1.d6,bp1,
-     &pram
+     &Pram
 c
       return
       end
@@ -1619,7 +1619,7 @@ c
       call copypop (pop_pre, pop)
       rh_pre=frho(de_pre,dh_pre)
 c
-      pram=rh_pre*vs_pre*vs_pre
+      Pram=rh_pre*vs_pre*vs_pre
 c
       if (stype.eq.'V') then
 c
@@ -1627,41 +1627,41 @@ c
 c
         if (mtype.eq.'B') then
 c         Specified B field in uG.  Won't change between iterations.
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
 c
         if (mtype.eq.'A') then
 c         Specified protostate malpha. B won't change between iterations
-          pram=rh_neu*vs_pre*vs_pre
-          pgas=fpresse(te_neu,de_neu,dh_neu)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pram=rh_neu*vs_pre*vs_pre
+          Pgas=fpresse(te_neu,de_neu,dh_neu)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'C') then
 c         Specified shockfront malpha.  B will change between iterations
 c         as the gas pressure at the back of the precursor changes.
-          pgas=fpresse(te_pre,de_pre,dh_pre)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pgas=fpresse(te_pre,de_pre,dh_pre)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'M') then
 c         Specified Alfven Mach number
           va=vs_pre/mmach
-          pmag=(0.5*rh_pre*va*va)
-          bmag=dsqrt(epi*pmag)
+          Pmag=(0.5*rh_pre*va*va)
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'R') then
 c         Specified magnetic eta = 2Pmag/Pram.  Bmag shouldn't change
 c         between iterations since Pram doesn't change.
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
-        bm_pre=bmag
+        bm_pre=Bmag
 c
 c       Now call post-shock state always P_pre, alpha may change for A
 c
@@ -1674,7 +1674,7 @@ c
 c jump is the new exact quadratric with no dx time or losses
 c pre and post 0,1 globals are set in routine
 c
-        call shockcmpf (tj, dej, dhj, vshoc, bmag)
+        call shockcmpf (tj, dej, dhj, vshoc, Bmag)
 c
         tm00=te0
 c
@@ -1692,42 +1692,42 @@ c
 c
         if (mtype.eq.'B') then
 c         Specified B field in uG.  Won't change between iterations.
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
 c
         if (mtype.eq.'A') then
 c         Specified malpha in protostate
-          pgas=fpresse(te_neu,de_neu,dh_neu)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pgas=fpresse(te_neu,de_neu,dh_neu)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'C') then
 c         Specified shockfront malpha.  B will change between iterations
 c         as the gas pressure at the back of the precursor changes.
-          pram=rh_neu*vs_pre*vs_pre
-          pgas=fpresse(te_pre,de_pre,dh_pre)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pram=rh_neu*vs_pre*vs_pre
+          Pgas=fpresse(te_pre,de_pre,dh_pre)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'M') then
           va=vs_pre/mmach
-          pmag=(0.5*rh_pre*va*va)
-          bmag=dsqrt(epi*pmag)
+          Pmag=(0.5*rh_pre*va*va)
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'R') then
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
-        bm_pre=bmag
+        bm_pre=Bmag
 c
 c       Now call velshock2 to find the shock speed
 c
-        pgas=fpresse(te_pre,de_pre,dh_pre)
+        Pgas=fpresse(te_pre,de_pre,dh_pre)
         vshoc=vs_pre
         t=te_pre
         tpo=te_pst
@@ -1736,32 +1736,32 @@ c
         tloss=0.0d0
         dt=0.0d0
 c
-   10   bm0=bmag
+   10   bm0=Bmag
 c
 c       Call function velshock2 to find the new shock speed
 c       N.B. velshock2 calls subroutine rankhug
-        vshoc=velshock2(dh,t,bmag,tpo)
+        vshoc=velshock2(dh,t,Bmag,tpo)
 c
-        pram=rh_neu*vshoc*vshoc
+        Pram=rh_neu*vshoc*vshoc
 c
         if (mtype.eq.'M') then
           va=vshoc/mmach
-          pmag=(0.5*rh_pre*va*va)
-          bmag=dsqrt(epi*pmag)
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          Pmag=(0.5*rh_pre*va*va)
+          Bmag=dsqrt(epi*Pmag)
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
           if (eps.gt.1.0d-6) goto 10
         endif
 c
         if (mtype.eq.'R') then
 c iterate for rampressure/alpha_r
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
           if (eps.gt.1.0d-6) goto 10
         endif
 c
         vs_neu=vel0
-        bm_neu=bmag
+        bm_neu=Bmag
         tm00=te0
       endif
 c
@@ -1786,14 +1786,14 @@ c
 c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
-      pmag=bp0
-      pgas=pr0
-      pram=rho0*vel0*vel0
+      Pmag=bp0
+      Pgas=pr0
+      Pram=rho0*vel0*vel0
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       return
       end
@@ -1928,7 +1928,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Open files, main and precursor
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appends5files ()
+      call appendS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1958,7 +1958,7 @@ c
       t=te_neu
       de=de_neu
       dh=dh_neu
-      bmag=bm_neu
+      Bmag=bm_neu
       call copypop (pop_neu, pop)
 c
       rad=dist(step)
@@ -2236,8 +2236,8 @@ c
      &   tab,'XOI',tab,'XOII',tab,'XOIII'
       do i=nfs,1,-1
         call copysteppop (i, popintfr, p1)
-        write (*,70) i,tab,x(i),tab,dr,
-     &    tab,x(i)/vshoc,tab,dr/vshoc,
+        write (*,70) i,tab,x(i),tab,predr(i),
+     &    tab,x(i)/vshoc,tab,predr(i)/vshoc,
      &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
      &    tab,fh(i),tab,fra(i),
      &    tab,foi(i),tab,foii(i),tab,foiii(i)
@@ -2252,8 +2252,8 @@ c
      &   tab,'XOI',tab,'XOII',tab,'XOIII'
         i=1
         call copysteppop (i, popintfr, p1)
-        write (*,70) i,tab,x(i),tab,dr,
-     &    tab,x(i)/vshoc,tab,dr/vshoc,
+        write (*,70) i,tab,x(i),tab,predr(i),
+     &    tab,x(i)/vshoc,tab,predr(i)/vshoc,
      &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
      &    tab,fh(i),tab,fra(i),
      &    tab,foi(i),tab,foii(i),tab,foiii(i)
@@ -2480,7 +2480,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Close precursor files
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      call closes5files ()
+      call closeS5files ()
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
@@ -2552,8 +2552,8 @@ c save state for step integral, uses pop, pop0 and pop1 in cblocks
 c
 c structural markers
 c
-      real*8 timmark(7),dismark(7),bmmark(7)
-      real*8 prmark(7),rhmark(7),dhmark(7),demark(7)
+      real*8 timMark(7),disMark(7),bmMark(7)
+      real*8 prMark(7),rhMark(7),dhMark(7),deMark(7)
       real*8 templim,ft,cft
       integer*4 tempidx
 c
@@ -2574,13 +2574,13 @@ c
       tab=','
 c
       do idx=1,7
-        timmark(idx)=0.0d0
-        dismark(idx)=0.0d0
-        bmmark(idx)=0.0d0
-        prmark(idx)=0.0d0
-        rhmark(idx)=0.0d0
-        dhmark(idx)=0.0d0
-        demark(idx)=0.0d0
+        timMark(idx)=0.0d0
+        disMark(idx)=0.0d0
+        bmMark(idx)=0.0d0
+        prMark(idx)=0.0d0
+        rhMark(idx)=0.0d0
+        dhMark(idx)=0.0d0
+        deMark(idx)=0.0d0
       enddo
 c
       rdvol=1.0d0
@@ -2593,7 +2593,7 @@ c open all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appends5files
+      call appendS5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2644,7 +2644,7 @@ c
       dr=0.d0
       ve=vel0
       vpo=vel1
-      bmag=bm0
+      Bmag=bm0
       bm0=bm0
       dv=ve*0.01d0
       fi=1.d0
@@ -2681,7 +2681,7 @@ c
       de=de_neu
       dh=dh_neu
       en=zen*dh
-      bmag=bm_neu
+      Bmag=bm_neu
 c
       netloss=flocallosses(t,de,dh,pop_neu,1.d38,0.d0,0.d0,wdil)
 c
@@ -2713,7 +2713,7 @@ c
       de=de_pre
       dh=dh_pre
       en=zen*dh
-      bmag=bm_pre
+      Bmag=bm_pre
 c
       netloss=flocallosses(t,de,dh,pop_pre,1.d38,0.d0,0.d0,wdil)
 c
@@ -2756,12 +2756,12 @@ c     rmod='NEAR'
 c      call isochorflow (t, de, dh, ve, Bmag, rmod, netloss, dt)
 c      call isobarflow (t, de, dh, ve, Bmag, rmod, netloss, dt)
 c      call rankhug (t, de, dh, ve, Bmag, 0.d0, 0.d0)
-      call shockcmpf (t, de, dh, ve, bmag)
+      call shockcmpf (t, de, dh, ve, Bmag)
 c
       t=te1
       de=de1
       dh=dh1
-      bmag=bm1
+      Bmag=bm1
 c
       call copypop (pop_pre, pop)
       call copypop (pop_pre, pop0)
@@ -2884,7 +2884,7 @@ c
       dh0=dh1
       de0=de1
       bm0=bm1
-      bmag=bm0
+      Bmag=bm0
       dist(1)=0.d0
       timlps(1)=0.d0
 c
@@ -3272,7 +3272,8 @@ c
 c
 c     get mean ionisation state for step
 c
-      rdis=dist(step)+dr*0.5d0!middleofstep,dist(step)isnowend
+c     middleofstep,dist(step)isnowend
+      rdis=dist(step)+dr*0.5d0
 c      cmpf=rho1/rho0
       fi=1.0d0
 c
@@ -3332,7 +3333,7 @@ c
       dh0=dh1
       de0=de1
       bm0=bm1
-      bmag=bm0
+      Bmag=bm0
       count=0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3422,7 +3423,7 @@ c     Close all files and flush
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call closes5files ()
+      call closeS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3435,7 +3436,7 @@ c     Reopen all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appends5files
+      call appendS5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3535,12 +3536,12 @@ c
         do idx=7,1,-1
           if (timmark(idx).gt.0.d0) then
             templim=10.0d0**dble(idx)
-            write (luop,210) idx,templim,idx,timmark(idx),idx,
-     &       dismark(idx),idx,bmmark(idx),idx,prmark(idx),idx,
-     &       rhmark(idx),idx,dhmark(idx),idx,demark(idx)
-            write (*,210) idx,templim,idx,timmark(idx),idx,dismark(idx),
-     &       idx,bmmark(idx),idx,prmark(idx),idx,rhmark(idx),idx,
-     &       dhmark(idx),idx,demark(idx)
+            write (luop,210) idx,templim,idx,timMark(idx),idx,
+     &       disMark(idx),idx,bmMark(idx),idx,prMark(idx),idx,
+     &       rhMark(idx),idx,dhMark(idx),idx,deMark(idx)
+            write (*,210) idx,templim,idx,timMark(idx),idx,disMark(idx),
+     &       idx,bmMark(idx),idx,prMark(idx),idx,rhMark(idx),idx,
+     &       dhMark(idx),idx,deMark(idx)
           endif
         enddo
 c
@@ -3556,7 +3557,7 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call closes5files ()
+      call closeS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3652,20 +3653,20 @@ c
       wmol=rh_neu/(en+de_neu)
       mu=fmua(de_neu,dh_neu)
 c
-      pram=rh_neu*vel0*vel0
-      pgas=pr_neu
-      pmag=(bm_neu*bm_neu)/epi
+      Pram=rh_neu*vel0*vel0
+      Pgas=pr_neu
+      Pmag=(bm_neu*bm_neu)/epi
 c
       machnumber=vel0/dsqrt(gammaEOS*pr_neu/rh_neu)
-      alfvennumber=vel0/dsqrt(2.0d0*pmag/rh_neu)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rh_neu)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,
      &gaseta,mageta,te_neu,de_neu,dh_neu,rh_neu,pr_neu,mu,pop_neu(1,
      &zmap(1)),pop_neu(2,zmap(1)),pop_neu(1,zmap(2)),pop_neu(2,zmap(2)),
-     &pop_neu(3,zmap(2)),bm_neu*1.d6,pmag,pram
+     &pop_neu(3,zmap(2)),bm_neu*1.d6,Pmag,Pram
 c
       return
       end
@@ -3893,7 +3894,7 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine creates5files ()
+      subroutine createS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4079,7 +4080,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine appends5files ()
+      subroutine appendS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

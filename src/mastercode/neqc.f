@@ -203,7 +203,7 @@ c
       endif
       bmag=bmag*1.d-6
 c
-      ve=dsqrt(gammaEOS*pgas/rho0)*machnumber
+      ve=dsqrt(gammaEOS*Pgas/rho0)*machnumber
 c
 c set compsh5 gobals
 c
@@ -213,7 +213,7 @@ c
       vs_neu=ve
       pr_neu=fpresse(t,de,dh)
       rh_neu=frho(de,dh)
-      bm_neu=bmag
+      bm_neu=Bmag
 c
       te_pre=t
       de_pre=de
@@ -221,9 +221,9 @@ c
       vs_pre=ve
       pr_pre=pr_neu
       rh_pre=rh_neu
-      bm_pre=bmag
+      bm_pre=Bmag
 c
-      call shockcmpf (t, de, dh, ve, bmag)
+      call shockcmpf (t, de, dh, ve, Bmag)
       call shocksummary (6)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -102,151 +102,151 @@ c
         skipbin(i)=.true.
       enddo
 c
-      nmetalqs=21
+      nMetalQs=21
 c     HI
-      ionelem(1)=zmap(1)
+      ionElem(1)=zmap(1)
 c     HeI
-      ionelem(2)=zmap(2)
+      ionElem(2)=zmap(2)
 c     HeII
-      ionelem(3)=zmap(2)
+      ionElem(3)=zmap(2)
 c     CII
-      ionelem(4)=zmap(6)
+      ionElem(4)=zmap(6)
 c     CIII
-      ionelem(5)=zmap(6)
+      ionElem(5)=zmap(6)
 c     CIV
-      ionelem(6)=zmap(6)
+      ionElem(6)=zmap(6)
 c     NII
-      ionelem(7)=zmap(7)
+      ionElem(7)=zmap(7)
 c     NIII
-      ionelem(8)=zmap(7)
+      ionElem(8)=zmap(7)
 c     NIV
-      ionelem(9)=zmap(7)
+      ionElem(9)=zmap(7)
 c     OII
-      ionelem(10)=zmap(8)
+      ionElem(10)=zmap(8)
 c     OIII
-      ionelem(11)=zmap(8)
+      ionElem(11)=zmap(8)
 c     OIV
-      ionelem(12)=zmap(8)
+      ionElem(12)=zmap(8)
 c     NeII
-      ionelem(13)=zmap(10)
+      ionElem(13)=zmap(10)
 c     NeIII
-      ionelem(14)=zmap(10)
+      ionElem(14)=zmap(10)
 c     NeIV
-      ionelem(15)=zmap(10)
+      ionElem(15)=zmap(10)
 c     SII
-      ionelem(16)=zmap(16)
+      ionElem(16)=zmap(16)
 c     SIII
-      ionelem(17)=zmap(16)
+      ionElem(17)=zmap(16)
 c     SIV
-      ionelem(18)=zmap(16)
+      ionElem(18)=zmap(16)
 c     FeII
-      ionelem(19)=zmap(26)
+      ionElem(19)=zmap(26)
 c     FeIII
-      ionelem(20)=zmap(26)
+      ionElem(20)=zmap(26)
 c     FeIV
-      ionelem(21)=zmap(26)
+      ionElem(21)=zmap(26)
 c
 c     HI
-      ionion(1)=1
+      ionIon(1)=1
 c     HeI
-      ionion(2)=1
+      ionIon(2)=1
 c     HeII
-      ionion(3)=2
+      ionIon(3)=2
 c     CII
-      ionion(4)=2
+      ionIon(4)=2
 c     CIII
-      ionion(5)=3
+      ionIon(5)=3
 c     CIV
-      ionion(6)=4
+      ionIon(6)=4
 c     NII
-      ionion(7)=2
+      ionIon(7)=2
 c     NIII
-      ionion(8)=3
+      ionIon(8)=3
 c     NIV
-      ionion(9)=4
+      ionIon(9)=4
 c     OII
-      ionion(10)=2
+      ionIon(10)=2
 c     OIII
-      ionion(11)=3
+      ionIon(11)=3
 c     OIV
-      ionion(12)=4
+      ionIon(12)=4
 c     NeII
-      ionion(13)=2
+      ionIon(13)=2
 c     NeIII
-      ionion(14)=3
+      ionIon(14)=3
 c     NeIV
-      ionion(15)=4
+      ionIon(15)=4
 c     SII
-      ionion(16)=2
+      ionIon(16)=2
 c     SIII
-      ionion(17)=3
+      ionIon(17)=3
 c     SIV
-      ionion(18)=4
+      ionIon(18)=4
 c     FeII
-      ionion(19)=2
+      ionIon(19)=2
 c     FeIII
-      ionion(20)=3
+      ionIon(20)=3
 c     FeIV
-      ionion(21)=4
+      ionIon(21)=4
 c
 c      eV ionisation limits ion,elem
 c
 c     HI
-      ionlimits(1)=ipotev(1,ionelem(1))
+      ionLimits(1)=ipotev(1,ionElem(1))
 c     HeI
-      ionlimits(2)=ipotev(1,ionelem(2))
+      ionLimits(2)=ipotev(1,ionElem(2))
 c     HeII
-      ionlimits(3)=ipotev(2,ionelem(3))
+      ionLimits(3)=ipotev(2,ionElem(3))
 c     CII
-      ionlimits(4)=ipotev(2,ionelem(4))
+      ionLimits(4)=ipotev(2,ionElem(4))
 c     CIII
-      ionlimits(5)=ipotev(3,ionelem(5))
+      ionLimits(5)=ipotev(3,ionElem(5))
 c     CIV
-      ionlimits(6)=ipotev(4,ionelem(6))
+      ionLimits(6)=ipotev(4,ionElem(6))
 c     NII
-      ionlimits(7)=ipotev(2,ionelem(7))
+      ionLimits(7)=ipotev(2,ionElem(7))
 c     NIII
-      ionlimits(8)=ipotev(3,ionelem(8))
+      ionLimits(8)=ipotev(3,ionElem(8))
 c     NIV
-      ionlimits(9)=ipotev(4,ionelem(9))
+      ionLimits(9)=ipotev(4,ionElem(9))
 c     OII
-      ionlimits(10)=ipotev(2,ionelem(10))
+      ionLimits(10)=ipotev(2,ionElem(10))
 c     OIII
-      ionlimits(11)=ipotev(3,ionelem(11))
+      ionLimits(11)=ipotev(3,ionElem(11))
 c     OIV
-      ionlimits(12)=ipotev(4,ionelem(12))
+      ionLimits(12)=ipotev(4,ionElem(12))
 c     NeII
-      ionlimits(13)=ipotev(2,ionelem(13))
+      ionLimits(13)=ipotev(2,ionElem(13))
 c     NeIII
-      ionlimits(14)=ipotev(3,ionelem(14))
+      ionLimits(14)=ipotev(3,ionElem(14))
 c     NeIV
-      ionlimits(15)=ipotev(4,ionelem(15))
+      ionLimits(15)=ipotev(4,ionElem(15))
 c     SII
-      ionlimits(16)=ipotev(2,ionelem(16))
+      ionLimits(16)=ipotev(2,ionElem(16))
 c     SIII
-      ionlimits(17)=ipotev(3,ionelem(17))
+      ionLimits(17)=ipotev(3,ionElem(17))
 c     SIV
-      ionlimits(18)=ipotev(4,ionelem(18))
+      ionLimits(18)=ipotev(4,ionElem(18))
 c     FeII
-      ionlimits(19)=ipotev(2,ionelem(19))
+      ionLimits(19)=ipotev(2,ionElem(19))
 c     FeIII
-      ionlimits(20)=ipotev(3,ionelem(20))
+      ionLimits(20)=ipotev(3,ionElem(20))
 c     FeIV
-      ionlimits(21)=ipotev(4,ionelem(21))
+      ionLimits(21)=ipotev(4,ionElem(21))
 c
-      do i=1,nmetalqs
-        ionqs(i)=0.0d0
-        ionis(i)=0.0d0
+      do i=1,nMetalQs
+        ionQs(i)=0.0d0
+        ionIs(i)=0.0d0
       enddo
-      nxqs=5
-      xraylimits(1)=100.d0
-      xraylimits(2)=1000.d0
-      xraylimits(3)=2000.d0
-      xraylimits(4)=5000.d0
-      xraylimits(5)=10000.d0
-      do i=1,nxqs
-        xrayqs(i)=0.0d0
-        xrayis(i)=0.0d0
+      nXQs=5
+      xrayLimits(1)=100.d0
+      xrayLimits(2)=1000.d0
+      xrayLimits(3)=2000.d0
+      xrayLimits(4)=5000.d0
+      xrayLimits(5)=10000.d0
+      do i=1,nXQs
+        xrayQs(i)=0.0d0
+        xrayIs(i)=0.0d0
       enddo
 c
       ipho=ipho+1
@@ -302,16 +302,16 @@ c
               ilum=ilum+souvec(i)*widnu
               qi=qi+souvec(i)*widnu/cphote(i)
             endif
-            do j=1,nmetalqs
-              if (photev(i).ge.ionlimits(j)) ionqs(j)=ionqs(j)+souvec(i)
+            do j=1,nMetalQs
+              if (photev(i).ge.ionLimits(j)) ionQs(j)=ionQs(j)+souvec(i)
      &         *widnu/cphote(i)
-              if (photev(i).ge.ionlimits(j)) ionis(j)=ionis(j)+souvec(i)
+              if (photev(i).ge.ionLimits(j)) ionIs(j)=ionIs(j)+souvec(i)
      &         *widnu
             enddo
-            do j=1,nxqs
-              if (photev(i).ge.xraylimits(j)) xrayqs(j)=xrayqs(j)+
+            do j=1,nXQs
+              if (photev(i).ge.xrayLimits(j)) xrayQs(j)=xrayQs(j)+
      &         souvec(i)*widnu/cphote(i)
-              if (photev(i).ge.xraylimits(j)) xrayis(j)=xrayis(j)+
+              if (photev(i).ge.xrayLimits(j)) xrayIs(j)=xrayIs(j)+
      &         souvec(i)*widnu
             enddo
           endif
@@ -341,16 +341,16 @@ c
             iflum=iflum+readflux(i)*widnu
             qfi=qfi+readflux(i)*widnu/cphote(i)
           endif
-          do j=1,nmetalqs
-            if (photev(i).ge.ionlimits(j)) ionqs(j)=ionqs(j)+readflux(i)
+          do j=1,nMetalQs
+            if (photev(i).ge.ionLimits(j)) ionQs(j)=ionQs(j)+readflux(i)
      &       *widnu/cphote(i)
-            if (photev(i).ge.ionlimits(j)) ionis(j)=ionis(j)+readflux(i)
+            if (photev(i).ge.ionLimits(j)) ionIs(j)=ionIs(j)+readflux(i)
      &       *widnu
           enddo
-          do j=1,nxqs
-            if (photev(i).ge.xraylimits(j)) xrayqs(j)=xrayqs(j)+
+          do j=1,nXQs
+            if (photev(i).ge.xrayLimits(j)) xrayQs(j)=xrayQs(j)+
      &       readflux(i)*widnu/cphote(i)
-            if (photev(i).ge.xraylimits(j)) xrayis(j)=xrayis(j)+
+            if (photev(i).ge.xrayLimits(j)) xrayIs(j)=xrayIs(j)+
      &       readflux(i)*widnu
           enddo
         enddo
@@ -362,13 +362,13 @@ c
         iflum=iflum*pi
         qfall=qfall*pi
         qfi=qfi*pi
-        do j=1,nmetalqs
-          ionqs(j)=ionqs(j)*pi
-          ionis(j)=ionis(j)*pi
+        do j=1,nMetalQs
+          ionQs(j)=ionQs(j)*pi
+          ionIs(j)=ionIs(j)*pi
         enddo
-        do j=1,nxqs
-          xrayqs(j)=xrayqs(j)*pi
-          xrayis(j)=xrayis(j)*pi
+        do j=1,nXQs
+          xrayQs(j)=xrayQs(j)*pi
+          xrayIs(j)=xrayIs(j)*pi
         enddo
 c
 c  default ionising luminosity ratio incase ftype is malformed
@@ -378,8 +378,8 @@ c
         if (ftype.eq.'B') fratio=(qfall/qall)
         if (ftype.eq.'C') fratio=(iflum/ilum)
         if (ftype.eq.'D') fratio=(qfi/qi)
-        if (ftype.eq.'E') fratio=(xrayis(1)/xlum)
-        if (ftype.eq.'F') fratio=(xrayqs(1)/qx)
+        if (ftype.eq.'E') fratio=(xrayIs(1)/xlum)
+        if (ftype.eq.'F') fratio=(xrayQs(1)/qx)
 c
 c scale to desired fraction
 c
@@ -412,13 +412,13 @@ c
       qoii=0.d0
       qall=0.d0
       qh2=0.0d0
-      do j=1,nmetalqs
-        ionqs(j)=0.0d0
-        ionis(j)=0.0d0
+      do j=1,nMetalQs
+        ionQs(j)=0.0d0
+        ionIs(j)=0.0d0
       enddo
-      do j=1,nxqs
-        xrayqs(j)=0.0d0
-        xrayis(j)=0.0d0
+      do j=1,nXQs
+        xrayQs(j)=0.0d0
+        xrayIs(j)=0.0d0
       enddo
 c
 c  Semi-Infinite Integrals
@@ -433,16 +433,16 @@ c
             qh2=qh2+souvec(i)*widnu/(cphote(i))
           endif
 c
-          do j=1,nmetalqs
-            if (photev(i).ge.ionlimits(j)) ionqs(j)=ionqs(j)+souvec(i)*
+          do j=1,nMetalQs
+            if (photev(i).ge.ionLimits(j)) ionQs(j)=ionQs(j)+souvec(i)*
      &       widnu/cphote(i)
-            if (photev(i).ge.ionlimits(j)) ionis(j)=ionis(j)+souvec(i)*
+            if (photev(i).ge.ionLimits(j)) ionIs(j)=ionIs(j)+souvec(i)*
      &       widnu
           enddo
-          do j=1,nxqs
-            if (photev(i).ge.xraylimits(j)) xrayqs(j)=xrayqs(j)+
+          do j=1,nXQs
+            if (photev(i).ge.xrayLimits(j)) xrayQs(j)=xrayQs(j)+
      &       souvec(i)*widnu/cphote(i)
-            if (photev(i).ge.xraylimits(j)) xrayis(j)=xrayis(j)+
+            if (photev(i).ge.xrayLimits(j)) xrayIs(j)=xrayIs(j)+
      &       souvec(i)*widnu
           enddo
         else
@@ -455,13 +455,13 @@ c
       qall=pi*qall
       blum=pi*blum
       ilum=pi*ilum
-      do j=1,nmetalqs
-        ionqs(j)=ionqs(j)*pi
-        ionis(j)=ionis(j)*pi
+      do j=1,nMetalQs
+        ionQs(j)=ionQs(j)*pi
+        ionIs(j)=ionIs(j)*pi
       enddo
-      do j=1,nxqs
-        xrayqs(j)=xrayqs(j)*pi
-        xrayis(j)=xrayis(j)*pi
+      do j=1,nXQs
+        xrayQs(j)=xrayQs(j)*pi
+        xrayIs(j)=xrayIs(j)*pi
       enddo
 c
       q1=0.0d0
@@ -491,8 +491,8 @@ c
 c
       if (qht.gt.epsilon) then
 c
-        write (*,50) blum,qall,ilum,qht,ilum/(ev*qht),xrayis(1)/(ev*
-     &   xrayqs(1)),qht,qhi,qhei,qheii
+        write (*,50) blum,qall,ilum,qht,ilum/(ev*qht),xrayIs(1)/(ev*
+     &   xrayQs(1)),qht,qhi,qhei,qheii
    50 format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
      & '::::::::::::::::'/
@@ -508,7 +508,7 @@ c
      & '  FQHI  (13.6-24.6eV) : ',1pg12.5,' (phots/cm^2/s) '/
      & '  FQHeI (24.6-54.4eV) : ',1pg12.5,' (phots/cm^2/s) '/
      & '  FQHeII    (>54.4eV) : ',1pg12.5,' (phots/cm^2/s) ')
-        write (*,60) (ionqs(i),i=4,nmetalqs)
+        write (*,60) (ionQs(i),i=4,nMetalQs)
    60 format(
      &  ' :::Key Metal Ions (phots/cm^2/s)::::::::::::::::',
      & '::::::::::::::::'/
@@ -526,7 +526,7 @@ c
      & '(16.2,30.7,54.9eV) '/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
      & '::::::::::::::::')
-        write (*,70) (xrayis(j),xrayqs(j),j=1,nxqs)
+        write (*,70) (xrayIs(j),xrayQs(j),j=1,nXQs)
    70 format(
      & '  X-Ray >0.1keV int. : ',1pg12.5,' (ergs/s/cm^2)'/
      & '  X-Ray >0.1keV Phot.: ',1pg12.5,' (phots/cm^2/s'/
