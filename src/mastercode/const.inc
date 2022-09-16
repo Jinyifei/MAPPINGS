@@ -631,7 +631,7 @@ c 25000 if not using CMFGEN inputs.  A major memory hog!
 c
 c      up to 560000 bins - CMFGEN!
 c
-      parameter( mxflxbins = 25000)
+      parameter( mxflxbins = 560000)
 c
 c number of energy bins in OPTXAGNF model
       parameter( mxoptxbins = 5000)

@@ -310,6 +310,8 @@ c   dilradpho effective source radius for finite extent plane parallel
 c   models as a funtion of energy,goes with rshock in s4
 c   infph: number of bins in vectors
 c   linpos: line bin position information.
+c   I/O spectrum tp1(mxinfph, tp2(mxinfph), tp3(mxinfph), tp4(mxinfph)
+c
 c
 c       ffphot,fbphot,p2phot: continuum spectra (in ergs)
 c                            (free-free,fre-bnd,2photon)
@@ -329,6 +331,10 @@ c
       real*8 tphot(mxinfph)
       real*8 sphot(mxinfph)
       real*8 soupho(mxinfph),wdil
+      real*8 tp1(mxinfph)
+      real*8 tp2(mxinfph)
+      real*8 tp3(mxinfph)
+      real*8 tp4(mxinfph)
       real*8 difftot(mxinfph)
       real*8 dilradpho,rshock
       real*8 emidif(mxinfph)
@@ -1847,13 +1853,11 @@ c
 c
 c   processes
 c
-c     common /phovec1/ tphot,sphot,wdil,emidif,updif,dwdif
-c    &                ,emilin,uplin,dwlin,soupho,dilradpho,difftot
-c    &                ,dustphot,srcsum,totsum
       common /phovec1/ tphot,sphot,wdil,emidif,updif,dwdif
      &                ,emidifcont,updifcont,dwdifcont
      &                ,soupho,dilradpho,difftot
      &                ,dustphot,srcsum,totsum
+     &                ,tp1,tp2,tp3,tp4
 c
       common /phovec2/ infph,linpos,fieldversion
      &                ,skipbin,ionstartbin

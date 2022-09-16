@@ -37,7 +37,7 @@ c
       integer*4 i,j
       real*8 t,u,u4,ar,xr
       real*8 ad,bd,ta,tb
-      real*8 tp,tp4
+      real*8 tp,to4
       real*8 a,b,c,d,e,f,r
       real*8 ch,ct,et
       real*8 fcor,adlt
@@ -85,7 +85,7 @@ c
 c
       endif
 c
-      tp4=tp*1.d-4
+      to4=tp*1.d-4
       t32=tp**(-1.5d0)
 c
       if ((recommode.eq.0).or.(recommode.eq.2)) then
@@ -140,12 +140,12 @@ c
             a1=arrec(1,ir)
             a2=arrec(2,ir)
             if (rrtype.eq.2) then
-              rate=a1*tp4**(-a2)
+              rate=a1*to4**(-a2)
               goto 10
             endif
             a3=arrec(3,ir)
             if (rrtype.eq.3) then
-              rate=a1*tp4**(-(a2+(a3*dlog10(tp4))))
+              rate=a1*to4**(-(a2+(a3*dlog10(to4))))
               goto 10
             endif
             a4=arrec(4,ir)
@@ -202,7 +202,7 @@ c    He I total - n=1 rate for OTS
               xr=0.787d0
             endif
             if (ar.lt.0.0d0) goto 20
-            rate=arf(tp4,ar,xr)
+            rate=arf(to4,ar,xr)
    20       continue
             rate=dmax1(0.d0,rate)
             rec(ion,atom)=rate
@@ -283,9 +283,9 @@ c
               if (tp.lt.1.d5) then
                 a2=arrec(2,ir)
                 ch=dble(max(1,ion-1))
-                fcor=flowt(tp4,ch,a2)
+                fcor=flowt(to4,ch,a2)
                 fcor=dmax1(0.d0,fcor)
-                adlt=adltf(tp4,en(1),en(2),en(3),en(4),en(5))
+                adlt=adltf(to4,en(1),en(2),en(3),en(4),en(5))
                 drate=drate+dmax1(0.0d0,adlt)
                 rec(ion,atom)=rec(ion,atom)*fcor
               endif
@@ -336,10 +336,10 @@ c
               chh=ion-1
               if (chh.gt.maxion(atom)-1) chh=chh-(maxion(atom)-1)
               ch=dble(chh)
-              fcor=flowt(tp4,ch,xr)
+              fcor=flowt(to4,ch,xr)
               fcor=dmax1(0.d0,fcor)
               rec(ion,atom)=rec(ion,atom)*fcor
-              adlt=adltf(tp4,a,b,c,d,f)
+              adlt=adltf(to4,a,b,c,d,f)
               adlt=dmax1(0.d0,adlt)
               drate=adf(tp,ad,bd,ta,tb)+adlt
             else

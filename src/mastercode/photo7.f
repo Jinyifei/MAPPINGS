@@ -45,6 +45,7 @@ c
 c
       integer*4 j,i,kmax,k,nl,np,idx
       integer*4 elok(mxelem),nel
+c
       character carac*36,model*64
       character caract*4,ilgg*4
       character banfil*64
@@ -89,7 +90,7 @@ c
           caract='   '
           if (ipote(1,i).lt.epotmi) write (caract,20) elem(i)
           carac(j:j+2)=caract//'   '
-   30   enddo
+        enddo
         i=j+2
    40   write (*,50) carac(1:i)
         ilgg='    '
@@ -100,18 +101,22 @@ c
         read (*,20) ilgg
         call toup (ilgg(1:1), ilgg)
 c
-        if ((ilgg.ne.'N').and.(ilgg.ne.'Y')) goto 40
+        if (ilgg.eq.'Y') goto 55
+        if ((ilgg.ne.'N')) goto 40
 c
         do i=3,atypes
           arad(2,i)=dabs(arad(2,i))
           if (ipote(1,i).lt.epotmi) arad(2,i)=-arad(2,i)
         enddo
 c
+   55   continue
+c
       endif
 c
 c     ***CHOOSING PHOTON SOURCE AND GEOMETRICAL PARAMETERS
 c
       model='Photo 7'
+c
       call photsou (model)
 c
 c     Possible to have no photons
@@ -181,7 +186,7 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    R  :  By Radius',/,
      & '    L  :  By Luminosity',/,
-     & '    P  :  By Ionizing Photons'//
+     & '    P  :  By Ionizing Photons',/,
      & ' :: ',$)
           read (*,20) ilgg
           call toup (ilgg(1:1), ilgg)
@@ -249,10 +254,10 @@ c
             endif
 c
 c
-  160  format(//
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '  Source Radius : ',1pg12.5,' cm',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+  160  format(//,
+     & ' ********************************************************',/,
+     & '  Source Radius * ',1pg12.5,' cm',/,
+     & ' ********************************************************',/)
             write (*,160) rstsun
             astar=fpi*rstsun*rstsun
             blum=astar*blum
@@ -362,7 +367,7 @@ c
         write (*,240)
   240    format(/'  Density Function ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' n(x) = n0*[fx*exp((x-a)/r0) + fp*((x/a)**b)]+c  ',/,
+     & ' n(x) = n0*[fx:exp((x-a)/r0) + fp:((x/a)**b)]+c  ',/,
      & ' Give parameters n0 fx fp a b c & r0 (cgs): ',$)
         read (*,*) ofac,xfac,pfac,afac,bfac,cfac,scalen
         dhn=ofac
@@ -395,12 +400,12 @@ c
           tinner=1.d4
 c
   280    format(//' Give an estimate of the initial temperature :',//
-     & '   * Use 1.0e4 if not known. Initial estimates of density,',/
-     & '   * and radius will be uncertain until the model starts.',/
-     & '   * Ionisation uncertainty will always make nH estimates',/
-     & '   * here approximate, but total pressure will be accurate.',/
-     & '   * Initial Q, P/k, T and nH is solved in model,',/
-     & '   * so this estimate is not crucial.',//
+     & '   : Use 1.0e4 if not known. Initial estimates of density,',/
+     & '   : and radius will be uncertain until the model starts.',/
+     & '   : Ionisation uncertainty will always make nH estimates',/
+     & '   : here approximate, but total pressure will be accurate.',/
+     & '   : Initial Q, P/k, T and nH is solved in model,',/
+     & '   : so this estimate is not crucial.',//
      & ' [T ~1e4, <10 as log] : ',$)
           write (*,280)
           read (*,*) tinner
@@ -410,10 +415,10 @@ c
           dhn=dnt/2.2d0
 c
   290 format(/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '  Total number density at',1pg10.3,': ',1pg10.3,/
-     & '  Est. Hydrogen number density at',1pg10.3,': ',1pg10.3/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/,
+     & '  Total number density at',1pg10.3,'* ',1pg10.3,/
+     & '  Est. Hydrogen number density at',1pg10.3,'* ',1pg10.3/
+     & ' ********************************************************',/)
           write (*,290) tinner,dnt,tinner,dhn
 c
 c     jden = B isobaric
@@ -457,16 +462,16 @@ c
   340    format(//' Give hydrogen number density : ',$)
         write (*,340)
         read (*,*) dhn
-        tinner=1.d4
+        tinner=1.0d4
       endif
 c
       dht=densnum(dhn)
 c
   350 format(//
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & '   Mean Ion Density (N):',1pg12.5/
      & '   Mean H  Density (dh):',1pg12.5/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
 c
       write (*,350) dht,dhn
 c
@@ -511,26 +516,26 @@ c
   370     write (*,380) rstromhb,rstromheb,qht*astar,qheii*astar,qht,
      &     qheii,qhdnin,qhdhin,qhdnav,qhdhav,unin,uhin,unav,uhav
   380 format(//,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '   Filled Sphere Parameters:',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '  Estimated HII   Stromgren radius:',1pg10.3,' cm.',/,
-     & '  Estimated HeIII Stromgren radius:',1pg10.3,' cm.',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '  Photon Luminosity LQH    :',1pg10.3, ' Phot/s',/,
-     & '  Photon Luminosity LQHeII :',1pg10.3, ' Phot/s',/,
-     & '  Photon Flux       FQH    :',1pg10.3, ' Phot/cm2/s',/,
-     & '  Photon Flux       FQHeII :',1pg10.3, ' Phot/cm2/s',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '        QHDN inner   : ',1pg12.5,' cm/s'/,
-     & '        QHDH inner   : ',1pg12.5,' cm/s'/,
-     & '          <QHDN>     : ',1pg12.5,' cm/s'/,
-     & '          <QHDH>     : ',1pg12.5,' cm/s'/,
-     & '        U(N) inner   : ',1pg12.5,/,
-     & '        U(H) inner   : ',1pg12.5,/,
-     & '          <U(N)>     : ',1pg12.5,/,
-     & '          <U(H)>     : ',1pg12.5,/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',//,
+     & ' ********************************************************',/,
+     & '   Filled Sphere Parameters*',/,
+     & ' ********************************************************',/,
+     & '  Estimated HII   Stromgren radius*',1pg10.3,' cm.',/,
+     & '  Estimated HeIII Stromgren radius*',1pg10.3,' cm.',/,
+     & ' ********************************************************',/,
+     & '  Photon Luminosity LQH    *',1pg10.3, ' Phot/s',/,
+     & '  Photon Luminosity LQHeII *',1pg10.3, ' Phot/s',/,
+     & '  Photon Flux       FQH    *',1pg10.3, ' Phot/cm2/s',/,
+     & '  Photon Flux       FQHeII *',1pg10.3, ' Phot/cm2/s',/,
+     & ' ********************************************************',/,
+     & '        QHDN inner   * ',1pg12.5,' cm/s',/,
+     & '        QHDH inner   * ',1pg12.5,' cm/s',/,
+     & '          <QHDN>     * ',1pg12.5,' cm/s',/,
+     & '          <QHDH>     * ',1pg12.5,' cm/s',/,
+     & '        U(N) inner   * ',1pg12.5,/,
+     & '        U(H) inner   * ',1pg12.5,/,
+     & '          <U(N)>     * ',1pg12.5,/,
+     & '          <U(H)>     * ',1pg12.5,/,
+     & ' ********************************************************',//,
      & ' Set initial radius in terms of distance or Q(N), U(N),',
      & ' Q(H), or U(H) (d/q/n/h/u):',$)
           read (*,20) ilgg
@@ -633,20 +638,20 @@ c
      & ' ********************************************************',/,
      & '   Partially Filled Sphere Parameters*',/,
      & ' ********************************************************',/,
-     & '  Empty inner radius *',1pg12.5,' cm'/,
+     & '  Empty inner radius *',1pg12.5,' cm',/,
      & '  Outer HII   radius *',1pg12.5,' cm.',/,
      & '  Outer HeIII radius *',1pg12.5,' cm.',/,
      & ' ********************************************************',/,
-     & '        QHDN inner   * ',1pg12.5,' cm/s'/,
-     & '        QHDH inner   * ',1pg12.5,' cm/s'/,
-     & '          <QHDN>     * ',1pg12.5,' cm/s'/,
-     & '          <QHDH>     * ',1pg12.5,' cm/s'/,
+     & '        QHDN inner   * ',1pg12.5,' cm/s',/,
+     & '        QHDH inner   * ',1pg12.5,' cm/s',/,
+     & '          <QHDN>     * ',1pg12.5,' cm/s',/,
+     & '          <QHDH>     * ',1pg12.5,' cm/s',/,
      & '        U(N) inner   * ',1pg12.5,/,
      & '        U(H) inner   * ',1pg12.5,/,
      & '          <U(N)>     * ',1pg12.5,/,
      & '          <U(H)>     * ',1pg12.5,/,
      & '   Total intensity   * ',1pg12.5,' erg/s/cm2' /,
-     & '   Ionizing intensity* ',1pg12.5,' erg/s/cm2'/,
+     & '   Ionizing intensity* ',1pg12.5,' erg/s/cm2',/,
      & ' ********************************************************'/)
           write (*,440) remp,rstromhb,rstromheb,qhdnin,qhdhin,qhdnav,
      &     qhdhav,unin,uhin,unav,uhav,blum,ilum
@@ -684,7 +689,7 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c     ***IF GEOMETRY PLANE-PARALLEL :
+c     ***IF GEOMETRY PLANE-PARALLEL *
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -828,63 +833,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
   600 admach=0.0d0
       turbheatmode=0
-c 440  format(//,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-c     & '  Micro-Turbulent Dissipation Heating',/,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-c     & '     Choose Timescale Type:',/,
-c     & '    A  : Recombination Timescale.',/,
-c     & '    B  : Collisional Timescale.',/,
-c     & '    C  : Cooling Timescale.',/,
-c     & '    D  : Fixed Timescale.',/,
-c     & '    N  : No Dissipaton.',/,
-c     & '   ::', $)
-c      write(*,440)
-c
-c      Read(*, 350), jtb
-c      call toup(jtb(1:1),jtb)
-c
-c      if ( jtb .eq. 'A') turbheatmode = 1
-c      if ( jtb .eq. 'B') turbheatmode = 2
-c      if ( jtb .eq. 'C') turbheatmode = 3
-c      if ( jtb .eq. 'D') turbheatmode = 4
-c
-c      if ( turbheatmode .gt. 0) then
-c
-c 450  format(/,' Adiabatic Mach Number: ',$)
-c      write(*,450)
-c      read(*, *) admach
-c
-c      if ( admach .lt. 0.0d0) admach = 0.0d0
-c
-c      if ( turbheatmode .eq. 4) then
-c 451  format(/,' Fixed Timescale (s): ',$)
-c      write(*,451)
-c      read(*, *) alphaTurbFixed
-c      if (alphaTurbFixed .lt. 0.0) alphaTurbFixed = 0.d0
-c      endif
-c
-c      endif
-c
-c      if ( turbheatmode .ge. 1 ) then
-c 455  format(//,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-c     & '  Micro-Turbulent Dissipation Enabled',/,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-c      write(*,455)
-c       if (turbheatmode .eq. 1) then
-c       write(*,*) 'On Recombination Timescale.'
-c       endif
-c       if (turbheatmode .eq. 2) then
-c       write(*,*) 'On Collisional Timescale.'
-c       endif
-c       if (turbheatmode .eq. 3) then
-c       write(*,*) 'On Cooling Timescale.'
-c       endif
-c       if (turbheatmode .eq. 4) then
-c       write(*,*) 'On Fixed Timescale:', alphaTurbFixed, 's'
-c       endif
-c      endif
       frlum=0.0d0
       tm00=0.0d0
 c
@@ -894,7 +842,7 @@ c     ***EQUILIBRIUM OR FINITE AGE ASSUMPTION
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  610 format(//
+  610 format(//,
      & ' ********************************************************',/,
      & '  Ionisation Balance Calculations',/,
      & ' ********************************************************'/)
@@ -919,7 +867,7 @@ c
         write (*,640)
   640    format(/'  Fixed Thermal Profile:',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',//
-     & ' f(x) = t0*[fx*exp((x-ta)/r0) + fp*((x/ta)**tb)]+tc  ',/
+     & ' f(x) = t0:[fx:exp((x-ta)/r0) + fp:((x/ta)::tb)]+tc  ',/
      & ' (with r in r0 units , t0<10K as log)',/
      & ' Give parameters t0 ta tb tc r0 : ',$)
         read (*,*) tofac,txfac,tpfac,tafac,tbfac,tcfac,tscalen
@@ -944,8 +892,8 @@ c
   660       format(/'  Source turn on and finite lifetime:',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' (Hydrogen Stromgrem radius of the order of',1pg10.3,
-     & ' cm'/' Characteristic time scale for ionisation: ',1pg8.1,
-     & ' sec)'/' Give elapsed time since source turned on (sec)',/,
+     & ' cm',/,' Characteristic time scale for ionisation: ',1pg8.1,
+     & ' sec)',/,' Elapsed time since source turned on (sec)',/,
      & ' and give life-time of ionising source (sec) : ',$)
           read (*,*) telap,tlife
           if ((telap.le.0.0d0).or.(tlife.le.0.0d0)) goto 650
@@ -1040,22 +988,22 @@ c
      & '   Radiation Field and Parameters*',/,
      & ' ********************************************************',/,
      & t5, ' At estimated T_inner *',1pg10.3,' K',/,
-     & t5,' Rsou.',t18,' Remp.',t35,' Rmax',t48,' <DILU>',/,
-     & t5, 1pg10.3,t18,1pg10.3,t35,1pg10.3,t48,1pg10.3/
-     & t5,' <Hdens>',t18,' <Ndens>',t35,' Fill Factor',/
-     & t5, 1pg10.3,t18,1pg10.3,t35,0pf9.6,//
+     & t5,' Rsou.',t18,' Remp.',t32,' Rmax',t46,' <DILU>',/,
+     & t5, 1pg10.3,t18,1pg10.3,t32,1pg10.3,t46,1pg10.3/
+     & t5,' <Hdens>',t18,' <Ndens>',t32,' Fill Factor',/
+     & t5, 1pg10.3,t18,1pg10.3,t32,0pf9.6,//
      & ' ********************************************************',/,
-     & t5,' FQ tot',t18,' Log FQ',t35,' LQ tot',t48,' Log LQ',/
-     & t5, 1pg10.3,t18,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
-     & t5,' Q(N) in',t18,' Log Q(N)',t35,' <Q(N)>',t48,' Log<Q(N)>',/
-     & t5, 1pg10.3,t18,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
-     & t5,' Q(H) in',t18,' Log Q(H)',t35,' <Q(H)>',t48,' Log<Q(H)>',/
-     & t5, 1pg10.3,t18,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
-     & t5,' U(N) in',t18,' Log U(N)',t35,' <U(N)>',t48,' Log<U(N)>',/
-     & t5, 1pg10.3,t18,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
-     & t5,' U(H) in',t18,' Log U(H)',t35,' <U(H)>',t48,' Log<U(H)>',/
-     & t5, 1pg10.3,t18,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
-     & ' ********************************************************'/)
+     & t5,' FQ tot',t18,' Log FQ',t32,' LQ tot',t46,' Log LQ',/
+     & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
+     & t5,' Q(N) in',t18,' Log Q(N)',t32,' <Q(N)>',t46,' Log<Q(N)>',/
+     & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
+     & t5,' Q(H) in',t18,' Log Q(H)',t32,' <Q(H)>',t46,' Log<Q(H)>',/
+     & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
+     & t5,' U(N) in',t18,' Log U(N)',t32,' <U(N)>',t46,' Log<U(N)>',/
+     & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
+     & t5,' U(H) in',t18,' Log U(H)',t32,' <U(H)>',t46,' Log<U(H)>',/
+     & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
+     & ' ********************************************************',/)
 c
       write (*,790) tinner,rstar,remp,rmax,wdpl,dhn,dht,fin,qht,
      &dlog10(qht),astar*qht,dlog10(astar*qht),qhdnin,dlog10(qhdnin),
@@ -1498,7 +1446,7 @@ c
           iem(i)=idx
         enddo
         write (*,*)
-        write (*,*) 'Monitoring Ion Emission:'
+        write (*,*) ' Monitoring Ion Emission:'
         do i=1,iemn
           write (*,'("Ion:",x,i3,": ",a2,a6)') i,elem(fmatom(iem(i))),
      &     rom(fmion(iem(i)))
@@ -1564,7 +1512,7 @@ c
 c       PHOTOIONISATION MODEL
 c       DIFFUSE FIELD CALCULATED ; 'OUTWARD ONLY' INTEGRATION
 c
-c       PHOTO6: As for P5 but adds new integration scheme
+c       PHOTO7: As for P5 but adds new integration scheme
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1616,7 +1564,7 @@ c
 c
       integer*4 lut0,m,maxio,mma,n,np,nidh,niter
       integer*4 i,j,k,ndifatoms,atom
-      integer*4 idx, nt, itr,init_it
+      integer*4 idx, nt, itr, init_it
 c
 c      integer*4 ielement
 c
@@ -2672,6 +2620,7 @@ c
       pollfile='nebphot'
       inquire (file=pollfile,exist=iexi)
       if ((iexi)) then
+        savemod=lmod
         lmod='NEBL'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
         caller='P7'
@@ -2679,13 +2628,14 @@ c
         np=4
         wmod='REAL'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        lmod='ALL'
+        lmod=savemod
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
       endif
 c
       pollfile='sophot'
       inquire (file=pollfile,exist=iexi)
       if ((iexi)) then
+        savemod=lmod
         lmod='SO'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
         caller='P7'
@@ -2693,13 +2643,14 @@ c
         np=4
         wmod='REAL'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        lmod='ALL'
+        lmod=savemod
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
       endif
 c
       pollfile='loclphot'
       inquire (file=pollfile,exist=iexi)
       if ((iexi)) then
+        savemod=lmod
         lmod='LOCL'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
         caller='P7'
@@ -2707,7 +2658,7 @@ c
         np=4
         wmod='REAL'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        lmod='ALL'
+        lmod=savemod
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
       endif
 c
@@ -2809,7 +2760,7 @@ c
             caller='P7'
             np=5
             pfx='grpot'
-            sfx='ph6'
+            sfx='ph7'
             call newfile (pfx, np, sfx, 3, fn)
             chargefile=fn(1:(np+3+5))
             open (ir1,file=chargefile,status='NEW')
@@ -3198,11 +3149,11 @@ c
      &'turn off :',1pg10.3)
       if ((radout.lt.khuge).and.(jgeo.eq.'S')) write (luop,450) radin,
      &radout
-  450 format(/' NB. :::::::::::::::Integration through the line',
+  450 format(/' NB. ***************Integration through the line',
      &'of sight for a ring aperture of radii :',2(1pg10.3))
       write (lupf,460) tempre,tspr
   460 format(//t4,'Preionisation conditions for step#0 ',
-     &'for all elements   (TEpr :',0pf8.0,' Time :',1pg9.2,' )  :'/)
+     &'for all elements   (TEpr :',0pf8.0,' Time *',1pg9.2,' )  :'/)
       write (lupf,470) (elem(i),i=1,atypes)
   470 format(' ',t8,16(4x,a2,4x)/)
       maxio=0
@@ -3240,82 +3191,45 @@ c
 c
       if (jsou.eq.'Y') then
 c
-c     Down stream photon field
+c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
 c
         caller='P7'
-        pfx='spec_tot'
+        pfx='flam_'
         np=lenv(pfx)
 c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-c       wmod='NFNU'
-c       call wpsou (caller,pfx,np,wmod,t,de,dh,dr, 1.0d0,tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
+c      write nebula spectrum into lam - flam (ergs/s/cm2/A)
 c
-c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
+        do j=1,infph
+         tp1(j)=tphot(j)
+        enddo
 c
         savemod=lmod
         lmod='NEBL'
         call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
-c
-        caller='P7'
-        pfx='sp_neb_'
-        np=lenv(pfx)
-c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-c       wmod='NFNU'
-c       call wpsou (caller,pfx,np,wmod,t,de,dh,dr, 1.0d0,tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
+        do j=1,infph
+         tp2(j)=tphot(j)
+        enddo
         lmod=savemod
 c
-c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
+        savemod=lmod
+        lmod='SO'
+        call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
+        do j=1,infph
+         tp3(j)=tphot(j)
+        enddo
+        lmod=savemod
 c
         savemod=lmod
         lmod='NEBC'
         call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
-c
-        caller='P7'
-        pfx='sp_nebc_'
-        np=lenv(pfx)
-c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
+        do j=1,infph
+         tp4(j)=tphot(j)
+        enddo
         lmod=savemod
 c
-        savemod=lmod
-        lmod='CONT'
-        call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
+        call wplam4 (caller, pfx, np, t, de, dh, dr, 1.d0)
 c
-        caller='P7'
-        pfx='sp_con_'
-        np=lenv(pfx)
-c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
         lmod=savemod
-c
-c      write source spectrum in lam - flam (ergs/s/cm2/A)
-c
-        lmod='SO'
-        call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
-c
-        caller='P7'
-        pfx='sp_src_'
-        np=lenv(pfx)
-c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        lmod=savemod
-c
         call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
 c
       endif
@@ -3360,9 +3274,9 @@ c
       real*8 dhn,fin
       real*8 dht,zi(mxelem)
 c
-      integer*4 i, j, at, io
+      integer*4 i, j, at, io, np
       integer*4 idx, nt, nl, itr
-      integer*4  nr, nf, nb
+      integer*4 nr, nf, nb
 c
       character abundtitle*64
       character banfil*64
@@ -3371,9 +3285,9 @@ c
       real*8 lamvac,lamair
       real*8 densnum, fnair
       integer*4 mlen
+      integer*4 lenv
 c
       dht=densnum(dhn)
-c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3400,12 +3314,10 @@ c
       write (lusp,10) theversion,runname,banfil,filnam
       write (lunt,10) theversion,runname,banfil,filnam
       if (jall.eq.'Y') then
-        write (lusl,10) theversion,runname(1:nr),banfil(1:nb),
-     &   filnam(1:nf)
+        write (lusl,10) theversion,runname,banfil,filnam
       endif
       if (jlin.eq.'Y') then
-        write (lulin,10) theversion,runname(1:nr),banfil(1:nb),
-     &   filnam(1:nf)
+        write (lulin,10) theversion,runname,banfil,filnam
       endif
       if (jiel.eq.'Y') then
         do idx=1,ieln
@@ -3428,7 +3340,7 @@ c
       write (lupf,20)
    20 format(' Plasma properties for ',
      &'each model step,',/,
-     &' and the pre-ionisation conditions used.'/ )
+     &' and the pre-ionisation conditions used.',/)
    30 format(' Nebula structure summary,',/,
      & ' and the strong line emissivities.',/,
      & ' Weight by shell volumes to get relative luminosities.'/)
@@ -3472,6 +3384,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     abundances file header
 c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       abundtitle=' Initial Abundances :'
       do i=1,atypes
@@ -3711,7 +3624,7 @@ c
 c
   330 format( ' Dust Parameters :',//
      & ,t5,' Alpha :',1pg10.3,/
-     & ,t5,' Graphite min:       max:',/
+     & ,t5,' Graphite min:       max;',/
      & ,t5,3x,1pg10.3,x,1pg10.3,/
      & ,t5,' Silicate min:       max:',/
      & ,t5,3x,1pg10.3,x,1pg10.3,/
@@ -3726,8 +3639,8 @@ c
      & ,t6,3(a4,2x),2(i2,4x),0pf6.4,//
      & ,t6,'Tend',t12,'DIend',t22,'TAUen',t31,'Jeq',t38,'Teini',/
      & ,t5,0pf6.0,2(1pg10.3),x,a4,x,0pf7.1,//,
-     & '::::::::::::::::::::::::::::::::::::',
-     & '::::::::::::::::::::::::::::::::::::',/)
+     & '************************************',
+     & '************************************',/)
       write (luop,340) jden,jgeo,jend,ielen,jpoen,fren,tend,diend,tauen,
      &jeq,tm00
 c
