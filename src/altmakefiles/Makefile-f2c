@@ -60,6 +60,7 @@ CPP    = /usr/bin/cpp -P -Iincludes/ -I.
 #
 INCS =  ${INCDIR}cblocks.inc \
 	${INCDIR}const.inc \
+	${INCDIR}p6blocks.inc \
 	${INCDIR}p7blocks.inc \
 	${INCDIR}s5blocks.inc
 #

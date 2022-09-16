@@ -6,15 +6,15 @@
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51b
+OUTNAME = map51dev
 #
 #-------------------------------
 #---------- Directories --------
 #-------------------------------
 #
-EXEDIR = ../lab/
-INCDIR = includes/
-CODDIR = workcode/
+EXEDIR  = ../lab/
+INCDIR  = includes/
+CODDIR  = workcode/
 BACKDIR = mastercode/
 #
 #-------------------------------
@@ -49,7 +49,7 @@ WARN   =
 # if recursion is ever needed; -fmax-stack-var-size=7618560
 #
 FC     = gfortran -std=legacy -march=native
-LDR    =  ${WARN} -Ofast -flto=8 -ffpe-summary='none'
+LDR    =  ${WARN} -Ofast -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
 
@@ -97,6 +97,7 @@ start:
 INCS =  ${INCDIR}cblocks.inc \
 	${INCDIR}const.inc \
 	${INCDIR}p7blocks.inc \
+	${INCDIR}p6blocks.inc \
 	${INCDIR}s5blocks.inc
 #
 #-------------------------------

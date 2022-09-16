@@ -88,6 +88,7 @@ LIB    = -isysroot`xcrun --show-sdk-path`
 #
 INCS =  ${INCDIR}cblocks.inc \
 	${INCDIR}const.inc \
+	${INCDIR}p6blocks.inc \
 	${INCDIR}p7blocks.inc \
 	${INCDIR}s5blocks.inc
 #
