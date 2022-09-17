@@ -34,6 +34,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
+      include 'p6blocks.inc'
 c
 c           Variables
 c
@@ -42,7 +43,7 @@ c
       real*8 rstsun,starlum
       real*8 scale,dnt,lam
 c
-      integer*4 j,luin,i,kmax,k,nl,np
+      integer*4 j,i,kmax,k,nl,np
       integer*4 idx1,idx2,idx3,idx4
 c
       character carac*36,model*64
@@ -51,14 +52,12 @@ c
 c
 c           Functions
 c
-      real*8 fdilu
+      real*8 densnum,fdilu
       integer*4 lenv,mlen
 c
-      luin=10
       jcon='Y'
       jspot='N'
       dtau0=0.025d0
-      nprefix=6
 c
       write (*,10)
 c
@@ -78,11 +77,12 @@ c
       call popcha (model)
       model='Photo 6'
 c
+   20 format(a)
+c
 c     artificial support for low ionisation species
 c
       if (expertmode.gt.0) then
 c
-   20    format(a)
         carac(1:33)='   '
         j=1
         do i=3,atypes
@@ -113,11 +113,9 @@ c
 c
       endif
 c
-c
 c     ***CHOOSING PHOTON SOURCE AND GEOMETRICAL PARAMETERS
 c
       model='Photo 6'
-c
       call photsou (model)
 c
 c     Possible to have no photons
@@ -133,9 +131,8 @@ c
       jtrans='OUTW'
 c
    80 write (*,100)
-   90 format(a)
   100 format(/' Spherical or plane II  geometry (s/p) : ',$)
-      read (*,90) jgeo
+      read (*,20) jgeo
       call toup (jgeo(1:1), jgeo)
 c
       if ((jgeo.ne.'S').and.(jgeo.ne.'P')) goto 80
@@ -155,7 +152,7 @@ c
      & '    T  :  Two Sided, outward only (symmetrical, default)',/,
      & '    O  :  One Sided, (precursors)',/,
      & ' :: ',$)
-        read (*,90) ilgg
+        read (*,20) ilgg
         call toup (ilgg(1:1), ilgg)
 c
         if ((ilgg.ne.'O').and.(ilgg.ne.'T')) ilgg='T'
@@ -190,7 +187,7 @@ c
      & '    L  :  By Luminosity',/,
      & '    P  :  By Ionizing Photons',/,
      & ' :: ',$)
-          read (*,90) ilgg
+          read (*,20) ilgg
           call toup (ilgg(1:1), ilgg)
 c
           if ((ilgg.ne.'R').and.(ilgg.ne.'L').and.(ilgg.ne.'P')) goto
@@ -231,7 +228,7 @@ c
 c
   160       format(//' Total or Ionising Luminosity (T/I)',$)
             write (*,160)
-            read (*,90) ilgg
+            read (*,20) ilgg
             call toup (ilgg(1:1), ilgg)
 c
             if ((ilgg.ne.'I').and.(ilgg.ne.'T')) ilgg='I'
@@ -257,9 +254,9 @@ c
 c
 c
   190  format(//,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & '  Source Radius : ',1pg12.5,' cm',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
             write (*,190) rstsun
             astar=fpi*rstsun*rstsun
             blum=astar*blum
@@ -307,7 +304,7 @@ c
       endif
 c
 c
-  210 format(//
+  210 format(//,
      & ' ********************************************************',/,
      & '  Setting the Physical Structure  ',/,
      & ' ********************************************************',//)
@@ -319,12 +316,13 @@ c
       if (expertmode.gt.0) then
 c
   220   write (*,230)
-  230 format(/' Thermal Structure ',/,
+  230 format(//,
+     & '  Thermal Structure ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    S  : Self-consistent,  (recommended)',/,
      & '    T  : isoThermal, (non-physical, not recommended)',/,
      & ' :: ',$)
-        read (*,90) jthm
+        read (*,20) jthm
         call toup (jthm(1:1), jthm)
 c
         if ((jthm.ne.'S').and.(jthm.ne.'T').and.(jthm.ne.'F')
@@ -405,10 +403,10 @@ c
         dhn=dnt/2.2d0
 c
   300 format(/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & '  Total number density at',1pg10.3,': ',1pg10.3,/
      & '  Est. Hydrogen number density at',1pg10.3,': ',1pg10.3/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
         write (*,300) tinner,dnt,tinner,dhn
 c
 c     jden = B isobaric
@@ -422,13 +420,13 @@ c
         tinner=1.0d4
       endif
 c
-      dht=zen*dhn
+      dht=densnum(dhn)
 c
   330 format(//
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & '   Mean Ion Density (N):',1pg12.5/
      & '   Mean H  Density (dh):',1pg12.5/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
 c
       write (*,330) dht,dhn
 c
@@ -473,17 +471,17 @@ c
   350     write (*,360) rstromhb,rstromheb,qht*astar,qheii*astar,qht,
      &     qheii,qhdnin,qhdhin,qhdnav,qhdhav,unin,uhin,unav,uhav
   360 format(//,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '   Filled Sphere Parameters:',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '  Estimated HII   Stromgren radius:',1pg10.3,' cm.',/,
-     & '  Estimated HeIII Stromgren radius:',1pg10.3,' cm.',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
+     & '   Filled Sphere Parameters*',/,
+     & ' ********************************************************',/,
+     & '  Estimated HII   Stromgren radius*',1pg10.3,' cm.',/,
+     & '  Estimated HeIII Stromgren radius*',1pg10.3,' cm.',/,
+     & ' ********************************************************',/,
      & '  Photon Luminosity LQH    :',1pg10.3, ' Phot/s',/,
      & '  Photon Luminosity LQHeII :',1pg10.3, ' Phot/s',/,
      & '  Photon Flux       FQH    :',1pg10.3, ' Phot/cm2/s',/,
      & '  Photon Flux       FQHeII :',1pg10.3, ' Phot/cm2/s',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & '        QHDN inner   : ',1pg12.5,' cm/s',/,
      & '        QHDH inner   : ',1pg12.5,' cm/s',/,
      & '          <QHDN>     : ',1pg12.5,' cm/s',/,
@@ -492,9 +490,9 @@ c
      & '        U(H) inner   : ',1pg12.5,/,
      & '          <U(N)>     : ',1pg12.5,/,
      & '          <U(H)>     : ',1pg12.5,/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',//,
+     & ' ********************************************************',//,
      & ' Set initial radius in terms of distance or Q(N), U(N),',
-     & ' Q(H), or U(H) (d/q/n/h/u):',$)
+     & ' Q(H), or U(H) (d/q/n/h/u)*',$)
           read (*,20) ilgg
           call toup (ilgg(1:1), ilgg)
 c
@@ -592,13 +590,13 @@ c
           qhdhav=qhdnav*(dht/dhn)
           uhav=qhdhav/cls
   430 format(//,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '   Partially Filled Sphere Parameters:',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
+     & '   Partially Filled Sphere Parameters*',/,
+     & ' ********************************************************',/,
      & '  Empty inner radius :',1pg12.5,' cm',/,
      & '  Outer HII   radius :',1pg12.5,' cm.',/,
      & '  Outer HeIII radius :',1pg12.5,' cm.',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & '        QHDN inner   : ',1pg12.5,' cm/s',/,
      & '        QHDH inner   : ',1pg12.5,' cm/s',/,
      & '          <QHDN>     : ',1pg12.5,' cm/s',/,
@@ -609,7 +607,7 @@ c
      & '          <U(H)>     : ',1pg12.5,/,
      & '   Total intensity   : ',1pg12.5,' erg/s/cm2' /,
      & '   Ionizing intensity: ',1pg12.5,' erg/s/cm2',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
           write (*,430) remp,rstromhb,rstromheb,qhdnin,qhdhin,qhdnav,
      &     qhdhav,unin,uhin,unav,uhav,blum,ilum
 c
@@ -744,9 +742,9 @@ c
           qhdhav=qht/dhn
           uhav=qhdhav/cls
   560  format(//,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' :: Inner Boundary Ionisation Parameters ::::::::::::::::',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
+     & ' ** Inner Boundary Ionisation Parameters ****************',/,
+     & ' ********************************************************',/,
      & '  Bolometric Flux : ',1pg12.5,' (erg/s/cm^2)',/,
      & '  Ionising Flux   : ',1pg12.5,' (erg/s/cm^2)',/,
      & '  Ionising Phot Flux FQ     : ',1pg12.5,' (phots/s/cm^2)',/,
@@ -754,7 +752,7 @@ c
      & '  Ionisation parameter QHDH : ',1pg12.5,'(cm/s)',/,
      & '  Ionisation parameter U(N) : ',1pg12.5/
      & '  Ionisation parameter U(H) : ',1pg12.5/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
           write (*,560) blum,ilum,qht,qhdnav,qhdhav,unav,uhav
 c
           volstromhb=qht/(dhn*dht*alphahb*fin)
@@ -790,63 +788,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
   590 admach=0.0d0
       turbheatmode=0
-c 440  format(//,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-c     & '  Micro-Turbulent Dissipation Heating',/,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-c     & '     Choose Timescale Type:',/,
-c     & '    A  : Recombination Timescale.',/,
-c     & '    B  : Collisional Timescale.',/,
-c     & '    C  : Cooling Timescale.',/,
-c     & '    D  : Fixed Timescale.',/,
-c     & '    N  : No Dissipaton.',/,
-c     & '   ::', $)
-c      write(*,440)
-c
-c      Read(*, 350), jtb
-c      call toup(jtb(1:1),jtb)
-c
-c      if ( jtb .eq. 'A') turbheatmode = 1
-c      if ( jtb .eq. 'B') turbheatmode = 2
-c      if ( jtb .eq. 'C') turbheatmode = 3
-c      if ( jtb .eq. 'D') turbheatmode = 4
-c
-c      if ( turbheatmode .gt. 0) then
-c
-c 450  format(/,' Adiabatic Mach Number: ',$)
-c      write(*,450)
-c      read(*, *) admach
-c
-c      if ( admach .lt. 0.0d0) admach = 0.0d0
-c
-c      if ( turbheatmode .eq. 4) then
-c 451  format(/,' Fixed Timescale (s): ',$)
-c      write(*,451)
-c      read(*, *) alphaTurbFixed
-c      if (alphaTurbFixed .lt. 0.0) alphaTurbFixed = 0.d0
-c      endif
-c
-c      endif
-c
-c      if ( turbheatmode .ge. 1 ) then
-c 455  format(//,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-c     & '  Micro-Turbulent Dissipation Enabled',/,
-c     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-c      write(*,455)
-c       if (turbheatmode .eq. 1) then
-c       write(*,*) 'On Recombination Timescale.'
-c       endif
-c       if (turbheatmode .eq. 2) then
-c       write(*,*) 'On Collisional Timescale.'
-c       endif
-c       if (turbheatmode .eq. 3) then
-c       write(*,*) 'On Cooling Timescale.'
-c       endif
-c       if (turbheatmode .eq. 4) then
-c       write(*,*) 'On Fixed Timescale:', alphaTurbFixed, 's'
-c       endif
-c      endif
       frlum=0.0d0
       tm00=0.0d0
 c
@@ -924,7 +865,7 @@ c
      & '  Source turn-off and final luminosity',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & ' (Hydrogen Stromgrem radius of the order of',1pg10.3,'(cm)',/,
-     & ' Characteristic time scale for recomb.: ',1pg8.1,'(sec)',/,
+     & ' Time scale for recombination: ',1pg8.1,'(sec)',/,
      & ' Give elapsed time since source turned off (sec)',/,
      & ' and fractional final lumnosity of the source (>=0) :: ',$)
           read (*,*) telap,frlum
@@ -990,23 +931,23 @@ c
       endif
       if (usekappa) then
   770    format(/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & ' Kappa Electron Distribution Enabled :',/,
      & ' Electron Kappa : ',1pg11.4,/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
         write (*,770) kappa
       endif
 c
   780 format(/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '   Radiation Field and Parameters:',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
+     & '   Radiation Field and Parameters*',/,
+     & ' ********************************************************',/,
      & t5, ' At estimated T_inner :',1pg10.3,' K',/,
      & t5,' Rsou.',t18,' Remp.',t32,' Rmax',t46,' <DILU>',/,
      & t5, 1pg10.3,t18,1pg10.3,t32,1pg10.3,t46,1pg10.3/
      & t5,' <Hdens>',t18,' <Ndens>',t32,' Fill Factor',/
      & t5, 1pg10.3,t18,1pg10.3,t32,0pf9.6,//
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & t5,' FQ tot',t18,' Log FQ',t32,' LQ tot',t46,' Log LQ',/
      & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
      & t5,' Q(N) in',t18,' Log Q(N)',t32,' <Q(N)>',t46,' Log<Q(N)>',/
@@ -1017,7 +958,7 @@ c
      & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
      & t5,' U(H) in',t18,' Log U(H)',t32,' <U(H)>',t46,' Log<U(H)>',/
      & t5, 1pg10.3,t18,0pf8.3,t32,1pg10.3,t46,0pf8.3,/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
 c
       write (*,780) tinner,rstar,remp,rmax,wdpl,dhn,dht,fin,qht,
      &dlog10(qht),astar*qht,dlog10(astar*qht),qhdnin,dlog10(qhdnin),
@@ -1055,7 +996,7 @@ c
      & '    G  :   (Reset geometry only)',/,
      & ' :: ',$)
       write (*,810) fren
-      read (*,90) jend
+      read (*,20) jend
       call toup (jend(1:1), jend)
 c
       if ((jend.ne.'A').and.(jend.ne.'B').and.(jend.ne.'C')
@@ -1140,6 +1081,8 @@ c
      & ' ********************************************************',//)
       write (*,980)
 c
+      p6pfx='photn'
+      nprefix=5
 c
   990 format(//'  Output settings : ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
@@ -1313,6 +1256,12 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+      call p6filenames ()
+      call createp6files ()
+      call p6headers (banfil, dhn, fin)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
       call compph6 (dhn, fin, banfil, difma, dtlma, dhlma)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1334,6 +1283,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
+      include 'p6blocks.inc'
 c
       real*8 poppre(mxion, mxelem), popend(mxion, mxelem)
       real*8 ppre(mxion, mxelem),difma,dtlma,dhlma
@@ -1378,23 +1328,19 @@ c
       real*8 dh1_initial
       real*8 de1_initial
 c
-      integer*4 luop,lups,lusp,lusl,lupf,lunt,ir1,lulin
       integer*4 lut0,m,maxio,mma,n,np,nidh,niter
       integer*4 i,j,k,ndifatoms,atom
       integer*4 idx, nt, itr, init_it
 c
 c      integer*4 ielement
 c
-      integer*4 luions(mxelem),luemiss(mxmonlines)
       integer*4 fuvmin,fuvmax,pahabsmax
 c
-      character jjd*4, pollfile*12,tab*4
-      character newfil*64, filna*64, banfil*64, fnam*64, filnb*64
+      character jjd*4, pollfile*16,tab*4
+      character banfil*64, fnam*64
       character imod*4, lmod*4, nmod*4,wmod*4,ispo*4
       character linemod*4, spmod*4, savemod*4
-      character fn*64
-      character filnc*64, filnd*64, fspl*64, filnt*64, filin*64
-      character filn(mxelem)*64, filnem(mxmonlines)*64
+      character fn*64,fspl*64
       character pfx*64,caller*4,sfx*4
       character irfile*64,chargefile*64
       logical iexi
@@ -1460,31 +1406,21 @@ c
       thist(2)=0.d0
       thist(3)=0.d0
 c
-c     Define logical unit numbers
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      luop=21
-      lups=22
-      lusp=23
-      lupf=27
-      lusl=28
-      lunt=29
+c open all main P6 files
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      call appendp6files ()
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c     Begin Main Calculation
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
       lut0=0
-      ir1=95
-c
-      do i=1,atypes
-        luions(i)=32+i
-      enddo
-      do i=1,mxmonlines
-        luemiss(i)=32+atypes+i
-      enddo
-      lulin=32+mxmonlines+atypes+1
-      ir1=lulin+1
-c
-c    ***DERIVE FILENAME : PHN**.PH6
-c
-      call p6fheader (newfil, banfil, fnam, filna, filnb, filnc, filnd,
-     &filnt, filn, filnem, filin, luop, lupf, lusl, lusp, lups, lunt,
-     &luions, luemiss, lulin, dhn, fin)
 c
       chargefile=' '
 c
@@ -1513,7 +1449,7 @@ c       maximal PAH absorption bin
         pahabsmax=k-1
 c
 c Calculate photon flux in FUV range using Weingartner &
-c   Draine (2001) ISRF
+c Draine (2001) ISRF
 c
         ffuv=0.d0
         pahsum=0.d0
@@ -1536,7 +1472,7 @@ c
      & '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
       endif
 c
-c*********************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c   The routine does some initial setup, guesses at the parameters at
 c   the inner boundary of the first spatial step, then for each spatial
@@ -1546,7 +1482,7 @@ c   spatial steps till the completion criteria are achieved.
 c
 c      write(*,*)'***COMPUTATION STARTS HERE'
 c
-c*********************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       fi=fin
       fi1=fin
@@ -1595,11 +1531,11 @@ c
 c     usesproto-ionisation
       pres0=fpressu(tinner,dhn,pop0)
 c
-c***********************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c      write(*,*)'***ITERATE, M = STEP NUMBER'
 c
-c***********************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       m=1
 c
@@ -1613,12 +1549,12 @@ c
       wei=3.d0
       agmu=(agmax+(wei*agmu))/(1.d0+wei)
 c
-c****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c      write(*,*)'IF M=1 , CHECK CONVERGENCE FOR THE DENSITY'
 c      write(*,*)'AND IONIC POP. AT THE INNER BOUNDARY'
 c
-c****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (m.eq.1) then
 c
@@ -1819,9 +1755,9 @@ c
         call copypop (pop, poppre)
         call copypop (pop, ppre)
 c
-c********************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c      write(*,*)'END OF INNER BOUNDRY FOR M = 1'
-c********************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c
 c     calculate qhdn into zone dh0
@@ -1872,11 +1808,11 @@ c
       oonh=dlog10(zion(zmap(8))/zsol(zmap(8)))
       ogas=12.d0+dlog10(zion(zmap(8)))
 c
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c      write(*,*)'***ESTIMATE OF VALUES AT THE OUTER BOUNDARY'
 c
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       call copypop (poppre, pop)
       call copypop (poppre, popend)
@@ -1917,9 +1853,9 @@ c
       endif
       de1=feldens(dh1,pop)
 c
-c***********************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c      write(*,*)'***DETERMINE SPACE STEP : DR'
-c***********************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       te1_initial=te1
       dh1_initial=dh1
@@ -1986,12 +1922,12 @@ c
         dvol=dr*irdvol
       endif
 c
-c******************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c      write(*,*)'CALCULATION OF IONIC POPULATION AT THE OUTER'
-c      of current step
+c     of current step
 c
-c******************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (jden.eq.'C') then
         dh1=dhn
       elseif (jden.eq.'F') then
@@ -2028,9 +1964,9 @@ c
       call totphot2 (t, dh, rad0, dr, dv, wdil1, lmod)
       call zetaeff (dh)
 c
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c      write(*,*)'*EQUILIBRIUM IONISATION AND TEMPERATURE .'
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if ((jeq.eq.'E').or.((jeq.eq.'P').and.(jthm.eq.'S'))) then
         dton1=1.d33
@@ -2080,6 +2016,7 @@ c
 c
 c      *TIME STEP LONG ENOUGH TO ASSUME EQUILIBRIUM TEMPERATURE
 c
+          dton1=1.d33
           call copypop (pop0, pop)
 c     Compute equilibrium temperature and ionization state of the gas
           call teequi2 (te1, tef, de1, dh1, dton1, nmod)
@@ -2087,10 +2024,10 @@ c     Compute equilibrium temperature and ionization state of the gas
         dtco1=(gammaEOSU*fpressu(tef,dh1,pop))/(eloss+epsilon)
       endif
 c
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c       write(*,*)'END EQUILIBRIUM IONISATION AND TEMPERATURE .'
 c       write(*,*) t,te1,tef
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (jthm.eq.'T') tef=fixtemp
 c
@@ -2104,14 +2041,12 @@ c
         prescc=pres0+radpint+frp
         pres1=fpressu(tef,dhn,pop)
         dhf=dhn*prescc/(pres1)
-c       write(*,'(" P/k P_H/k:",2(1pe11.4))')
-c     &          fpressu(tef,dhf,pop)/rkb, dhf*tef
       endif
       def=feldens(dhf,pop)
 c
-c************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c   write(*,*)'***COMPARES END VALUES WITH PREVIOUS STEP'
-c************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       call difhhe (pop, popend, difend)
       call difhhe (pop, poppre, difpre)
@@ -2137,9 +2072,9 @@ c
    80  format(t7,0pf8.0,5(f8.3),3(1pg9.2))
       endif
 c
-c***************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  write(*,*)'AVERAGE QUANTITIES FOR THE SPACE STEP CONSIDERED'
-c***************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c
       rww=1.d0
@@ -2167,9 +2102,9 @@ c
         rad=0.d0
       endif
 c
-c****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  write(*,*)'CHECK CONVERGENCE OF END VALUES WITH PREVIOUS STEP'
-c****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c
       if ((difg.ge.1.d0).and.(difend.gt.0.001d0)) then
@@ -2197,13 +2132,13 @@ c
       telast=t
       frx=1.d0-pop(jpoen,ielen)
 c
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c      write(*,*)'END CHECK CONVERGENCE STEP'
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c      write(*,*)'INTEGRATES COLUMN DENSITY AND END DIFFUSE FIELD'
-c****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (jtrans.eq.'OUTW') then
         frdw=1.d0
@@ -2230,10 +2165,10 @@ c
       imod='COLD'
       call sumdata (t, de, dh, dvol, dr, disav, imod)
 c
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c      write(*,*)'CALCULATION OF AVERAGE QUANTITIES '
 c       EQUAL VOLUMES
-c*****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (jgeo.eq.'S') then
         rww=(1.d0+((0.75d0*dr)/(rad0+dr)))**2
@@ -2268,10 +2203,10 @@ c
         rad=0.d0
       endif
 c
-c*************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c    ***CALCULATION OF IONIC POPULATION AND TEMPERATURE WHEN
 c       OR IF SOURCE SWITCHED OFF
-c*************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       dtoff=dmax1(0.d0,(telap-((2.d0*disav)/cls))-tlife)
       if ((jeq.ne.'E').and.(dtoff.gt.0.0)) then
@@ -2291,11 +2226,11 @@ c
 c
       endif
 c
-c*********************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c      write(*,*)'COMPUTES SPECTRUM OF THE REGION CONSIDERED'
 c
-c*********************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       imod='REST'
 c     Calculate total cooling rate of the plasma
@@ -2608,14 +2543,7 @@ c Main output
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      open (luop,file=filna,status='OLD',access='APPEND')
-      open (lupf,file=filnb,status='OLD',access='APPEND')
-      open (lups,file=filnc,status='OLD',access='APPEND')
-      open (lunt,file=filnt,status='OLD',access='APPEND')
-c
-      if (jall.eq.'Y') then
-        open (lusl,file=newfil,status='OLD',access='APPEND')
-      endif
+      call appendp6files ()
 c
       if ((grainmode.eq.1).and.(pahmode.eq.1)) then
 c
@@ -2813,15 +2741,15 @@ c
 c
       if (jall.eq.'Y') then
         write (lusl,370)
-        write (lusl,380) m,t,de,dh,dvol,disav,(dis0-remp),dr
+        write (lusl,380) m,t,de,dh,fi,dvol*rdvol,disav,(dis0-remp),dr
   370    format(//' Step   Te Ave.(K)   ',
      & '  ne(cm^-3)   ',
      & '  nH(cm^-3)   ',
      & '  fill. Fact. ',
-     & '  dVol Unit.  ',
-     & '    dR (cm)   ',
+     & '  dVol.  ',
      & ' Dist.Ave.(cm)',
-     & ' Din-Remp.(cm)')
+     & ' Din-Remp.(cm)',
+     & '    dR (cm)   ')
   380    format(1x,i4,8(1pg14.7)/)
       endif
 c
@@ -2835,15 +2763,13 @@ c
         call wionabal (lusl, popint)
       endif
 c
-      close (lunt)
-      close (luop)
-      close (lupf)
-      if (jall.eq.'Y') close (lusl)
-      close (lups)
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     ***END OUTPUT
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      call closep6files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2956,9 +2882,7 @@ c     write(*,*)'MODEL ENDED ; OUTPUT RESULTS **************'
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      open (luop,file=filna,status='OLD',access='APPEND')
-      open (lupf,file=filnb,status='OLD',access='APPEND')
-      open (lunt,file=filnt,status='OLD',access='APPEND')
+      call appendp6files ()
 c
       write (luop,420)
       write (lunt,420)
@@ -3011,101 +2935,75 @@ c
 c
       endif
 c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
       if (jsou.eq.'Y') then
 c
-c     Down stream photon field
+c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
 c
         caller='P6'
-        pfx='spec_tot'
+        pfx='flam_'
         np=lenv(pfx)
 c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-c       wmod='NFNU'
-c       call wpsou (caller,pfx,np,wmod,t,de,dh,dr, 1.0d0,tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
+c      write nebula spectrum into lam - flam (ergs/s/cm2/A)
 c
-c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
+        do j=1,infph
+         tp1(j)=tphot(j)
+        enddo
 c
         savemod=lmod
         lmod='NEBL'
         call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
-c
-        caller='P6'
-        pfx='sp_neb_'
-        np=lenv(pfx)
-c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-c       wmod='NFNU'
-c       call wpsou (caller,pfx,np,wmod,t,de,dh,dr, 1.0d0,tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        lmod=savemod
-c
-c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
-c
-        savemod=lmod
-        lmod='NEBC'
-        call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
-c
-        caller='P6'
-        pfx='sp_nebc_'
-        np=lenv(pfx)
-c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
+        do j=1,infph
+         tp2(j)=tphot(j)
+        enddo
         lmod=savemod
 c
         savemod=lmod
         lmod='SO'
         call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
-c
-        caller='P6'
-        pfx='sp_src_'
-        np=lenv(pfx)
-c
-        wmod='LFLM'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
-        wmod='REAL'
-        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+        do j=1,infph
+         tp3(j)=tphot(j)
+        enddo
         lmod=savemod
 c
+        savemod=lmod
+        lmod='NEBC'
+        call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
+        do j=1,infph
+         tp4(j)=tphot(j)
+        enddo
+        lmod=savemod
+c
+        call wplam4 (caller, pfx, np, t, de, dh, dr, 1.d0)
+c
+        lmod=savemod
         call totphot2 (te1, dh1, dis0, dr, 0.0d0, wdil0, lmod)
 c
       endif
 c
 c    ***COMPUTE AVERAGE SPECTRUM AND WRITES IT IN FILE PHN
 c
-      close (lupf)
-c
       call avrdata
 c
       call wrsppop (luop)
-      close (luop)
-      close (lunt)
 c
       linemod='LAMB'
       spmod='REL'
 c
-      open (lusp,file=filnd,status='OLD',access='APPEND')
       call spec2 (lusp, linemod, spmod)
-      close (lusp)
 c
-      write (*,490) fnam
-  490 format(//' Output created &&&&&& File : ',a/)
+      call closep6files ()
 c
+      write (*,490) banfil,filnam
+  490 format(//a12,' Output created &&&&&& File : ',a/)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
-c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine p6fheader (newfil, banfil, fnam, filna, filnb, filnc,
-     &filnd, filnt, filn, filnem, filin, luop, lupf, lusl, lups, lusp,
-     &lunt, luions, luemiss, lulin, dhn, fin)
+      subroutine p6headers (banfil, dhn, fin)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3115,157 +3013,130 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
+      include 'p6blocks.inc'
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c           Variables
 c
-      real*8 dhn,fin,blum,ilum
+      real*8 dhn,fin
       real*8 dht,zi(mxelem)
+c
+      real*8 blum,ilum
+c
       integer*4 i, ie, j, at, io, np
       integer*4 idx, nt, nl, itr
-      integer*4 luop,lups,lupf,lusl,lusp,lunt,lulin
-      integer*4 luions(mxelem)
-      integer*4 luemiss(mxmonmlions)
+      integer*4 nr, nf, nb
+c
       character fn*64
       character abundtitle*64
       character pfx*64,sfx*4
-      character newfil*64
-      character filna*64
       character banfil*64
-      character fnam*64
-      character filnb*64
-      character filin*64
-      character filnc*64
-      character filnd*64
-      character filnt*64
-      character filn(mxelem)*64
-      character filnem(mxmonmlions)*64
+      character el*4
 c
+      real*8 lamvac,lamair
+      real*8 densnum, fnair
+      integer*4 mlen
       integer*4 lenv
 c
-      dht=zen*dhn
-c
-      fn=' '
-c     pfx='photn'
-      pfx='photn'//' '
-      np=lenv(pfx)
-      sfx='ph6'
-      call newfile (pfx, np, sfx, 3, fn)
-      filna=fn(1:np+8)
-      fnam=filna
-c
-      fn=' '
-c     pfx='phapn'
-      pfx='phapn'//' '
-      np=lenv(pfx)
-      sfx='ph6'
-      call newfile (pfx, np, sfx, 3, fn)
-      filnb=fn(1:np+8)
-c
-      fn=' '
-c     pfx='phlss'
-      pfx='phlss'//' '
-      np=lenv(pfx)
-      sfx='ph6'
-      call newfile (pfx, np, sfx, 3, fn)
-      filnc=fn(1:np+8)
-c
-      fn=' '
-c     pfx='phsem'
-      pfx='phsem'//' '
-      np=lenv(pfx)
-      sfx='ph6'
-      call newfile (pfx, np, sfx, 3, fn)
-      filnt=fn(1:np+8)
-c
-      fn=' '
-c     pfx='emiss'
-      pfx='emiss'//' '
-      np=lenv(pfx)
-      sfx='csv'
-      call newfile (pfx, np, sfx, 3, fn)
-      filin=fn(1:np+8)
-c
-      fn=' '
-c     pfx='spec'
-      pfx='spec'//' '
-      np=lenv(pfx)
-      sfx='csv'
-      call newfile (pfx, np, sfx, 3, fn)
-      filnd=fn(1:np+8)
-c
-      if (jall.eq.'Y') then
-        fn=' '
-c       pfx='allion'
-        pfx='ions_'//' '
-        np=lenv(pfx)
-        sfx='ph6'
-        call newfile (pfx, np, sfx, 3, fn)
-        newfil=fn(1:np+8)
-      endif
+      dht=densnum(dhn)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      open (luop,file=filna,status='NEW')
-      open (lupf,file=filnb,status='NEW')
-      open (lups,file=filnc,status='NEW')
-      open (lusp,file=filnd,status='NEW')
-      open (lunt,file=filnt,status='NEW')
-      if (jlin.eq.'Y') then
-        open (lulin,file=filin,status='NEW')
-      endif
-      if (jall.eq.'Y') then
-        open (lusl,file=newfil,status='NEW')
-      endif
+      call appendp6files ()
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     ***WRITES ON FILE INITIAL PARAMETERS
 c
-      write (luop,10) theversion,runname,banfil,fnam
-      write (lupf,10) theversion,runname,banfil,fnam
-      write (lups,10) theversion,runname,banfil,fnam
-      write (lusp,10) theversion,runname,banfil,fnam
-      write (lunt,10) theversion,runname,banfil,fnam
+      nr=mlen(runname)
+      nb=mlen(banfil)
+      nf=mlen(filnam)
+   10 format(//,
+     & ' PHOTO 6: Photoionisation Model',/,
+     & ' ============================================',/,
+     & ' (Diffuse Field , Radiation Pressure)',//
+     & ' Calculated by MAPPINGS V ',a8,/,
+     & ' Run   :, ',a/
+     & ' Input :, ',a/
+     & ' Output:, ',a/)
+      write (luop,10) theversion,runname,banfil,filnam
+      write (lupf,10) theversion,runname,banfil,filnam
+      write (lups,10) theversion,runname,banfil,filnam
+      write (lusp,10) theversion,runname,banfil,filnam
+      write (lunt,10) theversion,runname,banfil,filnam
       if (jall.eq.'Y') then
-        write (lusl,10) theversion,runname,banfil,fnam
+        write (lusl,10) theversion,runname,banfil,filnam
       endif
       if (jlin.eq.'Y') then
-        write (lulin,10) theversion,runname,banfil,fnam
+        write (lulin,10) theversion,runname,banfil,filnam
       endif
-   10 format(
-     &'::::::::::::::::::::::::::::::::::::'
-     &,'::::::::::::::::::::::::::::::::::::',/
-     & ' Photoionisation model P6, MAPPINGS V ',a8,/
-     &'::::::::::::::::::::::::::::::::::::'
-     &,'::::::::::::::::::::::::::::::::::::',/
-     &' (Diffuse Field , Robust Integration, Radiation Pressure)',//
-     &,' Run   :, ',a96/
-     &,' Input :, ',a32/
-     &,' Output:, ',a32/)
+      if (jiel.eq.'Y') then
+        do idx=1,ieln
+          write (luions(idx),10) theversion,runname(1:nr),banfil(1:nb),
+     &     filnam(1:nf)
+        enddo
+      endif
+      if (jcol.eq.'Y') then
+        do idx=1,ieln
+          write (lucols(idx),10) theversion,runname(1:nr),banfil(1:nb),
+     &     filnam(1:nf)
+        enddo
+      endif
+      if (jiem.eq.'Y') then
+        do idx=1,iemn
+          write (luemiss(idx),10) theversion,runname(1:nr),banfil(1:nb),
+     &     filnam(1:nf)
+        enddo
+      endif
       write (lupf,20)
-   20 format(' This file contains the plasma properties for ',
+   20 format(' Plasma properties for ',
      &'each model step,',/,
      &' and the pre-ionisation conditions used.',/)
-   30 format(' This file contains the ionisation fraction for ',
+   30 format(' Nebula structure summary,',/,
+     & ' and the strong line emissivities.',/,
+     & ' Weight by shell volumes to get relative luminosities.'/)
+      write (lunt,30)
+   40 format(' Ionisation fraction for ',
      &'all atomic elements as a function of distance,',/,
-     &' and the abundances used. See photn for model details.',/)
+     &' and the abundances used. See photn for model details.'/ )
       if (jall.eq.'Y') then
-        write (lusl,30)
+        write (lusl,40)
       endif
-      write (lunt,40)
-   40 format(' This file contains the nebula structure summary,',/,
-     &' and the strong line emissivities. See photn for model details/')
-   50 format(' This file has line emissivities (erg/cm^3/s/sr) for '
-     &'up to ',i2,' selected lines as a function of distance.',
-     & ' See photn file for model details',/)
+   50 format(' Line emissivities (erg/cm^3/s/sr) for'
+     & ' ',i3,' lines as a function of distance or radius.',/,
+     & ' Weight by shell volumes x4pi to get luminosities.'/)
       if (jlin.eq.'Y') then
-        write (lulin,50) mxmonlines
+        write (lulin,50) njlines
+      endif
+   55   format(' Line emissivities (erg/cm^3/s/sr) for'
+     & ' multi-level atom models as a function of distance.',/,
+     & ' Weight by shell volumes x4pi to get luminosities.'/)
+      if (jiem.eq.'Y') then
+        do idx=1,iemn
+          write (luemiss(idx),55)
+        enddo
+      endif
+      if (jiel.eq.'Y') then
+        do idx=1,ieln
+          el=elem(iel(idx))
+          write (luions(idx),'(" Ionic Fraction Structure : X")')
+          write (luions(idx),'(/" Element : ",a2/)') el
+        enddo
+      endif
+      if (jcol.eq.'Y') then
+        do idx=1,ieln
+          el=elem(iel(idx))
+          write (lucols(idx),'(" Ionic Column Density Structure : N")')
+          write (lucols(idx),'(/" Element : ",a2/)') el
+        enddo
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     abundances file header
 c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       abundtitle=' Initial Abundances :'
       do i=1,atypes
@@ -3285,8 +3156,26 @@ c
       if (jall.eq.'Y') then
         call wabund (lusl)
       endif
+      if (jlin.eq.'Y') then
+        call wabund (lulin)
+      endif
+      if (jiem.eq.'Y') then
+        do idx=1,ieln
+          call wabund (luemiss(idx))
+        enddo
+      endif
+      if (jcol.eq.'Y') then
+        do idx=1,ieln
+          call wabund (lucols(idx))
+        enddo
+      endif
+      if (jiel.eq.'Y') then
+        do idx=1,ieln
+          call wabund (luions(idx))
+        enddo
+      endif
 c
-      close (lusp)
+      call wabund (lusp)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3318,9 +3207,9 @@ c
       call inulum (soupho, blum, ilum)
 c
   100  format(//,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' :: Inner Boundary Ionisation Parameters ::::::::::::::::',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
+     & ' ** Inner Boundary Ionisation Parameters ****************',/,
+     & ' ********************************************************',/,
      & '  Bolometric Flux : ',1pg12.5,' (erg/s/cm^2)',/,
      & '  Ionising Flux   : ',1pg12.5,' (erg/s/cm^2)',/,
      & '  Ionising Phot Flux FQ     : ',1pg12.5,' (phots/s/cm^2)',/,
@@ -3328,7 +3217,7 @@ c
      & '  Ionisation parameter QHDH : ',1pg12.5,'(cm/s)',/,
      & '  Ionisation parameter U(N) : ',1pg12.5/
      & '  Ionisation parameter U(H) : ',1pg12.5/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
       write (*,100) blum,ilum,qht,qhdnin,qhdhin,unin,uhin
       write (luop,100) blum,ilum,qht,qhdnin,qhdhin,unin,uhin
       open (lusp,file=filnd,status='OLD',access='APPEND')
@@ -3336,15 +3225,15 @@ c
       close (lusp)
 c
   110 format(/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' :: Radiation Field and Parameters ::::::::::::::::::::::',/,
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
+     & ' ** Radiation Field and Parameters **********************',/,
+     & ' ********************************************************',/,
      & t5, ' At estimated T_inner :',1pg10.3,' K',/,
      & t5,' Rsou.',t20,' Remp.',t35,' Rmax',t50,' <DILU>',/,
      & t5, 1pg10.3,t20,1pg10.3,t35,1pg10.3,t50,1pg10.3/
      & t5,' <Hdens>',t20,' <Ndens>',t35,' Fill Factor',/
      & t5, 1pg10.3,t20,1pg10.3,t35,0pf9.6,//
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
+     & ' ********************************************************',/,
      & t5,' FQ tot',t20,' Log FQ',t35,' LQ tot',t50,' Log LQ',/
      & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
      & t5,' Q(N) in',t20,' Log Q(N)',t35,' <Q(N)>',t50,' Log<Q(N)>',/
@@ -3355,7 +3244,7 @@ c
      & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
      & t5,' U(H) in',t20,' Log U(H)',t35,' <U(H)>',t50,' Log<U(H)>',/
      & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
-     & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
+     & ' ********************************************************',/)
 c
       write (luop,110) tinner,rstar,remp,rmax,wdpl,dhn,dht,fin,qht,
      &dlog10(qht),astar*qht,dlog10(astar*qht),qhdnin,dlog10(qhdnin),
@@ -3457,7 +3346,7 @@ c
       if (jeq.eq.'P') write (luop,240)
   240 format(t100,'RECscal',t109,'DToff')
       close (luop)
-      write (*,250) fnam
+      write (*,250) filnam
   250 format(/' Output in file : ',a/)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3639,3 +3528,348 @@ c
       return
 c
       end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine p6filenames ()
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c     set initial file unit numbers and default mode flags
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+      include 'p6blocks.inc'
+c
+      integer*4 i, np
+      integer*4 nt, nl, at, io, idx, ie
+c
+      character fn*64
+      character pfx*64,sfx*4
+c
+      integer*4 lenv
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c units
+c
+c     photn filna default
+      luop=20
+c     phapn filnb default
+      lupf=21
+c     phlss filnc default
+      lups=22
+c     spec filnd default
+      lusp=23
+c     phsem filnt default
+      lunt=24
+c     bands filpb jbnd
+      lupb=25
+c     lines single file filin jlin
+      lulin=26
+c     rates file filrt jrat
+      lurt=27
+c     allions  filio jall
+      lusl=28
+c     luions, filn jiel
+      do i=1,atypes
+        luions(i)=32+i
+      enddo
+c     luemiss filnem jiem
+      do i=1,atypes
+        luemiss(i)=32+atypes+i
+      enddo
+c     jcol, lucols, filncol
+      do i=1,mxmonmlions
+        lucols(i)=32+atypes+atypes+i
+      enddo
+      ir1=lucols(mxmonmlions)+1
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c 20
+      fn=' '
+      pfx='photn'//' '
+      np=lenv(pfx)
+      sfx='ph6'
+      call newfile (pfx, np, sfx, 3, fn)
+      filna=fn(1:np+8)
+      filnam=filna
+c 21
+      fn=' '
+      pfx='phapn'//' '
+      np=lenv(pfx)
+      sfx='ph6'
+      call newfile (pfx, np, sfx, 3, fn)
+      filnb=fn(1:np+8)
+c 22
+      fn=' '
+      pfx='phlss'//' '
+      np=lenv(pfx)
+      sfx='ph6'
+      call newfile (pfx, np, sfx, 3, fn)
+      filnc=fn(1:np+8)
+c 23
+      fn=' '
+      pfx='spec'//' '
+      np=lenv(pfx)
+      sfx='csv'
+      call newfile (pfx, np, sfx, 3, fn)
+      filnd=fn(1:np+8)
+c 24
+      fn=' '
+      pfx='phsem'//' '
+      np=lenv(pfx)
+      sfx='ph6'
+      call newfile (pfx, np, sfx, 3, fn)
+      filnt=fn(1:np+8)
+c 25
+      fn=' '
+      pfx='bands'//' '
+      np=lenv(pfx)
+      sfx='csv'
+      call newfile (pfx, np, sfx, 3, fn)
+      filpb=fn(1:np+8)
+c 26
+      fn=' '
+      pfx='lines'//' '
+      np=lenv(pfx)
+      sfx='csv'
+      call newfile (pfx, np, sfx, 3, fn)
+      filin=fn(1:np+8)
+c 27
+      fn=' '
+      pfx='rates'//' '
+      np=lenv(pfx)
+      sfx='csv'
+      call newfile (pfx, np, sfx, 3, fn)
+      filrt=fn(1:np+8)
+c 28
+      fn=' '
+      pfx='ions_'//' '
+      np=lenv(pfx)
+      sfx='ph6'
+      call newfile (pfx, np, sfx, 3, fn)
+      filio=fn(1:np+8)
+c
+      sfx='csv'
+      do i=1,ieln
+        ie=iel(i)
+        fn=' '
+        pfx=elem(ie)
+        if (elem_len(ie).eq.1) then
+          pfx=elem(ie)//'_'
+          np=lenv(pfx)
+        else
+          pfx=elem(ie)
+          np=lenv(pfx)
+        endif
+        call newfile (pfx, np, sfx, 3, fn)
+        filn(i)=fn(1:np+8)
+c
+        if (elem_len(ie).eq.1) then
+          pfx=elem(ie)//'_col'
+        else
+          pfx=elem(ie)//'col'
+        endif
+        np=lenv(pfx)
+        call newfile (pfx, np, sfx, 3, fn)
+        filncol(i)=fn(1:np+8)
+      enddo
+c
+      do i=1,iemn
+        idx=iem(i)
+c
+        at=fmatom(idx)
+        io=fmion(idx)
+        nt=nfmtrans(idx)
+        nl=fmnl(idx)
+        fn=' '
+c
+        pfx(1:32)=' '
+        pfx=elem(at)//rom(io)
+        np=lenv(pfx)
+        pfx=pfx(1:np)//'_'//jpfx//' '
+c
+        np=lenv(pfx)
+        sfx='csv'
+        call newfile (pfx, np, sfx, 3, fn)
+        filnem(i)=fn(1:np+8)
+      enddo
+c
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine createp6files ()
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+      include 'p6blocks.inc'
+c
+      integer*4 i
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c  Create All files NEW
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c      photn
+      open (luop,file=filna,status='NEW')
+c      phapn
+      open (lupf,file=filnb,status='NEW')
+c      phlss
+      open (lups,file=filnc,status='NEW')
+c      spec
+      open (lusp,file=filnd,status='NEW')
+c      phsem
+      open (lunt,file=filnt,status='NEW')
+      if (jbnd.eq.'Y') then
+c     bands
+        open (lupb,file=filpb,status='NEW')
+      endif
+      if (jlin.eq.'Y') then
+c     lines
+        open (lulin,file=filin,status='NEW')
+      endif
+      if (jrat.eq.'Y') then
+c     lines
+        open (lurt,file=filrt,status='NEW')
+      endif
+      if (jall.eq.'Y') then
+c     ions_
+        open (lusl,file=filio,status='NEW')
+      endif
+      if (jiel.eq.'Y') then
+        do i=1,ieln
+          open (luions(i),file=filn(i),status='NEW')
+        enddo
+      endif
+      if (jiem.eq.'Y') then
+        do i=1,iemn
+          open (luemiss(i),file=filnem(i),status='NEW')
+        enddo
+      endif
+      if (jcol.eq.'Y') then
+        do i=1,ieln
+          open (lucols(i),file=filncol(i),status='NEW')
+        enddo
+      endif
+c
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine appendp6files ()
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+      include 'p6blocks.inc'
+c
+      integer*4 i
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c  Open All files APPEND
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c     photn
+      open (luop,file=filna,status='OLD',access='APPEND')
+c     phapn
+      open (lupf,file=filnb,status='OLD',access='APPEND')
+c     phlss
+      open (lups,file=filnc,status='OLD',access='APPEND')
+c     spec
+      open (lusp,file=filnd,status='OLD',access='APPEND')
+c     phsem
+      open (lunt,file=filnt,status='OLD',access='APPEND')
+      if (jbnd.eq.'Y') then
+c     bands
+        open (lupb,file=filpb,status='OLD',access='APPEND')
+      endif
+      if (jlin.eq.'Y') then
+c     lines
+        open (lulin,file=filin,status='OLD',access='APPEND')
+      endif
+      if (jrat.eq.'Y') then
+c     lines
+        open (lurt,file=filrt,status='OLD',access='APPEND')
+      endif
+      if (jall.eq.'Y') then
+c     ions_
+        open (lusl,file=filio,status='OLD',access='APPEND')
+      endif
+      if (jiel.eq.'Y') then
+        do i=1,ieln
+          open (luions(i),file=filn(i),status='OLD',access='APPEND')
+        enddo
+      endif
+      if (jiem.eq.'Y') then
+        do i=1,iemn
+          open (luemiss(i),file=filnem(i),status='OLD',access='APPEND')
+        enddo
+      endif
+      if (jcol.eq.'Y') then
+        do i=1,ieln
+          open (lucols(i),file=filncol(i),status='OLD',access='APPEND')
+        enddo
+      endif
+c
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine closep6files ()
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+      include 'p6blocks.inc'
+c
+      integer*4 i
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c  Close All P7 files If Open
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      logical unitopen
+c
+      inquire (unit=luop,opened=unitopen)
+      if (unitopen) close (luop)
+      inquire (unit=lupf,opened=unitopen)
+      if (unitopen) close (lupf)
+      inquire (unit=lups,opened=unitopen)
+      if (unitopen) close (lups)
+      inquire (unit=lusp,opened=unitopen)
+      if (unitopen) close (lusp)
+      inquire (unit=lunt,opened=unitopen)
+      if (unitopen) close (lunt)
+      inquire (unit=lupb,opened=unitopen)
+      if (unitopen) close (lupb)
+      inquire (unit=lulin,opened=unitopen)
+      if (unitopen) close (lulin)
+      inquire (unit=lurt,opened=unitopen)
+      if (unitopen) close (lurt)
+      inquire (unit=lusl,opened=unitopen)
+      if (unitopen) close (lusl)
+c
+      do i=1,ieln
+        inquire (unit=luions(i),opened=unitopen)
+        if (unitopen) close (luions(i))
+      enddo
+c
+      do i=1,iemn
+        inquire (unit=luemiss(i),opened=unitopen)
+        if (unitopen) close (luemiss(i))
+      enddo
+c
+      do i=1,ieln
+        inquire (unit=lucols(i),opened=unitopen)
+        if (unitopen) close (lucols(i))
+      enddo
+c
+      inquire (unit=ir1,opened=unitopen)
+      if (unitopen) close (ir1)
+c
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

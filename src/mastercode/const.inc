@@ -1,10 +1,18 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c     MAPPINGS V.  An Astrophysical Plasma Modelling Code.
+c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
 c
-c     copyright 1975,1981,1993,1996,2008,2017,2022
 c
-c     Version: v5.1.21
+c     Creative Commons v4.0 International
+c     By Attribution, Share Alike
+c     CC-BY-SA-4.0Intl https://creativecommons.org
+c     1976 -- 2022+ Ralph Sutherland,
+c     Michael Dopita, Luc Binette, Ian Evans,
+c     Brent Groves, David Nicholls,
+c     Adam D. Thomas, Jin Yi-Fei
+c
+c
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -631,7 +639,7 @@ c 25000 if not using CMFGEN inputs.  A major memory hog!
 c
 c      up to 560000 bins - CMFGEN!
 c
-      parameter( mxflxbins = 25000)
+      parameter( mxflxbins = 560000)
 c
 c number of energy bins in OPTXAGNF model
       parameter( mxoptxbins = 5000)

@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yie-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -85,7 +85,7 @@ c
 c
 c main files, model and specs
 c
-      integer*4 luop,lusp,lupt
+      integer*4 luop,lusp,lupt,lupc
 c
 c common files
 c
@@ -95,38 +95,47 @@ c shock only files
 c
       integer*4 lualsh,lurtsh,lulsh,luionsh(mxelem)
 c
+c precursor only files
+c
+      integer*4 lualpc,lurtpc,lulpc,luionpc(mxelem)
+c
       integer*4 ie,jnorm,converged,useprecfile
       integer*4  count,step,np,finalit
 c
       common /shock5I/ ie,jnorm,converged,
      & count,step,np,finalit,useprecfile
 c
-      common /shock5L/ luop,lusp,lupt,
+      common /shock5L/ luop,lusp,lupt,lupc,
      & ludy,lucl,lupb,lupf,
-     & lualsh,lurtsh,lulsh,luionsh
+     & lualsh,lurtsh,lulsh,luionsh,
+     & lualpc,lurtpc,lulpc,luionpc
 c
 c file names
 c
       character abundtitle*24
 c
       character fn*64,fsh*64,fsp*64
-      character flsh*64
+      character flsh*64,flpc*64
       character fionsh(mxelem)*64
+      character fionpc(mxelem)*64
       character fl*64,fd*64,fr*64,fa*64
 c
       character frpc*64,frsh*64,fash*64
 c
-      character fpb*64,fcl*64,fpm*64,fsm*64,fpf*64
+      character fpb*64,fcl*64
+      character fpm*64,fsm*64
+      character fpc*64,fpt*64
+      character fapc*64,fpf*64
 c
       character pfx*64,sfx*4,caller*64
       character s5pfx*64,subname*64,pollfile*64
       character cht*64,pht*64,clt*64
 c
       common /shock5C/ abundtitle,
-     & fn,fsh,fsp,flsh,
-     & fionsh,fl,fd,fr,fa,
-     & frsh,fash,fpb,fcl,
-     & fpm,fsm,fpf,
+     & fn,fsh,fsp,flsh,flpc,
+     & fionsh,fionpc,fl,fd,fr,fa,
+     & frpc,frsh,fash,fpb,fcl,
+     & fpm,fsm,fpc,fpt,fapc,fpf,
      & pfx,sfx,caller,
      & s5pfx,subname,pollfile,
      & cht,pht,clt

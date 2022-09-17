@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21
+#    v5.1.21dev
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51
+OUTNAME = map51b
 #
 #-------------------------------
 #---------- Directories --------
@@ -21,48 +21,47 @@ BACKDIR = mastercode/
 #---------- Compilers ----------
 #-------------------------------
 #
-#  comment out and in as needed
-#   for different machines
-#
 # GCC FORTRAN - gfortran generic
-# tested with v4.8 but should work with v4.5 or newer
+# tested with v11 but should work with v4.5 or newer
 # on OSX, use MacPorts.org to get gcc4.8 or newer.
 # In Linux, use normal repositories, cygwin - try pgi fortran
 #
-#  GCC FORTRAN v4.9-9.x - added fpe suppression switch, otherwise as v4.8
-#  xcode 12+ -isysroot`xcrun --show-sdk-path`
-#  gcc10 flto=8 parallel obj opt
+#  GCC FORTRAN v4.9-11.x - added fpe suppression switch,
+#  otherwise as v4.8
+#  xcode 11+ -isysroot`xcrun --show-sdk-path` if -lSyslib is not found
+#  gcc10+ flto=8 parallel obj opt
 #
 #WARN   = -Wall
-#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized
+#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
 WARN   =
 #
-#  GCC FORTRAN v4.9-10.x - added fpe suppression switch, otherwise as v4.8
+# plain
 #
 # FC     = gfortran -std=legacy
-# #LDR    =  ${WARN} -g -O1 -fbounds-check -ffpe-summary='none'
 # LDR    = ${WARN} -Ofast -ffpe-summary='none'
 # OPTS   = -c ${LDR} -I${INCDIR}
 # LIB    =
 #
-#  GCC FORTRAN v4.9-10.x - added fpe suppression switch, otherwise as v4.8
-#  Xcode 11 /MacOS 11+ newer if -lSyslib is not found
-# use: -isysroot`xcrun --show-sdk-path`
-# GCC10 flto=8 parallel single obj optimization
+# if recursion is ever needed; -fmax-stack-var-size=7618560
 #
-FC     = /opt/local/bin/gfortran -std=legacy -march=native
-#LDR    =  ${WARN} -g -O1 -fbounds-check -ffpe-summary='none'
-LDR    = ${WARN} -Ofast -flto=8 -ffpe-summary='none'
+FC     = gfortran -std=legacy -march=native
+LDR    =  ${WARN} -Ofast -ffpe-summary='none'
+#LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
-LIB    = -isysroot`xcrun --show-sdk-path`
 #
+UNAME = $(shell uname)
 #
-#  GCC FORTRAN v4.5-4.8 and earlier
+ifeq ($(UNAME),Darwin)
+	LIB    = -isysroot`xcrun --show-sdk-path`
+	XSYS = Mac (wich xcrun)
+else
+	LIB =
+	XSYS = Linux
+endif
 #
-#FC     = gfortran -std=legacy
-#LDR    = -Ofast
-#OPTS   = -c ${LDR} -I${INCDIR}
-#LIB    =
+start:
+	@echo 'hello' x$(UNAME)x
+#
 #
 #     Generic FORTRAN
 #
@@ -71,12 +70,6 @@ LIB    = -isysroot`xcrun --show-sdk-path`
 #OPTS   = -c ${LDR} -I${INCDIR}
 #LIB    =
 #
-#     pgi FORTRAN
-#
-#FC     = pgf90
-#LDR    = -fast
-#OPTS   = -c ${LDR} -I${INCDIR}
-#LIB    =
 #
 #
 .SUFFIXES:
@@ -88,6 +81,7 @@ LIB    = -isysroot`xcrun --show-sdk-path`
 #
 INCS =  ${INCDIR}cblocks.inc \
 	${INCDIR}const.inc \
+	${INCDIR}p6blocks.inc \
 	${INCDIR}p7blocks.inc \
 	${INCDIR}s5blocks.inc
 #
@@ -194,7 +188,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21 make options:
+	@echo MAPPINGS V v5.1.21dev make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"
@@ -267,6 +261,7 @@ ${EXEDIR}${OUTNAME}: ${INCS} ${OBJ}
 #
 build:
 	@echo ' Building ${OUTNAME}:'
+	@echo ' Compiling for $(XSYS)'
 	@echo ' Copying over .f files'
 	@cp ${BACKDIR}*.f ${CODDIR}
 	@echo ' Copying over include files'

@@ -1149,6 +1149,26 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (jlin.eq.'Y') write (lulsh,10) iterations,theversion
       if (bandsmod.eq.'Y') write (lupb,10) iterations,theversion
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if (lupt.gt.0) write (lupt,10) iterations,theversion
+      if (lupc.gt.0) write (lupc,10) iterations,theversion
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,10) iterations,theversion
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),10) iterations,theversion
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,10) iterations,theversion
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') write (lulpc,10) iterations,theversion
+      endif
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c  put runname string and master file name in each file created
 c
@@ -1170,6 +1190,24 @@ c
       if (bandsmod.eq.'Y') write (lupb,20) runname,fsm
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (lupt.gt.0) write (lupt,20) runname,fsm
+      if (lupc.gt.0) write (lupc,20) runname,fsm
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,20) runname,fsm
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),20) runname,fsm
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,20) runname,fsm
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') write (lulpc,20) runname,fsm
+      endif
+c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Write Model Parameters
@@ -1217,6 +1255,25 @@ c
       if (bandsmod.eq.'Y') write (lupb,30) abnfile,ionsetup,srcfile
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       write (lupt,30) abnfile,ionsetup,srcfile
+      write (lupc,30) abnfile,ionsetup,srcfile
+c
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,30) abnfile,ionsetup,srcfile
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),30) abnfile,ionsetup,srcfile
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,30) abnfile,ionsetup,srcfile
+      endif
+      if (lualpc.gt.0) then
+        if (jlin.eq.'Y') write (lualpc,30) abnfile,ionsetup,srcfile
+      endif
+c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     abundances file header
@@ -1235,6 +1292,7 @@ c
       if (lupt.gt.0) call dispabundances (lupt, zion, abundtitle)
 c
       call wabund (lusp)
+      if (lupc.gt.0) call wabund (lupc)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1333,6 +1391,7 @@ c
       call protostate (luop)
       call protostate (lusp)
       if (lupt.gt.0) call protostate (lupt)
+      if (lupc.gt.0) call protostate (lupc)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1343,6 +1402,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       write (luop,130)
       write (lusp,130)
       if (lupt.gt.0) write (lupt,130)
+      if (lupc.gt.0) write (lupc,130)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ratmod.eq.'Y') write (lurtsh,130)
       if (dynmod.eq.'Y') write (ludy,130)
@@ -1368,11 +1428,46 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (jlin.eq.'Y') call wionpop (lulsh, pop)
       if (bandsmod.eq.'Y') call wionpop (lupb, pop)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,130)
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),130)
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,130)
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') write (lulpc,130)
+      endif
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (lupt.gt.0) call wionpop (lupt, pop)
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') call wionpop (lurtpc, pop)
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            call wionpop (luionpc(i), pop)
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') call wionpop (lualpc, pop)
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') call wionpop (lulpc, pop)
+      endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (ratmod.eq.'Y') then
         call wmodel (lurtsh, 0.d0, 0.0d0, 0.d0, 0.0d0, 'LOSH')
+        if (lurtpc.gt.0) call wmodel (lurtpc, 0.d0, 0.0d0, 0.d0, 0.0d0,
+     &   'LOSH')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1380,7 +1475,6 @@ c
       if (tsrmod.eq.'Y') then
 c
 c B  : Ion balance files.'
-c      luionsh(i)=32+i
 c
   140  format(//,
      & ' #[1], [2] <X>     , [3] DeltaX  , [4] t       , [5] dt      ,',
@@ -1389,6 +1483,10 @@ c
         do i=1,ieln
           write (luionsh(i),'(//," Element : ",a2)') elem(iel(i))
           write (luionsh(i),140) (j+9,rom(j),j=1,maxion(iel(i)))
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),'(//," Element : ",a2)') elem(iel(i))
+            write (luionpc(i),140) (j+9,rom(j),j=1,maxion(iel(i)))
+          endif
         enddo
       endif
 c
@@ -1471,12 +1569,20 @@ c
         write (lulsh,'("Run: ",a96)') runname
         write (lulsh,200) (elem(emlinlistatom(itr)),
      &   rom(emlinlistion(itr)),itr=1,njlines)
+        if (lulpc.gt.0) then
+          write (lulpc,'("Run: ",a96)') runname
+          write (lulpc,200) (elem(emlinlistatom(itr)),
+     &     rom(emlinlistion(itr)),itr=1,njlines)
+        endif
   210  format(
      & ' # [1] <X>, [2] DeltaX, [3] dX, [4] t, [5] dt,  [6] <T>,'
      & ' [7] <ne>, [8] <nH> , [9]  <nT>, [10] logQH, [11]  logUH,',
      & ' [12]  logQN, [13]   <HB>,',
      &   16(',',f12.3,'[',i2,']'))
         write (lulsh,210) (emlinlist(itr),itr+13,itr=1,njlines)
+        if (lulpc.gt.0) then
+          write (lulpc,210) (emlinlist(itr),itr+13,itr=1,njlines)
+        endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1488,7 +1594,7 @@ c
 c     Close all files and flush
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      call closes5files ()
+      call closeS5files ()
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
@@ -2456,6 +2562,34 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         write (lupt,80) 100.d0*rmserr,itcount,iabs(nfs0-nfs)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+        wmod='NEBL'
+        call multizone (nfs, x, nte, ne, nh, popfr, popintfr, wmod)
+c
+        caller='S5'
+        pfx='PCup'//s5pfx(1:nprefix)
+        np=lenv(pfx)
+c
+        wmod='LFLM'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+c
+        wmod='REAL'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+c
+        if (lmod.eq.'Y') then
+          wmod='NFNU'
+          call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+        endif
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c collect precursor spectrum
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+        call avrdata ()
+c
+        spmod='REL'
+        linemod='LAMB'
+        call spec2 (lupc, linemod, spmod)
+c
         call wrsppop (lupt)
 c
       endif
@@ -2482,6 +2616,102 @@ c  Close precursor files
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       call closeS5files ()
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine multizone (n, x, nte, ne, nh, popfr, popintfr, smod)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c Compute the emission from a multi-zone structure saved in the
+c x, nte, ne, nh, popfr, popintfr arrays. A general low level routine.
+c src not used so far, but it will in the future when we also add
+c diffuse field
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+c
+      integer*4 n,idx
+      real*8 x(mxifsteps),nte(mxifsteps)
+      real*8 nh(mxifsteps),ne(mxifsteps)
+      real*8 popfr(mxifsteps, mxion, mxelem)
+      real*8 popintfr(mxifsteps, mxion, mxelem)
+c
+      real*8 t,tdw,tup,de,dh,dvdw,dvup,rdvol,irdvol,dvol
+      real*8 gdil,x0,dx,dxdw,dxup
+      real*8 p1(mxion, mxelem), p2(mxion, mxelem)
+      real*8 sumhb,hbl
+c
+      character imod*4,specmode*4,smod*4,subname*64
+c
+      real*8 feldens
+c
+      gdil=0.5d0
+      fi=1.d0
+c
+      call zerbuf ()
+c global modes
+      jspot='N'
+      jcon='Y'
+      jgeo='P'
+      jtrans='LODW'
+      jden='C'
+      specmode='NEBL'
+      subname='MultiZone'
+c
+      rdvol=1.0d0
+      irdvol=1.d0
+      vunilog=0.d0
+      sumhb=0.0d0
+c
+      do idx=1,n-1
+c
+        dx=x(idx+1)-x(idx)
+        x0=x(idx)
+c
+        call copysteppop (idx, popintfr, popint)
+        call copysteppop (idx, popfr, p1)
+        call copysteppop (idx+1, popfr, p2)
+        call averinto (0.5d0, p1, p2, pop)
+        t=0.5d0*(nte(idx)+nte(idx+1))
+        dh=nh(idx)
+        de=feldens(dh,pop)
+        ne(idx)=de
+c
+        call localem (t, de, dh)
+        hbl=hbeta*fpi*dx
+        sumhb=sumhb+hbl
+        jgeo='P'
+c        write(*,'(8(1pg11.4,x))') x0,dx,t,dh,de,hbeta*fpi,hbl,sumhb
+        specmode='NEBL'
+        call totphot2 (t, dh, x0, dx, 0.d0, gdil, specmode)
+        call zetaeff (dh)
+c
+c     accumulate spectrum
+c
+        tdw=nte(idx+1)
+        tup=nte(idx)
+        dxdw=dx
+        dvdw=0.d0
+        dxup=0.d0
+        dvup=0.d0
+c
+        jgeo='P'
+        jtrans='LODW'
+        call newdif2 (tdw, tup, dh, x0, dxdw, dvdw, dxup, dvup, gdil,
+     &   jtrans)
+c
+        imod='ALL'
+        dvol=dx*irdvol
+        call sumdata (t, de, dh, dvol, dx, x0, imod)
+c
+      enddo
+c     write(*,*) 'multizone Hbeta:', sumhb, dlog10(sumhb)
+c
+c     call avrdata()
+c
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3734,6 +3964,7 @@ c
       luop=20
       lusp=21
       lupt=22
+      lupc=23
 c
 c common files
 c
@@ -3750,6 +3981,15 @@ c
       ieln=4
       do i=1,atypes
         luionsh(i)=30+i
+      enddo
+c
+c precursor only files to disabled set to 0
+c
+      lualpc=31+atypes
+      lurtpc=32+atypes
+      lulpc=33+atypes
+      do i=1,atypes
+        luionpc(i)=33+atypes+i
       enddo
 c
 c     Name "sh5" general output files
@@ -3776,6 +4016,7 @@ c spec line list files
 c always in csv files lists
 c
 c      open (lusp,file=fsh,status='NEW') shock
+c      open (lupc,file=fpc,status='NEW') precursor
 c
 c
       pfx='specSH'//s5pfx(1:nprefix)
@@ -3784,6 +4025,13 @@ c
       fsh=' '
       call newfile (pfx, np, sfx, 3, fn)
       fsh=fn(1:np+8)
+c
+      pfx='specPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      sfx='csv'
+      fpc=' '
+      call newfile (pfx, np, sfx, 3, fn)
+      fpc=fn(1:np+8)
 c
 c    allions files , shock and precursors
 c    allmod=Y
@@ -3796,17 +4044,29 @@ c
       sfx='sh5'
       call newfile (pfx, np, sfx, 3, fn)
       fash=fn(1:np+8)
+c     Precursor file
+      pfx='ionPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      call newfile (pfx, np, sfx, 3, fn)
+      fapc=fn(1:np+8)
 c
 c rates fitles , shock and precursors
 c ratmod=Y
 c
 c        open (lurtsh,file=frsh,status='NEW')
+c        open (lurtpc,file=frpc,status='NEW')
 c
       pfx='ratSH'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='sh5'
       call newfile (pfx, np, sfx, 3, fn)
       frsh=fn(1:np+8)
+c     Rates file for precursor
+      pfx='ratPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      sfx='sh5'
+      call newfile (pfx, np, sfx, 3, fn)
+      frpc=fn(1:np+8)
 c
 c shock 'dynamics' file
 c dynmod=Y
@@ -3848,12 +4108,22 @@ c
 c line structures, shocks and precursors
 c jlin=Y
 c
+c      open (lulsh,file=flsh,status='NEW')
+c      open (lulpc,file=flpc,status='NEW')
+c
       pfx='linSH'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='csv'
       flsh=' '
       call newfile (pfx, np, sfx, 3, fn)
       flsh=fn(1:np+8)
+c
+      pfx='linPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      sfx='csv'
+      flpc=' '
+      call newfile (pfx, np, sfx, 3, fn)
+      flpc=fn(1:np+8)
 c
 c       ionisation structure files -  all names a made only 4 are
 c       used atm tsrmod=Y  i is 1-mxelem and is effectively the
@@ -3866,6 +4136,7 @@ c
 c B  : Ion balance files.' for just the 4 chosen mapping z to i later
 c
 c          open (luionsh(i),file=fionsh(i),status='NEW')
+c          open (luionpc(i),file=fionpc(i),status='NEW')
 c
       sfx='csv'
       do i=1,atypes
@@ -3880,6 +4151,16 @@ c       mapppings internal ids not z, names mapped in prefs
         call newfile (pfx, np, sfx, 3, fn)
         fash=fn(1:np+8)
         fionsh(i)=fash
+c
+        if (elem_len(i).eq.1) then
+          pfx='elPC'//s5pfx(1:nprefix)//elem(i)//'_'
+        else
+          pfx='elPC'//s5pfx(1:nprefix)//elem(i)
+        endif
+        np=lenv(pfx)
+        call newfile (pfx, np, sfx, 3, fn)
+        fapc=fn(1:np+8)
+        fionpc(i)=fapc
 c
       enddo
 c
@@ -3924,6 +4205,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       open (lusp,file=fsh,status='NEW')
+      if (lupc.gt.0) open (lupc,file=fpc,status='NEW')
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3937,12 +4219,18 @@ c B  : Ion balance files.'
 c
         do i=1,ieln
           open (luionsh(i),file=fionsh(iel(i)),status='NEW')
+          if (luionpc(i).gt.0) then
+            open (luionpc(i),file=fionpc(iel(i)),status='NEW')
+          endif
         enddo
 c
       endif
 c
       if (allmod.eq.'Y') then
         open (lualsh,file=fash,status='NEW')
+        if (lualpc.gt.0) then
+          open (lualpc,file=fapc,status='NEW')
+        endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3969,6 +4257,8 @@ c
 c D  : All Rates file.
 c
         open (lurtsh,file=frsh,status='NEW')
+c       Rates file for precursor
+        if (lurtpc.gt.0) open (lurtpc,file=frpc,status='NEW')
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4030,12 +4320,13 @@ c     line structures, shocks and precursors
 c     jlin=Y
 c
         open (lulsh,file=flsh,status='NEW')
+        if (lulpc.gt.0) open (lulpc,file=flpc,status='NEW')
       endif
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine closes5files ()
+      subroutine closeS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4058,6 +4349,10 @@ c
       endif
       inquire (unit=lusp,opened=unitopen)
       if (unitopen) close (lusp)
+      if (lupc.gt.0) then
+        inquire (unit=lupc,opened=unitopen)
+        if (unitopen) close (lupc)
+      endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       inquire (unit=lurtsh,opened=unitopen)
       if (unitopen) close (lurtsh)
@@ -4076,9 +4371,28 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       inquire (unit=lupb,opened=unitopen)
       if (unitopen) close (lupb)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if (lurtpc.gt.0) then
+        inquire (unit=lurtpc,opened=unitopen)
+        if (unitopen) close (lurtpc)
+      endif
+      do i=1,ieln
+        if (luionpc(i).gt.0) then
+          inquire (unit=luionpc(i),opened=unitopen)
+          if (unitopen) close (luionpc(i))
+        endif
+      enddo
+      if (lualpc.gt.0) then
+        inquire (unit=lualpc,opened=unitopen)
+        if (unitopen) close (lualpc)
+      endif
+      if (lualpc.gt.0) then
+        inquire (unit=lulpc,opened=unitopen)
+        if (unitopen) close (lulpc)
+      endif
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       subroutine appendS5files ()
 c
@@ -4105,6 +4419,7 @@ c
       if (lupt.gt.0) open (lupt,file=fpm,status='OLD',access='APPEND')
 c
       open (lusp,file=fsh,status='OLD',access='APPEND')
+      if (lupc.gt.0) open (lupc,file=fpc,status='OLD',access='APPEND')
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4119,12 +4434,20 @@ c
         do i=1,ieln
           open (luionsh(i),file=fionsh(iel(i)),status='OLD',access='APPE
      &ND')
+          if (luionpc(i).gt.0) then
+            open (luionpc(i),file=fionpc(iel(i)),status='OLD',access='AP
+     &PEND')
+          endif
         enddo
 c
       endif
 c
       if (allmod.eq.'Y') then
         open (lualsh,file=fash,status='OLD',access='APPEND')
+c         Precursor file
+        if (lualpc.gt.0) then
+          open (lualpc,file=fapc,status='OLD',access='APPEND')
+        endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4151,6 +4474,10 @@ c
 c D  : All Rates file.
 c
         open (lurtsh,file=frsh,status='OLD',access='APPEND')
+c       Rates file for precursor
+        if (lurtpc.gt.0) then
+          open (lurtpc,file=frpc,status='OLD',access='APPEND')
+        endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4213,6 +4540,9 @@ c     line structures, shocks and precursors
 c     jlin=Y
 c
         open (lulsh,file=flsh,status='OLD',access='APPEND')
+        if (lulpc.gt.0) then
+          open (lulpc,file=flpc,status='OLD',access='APPEND')
+        endif
       endif
 c
       return

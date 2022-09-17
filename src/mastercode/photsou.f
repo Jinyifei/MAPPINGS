@@ -564,12 +564,14 @@ c     & '   IFI :   Input as a fraction of ionising intensity'/
      & '    C1 :   ATLAS9 Stellar models    (30000 - 50000K)'/
      & '    C2 :   TLUSTY Stellar models    (27500 - 55000K)'/
      & '    C3 :   CMFGEN Stellar models    (27500 - 48500K)'/
+     & '    C4 :   WMBASIC Stellar Moont, Westmoquette 2004'/
      & '    P1 :   TNMAP CSPN New HNi models (50kK -  190kK)'/
      & '    P2 :   TNMAP CSPN Old HCa models (50kK - 1000kK)'/
      & ' Non-Stellar Sources:'/
      & '    F  :   Local ISRF (Mathis etal (1993)'/
      & '    G  :   AGN (Bland-Hawthorn et al 2013) '/
      & '    J  :   AGN (Component Library v2, Jin et al 2012) '/
+     & '    OX :   OPTXAGNF full AGN model '/
      & ' File I/O Sources:'/
      & '    HS :   Input SLUG2 spectrum file (n*m POINTS)'/
      & '    H  :   Input SB99 spectrum1 file (n*1221 POINTS)'/
@@ -628,7 +630,7 @@ c WMBASIC Moont, Westmoquette 2004
       if ((iso.eq.'C').and.(sub.eq.'4')) goto 260
 c Theta 1C 40M_0 CMFGEN MODELS
       if ((iso.eq.'C').and.(sub.eq.'5')) goto 270
-c 4G polynomial 'stars'
+c Theta 1C 40M_0 20 atom solar stars
       if ((iso.eq.'C').and.(sub.eq.'6')) goto 280
 c 4G polynomial 'stars'
       if ((iso.eq.'C').and.(sub.eq.'7')) goto 220

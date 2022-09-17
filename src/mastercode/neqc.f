@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -66,6 +66,7 @@ c
       luop=20
       lusp=21
       lupt=0
+      lupc=0
 c
 c common files
 c
@@ -82,6 +83,15 @@ c
       ieln=4
       do i=1,atypes
         luionsh(i)=30+i
+      enddo
+c
+c precursor only files disabled set to 0
+c
+      lualpc=0
+      lurtpc=0
+      lulpc=0
+      do i=1,atypes
+        luionpc(i)=0
       enddo
 c
       fsm=' '

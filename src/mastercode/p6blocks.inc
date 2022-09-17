@@ -9,18 +9,18 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yi-Fei
+c     Adam D. Thomas, Jin Yie-Fei
 c
 c
-c       Version v5.1.21dev
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c     Photo 7 shared Variables - Mostly Files
+c       Version v5.1.21
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      character p7pfx*32
+c     Photo 6 shared Variables - Mostly Files
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      character p6pfx*32
 c
 c modes in cblocks
 c
@@ -50,7 +50,7 @@ c
       integer*4 lucols(mxmonmlions)
       integer*4 ir1
 c
-      common /photoP7L/ luop,lups,lupf,lusl,
+      common /photoP6L/ luop,lups,lupf,lusl,
      & lusp,lunt,lurt,lulin,ir1,lupb,
      & luions,lucols,luemiss
 c
@@ -68,7 +68,7 @@ c
       character filncol(mxelem)*64
       character filnem(mxmonmlions)*64
 c
-      common /photoP7C/ p7pfx,filio,filnam,
+      common /photoP6C/ p6pfx,filio,filnam,
      & filnb,filin,filnc,filnd,filnt,filna,filpb,
      & filn,filncol,filnem,filrt
 c
