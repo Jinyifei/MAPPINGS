@@ -6,15 +6,15 @@
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51b
+OUTNAME = map51dev
 #
 #-------------------------------
 #---------- Directories --------
 #-------------------------------
 #
-EXEDIR = ../lab/
-INCDIR = includes/
-CODDIR = workcode/
+EXEDIR  = ../lab/
+INCDIR  = includes/
+CODDIR  = workcode/
 BACKDIR = mastercode/
 #
 #-------------------------------

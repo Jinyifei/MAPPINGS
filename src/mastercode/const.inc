@@ -1,6 +1,6 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
+c     MAPPINGS V.  An Astrophysical Plasma Modelling Code.
 c
 c
 c     Creative Commons v4.0 International

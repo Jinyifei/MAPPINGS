@@ -13,7 +13,7 @@ X     : eXit with current source
 X     : eXit with current balance
 X     : eXit with current source
 v     : define shock by velocity, iterating on preshock if neeeded
-A     : Alpha = 1/beta  0 = no field, >> 1 is field dominated
+A     : Alpha = 1/beta  0 = no field, >> 1 is field dominated at shock
 1.0
 100.0 1.0 200.0  te ne v km/s
 F      : Use full internal diffuse radiation field

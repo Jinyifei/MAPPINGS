@@ -5,14 +5,14 @@ c
 c
 c     Creative Commons v4.0 International
 c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
+c     CC-BY-SA-4.0Intl https:/s/creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

@@ -6,7 +6,7 @@
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51b
+OUTNAME = map51dev
 #
 #-------------------------------
 #---------- Directories --------

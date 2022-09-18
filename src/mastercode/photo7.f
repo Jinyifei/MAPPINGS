@@ -518,7 +518,7 @@ c
      &     qheii,qhdnin,qhdhin,qhdnav,qhdhav,unin,uhin,unav,uhav
   380 format(//,
      & ' ********************************************************',/,
-     & '   Filled Sphere Parameters*',/,
+     & '   Filled Sphere Parameters:',/,
      & ' ********************************************************',/,
      & '  Estimated HII   Stromgren radius:',1pg10.3,' cm.',/,
      & '  Estimated HeIII Stromgren radius:',1pg10.3,' cm.',/,
