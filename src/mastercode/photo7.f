@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -49,6 +49,7 @@ c
       character carac*36,model*64
       character caract*4,ilgg*4
       character banfil*64
+c
       character outsettings*64,outshow*64
 c
 c           Functions
@@ -78,11 +79,12 @@ c
       call popcha (model)
       model='Photo 7'
 c
+   20 format(a)
+c
 c     artificial support for low ionisation species
 c
       if (expertmode.gt.0) then
 c
-   20    format(a)
         carac(1:33)='   '
         j=1
         do i=3,atypes
@@ -92,31 +94,30 @@ c
           carac(j:j+2)=caract//'   '
         enddo
         i=j+2
-   40   write (*,50) carac(1:i)
+   30   write (*,40) carac(1:i)
         ilgg='    '
 c
-   50    format(//' Allow the elements : ',a/
+   40    format(//' Allow the elements : ',a/
      & ' to recombine freely? (y/n) : ',$)
 c
         read (*,20) ilgg
         call toup (ilgg(1:1), ilgg)
 c
-        if (ilgg.eq.'Y') goto 55
-        if ((ilgg.ne.'N')) goto 40
+        if (ilgg.eq.'Y') goto 50
+        if ((ilgg.ne.'N')) goto 30
 c
         do i=3,atypes
           arad(2,i)=dabs(arad(2,i))
           if (ipote(1,i).lt.epotmi) arad(2,i)=-arad(2,i)
         enddo
 c
-   55   continue
+   50   continue
 c
       endif
 c
 c     ***CHOOSING PHOTON SOURCE AND GEOMETRICAL PARAMETERS
 c
       model='Photo 7'
-c
       call photsou (model)
 c
 c     Possible to have no photons
@@ -215,9 +216,9 @@ c
 c
   120 format(//
      & ' ********************************************************',/,
-     & '  Source Total Luminosity              * ', 1pg12.5/
-     & '  Source Ionising (13.6eV+) Luminosity * ', 1pg12.5/
-     & '  Source Ionising (13.6eV+) Photons    * ', 1pg12.5/
+     & '  Source Total Luminosity              : ', 1pg12.5/
+     & '  Source Ionising (13.6eV+) Luminosity : ', 1pg12.5/
+     & '  Source Ionising (13.6eV+) Photons    : ', 1pg12.5/
      & ' ********************************************************',/)
             write (*,120) blum,ilum,qht*astar
 c
@@ -256,7 +257,7 @@ c
 c
   160  format(//,
      & ' ********************************************************',/,
-     & '  Source Radius * ',1pg12.5,' cm',/,
+     & '  Source Radius : ',1pg12.5,' cm',/,
      & ' ********************************************************',/)
             write (*,160) rstsun
             astar=fpi*rstsun*rstsun
@@ -367,7 +368,7 @@ c
         write (*,240)
   240    format(/'  Density Function ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' n(x) = n0*[fx:exp((x-a)/r0) + fp:((x/a)**b)]+c  ',/,
+     & ' n(x) = n0*[fx*exp((x-a)/r0) + fp*((x/a)**b)]+c  ',/,
      & ' Give parameters n0 fx fp a b c & r0 (cgs): ',$)
         read (*,*) ofac,xfac,pfac,afac,bfac,cfac,scalen
         dhn=ofac
@@ -517,27 +518,27 @@ c
      &     qheii,qhdnin,qhdhin,qhdnav,qhdhav,unin,uhin,unav,uhav
   380 format(//,
      & ' ********************************************************',/,
-     & '   Filled Sphere Parameters*',/,
+     & '   Filled Sphere Parameters:',/,
      & ' ********************************************************',/,
-     & '  Estimated HII   Stromgren radius*',1pg10.3,' cm.',/,
-     & '  Estimated HeIII Stromgren radius*',1pg10.3,' cm.',/,
+     & '  Estimated HII   Stromgren radius:',1pg10.3,' cm.',/,
+     & '  Estimated HeIII Stromgren radius:',1pg10.3,' cm.',/,
      & ' ********************************************************',/,
-     & '  Photon Luminosity LQH    *',1pg10.3, ' Phot/s',/,
-     & '  Photon Luminosity LQHeII *',1pg10.3, ' Phot/s',/,
-     & '  Photon Flux       FQH    *',1pg10.3, ' Phot/cm2/s',/,
-     & '  Photon Flux       FQHeII *',1pg10.3, ' Phot/cm2/s',/,
+     & '  Photon Luminosity LQH    :',1pg10.3, ' Phot/s',/,
+     & '  Photon Luminosity LQHeII :',1pg10.3, ' Phot/s',/,
+     & '  Photon Flux       FQH    :',1pg10.3, ' Phot/cm2/s',/,
+     & '  Photon Flux       FQHeII :',1pg10.3, ' Phot/cm2/s',/,
      & ' ********************************************************',/,
-     & '        QHDN inner   * ',1pg12.5,' cm/s',/,
-     & '        QHDH inner   * ',1pg12.5,' cm/s',/,
-     & '          <QHDN>     * ',1pg12.5,' cm/s',/,
-     & '          <QHDH>     * ',1pg12.5,' cm/s',/,
-     & '        U(N) inner   * ',1pg12.5,/,
-     & '        U(H) inner   * ',1pg12.5,/,
-     & '          <U(N)>     * ',1pg12.5,/,
-     & '          <U(H)>     * ',1pg12.5,/,
+     & '        QHDN inner   : ',1pg12.5,' cm/s',/,
+     & '        QHDH inner   : ',1pg12.5,' cm/s',/,
+     & '          <QHDN>     : ',1pg12.5,' cm/s',/,
+     & '          <QHDH>     : ',1pg12.5,' cm/s',/,
+     & '        U(N) inner   : ',1pg12.5,/,
+     & '        U(H) inner   : ',1pg12.5,/,
+     & '          <U(N)>     : ',1pg12.5,/,
+     & '          <U(H)>     : ',1pg12.5,/,
      & ' ********************************************************',//,
      & ' Set initial radius in terms of distance or Q(N), U(N),',
-     & ' Q(H), or U(H) (d/q/n/h/u):',$)
+     & ' Q(H), or U(H) (d/q/n/h/u)*',$)
           read (*,20) ilgg
           call toup (ilgg(1:1), ilgg)
 c
@@ -638,20 +639,20 @@ c
      & ' ********************************************************',/,
      & '   Partially Filled Sphere Parameters*',/,
      & ' ********************************************************',/,
-     & '  Empty inner radius *',1pg12.5,' cm',/,
-     & '  Outer HII   radius *',1pg12.5,' cm.',/,
-     & '  Outer HeIII radius *',1pg12.5,' cm.',/,
+     & '  Empty inner radius :',1pg12.5,' cm',/,
+     & '  Outer HII   radius :',1pg12.5,' cm.',/,
+     & '  Outer HeIII radius :',1pg12.5,' cm.',/,
      & ' ********************************************************',/,
-     & '        QHDN inner   * ',1pg12.5,' cm/s',/,
-     & '        QHDH inner   * ',1pg12.5,' cm/s',/,
-     & '          <QHDN>     * ',1pg12.5,' cm/s',/,
-     & '          <QHDH>     * ',1pg12.5,' cm/s',/,
-     & '        U(N) inner   * ',1pg12.5,/,
-     & '        U(H) inner   * ',1pg12.5,/,
-     & '          <U(N)>     * ',1pg12.5,/,
-     & '          <U(H)>     * ',1pg12.5,/,
-     & '   Total intensity   * ',1pg12.5,' erg/s/cm2' /,
-     & '   Ionizing intensity* ',1pg12.5,' erg/s/cm2',/,
+     & '        QHDN inner   : ',1pg12.5,' cm/s',/,
+     & '        QHDH inner   : ',1pg12.5,' cm/s',/,
+     & '          <QHDN>     : ',1pg12.5,' cm/s',/,
+     & '          <QHDH>     : ',1pg12.5,' cm/s',/,
+     & '        U(N) inner   : ',1pg12.5,/,
+     & '        U(H) inner   : ',1pg12.5,/,
+     & '          <U(N)>     : ',1pg12.5,/,
+     & '          <U(H)>     : ',1pg12.5,/,
+     & '   Total intensity   : ',1pg12.5,' erg/s/cm2' /,
+     & '   Ionizing intensity: ',1pg12.5,' erg/s/cm2',/,
      & ' ********************************************************'/)
           write (*,440) remp,rstromhb,rstromheb,qhdnin,qhdhin,qhdnav,
      &     qhdhav,unin,uhin,unav,uhav,blum,ilum
@@ -689,7 +690,7 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c     ***IF GEOMETRY PLANE-PARALLEL *
+c     ***IF GEOMETRY PLANE-PARALLEL :
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -790,13 +791,13 @@ c
      & ' ********************************************************',/,
      & ' ** Inner Boundary Ionisation Parameters ****************',/,
      & ' ********************************************************',/,
-     & '  Bolometric Flux * ',1pg12.5,' (erg/s/cm^2)',/,
-     & '  Ionising Flux   * ',1pg12.5,' (erg/s/cm^2)',/,
-     & '  Ionising Phot Flux FQ     * ',1pg12.5,' (phots/s/cm^2)',/,
-     & '  Ionisation parameter QHDN * ',1pg12.5,'(cm/s)',/,
-     & '  Ionisation parameter QHDH * ',1pg12.5,'(cm/s)',/,
-     & '  Ionisation parameter U(N) * ',1pg12.5/
-     & '  Ionisation parameter U(H) * ',1pg12.5/
+     & '  Bolometric Flux : ',1pg12.5,' (erg/s/cm^2)',/,
+     & '  Ionising Flux   : ',1pg12.5,' (erg/s/cm^2)',/,
+     & '  Ionising Phot Flux FQ     : ',1pg12.5,' (phots/s/cm^2)',/,
+     & '  Ionisation parameter QHDN : ',1pg12.5,'(cm/s)',/,
+     & '  Ionisation parameter QHDH : ',1pg12.5,'(cm/s)',/,
+     & '  Ionisation parameter U(N) : ',1pg12.5/
+     & '  Ionisation parameter U(H) : ',1pg12.5/
      & ' ********************************************************',/)
           write (*,570) blum,ilum,qht,qhdnav,qhdhav,unav,uhav
 c
@@ -867,7 +868,7 @@ c
         write (*,640)
   640    format(/'  Fixed Thermal Profile:',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',//
-     & ' f(x) = t0:[fx:exp((x-ta)/r0) + fp:((x/ta)::tb)]+tc  ',/
+     & ' f(x) = t0*[fx*exp((x-ta)/r0) + fp*((x/ta)**tb)]+tc  ',/
      & ' (with r in r0 units , t0<10K as log)',/
      & ' Give parameters t0 ta tb tc r0 : ',$)
         read (*,*) tofac,txfac,tpfac,tafac,tbfac,tcfac,tscalen
@@ -977,8 +978,8 @@ c
       if (usekappa) then
   780    format(/
      & ' ********************************************************',/,
-     & ' Kappa Electron Distribution Enabled *',/,
-     & ' Electron Kappa * ',1pg11.4,/
+     & ' Kappa Electron Distribution Enabled :',/,
+     & ' Electron Kappa : ',1pg11.4,/
      & ' ********************************************************',/)
         write (*,780) kappa
       endif
@@ -987,7 +988,7 @@ c
      & ' ********************************************************',/,
      & '   Radiation Field and Parameters*',/,
      & ' ********************************************************',/,
-     & t5, ' At estimated T_inner *',1pg10.3,' K',/,
+     & t5, ' At estimated T_inner :',1pg10.3,' K',/,
      & t5,' Rsou.',t18,' Remp.',t32,' Rmax',t46,' <DILU>',/,
      & t5, 1pg10.3,t18,1pg10.3,t32,1pg10.3,t46,1pg10.3/
      & t5,' <Hdens>',t18,' <Ndens>',t32,' Fill Factor',/
@@ -1446,7 +1447,7 @@ c
           iem(i)=idx
         enddo
         write (*,*)
-        write (*,*) ' Monitoring Ion Emission:'
+        write (*,*) 'Monitoring Ion Emission:'
         do i=1,iemn
           write (*,'("Ion:",x,i3,": ",a2,a6)') i,elem(fmatom(iem(i))),
      &     rom(fmion(iem(i)))
@@ -1564,13 +1565,13 @@ c
 c
       integer*4 lut0,m,maxio,mma,n,np,nidh,niter
       integer*4 i,j,k,ndifatoms,atom
-      integer*4 idx, nt, itr, init_it
+      integer*4 idx, nt, itr,init_it
 c
 c      integer*4 ielement
 c
       integer*4 fuvmin,fuvmax,pahabsmax
 c
-      character jjd*4, pollfile*12,tab*4
+      character jjd*4, pollfile*16,tab*4
       character banfil*64
       character imod*4, lmod*4, nmod*4,wmod*4,ispo*4
       character linemod*4, spmod*4, savemod*4
@@ -2170,10 +2171,8 @@ c
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
 c      write(*,*)'CALCULATION OF IONIC POPULATION AT THE OUTER'
 c     of current step
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (jden.eq.'C') then
         dh1=dhn
@@ -2760,7 +2759,7 @@ c
             caller='P7'
             np=5
             pfx='grpot'
-            sfx='ph7'
+            sfx='ph6'
             call newfile (pfx, np, sfx, 3, fn)
             chargefile=fn(1:(np+3+5))
             open (ir1,file=chargefile,status='NEW')
@@ -3153,7 +3152,7 @@ c
      &'of sight for a ring aperture of radii :',2(1pg10.3))
       write (lupf,460) tempre,tspr
   460 format(//t4,'Preionisation conditions for step#0 ',
-     &'for all elements   (TEpr :',0pf8.0,' Time *',1pg9.2,' )  :'/)
+     &'for all elements   (TEpr :',0pf8.0,' Time :',1pg9.2,' )  :'/)
       write (lupf,470) (elem(i),i=1,atypes)
   470 format(' ',t8,16(4x,a2,4x)/)
       maxio=0
@@ -3274,9 +3273,9 @@ c
       real*8 dhn,fin
       real*8 dht,zi(mxelem)
 c
-      integer*4 i, j, at, io, np
+      integer*4 i, j, at, io
       integer*4 idx, nt, nl, itr
-      integer*4 nr, nf, nb
+      integer*4  nr, nf, nb
 c
       character abundtitle*64
       character banfil*64
@@ -3285,9 +3284,9 @@ c
       real*8 lamvac,lamair
       real*8 densnum, fnair
       integer*4 mlen
-      integer*4 lenv
 c
       dht=densnum(dhn)
+c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3314,10 +3313,12 @@ c
       write (lusp,10) theversion,runname,banfil,filnam
       write (lunt,10) theversion,runname,banfil,filnam
       if (jall.eq.'Y') then
-        write (lusl,10) theversion,runname,banfil,filnam
+        write (lusl,10) theversion,runname(1:nr),banfil(1:nb),
+     &   filnam(1:nf)
       endif
       if (jlin.eq.'Y') then
-        write (lulin,10) theversion,runname,banfil,filnam
+        write (lulin,10) theversion,runname(1:nr),banfil(1:nb),
+     &   filnam(1:nf)
       endif
       if (jiel.eq.'Y') then
         do idx=1,ieln
@@ -3340,7 +3341,7 @@ c
       write (lupf,20)
    20 format(' Plasma properties for ',
      &'each model step,',/,
-     &' and the pre-ionisation conditions used.',/)
+     &' and the pre-ionisation conditions used.'/ )
    30 format(' Nebula structure summary,',/,
      & ' and the strong line emissivities.',/,
      & ' Weight by shell volumes to get relative luminosities.'/)
@@ -3569,7 +3570,7 @@ c
      & ' ********************************************************',/,
      & ' ** Radiation Field and Parameters **********************',/,
      & ' ********************************************************',/,
-     & t5, ' At estimated T_inner *',1pg10.3,' K',/,
+     & t5, ' At estimated T_inner :',1pg10.3,' K',/,
      & t5,' Rsou.',t20,' Remp.',t35,' Rmax',t48,' <DILU>',/,
      & t5, 1pg10.3,t20,1pg10.3,t35,1pg10.3,t48,1pg10.3/
      & t5,' <Hdens>',t20,' <Ndens>',t35,' Fill Factor',/
@@ -3624,7 +3625,7 @@ c
 c
   330 format( ' Dust Parameters :',//
      & ,t5,' Alpha :',1pg10.3,/
-     & ,t5,' Graphite min:       max;',/
+     & ,t5,' Graphite min:       max:',/
      & ,t5,3x,1pg10.3,x,1pg10.3,/
      & ,t5,' Silicate min:       max:',/
      & ,t5,3x,1pg10.3,x,1pg10.3,/

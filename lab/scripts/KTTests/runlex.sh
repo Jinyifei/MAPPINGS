@@ -1,5 +1,5 @@
 #!/bin/tcsh
-# v5.1.21b
+# v5.1.21dev
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 # setenv NCPUS 4
@@ -9,7 +9,7 @@ set s="KTScripts"
 set r="KTResults"
 set i="KTInputs"
 set ext="ph6"
-set exe="map51b"
+set exe="map51dev"
 #
 echo " Cleaning work area..."
 cp "data/PHOTDAT.txt" "$i/PHOTDAT_prev.txt"
@@ -75,4 +75,4 @@ awk -f "$s/kt00T8.awk" photn0007.${ext}
 echo " Kentucky 2000 Tests completed. Output in $r/lextest_$d.txt"
 rm -f timing.txt map5output.txt
 rm -f *.${ext} *.csv *.sou
-cp "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"
+mv "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"

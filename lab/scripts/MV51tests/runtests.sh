@@ -1,12 +1,12 @@
 #!/bin/tcsh
-# v5.1.21b
+# v5.1.21dev
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 set d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`
 set r='MV51Results'
 set s='MV51Scripts'
 set i="MV51Inputs"
-set exe="Map51b"
+set exe="map51dev"
 #
 echo " MV 5.1 Tests: Clearing Area ..."
 cp "data/PHOTDAT.txt" "$i/PHOTDAT_prev.txt"
@@ -72,4 +72,4 @@ awk -f "$s/05_dustypah.awk" photn0005.ph6
 echo " MV 5.1 Tests completed. Output in "$r/MV52test_$d.txt""
 rm -f timing.txt map5output.txt
 rm -f *.ph6 *.nfn *.lam v*.sou *.bln *.sh5 *.csv SH*.sou PC*.sou
-cp "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"
+mv "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"

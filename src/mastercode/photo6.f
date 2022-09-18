@@ -477,19 +477,19 @@ c
      & '  Estimated HII   Stromgren radius*',1pg10.3,' cm.',/,
      & '  Estimated HeIII Stromgren radius*',1pg10.3,' cm.',/,
      & ' ********************************************************',/,
-     & '  Photon Luminosity LQH    *',1pg10.3, ' Phot/s',/,
-     & '  Photon Luminosity LQHeII *',1pg10.3, ' Phot/s',/,
-     & '  Photon Flux       FQH    *',1pg10.3, ' Phot/cm2/s',/,
-     & '  Photon Flux       FQHeII *',1pg10.3, ' Phot/cm2/s',/,
+     & '  Photon Luminosity LQH    :',1pg10.3, ' Phot/s',/,
+     & '  Photon Luminosity LQHeII :',1pg10.3, ' Phot/s',/,
+     & '  Photon Flux       FQH    :',1pg10.3, ' Phot/cm2/s',/,
+     & '  Photon Flux       FQHeII :',1pg10.3, ' Phot/cm2/s',/,
      & ' ********************************************************',/,
-     & '        QHDN inner   * ',1pg12.5,' cm/s',/,
-     & '        QHDH inner   * ',1pg12.5,' cm/s',/,
-     & '          <QHDN>     * ',1pg12.5,' cm/s',/,
-     & '          <QHDH>     * ',1pg12.5,' cm/s',/,
-     & '        U(N) inner   * ',1pg12.5,/,
-     & '        U(H) inner   * ',1pg12.5,/,
-     & '          <U(N)>     * ',1pg12.5,/,
-     & '          <U(H)>     * ',1pg12.5,/,
+     & '        QHDN inner   : ',1pg12.5,' cm/s',/,
+     & '        QHDH inner   : ',1pg12.5,' cm/s',/,
+     & '          <QHDN>     : ',1pg12.5,' cm/s',/,
+     & '          <QHDH>     : ',1pg12.5,' cm/s',/,
+     & '        U(N) inner   : ',1pg12.5,/,
+     & '        U(H) inner   : ',1pg12.5,/,
+     & '          <U(N)>     : ',1pg12.5,/,
+     & '          <U(H)>     : ',1pg12.5,/,
      & ' ********************************************************',//,
      & ' Set initial radius in terms of distance or Q(N), U(N),',
      & ' Q(H), or U(H) (d/q/n/h/u)*',$)
@@ -593,20 +593,20 @@ c
      & ' ********************************************************',/,
      & '   Partially Filled Sphere Parameters*',/,
      & ' ********************************************************',/,
-     & '  Empty inner radius *',1pg12.5,' cm',/,
-     & '  Outer HII   radius *',1pg12.5,' cm.',/,
-     & '  Outer HeIII radius *',1pg12.5,' cm.',/,
+     & '  Empty inner radius :',1pg12.5,' cm',/,
+     & '  Outer HII   radius :',1pg12.5,' cm.',/,
+     & '  Outer HeIII radius :',1pg12.5,' cm.',/,
      & ' ********************************************************',/,
-     & '        QHDN inner   * ',1pg12.5,' cm/s',/,
-     & '        QHDH inner   * ',1pg12.5,' cm/s',/,
-     & '          <QHDN>     * ',1pg12.5,' cm/s',/,
-     & '          <QHDH>     * ',1pg12.5,' cm/s',/,
-     & '        U(N) inner   * ',1pg12.5,/,
-     & '        U(H) inner   * ',1pg12.5,/,
-     & '          <U(N)>     * ',1pg12.5,/,
-     & '          <U(H)>     * ',1pg12.5,/,
-     & '   Total intensity   * ',1pg12.5,' erg/s/cm2' /,
-     & '   Ionizing intensity* ',1pg12.5,' erg/s/cm2',/,
+     & '        QHDN inner   : ',1pg12.5,' cm/s',/,
+     & '        QHDH inner   : ',1pg12.5,' cm/s',/,
+     & '          <QHDN>     : ',1pg12.5,' cm/s',/,
+     & '          <QHDH>     : ',1pg12.5,' cm/s',/,
+     & '        U(N) inner   : ',1pg12.5,/,
+     & '        U(H) inner   : ',1pg12.5,/,
+     & '          <U(N)>     : ',1pg12.5,/,
+     & '          <U(H)>     : ',1pg12.5,/,
+     & '   Total intensity   : ',1pg12.5,' erg/s/cm2' /,
+     & '   Ionizing intensity: ',1pg12.5,' erg/s/cm2',/,
      & ' ********************************************************',/)
           write (*,430) remp,rstromhb,rstromheb,qhdnin,qhdhin,qhdnav,
      &     qhdhav,unin,uhin,unav,uhav,blum,ilum
@@ -745,13 +745,13 @@ c
      & ' ********************************************************',/,
      & ' ** Inner Boundary Ionisation Parameters ****************',/,
      & ' ********************************************************',/,
-     & '  Bolometric Flux * ',1pg12.5,' (erg/s/cm^2)',/,
-     & '  Ionising Flux   * ',1pg12.5,' (erg/s/cm^2)',/,
-     & '  Ionising Phot Flux FQ     * ',1pg12.5,' (phots/s/cm^2)',/,
-     & '  Ionisation parameter QHDN * ',1pg12.5,'(cm/s)',/,
-     & '  Ionisation parameter QHDH * ',1pg12.5,'(cm/s)',/,
-     & '  Ionisation parameter U(N) * ',1pg12.5/
-     & '  Ionisation parameter U(H) * ',1pg12.5/
+     & '  Bolometric Flux : ',1pg12.5,' (erg/s/cm^2)',/,
+     & '  Ionising Flux   : ',1pg12.5,' (erg/s/cm^2)',/,
+     & '  Ionising Phot Flux FQ     : ',1pg12.5,' (phots/s/cm^2)',/,
+     & '  Ionisation parameter QHDN : ',1pg12.5,'(cm/s)',/,
+     & '  Ionisation parameter QHDH : ',1pg12.5,'(cm/s)',/,
+     & '  Ionisation parameter U(N) : ',1pg12.5/
+     & '  Ionisation parameter U(H) : ',1pg12.5/
      & ' ********************************************************',/)
           write (*,560) blum,ilum,qht,qhdnav,qhdhav,unav,uhav
 c
@@ -932,8 +932,8 @@ c
       if (usekappa) then
   770    format(/
      & ' ********************************************************',/,
-     & ' Kappa Electron Distribution Enabled *',/,
-     & ' Electron Kappa * ',1pg11.4,/
+     & ' Kappa Electron Distribution Enabled :',/,
+     & ' Electron Kappa : ',1pg11.4,/
      & ' ********************************************************',/)
         write (*,770) kappa
       endif
@@ -942,7 +942,7 @@ c
      & ' ********************************************************',/,
      & '   Radiation Field and Parameters*',/,
      & ' ********************************************************',/,
-     & t5, ' At estimated T_inner *',1pg10.3,' K',/,
+     & t5, ' At estimated T_inner :',1pg10.3,' K',/,
      & t5,' Rsou.',t18,' Remp.',t32,' Rmax',t46,' <DILU>',/,
      & t5, 1pg10.3,t18,1pg10.3,t32,1pg10.3,t46,1pg10.3/
      & t5,' <Hdens>',t18,' <Ndens>',t32,' Fill Factor',/
@@ -2996,7 +2996,7 @@ c
       call closep6files ()
 c
       write (*,490) banfil,filnam
-  490 format(//a12,' Output created &&&&&& File * ',a/)
+  490 format(//a12,' Output created &&&&&& File : ',a/)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
@@ -3120,15 +3120,15 @@ c
       if (jiel.eq.'Y') then
         do idx=1,ieln
           el=elem(iel(idx))
-          write (luions(idx),'(" Ionic Fraction Structure * X")')
-          write (luions(idx),'(/" Element * ",a2/)') el
+          write (luions(idx),'(" Ionic Fraction Structure : X")')
+          write (luions(idx),'(/" Element : ",a2/)') el
         enddo
       endif
       if (jcol.eq.'Y') then
         do idx=1,ieln
           el=elem(iel(idx))
-          write (lucols(idx),'(" Ionic Column Density Structure * N")')
-          write (lucols(idx),'(/" Element * ",a2/)') el
+          write (lucols(idx),'(" Ionic Column Density Structure : N")')
+          write (lucols(idx),'(/" Element : ",a2/)') el
         enddo
       endif
 c
@@ -3210,13 +3210,13 @@ c
      & ' ********************************************************',/,
      & ' ** Inner Boundary Ionisation Parameters ****************',/,
      & ' ********************************************************',/,
-     & '  Bolometric Flux * ',1pg12.5,' (erg/s/cm^2)',/,
-     & '  Ionising Flux   * ',1pg12.5,' (erg/s/cm^2)',/,
-     & '  Ionising Phot Flux FQ     * ',1pg12.5,' (phots/s/cm^2)',/,
-     & '  Ionisation parameter QHDN * ',1pg12.5,'(cm/s)',/,
-     & '  Ionisation parameter QHDH * ',1pg12.5,'(cm/s)',/,
-     & '  Ionisation parameter U(N) * ',1pg12.5/
-     & '  Ionisation parameter U(H) * ',1pg12.5/
+     & '  Bolometric Flux : ',1pg12.5,' (erg/s/cm^2)',/,
+     & '  Ionising Flux   : ',1pg12.5,' (erg/s/cm^2)',/,
+     & '  Ionising Phot Flux FQ     : ',1pg12.5,' (phots/s/cm^2)',/,
+     & '  Ionisation parameter QHDN : ',1pg12.5,'(cm/s)',/,
+     & '  Ionisation parameter QHDH : ',1pg12.5,'(cm/s)',/,
+     & '  Ionisation parameter U(N) : ',1pg12.5/
+     & '  Ionisation parameter U(H) : ',1pg12.5/
      & ' ********************************************************',/)
       write (*,100) blum,ilum,qht,qhdnin,qhdhin,unin,uhin
       write (luop,100) blum,ilum,qht,qhdnin,qhdhin,unin,uhin
@@ -3228,7 +3228,7 @@ c
      & ' ********************************************************',/,
      & ' ** Radiation Field and Parameters **********************',/,
      & ' ********************************************************',/,
-     & t5, ' At estimated T_inner *',1pg10.3,' K',/,
+     & t5, ' At estimated T_inner :',1pg10.3,' K',/,
      & t5,' Rsou.',t20,' Remp.',t35,' Rmax',t50,' <DILU>',/,
      & t5, 1pg10.3,t20,1pg10.3,t35,1pg10.3,t50,1pg10.3/
      & t5,' <Hdens>',t20,' <Ndens>',t35,' Fill Factor',/
