@@ -302,8 +302,8 @@ c
         read (luin,20) (ibuf(j),j=1,19)
         write (*,20) (ibuf(j),j=1,19)
         read (luin,*) drrecmode
-        if (drrecmode.lt.0) recommode=0
-        if (drrecmode.gt.3) drrecmode=0
+        if (drrecmode.lt.0) drrecmode=0
+        if (drrecmode.gt.2) drrecmode=0
         write (*,*) '*** drrecmode    :',drrecmode
 c
         read (luin,20) (ibuf(j),j=1,19)
@@ -417,7 +417,6 @@ c
       call readcolldata (luin, error)
       call readrecomdata (luin, error)
       call readdirecomdata (luin, error)
-      call readrecomdata2 (luin, error)
       call readcont (luin, error)
       call readchx (luin, error)
 c energy vector
@@ -1532,128 +1531,6 @@ c
         write (*,*) 'ERROR: data/ionisation/RRECOMDAT and DRECOMDAT'
         stop
       endif
-c
-      return
-      end
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-      subroutine readrecomdata2 (luin, error)
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c     Badnell 2015 SIII experimental DR+RR rates.
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-      include 'cblocks.inc'
-c
-c           Variables
-c
-      integer*4 i,j,m
-      real*8 c1,c2,c3,c4,c5,c6,c7
-      real*8 e1,e2,e3,e4,e5,e6,e7
-c
-      real*8 a_rr,b_rr,c_rr,t1_rr,t2_rr,t3_rr
-      integer*4 luin
-      integer*4 at,io,ni,tp,nl,nt
-      integer*4 nions,atom,ion,ndrr
-      character ilgg*4, ibuf(19)*4
-      logical error
-c
-c     formats for reading files
-c
-   10 format(19a4)
-   20 format(' ',19a4)
-c
-      error=.false.
-c
-c
-      filename=datadir(1:dtlen)//'data/ionisation/RECOMDAT2.txt'
-      open (luin,file=filename,status='OLD')
-   30 read (luin,10) (ibuf(i),i=1,19)
-      ilgg=ibuf(1)
-      if (ilgg(1:1).eq.'%') goto 30
-      write (*,20) (ibuf(i),i=1,19)
-      read (luin,*) nions
-c
-c skip if no BD2015 rates
-c
-      if (drrecmode.ne.2) return
-c
-      ndrr=0
-c
-      do i=1,nions
-c
-        atom=0
-        ion=0
-        read (luin,*) at,io,ni,tp,nt,nl
-c
-c note io is ion+1 already. 3 = 3->2 recomb
-c
-        if (zmap(at).ne.0) then
-c
-          atom=zmap(at)
-c
-          if (io.lt.maxion(atom)) then
-c
-            ndrr=ndrr+1
-c
-            if (ndrr.gt.mxnrec) then
-              write (*,*) 'ERROR in RECOMDAT2.txt'
-              write (*,*) 'Max number of ions exceeded.'
-              write (*,*) 'Change parameter mxnrec in const.inc'
-              write (*,*) 'eg: 209 for 16 elements'
-              write (*,*) '    465 for 30 elements'
-              write (*,*) 'rebuild and try again.'
-              write (*,*) ndrr,' ions.'
-              stop
-            endif
-c
-            atbdrec(ndrr)=at
-            ionbdrec(ndrr)=io
-            typerrec(ndrr)=tp
-            ntbdrec(ndrr)=nt
-            nlbdrec(ndrr)=nl
-c
-c DR coeffs first, SIII with 3 ground terms first
-c
-            do j=1,nl
-              read (luin,*) m,c1,c2,c3,c4,c5,c6,c7
-              cdr_bd15(1,j)=c1
-              cdr_bd15(2,j)=c2
-              cdr_bd15(3,j)=c3
-              cdr_bd15(4,j)=c4
-              cdr_bd15(5,j)=c5
-              cdr_bd15(6,j)=c6
-              cdr_bd15(7,j)=c7
-            enddo
-c
-            do j=1,nl
-              read (luin,*) m,e1,e2,e3,e4,e5,e6,e7
-              edr_bd15(1,j)=e1
-              edr_bd15(2,j)=e2
-              edr_bd15(3,j)=e3
-              edr_bd15(4,j)=e4
-              edr_bd15(5,j)=e5
-              edr_bd15(6,j)=e6
-              edr_bd15(7,j)=e7
-            enddo
-c
-c RR Rates - preserve paper odd order to make checking easier
-c
-            read (luin,*) a_rr,b_rr,t1_rr,t2_rr,c_rr,t3_rr
-            rr_bd15(1)=a_rr
-            rr_bd15(2)=b_rr
-            rr_bd15(3)=t1_rr
-            rr_bd15(4)=t2_rr
-            rr_bd15(5)=c_rr
-            rr_bd15(6)=t3_rr
-          endif
-        endif
-      enddo
-c
-      close (luin)
-c      endif
 c
       return
       end

@@ -276,17 +276,6 @@ c
       real*8 a2ndrec(mxnspl,mxnnorad)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c Badnell 2015 SIII DR and RR empirically adjusted coefficients
-c result saved over std results on ion by ion basis , 3 levels atm
-c no ion array only single species, 3D arrays when more available
-c in recom15 common
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      integer*4 nbd15rec,atbdrec(mxnrec),ionbdrec(mxnrec)
-      integer*4 typebdrec(mxnrec),ntbdrec(mxnrec),nlbdrec(mxnrec)
-      real*8 cdr_bd15(mxdrbd15,mxnlbd15),edr_bd15(mxdrbd15,mxnlbd15)
-      real*8 rr_bd15(mxrrbd15)
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
 c       declare PHOTDAT block variables
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1879,9 +1868,9 @@ c
       common /recom4/ nnorad,atndrec,ionndrec,
      &                typendrec,noradid,nodesndrec
       common /recom5/ tendrec,andrec,a2ndrec
-      common /recom15/ cdr_bd15,edr_bd15,rr_bd15
-      common /recom15i/ nbd15rec,atbdrec,ionbdrec
-      common /recom15i2/ typebdrec,ntbdrec,nlbdrec
+c       common /recom15/ cdr_bd15,edr_bd15,rr_bd15
+c       common /recom15i/ nbd15rec,atbdrec,ionbdrec
+c       common /recom15i2/ typebdrec,ntbdrec,nlbdrec
 
 c
 c Ancient rates

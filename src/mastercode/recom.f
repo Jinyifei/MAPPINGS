@@ -356,67 +356,6 @@ c end if (drrecmode.eq.1) old DR calcs
 c
       endif
 c
-      if (drrecmode.eq.2) then
-c
-c Replace SIII rates with Badnell 2015 data but leave other rates
-c
-c       write(*,*) '//drecmode=2, BD2015 SIII DR + RR rates plus std'
-c
-c     only siii atm
-        ion=3
-c     s=16
-        atom=zmap(16)
-c
-c updating rr radiative and dr (dielectronic recombination) rates both
-c even though we don't have photo sections to go with  no milne relation
-c
-        rate=0.0d0
-        drate=0.0d0
-c
-c radiative rate
-c
-        arr=rr_bd15(1)
-        brr=rr_bd15(2)
-        crr=rr_bd15(5)
-c
-        tt0=dsqrt(tp/rr_bd15(3))
-        tt1=dsqrt(tp/rr_bd15(4))
-        t0t=1.d0/tt0
-c     t2
-        t2t=dexp(-rr_bd15(6)/tp)
-c
-        bp=brr+crr*t2t
-        f1=(1.d0+tt0)**(1.d0-bp)
-        f2=(1.d0+tt1)**(1.d0+bp)
-        rate=arr*t0t/(f1*f2)
-        rate=dmax1(0.d0,rate)
-c
-c dielectronic rates  double weights to save conversions
-c
-        drate=0.d0
-        sumw=0.d0
-        j=1
-c
-        w=1.0d0
-        sumw=sumw+w
-        dri=0.d0
-c assumes fits BD15 already weighted by 2j+1, 7 i terms in c and e
-        do i=1,7
-          tdr=cdr_bd15(i,j)*dexp(-edr_bd15(i,j)/tp)
-          dri=dri+tdr
-        enddo
-        drate=drate+dri*w
-c         enddo
-        drate=t32*drate/sumw
-c
-        drate=dmax1(0.d0,drate)
-c       overwrite siii total rate
-        rec(ion,atom)=drate+rate
-c
-c end if (drrecmode.eq.2) BD15 DR + RR calcs
-c
-      endif
-c
       return
 c
       end
