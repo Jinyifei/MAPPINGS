@@ -7,7 +7,7 @@
 0
 % rr recombination mode ( default 0 = new, 1 = old, 2 = NORAD for CNO, 0 otherwise)
 0
-% dr recombination mode ( default 0 = new, 1 = old, 2 = B15 SIII only + std  3 = off )
+% dr recombination mode ( default 0 = new, 1 = old, 2 = off )
 0
 % chargetransfer mode ( default 0 = new MV,1 = A&R85 MIII, 2 = MI ancient, 3 = off)
 0
