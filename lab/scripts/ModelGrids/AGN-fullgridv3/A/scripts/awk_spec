@@ -1,0 +1,112 @@
+#
+# for reading v5.0.13 + mappings spec.csv output
+#
+BEGIN{line = 0;
+  halpha   = 0.0;
+  hei5876  = 0.0;
+  nii      = 0.0;
+  nii6584  = 0.0;
+  oi6300   = 0.0;
+  oii      = 0.0;
+  oii3726  = 0.0;
+  oii3729  = 0.0;
+  oiii4363 = 0.0;
+  oiii     = 0.0;
+  oiii5007 = 0.0;
+  neiii    = 0.0;
+  sii      = 0.0;
+  sii6716  = 0.0;
+  sii6731  = 0.0;
+  siii     = 0.0;
+  printf(" ::::::::::::::::::::::::::::::::::\n");
+}
+/ Output:/{print " "$2}
+/ Run   :/{
+         rn=$0;
+         n = split($0, a, ",");
+         n = split(a[3], q, "=");
+         lu=q[2];
+         n = split(a[4], p, "=");
+         pres=p[2];
+         abund=a[8];
+         n = split(a[9], k, "=");
+         mass=k[2];
+         ledd=a[10]
+         type=a[11]
+         }
+/  O \,/{n = split($0, oxy, ",");
+         lz=oxy[3];
+         lg=oxy[7];
+}
+/  Fe\,/{n = split($0, fe, ",");
+         lzfe=fe[3];
+         lgfe=fe[7];
+}
+/H-beta  :,/ { n = split($0, a, ","); hbeta = a[4]}
+/3726.032/{n = split($0, a, ","); oii      = a[3]; oii3726 = a[3]}
+/3728.815/{n = split($0, a, ","); oii      = oii  + a[3]; oii3729 = a[3]}
+/3868.764/{n = split($0, a, ","); neiii    = a[3]}
+/3967.471/{n = split($0, a, ","); neiii    = neiii  + a[3]}
+/4363.209/{n = split($0, a, ","); oiii4363 = a[3]}
+/4958.911/{n = split($0, a, ","); oiii    = a[3]}
+/5006.843/{n = split($0, a, ","); oiii    = oiii+a[3]; oiii5007 = a[3]}
+/5875.665/{n = split($0, a, ","); hei5876 = a[3]}
+/6300.304/{n = split($0, a, ","); oi6300  = a[3]}
+/6548.052/{n = split($0, a, ","); nii     = a[3]}
+/6562.819/{n = split($0, a, ","); halpha  = a[3]}
+/6583.454/{n = split($0, a, ","); nii     = nii + a[3]; nii6584 = a[3]}
+/6716.440/{n = split($0, a, ","); sii     = a[3]; sii6716 = a[3]}
+/6730.816/{n = split($0, a, ","); sii     = sii + a[3]; sii6731 = a[3]}
+/9068.620/{n = split($0, a, ","); siii    = a[3]}
+/9530.619/{n = split($0, a, ","); siii    = siii + a[3]}
+END{
+printf(" ::::::::::::::::::::::::::::::::::\n");
+print  " MV v5.1.21 P7 Dusty AGN "
+print  " LogU="lu", Log[O]+12="lz", gas Log[O]+12="lg", Log[Fe]="lzfe", gas Log[Fe]="lgfe", LogP/k="pres", mass="mass", Ledd=",ledd", type="type;
+print  " Quantity     ,  Model";
+hb = hbeta*1e-37
+printf(" ::::::::::::::::::::::::::::::::::\n");
+printf(" HBeta   E37  ,  %7.4f\n", hb       );
+printf(" HI      6562 ,  %7.4f\n", halpha   );
+printf(" HeI     5876 ,  %7.4f\n", hei5876  );
+printf(" [NII]   6584 ,  %7.4f\n", nii6584  );
+printf(" [NII]   6584+,  %7.4f\n", nii      );
+printf(" [OI]    6300 ,  %7.4f\n", oi6300   );
+printf(" [OII]   3727+,  %7.4f\n", oii      );
+printf(" [OII]   3726 ,  %7.4f\n", oii3726  );
+printf(" [OII]   3729 ,  %7.4f\n", oii3729  );
+printf(" [OIII]  4363 ,  %7.4f\n", oiii4363 );
+printf(" [OIII]  5007 ,  %7.4f\n", oiii5007 );
+printf(" [OIII]  5007+,  %7.4f\n", oiii     );
+printf(" [NeIII] 3869+,  %7.4f\n", neiii    );
+printf(" [SII]   6731+,  %7.4f\n", sii      );
+printf(" [SII]   6716 ,  %7.4f\n", sii6716  );
+printf(" [SII]   6731 ,  %7.4f\n", sii6731  );
+printf(" [SIII]  9532+,  %7.4f\n", siii     );
+printf(" ::::::::::::::::::::::::::::::::::\n");
+printf(" Log10 Ratios\n");
+printf(" ::::::::::::::::::::::::::::::::::\n");
+printf(" [NII]/Ha      ,  %7.4f\n", log(nii6584/halpha)*0.4342944819032518);
+printf(" [NII]+/Ha     ,  %7.4f\n", log(nii/halpha)*0.4342944819032518);
+printf(" [SII]+/Ha     ,  %7.4f\n", log(sii/halpha)*0.4342944819032518);
+printf(" [NII]/[OII]+  ,  %7.4f\n", log(nii6584/oii)*0.4342944819032518);
+printf(" [NII]+/[OII]+ ,  %7.4f\n", log(nii/oii)*0.4342944819032518);
+printf(" [NII]/[SII]+  ,  %7.4f\n", log(nii6584/sii)*0.4342944819032518);
+printf(" [NII]+/[SII]+ ,  %7.4f\n", log(nii/sii)*0.4342944819032518);
+printf(" [OII]+/Hb     ,  %7.4f\n", log(oii)*0.4342944819032518);
+printf(" [OIII]/Hb     ,  %7.4f\n", log(oiii5007)*0.4342944819032518);
+printf(" [OIII]+/Hb    ,  %7.4f\n", log(oiii)*0.4342944819032518);
+printf(" [OIII]/[OII]+ ,  %7.4f\n", log(oiii5007/oii)*0.4342944819032518);
+printf(" [OIII]+/[OII]+,  %7.4f\n", log(oiii/oii)*0.4342944819032518);
+printf(" [OIII]/[SII]+ ,  %7.4f\n", log(oiii5007/sii)*0.4342944819032518);
+printf(" [OIII]+/[SII]+,  %7.4f\n", log(oiii/sii)*0.4342944819032518);
+printf(" 4363/5007     ,  %7.4f\n", log(oiii4363/oiii5007)*0.4342944819032518);
+printf(" 4363/5007+    ,  %7.4f\n", log(oiii4363/oiii)*0.4342944819032518);
+printf(" [OI]/[OII]+   ,  %7.4f\n", log(oi6300/oii)*0.4342944819032518);
+printf(" [OII]+/[SII]+ ,  %7.4f\n", log(oii/sii)*0.4342944819032518);
+printf(" R23           ,  %7.4f \n",log(oiii+oii)*0.4342944819032518);
+printf(" S23           ,  %7.4f \n",log(siii+sii)*0.4342944819032518);
+printf(" [SII]6716/6731,  %7.4f \n",log(sii6716/sii6731)*0.4342944819032518;
+printf(" [OII]3729/3726,  %7.4f \n",log(oii3729/oii3726)*0.4342944819032518;
+printf(" ::::::::::::::::::::::::::::::::::\n");
+}

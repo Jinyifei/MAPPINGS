@@ -1830,10 +1830,10 @@ c     Complete ln(Gamma) version 1
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       implicit none
-      real*8 z , a(7) , s, pi
+      real*8 z , s, pi
       real*8 a_1, a_2, a_3, a_4, a_5, a_6, a_7
       real*8 az
-      integer i
+c
       parameter(pi=4.d0*datan(1.d0))
       parameter(a_1=1.d0/12.d0)
       parameter(a_2=1.d0/30.d0)

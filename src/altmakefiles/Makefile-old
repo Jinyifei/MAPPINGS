@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21dev
+#    v5.1.21
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51dev
+OUTNAME = map51
 #
 #-------------------------------
 #---------- Directories --------
@@ -35,7 +35,7 @@ UNAME = $(shell uname)
 #
 ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
-	XSYS = Mac (wich xcrun)
+	XSYS = Mac (with xcrun)
 else
 	LIB =
 	XSYS = Linux

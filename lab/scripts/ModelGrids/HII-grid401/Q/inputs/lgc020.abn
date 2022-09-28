@@ -1,0 +1,60 @@
+%
+%  type = 1:
+%        All abundances are logarithmic, by number H=0.00
+%
+%  type = 2:
+%        All abundances are linear, by number H=1.00
+%
+%  type = 3:
+%        All abundances are log +12.0 , by number H=12.00
+%
+%  Elements not included in the data file map.prefs will not be read
+%
+%  Elements not included in the data file map.prefs will not be read
+%
+%  Elements not present in this file will have no effect on the
+%  default abundances.
+%
+% Local Galactic Concordance Base + He, C & N scaling
+%
+% He/H : log(He/H) = -1.0783+log(1+0.17006*zeta) = log(0.0835+0.0142*zeta)
+% C/H  : log(C/O)  = log(O/H)+log(10^-0.800 + 10^(2.72+log(O/H)))
+% N/H  : log(N/O)  = log(O/H)+log(10^-1.732 + 10^(2.19+log(O/H)))
+% O/H  = log(O/H)  = -3.24 + log(zeta)
+%
+% HII region Abundance Grid,
+%  zeta = 0.05, 0.1, 0.2, 0.3, 0.5, 1.0, 2.0, 3.0, 5.0
+%  extra points at 0.4, 0.6 0.7 0.8 & 0.9 optional
+%
+Local Galactic Concordance, zeta = 0.200, log(zeta) = -0.699
+30  1
+01   0.000
+02  -1.064
+03  -8.720
+04  -11.379
+05  -9.889
+06  -4.599
+07  -5.378
+08  -3.939
+09  -8.139
+10  -4.609
+11  -6.489
+12  -5.139
+13  -6.269
+14  -5.199
+15  -7.289
+16  -5.579
+17  -7.199
+18  -6.299
+19  -7.659
+20  -6.379
+21  -9.539
+22  -7.799
+23  -8.809
+24  -7.079
+25  -7.279
+26  -5.179
+27  -7.769
+28  -6.499
+29  -8.519
+30  -8.139

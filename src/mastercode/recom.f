@@ -34,7 +34,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
 c
-      integer*4 i,j
+      integer*4 i
       real*8 t,u,u4,ar,xr
       real*8 ad,bd,ta,tb
       real*8 tp,tp40
@@ -49,9 +49,6 @@ c
 c
       integer*4 ion,atom,ir,maxio,chh,isos
       integer*4 rrtype,drtype
-c BD 2015 SIII
-      real*8 arr,brr,crr,tt0,tt1,t0t,t2t,bp
-      real*8 tdr,w,sumw,f1,f2,dri
 c
 c      Old code functions
 c

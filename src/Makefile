@@ -21,8 +21,6 @@ BACKDIR = mastercode/
 #---------- Compilers ----------
 #-------------------------------
 #
-#  comment out and in as needed
-#   for different machines
 #
 # GCC FORTRAN - gfortran generic
 # tested with v11 but should work with v4.5 or newer
@@ -35,13 +33,12 @@ BACKDIR = mastercode/
 #  gcc10+ flto=8 parallel obj opt
 #
 #WARN   = -Wall
-#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
+#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized
 WARN   =
 #
 # plain
 #
 # FC     = gfortran -std=legacy
-# #LDR    =  ${WARN} -g -O1 -fbounds-check -ffpe-summary='none'
 # LDR    = ${WARN} -Ofast -ffpe-summary='none'
 # OPTS   = -c ${LDR} -I${INCDIR}
 # LIB    =
@@ -49,34 +46,28 @@ WARN   =
 # if recursion is ever needed; -fmax-stack-var-size=7618560
 #
 FC     = gfortran -std=legacy -march=native
-LDR    =  ${WARN} -Ofast -flto=8 -ffpe-summary='none'
+LDR    = ${WARN} -Ofast -ffpe-summary='none'
+#
+# Optionally add -flto=n for longer link and some performance gains
+# eg set n to number of cpus, here 8, to build with in gcc10 or newer.
+#
+#LDR    = ${WARN} -Ofast -flto=8 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
-
+#
 UNAME = $(shell uname)
-
-
-
+#
 ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
-	XSYS = Mac (wich xcrun)
+	XSYS = Mac (with xcrun)
 else
 	LIB =
 	XSYS = Linux
 endif
-
-
+#
 start:
 	@echo 'hello' x$(UNAME)x
-
 #
-#
-#  GCC FORTRAN v4.5-4.8 and earlier
-#
-#FC     = gfortran -std=legacy
-#LDR    = -Ofast
-#OPTS   = -c ${LDR} -I${INCDIR}
-#LIB    =
 #
 #     Generic FORTRAN
 #
@@ -96,6 +87,7 @@ start:
 #
 INCS =  ${INCDIR}cblocks.inc \
 	${INCDIR}const.inc \
+	${INCDIR}p6blocks.inc \
 	${INCDIR}p7blocks.inc \
 	${INCDIR}s5blocks.inc
 #

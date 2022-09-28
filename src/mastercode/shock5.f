@@ -2685,8 +2685,7 @@ c
         sumhb=sumhb+hbl
         jgeo='P'
 c        write(*,'(8(1pg11.4,x))') x0,dx,t,dh,de,hbeta*fpi,hbl,sumhb
-        specmode='NEBL'
-        call totphot2 (t, dh, x0, dx, 0.d0, gdil, specmode)
+        call totphot2 (t, dh, x0, dx, 0.d0, gdil, smod)
         call zetaeff (dh)
 c
 c     accumulate spectrum

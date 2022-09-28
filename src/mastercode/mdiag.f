@@ -648,7 +648,7 @@ c
           if (ra.lt.epsilon) goto 70
           do kc=1,jc
             a(kc,kl)=a(kc,kl)/rab
-   60     enddo
+          enddo
    70   continue
 c
         do kl=il,jl

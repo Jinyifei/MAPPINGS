@@ -45,7 +45,7 @@ c
       integer*4 m,i,j,idx,np,jnorm
       integer*4 luions(mxelem)
 c
-      character caller*4, n2*12, norm*12
+      character caller*4, n2*12, norm*16
       character imod*4, lmod*4, model*64
       character nmod*4, mmod*4
       character ilgg*4, ill*4, filn(mxelem)*64

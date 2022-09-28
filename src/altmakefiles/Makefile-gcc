@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21dev
+#    v5.1.21
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51dev
+OUTNAME = map51
 #
 #-------------------------------
 #---------- Directories --------
@@ -21,8 +21,6 @@ BACKDIR = mastercode/
 #---------- Compilers ----------
 #-------------------------------
 #
-#  comment out and in as needed
-#   for different machines
 #
 # GCC FORTRAN - gfortran generic
 # tested with v11 but should work with v4.5 or newer
@@ -35,7 +33,7 @@ BACKDIR = mastercode/
 #  gcc10+ flto=8 parallel obj opt
 #
 #WARN   = -Wall
-#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
+#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized
 WARN   =
 #
 # plain
@@ -49,6 +47,11 @@ WARN   =
 #
 FC     = gfortran -std=legacy -march=native
 LDR    =  ${WARN} -Ofast -ffpe-summary='none'
+#
+# Optionally add -flto=n for longer link and some performance gains
+# eg set n to number of cpus, here 8, to build with in gcc10 or newer.
+#
+#LDR    = ${WARN} -Ofast -flto=8 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
 #
@@ -191,7 +194,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21dev make options:
+	@echo MAPPINGS V v5.1.21 make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"

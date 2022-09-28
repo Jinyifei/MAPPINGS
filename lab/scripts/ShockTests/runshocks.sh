@@ -22,6 +22,8 @@ cat timing.txt >> "$r/MV52Shocks_$d.txt"
 cat timing.txt
 awk -f "$s/01_shock050spec.awk" specSHv050s_0001.csv >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/01_shock050spec.awk" specSHv050s_0001.csv
+awk -f "$s/01_shock050prec.awk" specPCv050s_0001.csv >> "$r/MV52Shocks_$d.txt"
+awk -f "$s/01_shock050prec.awk" specPCv050s_0001.csv
 awk -f "$s/01_shock050struc.awk" shck_v050s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/01_shock050struc.awk" shck_v050s_0001.sh5
 #
@@ -33,6 +35,8 @@ cat timing.txt >> "$r/MV52Shocks_$d.txt"
 cat timing.txt
 awk -f "$s/02_shock100spec.awk" specSHv100s_0001.csv >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/02_shock100spec.awk" specSHv100s_0001.csv
+awk -f "$s/02_shock100prec.awk" specPCv100s_0001.csv >> "$r/MV52Shocks_$d.txt"
+awk -f "$s/02_shock100prec.awk" specPCv100s_0001.csv
 awk -f "$s/02_shock100struc.awk" shck_v100s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/02_shock100struc.awk" shck_v100s_0001.sh5
 #
@@ -44,6 +48,8 @@ cat timing.txt >> "$r/MV52Shocks_$d.txt"
 cat timing.txt
 awk -f "$s/03_shock200spec.awk" specSHv200s_0001.csv >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/03_shock200spec.awk" specSHv200s_0001.csv
+awk -f "$s/03_shock200prec.awk" specPCv200s_0001.csv >> "$r/MV52Shocks_$d.txt"
+awk -f "$s/03_shock200prec.awk" specPCv200s_0001.csv
 awk -f "$s/03_shock200struc.awk" shck_v200s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/03_shock200struc.awk" shck_v200s_0001.sh5
 #
@@ -55,6 +61,8 @@ cat timing.txt >> "$r/MV52Shocks_$d.txt"
 cat timing.txt
 awk -f "$s/04_shock400spec.awk" specSHv400s_0001.csv >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/04_shock400spec.awk" specSHv400s_0001.csv
+awk -f "$s/04_shock400prec.awk" specPCv400s_0001.csv >> "$r/MV52Shocks_$d.txt"
+awk -f "$s/04_shock400prec.awk" specPCv400s_0001.csv
 awk -f "$s/04_shock400struc.awk" shck_v400s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/04_shock400struc.awk" shck_v400s_0001.sh5
 #
@@ -66,6 +74,8 @@ cat timing.txt >> "$r/MV52Shocks_$d.txt"
 cat timing.txt
 awk -f "$s/05_shock800spec.awk" specSHv800s_0001.csv >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/05_shock800spec.awk" specSHv800s_0001.csv
+awk -f "$s/05_shock800prec.awk" specPCv800s_0001.csv >> "$r/MV52Shocks_$d.txt"
+awk -f "$s/05_shock800prec.awk" specPCv800s_0001.csv
 awk -f "$s/05_shock800struc.awk" shck_v800s_0001.sh5 >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/05_shock800struc.awk" shck_v800s_0001.sh5
 #
@@ -79,11 +89,13 @@ cat timing.txt >> "$r/MV52Shocks_$d.txt"
 cat timing.txt
 awk -f "$s/06_shockx100spec.awk" specSHx0100_0001.csv >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/06_shockx100spec.awk" specSHx0100_0001.csv
+awk -f "$s/06_shockx100prec.awk" specPCx0100_0001.csv >> "$r/MV52Shocks_$d.txt"
+awk -f "$s/06_shockx100prec.awk" specPCx0100_0001.csv
 awk -f "$s/06_shockx100struc.awk" shck_x0100_0001.sh5 >> "$r/MV52Shocks_$d.txt"
 awk -f "$s/06_shockx100struc.awk" shck_x0100_0001.sh5
-cp map_prev.prefs map.prefs
+mv map_prev.prefs map.prefs
 echo " MV 5.2 Shock Tests completed. Output in "$r/MV52Shocks_$d.txt""
 rm -f timing.txt map5output.txt
 rm -f *.ph6 *.nfn *.lam v*.sou *.bln *.sh5 *.csv SH*.sou PC*.sou
-cp "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"
+mv "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"
 #

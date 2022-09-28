@@ -955,8 +955,7 @@ c
 c
       character sfx*4,fps*64
 c
-      real*8 tl(mxinfph)
-      real*8 bv, blum, ilum, widnu, clam, lambda
+      real*8 bv, clam, lambda
 c
       integer*4 lunt,i,j,np
       logical iexi
@@ -969,6 +968,10 @@ c
       integer*4 lenv,mlen
 c
       fps=' '
+c
+c currently unused - dummy to suppress warning
+c
+      dr=1.d0
 c
       fn=' '
       sfx='lam'

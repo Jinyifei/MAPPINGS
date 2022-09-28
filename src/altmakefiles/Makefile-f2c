@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21dev
+#    v5.1.21
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51dev
+OUTNAME = map51
 #
 #-------------------------------
 #---------- Directories --------
@@ -23,7 +23,7 @@ BACKDIR = mastercode/
 #
 #
 #  generic f2c - ANSI C/gcc
-#  xcode 12+ -isysroot`xcrun --show-sdk-path`
+#  xcode 11+ -isysroot`xcrun --show-sdk-path`
 FC     = f2c
 CC     = gcc
 FOPTS  = -I${INCDIR} -f -d${CODDIR} -a -A -Nn1608 -r8
@@ -185,7 +185,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21dev make options:
+	@echo MAPPINGS V v5.1.21 make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"

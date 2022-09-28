@@ -1337,7 +1337,7 @@ c
       integer*4 fuvmin,fuvmax,pahabsmax
 c
       character jjd*4, pollfile*16,tab*4
-      character banfil*64, fnam*64
+      character banfil*64
       character imod*4, lmod*4, nmod*4,wmod*4,ispo*4
       character linemod*4, spmod*4, savemod*4
       character fn*64,fspl*64
@@ -3034,8 +3034,7 @@ c
       character banfil*64
       character el*4
 c
-      real*8 lamvac,lamair
-      real*8 densnum, fnair
+      real*8 densnum
       integer*4 mlen
       integer*4 lenv
 c

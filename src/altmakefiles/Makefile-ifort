@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21dev
+#    v5.1.21
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51dev
+OUTNAME = map51
 #
 #-------------------------------
 #---------- Directories --------
@@ -33,11 +33,14 @@ UNAME = $(shell uname)
 #
 ifeq ($(UNAME),Darwin)
 	LIB  =
-	XSYS = Mac (wich xcrun)
+	XSYS = Mac (intel)
 else
 	LIB =
 	XSYS = Linux
 endif
+#
+start:
+	@echo 'hello' x$(UNAME)x
 #
 #
 #     Generic FORTRAN
@@ -165,7 +168,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21dev make options:
+	@echo MAPPINGS V v5.1.21 make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"
