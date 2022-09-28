@@ -13,7 +13,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -37,13 +37,11 @@ c
       integer*4 i,j
       real*8 t,u,u4,ar,xr
       real*8 ad,bd,ta,tb
-      real*8 tp,tp4
+      real*8 tp,tp40
       real*8 a,b,c,d,e,f,r
       real*8 ch,ct,et
       real*8 fcor,adlt
       real*8 rate,drate
-c      real*8 arfc
-c      real*8 adfc
 c
       real*8 en(8),co(8)
       real*8 a1,a2,a3,a4,a5,a6
@@ -85,7 +83,7 @@ c
 c
       endif
 c
-      tp4=tp*1.d-4
+      tp40=tp*1.d-4
       t32=tp**(-1.5d0)
 c
       if ((recommode.eq.0).or.(recommode.eq.2)) then
@@ -140,12 +138,12 @@ c
             a1=arrec(1,ir)
             a2=arrec(2,ir)
             if (rrtype.eq.2) then
-              rate=a1*tp4**(-a2)
+              rate=a1*tp40**(-a2)
               goto 10
             endif
             a3=arrec(3,ir)
             if (rrtype.eq.3) then
-              rate=a1*tp4**(-(a2+(a3*dlog10(tp4))))
+              rate=a1*tp40**(-(a2+(a3*dlog10(tp40))))
               goto 10
             endif
             a4=arrec(4,ir)
@@ -202,7 +200,7 @@ c    He I total - n=1 rate for OTS
               xr=0.787d0
             endif
             if (ar.lt.0.0d0) goto 20
-            rate=arf(tp4,ar,xr)
+            rate=arf(tp40,ar,xr)
    20       continue
             rate=dmax1(0.d0,rate)
             rec(ion,atom)=rate
@@ -283,9 +281,9 @@ c
               if (tp.lt.1.d5) then
                 a2=arrec(2,ir)
                 ch=dble(max(1,ion-1))
-                fcor=flowt(tp4,ch,a2)
+                fcor=flowt(tp40,ch,a2)
                 fcor=dmax1(0.d0,fcor)
-                adlt=adltf(tp4,en(1),en(2),en(3),en(4),en(5))
+                adlt=adltf(tp40,en(1),en(2),en(3),en(4),en(5))
                 drate=drate+dmax1(0.0d0,adlt)
                 rec(ion,atom)=rec(ion,atom)*fcor
               endif
@@ -336,10 +334,10 @@ c
               chh=ion-1
               if (chh.gt.maxion(atom)-1) chh=chh-(maxion(atom)-1)
               ch=dble(chh)
-              fcor=flowt(tp4,ch,xr)
+              fcor=flowt(tp40,ch,xr)
               fcor=dmax1(0.d0,fcor)
               rec(ion,atom)=rec(ion,atom)*fcor
-              adlt=adltf(tp4,a,b,c,d,f)
+              adlt=adltf(tp40,a,b,c,d,f)
               adlt=dmax1(0.d0,adlt)
               drate=adf(tp,ad,bd,ta,tb)+adlt
             else

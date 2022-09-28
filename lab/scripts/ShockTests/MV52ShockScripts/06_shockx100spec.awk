@@ -116,6 +116,7 @@ BEGIN{line = 0;
 END{
 print  " MV 5.2 Shock Test 02: 100km/s"
 print  " Quantity      ,   MVS5,   Model,  Diff%"
+<<<<<<<< HEAD:lab/scripts/ShockTests/MV52ShockScripts/06_shockx100spec.awk
 hb = hbeta*1e4
 printf(" HB  e-04 4861 , 0.6462, %7.4f, %6.1f\n", hb,         100*(hb          - 6.46173e-01)/ 6.46173e-01);
 printf(" Lya      1215 , 51.803, %7.3f, %6.1f\n", lyalpha,    100*(lyalpha     - 5.18029e+01)/ 5.18029e+01);
@@ -167,4 +168,45 @@ suml = suml+(sii6716+sii6731+siii6312+siii9069+siii9531+siv1051m+arii6985m);
 suml = suml+(feii16435+feii1793m);
 suml = suml*hb;
 printf(" Ltot  e-04    , 58.724, %7.3f, %6.1f\n", suml   , 100*(suml     - 5.87240e+01)/5.87240e+01);
+========
+hb = hbeta*1e7
+printf(" HB  e-07 4861 , 0.6481, %7.4f, %6.1f\n", hb,         100*(hb          - 6.48140e-01)/ 6.48140e-01);
+printf(" Lya      1215 , 276.04, %7.2f, %6.1f\n", lyalpha,    100*(lyalpha     - 2.76042e+02)/ 2.76042e+02);
+printf(" HeI      5876 ,  0.009, %7.3f, %6.1f\n", hei5876,    100*( hei5876    - 8.87547e-03)/ 8.87547e-03);
+printf(" CII      2326 ,  2.999, %7.3f, %6.1f\n", cii2326,    100*( cii2326    - 2.99884e+00)/ 2.99884e+00);
+printf(" CIII     1909 ,  0.879, %7.3f, %6.1f\n", ciii1909,   100*( ciii1909   - 8.78989e-01)/ 8.78989e-01);
+printf(" NI       5200 ,  1.254, %7.3f, %6.1f\n", ni5200,     100*( ni5200     - 1.25421e+00)/ 1.25421e+00);
+printf(" NII      5755 ,  0.041, %7.3f, %6.1f\n", nii5755,    100*( nii5755    - 4.06987e-02)/ 4.06987e-02);
+printf(" NII      6548 ,  0.486, %7.3f, %6.1f\n", nii6548,    100*( nii6548    - 4.86240e-01)/ 4.86240e-01);
+printf(" NII      6584 ,  1.431, %7.3f, %6.1f\n", nii6584,    100*( nii6584    - 1.43060e+00)/ 1.43060e+00);
+printf(" OI       6300 ,  3.144, %7.3f, %6.1f\n", oi6300,     100*( oi6300     - 3.14362e+00)/ 3.14362e+00);
+printf(" OII      3727 ,  2.059, %7.3f, %6.1f\n", oii3727,    100*( oii3727    - 2.05934e+00)/ 2.05934e+00);
+printf(" OII      7319 ,  0.033, %7.3f, %6.1f\n", oii7319,    100*( oii7319    - 3.31933e-02)/ 3.31933e-02);
+printf(" OII      7330 ,  0.027, %7.3f, %6.1f\n", oii7330,    100*( oii7330    - 2.69001e-02)/ 2.69001e-02);
+printf(" NeII   12.81m ,  0.143, %7.3f, %6.1f\n", neii1281m,  100*( neii1281m  - 1.43222e-01)/ 1.43222e-01);
+printf(" NeIII  15.55m ,  0.012, %7.3f, %6.1f\n", neiii1555m, 100*( neiii1555m - 1.21644e-02)/ 1.21644e-02);
+printf(" MgII     2798 , 20.008, %7.3f, %6.1f\n", mgii2798,   100*( mgii2798   - 2.00081e+01)/ 2.00081e+01);
+printf(" SiIII    1892 ,  0.010, %7.3f, %6.1f\n", sliii1892,  100*( sliii1892  - 9.97465e-03)/ 9.97465e-03);
+printf(" SiIII    2335 ,  0.981, %7.3f, %6.1f\n", slii2335,   100*( slii2335   - 9.81490e-01)/ 9.81490e-01);
+printf(" SiIII  18.71m ,  0.059, %7.3f, %6.1f\n", siii1871m,  100*( siii1871m  - 5.93134e-02)/ 5.93134e-02);
+printf(" SII      6716 ,  2.712, %7.3f, %6.1f\n", sii6716,    100*( sii6716    - 2.71204e+00)/ 2.71204e+00);
+printf(" SII      6731 ,  1.887, %7.3f, %6.1f\n", sii6731,    100*( sii6731    - 1.88651e+00)/ 1.88651e+00);
+printf(" SIII     6312 ,  0.009, %7.3f, %6.1f\n", siii6312,   100*( siii6312   - 9.24675e-03)/ 9.24675e-03);
+printf(" SIII     9069 ,  0.069, %7.3f, %6.1f\n", siii9069,   100*( siii9069   - 6.86147e-02)/ 6.86147e-02);
+printf(" SIII     9531 ,  0.172, %7.3f, %6.1f\n", siii9531,   100*( siii9531   - 1.72357e-01)/ 1.72357e-01);
+printf(" ArII   6.985m ,  0.018, %7.3f, %6.1f\n", arii6985m,  100*( arii6985m  - 1.76569e-02)/ 1.76569e-02);
+printf(" FeII   1.643m ,  1.181, %7.3f, %6.1f\n", feii16435,  100*( feii16435  - 1.18131e+00)/ 1.18131e+00);
+printf(" FeII   17.93m ,  0.257, %7.3f, %6.1f\n", feii1793m,  100*( feii1793m  - 2.56683e-01)/ 2.56683e-01);
+printf(" NiII   6.636m ,  0.062, %7.3f, %6.1f\n", nkii6636m,  100*( nkii6636m  - 6.19121e-02)/ 6.19121e-02);
+suml = (lyalpha+nv1240+oiv1400+siiv1397+oiv1406+niv1485+civ1549)
+suml = suml+(oiii1663+niii1749+mgvi1806+sliii1892+ciii1909+cii2326)
+suml = suml+(slii2335+neiv2423+mgii2798+oii3727+neiii3869+neiii3967)
+suml = suml+(oiii4363+heii4686+oiii4959+oiii5007+ni5200+nii5755)
+suml = suml+(hei5876+oi6300+siii6312+nii6548+nii6584+sii6716+sii6731)
+suml = suml+(oii7319+oii7330+siii9069+siii9531+feii16435+nkii6636m+arii6985m)
+suml = suml+(nevi7652m+siv1051m+neii1281m+neiii1555m)
+suml = suml+(feii1793m+siii1871m+oiv2589m)
+suml = suml*hb;
+printf(" Ltot  e-07    , 204.82, %7.2f, %6.1f\n", suml   , 100*(suml     - 2.04824e+02)/2.04824e+02);
+>>>>>>>> dev:lab/scripts/ShockTests/MV52ShockScripts/02_shock100prec.awk
 }

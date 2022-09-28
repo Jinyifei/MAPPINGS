@@ -199,7 +199,6 @@ c
 c
    70 continue
 c
-c
       return
 c
       end

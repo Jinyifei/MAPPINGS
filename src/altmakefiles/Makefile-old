@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21
+#    v5.1.21dev
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51
+OUTNAME = map51dev
 #
 #-------------------------------
 #---------- Directories --------
@@ -23,26 +23,27 @@ BACKDIR = mastercode/
 #
 #
 #
-#WARN   = -diag-enable=all -check all
-#WARN   = -check uninit,bounds,stack
-WARN   = -diag-disable=all -nocheck
-#
-#     intel FORTRAN
-#
-FC     = ifort
-# LDR    =  ${WARN} -g -O1 -fbounds-check -ffpe-summary='none'
-LDR    = ${WARN} -mtune=native -Ofast -ipo -inline-max-size=512
-OPTS   =  -c ${LDR} -I${INCDIR}
-LIB    =
-#
 #
 #
 #     Generic FORTRAN
 #
-#FC     = f77
-#LDR    = -O3
-#OPTS   = -c ${LDR} -I${INCDIR}
-#LIB    =
+FC     = f77
+LDR    = -O3
+OPTS   = -c ${LDR} -I${INCDIR}
+#
+UNAME = $(shell uname)
+#
+ifeq ($(UNAME),Darwin)
+	LIB    = -isysroot`xcrun --show-sdk-path`
+	XSYS = Mac (wich xcrun)
+else
+	LIB =
+	XSYS = Linux
+endif
+#
+start:
+	@echo 'hello' x$(UNAME)x
+#
 #
 #
 #
@@ -55,6 +56,7 @@ LIB    =
 #
 INCS =  ${INCDIR}cblocks.inc \
 	${INCDIR}const.inc \
+	${INCDIR}p6blocks.inc \
 	${INCDIR}p7blocks.inc \
 	${INCDIR}s5blocks.inc
 #
@@ -161,7 +163,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21 make options:
+	@echo MAPPINGS V v5.1.21dev make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"
@@ -234,6 +236,7 @@ ${EXEDIR}${OUTNAME}: ${INCS} ${OBJ}
 #
 build:
 	@echo ' Building ${OUTNAME}:'
+	@echo ' Compiling for $(XSYS)'
 	@echo ' Copying over .f files'
 	@cp ${BACKDIR}*.f ${CODDIR}
 	@echo ' Copying over include files'

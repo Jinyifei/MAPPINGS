@@ -5,14 +5,14 @@ c
 c
 c     Creative Commons v4.0 International
 c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
+c     CC-BY-SA-4.0Intl https:/s/creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yie-Fei
+c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -299,6 +299,8 @@ c   dilradpho effective source radius for finite extent plane parallel
 c   models as a funtion of energy,goes with rshock in s4
 c   infph: number of bins in vectors
 c   linpos: line bin position information.
+c   I/O spectrum tp1(mxinfph, tp2(mxinfph), tp3(mxinfph), tp4(mxinfph)
+c
 c
 c       ffphot,fbphot,p2phot: continuum spectra (in ergs)
 c                            (free-free,fre-bnd,2photon)
@@ -318,6 +320,10 @@ c
       real*8 tphot(mxinfph)
       real*8 sphot(mxinfph)
       real*8 soupho(mxinfph),wdil
+      real*8 tp1(mxinfph)
+      real*8 tp2(mxinfph)
+      real*8 tp3(mxinfph)
+      real*8 tp4(mxinfph)
       real*8 difftot(mxinfph)
       real*8 dilradpho,rshock
       real*8 emidif(mxinfph)
@@ -1836,13 +1842,11 @@ c
 c
 c   processes
 c
-c     common /phovec1/ tphot,sphot,wdil,emidif,updif,dwdif
-c    &                ,emilin,uplin,dwlin,soupho,dilradpho,difftot
-c    &                ,dustphot,srcsum,totsum
       common /phovec1/ tphot,sphot,wdil,emidif,updif,dwdif
      &                ,emidifcont,updifcont,dwdifcont
      &                ,soupho,dilradpho,difftot
      &                ,dustphot,srcsum,totsum
+     &                ,tp1,tp2,tp3,tp4
 c
       common /phovec2/ infph,linpos,fieldversion
      &                ,skipbin,ionstartbin
@@ -1868,10 +1872,6 @@ c
       common /recom4/ nnorad,atndrec,ionndrec,
      &                typendrec,noradid,nodesndrec
       common /recom5/ tendrec,andrec,a2ndrec
-c       common /recom15/ cdr_bd15,edr_bd15,rr_bd15
-c       common /recom15i/ nbd15rec,atbdrec,ionbdrec
-c       common /recom15i2/ typebdrec,ntbdrec,nlbdrec
-
 c
 c Ancient rates
 c

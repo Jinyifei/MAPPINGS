@@ -328,7 +328,7 @@ c     from Abramowitz and Stegun or DMLF in public domain
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fe1(x)
+      real*8 function fE1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -348,7 +348,7 @@ c    Fast version
       data nx / 0.d0 /
 c
       if (x.le.0.d0) then
-        fe1=(0.d0/nx)
+        fE1=(0.d0/nx)
         return
       endif
 c
@@ -365,12 +365,12 @@ c     A&S Eqn 5.1.56 pg 231
           f=f*dexp(-x)/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
         endif
       endif
-      fe1=f
+      fE1=f
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fexpe1(x)
+      real*8 function fexpE1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -396,7 +396,7 @@ c
       data nx / 0.d0 /
 c
       if (x.le.0.d0) then
-        fexpe1=(0.d0/nx)
+        fexpE1=(0.d0/nx)
         return
       endif
 c
@@ -412,12 +412,12 @@ c     A&S Eqn 5.1.56 pg 231
         f=(b(4)+x*(b(3)+x*(b(2)+x*(b(1)+x))))
         f=f/(x*(c(4)+x*(c(3)+x*(c(2)+x*(c(1)+x)))))
       endif
-      fexpe1=f
+      fexpE1=f
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fcodye1(x)
+      real*8 function fcodyE1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -544,7 +544,7 @@ c----------------------------------------------------------------------
 c return IEEE infinty for 0.d0 or less
 c----------------------------------------------------------------------
       if (x.le.0.d0) then
-        fcodye1=(0.d0/zero)
+        fcodyE1=(0.d0/zero)
         return
       endif
 c----------------------------------------------------------------------
@@ -584,12 +584,12 @@ c----------------------------------------------------------------------
           ei=ei*dexp(-x)
         endif
       endif
-      fcodye1=-ei
+      fcodyE1=-ei
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      real*8 function fcodyexpe1(arg)
+      real*8 function fcodyExpE1(arg)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -714,7 +714,7 @@ c return IEEE infinty for 0.d0 or less
 c----------------------------------------------------------------------
       x=arg
       if (x.le.0.d0) then
-        fcodyexpe1=(0.d0/zero)
+        fcodyExpE1=(0.d0/zero)
         return
       endif
 c----------------------------------------------------------------------
@@ -748,7 +748,7 @@ c----------------------------------------------------------------------
         enddo
         ei=-w*(one-w*sump/sumq)
       endif
-      fcodyexpe1=-ei
+      fcodyExpE1=-ei
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -779,7 +779,7 @@ c     sub is an index to the two different integrals
 c
       real*8 xp,p,q,xinv
       real*8 fint
-      real*8 fcodyexpe1
+      real*8 fcodyExpE1
 c
       real*8 pj(0:14), qj(0:14)
       integer*4 j
@@ -801,7 +801,7 @@ c
 c
 c     evaluate f1(x) = e^x integral(1 to inf)(e^-xt)/t dt
 c
-        fint=fcodyexpe1(x)
+        fint=fcodyExpE1(x)
 c
       else
 c
@@ -835,8 +835,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 function fue1(u, rexp)
       implicit none
-      real*8 u,rexp,fcodyexpe1
-      fue1=fcodyexpe1(u)*dexp(-rexp)
+      real*8 u,rexp,fcodyExpE1
+      fue1=fcodyExpE1(u)*dexp(-rexp)
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

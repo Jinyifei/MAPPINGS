@@ -82,7 +82,7 @@ c
 c
       endif
 c
-      call closes5files ()
+      call closeS5files ()
 c
       write (*,30)
 c
@@ -144,8 +144,8 @@ c
 c
       mtype='A'
       magparam=0.d0
-      pmag=0.0d0
-      bmag=0.d0
+      Pmag=0.0d0
+      Bmag=0.d0
 c
       vmod='NONE'
       s5pfx='v100sh'
@@ -251,10 +251,10 @@ c       Preshock magnetic field at shockfront in uG
      & ' (microgauss): ', $ )
         write (*,80)
         read (*,*) magparam
-        bmag=dabs(magparam)
-        magparam=bmag
-        bmag=bmag*1e-6
-        pmag=(bmag*bmag)/epi
+        Bmag=dabs(magparam)
+        magparam=Bmag
+        Bmag=Bmag*1e-6
+        Pmag=(Bmag*Bmag)/epi
       endif
 c
       if (mtype.eq.'A') then
@@ -268,9 +268,9 @@ c     Alpha = 0.1 is weak magnetic field. Alpha = 0.0 is no magnetic
         read (*,*) magparam
         malpha=magparam
         if (magparam.lt.0.0d0) then
-          bmag=-magparam
-          bmag=bmag*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=-magparam
+          Bmag=Bmag*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -286,9 +286,9 @@ c
         read (*,*) magparam
         malpha=magparam
         if (magparam.lt.0.0d0) then
-          bmag=-magparam
-          bmag=bmag*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=-magparam
+          Bmag=Bmag*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -306,9 +306,9 @@ c       Preshock magnetic field expressed as magnetic Alfven Mach number
         read (*,*) magparam
         mmach=magparam
         if (magparam.lt.0.0d0) then
-          bmag=-magparam
-          bmag=bmag*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=-magparam
+          Bmag=Bmag*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -328,8 +328,8 @@ c       Pram = rho*vs*vs; Pmag = (B^2)/8pi
         read (*,*) magparam
         mageta=magparam
         if (magparam.lt.0.0d0) then
-          bmag=dabs(magparam)*1e-6
-          pmag=(bmag*bmag)/epi
+          Bmag=dabs(magparam)*1e-6
+          Pmag=(Bmag*Bmag)/epi
           mtype='B'
           magparam=dabs(magparam)
           mageta=1.0d0
@@ -366,36 +366,36 @@ c
         if (t.le.10.d0) t=10.d0**t
         if (dh.le.0.d0) dh=10.d0**dh
 c
-        pgas=fpresse(t,de,dh)
+        Pgas=fpresse(t,de,dh)
         de=feldens(dh,pop_neu)
         rh_neu=frho(de,dh)
-        pram=rh_neu*ve*ve
+        Pram=rh_neu*ve*ve
 c
         if (mtype.eq.'B') then
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
         if (mtype.eq.'A') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'C') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'M') then
           va=ve/mmach
-          pmag=(0.5*rh_neu*va*va)
-          bmag=dsqrt(epi*pmag)
+          Pmag=(0.5*rh_neu*va*va)
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'R') then
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         vshoc=ve
 c
-        bm_neu=bmag
+        bm_neu=Bmag
         te_neu=t
         de_neu=de
         dh_neu=dh
@@ -408,7 +408,7 @@ c
         dt=0.d0
         tloss=0.d0
 c
-        call shockcmpf (t, de, dh, ve, bmag)
+        call shockcmpf (t, de, dh, ve, Bmag)
 c
         tm00=te0
 c
@@ -448,44 +448,44 @@ c       Partially set up proto-state
         te_neu=tpr
         dh_neu=dh
         de_neu=feldens(dh_neu,pop_neu)
-        pgas=fpresse(te_neu,de_neu,dh_neu)
+        Pgas=fpresse(te_neu,de_neu,dh_neu)
         rh_neu=frho(de_neu,dh_neu)
 c
         if (mtype.eq.'B') then
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
         if (mtype.eq.'A') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
         if (mtype.eq.'C') then
-          pmag=malpha*pgas
-          bmag=dsqrt(epi*pmag)
+          Pmag=malpha*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         vapprox=velshock2(dh_neu,tpr,0.d0,tpo)
         rh_neu=frho(de_neu,dh_neu)
-        pram=rh_neu*vapprox*vapprox
+        Pram=rh_neu*vapprox*vapprox
         if (mtype.eq.'R') then
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
 c       We need to iterate for a consistent solution.  We have the
 c       density and T jump; solve for shock speed and magnetic field.
 c
-  160   bm0=bmag
+  160   bm0=Bmag
 c
-        vshoc=velshock2(dh_neu,tpr,bmag,tpo)
+        vshoc=velshock2(dh_neu,tpr,Bmag,tpo)
         ve=vshoc
-        pram=rh_neu*ve*ve
+        Pram=rh_neu*ve*ve
 c
         if (mtype.eq.'M') then
           va=vshoc/mmach
-          pmag=(0.5*rh_neu*va*va)
-          bmag=dsqrt(epi*pmag)
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          Pmag=(0.5*rh_neu*va*va)
+          Bmag=dsqrt(epi*Pmag)
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
           if (eps.gt.1.0d-6) goto 160
         endif
 c
@@ -493,10 +493,10 @@ c
 c
 c iterate for rampressure/alpha_r
 c
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
 c           write(*,*) vshoc,Pram,Pmag,bm0,Bmag,te1
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
 c         write (*,*) eps,Bmag,bm0
           if (eps.gt.1.0d-6) goto 160
         endif
@@ -504,10 +504,10 @@ c
         dt=0.d0
         tloss=0.d0
 c
-        call shockcmpf (te_neu, de_neu, dh_neu, ve, bmag)
+        call shockcmpf (te_neu, de_neu, dh_neu, ve, Bmag)
 c
         tm00=te0
-        bm_neu=bmag
+        bm_neu=Bmag
         vs_neu=vshoc
         pr_neu=fpresse(te_neu,de_neu,dh_neu)
         rh_neu=frho(de_neu,dh_neu)
@@ -552,15 +552,15 @@ c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
 c
-      pmag=bp0
-      pgas=pr0
-      pram=rho0*vel0*vel0
+      Pmag=bp0
+      Pgas=pr0
+      Pram=rho0*vel0*vel0
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rho0)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       call shocksummary (6)
 c
@@ -1090,7 +1090,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Create User and open main model files
 c
-      call creates5files ()
+      call createS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1119,7 +1119,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Write Headers, open files to write
 c
-      call appends5files ()
+      call appendS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       de=feldens(dh,pop)
@@ -1149,6 +1149,26 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (jlin.eq.'Y') write (lulsh,10) iterations,theversion
       if (bandsmod.eq.'Y') write (lupb,10) iterations,theversion
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if (lupt.gt.0) write (lupt,10) iterations,theversion
+      if (lupc.gt.0) write (lupc,10) iterations,theversion
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,10) iterations,theversion
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),10) iterations,theversion
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,10) iterations,theversion
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') write (lulpc,10) iterations,theversion
+      endif
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c  put runname string and master file name in each file created
 c
@@ -1170,6 +1190,24 @@ c
       if (bandsmod.eq.'Y') write (lupb,20) runname,fsm
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (lupt.gt.0) write (lupt,20) runname,fsm
+      if (lupc.gt.0) write (lupc,20) runname,fsm
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,20) runname,fsm
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),20) runname,fsm
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,20) runname,fsm
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') write (lulpc,20) runname,fsm
+      endif
+c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Write Model Parameters
@@ -1217,6 +1255,25 @@ c
       if (bandsmod.eq.'Y') write (lupb,30) abnfile,ionsetup,srcfile
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       write (lupt,30) abnfile,ionsetup,srcfile
+      write (lupc,30) abnfile,ionsetup,srcfile
+c
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,30) abnfile,ionsetup,srcfile
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),30) abnfile,ionsetup,srcfile
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,30) abnfile,ionsetup,srcfile
+      endif
+      if (lualpc.gt.0) then
+        if (jlin.eq.'Y') write (lualpc,30) abnfile,ionsetup,srcfile
+      endif
+c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     abundances file header
@@ -1235,6 +1292,7 @@ c
       if (lupt.gt.0) call dispabundances (lupt, zion, abundtitle)
 c
       call wabund (lusp)
+      if (lupc.gt.0) call wabund (lupc)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1333,6 +1391,7 @@ c
       call protostate (luop)
       call protostate (lusp)
       if (lupt.gt.0) call protostate (lupt)
+      if (lupc.gt.0) call protostate (lupc)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1343,6 +1402,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       write (luop,130)
       write (lusp,130)
       if (lupt.gt.0) write (lupt,130)
+      if (lupc.gt.0) write (lupc,130)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (ratmod.eq.'Y') write (lurtsh,130)
       if (dynmod.eq.'Y') write (ludy,130)
@@ -1368,11 +1428,46 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (jlin.eq.'Y') call wionpop (lulsh, pop)
       if (bandsmod.eq.'Y') call wionpop (lupb, pop)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') write (lurtpc,130)
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),130)
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') write (lualpc,130)
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') write (lulpc,130)
+      endif
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       if (lupt.gt.0) call wionpop (lupt, pop)
+      if (lurtpc.gt.0) then
+        if (ratmod.eq.'Y') call wionpop (lurtpc, pop)
+      endif
+      if (tsrmod.eq.'Y') then
+        do i=1,ieln
+          if (luionpc(i).gt.0) then
+            call wionpop (luionpc(i), pop)
+          endif
+        enddo
+      endif
+      if (lualpc.gt.0) then
+        if (allmod.eq.'Y') call wionpop (lualpc, pop)
+      endif
+      if (lulpc.gt.0) then
+        if (jlin.eq.'Y') call wionpop (lulpc, pop)
+      endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (ratmod.eq.'Y') then
         call wmodel (lurtsh, 0.d0, 0.0d0, 0.d0, 0.0d0, 'LOSH')
+        if (lurtpc.gt.0) call wmodel (lurtpc, 0.d0, 0.0d0, 0.d0, 0.0d0,
+     &   'LOSH')
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1380,7 +1475,6 @@ c
       if (tsrmod.eq.'Y') then
 c
 c B  : Ion balance files.'
-c      luionsh(i)=32+i
 c
   140  format(//,
      & ' #[1], [2] <X>     , [3] DeltaX  , [4] t       , [5] dt      ,',
@@ -1389,6 +1483,10 @@ c
         do i=1,ieln
           write (luionsh(i),'(//," Element : ",a2)') elem(iel(i))
           write (luionsh(i),140) (j+9,rom(j),j=1,maxion(iel(i)))
+          if (luionpc(i).gt.0) then
+            write (luionpc(i),'(//," Element : ",a2)') elem(iel(i))
+            write (luionpc(i),140) (j+9,rom(j),j=1,maxion(iel(i)))
+          endif
         enddo
       endif
 c
@@ -1471,12 +1569,20 @@ c
         write (lulsh,'("Run: ",a96)') runname
         write (lulsh,200) (elem(emlinlistatom(itr)),
      &   rom(emlinlistion(itr)),itr=1,njlines)
+        if (lulpc.gt.0) then
+          write (lulpc,'("Run: ",a96)') runname
+          write (lulpc,200) (elem(emlinlistatom(itr)),
+     &     rom(emlinlistion(itr)),itr=1,njlines)
+        endif
   210  format(
      & ' # [1] <X>, [2] DeltaX, [3] dX, [4] t, [5] dt,  [6] <T>,'
      & ' [7] <ne>, [8] <nH> , [9]  <nT>, [10] logQH, [11]  logUH,',
      & ' [12]  logQN, [13]   <HB>,',
      &   16(',',f12.3,'[',i2,']'))
         write (lulsh,210) (emlinlist(itr),itr+13,itr=1,njlines)
+        if (lulpc.gt.0) then
+          write (lulpc,210) (emlinlist(itr),itr+13,itr=1,njlines)
+        endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1488,7 +1594,7 @@ c
 c     Close all files and flush
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      call closes5files ()
+      call closeS5files ()
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
@@ -1528,15 +1634,15 @@ c
 c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
-      pgas=pr0
-      pmag=bp0
-      pram=rh_pre*vs_pre*vs_pre
+      Pgas=pr0
+      Pmag=bp0
+      Pram=rh_pre*vs_pre*vs_pre
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.d0*pmag/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.d0*Pmag/rho0)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
    10   format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
@@ -1581,23 +1687,23 @@ c
       wmol=rho0/(en+de0)
       mu=fmua(de0,dh0)
 c
-      pgas=pr0
-      pmag=(bm0*bm0)/epi
-      pram=rho0*vel0*vel0
+      Pgas=pr0
+      Pmag=(bm0*bm0)/epi
+      Pram=rho0*vel0*vel0
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      alfvennumber=vel0/dsqrt(2.0d0*pmag/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rho0)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,
      &gaseta,mageta,te0,de0,dh0,rho0,pr0,mu,pop(1,zmap(1)),pop(2,zmap(1)
-     &),pop(1,zmap(2)),pop(2,zmap(2)),pop(3,zmap(2)),bm0*1.d6,bp0,pram
+     &),pop(1,zmap(2)),pop(2,zmap(2)),pop(3,zmap(2)),bm0*1.d6,bp0,Pram
 c
-      pram=rho1*vel1*vel1
+      Pram=rho1*vel1*vel1
       write (lunit,20) cmpf,te1,de1,dh1,vel1*1d-5,rho1,pr1,bm1*1.d6,bp1,
-     &pram
+     &Pram
 c
       return
       end
@@ -1619,7 +1725,7 @@ c
       call copypop (pop_pre, pop)
       rh_pre=frho(de_pre,dh_pre)
 c
-      pram=rh_pre*vs_pre*vs_pre
+      Pram=rh_pre*vs_pre*vs_pre
 c
       if (stype.eq.'V') then
 c
@@ -1627,41 +1733,41 @@ c
 c
         if (mtype.eq.'B') then
 c         Specified B field in uG.  Won't change between iterations.
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
 c
         if (mtype.eq.'A') then
 c         Specified protostate malpha. B won't change between iterations
-          pram=rh_neu*vs_pre*vs_pre
-          pgas=fpresse(te_neu,de_neu,dh_neu)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pram=rh_neu*vs_pre*vs_pre
+          Pgas=fpresse(te_neu,de_neu,dh_neu)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'C') then
 c         Specified shockfront malpha.  B will change between iterations
 c         as the gas pressure at the back of the precursor changes.
-          pgas=fpresse(te_pre,de_pre,dh_pre)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pgas=fpresse(te_pre,de_pre,dh_pre)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'M') then
 c         Specified Alfven Mach number
           va=vs_pre/mmach
-          pmag=(0.5*rh_pre*va*va)
-          bmag=dsqrt(epi*pmag)
+          Pmag=(0.5*rh_pre*va*va)
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'R') then
 c         Specified magnetic eta = 2Pmag/Pram.  Bmag shouldn't change
 c         between iterations since Pram doesn't change.
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
-        bm_pre=bmag
+        bm_pre=Bmag
 c
 c       Now call post-shock state always P_pre, alpha may change for A
 c
@@ -1674,7 +1780,7 @@ c
 c jump is the new exact quadratric with no dx time or losses
 c pre and post 0,1 globals are set in routine
 c
-        call shockcmpf (tj, dej, dhj, vshoc, bmag)
+        call shockcmpf (tj, dej, dhj, vshoc, Bmag)
 c
         tm00=te0
 c
@@ -1692,42 +1798,42 @@ c
 c
         if (mtype.eq.'B') then
 c         Specified B field in uG.  Won't change between iterations.
-          bmag=magparam*1.0d-6
-          pmag=(bmag*bmag)/epi
+          Bmag=magparam*1.0d-6
+          Pmag=(Bmag*Bmag)/epi
         endif
 c
         if (mtype.eq.'A') then
 c         Specified malpha in protostate
-          pgas=fpresse(te_neu,de_neu,dh_neu)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pgas=fpresse(te_neu,de_neu,dh_neu)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'C') then
 c         Specified shockfront malpha.  B will change between iterations
 c         as the gas pressure at the back of the precursor changes.
-          pram=rh_neu*vs_pre*vs_pre
-          pgas=fpresse(te_pre,de_pre,dh_pre)
-          pmag=magparam*pgas
-          bmag=dsqrt(epi*pmag)
+          Pram=rh_neu*vs_pre*vs_pre
+          Pgas=fpresse(te_pre,de_pre,dh_pre)
+          Pmag=magparam*Pgas
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'M') then
           va=vs_pre/mmach
-          pmag=(0.5*rh_pre*va*va)
-          bmag=dsqrt(epi*pmag)
+          Pmag=(0.5*rh_pre*va*va)
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
         if (mtype.eq.'R') then
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
         endif
 c
-        bm_pre=bmag
+        bm_pre=Bmag
 c
 c       Now call velshock2 to find the shock speed
 c
-        pgas=fpresse(te_pre,de_pre,dh_pre)
+        Pgas=fpresse(te_pre,de_pre,dh_pre)
         vshoc=vs_pre
         t=te_pre
         tpo=te_pst
@@ -1736,32 +1842,32 @@ c
         tloss=0.0d0
         dt=0.0d0
 c
-   10   bm0=bmag
+   10   bm0=Bmag
 c
 c       Call function velshock2 to find the new shock speed
 c       N.B. velshock2 calls subroutine rankhug
-        vshoc=velshock2(dh,t,bmag,tpo)
+        vshoc=velshock2(dh,t,Bmag,tpo)
 c
-        pram=rh_neu*vshoc*vshoc
+        Pram=rh_neu*vshoc*vshoc
 c
         if (mtype.eq.'M') then
           va=vshoc/mmach
-          pmag=(0.5*rh_pre*va*va)
-          bmag=dsqrt(epi*pmag)
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          Pmag=(0.5*rh_pre*va*va)
+          Bmag=dsqrt(epi*Pmag)
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
           if (eps.gt.1.0d-6) goto 10
         endif
 c
         if (mtype.eq.'R') then
 c iterate for rampressure/alpha_r
-          pmag=0.5d0*mageta*pram
-          bmag=dsqrt(epi*pmag)
-          eps=dabs(2.0*(bmag-bm0)/(bmag+bm0))
+          Pmag=0.5d0*mageta*Pram
+          Bmag=dsqrt(epi*Pmag)
+          eps=dabs(2.0*(Bmag-bm0)/(Bmag+bm0))
           if (eps.gt.1.0d-6) goto 10
         endif
 c
         vs_neu=vel0
-        bm_neu=bmag
+        bm_neu=Bmag
         tm00=te0
       endif
 c
@@ -1786,14 +1892,14 @@ c
 c
       bp0=(bm0*bm0)/epi
       bp1=(bm1*bm1)/epi
-      pmag=bp0
-      pgas=pr0
-      pram=rho0*vel0*vel0
+      Pmag=bp0
+      Pgas=pr0
+      Pram=rho0*vel0*vel0
 c
       machnumber=vel0/dsqrt(gammaEOS*pr0/rho0)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       return
       end
@@ -1928,7 +2034,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Open files, main and precursor
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appends5files ()
+      call appendS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1958,7 +2064,7 @@ c
       t=te_neu
       de=de_neu
       dh=dh_neu
-      bmag=bm_neu
+      Bmag=bm_neu
       call copypop (pop_neu, pop)
 c
       rad=dist(step)
@@ -2236,8 +2342,8 @@ c
      &   tab,'XOI',tab,'XOII',tab,'XOIII'
       do i=nfs,1,-1
         call copysteppop (i, popintfr, p1)
-        write (*,70) i,tab,x(i),tab,dr,
-     &    tab,x(i)/vshoc,tab,dr/vshoc,
+        write (*,70) i,tab,x(i),tab,predr(i),
+     &    tab,x(i)/vshoc,tab,predr(i)/vshoc,
      &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
      &    tab,fh(i),tab,fra(i),
      &    tab,foi(i),tab,foii(i),tab,foiii(i)
@@ -2252,8 +2358,8 @@ c
      &   tab,'XOI',tab,'XOII',tab,'XOIII'
         i=1
         call copysteppop (i, popintfr, p1)
-        write (*,70) i,tab,x(i),tab,dr,
-     &    tab,x(i)/vshoc,tab,dr/vshoc,
+        write (*,70) i,tab,x(i),tab,predr(i),
+     &    tab,x(i)/vshoc,tab,predr(i)/vshoc,
      &    tab,nte(i),tab,ne(i),tab,nh(i),tab,1.d0-fh(i),
      &    tab,fh(i),tab,fra(i),
      &    tab,foi(i),tab,foii(i),tab,foiii(i)
@@ -2456,6 +2562,34 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         write (lupt,80) 100.d0*rmserr,itcount,iabs(nfs0-nfs)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+        wmod='NEBL'
+        call multizone (nfs, x, nte, ne, nh, popfr, popintfr, wmod)
+c
+        caller='S5'
+        pfx='PCup'//s5pfx(1:nprefix)
+        np=lenv(pfx)
+c
+        wmod='LFLM'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+c
+        wmod='REAL'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+c
+        if (lmod.eq.'Y') then
+          wmod='NFNU'
+          call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
+        endif
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c collect precursor spectrum
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+        call avrdata ()
+c
+        spmod='REL'
+        linemod='LAMB'
+        call spec2 (lupc, linemod, spmod)
+c
         call wrsppop (lupt)
 c
       endif
@@ -2480,8 +2614,104 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Close precursor files
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      call closes5files ()
+      call closeS5files ()
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine multizone (n, x, nte, ne, nh, popfr, popintfr, smod)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c Compute the emission from a multi-zone structure saved in the
+c x, nte, ne, nh, popfr, popintfr arrays. A general low level routine.
+c src not used so far, but it will in the future when we also add
+c diffuse field
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+c
+      integer*4 n,idx
+      real*8 x(mxifsteps),nte(mxifsteps)
+      real*8 nh(mxifsteps),ne(mxifsteps)
+      real*8 popfr(mxifsteps, mxion, mxelem)
+      real*8 popintfr(mxifsteps, mxion, mxelem)
+c
+      real*8 t,tdw,tup,de,dh,dvdw,dvup,rdvol,irdvol,dvol
+      real*8 gdil,x0,dx,dxdw,dxup
+      real*8 p1(mxion, mxelem), p2(mxion, mxelem)
+      real*8 sumhb,hbl
+c
+      character imod*4,specmode*4,smod*4,subname*64
+c
+      real*8 feldens
+c
+      gdil=0.5d0
+      fi=1.d0
+c
+      call zerbuf ()
+c global modes
+      jspot='N'
+      jcon='Y'
+      jgeo='P'
+      jtrans='LODW'
+      jden='C'
+      specmode='NEBL'
+      subname='MultiZone'
+c
+      rdvol=1.0d0
+      irdvol=1.d0
+      vunilog=0.d0
+      sumhb=0.0d0
+c
+      do idx=1,n-1
+c
+        dx=x(idx+1)-x(idx)
+        x0=x(idx)
+c
+        call copysteppop (idx, popintfr, popint)
+        call copysteppop (idx, popfr, p1)
+        call copysteppop (idx+1, popfr, p2)
+        call averinto (0.5d0, p1, p2, pop)
+        t=0.5d0*(nte(idx)+nte(idx+1))
+        dh=nh(idx)
+        de=feldens(dh,pop)
+        ne(idx)=de
+c
+        call localem (t, de, dh)
+        hbl=hbeta*fpi*dx
+        sumhb=sumhb+hbl
+        jgeo='P'
+c        write(*,'(8(1pg11.4,x))') x0,dx,t,dh,de,hbeta*fpi,hbl,sumhb
+        specmode='NEBL'
+        call totphot2 (t, dh, x0, dx, 0.d0, gdil, specmode)
+        call zetaeff (dh)
+c
+c     accumulate spectrum
+c
+        tdw=nte(idx+1)
+        tup=nte(idx)
+        dxdw=dx
+        dvdw=0.d0
+        dxup=0.d0
+        dvup=0.d0
+c
+        jgeo='P'
+        jtrans='LODW'
+        call newdif2 (tdw, tup, dh, x0, dxdw, dvdw, dxup, dvup, gdil,
+     &   jtrans)
+c
+        imod='ALL'
+        dvol=dx*irdvol
+        call sumdata (t, de, dh, dvol, dx, x0, imod)
+c
+      enddo
+c     write(*,*) 'multizone Hbeta:', sumhb, dlog10(sumhb)
+c
+c     call avrdata()
+c
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2552,8 +2782,8 @@ c save state for step integral, uses pop, pop0 and pop1 in cblocks
 c
 c structural markers
 c
-      real*8 timmark(7),dismark(7),bmmark(7)
-      real*8 prmark(7),rhmark(7),dhmark(7),demark(7)
+      real*8 timMark(7),disMark(7),bmMark(7)
+      real*8 prMark(7),rhMark(7),dhMark(7),deMark(7)
       real*8 templim,ft,cft
       integer*4 tempidx
 c
@@ -2574,13 +2804,13 @@ c
       tab=','
 c
       do idx=1,7
-        timmark(idx)=0.0d0
-        dismark(idx)=0.0d0
-        bmmark(idx)=0.0d0
-        prmark(idx)=0.0d0
-        rhmark(idx)=0.0d0
-        dhmark(idx)=0.0d0
-        demark(idx)=0.0d0
+        timMark(idx)=0.0d0
+        disMark(idx)=0.0d0
+        bmMark(idx)=0.0d0
+        prMark(idx)=0.0d0
+        rhMark(idx)=0.0d0
+        dhMark(idx)=0.0d0
+        deMark(idx)=0.0d0
       enddo
 c
       rdvol=1.0d0
@@ -2593,7 +2823,7 @@ c open all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appends5files
+      call appendS5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2644,7 +2874,7 @@ c
       dr=0.d0
       ve=vel0
       vpo=vel1
-      bmag=bm0
+      Bmag=bm0
       bm0=bm0
       dv=ve*0.01d0
       fi=1.d0
@@ -2681,7 +2911,7 @@ c
       de=de_neu
       dh=dh_neu
       en=zen*dh
-      bmag=bm_neu
+      Bmag=bm_neu
 c
       netloss=flocallosses(t,de,dh,pop_neu,1.d38,0.d0,0.d0,wdil)
 c
@@ -2713,7 +2943,7 @@ c
       de=de_pre
       dh=dh_pre
       en=zen*dh
-      bmag=bm_pre
+      Bmag=bm_pre
 c
       netloss=flocallosses(t,de,dh,pop_pre,1.d38,0.d0,0.d0,wdil)
 c
@@ -2756,12 +2986,12 @@ c     rmod='NEAR'
 c      call isochorflow (t, de, dh, ve, Bmag, rmod, netloss, dt)
 c      call isobarflow (t, de, dh, ve, Bmag, rmod, netloss, dt)
 c      call rankhug (t, de, dh, ve, Bmag, 0.d0, 0.d0)
-      call shockcmpf (t, de, dh, ve, bmag)
+      call shockcmpf (t, de, dh, ve, Bmag)
 c
       t=te1
       de=de1
       dh=dh1
-      bmag=bm1
+      Bmag=bm1
 c
       call copypop (pop_pre, pop)
       call copypop (pop_pre, pop0)
@@ -2884,7 +3114,7 @@ c
       dh0=dh1
       de0=de1
       bm0=bm1
-      bmag=bm0
+      Bmag=bm0
       dist(1)=0.d0
       timlps(1)=0.d0
 c
@@ -3272,7 +3502,8 @@ c
 c
 c     get mean ionisation state for step
 c
-      rdis=dist(step)+dr*0.5d0!middleofstep,dist(step)isnowend
+c     middleofstep,dist(step)isnowend
+      rdis=dist(step)+dr*0.5d0
 c      cmpf=rho1/rho0
       fi=1.0d0
 c
@@ -3332,7 +3563,7 @@ c
       dh0=dh1
       de0=de1
       bm0=bm1
-      bmag=bm0
+      Bmag=bm0
       count=0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3422,7 +3653,7 @@ c     Close all files and flush
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call closes5files ()
+      call closeS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3435,7 +3666,7 @@ c     Reopen all main shock files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call appends5files
+      call appendS5files
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3535,12 +3766,12 @@ c
         do idx=7,1,-1
           if (timmark(idx).gt.0.d0) then
             templim=10.0d0**dble(idx)
-            write (luop,210) idx,templim,idx,timmark(idx),idx,
-     &       dismark(idx),idx,bmmark(idx),idx,prmark(idx),idx,
-     &       rhmark(idx),idx,dhmark(idx),idx,demark(idx)
-            write (*,210) idx,templim,idx,timmark(idx),idx,dismark(idx),
-     &       idx,bmmark(idx),idx,prmark(idx),idx,rhmark(idx),idx,
-     &       dhmark(idx),idx,demark(idx)
+            write (luop,210) idx,templim,idx,timMark(idx),idx,
+     &       disMark(idx),idx,bmMark(idx),idx,prMark(idx),idx,
+     &       rhMark(idx),idx,dhMark(idx),idx,deMark(idx)
+            write (*,210) idx,templim,idx,timMark(idx),idx,disMark(idx),
+     &       idx,bmMark(idx),idx,prMark(idx),idx,rhMark(idx),idx,
+     &       dhMark(idx),idx,deMark(idx)
           endif
         enddo
 c
@@ -3556,7 +3787,7 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      call closes5files ()
+      call closeS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3652,20 +3883,20 @@ c
       wmol=rh_neu/(en+de_neu)
       mu=fmua(de_neu,dh_neu)
 c
-      pram=rh_neu*vel0*vel0
-      pgas=pr_neu
-      pmag=(bm_neu*bm_neu)/epi
+      Pram=rh_neu*vel0*vel0
+      Pgas=pr_neu
+      Pmag=(bm_neu*bm_neu)/epi
 c
       machnumber=vel0/dsqrt(gammaEOS*pr_neu/rh_neu)
-      alfvennumber=vel0/dsqrt(2.0d0*pmag/rh_neu)
-      malpha=pmag/pgas
-      gaseta=gammaEOS*pgas/pram
-      mageta=2.d0*pmag/pram
+      alfvennumber=vel0/dsqrt(2.0d0*Pmag/rh_neu)
+      malpha=Pmag/Pgas
+      gaseta=gammaEOS*Pgas/Pram
+      mageta=2.d0*Pmag/Pram
 c
       write (lunit,10) vel0*1.0d-5,machnumber,alfvennumber,malpha,
      &gaseta,mageta,te_neu,de_neu,dh_neu,rh_neu,pr_neu,mu,pop_neu(1,
      &zmap(1)),pop_neu(2,zmap(1)),pop_neu(1,zmap(2)),pop_neu(2,zmap(2)),
-     &pop_neu(3,zmap(2)),bm_neu*1.d6,pmag,pram
+     &pop_neu(3,zmap(2)),bm_neu*1.d6,Pmag,Pram
 c
       return
       end
@@ -3733,6 +3964,7 @@ c
       luop=20
       lusp=21
       lupt=22
+      lupc=23
 c
 c common files
 c
@@ -3749,6 +3981,15 @@ c
       ieln=4
       do i=1,atypes
         luionsh(i)=30+i
+      enddo
+c
+c precursor only files to disabled set to 0
+c
+      lualpc=31+atypes
+      lurtpc=32+atypes
+      lulpc=33+atypes
+      do i=1,atypes
+        luionpc(i)=33+atypes+i
       enddo
 c
 c     Name "sh5" general output files
@@ -3775,6 +4016,7 @@ c spec line list files
 c always in csv files lists
 c
 c      open (lusp,file=fsh,status='NEW') shock
+c      open (lupc,file=fpc,status='NEW') precursor
 c
 c
       pfx='specSH'//s5pfx(1:nprefix)
@@ -3783,6 +4025,13 @@ c
       fsh=' '
       call newfile (pfx, np, sfx, 3, fn)
       fsh=fn(1:np+8)
+c
+      pfx='specPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      sfx='csv'
+      fpc=' '
+      call newfile (pfx, np, sfx, 3, fn)
+      fpc=fn(1:np+8)
 c
 c    allions files , shock and precursors
 c    allmod=Y
@@ -3795,17 +4044,29 @@ c
       sfx='sh5'
       call newfile (pfx, np, sfx, 3, fn)
       fash=fn(1:np+8)
+c     Precursor file
+      pfx='ionPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      call newfile (pfx, np, sfx, 3, fn)
+      fapc=fn(1:np+8)
 c
 c rates fitles , shock and precursors
 c ratmod=Y
 c
 c        open (lurtsh,file=frsh,status='NEW')
+c        open (lurtpc,file=frpc,status='NEW')
 c
       pfx='ratSH'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='sh5'
       call newfile (pfx, np, sfx, 3, fn)
       frsh=fn(1:np+8)
+c     Rates file for precursor
+      pfx='ratPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      sfx='sh5'
+      call newfile (pfx, np, sfx, 3, fn)
+      frpc=fn(1:np+8)
 c
 c shock 'dynamics' file
 c dynmod=Y
@@ -3847,12 +4108,22 @@ c
 c line structures, shocks and precursors
 c jlin=Y
 c
+c      open (lulsh,file=flsh,status='NEW')
+c      open (lulpc,file=flpc,status='NEW')
+c
       pfx='linSH'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='csv'
       flsh=' '
       call newfile (pfx, np, sfx, 3, fn)
       flsh=fn(1:np+8)
+c
+      pfx='linPC'//s5pfx(1:nprefix)
+      np=lenv(pfx)
+      sfx='csv'
+      flpc=' '
+      call newfile (pfx, np, sfx, 3, fn)
+      flpc=fn(1:np+8)
 c
 c       ionisation structure files -  all names a made only 4 are
 c       used atm tsrmod=Y  i is 1-mxelem and is effectively the
@@ -3865,6 +4136,7 @@ c
 c B  : Ion balance files.' for just the 4 chosen mapping z to i later
 c
 c          open (luionsh(i),file=fionsh(i),status='NEW')
+c          open (luionpc(i),file=fionpc(i),status='NEW')
 c
       sfx='csv'
       do i=1,atypes
@@ -3880,6 +4152,16 @@ c       mapppings internal ids not z, names mapped in prefs
         fash=fn(1:np+8)
         fionsh(i)=fash
 c
+        if (elem_len(i).eq.1) then
+          pfx='elPC'//s5pfx(1:nprefix)//elem(i)//'_'
+        else
+          pfx='elPC'//s5pfx(1:nprefix)//elem(i)
+        endif
+        np=lenv(pfx)
+        call newfile (pfx, np, sfx, 3, fn)
+        fapc=fn(1:np+8)
+        fionpc(i)=fapc
+c
       enddo
 c
 c Final downstream field.'
@@ -3893,7 +4175,7 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine creates5files ()
+      subroutine createS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3923,6 +4205,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       open (lusp,file=fsh,status='NEW')
+      if (lupc.gt.0) open (lupc,file=fpc,status='NEW')
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3936,12 +4219,18 @@ c B  : Ion balance files.'
 c
         do i=1,ieln
           open (luionsh(i),file=fionsh(iel(i)),status='NEW')
+          if (luionpc(i).gt.0) then
+            open (luionpc(i),file=fionpc(iel(i)),status='NEW')
+          endif
         enddo
 c
       endif
 c
       if (allmod.eq.'Y') then
         open (lualsh,file=fash,status='NEW')
+        if (lualpc.gt.0) then
+          open (lualpc,file=fapc,status='NEW')
+        endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3968,6 +4257,8 @@ c
 c D  : All Rates file.
 c
         open (lurtsh,file=frsh,status='NEW')
+c       Rates file for precursor
+        if (lurtpc.gt.0) open (lurtpc,file=frpc,status='NEW')
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4029,12 +4320,13 @@ c     line structures, shocks and precursors
 c     jlin=Y
 c
         open (lulsh,file=flsh,status='NEW')
+        if (lulpc.gt.0) open (lulpc,file=flpc,status='NEW')
       endif
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine closes5files ()
+      subroutine closeS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4057,6 +4349,10 @@ c
       endif
       inquire (unit=lusp,opened=unitopen)
       if (unitopen) close (lusp)
+      if (lupc.gt.0) then
+        inquire (unit=lupc,opened=unitopen)
+        if (unitopen) close (lupc)
+      endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       inquire (unit=lurtsh,opened=unitopen)
       if (unitopen) close (lurtsh)
@@ -4075,11 +4371,30 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       inquire (unit=lupb,opened=unitopen)
       if (unitopen) close (lupb)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      if (lurtpc.gt.0) then
+        inquire (unit=lurtpc,opened=unitopen)
+        if (unitopen) close (lurtpc)
+      endif
+      do i=1,ieln
+        if (luionpc(i).gt.0) then
+          inquire (unit=luionpc(i),opened=unitopen)
+          if (unitopen) close (luionpc(i))
+        endif
+      enddo
+      if (lualpc.gt.0) then
+        inquire (unit=lualpc,opened=unitopen)
+        if (unitopen) close (lualpc)
+      endif
+      if (lualpc.gt.0) then
+        inquire (unit=lulpc,opened=unitopen)
+        if (unitopen) close (lulpc)
+      endif
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine appends5files ()
+      subroutine appendS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4104,6 +4419,7 @@ c
       if (lupt.gt.0) open (lupt,file=fpm,status='OLD',access='APPEND')
 c
       open (lusp,file=fsh,status='OLD',access='APPEND')
+      if (lupc.gt.0) open (lupc,file=fpc,status='OLD',access='APPEND')
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4118,12 +4434,20 @@ c
         do i=1,ieln
           open (luionsh(i),file=fionsh(iel(i)),status='OLD',access='APPE
      &ND')
+          if (luionpc(i).gt.0) then
+            open (luionpc(i),file=fionpc(iel(i)),status='OLD',access='AP
+     &PEND')
+          endif
         enddo
 c
       endif
 c
       if (allmod.eq.'Y') then
         open (lualsh,file=fash,status='OLD',access='APPEND')
+c         Precursor file
+        if (lualpc.gt.0) then
+          open (lualpc,file=fapc,status='OLD',access='APPEND')
+        endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4150,6 +4474,10 @@ c
 c D  : All Rates file.
 c
         open (lurtsh,file=frsh,status='OLD',access='APPEND')
+c       Rates file for precursor
+        if (lurtpc.gt.0) then
+          open (lurtpc,file=frpc,status='OLD',access='APPEND')
+        endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -4212,6 +4540,9 @@ c     line structures, shocks and precursors
 c     jlin=Y
 c
         open (lulsh,file=flsh,status='OLD',access='APPEND')
+        if (lulpc.gt.0) then
+          open (lulpc,file=flpc,status='OLD',access='APPEND')
+        endif
       endif
 c
       return

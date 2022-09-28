@@ -926,7 +926,135 @@ c
         fps=fn(1:(np+3+5))
 c
       endif
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       call wpsoufile (caller, fps, wmod, t, de, dh, dr, scale, tp)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      return
+      end
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      subroutine wplam4 (caller, pfx, np, t, de, dh, dr, scale)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c     Routine to write out a 4 flambda vectors, given the
+c     fields in tp1, total, tp2 , neblula only, tp3, src, tp4 nebcont.
+c
+c     Vector Units: Fnu  = ergs/s/cm2/Hz/sr
+c     wmod = 'LFLM' then write lam (A) v Flam (ergs/s/cm2/A) .lam
+c
+c     Now puts out 5 columns in the files: lambda tp1,..tp4 in flabda
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      include 'cblocks.inc'
+c
+      character* (*) caller
+      character* (*) pfx
+      real*8 t,de,dh,dr,scale
+c
+      character sfx*4,fps*64
+c
+      real*8 tl(mxinfph)
+      real*8 bv, blum, ilum, widnu, clam, lambda
+c
+      integer*4 lunt,i,j,np
+      logical iexi
+c
+      character fn*64
+c
+c functions
+c
+      real*8 fnair
+      integer*4 lenv,mlen
+c
+      fps=' '
+c
+      fn=' '
+      sfx='lam'
+      call newfile (pfx, np, sfx, 3, fn)
+      fps=fn(1:(np+3+5))
+
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c
+c     write lam (A) v Flam (ergs/s/cm2/A)
+c     total, src, neb, neb continum
+c
+c     Now puts out 5 columns in the files: wave in A fluxs in flambda
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c
+      lunt=99
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+      np=mlen(runname)
+c
+      i=infph-1
+c
+      inquire (file=fps,exist=iexi)
+      if (.not.iexi) then
+          open (lunt,file=fps,status='NEW')
+          write (lunt,10) runname(1:np),t,de,dh
+   10     format('% 4FLAM SPECTRUM '/
+     &     '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'/
+     &     '% RUN :',a45,' %'/
+     &     '% UNITS: Lambda (Air) vs 4 Flambda (ergs/s/cm2/A)    %'/
+     &     '% UNITS: bin centre wavelengths                      %'/
+     &     '% TEMP.    :',1pe12.5,'                             %'/
+     &     '% El. DENS.:',1pe12.5,'                             %'/
+     &     '% H.  DENS.:',1pe12.5,'                             %')
+      else
+        open (lunt,file=fps,status='OLD',access='APPEND')
+      endif
+c
+      call fieldsummary (lunt, 0, tp1)
+c
+      np=lenv(caller)
+      write (lunt,*) 'Produced by ',caller(1:np),' :MAPPINGS V ',
+     &theversion
+c
+   20  format(1pe14.7,4(', ',1pe14.7))
+c
+       do j=infph,1,-1
+c
+         bv=cphotev(j)*evplk
+         clam=1.0d8*cls/(bv*evplk)
+         tp1(j)=fpi*(scale*bv*tp1(j)/clam)
+         if (tp1(j).lt.ioepsilon) then
+           tp1(j)=0.d0
+         endif
+c
+         tp2(j)=fpi*(scale*bv*tp2(j)/clam)
+         if (tp2(j).lt.ioepsilon) then
+           tp2(j)=0.d0
+         endif
+c
+         tp3(j)=fpi*(scale*bv*tp3(j)/clam)
+         if (tp3(j).lt.ioepsilon) then
+           tp3(j)=0.d0
+         endif
+c
+         tp4(j)=fpi*(scale*bv*tp4(j)/clam)
+         if (tp4(j).lt.ioepsilon) then
+           tp4(j)=0.d0
+         endif
+c
+         lambda=1.0d8*cls/(cphotev(j)*evplk)
+         if (lambda.ge.1000.d0) then
+           if (lambda.le.50000.d0) then
+             if (tp1(j).gt.0.d0) then
+               lambda=lambda/fnair(lambda)
+               write (lunt,20) lambda,tp1(j),tp2(j),tp3(j),tp4(j)
+             endif
+           endif
+         endif
+c
+       enddo
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+      close (lunt)
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
