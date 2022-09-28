@@ -72,9 +72,9 @@ templates_path = ['_templates']
 master_doc = 'index'
 
 # General information about the project.
-project = 'python'
-copyright = '2018, Knox Long, Christian Knigge, Stuart Sim, Nick Higginbottom, James Matthews, Sam Mangham, Edward Parkinson, Mandy Hewitt'
-author = 'Knox Long, Christian Knigge, Stuart Sim, Nick Higginbottom, James Matthews, Sam Mangham, Edward Parkinson, Mandy Hewitt'
+project = 'Mappings'
+copyright = '2022, Ralph Sutherland, David Nicholls, Arpita Roy, Knox Long'
+author = 'Ralph Sutherland, David Nicholls, Arpita Roy, Knox Long'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

@@ -78,17 +78,10 @@ Add others
    :hidden:
    :caption: Documentation
 
-   quick
+   Mappings_guide
    installation
    running_mapping
    input
    output
-   operation
-   radiation
-   wind_models
-   coordinate
-   examples
-   physics
-   atomic
    meta
    *
