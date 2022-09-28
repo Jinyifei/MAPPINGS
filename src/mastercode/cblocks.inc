@@ -5,14 +5,14 @@ c
 c
 c     Creative Commons v4.0 International
 c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
+c     CC-BY-SA-4.0Intl https:/s/creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21dev
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -274,17 +274,6 @@ c
       real*8 tendrec(mxnspl,mxnnorad)
       real*8 andrec (mxnspl,mxnnorad)
       real*8 a2ndrec(mxnspl,mxnnorad)
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c Badnell 2015 SIII DR and RR empirically adjusted coefficients
-c result saved over std results on ion by ion basis , 3 levels atm
-c no ion array only single species, 3D arrays when more available
-c in recom15 common
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      integer*4 nbd15rec,atbdrec(mxnrec),ionbdrec(mxnrec)
-      integer*4 typebdrec(mxnrec),ntbdrec(mxnrec),nlbdrec(mxnrec)
-      real*8 cdr_bd15(mxdrbd15,mxnlbd15),edr_bd15(mxdrbd15,mxnlbd15)
-      real*8 rr_bd15(mxrrbd15)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c       declare PHOTDAT block variables
@@ -1883,10 +1872,6 @@ c
       common /recom4/ nnorad,atndrec,ionndrec,
      &                typendrec,noradid,nodesndrec
       common /recom5/ tendrec,andrec,a2ndrec
-      common /recom15/ cdr_bd15,edr_bd15,rr_bd15
-      common /recom15i/ nbd15rec,atbdrec,ionbdrec
-      common /recom15i2/ typebdrec,ntbdrec,nlbdrec
-
 c
 c Ancient rates
 c

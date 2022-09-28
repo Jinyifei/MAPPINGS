@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21
+#    v5.1.21dev
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51
+OUTNAME = map51dev
 #
 #-------------------------------
 #---------- Directories --------
@@ -28,8 +28,16 @@ WARN   = -diag-disable=all -nocheck
 FC     = ifort
 LDR    = ${WARN} -mtune=native -Ofast -ipo -inline-max-size=1024
 OPTS   = -c ${LDR} -I${INCDIR}
-LIB    =
 #
+UNAME = $(shell uname)
+#
+ifeq ($(UNAME),Darwin)
+	LIB  =
+	XSYS = Mac (wich xcrun)
+else
+	LIB =
+	XSYS = Linux
+endif
 #
 #
 #     Generic FORTRAN
@@ -157,7 +165,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21 make options:
+	@echo MAPPINGS V v5.1.21dev make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"
@@ -230,6 +238,7 @@ ${EXEDIR}${OUTNAME}: ${INCS} ${OBJ}
 #
 build:
 	@echo ' Building ${OUTNAME}:'
+	@echo ' Compiling for $(XSYS)'
 	@echo ' Copying over .f files'
 	@cp ${BACKDIR}*.f ${CODDIR}
 	@echo ' Copying over include files'

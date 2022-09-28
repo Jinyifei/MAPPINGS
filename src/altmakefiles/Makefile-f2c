@@ -1,12 +1,12 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21
+#    v5.1.21dev
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51
+OUTNAME = map51dev
 #
 #-------------------------------
 #---------- Directories --------
@@ -41,6 +41,20 @@ CPP    = /usr/bin/cpp -P -Iincludes/ -I.
 #CC     = cc
 #LIB    = -lU77  -lf90math -lfio -lf77math
 #CPP    = cpp -P -xassembler-with-cpp -Iincludes/ -I.
+#
+UNAME = $(shell uname)
+#
+ifeq ($(UNAME),Darwin)
+	LIB    = -isysroot`xcrun --show-sdk-path`
+	XSYS = Mac (wich xcrun)
+else
+	LIB =
+	XSYS = Linux
+endif
+#
+start:
+	@echo 'hello' x$(UNAME)x
+#
 #
 #     Generic FORTRAN
 #
@@ -171,7 +185,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21 make options:
+	@echo MAPPINGS V v5.1.21dev make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"
@@ -246,6 +260,7 @@ ${EXEDIR}${OUTNAME}: ${INCS} ${OBJ}
 #
 build:
 	@echo ' Building ${OUTNAME}:'
+	@echo ' Compiling for $(XSYS)'
 	@echo ' Copying over .f files'
 	@cp ${BACKDIR}*.f ${CODDIR}
 	@echo ' Copying over include files'
@@ -318,3 +333,4 @@ uninstallall:
 	rm -f /opt/local/bin/${OUTNAME}
 	rm -rf /opt/local/share/mappings
 	@echo ' Uninstalled /opt/local/bin/${OUTNAME} and /opt/local/share/mappings'
+
