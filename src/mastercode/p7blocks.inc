@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21dev
+c       Version v5.1.21
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
