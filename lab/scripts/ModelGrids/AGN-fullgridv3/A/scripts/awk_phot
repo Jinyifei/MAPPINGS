@@ -75,7 +75,7 @@ BEGIN{line = 0;
 /9530.619/{n = split($0, a, ","); siii    = siii + a[3]}
 /Detailed Emission Spectrum/{
 printf(" ::::::::::::::::::::::::::::::::::\n");
-print  " MV v5.1.21 P7 Dusty AGN "
+print  " MV 5.1.18 P7 Dusty AGN "
 print  " LogU="lu", Log[O]+12="lz", gas Log[O]+12="lg", Log[Fe]="lzfe", gas Log[Fe]="lgfe", LogP/k="pres", mass="mass", Ledd=",ledd", type="type;
 print  " Quantity     ,  Model";
 hb = hbeta*1e-37

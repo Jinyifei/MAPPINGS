@@ -21,9 +21,6 @@ BACKDIR = mastercode/
 #---------- Compilers ----------
 #-------------------------------
 #
-#  comment out and in as needed
-#   for different machines
-#
 # GCC FORTRAN - gfortran generic
 # tested with v11 but should work with v4.5 or newer
 # on OSX, use MacPorts.org to get gcc4.8 or newer.
@@ -41,7 +38,6 @@ WARN   =
 # plain
 #
 # FC     = gfortran -std=legacy
-# #LDR    =  ${WARN} -g -O1 -fbounds-check -ffpe-summary='none'
 # LDR    = ${WARN} -Ofast -ffpe-summary='none'
 # OPTS   = -c ${LDR} -I${INCDIR}
 # LIB    =
@@ -50,12 +46,11 @@ WARN   =
 #
 FC     = gfortran -std=legacy -march=native
 LDR    =  ${WARN} -Ofast -ffpe-summary='none'
-#LDR    =  ${WARN} -Ofast -flto=8 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
-
+#
 UNAME = $(shell uname)
-
+#
 ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
 	XSYS = Mac (with xcrun)
@@ -63,19 +58,10 @@ else
 	LIB =
 	XSYS = Linux
 endif
-
-
+#
 start:
 	@echo 'hello' x$(UNAME)x
-
 #
-#
-#  GCC FORTRAN v4.5-4.8 and earlier
-#
-#FC     = gfortran -std=legacy
-#LDR    = -Ofast
-#OPTS   = -c ${LDR} -I${INCDIR}
-#LIB    =
 #
 #     Generic FORTRAN
 #
@@ -168,8 +154,6 @@ OBJ = ${CODDIR}mappings.o \
 	${CODDIR}recom.o \
 	${CODDIR}reson.o \
 	${CODDIR}sdifeq.o \
-	${CODDIR}shock2.o \
-	${CODDIR}shock3.o \
 	${CODDIR}shock4.o \
 	${CODDIR}shock5.o \
 	${CODDIR}sinsla.o \
@@ -204,7 +188,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.22 make options:
+	@echo MAPPINGS V v5.1.21 make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"
@@ -293,7 +277,8 @@ build:
 	@mv $(INCS) ${BACKDIR}
 	@echo ' Cleaning up src area'
 	@rm -f *~
-	@echo ' Done.'
+	@echo ' Done.  Compiled Successfully'
+	@echo ' Done.  A local version of the executable ${OUTNAME} can be found in ../lab'
 #
 #------------------------------------------------------------
 #

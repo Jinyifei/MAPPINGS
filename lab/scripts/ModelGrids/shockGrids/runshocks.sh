@@ -1,5 +1,5 @@
 #!/bin/bash
-#v1.1.3
+#v1.1.4
 # 3  or 4  args: 'name' param2 param3 [ncpus]
 ########################################################################
 #
@@ -7,9 +7,10 @@
 # param3 = Ram Pressure
 # last param is # of cpus
 #
-# MAPPINGS version
+# MAPPINGS version, shared exe path
 #
-vers="v5.1.21"
+m_vers="v5.1.21"
+map_exe="map51dev"
 #
 ########################################################################
 #
@@ -62,9 +63,9 @@ pretemp="100.0"
 #
 ########################################################################
 #
-# Abundances "GC_ZO_P0000.abn"
+# Abundances eg GC2016/GC_ZO_1000.abn etc see inputs and sub folders
 #
-abund="solar2009AGSS.txt"
+abund="solar2009.txt"
 #
 # type: "etam" or "alpha"
 #
@@ -92,7 +93,7 @@ echo " "$(date)
 ########################################################################
 if (( $# < 1 )); then
       echo " Run an MV shock grid, with runname"
-      echo " Run a 10 <= V <= 3500 shock grid"
+      echo " Run a 10 <= V <= 5000 shock grid"
       echo " and produce grid_XXX.csv file of log ratios to plot"
       echo " "
       echo " Usage1: runshocks.sh 'RunName' alpha n@100'"
@@ -235,6 +236,8 @@ cd "V"${vName}
         scripts/"shocks5_${type}".mv > "shocks5_v${vName}".mv
 # background execution
 #echo "shocks5_v${vName}.mv"
+    sed -e s/MEXE/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
+    chmod +x runmvscript.sh
     (./runmvscript.sh "shocks5_v${vName}".mv )>&/dev/null&
     addPid "shocks5_v${vName}" $!
     idx=$(expr $idx + 1)

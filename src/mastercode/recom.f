@@ -34,7 +34,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
 c
-      integer*4 i
+      integer*4 i,j
       real*8 t,u,u4,ar,xr
       real*8 ad,bd,ta,tb
       real*8 tp,tp40

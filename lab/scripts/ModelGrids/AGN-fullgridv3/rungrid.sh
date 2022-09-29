@@ -1,5 +1,5 @@
 #!/bin/bash
-# MV v5.1.21 v3.1 v4 bash looped and slotted PID version
+# MV v5.1.21 v3.1.1 v4 bash looped and slotted PID version
 #
 ########################################################################
 #
@@ -44,7 +44,7 @@ fi
 # MAPPINGS version
 #
 m_vers="v5.1.21"
-map_exe="map51"
+map_exe="map51dev"
 #
 ########################################################################
 #
@@ -69,9 +69,9 @@ sides="one"
 pres="8.0"
 #
 ########################################################################
-# Abundances
+# Abundances eg GC2016/GC_ZO_1000.abn etc see inputs and sub folders
 #
-abun="lgc100.abn"
+abun="solar2009.txt"
 #
 # set corresponding abundance file names for mv script
 #

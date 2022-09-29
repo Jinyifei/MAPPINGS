@@ -75,4 +75,4 @@ awk -f "$s/kt00T8.awk" photn0007.${ext}
 echo " Kentucky 2000 Tests completed. Output in $r/lextest_$d.txt"
 rm -f timing.txt map5output.txt
 rm -f *.${ext} *.csv *.sou
-cp "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"
+mv "$i/PHOTDAT_prev.txt" "data/PHOTDAT.txt"

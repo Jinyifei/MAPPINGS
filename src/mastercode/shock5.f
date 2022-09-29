@@ -2386,6 +2386,7 @@ c and save for next interation starting point.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+      if (finalit.le.0) then
       n100=nfs
       do i=1,nfs
         if (nte(i).lt.100.d0) then
@@ -2436,6 +2437,7 @@ c
           f=min(1.0d0,0.04d0*dble(i*i))
           fra(i)=absf*f
         enddo
+      endif
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2529,7 +2531,7 @@ c
      & '     Psi_H (Q_H/v) : ',  1pg12.5,/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
 c
-c redo Psi as vel0 has changes slightly
+c redo Psi as vel0 has changed slightly
 c
         psi=viofr/vel0
         write (*,110) vel0*1.d-5,viofr*1.d-5,psi,qh*1.d-5,qh/vel0
@@ -2685,7 +2687,8 @@ c
         sumhb=sumhb+hbl
         jgeo='P'
 c        write(*,'(8(1pg11.4,x))') x0,dx,t,dh,de,hbeta*fpi,hbl,sumhb
-        call totphot2 (t, dh, x0, dx, 0.d0, gdil, smod)
+        specmode='NEBL'
+        call totphot2 (t, dh, x0, dx, 0.d0, gdil, specmode)
         call zetaeff (dh)
 c
 c     accumulate spectrum

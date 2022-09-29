@@ -69,7 +69,7 @@ c
 c quadratic full solution for non-magnetic case, for shocks
 c and flows, with or without cooling
 c
-      g=gammaeosg
+      g=gammaEOSg
       lambda=tl*tstep
       a(3)=-(g*pr0+0.5d0*rv2-lambda)/rv2
       a(2)=g*(pr0+rv2)/rv2
@@ -78,9 +78,9 @@ c
       q=-0.5d0*(a(2)+dsign(1.d0,a(2))*dsqrt(delta))
       r1=a(1)/q
       r2=q/a(3)
-      cmpfhd=dmax1(r1,r2)
-      vel1=vel0/cmpfhd
-      cmpf=cmpfhd
+      cmpfHD=dmax1(r1,r2)
+      vel1=vel0/cmpfHD
+      cmpf=cmpfHD
 c
       if (bmag.gt.0.d0) then
 c
@@ -105,9 +105,9 @@ c find the two positive roots near x1 and x2  for the cubic in a
 c
         call cubic (a, x1, x2, r1, r2)
 c       for S5 this is the root we always need
-        cmpfnew=dmax1(r1,r2)
+        cmpfNEW=dmax1(r1,r2)
 c
-        cmpf=cmpfnew
+        cmpf=cmpfNEW
 c
       endif
 c

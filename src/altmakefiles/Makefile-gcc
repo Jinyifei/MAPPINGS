@@ -33,7 +33,7 @@ BACKDIR = mastercode/
 #  gcc10+ flto=8 parallel obj opt
 #
 #WARN   = -Wall
-#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized
+#WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
 WARN   =
 #
 # plain
@@ -283,7 +283,8 @@ build:
 	@mv $(INCS) ${BACKDIR}
 	@echo ' Cleaning up src area'
 	@rm -f *~
-	@echo ' Done.'
+	@echo ' Done.  Compiled Successfully'
+	@echo ' Done.  A local version of the executable ${OUTNAME} can be found in ../lab'
 #
 #------------------------------------------------------------
 #

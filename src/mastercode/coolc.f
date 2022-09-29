@@ -39,7 +39,7 @@ c
       integer*4 l,luop,m,i,j,jnorm,nt,idx,np
       integer*4 luions(mxelem)
 c
-      character caller*4, n2*12, norm*16
+      character caller*4, n2*12, norm*12
       character imod*4, lmod*4, model*64
       character spmod*4, jeqnenh*4
       character fn*64,jsaveatoms*4,jcoolelems*4,jsavespecs*4

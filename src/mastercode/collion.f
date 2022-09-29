@@ -106,7 +106,7 @@ c
               ys(k)=ycol(k,io)
               y2s(k)=y2col(k,io)
             enddo
-            ex1=fcodye1(invt)
+            ex1=fcodyE1(invt)
             rate=ex1/(dsqrt(t*ep)*ep)
             x=1.d0-(dlog(f)/dlog(t+f))
             y=fsplint(xs,ys,y2s,ni,x)

@@ -1,11 +1,12 @@
 #!/bin/bash
-#v1.1.3
+#v1.1.4
 # 3 or 4 args: 'name' alpha n0 [ncpus]
 ########################################################################
 #
 # MAPPINGS version
 #
-vers="v5.1.21"
+m_vers="v5.1.21"
+map_exe="map51dev"
 #
 ########################################################################
 #
@@ -36,11 +37,11 @@ pretemp="100.0"
 #
 ########################################################################
 #
-# Abundances
+# Abundances eg GC2016/GC_ZO_1000.abn etc see inputs and sub folders
 #
-abund="solar2009AGSS.txt"
+abund="solar2009.txt"
 #
-# Abundances type: "depl" or "undepl"
+# type: "etam" or "alpha"
 #
 type="alpha"
 ########################################################################
@@ -206,6 +207,8 @@ cd "V"${vName}
         scripts/shocks5_alpha.mv > "shocks5_v${vName}".mv
 # background execution
 #echo "shocks5_v${vName}.mv"
+    sed -e s/MEXE/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
+    chmod +x runmvscript.sh
     (./runmvscript.sh "shocks5_v${vName}".mv )>&/dev/null&
     addPid "shocks5_v${vName}" $!
     idx=$(expr $idx + 1)

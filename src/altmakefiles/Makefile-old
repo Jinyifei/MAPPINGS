@@ -252,7 +252,8 @@ build:
 	@mv $(INCS) ${BACKDIR}
 	@echo ' Cleaning up src area'
 	@rm -f *~
-	@echo ' Done.'
+	@echo ' Done.  Compiled Successfully'
+	@echo ' Done.  A local version of the executable ${OUTNAME} can be found in ../lab'
 #
 #------------------------------------------------------------
 #
