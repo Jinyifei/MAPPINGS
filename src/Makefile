@@ -29,7 +29,8 @@ BACKDIR = mastercode/
 #  GCC FORTRAN v4.9-11.x - added fpe suppression switch,
 #  otherwise as v4.8
 #  xcode 11+ -isysroot`xcrun --show-sdk-path` if -lSyslib is not found
-#  gcc10+ flto=8 parallel obj opt
+#  gcc10+ flto=n parallel obj opt, set n=ncpus for global object optimisation
+#  slower build but some performance gains from inlining accross files etc.
 #
 #WARN   = -Wall
 #WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
