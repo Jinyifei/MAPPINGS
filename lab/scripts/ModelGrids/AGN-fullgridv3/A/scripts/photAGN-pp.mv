@@ -1,0 +1,381 @@
+yes   : change abund ***************************DUST & ABUNDANCES
+inputs/ABUND
+no    : no more changes
+no    : no offsets
+yes   : include dust
+yes   : change depletions
+inputs/DEPLFILE
+no    : no more changes
+no    : allow grain destruction
+M     : MRN distribution
+yes   : Include PAH molecules?
+0.3   : fraction of Carbon Dust Depletion in PAHs
+Q     : PAH switch on QHDH < Value
+4e2   : PAH switch on Value
+no    : graphite grains to be cospatial with PAHs
+no    : Evaluate dust temperatures and IR flux?
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+1     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=1e6,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+2    : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=2e6,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+3     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=3e6,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+4     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=4e6,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+5     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=5e6,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+6     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=1e7,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+7     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=2e7,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+8     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=3e7,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+9     : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=5e7,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+10    : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=1e8,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+11    : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=2e8,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+12    : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=3e8,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+13    : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=5e8,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+P7    : Photo. Abs. distance step, full cont ***************************START P7
+D     : Default ionisation values
+J     : Jin et al 2012 library v2
+14    : mass 1=1e6,2=2e6,3=3e6,4=4e6,5=5e6,6=1e7,7=2e7,8=3e7,9=5e7,10=1e8,11=2e8,12=3e8,13=5e8,14=1e9
+AGNLEDD     : Ledd Value 0.01 - 1.00
+AGNTYPE     : N narrow or B broad then components thermal intermediate and non-thermal fractions
+FDISK
+FINTER
+FCORONA
+X     : eXit with current source
+p     : plane parallel  sided p=pp s =sph
+SIDES : one or two sided
+B     : isoBaric, (const pressure)
+A     : plain isobaric
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+U     : Give initial U(H)
+LUVALUE  :  U(H)  [not Q(N)] at inner radius (< 100 as log)
+0.5     : geometrical dilution factor (<=0.5)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+X     : exit with output options
+PP,LU=LUVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,sides=SIDES,GEOM,ABUND,mass=1e9,LEDD,TYPE,P7,MMVERSION,DVERSION,DEPLFILE
+X

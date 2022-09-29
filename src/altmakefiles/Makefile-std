@@ -53,7 +53,7 @@ UNAME = $(shell uname)
 #
 ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
-	XSYS = Mac (wich xcrun)
+	XSYS = Mac (with xcrun)
 else
 	LIB =
 	XSYS = Linux

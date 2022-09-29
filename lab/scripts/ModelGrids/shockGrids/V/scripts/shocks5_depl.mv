@@ -1,0 +1,61 @@
+yes   : change abund
+inputs/ABUNDANCES
+no    : no more changes
+yes    : offsets?
+inputs/Depln_Fe_1.50.txt
+no    : no more changes
+no    : no dust
+s5    : Shock with auto precursor
+C     : Calulate a preionisation balance
+B     :  Equilibrium ionisation at a fixed temp
+F     :  Local ISRF (Mathis etal (1993)
+1     :  Component scaling factor
+X  :   eXit with current source
+100.0 PREDENS 1 0.5  : T, H density, slab thickness (dr), Geo. Dilution
+X     :  eXit with current balance
+X     :  eXit with current source
+v     : in terms of shock velocity
+a     : magnetic field Alpha Pmag/Pgas in proto-shock state
+ALPHA : Magnetic Pmag/Pgas
+PRETEMP PREDENS VELOCITY
+f     : full internal field
+s     : temperature and ionisation < 0.05 ending 500K
+500.0
+4     : minimum number of iterations, > 1
+PREFIX_
+k     : cooling and cooling components
+x
+3     : cooling file normalisation, 3=n^2
+a     : std display
+v=VELOCITY, n0=PREDENS, t0=PRETEMP, A0=ALPHA, abund=ABUNDANCES depleted
+restart
+yes   : change abund
+inputs/ABUNDANCES
+no    : no more changes
+yes    : offsets?
+inputs/Depln_Fe_1.50.txt
+no    : no more changes
+no    : no dust
+P6    : Photo. Abs. distance step, full cont
+D     : Default ionisation values
+I     : Input data
+SHupPREFIX_0001.sou
+0     : min energy (Min.:   .00 Ryd.)
+9.0e9 : high energy cut-off
+X     : eXit with current source
+P     : plane parallel
+O     : onesided diffuse field
+C     : isochoric
+PREDENS
+1     : filling factor (0<f<=1)
+X     : eXit with current source
+0.5   : plane parallel dilution factor
+E     : Equilibrium ionization balance.
+0.05   Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+F     : Standard output + first balance  >Name for run>>>>
+PREFIXp
+v=VELOCITY, n0=PREDENS, t0=PRETEMP, A0=ALPHA, equi precursor, abund=ABUNDANCES depleted
+x     : exit
+
+
