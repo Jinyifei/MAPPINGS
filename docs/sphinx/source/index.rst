@@ -29,7 +29,7 @@ Planetary Nebulae, AGN emission regions and
 shockwaves in the interstellar medium.
 
 
-The code is is available on `Bitbucket  <https://bitbucket.org/RalphSutherland/mappings/src/master/>`_  
+The code is is available on `Bitbucket  <https://bitbucket.org/RalphSutherland/mappings/src/mastercode/>`_  
 
 Issues regarding the code and suggestions for improvement the code regarding the should be reported there.  We actively 
 encourage other to make use of the code for their own science.  
