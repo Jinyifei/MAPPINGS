@@ -764,7 +764,7 @@ c
      & ' SHOCK4: Explicit Rankine-Hugoniot shock code: ',/,
      & ' ============================================',/,
      & ' Diffuse Field, Full Continuum Calculations.',/,
-     & ' Calculated by MAPPINGS V ',a8)
+     & ' Calculated by MAPPINGS V ',a12)
       write (*,360) theversion
       write (luop,360) theversion
       write (lusp,360) theversion

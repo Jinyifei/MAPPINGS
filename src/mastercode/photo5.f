@@ -2513,7 +2513,7 @@ c
           open (ir1,file=irfile,status='NEW')
           write (ir1,120) theversion
   120      format('%  Infrared flux per region ',/,
-     & '%  MAPPINGS V ',a8,/
+     & '%  MAPPINGS V ',a12,/
      & '%  given as:',/,
      & '%    energy edge (eV) ,,continuumflux, ',
      & 'IRflux Fnu(erg s-1 cm-2 Hz-1Sr-1)',/,
@@ -2554,7 +2554,7 @@ c
             open (ir1,file=chargefile,status='NEW')
             write (ir1,150) theversion
   150      format('%  grain charge in each region ',/,
-     & '%  MAPPINGS V ',a8,/
+     & '%  MAPPINGS V ',a12,/
      & '%  given as:',/,
      & '%  m,Av. distance,Temp,dh,de,',/,
      & '%  grain charge(allsizes) (graphite),',/,
@@ -3005,7 +3005,7 @@ c
    10 format(
      &' ###################################'
      &,'####################################',/
-     & '  Photoionisation model P5, MAPPINGS V ',a8,/
+     & '  Photoionisation model P5, MAPPINGS V ',a12,/
      &' ###################################'
      &,'####################################',/
      &' (Diffuse Field ,Outward Integration, Radiation Pressure)'//

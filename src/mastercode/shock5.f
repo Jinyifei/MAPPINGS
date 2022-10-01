@@ -1132,7 +1132,7 @@ c
      & ' ============================================',/,
      & ' Diffuse Field, Full Continuum Calculations.',/,
      & ' Global Shock-Precursor Iterations: ',i2,/,
-     & ' Calculated by MAPPINGS V ',a8)
+     & ' Calculated by MAPPINGS V ',a12)
       write (*,10) iterations,theversion
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       write (luop,10) iterations,theversion

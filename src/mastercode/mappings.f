@@ -21,7 +21,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.1.21rss
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -54,13 +54,13 @@ c
       character abundtitle*24
       logical initerr
 c
-      theversion='v5.1.21'
+      theversion='v5.1.21rss'
 c
    10 format(/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & /
-     & '  Welcome to MAPPINGS V ',a8,/
+     & '  Welcome to MAPPINGS V ',a12,/
      & /
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
@@ -179,7 +179,7 @@ c
       write (*,70)
    60 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
-     & '  MAPPINGS V ',a8,': Models : ',a,/)
+     & '  MAPPINGS V ',a12,': Models : ',a,/)
    70  format(
      & ' :::::::::::: Photoionisation Multizone Models ::::::::::'/
      & '    P6  :  Photoionisation, dust + Robust Integrator'/

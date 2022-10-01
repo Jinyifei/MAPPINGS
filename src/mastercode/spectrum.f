@@ -2248,7 +2248,7 @@ c
    20 format(' ',a3,a6,1x,1pg13.6,1x,1pg13.6,1x,1pg12.4,1x,i4)
    30 format(/' Local Emission Line Spectrum File:'/
      &        ' =================================='/)
-   40 format( ' MAPPINGS V :',a8,/
+   40 format( ' MAPPINGS V :',a12,/
      &        ' RUN:',a80,/)
    50 format( ' Local Slab Properties:'/
      &' ==================================================='/

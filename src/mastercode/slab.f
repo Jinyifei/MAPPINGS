@@ -388,7 +388,7 @@ c
       call wmodel (luop, t, de, dh, dr, wmod)
 c
   200  format(' Plasma Slab model diffuse field included.'/
-     &' produced by MAPPINGS V ',a8,'     Run:',a80/)
+     &' produced by MAPPINGS V ',a12,'     Run:',a80/)
       write (luop,200) theversion,runname
 c
       wmod='FILE'

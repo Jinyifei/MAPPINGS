@@ -551,7 +551,7 @@ c
    30 format(' Nonequilibrium Cooling',/,
      & ' ============================================',/,
      & ' Diffuse Field, Full Continuum Calculations.',/,
-     & ' Calculated by MAPPINGS V ',a8)
+     & ' Calculated by MAPPINGS V ',a12)
       write (*,30) theversion
       write (luop,30) theversion
       write (lusp,30) theversion
