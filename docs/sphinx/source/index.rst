@@ -1,4 +1,4 @@
-.. mapping documentation master file, created by
+.. MAPPINGS documentation master file, created by
    sphinx-quickstart on Sun Jan 14 18:04:35 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -13,23 +13,29 @@ Astrophysical equilibrium and time-dependent photoinisation and steady supersoni
 *MAPPINGS V*is photoionisation and shock modelling code written in FORTRAN. It allows one to
 compute nebular emission spectra from the far UV-Xrays (~0.1 Å or 100 keV) to the far IR (>1000 μm or 1e-6 eV).
 
-*MAPPINGS* was originally written and descrbed by `Dopita and Sutherland (1995) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
-
-Major improvements were made by
+*MAPPINGS* was originally written by Dopita in 1976 and descrbed in a PhD thesis in 1982 by Binette (ANU) and then by PhD thesis by Sutherland in 1993 (ANU) and a cooling paper in 1993, and Sutherland has curated
+the code since 1989.  The code has evolved since then and useful early references is are
+`Sutherland and Dopita 1993` and `Dopita and Sutherland (1995) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
 
 * Add papers here.
 
 *MAPPINGS*
-calculates emission line fluxes for recombination lines, intercombination lines and
-collisionally excited lines for all elements from hydrogen to zinc, where these exceed a
-(presettable) minimum flux. MAPPINGS began in 1976 as a five-level-atom solver. It has
-gone through major upgrades since then and is currently at version 5.1
-It can be used to model HII regions, Plane
-Planetary Nebulae, AGN emission regions and
-shockwaves in the interstellar medium.
+This code calculates ionisation and emission for continuum and line fluxes of recombination and collisionally excited lines
+for all elements from hydrogen to zinc, for over 88,000 lines in the current version.
+ MAPPINGS began in 1976 as a five-level-atom solver and simple shock model. It has
+gone through major upgrades since then and is currently at version 5.1 with 174 multi-level ions and some up to 900 level upper level ion models
+cascades, charge exchange and other processes and full continuum and diffuse field estimation.  It produces output for nebula structures as well as
+emission spectra both as line lists and f-lambda and f-nu energy and wavelength files to compare with observations of fluxes and  entire
+spectra.
+
+It can be used to model equilibrium and time dependent astrophysical plasmas and emission
+and is used for atomic diagnostics, cooling, model HII regions,
+Planetary Nebulae, Nova Shells, AGN emission regions and a wide range of Herbig Haro and fast
+Shockwaves in the interstellar medium.
 
 
-The code is is available on `Bitbucket  <https://bitbucket.org/RalphSutherland/mappings/src/mastercode/>`_
+The code is is available on `Bitbucket  <https://bitbucket.org/RalphSutherland/mappings>`_
+and a slower mirror on a university server for `mappings  <https://mappings.anu.edu.au/code>`_
 
 Issues regarding the code and suggestions for improvement the code regarding the should be reported there.  We actively
 encourage other to make use of the code for their own science.
@@ -60,7 +66,7 @@ look at the page for :doc:`documentation on the documentation <meta>`.
 -------
 Authors
 -------
-The authors of the *mapping* code and their institutions are:
+The authors of the *MAPPINGS* code and their institutions are:
 
 
 Ralph S Sutherland
