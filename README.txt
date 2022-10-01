@@ -6,11 +6,11 @@
 		1976 -- 2022+ Ralph Sutherland,
 		Michael Dopita, Luc Binette, Ian Evans,
 		Brent Groves, David Nicholls,
-		Adam D. Thomas, Jin Yi-Fei
+		Adam D. Thomas, Jin Yi-Fei, Knox Long
 
 
-`https://mappings.anu.edu.au/code`
 `https://bitbucket.org/RalphSutherland/mappings`
+`https://mappings.anu.edu.au/code`
 
 #### Contact:
 
@@ -69,25 +69,48 @@ To remove the local copy simply delete the `mappings/` directory
 
 ## The Mappings directory structure:
 
-#### mappings/
-	lab/
-		data/
-		abund/
-	src/
+#### mappings_V/
+
+README.txt
+README.md
+credits.txt
+
+src/
+		FORTRAN source code and a standard plus alternative Makefiles
+		for other systems and common compilers for use as templates. The
+		standard Makefile assumes a bash shell gmake compatible make
+		and GCC gfortran 10.x or newer but can work with earlier versions
+		if needed.
+
 		mastercode/
 		includes/
 		workcode/
 
-#### Optional:
-		lab/atmos/
-		lab/scripts/
+lab/
+		The directory where the executable is created and run along with
+		test and example control scripts, a large directory of stellar
+		atmosphere libraries atmos/ may be removed if space is a premium
+		and external photoionisation is not needed.
 
-#### Shared: (optional with sudo make install)
-		/usr/local/bin/
-		/usr/local/share/mappings/
-			data/
-			abund/
-			atmos/
+		data/
+		abund/
+		scripts/
+		atmos/ (optional)
+
+docs/
+		documentation files and support directories
+
+addons/
+		additions abundance preference files and options (see advanced use sections)
+
+misc/
+		auxillary programs for modifying and editing model and observed spectra
+		with the current standard CODATA/IAU physico-chemical constants in use
+		lines/
+		blur/
+		dered/
+		fundamental_constants/
+
 
 ### Key Directories and Files:
 

@@ -6,11 +6,11 @@
 		1976 -- 2022+ Ralph Sutherland,
 		Michael Dopita, Luc Binette, Ian Evans,
 		Brent Groves, David Nicholls,
-		Adam D. Thomas, Jin Yi-Fei
+		Adam D. Thomas, Jin Yi-Fei, Knox Long
 
 
-`https://mappings.anu.edu.au/code`
 `https://bitbucket.org/RalphSutherland/mappings`
+`https://mappings.anu.edu.au/code`
 
 #### Contact:
 
