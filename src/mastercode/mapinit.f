@@ -78,6 +78,7 @@ c
         datadir='/usr/local/share/mappings/'
         dtlen=lenv(datadir)
         filename=datadir(1:dtlen)//'data/ATDAT.txt'
+        inquire (file=filename,exist=iexi)
         if (iexi.eqv..false.) then
           m=lenv(filename)
           write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
