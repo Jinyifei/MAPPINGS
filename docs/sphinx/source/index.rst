@@ -4,22 +4,22 @@
    contain the root `toctree` directive.
 
 ########
-*Mappings*
+*MAPPINGS*
 ########
 --------------------------------------
 Astrophysical equilibrium and time-dependent photoinisation and steady supersonic shock spectral emission code.
 --------------------------------------
 
-*mappings*is photoionisation and shock modelling code written in FORTRAN. It allows one to
-compute nebular emission spectra from the far UV (~300 Å) to the far IR (>600 μ). 
+*MAPPINGS V*is photoionisation and shock modelling code written in FORTRAN. It allows one to
+compute nebular emission spectra from the far UV-Xrays (~0.1 Å or 100 keV) to the far IR (>1000 μm or 1e-6 eV).
 
-*mappings* was originally written and descrbed by `Dopita and Sutherland (1995) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
+*MAPPINGS* was originally written and descrbed by `Dopita and Sutherland (1995) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
 
-Major improvements were made by 
+Major improvements were made by
 
 * Add papers here.
 
-*mappings*
+*MAPPINGS*
 calculates emission line fluxes for recombination lines, intercombination lines and
 collisionally excited lines for all elements from hydrogen to zinc, where these exceed a
 (presettable) minimum flux. MAPPINGS began in 1976 as a five-level-atom solver. It has
@@ -29,18 +29,18 @@ Planetary Nebulae, AGN emission regions and
 shockwaves in the interstellar medium.
 
 
-The code is is available on `Bitbucket  <https://bitbucket.org/RalphSutherland/mappings/src/mastercode/>`_  
+The code is is available on `Bitbucket  <https://bitbucket.org/RalphSutherland/mappings/src/mastercode/>`_
 
-Issues regarding the code and suggestions for improvement the code regarding the should be reported there.  We actively 
-encourage other to make use of the code for their own science.  
-If anyone has questions about 
+Issues regarding the code and suggestions for improvement the code regarding the should be reported there.  We actively
+encourage other to make use of the code for their own science.
+If anyone has questions about
 whether the code might be useful for a project, we encourage you to contact one of the authors of
 the code.
 
 
-If you make use of *mappings* in your published research we ask that you reference the following papers
+If you make use of *MAPPINGS* in your published research we ask that you reference the following papers
 
-* Add a more limited set of 
+* Add a more limited set of
 
 
 
