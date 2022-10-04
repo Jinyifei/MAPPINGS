@@ -23,3 +23,4 @@ lab/00ignore
 src/workcode/*.[co]
 MAPPINGS.xcodeproj
 *.jar
+map52dev

@@ -8,19 +8,34 @@
 # the appropriate shell for both interactive and non-interactive shells
 # most commonly .tcshrc or .cshrc
 #
-alias map  "map52dev"
+# eg:
+#
+# set    mapbase = "/opt/local"
+# set    mapbase = "/usr/local"
+# set    mapbase = "/Users/ralph/mappings_V"
+# set    maplab  = "${mapbase}/lab"
+#
+# set to run locally as previously
+#
+set   mapbase = "."
+set   maplab  = "${mapbase}"
+#
+set    mappings = "$maplab"
+setenv MAPPINGS   "$maplab"
+set    mapbin = "$maplab"
+setenv MAPBIN   "$maplab"
+#
+ alias map "$maplab/map52dev"
 #
 # set location for shared gobal mappings data installation,
 # uncomment if needed
 #
-# set    mapbase = "/opt/local"
-#
 # set    mappings = "$mapbase/share/mappings/"
 # setenv MAPPINGS   "$mapbase/share/mappings/"
 #
-# set    mapexe = "$mapbase/bin/map52dev"
-# setenv MAPEXE   "$mapbase/bin/map52dev"
+# set    mapbin = "$mapbase/bin"
+# setenv MAPBIN   "$mapbase/bin"
 #
-# set path = ($mapexe $path)
+# set path = ($mapbin $path)
 #
 ########################################################################

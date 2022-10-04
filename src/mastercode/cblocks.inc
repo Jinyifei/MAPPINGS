@@ -28,7 +28,7 @@ c              './' or '/usr/local/share/mappings/'
 c
 c     filename: scratch array for files in general
 c
-      character*8 theversion
+      character*16 theversion
       integer*4 dtlen
       character*512 datadir
       character*512 filename
