@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.2.0
 c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -40,6 +40,7 @@ c
       integer*4 checksum
 c
       character ibell*4,ilgg*4, ibuf(19)*4
+      character env_var*256
 cc
 cc Test io variables
 c      character sfx*4, fl*20
@@ -49,6 +50,7 @@ c      integer*4 ir,l
 cc
 c
       logical error,iexi
+      integer*4 check_env
 c
 c externals
 c
@@ -62,33 +64,40 @@ c
 c
       ibell(1:4)=char(7)
 c
-c new search path, local area /opt/local
+c search path for data
+c local area  ./data, etc
+c then location given by MAPPINGS enviroment variable
+c then /opt/local
 c then /usr/local then
-c surrender. Added /opt/local for tosca cluster
+c surrender.
 c
       inquire (file='data/ATDAT.txt',exist=iexi)
       if (iexi) then
         datadir='./'
-      else
+      else if (iexi.eqv..false.) then
+        call get_environment_variable('MAPPINGS',
+     & env_var,status=check_env)
+C       write(*,*) ' *** ATOMIC Data from : ',env_var,check_env
+        datadir=trim(env_var)//'/lab/'
+C       write(*,*) ' *** ATOMIC Data from : ',datadir
+        dtlen=lenv(datadir)
+        inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
+      else if (iexi.eqv..false.) then
         datadir='/opt/local/share/mappings/'
-      endif
-      dtlen=lenv(datadir)
-      inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
-      if (iexi.eqv..false.) then
+        dtlen=lenv(datadir)
+        inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
+      else if (iexi.eqv..false.) then
         datadir='/usr/local/share/mappings/'
         dtlen=lenv(datadir)
-        filename=datadir(1:dtlen)//'data/ATDAT.txt'
-        inquire (file=filename,exist=iexi)
-        if (iexi.eqv..false.) then
-          m=lenv(filename)
-          write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
-          write (*,*) ' MV requires a valid local data/ directory or'
-          write (*,*) ' a valid shared /usr/local/share/mappings/data/'
-          write (*,*) ' or a valid shared /opt/local/share/mappings/data
-     &/'
-          write (*,*) ' directory.  '
-          stop
-        endif
+        inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
+      else if (iexi.eqv..false.) then
+         m=lenv(filename)
+         write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
+         write (*,*) ' MV requires a valid local data/ directory or'
+         write (*,*) ' a valid shared /usr/local/share/mappings/data/'
+         write (*,*) ' or a shared /opt/local/share/mappings/data/'
+         write (*,*) ' directory.  '
+         stop
       endif
 c
       filename=''

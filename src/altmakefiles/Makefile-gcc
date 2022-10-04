@@ -1,28 +1,25 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21dev
+#    v5.2.0dev
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51dev
+OUTNAME = map52dev
 #
 #-------------------------------
 #---------- Directories --------
 #-------------------------------
 #
-EXEDIR = ../lab/
-INCDIR = includes/
-CODDIR = workcode/
+EXEDIR  = ../lab/
+INCDIR  = includes/
+CODDIR  = workcode/
 BACKDIR = mastercode/
 #
 #-------------------------------
 #---------- Compilers ----------
 #-------------------------------
-#
-#  comment out and in as needed
-#   for different machines
 #
 # GCC FORTRAN - gfortran generic
 # tested with v11 but should work with v4.5 or newer
@@ -32,7 +29,8 @@ BACKDIR = mastercode/
 #  GCC FORTRAN v4.9-11.x - added fpe suppression switch,
 #  otherwise as v4.8
 #  xcode 11+ -isysroot`xcrun --show-sdk-path` if -lSyslib is not found
-#  gcc10+ flto=8 parallel obj opt
+#  gcc10+ flto=n parallel obj opt, set n=ncpus for global object optimisation
+#  slower build but some performance gains from inlining accross files etc.
 #
 #WARN   = -Wall
 #WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
@@ -56,7 +54,7 @@ UNAME = $(shell uname)
 #
 ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
-	XSYS = Mac (wich xcrun)
+	XSYS = Mac (with xcrun)
 else
 	LIB =
 	XSYS = Linux
@@ -191,7 +189,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21dev make options:
+	@echo MAPPINGS V v5.2.0dev make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"

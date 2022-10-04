@@ -1,10 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  FORMAT VERSION: 4
 %
-%  MAPPINGS V v5.1.21
+%  MAPPINGS V v5.2.0
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Hydrogenic Collisional Excitation Line Data v5.1.21.997
+Hydrogenic Collisional Excitation Line Data v5.2.0.997
  2
  01
  01 01

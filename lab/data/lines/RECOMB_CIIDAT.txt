@@ -35,7 +35,7 @@
 % ...
 % includes guard values at 2e5K to keep splines going down at extreme T
 %
-Carbon II Recombination Spectrum v5.1.21
+Carbon II Recombination Spectrum v5.2.0
 CII Recombination Multiplets and Lines v1.0.0
 19
 01 94047.052 1063.30 2p2D-4f2F*

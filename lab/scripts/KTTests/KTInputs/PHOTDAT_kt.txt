@@ -48,7 +48,7 @@
 % Nedges
 % bin left energies (eV)
 %
-Standard 4054 Photon Energy Bins v5.1.21
+Standard 4054 Photon Energy Bins v5.2.0
   -20
  4055
  1.000000000000E-03

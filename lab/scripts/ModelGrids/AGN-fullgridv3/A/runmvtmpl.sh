@@ -1,5 +1,5 @@
 #!/bin/tcsh
-# v5.1.21 v2.1.1
+# v5.2.0 v2.1.1
 # tcsh for timing format
 #
 set scr=${1}

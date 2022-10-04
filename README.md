@@ -1,4 +1,4 @@
-# MAPPINGS V v5.1.21
+# MAPPINGS V v5.2.0
 
 		Creative Commons v4.0 International
 		By Attribution, Share Alike
@@ -114,7 +114,7 @@ All the useful parameters are near the top of the makefile.
 
 * `Makefile`.   This makefile  controls all the building of MAPPINGS.  It takes one argument to control the operation:
 
-        `MAPPINGS V v5.1.21 make options:
+        `MAPPINGS V v5.2.0 make options:
         `
         `Type 'make help'    to see this menu
         `Type 'make build'   to create executable from scratch and clean in ../lab

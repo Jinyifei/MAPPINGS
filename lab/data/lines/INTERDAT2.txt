@@ -7,7 +7,7 @@
 %
 % 02 01 3.358761E-11 01 03 1.270E-04 0.000
 %
-Legacy Two Level FS and inter-system data v5.1.21
+Legacy Two Level FS and inter-system data v5.2.0
 17
 10 03 6.234190E-11 09 05 3.810E+00 1.300
 12 01 4.348500E-12 01 09 4.300E+02 1.700

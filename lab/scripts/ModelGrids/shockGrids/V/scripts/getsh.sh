@@ -9,7 +9,7 @@ date
 
 # MAPPINGS version
 #
-vers="v5.1.21"
+vers="v5.2.0"
 #
 echo " MV ${vers} S5 Shock Grid."
 #

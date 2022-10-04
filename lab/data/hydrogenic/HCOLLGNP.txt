@@ -28,7 +28,7 @@
 %  nentries
 %
 %
-Hydrogen GNP Collisional Coeffs. v5.1.21
+Hydrogen GNP Collisional Coeffs. v5.2.0
  56
  01  00  02  00  2.302E-01  5.248E-06 -1.144E-10  8.240E-16  2.694E-01  7.883E-07 -1.394E-12  1.451E-18
  01  00  02  01  3.440E-01  1.293E-05  5.124E-12  4.473E-17  3.162E-01  1.472E-05 -8.275E-12 -8.794E-19

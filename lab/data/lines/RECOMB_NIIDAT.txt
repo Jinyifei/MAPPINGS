@@ -56,7 +56,7 @@
 %
 % ID Mult ∆Eij Lambda Air Trans
 %
-Nitrogen II Recombination Spectrum v5.1.21
+Nitrogen II Recombination Spectrum v5.2.0
 NII Recombination Multiplets and Lines v1.0.3
  55
  01  03  17642.277  5666.63  3p3D2-3s3P1*

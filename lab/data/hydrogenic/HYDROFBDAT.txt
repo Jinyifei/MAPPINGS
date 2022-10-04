@@ -13,7 +13,7 @@
 %
 % RSS2014
 %
-Hydrogenic extended n=30 Free-Bound data v5.1.21
+Hydrogenic extended n=30 Free-Bound data v5.2.0
 Scaled Energies and n values
  98
  30  1.111111111E-03  1.111111111E-03

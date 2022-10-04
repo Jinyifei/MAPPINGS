@@ -10,7 +10,7 @@ c     Ian Evans, Stephen Mettheringham
 c     Brent Groves, David Nicholls,
 c     Jin Yi-Fei, Adam D. Thomas,
 c
-c     Version: v5.1.21
+c     Version: v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

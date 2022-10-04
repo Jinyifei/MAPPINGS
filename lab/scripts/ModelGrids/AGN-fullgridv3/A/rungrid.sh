@@ -1,5 +1,5 @@
 #!/bin/bash
-# MV v5.1.21 v2.1 v4 bash looped and slotted PID version
+# MV v5.2.0 v2.1 v4 bash looped and slotted PID version
 #
 ########################################################################
 #
@@ -43,7 +43,7 @@ fi
 #
 # MAPPINGS version
 #
-m_vers="v5.1.21"
+m_vers="v5.2.0"
 map_exe="map51"
 #
 ########################################################################

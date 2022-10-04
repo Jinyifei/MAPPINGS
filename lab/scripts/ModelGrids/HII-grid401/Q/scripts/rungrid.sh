@@ -1,5 +1,5 @@
 #!/bin/bash
-# v5.1.21  bash looped and simplified version
+# v5.2.0  bash looped and simplified version
 #
 ########################################################################
 #

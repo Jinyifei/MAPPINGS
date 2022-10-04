@@ -46,7 +46,7 @@
 % alpha_eff = (a*t_4^f)*(1+b*(tm)+c*(tm)^2+d*(tm)^3)*1e-14
 %      = (a*t_4^f)*(1+tm*(b+tm*(c+tm*d))))*1e-14
 %
-Neon II Recombination Spectrum v5.1.21
+Neon II Recombination Spectrum v5.2.0
 NeII 6 Multiplet transition v1.0.4
 38
 01 01 31064.367 3218.193 3d4F9|2-3p4D7|2*

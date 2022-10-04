@@ -1,7 +1,7 @@
  Tue  9 Aug 2022 01:25:15 AEST
  menzel.local
  7.442u 0.313s 0:07.77 99.7%
- MAPPINGS V v5.1.21
+ MAPPINGS V v5.2.0
  Table 2 Kentucky Benchmark Nebulae
  Cool 20kK HII region
  Quantity     ,  Mean,   Model,  Diff%
@@ -22,7 +22,7 @@
  Tue  9 Aug 2022 01:25:23 AEST
  menzel.local
  9.971u 0.264s 0:10.27 99.6%
- MAPPINGS V v5.1.21
+ MAPPINGS V v5.2.0
  Table 3 Kentucky Benchmark Nebulae
  40kK HII region
  Quantity     ,  Mean,   Model,  Diff%
@@ -54,7 +54,7 @@
  Tue  9 Aug 2022 01:25:34 AEST
  menzel.local
  8.560u 0.226s 0:08.79 99.8%
- MAPPINGS V v5.1.21
+ MAPPINGS V v5.2.0
  Table 4 Kentucky Benchmark Nebulae
  PP 40kK HII blister region
  Quantity     ,  Mean,   Model,  Diff%
@@ -84,7 +84,7 @@
  Tue  9 Aug 2022 01:25:43 AEST
  menzel.local
  15.709u 0.310s 0:16.04 99.8%
- MAPPINGS V v5.1.21
+ MAPPINGS V v5.2.0
  Table 5 Kentucky Benchmark Nebulae
  Meudon 150kK PN
  Quantity     ,  Mean,   Model,  Diff%
@@ -131,7 +131,7 @@
  Tue  9 Aug 2022 01:26:00 AEST
  menzel.local
  8.794u 0.186s 0:09.00 99.6%
- MAPPINGS V v5.1.21
+ MAPPINGS V v5.2.0
  Table 6 Kentucky Benchmark Nebulae
  Hi Ionisation Low Density 75kK PN
  Quantity     ,  Mean,   Model,  Diff%
@@ -161,7 +161,7 @@
  Tue  9 Aug 2022 01:26:09 AEST
  menzel.local
  9.365u 0.196s 0:09.60 99.4%
- MAPPINGS V v5.1.21
+ MAPPINGS V v5.2.0
  Table 7 Kentucky Benchmark Nebulae
  Lo Ionisation High Density 75kK PN
  Quantity     ,  Mean,   Model,  Diff%
@@ -186,7 +186,7 @@
  Tue  9 Aug 2022 01:26:19 AEST
  menzel.local
  15.708u 0.252s 0:15.99 99.7%
- MAPPINGS V v5.1.21
+ MAPPINGS V v5.2.0
  Table 8 Kentucky Benchmark Nebulae
  AGN NLR powerlaw
  Quantity     ,  Mean,   Model,  Diff%

@@ -1,36 +1,40 @@
 #
 # Make MAPPINGS V
 #
-#    v5.1.21dev
+#    v5.2.0dev
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map51dev
+OUTNAME = map52dev
 #
 #-------------------------------
 #---------- Directories --------
 #-------------------------------
 #
-EXEDIR  = ../lab/
-INCDIR  = includes/
-CODDIR  = workcode/
+EXEDIR = ../lab/
+INCDIR = includes/
+CODDIR = workcode/
 BACKDIR = mastercode/
 #
 #-------------------------------
 #---------- Compilers ----------
 #-------------------------------
 #
-# GCC FORTRAN - gfortran generic
+# GCC FORTRAN - gfortran standard default build
 # tested with v11 but should work with v4.5 or newer
-# on OSX, use MacPorts.org to get gcc4.8 or newer.
-# In Linux, use normal repositories, cygwin - try pgi fortran
+# standard build in 2022 is gfortran v10.x
 #
-#  GCC FORTRAN v4.9-11.x - added fpe suppression switch,
-#  otherwise as v4.8
+# In Linux, use normal repositories
+# on OSX, use MacPorts.org/homebrew to get gcc8 or newer,
+#
+#  GCC FORTRAN v4.9-11.x
+#  otherwise as v4.8 - added fpe suppression switch,
 #  xcode 11+ -isysroot`xcrun --show-sdk-path` if -lSyslib is not found
-#  gcc10+ flto=n parallel obj opt, set n=ncpus for global object optimisation
-#  slower build but some performance gains from inlining accross files etc.
+#  gcc10+ flto=n parallel global obj optimisation, slow but some performance
+#         improvement, set n to ncpus eg flto=8 on an 8 core machine.
+#
+# if recursion is ever needed; -fmax-stack-var-size=7618560
 #
 #WARN   = -Wall
 #WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
@@ -43,10 +47,11 @@ WARN   =
 # OPTS   = -c ${LDR} -I${INCDIR}
 # LIB    =
 #
-# if recursion is ever needed; -fmax-stack-var-size=7618560
+# Standard no flto, optional flto or debugging LDR commented.
 #
 FC     = gfortran -std=legacy -march=native
 LDR    =  ${WARN} -Ofast -ffpe-summary='none'
+#LDR    =  ${WARN} -Ofast -flto=8 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
 #
@@ -54,7 +59,7 @@ UNAME = $(shell uname)
 #
 ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
-	XSYS = Mac (with xcrun)
+	XSYS = macOS (with xcrun)
 else
 	LIB =
 	XSYS = Linux
@@ -189,7 +194,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.1.21dev make options:
+	@echo MAPPINGS V v5.2.0dev make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"

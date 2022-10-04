@@ -1,12 +1,12 @@
 #!/bin/tcsh
-# v5.1.21dev
+# v5.2.0dev
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 set d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`
 set r='MV52ShockResults'
 set s='MV52ShockScripts'
 set i='MV52ShockInputs'
-set exe="map51dev"
+set exe="map52dev"
 #
 echo " MV 5.2 Shock Tests: Clearing Area ..."
 cp "data/PHOTDAT.txt" "$i/PHOTDAT_prev.txt"

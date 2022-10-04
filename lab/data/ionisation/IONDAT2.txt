@@ -1,7 +1,7 @@
 %
 % Misc/Older Ionisation balance data
 %
-% Compatibility coefficients v5.1.21
+% Compatibility coefficients v5.2.0
 %
 % Including collisional ionisation rates coefs for Shull method
 % radiative and dielectronic recombination rate fits
@@ -81,7 +81,7 @@
 % #entries
 % M   atom ion  VAL.EL.
 %
-Legacy Ionisation Rates v5.1.21
+Legacy Ionisation Rates v5.2.0
 209
 01 01 01 0.000D+00 0.000D+00 4.130D-13 0.720D+00 0.000D+00 0.000D+00 0.000D+00 0.000D+00 0.000D+00 0.000D+00
 02 01 02 2.300D-11 2.850D+05 4.300D-13 6.720D-01 1.900D-03 3.000D-01 4.700D+05 9.400D+04 0.000D+00 0.000D+00
@@ -378,7 +378,7 @@ CHARCO(J,I)
 24   8   2   0.00D+00   2.00D-10   0.00    0.96    2
 25   8   3   0.00D+00   1.10D-09   0.00   -0.15    2
 26   8   4   0.00D+00   7.40D-10   0.00   -0.23    2
-Legacy Charge Transfer Data v5.1.21
+Legacy Charge Transfer Data v5.2.0
 4
 H I recombination reactions
 28

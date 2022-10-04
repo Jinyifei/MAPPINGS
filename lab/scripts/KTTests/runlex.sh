@@ -1,5 +1,5 @@
 #!/bin/tcsh
-# v5.1.21dev
+# v5.2.0dev
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 # setenv NCPUS 4
@@ -9,7 +9,7 @@ set s="KTScripts"
 set r="KTResults"
 set i="KTInputs"
 set ext="ph6"
-set exe="map51dev"
+set exe="map52dev"
 #
 echo " Cleaning work area..."
 cp "data/PHOTDAT.txt" "$i/PHOTDAT_prev.txt"

@@ -6,7 +6,7 @@
 %
 % RSS2014
 %
-Heliogenic extended n=50 Free-Bound data v5.1.21
+Heliogenic extended n=50 Free-Bound data v5.2.0
 Edge numbers, scaled energies, e_n
  123
  50  8.649535099E-03  8.649535099E-03

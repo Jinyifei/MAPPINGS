@@ -50,7 +50,7 @@
 % Nedges
 % bin left energies (eV)
 %
-7976 Photon Bins + R5000 Optical Spectrum v5.1.21
+7976 Photon Bins + R5000 Optical Spectrum v5.2.0
   -21
  7977
 1.0000000000000E-06

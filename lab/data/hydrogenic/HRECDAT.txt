@@ -35,7 +35,7 @@
 %       Title
 %       ....
 %
-Hydrogenic Recombination Data v5.1.21
+Hydrogenic Recombination Data v5.2.0
 NORAD Total and n=1 H-recombination
 121
 -3.00D+00 -8.3206175341D+00 -9.2834874941D+00

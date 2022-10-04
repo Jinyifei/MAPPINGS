@@ -4,7 +4,7 @@
 #
 # use:  ./getgrid.sh V[012]*
 #
-vers="v5.1.21"
+vers="v5.2.0"
 #
 date
 echo "MV ${vers} S5 Shock Grid Iron Spectral Lines"
