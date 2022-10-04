@@ -1,7 +1,8 @@
 #
 # Make MAPPINGS V
 #
-#    v5.2.0dev
+#   v5.2.0dev, full version
+#   inside exe simple exe name
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
