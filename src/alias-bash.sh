@@ -21,6 +21,6 @@ alias map="map52dev"
 # export  mapexe="$mapbase/bin/map52dev"
 # export  MAPEXE="$mapbase/bin/map52dev"
 #
-# set path = ($mapexe $path)
+# export PATH="$MAPEXE:$PATH"
 #
 ########################################################################
