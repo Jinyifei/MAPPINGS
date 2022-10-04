@@ -10,7 +10,7 @@
 # MAPPINGS version, shared exe path
 #
 m_vers="v5.2.0"
-map_exe="map52dev"
+map_exe="map52"
 #
 ########################################################################
 #

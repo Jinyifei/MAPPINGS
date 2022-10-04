@@ -25,7 +25,7 @@ setenv MAPPINGS   "$maplab"
 set    mapbin = "$maplab"
 setenv MAPBIN   "$maplab"
 #
- alias map "$maplab/map52dev"
+ alias map "$maplab/map52"
 #
 # set location for shared gobal mappings data installation,
 # uncomment if needed

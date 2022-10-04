@@ -6,7 +6,7 @@ set d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`
 set r='MV52ShockResults'
 set s='MV52ShockScripts'
 set i='MV52ShockInputs'
-set exe="map52dev"
+set exe="map52"
 #
 echo " MV 5.2 Shock Tests: Clearing Area ..."
 cp "data/PHOTDAT.txt" "$i/PHOTDAT_prev.txt"

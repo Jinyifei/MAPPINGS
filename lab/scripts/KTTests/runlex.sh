@@ -9,7 +9,7 @@ set s="KTScripts"
 set r="KTResults"
 set i="KTInputs"
 set ext="ph6"
-set exe="map52dev"
+set exe="map52"
 #
 echo " Cleaning work area..."
 cp "data/PHOTDAT.txt" "$i/PHOTDAT_prev.txt"
