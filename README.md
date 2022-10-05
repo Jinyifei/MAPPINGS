@@ -6,7 +6,7 @@
 		1976 -- 2022+ Ralph Sutherland,
 		Michael Dopita, Luc Binette, Ian Evans,
 		Brent Groves, David Nicholls,
-		Adam D. Thomas, Jin Yi-Fei
+		Adam D. Thomas, Jin Yi-Fei, Knox Long
 
 
 `https://mappings.anu.edu.au/code`
@@ -25,34 +25,34 @@
 [wait a while....]
 
 	> cd ../lab
-	> ./map51
+	> ./map52
 
-### Installing so map51 can run anywhere:
+### Installing so map52 can run anywhere:
 
 	> cd mappings/src
 	> make build
 	> sudo make install
 
-This copies map51 into /usr/local/bin so it can be run
+This copies map52 into /usr/local/bin so it can be run
 from any location by all users of the computer.
 It also creates copies of the essential lab directories; data, atmos, and
 abund, into /usr/local/share.
 
-#### When running map51, you can run locally in lab/ (note ./map51)
+#### When running map52, you can run locally in lab/ (note ./map52)
 
 	> cd ../lab
-	> ./map51
+	> ./map52
 
 and it will find the local map.prefs, data, abund etc
 old scripts will work as before.
 
 #### With the `/local` installed option you can use any directory
-(note plain map51) ie:
+(note plain map52) ie:
 
 	> cd
 	> mkdir test
 	> cd test
-	> map51
+	> map52
 
 If mappings finds a local data file it will use those,
 otherwise it will fallback to use the shared copy, so you can
@@ -94,7 +94,7 @@ To remove the local copy simply delete the `mappings/` directory
 * `lab/`  This is where the executable is made and run.  The runtime files such
 	as map.prefs are here and the essential data directory with the runtime data
 	files.
-* `map51`: The executable.
+* `map52`: The executable.
 
 
 * `map.prefs`   Essential startup data - must be present.
