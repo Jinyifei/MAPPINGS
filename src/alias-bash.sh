@@ -20,9 +20,7 @@
 export mapbase="."
 export maplab="${mapbase}"
 #
-set    mappings="$maplab"
-setenv MAPPINGS="$maplab"
-export mapbin="$maplab"
+export MAPPINGS="$maplab"
 export MAPBIN="$maplab"
 #
 alias map="$maplab/map52"
@@ -32,10 +30,8 @@ alias map="$maplab/map52"
 #
 # export mapbase="/opt/local"
 #
-# export  mappings="$mapbase/share/mappings/"
 # export  MAPPINGS="$mapbase/share/mappings/"
 #
-# export  mapbin="$mapbase/bin"
 # export  MAPBIN="$mapbase/bin"
 #
 # export PATH="$MAPBIN:$PATH"
