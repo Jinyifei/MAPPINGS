@@ -10,6 +10,8 @@
 #
 ########################################################################
 #
+# used for data/ and atmos/. Not used for abund/ yet
+#
 # set general mappings area then specify data/ location & mappings exe
 #
 # local to std mappings_V/lab change user name as needed
