@@ -73,23 +73,23 @@ c surrender.
 c
       inquire (file='data/ATDAT.txt',exist=iexi)
       if (iexi) then
-        datadir='./'
+        datadir='.'
       else if (iexi.eqv..false.) then
-        call get_environment_variable('MAPPINGS',
-     & env_var,status=check_env)
+        call get_environment_variable('MAPDATA',
+     &                                 env_var,status=check_env)
 C       write(*,*) ' *** ATOMIC Data from : ',env_var,check_env
-        datadir=trim(env_var)//'/lab/'
+        datadir=trim(env_var)
 C       write(*,*) ' *** ATOMIC Data from : ',datadir
         dtlen=lenv(datadir)
-        inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
+        inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
       else if (iexi.eqv..false.) then
-        datadir='/opt/local/share/mappings/'
+        datadir='/opt/local/share/mappings'
         dtlen=lenv(datadir)
-        inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
+        inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
       else if (iexi.eqv..false.) then
-        datadir='/usr/local/share/mappings/'
+        datadir='/usr/local/share/mappings'
         dtlen=lenv(datadir)
-        inquire (file=datadir(1:dtlen)//'data/ATDAT.txt',exist=iexi)
+        inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
       else if (iexi.eqv..false.) then
          m=lenv(filename)
          write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
@@ -109,10 +109,10 @@ c
      & '  MAPPINGS V : Begin Data Initialisation.',/
      & '     DATA DIR.: ',a,/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-      if ((dtlen.eq.2).and.(datadir(1:dtlen).eq.'./')) then
+      if ((dtlen.eq.1).and.(datadir(1:dtlen).eq.'.')) then
         write (*,10) 'Local = data/'
       else
-        write (*,10) 'Shared = '//datadir(1:dtlen)//'data/'
+        write (*,10) 'Shared = '//datadir(1:dtlen)//'/data/'
       endif
 c
 c     formats for reading files
@@ -199,7 +199,7 @@ c
       if (iexi) then
         open (luin,file='map.prefs',status='OLD')
       else
-        filename=datadir(1:dtlen)//'data/ATDAT.txt'
+        filename=datadir(1:dtlen)//'/data/ATDAT.txt'
         open (luin,file=filename,status='OLD')
       endif
 c
@@ -273,7 +273,7 @@ c
       kappamode=0
       expertmode=0
 c
-      filename=datadir(1:dtlen)//'data/switches.txt'
+      filename=datadir(1:dtlen)//'/data/switches.txt'
       inquire (file=filename,exist=iexi)
       if (iexi) then
         open (luin,file=filename,status='OLD')
@@ -931,7 +931,7 @@ c
       error=.false.
 c
 c
-      filename=datadir(1:dtlen)//'data/ionisation/IONDAT.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/IONDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -1002,7 +1002,7 @@ c
 c
       if (phionmode.eq.1) then
 c
-        filename=datadir(1:dtlen)//'data/ionisation/PHIONDAT.txt'
+        filename=datadir(1:dtlen)//'/data/ionisation/PHIONDAT.txt'
         open (luin,file=filename,status='OLD')
    30   read (luin,fmt=10) (ibuf(j),j=1,19)
         ilgg=ibuf(1)
@@ -1052,7 +1052,7 @@ c
 c
       if (phionmode.eq.0) then
 c new verner photo fits and new auger data
-        filename=datadir(1:dtlen)//'data/ionisation/PHIONDAT2.txt'
+        filename=datadir(1:dtlen)//'/data/ionisation/PHIONDAT2.txt'
         open (luin,file=filename,status='OLD')
    60   read (luin,fmt=10) (ibuf(j),j=1,19)
         ilgg=ibuf(1)
@@ -1191,7 +1191,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/ionisation/COLLDAT2.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/COLLDAT2.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,10) (ibuf(i),i=1,19)
       ilgg=ibuf(1)
@@ -1339,7 +1339,7 @@ c
       error=.false.
 c
 c
-      filename=datadir(1:dtlen)//'data/ionisation/RRECOMDAT.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/RRECOMDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,10) (ibuf(i),i=1,19)
       ilgg=ibuf(1)
@@ -1399,7 +1399,7 @@ c
       enddo
 c
 c      if (recommode.eq.2) then
-      filename=datadir(1:dtlen)//'data/ionisation/NORADREC.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/NORADREC.txt'
       open (luin,file=filename,status='OLD')
    50 read (luin,10) (ibuf(i),i=1,19)
       ilgg=ibuf(1)
@@ -1473,7 +1473,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/ionisation/DRECOMDAT.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/DRECOMDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,10) (ibuf(i),i=1,19)
       ilgg=ibuf(1)
@@ -1577,7 +1577,7 @@ c
    30 format(4(1x,i2,1x),8(1pg10.3,1x))
 c
       error=.false.
-      filename=datadir(1:dtlen)//'data/hydrogenic/HPXDAT.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HPXDAT.txt'
       open (luin,file=filename,status='OLD')
    40 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -1599,7 +1599,7 @@ c      call endgrads (hipxlge, hipxlgs, nhipx, dydx0, dydxn)
 c
       close (luin)
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HRECDAT.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HRECDAT.txt'
       open (luin,file=filename,status='OLD')
    50 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -1776,7 +1776,7 @@ c
         nialines(at,at)=nialines(at,at)+nxhlines*nxhseries
       enddo
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HELIORECDAT.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HELIORECDAT.txt'
       open (luin,file=filename,status='OLD')
    60 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -1931,7 +1931,7 @@ c
 c
       close (luin)
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HRECRATA.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HRECRATA.txt'
       open (luin,file=filename,status='OLD')
    70 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -1966,7 +1966,7 @@ c precompute orthogonal splines
 cc
       close (luin)
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HRECRATB.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HRECRATB.txt'
       open (luin,file=filename,status='OLD')
    80 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2003,7 +2003,7 @@ c precompute orthogonal splines
 c
       close (luin)
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HERECDAT.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HERECDAT.txt'
       open (luin,file=filename,status='OLD')
    90 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2030,7 +2030,7 @@ c      enddo
 c
       close (luin)
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HERECRATA.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HERECRATA.txt'
       open (luin,file=filename,status='OLD')
   100 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2068,7 +2068,7 @@ c
       close (luin)
 c
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HERECRATB.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HERECRATB.txt'
       open (luin,file=filename,status='OLD')
   110 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2105,7 +2105,7 @@ c
       close (luin)
 c
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HCOLLGNP.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HCOLLGNP.txt'
       open (luin,file=filename,status='OLD')
   120 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2145,7 +2145,7 @@ c
 c
 c **** INLCLUDES legacy HEI data ****
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HYDRODAT.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HYDRODAT.txt'
       open (luin,file=filename,status='OLD')
   130 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2225,7 +2225,7 @@ c     nowvacritzcm
       nheilines=15
       close (luin)
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HYDROFBDAT.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HYDROFBDAT.txt'
       open (luin,file=filename,status='OLD')
   180 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2258,7 +2258,7 @@ c
       close (luin)
 c
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HELIOFBDAT.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HELIOFBDAT.txt'
       open (luin,file=filename,status='OLD')
   190 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2339,7 +2339,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/hydrogenic/HCOLLDATA.txt'
+      filename=datadir(1:dtlen)//'/data/hydrogenic/HCOLLDATA.txt'
       open (luin,file=filename,status='OLD')
 c
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -2488,7 +2488,7 @@ c
       do i=1,ionum
         found(i)=.false.
       enddo
-      filename=datadir(1:dtlen)//'data/PHOTDAT.txt'
+      filename=datadir(1:dtlen)//'/data/PHOTDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -2895,7 +2895,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/ionisation/CHXDAT.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/CHXDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -3011,7 +3011,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/ionisation/IONDAT2.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/IONDAT2.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -3283,7 +3283,7 @@ c
       atom=0
       ion=0
 c
-      filename=datadir(1:dtlen)//'data/ionisation/COLLDAT.txt'
+      filename=datadir(1:dtlen)//'/data/ionisation/COLLDAT.txt'
       open (luin,file=filename,status='OLD')
    40 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -3357,7 +3357,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/CONTDAT.txt'
+      filename=datadir(1:dtlen)//'/data/CONTDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -3586,7 +3586,7 @@ c
 c     xlines=0
 c     xilines=0
 c
-c     filename=datadir(1:dtlen)//'data/lines/XLINDAT.txt'
+c     filename=datadir(1:dtlen)//'/data/lines/XLINDAT.txt'
 c     open (luin,file=filename,status='OLD')
 c
 c  30 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -3615,7 +3615,7 @@ c     enddo
 c
 c     close (luin)
 c
-c     filename=datadir(1:dtlen)//'data/lines/XINTERDAT.txt'
+c     filename=datadir(1:dtlen)//'/data/lines/XINTERDAT.txt'
 c     open (luin,file=filename,status='OLD')
 cc
 c  40 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -3643,7 +3643,7 @@ c     enddo
 cc
 c     close (luin)
 c
-c     filename=datadir(1:dtlen)//'data/lines/XHEIFDAT.txt'
+c     filename=datadir(1:dtlen)//'/data/lines/XHEIFDAT.txt'
 c     open (luin,file=filename,status='OLD')
 c
 c  45 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -3679,7 +3679,7 @@ c     enddo
 c
 c     close (luin)
 c
-c     filename=datadir(1:dtlen)//'data/lines/LMTDAT.txt'
+c     filename=datadir(1:dtlen)//'/data/lines/LMTDAT.txt'
 c     open (luin,file=filename,status='OLD')
 c  50 read (luin,fmt=10) (ibuf(j),j=1,19)
 c     ilgg=ibuf(1)
@@ -3766,7 +3766,7 @@ c
       maxlevels=0
       maxcolls=0
 c
-      filename=datadir(1:dtlen)//'data/lines/XR3DATA.txt'
+      filename=datadir(1:dtlen)//'/data/lines/XR3DATA.txt'
       open (luin,file=filename,status='OLD')
 c
    40 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -4111,7 +4111,7 @@ c
       nxrlions=0
       nxrllines=0
 c
-      filename=datadir(1:dtlen)//'data/lines/XRLDATA.txt'
+      filename=datadir(1:dtlen)//'/data/lines/XRLDATA.txt'
       open (luin,file=filename,status='OLD')
 c
    40 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -4498,7 +4498,7 @@ c
 c
 c CII recomb, 16 brightest multiplets resolved into 19 lines
 c
-      filename=datadir(1:dtlen)//'data/lines/RECOMB_CIIDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/RECOMB_CIIDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -4598,7 +4598,7 @@ c
 c
       nrcnii=0
 c NII recomb, 7 brightest multiplets resolved into 55 lines
-      filename=datadir(1:dtlen)//'data/lines/RECOMB_NIIDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/RECOMB_NIIDAT.txt'
       open (luin,file=filename,status='OLD')
    40 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -4822,7 +4822,7 @@ c
 c
 c O I recomb, Triplet and Quintet systems
 c
-      filename=datadir(1:dtlen)//'data/lines/RECOMB_OIDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/RECOMB_OIDAT.txt'
       open (luin,file=filename,status='OLD')
    50 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -4945,7 +4945,7 @@ c
 c
 c OII recomb, 35 brightest multiplets resolved into 200 lines
 c
-      filename=datadir(1:dtlen)//'data/lines/RECOMB_OIIDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/RECOMB_OIIDAT.txt'
       open (luin,file=filename,status='OLD')
    60 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -5226,7 +5226,7 @@ c
 c
 c NeII recomb, 6 brightest multiplets resolved into 38 lines
 c
-      filename=datadir(1:dtlen)//'data/lines/RECOMB_NEIIDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/RECOMB_NEIIDAT.txt'
       open (luin,file=filename,status='OLD')
    70 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -5339,7 +5339,7 @@ c
 c
       error=.false.
 c
-c     filename=datadir(1:dtlen)//'data/lines/resondat2.txt'
+c     filename=datadir(1:dtlen)//'/data/lines/resondat2.txt'
 c     open (luin,file=filename,status='old')
 c  30 read (luin,fmt=10) (ibuf(j),j=1,19)
 c     ilgg=ibuf(1)
@@ -5368,7 +5368,7 @@ c       endif
 c  40 continue
 c     close (luin)
 c
-      filename=datadir(1:dtlen)//'data/lines/INTERDAT2.txt'
+      filename=datadir(1:dtlen)//'/data/lines/INTERDAT2.txt'
       open (luin,file=filename,status='OLD')
 c
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -5426,7 +5426,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/lines/THREEDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/THREEDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -5545,7 +5545,7 @@ c
    20 format(' ',19a4)
 c
       error=.false.
-      filename=datadir(1:dtlen)//'data/lines/MULTIDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/MULTIDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -6130,7 +6130,7 @@ c
    20 format(' ',19a4)
 c
       error=.false.
-      filename=datadir(1:dtlen)//'data/lines/FEDAT.txt'
+      filename=datadir(1:dtlen)//'/data/lines/FEDAT.txt'
       open (luin,file=filename,status='OLD')
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
       ilgg=ibuf(1)
@@ -6634,7 +6634,7 @@ c
       kapatom(1)=0
       if (kappamode.eq.1) then
 c
-        filename=datadir(1:dtlen)//'data/lines/KAPPADAT.txt'
+        filename=datadir(1:dtlen)//'/data/lines/KAPPADAT.txt'
         open (luin,file=filename,status='OLD')
    30   read (luin,fmt=10) (ibuf(j),j=1,19)
         ilgg=ibuf(1)
@@ -6765,7 +6765,7 @@ c
 c
       error=.false.
 c
-      filename=datadir(1:dtlen)//'data/STARDAT.txt'
+      filename=datadir(1:dtlen)//'/data/STARDAT.txt'
       open (luin,file=filename,status='OLD')
    20 read (luin,fmt=10) (ibuf(j),j=1,11)
       ilgg=ibuf(1)
@@ -6856,7 +6856,7 @@ c
 c   Capacitance
       ec=((eesu*eesu)*pi)/(2*6.6136223d-08)
 c
-      filename=datadir(1:dtlen)//'data/dust/DUSTDATpah.txt'
+      filename=datadir(1:dtlen)//'/data/dust/DUSTDATpah.txt'
       open (luin,file=filename,status='OLD')
 c
    30 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -7205,7 +7205,7 @@ c
 c
 c    Splines for graphite grains type=1
 c
-      filename=datadir(1:dtlen)//'data/dust/DUSTDATgra.txt'
+      filename=datadir(1:dtlen)//'/data/dust/DUSTDATgra.txt'
       open (luin,file=filename,status='OLD')
 c
    80 read (luin,fmt=10) (ibuf(j),j=1,19)
@@ -7327,7 +7327,7 @@ c
 c
 c    Splines for silicate grains type=2
 c
-      filename=datadir(1:dtlen)//'data/dust/DUSTDATsil.txt'
+      filename=datadir(1:dtlen)//'/data/dust/DUSTDATsil.txt'
       open (luin,file=filename,status='OLD')
 c
   100 read (luin,fmt=10) (ibuf(j),j=1,19)

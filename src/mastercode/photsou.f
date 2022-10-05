@@ -2063,9 +2063,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/compSED/'//agnfile
+        srcfile=datadir(1:dtlen)//'/atmos/compSED/'//agnfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/compSED/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/compSED/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -2196,9 +2196,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/compSED2/'//agnfile
+        srcfile=datadir(1:dtlen)//'/atmos/compSED2/'//agnfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/compSED2/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/compSED2/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -4348,9 +4348,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/ATLAS9/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/ATLAS9/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/ATLAS9/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/ATLAS9/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -4398,9 +4398,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/TLUSTY/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/TLUSTY/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/TLUSTY/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/TLUSTY/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(atfile)
@@ -4446,9 +4446,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/CMFGEN/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/CMFGEN/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CMFGEN/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/CMFGEN/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -4491,9 +4491,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/T1CLibrary/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/T1CLibrary/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/T1CLibrary/'
+        write (*,*) ' Trying ',datadir(1:dtlen)//'/atmos/T1CLibrary/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -4536,9 +4536,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/N18CMFGEN/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/N18CMFGEN/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/N18CMFGEN/'
+        write (*,*) ' Trying ',datadir(1:dtlen)//'/atmos/N18CMFGEN/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -4597,9 +4597,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/WMBASIC/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/WMBASIC/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/WMBASIC/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/WMBASIC/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -4641,9 +4641,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/CSPN/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/CSPN/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CSPN/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/CSPN/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
@@ -4690,9 +4690,9 @@ c
       inquire (file=srcfile(1:l),exist=iexi)
       if (iexi.eqv..false.) then
         write (*,*) srcfile(1:l),' NOT FOUND.'
-        srcfile=datadir(1:dtlen)//'atmos/CSPN/'//atfile
+        srcfile=datadir(1:dtlen)//'/atmos/CSPN/'//atfile
         l=lenv(srcfile)
-        write (*,*) ' Looking in ',datadir(1:dtlen)//'atmos/CSPN/'
+        write (*,*) ' Looking in ',datadir(1:dtlen)//'/atmos/CSPN/'
         inquire (file=srcfile(1:l),exist=iexi)
       endif
       l=lenv(srcfile)
