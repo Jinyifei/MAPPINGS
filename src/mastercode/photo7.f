@@ -3417,8 +3417,6 @@ c
         enddo
       endif
 c
-      call wabund (lusp)
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
    70     format(
