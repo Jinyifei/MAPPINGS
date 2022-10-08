@@ -1,6 +1,9 @@
 map51
 map51b
 map51dev
+map52
+map52b
+map52dev
 .DS_Store
 xcuserdata
 xcshareddata
@@ -18,8 +21,12 @@ lab/00ignore
 lab/map51
 lab/map51b
 lab/map51dev
+lab/map52
+lab/map52b
+lab/map52dev
 00Ignore
 00ignore/
 src/workcode/*.[co]
 MAPPINGS.xcodeproj
 *.jar
+map52dev
