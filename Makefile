@@ -219,7 +219,8 @@ build:
 	@make compile
 	@echo ' Removing object files'
 	@rm -f ${OBJ}
-	@echo ' Done.'
+	@echo ' Done.  Compiled Successfully'
+	@echo ' Done.  A local version of the executable ${OUTNAME} can be found in ${EXEDIR}'
 #
 #------------------------------------------------------------
 #
