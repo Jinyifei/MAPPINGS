@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1380,7 +1380,7 @@ c     chklim = 0.d0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      chklim=1.0d-5
+      chklim=1.0d-7
       if ((mode.eq.'ABS').or.(mode.eq.'TOTL')) then
         chklim=epsilon
       endif
@@ -1710,8 +1710,8 @@ c
         endif
       enddo
 c
-      fhbt=((fhbeta*fpi)+epsilon)*10.0d0**vunilog
-      fhbtlog=dlog10(fhbt)
+      fhbtlog=dlog10((fhbeta*(fpi))+epsilon)+vunilog
+      fhbt=10.d0**fhbtlog
 c
       if ((llist.eq.'TOTL')) then
 c
@@ -2248,7 +2248,7 @@ c
    20 format(' ',a3,a6,1x,1pg13.6,1x,1pg13.6,1x,1pg12.4,1x,i4)
    30 format(/' Local Emission Line Spectrum File:'/
      &        ' =================================='/)
-   40 format( ' MAPPINGS V :',a8,/
+   40 format( ' MAPPINGS V :',a12,/
      &        ' RUN:',a80,/)
    50 format( ' Local Slab Properties:'/
      &' ==================================================='/

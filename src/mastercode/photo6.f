@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.1.21
+c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -472,10 +472,10 @@ c
      &     qheii,qhdnin,qhdhin,qhdnav,qhdhav,unin,uhin,unav,uhav
   360 format(//,
      & ' ********************************************************',/,
-     & '   Filled Sphere Parameters*',/,
+     & '   Filled Sphere Parameters:',/,
      & ' ********************************************************',/,
-     & '  Estimated HII   Stromgren radius*',1pg10.3,' cm.',/,
-     & '  Estimated HeIII Stromgren radius*',1pg10.3,' cm.',/,
+     & '  Estimated HII   Stromgren radius:',1pg10.3,' cm.',/,
+     & '  Estimated HeIII Stromgren radius:',1pg10.3,' cm.',/,
      & ' ********************************************************',/,
      & '  Photon Luminosity LQH    :',1pg10.3, ' Phot/s',/,
      & '  Photon Luminosity LQHeII :',1pg10.3, ' Phot/s',/,
@@ -492,7 +492,7 @@ c
      & '          <U(H)>     : ',1pg12.5,/,
      & ' ********************************************************',//,
      & ' Set initial radius in terms of distance or Q(N), U(N),',
-     & ' Q(H), or U(H) (d/q/n/h/u)*',$)
+     & ' Q(H), or U(H) (d/q/n/h/u):',$)
           read (*,20) ilgg
           call toup (ilgg(1:1), ilgg)
 c
@@ -1244,7 +1244,7 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Set Name/code for this model: ',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' ::',$)
+     & ' :: ',$)
       write (*,1090)
       read (*,20) runname
       np=mlen(runname)
@@ -1267,7 +1267,6 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       return
-c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1337,7 +1336,7 @@ c
       integer*4 fuvmin,fuvmax,pahabsmax
 c
       character jjd*4, pollfile*16,tab*4
-      character banfil*64
+      character banfil*64, fnam*64
       character imod*4, lmod*4, nmod*4,wmod*4,ispo*4
       character linemod*4, spmod*4, savemod*4
       character fn*64,fspl*64
@@ -2345,10 +2344,10 @@ c
       fhi=pop(1,1)
       fhii=pop(2,1)
 c
+      caller='P6'
       pollfile='balance'
       inquire (file=pollfile,exist=iexi)
       if (((jbal.eq.'Y').and.(m.eq.1)).or.(iexi)) then
-        caller='P6'
         pfx=jbfx//' '
         np=lenv(pfx)
         call wbal (caller, pfx, np, pop)
@@ -2357,7 +2356,6 @@ c
       pollfile='photons'
       inquire (file=pollfile,exist=iexi)
       if ((iexi)) then
-        caller='P6'
         pfx='psou'
         np=4
         wmod='REAL'
@@ -2370,7 +2368,6 @@ c
         savemod=lmod
         lmod='NEBL'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
-        caller='P6'
         pfx='nsou'
         np=4
         wmod='REAL'
@@ -2385,7 +2382,6 @@ c
         savemod=lmod
         lmod='SO'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
-        caller='P6'
         pfx='ssou'
         np=4
         wmod='REAL'
@@ -2400,7 +2396,6 @@ c
         savemod=lmod
         lmod='LOCL'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
-        caller='P6'
         pfx='lsou'
         np=4
         wmod='REAL'
@@ -2412,7 +2407,6 @@ c
       pollfile='speclocal'
       inquire (file=pollfile,exist=iexi)
       if (iexi) then
-        caller='P6'
         pfx='local'
         np=5
         sfx='lam'
@@ -2430,7 +2424,6 @@ c
         pollfile='IRphot'
         inquire (file=pollfile,exist=iexi)
         if ((iexi).and.(irmode.gt.0)) then
-          caller='P6'
           pfx='irsou'
           np=5
           wmod='REAL'
@@ -2444,7 +2437,6 @@ c
         pollfile='pahphot'
         inquire (file=pollfile,exist=iexi)
         if ((iexi).and.(pahactive.eq.1)) then
-          caller='P6'
           pfx='pahs'
           np=4
           wmod='REAL'
@@ -2461,7 +2453,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if ((irmode.ne.0).and.iexi) then
           if (irfile.eq.' ') then
-            caller='P6'
             np=6
             pfx='IRflux'
             sfx='sou'
@@ -2470,7 +2461,7 @@ c
             open (ir1,file=irfile,status='NEW')
             write (ir1,100) theversion
   100      format('%  Infrared flux per region ',/,
-     & '%  MAPPINGS V ',a8,/,
+     & '%  MAPPINGS V ',a12,/,
      & '%  given as:',/,
      & '%    energy edge (eV), continuum flux, ',
      & 'IRflux Fnu(erg s-1 cm-2 Hz-1Sr-1)',/,
@@ -2504,7 +2495,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if (iexi) then
           if (chargefile.eq.' ') then
-            caller='P6'
             np=5
             pfx='grpot'
             sfx='ph6'
@@ -2513,7 +2503,7 @@ c
             open (ir1,file=chargefile,status='NEW')
             write (ir1,130) theversion
   130      format('%  grain charge in each region ',/,
-     & '%  MAPPINGS V ',a8,/,
+     & '%  MAPPINGS V ',a12,/,
      & '%  given as:',/,
      & '%  m,Av. distance,Temp,dh,de,',/,
      & '%  grain charge(allsizes) (graphite),',/,
@@ -2570,7 +2560,7 @@ c
 c
       endif
 c
-  220 format(i4,19(1pg12.5,', '))
+  220 format(i4,20(',',1pg13.6))
       write (lunt,220) m,(dis0-remp),dr,disav,t,dh,de,de+en,fhi,fhii,
      &hbeta,f5007,f4363,f3727,f6300,f6584,f6720,f6716,f6731,f673116
 c
@@ -2707,36 +2697,29 @@ c
       if (jiel.eq.'Y') then
   340  format(1x,i4,',', 10(1pg12.5,', '),31(1pg12.5,', '))
         do idx=1,ieln
-          open (luions(idx),file=filn(idx),status='OLD',access='APPEND')
-     &
           write (luions(idx),340) m,disav,(dis0-remp),dr,t,de,dh,de+en,
      &     dlog10(qhdh),dlog10(qhdh/cls),dlog10(qhdn),(pop(j,iel(idx)),
      &     j=1,maxion(iel(idx)))
-          close (luions(idx))
         enddo
       endif
 c
       if (jiem.eq.'Y') then
   350  format(1x,i4,',',11(1pg12.5,', '),31(1pg12.5,', '))
         do i=1,iemn
-          open (luemiss(i),file=filnem(i),status='OLD',access='APPEND')
           idx=iem(i)
           nt=nfmtrans(idx)
           write (luemiss(i),350) m,disav,(dis0-remp),dr,t,de,dh,de+en,
      &     dlog10(qhdh),dlog10(qhdh/cls),dlog10(qhdn),hbeta,(fmbri(itr,
      &     idx),itr=1,nt)
-          close (luemiss(i))
         enddo
       endif
 c
       if (jlin.eq.'Y') then
         call speclocallines (linfluxes)
-        open (lulin,file=filin,status='OLD',access='APPEND')
   360  format(1x,i4,',', 11(1pg12.5,', '),31(1pg12.5,', '))
         write (lulin,360) m,disav,(dis0-remp),dr,t,de,dh,de+en,
      &   dlog10(qhdh),dlog10(qhdh/cls),dlog10(qhdn),hbeta,
      &   (linfluxes(itr),itr=1,njlines)
-        close (lulin)
       endif
 c
       if (jall.eq.'Y') then
@@ -2932,6 +2915,8 @@ c
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
         wmod='REAL'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
+        wmod='NFNU'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
 c
       endif
 c
@@ -3034,7 +3019,8 @@ c
       character banfil*64
       character el*4
 c
-      real*8 densnum
+      real*8 lamvac,lamair
+      real*8 densnum, fnair
       integer*4 mlen
       integer*4 lenv
 c
@@ -3055,7 +3041,7 @@ c
      & ' PHOTO 6: Photoionisation Model',/,
      & ' ============================================',/,
      & ' (Diffuse Field , Radiation Pressure)',//
-     & ' Calculated by MAPPINGS V ',a8,/,
+     & ' Calculated by MAPPINGS V ',a12,/,
      & ' Run   :, ',a/
      & ' Input :, ',a/
      & ' Output:, ',a/)
@@ -3174,8 +3160,6 @@ c
         enddo
       endif
 c
-      call wabund (lusp)
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (jeq.eq.'E') then
@@ -3228,22 +3212,22 @@ c
      & ' ** Radiation Field and Parameters **********************',/,
      & ' ********************************************************',/,
      & t5, ' At estimated T_inner :',1pg10.3,' K',/,
-     & t5,' Rsou.',t20,' Remp.',t35,' Rmax',t50,' <DILU>',/,
-     & t5, 1pg10.3,t20,1pg10.3,t35,1pg10.3,t50,1pg10.3/
+     & t5,' Rsou.',t20,' Remp.',t35,' Rmax',t48,' <DILU>',/,
+     & t5, 1pg10.3,t20,1pg10.3,t35,1pg10.3,t48,1pg10.3/
      & t5,' <Hdens>',t20,' <Ndens>',t35,' Fill Factor',/
      & t5, 1pg10.3,t20,1pg10.3,t35,0pf9.6,//
      & ' ********************************************************',/,
-     & t5,' FQ tot',t20,' Log FQ',t35,' LQ tot',t50,' Log LQ',/
-     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
-     & t5,' Q(N) in',t20,' Log Q(N)',t35,' <Q(N)>',t50,' Log<Q(N)>',/
-     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
-     & t5,' Q(H) in',t20,' Log Q(H)',t35,' <Q(H)>',t50,' Log<Q(H)>',/
-     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
-     & t5,' U(N) in',t20,' Log U(N)',t35,' <U(N)>',t50,' Log<U(N)>',/
-     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
-     & t5,' U(H) in',t20,' Log U(H)',t35,' <U(H)>',t50,' Log<U(H)>',/
-     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t50,0pf8.3,/
-     & ' ********************************************************',/)
+     & t5,' FQ tot',t20,' Log FQ',t35,' LQ tot',t48,' Log LQ',/
+     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
+     & t5,' Q(N) in',t20,' Log Q(N)',t35,' <Q(N)>',t48,' Log<Q(N)>',/
+     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
+     & t5,' Q(H) in',t20,' Log Q(H)',t35,' <Q(H)>',t48,' Log<Q(H)>',/
+     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
+     & t5,' U(N) in',t20,' Log U(N)',t35,' <U(N)>',t48,' Log<U(N)>',/
+     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
+     & t5,' U(H) in',t20,' Log U(H)',t35,' <U(H)>',t48,' Log<U(H)>',/
+     & t5, 1pg10.3,t20,0pf8.3,t35,1pg10.3,t48,0pf8.3,/
+     & ' ********************************************************'/)
 c
       write (luop,110) tinner,rstar,remp,rmax,wdpl,dhn,dht,fin,qht,
      &dlog10(qht),astar*qht,dlog10(astar*qht),qhdnin,dlog10(qhdnin),
@@ -3253,7 +3237,7 @@ c
 c
   120 format(t6,'MOD',t10,'Temp.',t22,'Alpha',t31,'Turn-on',
      & t39,'Cut-off',/,
-     & t6,a2,x,1pg10.3,x,0pf8.3,x,0pf8.3,x,0pf8.3,//
+     & t6,a2,x,1pg10.3,x,0pf8.3,x,0pf8.3,x,0pf8.3,//,
      & t6,'Zstar',t16,'FQHI',t27,'FQHEI',t38,'FQHEII',/,
      & t6,0pf8.4,1x,3(1pg10.3,x),/)
       write (luop,120) iso,teff,alnth,turn,cut,zstar,qhi,qhei,qheii
@@ -3297,8 +3281,8 @@ c
      & ,t6,3(a4,2x),2(i2,4x),0pf6.4,//
      & ,t6,'Tend',t12,'DIend',t22,'TAUen',t31,'Jeq',t38,'Teini',/
      & ,t5,0pf6.0,2(1pg10.3),x,a4,x,0pf7.1,//,
-     & '::::::::::::::::::::::::::::::::::::',
-     & '::::::::::::::::::::::::::::::::::::',/)
+     & '************************************',
+     & '************************************',/)
       write (luop,170) jden,jgeo,jend,ielen,jpoen,fren,tend,diend,tauen,
      &jeq,tm00
 c
@@ -3376,7 +3360,6 @@ c
         write (lunt,270)
       endif
 c
-      close (lunt)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3393,8 +3376,6 @@ c
      &'  Slab depth',t168,'  Alfen Spd.',t182,
      &'  Mag. Field',t196,'  Grain Pot.')
       write (lupf,280)
-c
-      close (lupf)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3418,27 +3399,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (jiel.eq.'Y') then
 c
-c     write ion balance files if requested
-c
-        do i=1,ieln
-          ie=iel(i)
-          fn=' '
-          pfx=elem(ie)
-          if (elem_len(ie).eq.1) then
-            pfx=elem(ie)//'_'//jpfx//' '
-            np=lenv(pfx)
-          else
-            pfx=elem(ie)//jpfx//' '
-            np=lenv(pfx)
-          endif
-          sfx='csv'
-          call newfile (pfx, np, sfx, 3, fn)
-          filn(i)=fn(1:np+8)
-        enddo
-c
-        do i=1,ieln
-          open (luions(i),file=filn(i),status='NEW')
-        enddo
+c  Now already open append in subroutine
 c
         do i=1,ieln
 c
@@ -3642,7 +3603,7 @@ c 27
       sfx='csv'
       call newfile (pfx, np, sfx, 3, fn)
       filrt=fn(1:np+8)
-c 28
+c 28 old allion now ions_
       fn=' '
       pfx='ions_'//' '
       np=lenv(pfx)
@@ -3656,25 +3617,28 @@ c
         fn=' '
         pfx=elem(ie)
         if (elem_len(ie).eq.1) then
-          pfx=elem(ie)//'_'
-          np=lenv(pfx)
+          pfx=elem(ie)
+          pfx=pfx(1:1)//'_ion'
         else
           pfx=elem(ie)
-          np=lenv(pfx)
+          pfx=pfx(1:2)//'_ion'
         endif
+        np=lenv(pfx)
         call newfile (pfx, np, sfx, 3, fn)
         filn(i)=fn(1:np+8)
 c
         if (elem_len(ie).eq.1) then
-          pfx=elem(ie)//'_col'
+          pfx=elem(ie)
+          pfx=pfx(1:1)//'_col'
         else
-          pfx=elem(ie)//'col'
+          pfx=elem(ie)
+          pfx=pfx(1:2)//'_col'
         endif
         np=lenv(pfx)
         call newfile (pfx, np, sfx, 3, fn)
         filncol(i)=fn(1:np+8)
       enddo
-c
+c     emmissivity structure
       do i=1,iemn
         idx=iem(i)
 c
@@ -3685,7 +3649,7 @@ c
         fn=' '
 c
         pfx(1:32)=' '
-        pfx=elem(at)//rom(io)
+        pfx=elem(at)//rom(io)//'_em'
         np=lenv(pfx)
         pfx=pfx(1:np)//'_'//jpfx//' '
 c
@@ -3731,23 +3695,26 @@ c     lines
         open (lulin,file=filin,status='NEW')
       endif
       if (jrat.eq.'Y') then
-c     lines
+c     rates
         open (lurt,file=filrt,status='NEW')
       endif
       if (jall.eq.'Y') then
-c     ions_
+c     old allions now ions_
         open (lusl,file=filio,status='NEW')
       endif
+c     individual elements
       if (jiel.eq.'Y') then
         do i=1,ieln
           open (luions(i),file=filn(i),status='NEW')
         enddo
       endif
+c     emmissivity structure
       if (jiem.eq.'Y') then
         do i=1,iemn
           open (luemiss(i),file=filnem(i),status='NEW')
         enddo
       endif
+c     column densities
       if (jcol.eq.'Y') then
         do i=1,ieln
           open (lucols(i),file=filncol(i),status='NEW')
@@ -3789,24 +3756,27 @@ c     bands
 c     lines
         open (lulin,file=filin,status='OLD',access='APPEND')
       endif
+c     rates
       if (jrat.eq.'Y') then
-c     lines
         open (lurt,file=filrt,status='OLD',access='APPEND')
       endif
       if (jall.eq.'Y') then
-c     ions_
+c     old allions now ions_
         open (lusl,file=filio,status='OLD',access='APPEND')
       endif
+c     individual elements
       if (jiel.eq.'Y') then
         do i=1,ieln
           open (luions(i),file=filn(i),status='OLD',access='APPEND')
         enddo
       endif
+c     emmissivity structure
       if (jiem.eq.'Y') then
         do i=1,iemn
           open (luemiss(i),file=filnem(i),status='OLD',access='APPEND')
         enddo
       endif
+c     column densities
       if (jcol.eq.'Y') then
         do i=1,ieln
           open (lucols(i),file=filncol(i),status='OLD',access='APPEND')
@@ -3827,7 +3797,7 @@ c
       integer*4 i
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c  Close All P7 files If Open
+c  Close All P6 files If Open ignores closed units
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       logical unitopen
