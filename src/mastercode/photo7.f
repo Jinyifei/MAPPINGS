@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.2.0dev
+c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -538,7 +538,7 @@ c
      & '          <U(H)>     : ',1pg12.5,/,
      & ' ********************************************************',//,
      & ' Set initial radius in terms of distance or Q(N), U(N),',
-     & ' Q(H), or U(H) (d/q/n/h/u)*',$)
+     & ' Q(H), or U(H) (d/q/n/h/u):',$)
           read (*,20) ilgg
           call toup (ilgg(1:1), ilgg)
 c
@@ -2597,10 +2597,10 @@ c
       fhi=pop(1,1)
       fhii=pop(2,1)
 c
+      caller='P7'
       pollfile='balance'
       inquire (file=pollfile,exist=iexi)
       if (((jbal.eq.'Y').and.(m.eq.1)).or.(iexi)) then
-        caller='P7'
         pfx=jbfx//' '
         np=lenv(pfx)
         call wbal (caller, pfx, np, pop)
@@ -2609,7 +2609,6 @@ c
       pollfile='photons'
       inquire (file=pollfile,exist=iexi)
       if ((iexi)) then
-        caller='P7'
         pfx='psou'
         np=4
         wmod='REAL'
@@ -2622,7 +2621,6 @@ c
         savemod=lmod
         lmod='NEBL'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
-        caller='P7'
         pfx='nsou'
         np=4
         wmod='REAL'
@@ -2637,7 +2635,6 @@ c
         savemod=lmod
         lmod='SO'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
-        caller='P7'
         pfx='ssou'
         np=4
         wmod='REAL'
@@ -2652,7 +2649,6 @@ c
         savemod=lmod
         lmod='LOCL'
         call totphot2 (t, dh, rad, dr, dv, wdil1, lmod)
-        caller='P7'
         pfx='lsou'
         np=4
         wmod='REAL'
@@ -2664,7 +2660,6 @@ c
       pollfile='speclocal'
       inquire (file=pollfile,exist=iexi)
       if (iexi) then
-        caller='P7'
         pfx='local'
         np=5
         sfx='lam'
@@ -2682,7 +2677,6 @@ c
         pollfile='IRphot'
         inquire (file=pollfile,exist=iexi)
         if ((iexi).and.(irmode.gt.0)) then
-          caller='P7'
           pfx='irsou'
           np=5
           wmod='REAL'
@@ -2696,7 +2690,6 @@ c
         pollfile='pahphot'
         inquire (file=pollfile,exist=iexi)
         if ((iexi).and.(pahactive.eq.1)) then
-          caller='P7'
           pfx='pahs'
           np=4
           wmod='REAL'
@@ -2713,7 +2706,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if ((irmode.ne.0).and.iexi) then
           if (irfile.eq.' ') then
-            caller='P7'
             np=6
             pfx='IRflux'
             sfx='sou'
@@ -2722,7 +2714,7 @@ c
             open (ir1,file=irfile,status='NEW')
             write (ir1,100) theversion
   100      format('%  Infrared flux per region ',/,
-     & '%  MAPPINGS V ',a8,/,
+     & '%  MAPPINGS V ',a12,/,
      & '%  given as:',/,
      & '%    energy edge (eV), continuum flux, ',
      & 'IRflux Fnu(erg s-1 cm-2 Hz-1Sr-1)',/,
@@ -2756,7 +2748,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if (iexi) then
           if (chargefile.eq.' ') then
-            caller='P7'
             np=5
             pfx='grpot'
             sfx='ph6'
@@ -2765,7 +2756,7 @@ c
             open (ir1,file=chargefile,status='NEW')
             write (ir1,130) theversion
   130      format('%  grain charge in each region ',/,
-     & '%  MAPPINGS V ',a8,/,
+     & '%  MAPPINGS V ',a12,/,
      & '%  given as:',/,
      & '%  m,Av. distance,Temp,dh,de,',/,
      & '%  grain charge(allsizes) (graphite),',/,
@@ -3185,6 +3176,8 @@ c
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
         wmod='REAL'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
+        wmod='NFNU'
+        call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.0d0, tphot)
 c
       endif
 c
@@ -3303,7 +3296,7 @@ c
      & ' PHOTO 7: Photoionisation Model',/,
      & ' ============================================',/,
      & ' (Diffuse Field , Radiation Pressure)',//
-     & ' Calculated by MAPPINGS V ',a8,/,
+     & ' Calculated by MAPPINGS V ',a12,/,
      & ' Run   :, ',a/
      & ' Input :, ',a/
      & ' Output:, ',a/)
@@ -3880,25 +3873,28 @@ c
         fn=' '
         pfx=elem(ie)
         if (elem_len(ie).eq.1) then
-          pfx=elem(ie)//'_'
-          np=lenv(pfx)
+          pfx=elem(ie)
+          pfx=pfx(1:1)//'_ion'
         else
           pfx=elem(ie)
-          np=lenv(pfx)
+          pfx=pfx(1:2)//'_ion'
         endif
+        np=lenv(pfx)
         call newfile (pfx, np, sfx, 3, fn)
         filn(i)=fn(1:np+8)
 c
         if (elem_len(ie).eq.1) then
-          pfx=elem(ie)//'_col'
+          pfx=elem(ie)
+          pfx=pfx(1:1)//'_col'
         else
-          pfx=elem(ie)//'col'
+          pfx=elem(ie)
+          pfx=pfx(1:2)//'_col'
         endif
         np=lenv(pfx)
         call newfile (pfx, np, sfx, 3, fn)
         filncol(i)=fn(1:np+8)
       enddo
-c
+c     emmissivity structure
       do i=1,iemn
         idx=iem(i)
 c
@@ -4013,24 +4009,27 @@ c     bands
 c     lines
         open (lulin,file=filin,status='OLD',access='APPEND')
       endif
+c     rates
       if (jrat.eq.'Y') then
-c     lines
         open (lurt,file=filrt,status='OLD',access='APPEND')
       endif
       if (jall.eq.'Y') then
-c     ions_
+c     old allions now ions_
         open (lusl,file=filio,status='OLD',access='APPEND')
       endif
+c     individual elements
       if (jiel.eq.'Y') then
         do i=1,ieln
           open (luions(i),file=filn(i),status='OLD',access='APPEND')
         enddo
       endif
+c     emmissivity structure
       if (jiem.eq.'Y') then
         do i=1,iemn
           open (luemiss(i),file=filnem(i),status='OLD',access='APPEND')
         enddo
       endif
+c     column densities
       if (jcol.eq.'Y') then
         do i=1,ieln
           open (lucols(i),file=filncol(i),status='OLD',access='APPEND')
@@ -4051,7 +4050,7 @@ c
       integer*4 i
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c  Close All P7 files If Open
+c  Close All P6 files If Open ignores closed units
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       logical unitopen

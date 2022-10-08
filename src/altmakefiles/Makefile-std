@@ -2,6 +2,7 @@
 # Make MAPPINGS V
 #
 #    v5.2.0dev
+#
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
@@ -21,6 +22,9 @@ BACKDIR = mastercode/
 #---------- Compilers ----------
 #-------------------------------
 #
+#  comment out and in as needed
+#   for different machines
+#
 # GCC FORTRAN - gfortran generic
 # tested with v11 but should work with v4.5 or newer
 # on OSX, use MacPorts.org to get gcc4.8 or newer.
@@ -38,6 +42,7 @@ WARN   =
 # plain
 #
 # FC     = gfortran -std=legacy
+# #LDR    =  ${WARN} -g -O1 -fbounds-check -ffpe-summary='none'
 # LDR    = ${WARN} -Ofast -ffpe-summary='none'
 # OPTS   = -c ${LDR} -I${INCDIR}
 # LIB    =
@@ -46,22 +51,32 @@ WARN   =
 #
 FC     = gfortran -std=legacy -march=native
 LDR    =  ${WARN} -Ofast -ffpe-summary='none'
+#LDR    =  ${WARN} -Ofast -flto=8 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${INCDIR}
-#
+
 UNAME = $(shell uname)
-#
+
 ifeq ($(UNAME),Darwin)
 	LIB    = -isysroot`xcrun --show-sdk-path`
-	XSYS = Mac (with xcrun)
+	XSYS = macOS (with xcrun)
 else
 	LIB =
 	XSYS = Linux
 endif
-#
+
+
 start:
 	@echo 'hello' x$(UNAME)x
+
 #
+#
+#  GCC FORTRAN v4.5-4.8 and earlier
+#
+#FC     = gfortran -std=legacy
+#LDR    = -Ofast
+#OPTS   = -c ${LDR} -I${INCDIR}
+#LIB    =
 #
 #     Generic FORTRAN
 #
@@ -141,8 +156,6 @@ OBJ = ${CODDIR}mappings.o \
 	${CODDIR}pheat.o \
 	${CODDIR}phion.o \
 	${CODDIR}phocrv.o \
-	${CODDIR}photo4.o \
-	${CODDIR}photo5.o \
 	${CODDIR}photo6.o \
 	${CODDIR}photo7.o \
 	${CODDIR}photsou.o \
@@ -188,7 +201,7 @@ OBJ = ${CODDIR}mappings.o \
 #-------------------------------
 #
 help:
-	@echo MAPPINGS V v5.2.0dev make options:
+	@echo MAPPINGS V v5.2.0 make options:
 	@echo ' '
 	@echo Type "'make help'    to see this menu"
 	@echo Type "'make build'   to create executable from scratch and clean in ../lab"

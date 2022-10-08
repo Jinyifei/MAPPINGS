@@ -66,7 +66,7 @@ c
 c
 c search path for data
 c local area  ./data, etc
-c then location given by MAPPINGS enviroment variable
+c then location given by MAPDATA enviroment variable
 c then /opt/local
 c then /usr/local then
 c surrender.
@@ -74,6 +74,7 @@ c
       inquire (file='data/ATDAT.txt',exist=iexi)
       if (iexi) then
         datadir='.'
+        dtlen=1
       else if (iexi.eqv..false.) then
         call get_environment_variable('MAPDATA',
      &                                 env_var,status=check_env)

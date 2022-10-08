@@ -59,7 +59,7 @@ c
       character*64 trimid(mxtr)
 c
    10 format(//' Single Multi-Level Ion Emission Model'/
-     &' produced by MAPPINGS V ',a8,'  Run:',a80/)
+     &' produced by MAPPINGS V ',a12,'  Run:',a80/)
       model='Single ion model'
       luop=23
       imod='ALL'
@@ -900,7 +900,7 @@ c
       real*8 fupsilonij, fnair
 c
    10 format(//' Single Multi-Level Ion Critical Density Model'/
-     &' produced by MAPPINGS V ',a8,'  Run:',a80/)
+     &' produced by MAPPINGS V ',a12,'  Run:',a80/)
       model='CD ion model'
       luop=23
       imod='ALL'
@@ -1189,7 +1189,7 @@ c
       real*8 fupsilonij, fnair
 c
    10 format(//' Single Multi-Level Ion Te Ratio Model'/
-     &' produced by MAPPINGS V ',a8,'  Run:',a80/)
+     &' produced by MAPPINGS V ',a12,'  Run:',a80/)
       model='TE ion model'
       luop=23
       imod='ALL'

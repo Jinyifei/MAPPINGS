@@ -237,7 +237,7 @@ c
    70 format(' Equilibrium Cooling Curve Calculation',
      & '(CIE optically thin):'/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' produced by MAPPINGS V ',a8,'  Run:',a/)
+     & ' produced by MAPPINGS V ',a12,'  Run:',a/)
       write (luop,70) theversion,runname(1:np)
 c
    80 format(' Abundances (by number H = 1.0)'/

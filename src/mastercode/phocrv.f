@@ -306,7 +306,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
    90 format(' Photoionization Curve Calculation (optically thin):'/
-     &' Produced by MAPPINGS V ',a8,'  Run:',a/)
+     &' Produced by MAPPINGS V ',a12,'  Run:',a/)
       write (luop,90) theversion,runname(1:np)
       write (lupb,90) theversion,runname(1:np)
 c

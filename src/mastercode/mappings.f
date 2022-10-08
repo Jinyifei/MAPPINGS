@@ -179,7 +179,7 @@ c
       write (*,70)
    60 format(//
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
-     & '  MAPPINGS V ',a8,': Models : ',a,/)
+     & '  MAPPINGS V ',a12,': Models : ',a,/)
    70  format(
      & ' :::::::::::: Photoionisation Multizone Models ::::::::::'/
      & '    P6  :  Photoionisation, dust + Robust Integrator'/
@@ -227,8 +227,6 @@ c
       if (ilgg(1:2).eq.'S4') call shock4
       if (ilgg(1:2).eq.'S5') call shock5
 c
-c     if (ilgg(1:2).eq.'P4') call photo4
-      if (ilgg(1:2).eq.'P5') call photo5
       if (ilgg(1:2).eq.'P6') call photo6
       if (ilgg(1:2).eq.'P7') call photo7
       if (ilgg(1:1).eq.'E') goto 110

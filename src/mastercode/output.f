@@ -776,8 +776,13 @@ c
       endif
 c
    60  format(1pe14.7,' ',1pe14.7)
+   70  format(1pe14.7,', ',1pe14.7)
 c
       if (wmod.eq.'LFLM') then
+
+         write (lunt,*) ' Wavelength   , Flambda Flux  '
+         write (lunt,*) ' (A, air,vac) , (ergs/s/cm2/A)'
+
         do j=infph,1,-1
 c
           bv=cphotev(j)*evplk
@@ -793,13 +798,25 @@ c
             if (lambda.le.50000.d0) then
               if (tl(j).gt.0.d0) then
                 lambda=lambda/fnair(lambda)
-                write (lunt,60) lambda,tl(j)
+                write (lunt,70) lambda,tl(j)
               endif
             endif
           endif
 c
         enddo
       else
+c
+        if (wmod.eq.'NFNU') then
+           write (lunt,*) ' Frequency    ,   nuFnu Flux    '
+           write (lunt,*) '    (Hz)      , (ergs/s/cm2/sr) '
+        elseif (wmod.eq.'NORM') then
+           write (lunt,*) '   Energy     ,        L(E)     '
+           write (lunt,*) '    (eV)      ,   (ergs/s cm3)  '
+        elseif (wmod.eq.'XRAY') then
+           write (lunt,*) ' Mid Energy         Flux(E)     '
+           write (lunt,*) '    (eV)        (ergs/s/cm2/ev) '
+        endif
+c
         do j=1,infph-1
 c
           bv=cphotev(j)*evplk
@@ -818,10 +835,10 @@ c
 c
           if (wmod.eq.'NFNU') then
             if (tl(j).gt.ioepsilon) then
-              write (lunt,60) photev(j)*evplk,tl(j)
+              write (lunt,70) photev(j)*evplk,tl(j)
             endif
           elseif (wmod.eq.'NORM') then
-            write (lunt,60) photev(j),tl(j)
+            write (lunt,70) photev(j),tl(j)
           elseif (wmod.eq.'XRAY') then
             if (tl(j).gt.0.d0) then
               write (lunt,60) cphotev(j),tl(j)
@@ -858,9 +875,9 @@ c     are only used internally for source vectors and are converted
 c     when files are read in in photsou.f
 c
 c     wmod = 'REAL' use total emission from slab, don't use dr, .sou
-c     wmod = 'NORM' then normalise to 1cm slab, use dr, .fnu
-c     wmod = 'NFNU' then write nu v nuFnu (ergs/s/cm2/sr), .nfn
-c     wmod = 'LFLM' then write lam (A) v Flam (ergs/s/cm2/A) .lam
+c     wmod = 'NORM' then normalise to 1cm slab, use dr, .csv
+c     wmod = 'NFNU' then write nu v nuFnu (ergs/s/cm2/sr), .csv
+c     wmod = 'LFLM' then write lam (A) v Flam (ergs/s/cm2/A) .csv
 c     wmod = 'PSOU' .sou Jnu 1/4pi units from photsou
 c
 c     Now puts out two columns in the files: energy in eV and flux.
@@ -971,7 +988,7 @@ c
       fps=' '
 c
       fn=' '
-      sfx='lam'
+      sfx='csv'
       call newfile (pfx, np, sfx, 3, fn)
       fps=fn(1:(np+3+5))
 
@@ -1014,6 +1031,10 @@ c
       np=lenv(caller)
       write (lunt,*) 'Produced by ',caller(1:np),' :MAPPINGS V ',
      &theversion
+      write (lunt,*) ' Wavelength  ,  Total Model  ,  Source Only  ',
+     & ',  Nebula Only  ,  Nebual Cont. '
+      write (lunt,*) ' (A, air,vac), (ergs/s/cm2/A), (ergs/s/cm2/A)',
+     & ', (ergs/s/cm2/A), (ergs/s/cm2/A)'
 c
    20  format(1pe14.7,4(', ',1pe14.7))
 c
@@ -1086,7 +1107,7 @@ c
    10 format(
      &'::::::::::::::::::::::::::::::::::::'
      &,'::::::::::::::::::::::::::::::::::::',/
-     & ' Spectrum File, MAPPINGS V ',a8,/
+     & ' Spectrum File, MAPPINGS V ',a12,/
      &'::::::::::::::::::::::::::::::::::::'
      &,'::::::::::::::::::::::::::::::::::::',/
      &,t5,' Run   : ,',a)

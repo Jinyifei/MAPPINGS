@@ -12,7 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yi-Fei
 c
 c
-c       Version v5.2.0dev
+c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -551,7 +551,7 @@ c
    30 format(' Nonequilibrium Cooling',/,
      & ' ============================================',/,
      & ' Diffuse Field, Full Continuum Calculations.',/,
-     & ' Calculated by MAPPINGS V ',a8)
+     & ' Calculated by MAPPINGS V ',a12)
       write (*,30) theversion
       write (luop,30) theversion
       write (lusp,30) theversion

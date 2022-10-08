@@ -1,8 +1,7 @@
 #
 # Make MAPPINGS V
 #
-#   v5.2.0dev, full version
-#   inside exe simple exe name
+#    v5.2.0dev
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
@@ -148,8 +147,6 @@ OBJ = ${CODDIR}mappings.o \
 	${CODDIR}pheat.o \
 	${CODDIR}phion.o \
 	${CODDIR}phocrv.o \
-	${CODDIR}photo4.o \
-	${CODDIR}photo5.o \
 	${CODDIR}photo6.o \
 	${CODDIR}photo7.o \
 	${CODDIR}photsou.o \
