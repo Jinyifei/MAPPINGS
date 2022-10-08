@@ -3160,8 +3160,6 @@ c
         enddo
       endif
 c
-      call wabund (lusp)
-c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (jeq.eq.'E') then

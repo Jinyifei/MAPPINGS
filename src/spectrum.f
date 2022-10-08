@@ -1380,7 +1380,7 @@ c     chklim = 0.d0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      chklim=1.0d-5
+      chklim=1.0d-7
       if ((mode.eq.'ABS').or.(mode.eq.'TOTL')) then
         chklim=epsilon
       endif
@@ -1710,8 +1710,8 @@ c
         endif
       enddo
 c
-      fhbt=((fhbeta*fpi)+epsilon)*10.0d0**vunilog
-      fhbtlog=dlog10(fhbt)
+      fhbtlog=dlog10((fhbeta*(fpi))+epsilon)+vunilog
+      fhbt=10.d0**fhbtlog
 c
       if ((llist.eq.'TOTL')) then
 c
