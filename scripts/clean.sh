@@ -1,0 +1,13 @@
+rm *.neq
+rm *.csv
+rm *.sou
+rm *.nfn
+rm *.lam
+rm *.bln
+rm *.neq
+rm *.pie
+rm *.emi
+rm *.dat
+rm *.sh[2-7]
+rm *.ph[2-7]
+rm fort.[0-9][0-9]
