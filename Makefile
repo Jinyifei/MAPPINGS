@@ -1,12 +1,11 @@
 #
 # Make MAPPINGS V
 #
-#    v5.2.0rss
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map52rss
+OUTNAME = map52x   
 #
 #-------------------------------
 #---------- Directories --------
@@ -201,26 +200,22 @@ OBJ = ${CODDIR}mappings.o \
 clean:
 	@echo ' Removing object files'
 	@rm -f ${OBJ}
-	@echo ' Done.'
 #
 #------------------------------------------------------------
 #
-compile:${EXEDIR}${OUTNAME}
-#
-${EXEDIR}${OUTNAME}: ${INCS} ${OBJ}
+compile:${EXEDIR}${OUTNAME} ${INCS} ${OBJ}
+	@echo ' Compiling for $(XSYS)'
 	${FC} ${LDR} -o ${EXEDIR}${OUTNAME} ${OBJ} ${LIB}
+	@echo ' Done.  Compiled Successfully'
+	@echo ' Done.  A local version of the executable ${OUTNAME} can be found in ${EXEDIR}'
 
 #
 #------------------------------------------------------------
 #
 build:
 	@echo ' Building ${OUTNAME}:'
-	@echo ' Compiling for $(XSYS)'
 	@make compile
-	@echo ' Removing object files'
-	@rm -f ${OBJ}
-	@echo ' Done.  Compiled Successfully'
-	@echo ' Done.  A local version of the executable ${OUTNAME} can be found in ${EXEDIR}'
+	@make clean
 #
 #------------------------------------------------------------
 #
