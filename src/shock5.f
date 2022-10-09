@@ -149,7 +149,7 @@ c
 c
       vmod='NONE'
       s5pfx='v100sh'
-      nprefix=6
+      nprefix=20
 c
       wdil=0.5d0
       wdilt0=1.d4
@@ -2566,10 +2566,12 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
         wmod='NEBL'
         call multizone (nfs, x, nte, ne, nh, popfr, popintfr, wmod)
+
 c
         caller='S5'
         pfx='PCup'//s5pfx(1:nprefix)
         np=lenv(pfx)
+        write(*,*) 'ytest" ', pfx, s5pfx
 c
         wmod='LFLM'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)
@@ -4196,7 +4198,7 @@ c
 c     Write "sh5" general output files always open until close all
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
+c  
       open (luop,file=fsm,status='NEW')
       if (lupt.gt.0) open (lupt,file=fpm,status='NEW')
 c

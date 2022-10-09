@@ -21,10 +21,20 @@ c
 c     This utility subroutine will return a filename that is
 c     unique in the current directory.
 c     It accepts a prefix and suffix.  Prefixes can be up to 16 chars
-c     and suffixes can be 4.  The final filemane will be a character*64
+c     and suffixes can be 4.  The final filename will be a character*64
 c     string.  Multiple of four are used for SPARC and RISC optimisation.
 c
+c     p and s are integers, indicated the length of the prefix and suff
+c
 c     RSS 10/90
+c
+c     ksl 2210 - Modified to use trim and adjustl to strip leading and
+c     trailing characters of stings. p and s not indicate the 
+c     maximum lenght of the input strings after trimming.  If
+c     pref or suff are too long, and error message is printed, 
+c     and pref and suff will cut to their maximum lengths.  An
+c     alternative which might be better is to simply exit
+c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -36,6 +46,21 @@ c
       logical iexi
 c
 c
+      pref=adjustl(pref)
+      pref=trim(pref)
+      if (len(pref)>p) then
+          write(*,*) 'Error: length of pref ', pref, 
+     &      'greater than allowed ', p
+          pref=pref(1:p)
+      endif
+      suff=adjustl(suff);
+      suff=trim(suff)
+      if (len(suff)>s) then
+          write(*,*) 'Error: length of suff', suff, 
+     &      'greater than allowed ', p
+          suff=suff(1:s)
+      endif
+
    10 format(i4.4)
       filena=' '
       l=p+4+1+s
@@ -45,25 +70,12 @@ c
    20 i=i+1
       s2=' '
       write (s2,10) i
-      j=p+1
-      filena(j:j+4)=s2
+      filena=trim(pref)//trim(s2)//'.'//trim(suff)
 c
-      s1=' '
-      if ((p.gt.0).and.(p.lt.17)) s1=pref(1:p)
-      j=p+1
-      filena(1:p)=s1
-c
-      s2=' '
-      if ((s.gt.0).and.(s.lt.5)) s2=suff(1:s)
-      j=p+6
-      filena(j:l)=s2
-      j=j-1
-      filena(j:j)='.'
-c
-      inquire (file=filena(1:l),exist=iexi)
+      inquire (file=filena,exist=iexi)
 c
       if (iexi) goto 20
-c
+
       return
 c
       end
