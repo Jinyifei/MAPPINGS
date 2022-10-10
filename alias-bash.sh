@@ -14,17 +14,11 @@
 #
 # set general mappings area then specify data/ location & mappings exe
 #
-# local to std mappings_V/lab change user name as needed
-#
-# mapbase="/Users/ralph/mappings_V"
-# export MAPDATA="$mapbase/lab"
-# export MAPBIN="$mapbase/lab"
-#
 # or globally installed in system base area or other user area:
 # up to user to use sudo make install su install options in make
 # or create other locations
 #
-# mapbase="/opt/local"
+# mapbase="/usr/local"
 # export MAPDATA="$mapbase/share/mappings/"
 # export MAPBIN="$mapbase/bin"
 #
@@ -38,9 +32,10 @@
 #
 # here set to run in lab as previously, change username as needed
 #
-mapbase="/Users/ralph/mappings_V"
+mapbase="~"
 export MAPDATA="$mapbase/lab"
 export MAPBIN="$mapbase/lab"
+#
 export PATH="$MAPBIN:$PATH"
 #
 alias map="map52"

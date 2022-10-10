@@ -4048,11 +4048,7 @@ c
       integer*4 i
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-<<<<<<< HEAD:src/mastercode/photo7.f
 c  Close All P7 files If Open ignores closed units
-=======
-c  Close All P6 files If Open ignores closed units
->>>>>>> 628c365b01661db74f7e5c8d02f78c2a150f3833:src/photo7.f
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       logical unitopen
