@@ -3,7 +3,9 @@ map51b
 map51dev
 map52
 map52b
+map52x
 map520dev
+map52dev
 .DS_Store
 xcuserdata
 xcshareddata
@@ -18,6 +20,12 @@ project.xcworkspace
 *.o
 lab/00ignore/
 lab/00ignore
+lab/map51
+lab/map51b
+lab/map51dev
+lab/map52
+lab/map52b
+lab/map52dev
 00Ignore
 00ignore/
 src/workcode/*.[co]

@@ -167,6 +167,8 @@ OBJ = ${CODDIR}mappings.o \
 	${CODDIR}recom.o \
 	${CODDIR}reson.o \
 	${CODDIR}sdifeq.o \
+	${CODDIR}shock2.o \
+	${CODDIR}shock3.o \
 	${CODDIR}shock4.o \
 	${CODDIR}shock5.o \
 	${CODDIR}sinsla.o \
