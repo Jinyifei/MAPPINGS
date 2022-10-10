@@ -4048,7 +4048,7 @@ c
       integer*4 i
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c  Close All P6 files If Open ignores closed units
+c  Close All P7 files If Open ignores closed units
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       logical unitopen

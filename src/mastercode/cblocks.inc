@@ -1,6 +1,6 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
+c     MAPPINGS V.  An Astrophysical Plasma Modelling Code.
 c
 c
 c     Creative Commons v4.0 International
@@ -9,7 +9,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yi-Fei
+c     Adam D. Thomas, Jin Yi-Fei, Knox Long
 c
 c
 c       Version v5.2.0dev
