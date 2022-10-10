@@ -38,6 +38,6 @@ export MAPBIN="$mapbase/lab"
 #
 export PATH="$MAPBIN:$PATH"
 #
-alias map="map52"
+alias map="map52dev"
 #
 ########################################################################
