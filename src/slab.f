@@ -35,13 +35,13 @@ c
       real*8 popz(mxion, mxelem),dift,tst,tstep
 c      real*8 popt1(mxion, mxelem)
 c
-      integer*4 l,luop,np
+      integer*4 l,luop,np,flen
       integer*4 i,j
 c
       character imod*4, lmod*4, kmod*4, nmod*4,wmod*4
       character ilgg*4, jprin*4, ndee*4, ill*4
-      character fn*64
-      character fl*64,pfx*32,sfx*4,caller*4,model*64
+      character fn*128
+      character fl*128,pfx*64,sfx*16,caller*4,model*64
 c
 c           Functions
 c
@@ -55,8 +55,8 @@ c
       fn=' '
       pfx='slab'
       sfx='txt'
-      call newfile (pfx, 4, sfx, 3, fn)
-      fl=fn(1:12)
+      call newfile (pfx, sfx, fn, flen)
+      fl=fn(1:flen)
 c
       trea=epsilon
 c

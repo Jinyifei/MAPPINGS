@@ -14,7 +14,7 @@ c     Version: v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      subroutine newfile (pref, p, suff, s, filena)
+      subroutine newfile (pref, suff, filena, strlength)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -29,48 +29,91 @@ c
 c     RSS 10/90
 c
 c     ksl 2210 - Modified to use trim and adjustl to strip leading and
-c     trailing characters of stings. p and s not indicate the 
+c     trailing characters of stings. p and s not indicate the
 c     maximum lenght of the input strings after trimming.  If
-c     pref or suff are too long, and error message is printed, 
+c     pref or suff are too long, and error message is printed,
 c     and pref and suff will cut to their maximum lengths.  An
 c     alternative which might be better is to simply exit
 c
+c     RSS 2210 - Code no longer uses np prefix length or ns suffix
+c     length and uses std trim len and adjustl in newfile.  User
+c     prefixes will now be allowed to be up to 64 chars unless
+c     more is needed.
+c
+c     Note: the system len gives array length *not* the string
+c     content length like the mappings lenv call.  This adjustl
+c     and trim allows spaces and invalid chars in filenames which
+c     is under trial for the present.  mlen remains a library
+c     independent way to trim and get str length with spaces
+c     allowed. lenv is a trim which stops at the first space and
+c     disallows invalid file chars, and may be used if this
+c     fortran library version fails.
+c
+c     newfile now returns the final file length so fn(1:length)
+c     can be used in calling routine, and prefix length and suffix
+c     length are no longer needed or used, except internally in
+c     the newfile routine. This means the main code can be
+c     simplified.  The file system can handle full char arrays
+c     with emply or garbage 'tails' and  trims internally on most,
+c     but not all systems.
+c
+c     In the main code prefix is usually a 64 char array, allowing
+c     longer prefixes, filename char strings are usually 128
+c     chars,  suffix char arrays are usually 16 but almost
+c     universally all files use 3 char suffic/extensions eg csv or
+c     ph6.  128 char file will allow prepending modest paths, but
+c     usually prefix is 5-16 chars and filenames 13-24 chars with
+c     the 4 digit ids and the '.'.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'const.inc'
 c
       character* (*) filena
-      character pref*32,suff*4,s1*32,s2*32
-      integer*4 p,s,i,j,l
+      character* (*) pref
+      character* (*) suff
+c
+      integer*4 strlength
+c
+      character idnum*4
+      integer*4 p,s,i,j,l, maxpref
       logical iexi
 c
 c
+c These can only really reduce length and will leave spaces
+c
+      suff=adjustl(suff)
+      suff=trim(suff)
+      s=len(trim(suff))
+
+      strlength=s
+c
+c len give full memory length *not* a string length
+c allow for 4 digit idnum and . and suffix length
+c
+      maxpref=len(filena)-5-s
+c
+c These can only really reduce lenght and will leave spaces
+c
       pref=adjustl(pref)
       pref=trim(pref)
-      if (len(pref)>p) then
-          write(*,*) 'Error: length of pref ', pref, 
-     &      'greater than allowed ', p
-          pref=pref(1:p)
+      p=len(trim(pref))
+      if (p>maxpref) then
+          write(*,*) 'Warning: length of pref ', trim(pref),
+     &      'greater than allowed ', p,maxpref
+          pref=pref(1:maxpref)
+          p=maxpref
       endif
-      suff=adjustl(suff);
-      suff=trim(suff)
-      if (len(suff)>s) then
-          write(*,*) 'Error: length of suff', suff, 
-     &      'greater than allowed ', p
-          suff=suff(1:s)
-      endif
-
+      strlength=strlength+p+5
+c
    10 format(i4.4)
       filena=' '
-      l=p+4+1+s
-      filena(1:l+1)=' '
+      filena(1:strlength+1)=' '
 c
       i=0
    20 i=i+1
-      s2=' '
-      write (s2,10) i
-      filena=trim(pref)//trim(s2)//'.'//trim(suff)
+      idnum=' '
+      filena=pref(1:p)//idnum(1:4)//'.'//suff(1:s)
 c
       inquire (file=filena,exist=iexi)
 c

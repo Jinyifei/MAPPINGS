@@ -43,7 +43,7 @@ c
       character env_var*256
 cc
 cc Test io variables
-c      character sfx*4, fl*20
+c      character sfx*16, fl*128
 c      real*8 rate,e,px,t
 c      real*8 fkramer,vernerphoto
 c      integer*4 ir,l

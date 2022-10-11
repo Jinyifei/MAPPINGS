@@ -3917,7 +3917,7 @@ c
       include 'cblocks.inc'
       include 's5blocks.inc'
 c
-      integer*4 i
+      integer*4 i,flen
       character* (*) px
 c
       integer*4 mlen,lenv
@@ -4004,8 +4004,8 @@ c
       pfx='shck_'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='sh5'
-      call newfile (pfx, np, sfx, 3, fn)
-      fsm=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fsm=fn(1:flen)
 c
 c  lupt
 c
@@ -4013,8 +4013,8 @@ c
       pfx='prec_'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='sh5'
-      call newfile (pfx, np, sfx, 3, fn)
-      fpm=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fpm=fn(1:flen)
 c
 c spec line list files
 c always in csv files lists
@@ -4027,15 +4027,15 @@ c
       np=lenv(pfx)
       sfx='csv'
       fsh=' '
-      call newfile (pfx, np, sfx, 3, fn)
-      fsh=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fsh=fn(1:flen)
 c
       pfx='specPC'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='csv'
       fpc=' '
-      call newfile (pfx, np, sfx, 3, fn)
-      fpc=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fpc=fn(1:flen)
 c
 c    allions files , shock and precursors
 c    allmod=Y
@@ -4046,13 +4046,13 @@ c
       pfx='ionSH'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='sh5'
-      call newfile (pfx, np, sfx, 3, fn)
-      fash=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fash=fn(1:flen)
 c     Precursor file
       pfx='ionPC'//s5pfx(1:nprefix)
       np=lenv(pfx)
-      call newfile (pfx, np, sfx, 3, fn)
-      fapc=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fapc=fn(1:flen)
 c
 c rates fitles , shock and precursors
 c ratmod=Y
@@ -4063,14 +4063,14 @@ c
       pfx='ratSH'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='sh5'
-      call newfile (pfx, np, sfx, 3, fn)
-      frsh=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      frsh=fn(1:flen)
 c     Rates file for precursor
       pfx='ratPC'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='sh5'
-      call newfile (pfx, np, sfx, 3, fn)
-      frpc=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      frpc=fn(1:flen)
 c
 c shock 'dynamics' file
 c dynmod=Y
@@ -4081,8 +4081,8 @@ c
       np=lenv(pfx)
       sfx='sh5'
       fd=' '
-      call newfile (pfx, np, sfx, 3, fn)
-      fd=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fd=fn(1:flen)
 c
 c shock cooling file
 c fclmod=Y
@@ -4093,8 +4093,8 @@ c
       np=lenv(pfx)
       sfx='csv'
       fcl=' '
-      call newfile (pfx, np, sfx, 3, fn)
-      fcl=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fcl=fn(1:flen)
 c
 c shock cooling emission bands
 c bandsmod=Y
@@ -4106,8 +4106,8 @@ c
       np=lenv(pfx)
       sfx='csv'
       fpb=' '
-      call newfile (pfx, np, sfx, 3, fn)
-      fpb=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      fpb=fn(1:flen)
 c
 c line structures, shocks and precursors
 c jlin=Y
@@ -4119,15 +4119,15 @@ c
       np=lenv(pfx)
       sfx='csv'
       flsh=' '
-      call newfile (pfx, np, sfx, 3, fn)
-      flsh=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      flsh=fn(1:flen)
 c
       pfx='linPC'//s5pfx(1:nprefix)
       np=lenv(pfx)
       sfx='csv'
       flpc=' '
-      call newfile (pfx, np, sfx, 3, fn)
-      flpc=fn(1:np+8)
+      call newfile (pfx, sfx, fn, flen)
+      flpc=fn(1:flen)
 c
 c       ionisation structure files -  all names a made only 4 are
 c       used atm tsrmod=Y  i is 1-mxelem and is effectively the
@@ -4152,8 +4152,8 @@ c       mapppings internal ids not z, names mapped in prefs
         endif
         np=lenv(pfx)
         fn=' '
-        call newfile (pfx, np, sfx, 3, fn)
-        fash=fn(1:np+8)
+        call newfile (pfx, sfx, fn, flen)
+        fash=fn(1:flen)
         fionsh(i)=fash
 c
         if (elem_len(i).eq.1) then
@@ -4162,8 +4162,8 @@ c
           pfx='elPC'//s5pfx(1:nprefix)//elem(i)
         endif
         np=lenv(pfx)
-        call newfile (pfx, np, sfx, 3, fn)
-        fapc=fn(1:np+8)
+        call newfile (pfx, sfx, fn, flen)
+        fapc=fn(1:flen)
         fionpc(i)=fapc
 c
       enddo

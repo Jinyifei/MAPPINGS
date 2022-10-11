@@ -99,8 +99,10 @@ c
       integer*4 i,j,k,l,inl
 c
       character tempfile*64
-c      character fn*64
-c      character pfx*32,sfx*4
+c
+      integer*4 flen
+c      character fn*128
+c      character pfx*64,sfx*16
 c
       logical tfine, quickir
 c
@@ -150,8 +152,8 @@ c
 c      if (IRtemp) then
 c         pfx='temp'
 c         sfx='dat'
-c         call newfile(pfx,4,sfx,3,fn)
-c         tempfile=fn(1:12)
+c         call newfile(pfx,sfx,fn,flen)
+c         tempfile=fn(1:flen)
 c         open(15,file=tempfile,status='unknown',access='APPEND')
 c      endif
 c

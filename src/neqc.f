@@ -53,6 +53,7 @@ c
       real*8 teinit,dhinit
       real*8 frho
       integer*4 elok(mxelem),nel,i,idx
+      integer*4 flen
 c
       real*8 fpresse,feldens
 c
@@ -97,8 +98,8 @@ c
       fsm=' '
       pfx='neqcl'
       sfx='neq'
-      call newfile (pfx, 4, sfx, 3, fn)
-      fsm=fn(1:13)
+      call newfile (pfx, sfx, fn, flen)
+      fsm=fn(1:flen)
 c
       open (luop,file=fsm,status='NEW')
 c
@@ -380,8 +381,8 @@ c
         ratmod='Y'
         pfx='rates'
         sfx='csv'
-        call newfile (pfx, 5, sfx, 3, fn)
-        fr=fn(1:13)
+        call newfile (pfx, sfx, fn, flen)
+        fr=fn(1:flen)
         open (lurtsh,file=fr,status='NEW')
       endif
 c
@@ -399,8 +400,8 @@ c
         pfx='neqc'
         sfx='csv'
         fcl=' '
-        call newfile (pfx, 4, sfx, 3, fn)
-        fcl=fn(1:12)
+        call newfile (pfx, sfx, fn, flen)
+        fcl=fn(1:flen)
         open (lucl,file=fcl,status='NEW')
       endif
 c
@@ -408,16 +409,16 @@ c
         pfx='dyn'
         sfx='csv'
         fd=' '
-        call newfile (pfx, 3, sfx, 3, fn)
-        fd=fn(1:11)
+        call newfile (pfx, sfx, fn, flen)
+        fd=fn(1:flen)
         open (ludy,file=fd,status='NEW')
       endif
 c
       pfx='spec'
       sfx='csv'
       fsh=' '
-      call newfile (pfx, 4, sfx, 3, fn)
-      fsh=fn(1:12)
+      call newfile (pfx, sfx, fn, flen)
+      fsh=fn(1:flen)
       open (lusp,file=fsh,status='NEW')
 c
 c     ionbalance files
@@ -485,7 +486,7 @@ c
       include 'cblocks.inc'
       include 's5blocks.inc'
 c
-      integer*4 i,j
+      integer*4 i,j,flen
       character tab*1
       real*8 feldens
       integer*4 lenv,mlen
@@ -520,8 +521,8 @@ c         ie=iel(i)
           pfx=elem(i)
           np=lenv(pfx)
           sfx='csv'
-          call newfile (pfx, np, sfx, 3, fn)
-          fionsh(i)=fn(1:(np+8))
+          call newfile (pfx, sfx, fn, flen)
+          fionsh(i)=fn(1:flen)
         enddo
 c
         np=mlen(runname)
@@ -542,8 +543,8 @@ c
       fpb=' '
       pfx='bands'
       sfx='csv'
-      call newfile (pfx, 5, sfx, 3, fn)
-      fpb=fn(1:13)
+      call newfile (pfx, sfx, fn, flen)
+      fpb=fn(1:flen)
       open (lupb,file=fpb,status='NEW')
 c
 c     Title

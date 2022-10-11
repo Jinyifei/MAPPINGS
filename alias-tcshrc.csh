@@ -32,7 +32,7 @@
  setenv MAPDATA "$mapbase/lab"
  set mapbin  =  "$mapbase/lab"
  setenv MAPBIN  "$mapbin"
- #
+#
  set path = ($mapbin $path)
 #
  alias map "map52dev"

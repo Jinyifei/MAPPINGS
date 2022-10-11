@@ -58,6 +58,7 @@ c
       integer*4 ie,luop,lusp,lupb,lucl
       integer*4 count,step, np,i,j,lurt,ludy,lual,m,lupf
       integer*4 luions(4),idx1,idx2,idx3,idx4
+      integer*4 flen
 c
 c     time steps - non-standard so commented out
 c
@@ -66,12 +67,12 @@ c      real tarray(2)
 c      real dtime,dtarr
 c
       character*24 abundtitle
-      character fn*64
+      character fn*128
       character filn(4)*64
       character specmode*4, rmod*4, imod*4, tsrmod*4,spmod*4
-      character fl*64, lmod*4, tab*1, ilgg*4, tmod*4, linemod*4
+      character fl*128, lmod*4, tab*1, ilgg*4, tmod*4, linemod*4
       character fd*64, fr*64, fa*64, fsp*64, allmod*4, ratmod*4,ispo*4
-      character pfx*32, sfx*4, caller*4,wmod*4,pollfile*12,vmod*4
+      character pfx*64, sfx*16, caller*4,wmod*4,pollfile*12,vmod*4
       character cht*64,pht*64,clt*64,dynmod*4, mypfx*32, model*64
       character fpf*64, fpb*64, fcl*64, fclmod*4
 c
@@ -109,8 +110,8 @@ c
       fl=' '
       pfx='shckn'
       sfx='sh4'
-      call newfile (pfx, 4, sfx, 3, fn)
-      fl=fn(1:12)
+      call newfile (pfx, sfx, fn, flen)
+      fl=fn(1:flen)
 c
       open (luop,file=fl,status='NEW')
 c
@@ -548,8 +549,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         ratmod='Y'
         pfx='rates'
         sfx='sh4'
-        call newfile (pfx, 5, sfx, 3, fn)
-        fr=fn(1:13)
+        call newfile (pfx, sfx, fn, flen)
+        fr=fn(1:flen)
         open (lurt,file=fr,status='NEW')
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -563,8 +564,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         pfx='cc'
         sfx='csv'
         fcl=' '
-        call newfile (pfx, 2, sfx, 3, fn)
-        fcl=fn(1:10)
+        call newfile (pfx, sfx, fn, flen)
+        fcl=fn(1:flen)
         open (lucl,file=fcl,status='NEW')
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -578,16 +579,16 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         pfx='dyn'
         sfx='sh4'
         fd=' '
-        call newfile (pfx, 3, sfx, 3, fn)
-        fd=fn(1:11)
+        call newfile (pfx, sfx, fn, flen)
+        fd=fn(1:flen)
         open (ludy,file=fd,status='NEW')
       endif
 c
       pfx='spec'
       sfx='csv'
       fsp=' '
-      call newfile (pfx, 4, sfx, 3, fn)
-      fsp=fn(1:12)
+      call newfile (pfx, sfx, fn, flen)
+      fsp=fn(1:flen)
       open (lusp,file=fsp,status='NEW')
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -615,8 +616,8 @@ c
         if (allmod.eq.'Y') then
           pfx='allion'
           sfx='sh4'
-          call newfile (pfx, 6, sfx, 3, fn)
-          fa=fn(1:14)
+          call newfile (pfx, sfx, fn, flen)
+          fa=fn(1:flen)
           open (lual,file=fa,status='NEW')
         endif
 c
@@ -717,8 +718,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
           fn=' '
           pfx=elem(ie)
           sfx='csv'
-          call newfile (pfx, elem_len(ie), sfx, 3, fn)
-          filn(i)=fn(1:(elem_len(ie)+3+5))
+          call newfile (pfx, sfx, fn, flen)
+          filn(i)=fn(1:flen)
         enddo
 c
         do i=1,ieln
@@ -754,8 +755,8 @@ c
       fpb=' '
       pfx='bands'
       sfx='sh4'
-      call newfile (pfx, 5, sfx, 3, fn)
-      fpb=fn(1:13)
+      call newfile (pfx, sfx, fn, flen)
+      fpb=fn(1:flen)
       open (lupb,file=fpb,status='NEW')
 c
 c     Title
@@ -1676,8 +1677,8 @@ c
         pfx='slec'
         sfx='sh4'
         fpf=' '
-        call newfile (pfx, 4, sfx, 3, fn)
-        fpf=fn(1:12)
+        call newfile (pfx, sfx, fn, flen)
+        fpf=fn(1:flen)
         write (*,*) 'fpf''',fa,''''
         open (lupf,file=fpf,status='NEW')
         spmod='ABS'

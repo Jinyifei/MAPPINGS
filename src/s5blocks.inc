@@ -114,11 +114,11 @@ c file names
 c
       character abundtitle*24
 c
-      character fn*64,fsh*64,fsp*64
+      character fn*128,fsh*64,fsp*64
       character flsh*64,flpc*64
       character fionsh(mxelem)*64
       character fionpc(mxelem)*64
-      character fl*64,fd*64,fr*64,fa*64
+      character fl*128,fd*64,fr*64,fa*64
 c
       character frpc*64,frsh*64,fash*64
 c
@@ -127,7 +127,7 @@ c
       character fpc*64,fpt*64
       character fapc*64,fpf*64
 c
-      character pfx*64,sfx*4,caller*64
+      character pfx*64,sfx*16,caller*64
       character s5pfx*64,subname*64,pollfile*64
       character cht*64,pht*64,clt*64
 c

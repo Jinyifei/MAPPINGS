@@ -38,14 +38,15 @@ c
 c
       integer*4 l,luop,m,i,j,jnorm,nt,idx,np
       integer*4 luions(mxelem)
+      integer*4 flen
 c
       character caller*4, n2*12, norm*12
       character imod*4, lmod*4, model*64
       character spmod*4, jeqnenh*4
-      character fn*64,jsaveatoms*4,jcoolelems*4,jsavespecs*4
-      character fl*64,filn(mxelem)*64,cfiln(mxelem)*64
+      character fn*128,jsaveatoms*4,jcoolelems*4,jsavespecs*4
+      character fl*128,filn(mxelem)*64,cfiln(mxelem)*64
       character ilgg*4,jprin*4,ill*4
-      character pfx*32,sfx*4,tab*4
+      character pfx*64,sfx*16,tab*4
 c
 c     External Functions
 c
@@ -134,8 +135,8 @@ c
           fn=' '
           pfx='Ion'//elem(j)
           sfx='csv'
-          call newfile (pfx, elem_len(j)+3, sfx, 3, fn)
-          filn(i)=fn(1:(elem_len(j)+3+5+3))
+          call newfile (pfx, sfx, fn, flen)
+          filn(i)=fn(1:flen)
           open (luions(i),file=filn(i),status='NEW')
           write (luions(i),'(" Run        : ",a80)') runname(1:np)
           write (luions(i),'(" Element    : ",a2)') elem(i)
@@ -152,8 +153,8 @@ c
           fn=' '
           pfx='Loss'//elem(j)
           sfx='csv'
-          call newfile (pfx, elem_len(j)+4, sfx, 3, fn)
-          cfiln(i)=fn(1:(elem_len(j)+3+5+4))
+          call newfile (pfx, sfx, fn, flen)
+          cfiln(i)=fn(1:flen)
           open (luions(i),file=cfiln(i),status='NEW')
           write (luions(i),'(" Run     : ",a)') runname(1:np)
           write (luions(i),'(" Element : ",a2)') elem(i)
@@ -230,8 +231,8 @@ c
       fn=' '
       pfx='coolcv'
       sfx='csv'
-      call newfile (pfx, 6, sfx, 3, fn)
-      fl=fn(1:14)
+      call newfile (pfx, sfx, fn, flen)
+      fl=fn(1:flen)
       open (luop,file=fl,status='NEW')
 c
    70 format(' Equilibrium Cooling Curve Calculation',

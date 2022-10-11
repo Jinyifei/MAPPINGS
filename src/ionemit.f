@@ -36,11 +36,12 @@ c
       integer*4 ndhsteps
       integer*4 modeltype
       integer*4 linetype
-c      character str*18
-      character fn*64
-      character fl*64
-      character pfx*32
-      character sfx*4
+      integer*4 flen
+c
+      character fn*128
+      character fl*128
+      character pfx*64
+      character sfx*16
       character ilgg*4
       character imod*4
       character model*64,s*64
@@ -67,8 +68,8 @@ c
       fn=' '
       pfx='ion'
       sfx='csv'
-      call newfile (pfx, 3, sfx, 3, fn)
-      fl=fn(1:13)
+      call newfile (pfx, sfx, fn, flen)
+      fl=fn(1:flen)
       open (luop,file=fl,status='NEW')
 c
       call zer
@@ -873,17 +874,17 @@ c
       integer*4 luop
       integer*4 i,j,k,idx,kmax,stepidx
       integer*4 i0,j0,i1,j1,itr0,itr1
-      integer*4 nl,plen
+      integer*4 nl,plen,flen
       integer*4 at,io
       integer*4 nt, itr
       integer*4 ndhsteps
       integer*4 modeltype
       integer*4 linetype
       integer*4 wlower,wupper
-      character fn*64
-      character fl*64
-      character pfx*32
-      character sfx*4
+      character fn*128
+      character fl*128
+      character pfx*64
+      character sfx*16
       character imod*4
       character model*64
 c
@@ -959,8 +960,8 @@ c
         pfx(plen:plen)='_'
 c
         sfx='csv'
-        call newfile (pfx, plen, sfx, 3, fn)
-        fl=fn(1:plen+5+3)
+        call newfile (pfx, sfx, fn, flen)
+        fl=fn(1:flen)
         open (luop,file=fl,status='NEW')
 c
         nt=nfmtrans(idx)
@@ -1160,17 +1161,17 @@ c
       integer*4 i,j,k,idx,kmax,stepidx
       integer*4 i0,j0,i1,j1,i2,j2
       integer*4 itr0,itr1,itr2
-      integer*4 nl,plen
+      integer*4 nl,plen,flen
       integer*4 at,io
       integer*4 nt, itr
       integer*4 ntsteps
       integer*4 modeltype
       integer*4 linetype
       integer*4 wlower,wupper
-      character fn*64
-      character fl*64
-      character pfx*32
-      character sfx*4
+      character fn*128
+      character fl*128
+      character pfx*64
+      character sfx*16
       character imod*4
       character model*64
 c
@@ -1248,8 +1249,8 @@ c
         pfx(plen:plen)='_'
 c
         sfx='csv'
-        call newfile (pfx, plen, sfx, 3, fn)
-        fl=fn(1:plen+5+3)
+        call newfile (pfx, sfx, fn, flen)
+        fl=fn(1:flen)
         open (luop,file=fl,status='NEW')
 c
         nt=nfmtrans(idx)

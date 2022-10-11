@@ -24,9 +24,9 @@ CODDIR = src
 # enviroment variables MAPDATA = INSTALLDATA
 # and MAPBIN in the shell the same as INSTALLBIN .
 #
-# INSTALLBASE = /usr/local
-# INSTALLDATA = ${INSTALLBASE}/share/mappings
-# INSTALLBIN  = ${INSTALLBASE}/bin
+#INSTALLBASE = /usr/local
+#INSTALLDATA = ${INSTALLBASE}/share/mappings
+#INSTALLBIN  = ${INSTALLBASE}/bin
 #
 # home area lab
 #

@@ -30,9 +30,10 @@ c
 c
       character* (*) caller
       character tab*4
-      character fn*64
-      character pfx*32,sfx*4,fl*64
+      character fn*128
+      character pfx*64,sfx*16,fl*128
       integer*4 lunt,i,np,nentries,j
+      integer*4 flen
 c
       tab=char(9)
       lunt=99
@@ -41,8 +42,8 @@ c     write out balance file
 c
       fn=' '
       sfx='bln'
-      call newfile (pfx, np, sfx, 3, fn)
-      fl=fn(1:(np+3+5))
+      call newfile (pfx, sfx, fn, flen)
+      fl=fn(1:flen)
 c
       open (lunt,file=fl,status='NEW')
 c
@@ -554,12 +555,12 @@ c
       real*8 tp(mxinfph),tl(mxinfph),t,de,dh,dr
       real*8 widnu,scale
 c
-      integer*4 lunt,i,j,np
+      integer*4 lunt,i,j,np,flen
 c
       character* (*) caller
       character tab*4
-      character fn*64
-      character pfx*32,sfx*4,fps*64
+      character fn*128
+      character pfx*64,sfx*16,fps*128
 c
       tab=char(9)
       lunt=99
@@ -570,8 +571,8 @@ c     output upstream field photon source file
 c
       fn=' '
       sfx='emi'
-      call newfile (pfx, np, sfx, 3, fn)
-      fps=fn(1:(np+3+5))
+      call newfile (pfx, sfx, fn, flen)
+      fps=fn(1:flen)
 c
       open (lunt,file=fps,status='NEW')
       i=infph-1
@@ -890,42 +891,42 @@ c
 c
       real*8 tp(mxinfph),t,de,dh,dr,scale
 c
-      integer*4 np
+      integer*4 np,flen
 c
       character wmod*4
-      character fn*64
+      character fn*128
       character* (*) caller
       character* (*) pfx
-      character sfx*4,fps*64
+      character sfx*16,fps*128
 c
       fps=' '
       if (wmod.eq.'LFLM') then
 c
         fn=' '
         sfx='lam'
-        call newfile (pfx, np, sfx, 3, fn)
-        fps=fn(1:(np+3+5))
+        call newfile (pfx, sfx, fn, flen)
+        fps=fn(1:flen)
 c
       elseif (wmod.eq.'NFNU') then
 c
         fn=' '
         sfx='nfn'
-        call newfile (pfx, np, sfx, 3, fn)
-        fps=fn(1:(np+3+5))
+        call newfile (pfx, sfx, fn, flen)
+        fps=fn(1:flen)
 c
       elseif (wmod.eq.'NORM') then
 c
         fn=' '
         sfx='emi'
-        call newfile (pfx, np, sfx, 3, fn)
-        fps=fn(1:(np+3+5))
+        call newfile (pfx, sfx, fn, flen)
+        fps=fn(1:flen)
 c
       elseif (wmod.eq.'XRAY') then
 c
         fn=' '
         sfx='dat'
-        call newfile (pfx, np, sfx, 3, fn)
-        fps=fn(1:(np+3+5))
+        call newfile (pfx, sfx, fn, flen)
+        fps=fn(1:flen)
 c
       elseif (wmod.eq.'PSOU') then
 c
@@ -939,8 +940,8 @@ c     output upstream field photon source file
 c
         fn=' '
         sfx='sou'
-        call newfile (pfx, np, sfx, 3, fn)
-        fps=fn(1:(np+3+5))
+        call newfile (pfx, sfx, fn, flen)
+        fps=fn(1:flen)
 c
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -970,15 +971,15 @@ c
       character* (*) pfx
       real*8 t,de,dh,dr,scale
 c
-      character sfx*4,fps*64
+      character sfx*16,fps*128
 c
       real*8 tl(mxinfph)
       real*8 bv, blum, ilum, widnu, clam, lambda
 c
-      integer*4 lunt,i,j,np
+      integer*4 lunt,i,j,np,flen
       logical iexi
 c
-      character fn*64
+      character fn*128
 c
 c functions
 c
@@ -989,8 +990,8 @@ c
 c
       fn=' '
       sfx='csv'
-      call newfile (pfx, np, sfx, 3, fn)
-      fps=fn(1:(np+3+5))
+      call newfile (pfx, sfx, fn, flen)
+      fps=fn(1:flen)
 
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -1087,22 +1088,22 @@ c
       include 'cblocks.inc'
 c
       real*8 t,de,dh
-      integer*4 np
+      integer*4 np,flen
       character* (*) caller
-      character pfx*32
+      character pfx*64
 c
       integer*4 lunt
 c
       character fsp*64
-      character fn*64, sfx*4
+      character fn*128, sfx*16
       character linemod*4, spmod*4
 c
       lunt=99
 c
       fn=' '
       sfx='csv'
-      call newfile (pfx, np, sfx, 3, fn)
-      fsp=fn(1:(np+3+5))
+      call newfile (pfx, sfx, fn, flen)
+      fsp=fn(1:flen)
       open (lunt,file=fsp,status='NEW')
    10 format(
      &'::::::::::::::::::::::::::::::::::::'

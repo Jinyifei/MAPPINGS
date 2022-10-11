@@ -42,7 +42,7 @@ c     real*8 ab,t,de,dh,en,fhi,fhii
       real*8 b0,b1,b2,b3,b4,blum,widnu,pe,binlum
 c
       integer*4 l,luop,lupb
-      integer*4 m,i,j,idx,np,jnorm
+      integer*4 m,i,j,idx,np,jnorm,flen
       integer*4 luions(mxelem)
 c
       character caller*4, n2*12, norm*12
@@ -50,8 +50,8 @@ c
       character nmod*4, mmod*4
       character ilgg*4, ill*4, filn(mxelem)*64
       character jsaveatoms*4
-      character fn*64,fl*64,fb*64
-      character pfx*32,sfx*4,tab*4,fmod*4
+      character fn*128,fl*128,fb*128
+      character pfx*64,sfx*16,tab*4,fmod*4
 c
 c           Functions
 c
@@ -73,12 +73,12 @@ c
       fn=' '
       pfx='phocv'
       sfx='csv'
-      call newfile (pfx, 5, sfx, 3, fn)
-      fl=fn(1:13)
+      call newfile (pfx, sfx, fn, flen)
+      fl=fn(1:flen)
       fn=' '
       pfx='phopb'
       sfx='csv'
-      call newfile (pfx, 5, sfx, 3, fn)
+      call newfile (pfx, sfx, fn, flen)
       fb=fn(1:13)
 c
       cab=0.0d0
@@ -273,10 +273,9 @@ c
           j=i
           fn=' '
           pfx='IonPIE'//elem(j)
-          np=lenv(pfx)
           sfx='csv'
-          call newfile (pfx, np, sfx, 3, fn)
-          filn(i)=fn(1:(np+8))
+          call newfile (pfx, sfx, fn, flen)
+          filn(i)=fn(1:flen)
           open (luions(i),file=filn(i),status='NEW')
           write (luions(i),'(" Photoionisation Equilibrium Curve : ")')
           write (luions(i),'(" File       : ",a)') fl(1:13)
