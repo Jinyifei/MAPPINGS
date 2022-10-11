@@ -116,22 +116,16 @@ All the useful parameters are near the top of the makefile.
         `MAPPINGS V v5.2.0 make options:
         `
         `Type 'make help'    to see this menu
+        `Type 'make compile' to create executable
         `Type 'make build'   to create executable from scratch and clean in ../lab
         `
         `Type 'sudo make install'   to install the built code and data into /usr/local
         `Type 'sudo make installcode' to install the built code only into /usr/local
         `
-        `Type 'sudo make installopt' to install the built code and data into /opt/local
-        `Type 'sudo make installcodeopt' to install the built code only into /opt/local
-        `
-        `Type 'make prepare' to copy over '*.f' and '*.inc' files
-        `Type 'make compile' to create executable
-        `Type 'make backup'  to backup '*.f' and '*.inc' files
-        `Type 'make clean'   to backup '*.f' and '*.inc', remove '*.o'
-        `Type 'make listing' to create listing of code
+        `Type 'make clean'       remove '*.o'
+        `Type 'make distclean'   remove '*.o' and exe
         `
         `Type 'make uninstall' remove /usr/local/
-        `Type 'make uninstallopt' remove /opt/local/
 
 * `mastercode/` Contains a master copy of the code - only accessed by the Makefile.
 * `workcode/`   The Makefile copies the .f files here.  These can be edited etc by
