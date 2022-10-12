@@ -1679,7 +1679,6 @@ c
         fpf=' '
         call newfile (pfx, sfx, fn, flen)
         fpf=fn(1:flen)
-        write (*,*) 'fpf''',fa,''''
         open (lupf,file=fpf,status='NEW')
         spmod='ABS'
         linemod='LAMB'

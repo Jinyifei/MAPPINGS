@@ -1212,7 +1212,7 @@ c
  1070   format(//' Prefix for final source file : ',$)
         write (*,1070)
         read (*,*) jpfx
-        nprefix=lenv(jpfx)
+        nprefix=len(trim(jpfx))
         jpfx=jpfx(1:nprefix)
       endif
 c
@@ -1228,10 +1228,8 @@ c
  1080    format(//' Prefix for first ion balance file : ',$)
         write (*,1080)
         read (*,*) jbfx
-        jbfx=jbfx(1:15)//' '
-        nprefix=lenv(jbfx)
+        nprefix=len(trim(jpfx))
         jbfx=jbfx(1:nprefix)
-        write (*,*) jbfx
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2348,8 +2346,8 @@ c
       pollfile='balance'
       inquire (file=pollfile,exist=iexi)
       if (((jbal.eq.'Y').and.(m.eq.1)).or.(iexi)) then
-        pfx=jbfx//' '
-        np=lenv(pfx)
+        pfx=jbfx
+        np=len(trim(pfx))
         call wbal (caller, pfx, np, pop)
       endif
 c
@@ -2408,7 +2406,6 @@ c
       inquire (file=pollfile,exist=iexi)
       if (iexi) then
         pfx='local'
-        np=5
         sfx='lam'
         call newfile (pfx, sfx, fn, flen)
         fspl=fn(1:flen)
@@ -2906,8 +2903,8 @@ c
 c and as nu-nufnu
 c
         caller='P6'
-        pfx=jpfx//' '
-        np=lenv(pfx)
+        pfx=jpfx
+        np=len(trim(pfx))
 c
 c     Down stream nebula only photon field and source
 c
@@ -2928,7 +2925,7 @@ c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
 c
         caller='P6'
         pfx='flam_'
-        np=lenv(pfx)
+        np=len(trim(pfx))
 c
 c      write nebula spectrum into lam - flam (ergs/s/cm2/A)
 c
@@ -3444,12 +3441,7 @@ c
           fn=' '
 c
           pfx=elem(at)//rom(io)
-          np=lenv(pfx)
-          pfx=pfx(1:np)
-          np=lenv(jpfx)
-          pfx=pfx//'_'//jpfx(1:np)
-c
-          np=lenv(pfx)
+          pfx=trim(pfx)//'_'//trim(jpfx)
           sfx='csv'
           call newfile (pfx, sfx, fn, flen)
           filnem(i)=fn(1:flen)
@@ -3507,7 +3499,7 @@ c
       character fn*128
       character pfx*64,sfx*16
 c
-      integer*4 lenv
+C     integer*4 lenv
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3553,9 +3545,7 @@ c first space.
 c
       fn=' '
       pfx='photn'
-      np=len(trim(pfx))
       sfx='ph6'
-      ns=len(trim(sfx))
 c
       call newfile (pfx, sfx, fn, flen)
       filna=fn(1:flen)
@@ -3563,59 +3553,48 @@ c
 c 21
       fn=' '
       pfx='phapn'
-      np=len(trim(pfx))
       sfx='ph6'
-      ns=len(trim(sfx))
       call newfile (pfx, sfx, fn, flen)
       filnb=fn(1:flen)
 c 22
       fn=' '
       pfx='phlss'
-      np=len(trim(pfx))
       sfx='ph6'
-      ns=len(trim(sfx))
       call newfile (pfx, sfx, fn, flen)
       filnc=fn(1:flen)
 c 23
       fn=' '
       pfx='spec'
-      np=len(trim(pfx))
       sfx='ph6'
-      ns=len(trim(sfx))
       call newfile (pfx, sfx, fn, flen)
       filnd=fn(1:flen)
 c 24
       fn=' '
-      pfx='phsem'//' '
-      np=lenv(pfx)
+      pfx='phsem'
       sfx='ph6'
       call newfile (pfx, sfx, fn, flen)
       filnt=fn(1:flen)
 c 25
       fn=' '
-      pfx='bands'//' '
-      np=lenv(pfx)
+      pfx='bands'
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
       filpb=fn(1:flen)
 c 26
       fn=' '
-      pfx='lines'//' '
-      np=lenv(pfx)
+      pfx='lines'
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
       filin=fn(1:flen)
 c 27
       fn=' '
-      pfx='rates'//' '
-      np=lenv(pfx)
+      pfx='rates'
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
       filrt=fn(1:flen)
 c 28 old allion now ions_
       fn=' '
-      pfx='ions_'//' '
-      np=lenv(pfx)
+      pfx='ions_'
       sfx='ph6'
       call newfile (pfx, sfx, fn, flen)
       filio=fn(1:flen)
@@ -3632,7 +3611,6 @@ c
           pfx=elem(ie)
           pfx=pfx(1:2)//'_ion'
         endif
-        np=lenv(pfx)
         call newfile (pfx, sfx, fn, flen)
         filn(i)=fn(1:flen)
 c
@@ -3643,7 +3621,6 @@ c
           pfx=elem(ie)
           pfx=pfx(1:2)//'_col'
         endif
-        np=lenv(pfx)
         call newfile (pfx, sfx, fn, flen)
         filncol(i)=fn(1:flen)
       enddo
@@ -3657,15 +3634,13 @@ c
         nl=fmnl(idx)
         fn=' '
 c
-        pfx(1:32)=' '
         pfx=elem(at)//rom(io)//'_em'
-        np=lenv(pfx)
-        pfx=pfx(1:np)//'_'//jpfx//' '
+        pfx=pfx(1:np)//'_'//jpfx
 c
-        np=lenv(pfx)
         sfx='csv'
         call newfile (pfx, sfx, fn, flen)
         filnem(i)=fn(1:flen)
+c
       enddo
 c
       return

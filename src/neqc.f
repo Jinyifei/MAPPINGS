@@ -519,7 +519,6 @@ c
 c         ie=iel(i)
           fn=' '
           pfx=elem(i)
-          np=lenv(pfx)
           sfx='csv'
           call newfile (pfx, sfx, fn, flen)
           fionsh(i)=fn(1:flen)

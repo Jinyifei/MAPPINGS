@@ -768,8 +768,7 @@ c
 c
       call fieldsummary (lunt, 0, tl)
 c
-      np=lenv(caller)
-      write (lunt,*) 'Produced by ',caller(1:np),' :MAPPINGS V ',
+      write (lunt,*) 'Produced by ',trim(caller),' :MAPPINGS V ',
      &theversion
       if ((wmod.eq.'REAL').or.(wmod.eq.'PSOU')) then
         write (lunt,*) fieldversion
@@ -1029,8 +1028,7 @@ c
 c
       call fieldsummary (lunt, 0, tp1)
 c
-      np=lenv(caller)
-      write (lunt,*) 'Produced by ',caller(1:np),' :MAPPINGS V ',
+      write (lunt,*) 'Produced by ',trim(caller),' :MAPPINGS V ',
      &theversion
       write (lunt,*) ' Wavelength  ,  Total Model  ,  Source Only  ',
      & ',  Nebula Only  ,  Nebual Cont. '

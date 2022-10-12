@@ -98,7 +98,7 @@ c
       pref=adjustl(pref)
       pref=trim(pref)
       p=len(trim(pref))
-      if (p>maxpref) then
+      if (p.gt.maxpref) then
           write(*,*) 'Warning: length of pref ', trim(pref),
      &      'greater than allowed ', p,maxpref
           pref=pref(1:maxpref)
@@ -113,6 +113,8 @@ c
       i=0
    20 i=i+1
       idnum=' '
+      write (idnum,10) i
+c
       filena=pref(1:p)//idnum(1:4)//'.'//suff(1:s)
 c
       inquire (file=filena,exist=iexi)
