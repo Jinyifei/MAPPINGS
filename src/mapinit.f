@@ -40,7 +40,8 @@ c
       integer*4 checksum
 c
       character ibell*4,ilgg*4, ibuf(19)*4
-      character env_var*256
+      character env_var*512
+      character homedir*512
 cc
 cc Test io variables
 c      character sfx*16, fl*128
@@ -67,9 +68,14 @@ c
 c search path for data
 c local area  ./data, etc
 c then location given by MAPDATA enviroment variable
+c       replace ~/ with HOME enviroment variable/
 c then /opt/local
 c then /usr/local then
 c surrender.
+c
+        call get_environment_variable('HOME',
+     &                                 env_var,status=check_env)
+        homedir=trim(env_var)
 c
       inquire (file='data/ATDAT.txt',exist=iexi)
       if (iexi) then
@@ -81,15 +87,19 @@ c
 C       write(*,*) ' *** ATOMIC Data from : ',env_var,check_env
         datadir=trim(env_var)
 C       write(*,*) ' *** ATOMIC Data from : ',datadir
-        dtlen=lenv(datadir)
-        inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
+        dtlen=len(trim(datadir))
+        if (datadir(1:1).eq.'~') then
+           datadir=trim(homedir)//datadir(2:dtlen)
+           dtlen=len(trim(datadir))
+        endif
+        inquire (file=trim(datadir)//'/data/ATDAT.txt',exist=iexi)
       else if (iexi.eqv..false.) then
         datadir='/opt/local/share/mappings'
-        dtlen=lenv(datadir)
+        dtlen=len(trim(datadir))
         inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
       else if (iexi.eqv..false.) then
         datadir='/usr/local/share/mappings'
-        dtlen=lenv(datadir)
+        dtlen=len(trim(datadir))
         inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
       else if (iexi.eqv..false.) then
          m=lenv(filename)
@@ -111,9 +121,9 @@ c
      & '     DATA DIR.: ',a,/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
       if ((dtlen.eq.1).and.(datadir(1:dtlen).eq.'.')) then
-        write (*,10) 'Local = data/'
+        write (*,10) 'Local = data'
       else
-        write (*,10) 'Shared = '//datadir(1:dtlen)//'/data/'
+        write (*,10) 'Shared = '//datadir(1:dtlen)//'/data'
       endif
 c
 c     formats for reading files
@@ -200,7 +210,7 @@ c
       if (iexi) then
         open (luin,file='map.prefs',status='OLD')
       else
-        filename=datadir(1:dtlen)//'/data/ATDAT.txt'
+        filename=trim(datadir)//'/map.prefs'
         open (luin,file=filename,status='OLD')
       endif
 c

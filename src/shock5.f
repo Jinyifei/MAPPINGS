@@ -2028,7 +2028,6 @@ c  functions
 c
       real*8 feldens,frectim3
 c      real*8 fdilu
-      integer*4 lenv
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c  Open files, main and precursor
@@ -2569,8 +2568,8 @@ c
 
 c
         caller='S5'
-        pfx='PCup'//s5pfx(1:nprefix)
-        np=lenv(pfx)
+        pfx='PCup'//trim(s5pfx)
+        np=len(trim(pfx))
         write(*,*) 'ytest" ', pfx, s5pfx
 c
         wmod='LFLM'
@@ -2799,8 +2798,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       real*8 frho,fmua,fdynamictimestep
       real*8 feldens,fpresse,flocallosses
-c
-      integer*4 lenv
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3483,8 +3480,8 @@ c
         rad=dist(step)
         call totphot2 (t, dh, rad, dr, dv, wdil, specmode)
         caller='S5'
-        pfx='shlocl'//s5pfx(1:nprefix)
-        np=lenv(pfx)
+        pfx='shlocl'//trim(s5pfx)
+        np=len(trim(pfx))
         wmod='NORM'
         dva=vel1-vel0
         en=zen*dh
@@ -3682,8 +3679,8 @@ c
         if (jspec(1:1).eq.'Y') then
 c
           caller='S5'
-          pfx='SHdw'//s5pfx(1:nprefix)
-          np=lenv(pfx)
+          pfx='SHdw'//trim(s5pfx)
+          np=len(trim(pfx))
           dva=0.d0
 c
           wmod='LFLM'
@@ -3715,8 +3712,8 @@ c
         call fieldsummary (6, 1, tphot)
 c
         caller='S5'
-        pfx='SHup'//s5pfx(1:nprefix)
-        np=lenv(pfx)
+        pfx='SHup'//trim(s5pfx)
+        np=len(trim(pfx))
         dva=vel1-vel0
 c
         wmod='LFLM'
@@ -3920,7 +3917,7 @@ c
       integer*4 i,flen
       character* (*) px
 c
-      integer*4 mlen,lenv
+      integer*4 mlen
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     set up file modes
@@ -4001,8 +3998,7 @@ c
 c  luop
 c
       fsm=' '
-      pfx='shck_'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='shck_'//trim(s5pfx)
       sfx='sh5'
       call newfile (pfx, sfx, fn, flen)
       fsm=fn(1:flen)
@@ -4010,8 +4006,7 @@ c
 c  lupt
 c
       fpm=' '
-      pfx='prec_'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='prec_'//trim(s5pfx)
       sfx='sh5'
       call newfile (pfx, sfx, fn, flen)
       fpm=fn(1:flen)
@@ -4023,15 +4018,13 @@ c      open (lusp,file=fsh,status='NEW') shock
 c      open (lupc,file=fpc,status='NEW') precursor
 c
 c
-      pfx='specSH'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='specSH'//trim(s5pfx)
       sfx='csv'
       fsh=' '
       call newfile (pfx, sfx, fn, flen)
       fsh=fn(1:flen)
 c
-      pfx='specPC'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='specPC'//trim(s5pfx)
       sfx='csv'
       fpc=' '
       call newfile (pfx, sfx, fn, flen)
@@ -4043,14 +4036,12 @@ c
 c    open (lualsh,file=fash,status='NEW')
 c    open (lualpc,file=fapc,status='NEW')
 c
-      pfx='ionSH'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='ionSH'//trim(s5pfx)
       sfx='sh5'
       call newfile (pfx, sfx, fn, flen)
       fash=fn(1:flen)
 c     Precursor file
-      pfx='ionPC'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='ionPC'//trim(s5pfx)
       call newfile (pfx, sfx, fn, flen)
       fapc=fn(1:flen)
 c
@@ -4060,14 +4051,12 @@ c
 c        open (lurtsh,file=frsh,status='NEW')
 c        open (lurtpc,file=frpc,status='NEW')
 c
-      pfx='ratSH'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='ratSH'//trim(s5pfx)
       sfx='sh5'
       call newfile (pfx, sfx, fn, flen)
       frsh=fn(1:flen)
 c     Rates file for precursor
-      pfx='ratPC'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='ratPC'//trim(s5pfx)
       sfx='sh5'
       call newfile (pfx, sfx, fn, flen)
       frpc=fn(1:flen)
@@ -4077,8 +4066,7 @@ c dynmod=Y
 c
 c    open (ludy,file=fd,status='NEW')
 c
-      pfx='dynSH'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='dynSH'//trim(s5pfx)
       sfx='sh5'
       fd=' '
       call newfile (pfx, sfx, fn, flen)
@@ -4089,8 +4077,7 @@ c fclmod=Y
 c
 c         open (lucl,file=fcl,status='NEW')
 c
-      pfx='coolSH'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='coolSH'//trim(s5pfx)
       sfx='csv'
       fcl=' '
       call newfile (pfx, sfx, fn, flen)
@@ -4102,8 +4089,7 @@ c
 c     open (lupb,file=fpb,status='NEW')
 c
       lupb=30
-      pfx='bandSH'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='bandSH'//trim(s5pfx)
       sfx='csv'
       fpb=' '
       call newfile (pfx, sfx, fn, flen)
@@ -4115,15 +4101,13 @@ c
 c      open (lulsh,file=flsh,status='NEW')
 c      open (lulpc,file=flpc,status='NEW')
 c
-      pfx='linSH'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='linSH'//trim(s5pfx)
       sfx='csv'
       flsh=' '
       call newfile (pfx, sfx, fn, flen)
       flsh=fn(1:flen)
 c
-      pfx='linPC'//s5pfx(1:nprefix)
-      np=lenv(pfx)
+      pfx='linPC'//trim(s5pfx)
       sfx='csv'
       flpc=' '
       call newfile (pfx, sfx, fn, flen)
@@ -4144,24 +4128,16 @@ c          open (luionpc(i),file=fionpc(i),status='NEW')
 c
       sfx='csv'
       do i=1,atypes
+c
 c       mapppings internal ids not z, names mapped in prefs
-        if (elem_len(i).eq.1) then
-          pfx='elSH'//s5pfx(1:nprefix)//elem(i)//'_'
-        else
-          pfx='elSH'//s5pfx(1:nprefix)//elem(i)
-        endif
-        np=lenv(pfx)
+c
+        pfx='elSH'//trim(s5pfx)//elem(i)
         fn=' '
         call newfile (pfx, sfx, fn, flen)
         fash=fn(1:flen)
         fionsh(i)=fash
 c
-        if (elem_len(i).eq.1) then
-          pfx='elPC'//s5pfx(1:nprefix)//elem(i)//'_'
-        else
-          pfx='elPC'//s5pfx(1:nprefix)//elem(i)
-        endif
-        np=lenv(pfx)
+        pfx='elPC'//trim(s5pfx)//elem(i)
         call newfile (pfx, sfx, fn, flen)
         fapc=fn(1:flen)
         fionpc(i)=fapc

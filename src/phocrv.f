@@ -56,7 +56,7 @@ c
 c           Functions
 c
       real*8 frectim,frho,feldens,fmua
-      integer*4 mlen,lenv
+      integer*4 mlen
 c
    10 format(//,a,$)
    20 format(a)
@@ -75,6 +75,7 @@ c
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
       fl=fn(1:flen)
+c
       fn=' '
       pfx='phopb'
       sfx='csv'

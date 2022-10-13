@@ -55,7 +55,7 @@ c
 c           Functions
 c
       real*8 densnum,fdilu
-      integer*4 lenv,mlen
+      integer*4 mlen
 c
       jcon='Y'
       jspot='N'
@@ -1307,12 +1307,11 @@ c
 c
 c     get final field file prefix
 c
- 1040   format (a16)
+ 1040   format (a64)
  1050   format(//' Prefix for final source files : ',$)
         write (*,1050)
         read (*,1040) jpfx
-        jpfx=jpfx(1:15)//' '
-        nprefix=lenv(jpfx)
+        nprefix=len(trim(jpfx))
         jpfx=jpfx(1:nprefix)
       endif
 c
@@ -1464,10 +1463,8 @@ c
  1200   format(//' Prefix for first ion balance file : ',$)
         write (*,1200)
         read (*,*) jbfx
-        jbfx=jbfx(1:15)//' '
-        nprefix=lenv(jbfx)
+        nprefix=len(trim(jbfx))
         jbfx=jbfx(1:nprefix)
-        write (*,*) jbfx
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1563,11 +1560,9 @@ c
       real*8 dh1_initial
       real*8 de1_initial
 c
-      integer*4 lut0,m,maxio,mma,n,np,nidh,niter
-      integer*4 i,j,k,ndifatoms,atom, flen
+      integer*4 lut0,m,maxio,mma,n,nidh,niter
+      integer*4 i,j,k,ndifatoms,atom, flen, np
       integer*4 idx, nt, itr,init_it
-c
-c      integer*4 ielement
 c
       integer*4 fuvmin,fuvmax,pahabsmax
 c
@@ -1583,7 +1578,6 @@ c
 c     External Functions
 c
       real*8 fdilu,feldens,fradpress,fpressu,frectim,fzgas
-      integer*4 lenv
 c
 c     internal functions
 c
@@ -2601,8 +2595,8 @@ c
       pollfile='balance'
       inquire (file=pollfile,exist=iexi)
       if (((jbal.eq.'Y').and.(m.eq.1)).or.(iexi)) then
-        pfx=jbfx//' '
-        np=lenv(pfx)
+        pfx=trim(jbfx)
+        np=len(trim(pfx))
         call wbal (caller, pfx, np, pop)
       endif
 c
@@ -2661,11 +2655,9 @@ c
       inquire (file=pollfile,exist=iexi)
       if (iexi) then
         pfx='local'
-        np=5
         sfx='lam'
         call newfile (pfx, sfx, fn, flen)
-        fspl=fn(1:flen)
-        open (lusp,file=fspl,status='NEW')
+        open (lusp,file=fn,status='NEW')
         linemod='LAMB'
         spmod='REL'
         call speclocal (lusp, tloss, eloss, egain, dlos, t, dh, de,
@@ -2678,7 +2670,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if ((iexi).and.(irmode.gt.0)) then
           pfx='irsou'
-          np=5
           wmod='REAL'
           do i=1,infph-1
             pahtest(i)=0.5d0*(photev(i+1)+photev(i))*ev*irphot(i)*dr
@@ -2691,7 +2682,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if ((iexi).and.(pahactive.eq.1)) then
           pfx='pahs'
-          np=4
           wmod='REAL'
           do i=1,infph
             pahtest(i)=paheng*pahflux(i)
@@ -2706,7 +2696,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if ((irmode.ne.0).and.iexi) then
           if (irfile.eq.' ') then
-            np=6
             pfx='IRflux'
             sfx='sou'
             call newfile (pfx, sfx, fn, flen)
@@ -2748,7 +2737,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if (iexi) then
           if (chargefile.eq.' ') then
-            np=5
             pfx='grpot'
             sfx='ph6'
             call newfile (pfx, sfx, fn, flen)
@@ -3167,8 +3155,8 @@ c
 c and as nu-nufnu
 c
         caller='P7'
-        pfx=jpfx//' '
-        np=lenv(jpfx)
+        pfx=trim(jpfx)
+        np=len(trim(pfx))
 c
 c     Down stream nebula only photon field and source
 c
@@ -3187,7 +3175,7 @@ c      write nebula spectrum in lam - flam (ergs/s/cm2/A)
 c
         caller='P7'
         pfx='flam_'
-        np=lenv(pfx)
+        np=len(trim(pfx))
 c
 c      write nebula spectrum into lam - flam (ergs/s/cm2/A)
 c
@@ -3755,13 +3743,11 @@ c
       include 'cblocks.inc'
       include 'p7blocks.inc'
 c
-      integer*4 i, np, flen
+      integer*4 i, flen
       integer*4 nt, nl, at, io, idx, ie
 c
       character fn*128
       character pfx*64,sfx*16
-c
-      integer*4 lenv
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3802,68 +3788,59 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c 20
       fn=' '
-      pfx='photn'//' '
-      np=lenv(pfx)
+      pfx='photn'
       sfx='ph7'
       call newfile (pfx, sfx, fn, flen)
-      filna=fn(1:np+8)
+      filna=fn(1:flen)
       filnam=filna
 c 21
       fn=' '
-      pfx='phapn'//' '
-      np=lenv(pfx)
+      pfx='phapn'
       sfx='ph7'
       call newfile (pfx, sfx, fn, flen)
-      filnb=fn(1:np+8)
+      filnb=fn(1:flen)
 c 22
       fn=' '
-      pfx='phlss'//' '
-      np=lenv(pfx)
+      pfx='phlss'
       sfx='ph7'
       call newfile (pfx, sfx, fn, flen)
-      filnc=fn(1:np+8)
+      filnc=fn(1:flen)
 c 23
       fn=' '
-      pfx='spec'//' '
-      np=lenv(pfx)
+      pfx='spec'
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
-      filnd=fn(1:np+8)
+      filnd=fn(1:flen)
 c 24
       fn=' '
-      pfx='phsem'//' '
-      np=lenv(pfx)
+      pfx='phsem'
       sfx='ph7'
       call newfile (pfx, sfx, fn, flen)
-      filnt=fn(1:np+8)
+      filnt=fn(1:flen)
 c 25
       fn=' '
-      pfx='bands'//' '
-      np=lenv(pfx)
+      pfx='bands'
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
-      filpb=fn(1:np+8)
+      filpb=fn(1:flen)
 c 26
       fn=' '
-      pfx='lines'//' '
-      np=lenv(pfx)
+      pfx='lines'
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
-      filin=fn(1:np+8)
+      filin=fn(1:flen)
 c 27
       fn=' '
-      pfx='rates'//' '
-      np=lenv(pfx)
+      pfx='rates'
       sfx='csv'
       call newfile (pfx, sfx, fn, flen)
-      filrt=fn(1:np+8)
+      filrt=fn(1:flen)
 c 28
       fn=' '
-      pfx='ions_'//' '
-      np=lenv(pfx)
+      pfx='ions_'
       sfx='ph7'
       call newfile (pfx, sfx, fn, flen)
-      filio=fn(1:np+8)
+      filio=fn(1:flen)
 c
       sfx='csv'
       do i=1,ieln
@@ -3877,9 +3854,8 @@ c
           pfx=elem(ie)
           pfx=pfx(1:2)//'_ion'
         endif
-        np=lenv(pfx)
         call newfile (pfx, sfx, fn, flen)
-        filn(i)=fn(1:np+8)
+        filn(i)=fn(1:flen)
 c
         if (elem_len(ie).eq.1) then
           pfx=elem(ie)
@@ -3888,9 +3864,8 @@ c
           pfx=elem(ie)
           pfx=pfx(1:2)//'_col'
         endif
-        np=lenv(pfx)
         call newfile (pfx, sfx, fn, flen)
-        filncol(i)=fn(1:np+8)
+        filncol(i)=fn(1:flen)
       enddo
 c     emmissivity structure
       do i=1,iemn
@@ -3902,15 +3877,12 @@ c
         nl=fmnl(idx)
         fn=' '
 c
-        pfx(1:32)=' '
         pfx=elem(at)//rom(io)
-        np=lenv(pfx)
-        pfx=pfx(1:np)//'_'//jpfx//' '
+        pfx=trim(pfx)//'_'//trim(jpfx)
 c
-        np=lenv(pfx)
         sfx='csv'
         call newfile (pfx, sfx, fn, flen)
-        filnem(i)=fn(1:np+8)
+        filnem(i)=fn(1:flen)
       enddo
 c
       return

@@ -81,8 +81,7 @@ c
         xi(i)=zelem(i)*atwei(i)/msum
       enddo
 c
-      np=lenv(title)
-      write (luop,10) title(1:np)
+      write (luop,10) trim(title)
    10 format( /a24/
      &         ' ==================================',
      &         '==================================')
@@ -146,24 +145,27 @@ c     read local solar abundance file first
 c
       iexi=.false.
       fnam='abund/solar.txt'
-      m=lenv(fnam)
-      inquire (file=fnam(1:m),exist=iexi)
+      inquire (file=trim(fnam),exist=iexi)
       if (iexi) then
         abdir='abund/'
       else
-        fnam='/usr/local/share/mappings/abund/solar.txt'
-        m=lenv(fnam)
-        inquire (file=fnam(1:m),exist=iexi)
+        fnam=trim(datadir)//'/abund/solar.txt'
+        inquire (file=trim(fnam),exist=iexi)
         if (iexi) then
-          abdir='/usr/local/share/mappings/abund/'
+          abdir=trim(datadir)//'/abund/'
         else
-          abdir='/opt/local/share/mappings/abund/'
+           fnam='/usr/local/share/mappings'//'/abund/solar.txt'
+           inquire (file=trim(fnam),exist=iexi)
+           if (iexi) then
+             abdir='/usr/local/share/mappings/abund/'
+           else
+             abdir='/opt/local/share/mappings/abund/'
+           endif
         endif
       endif
 c
-      l=lenv(abdir)
-      fnam=abdir(1:l)//'solar.txt'
-      m=lenv(fnam)
+      fnam=trim(abdir)//'solar.txt'
+      m=len(trim(fnam))
       inquire (file=fnam(1:m),exist=iexi)
       if (iexi) then
 c
@@ -255,29 +257,26 @@ c
 c
 c look locally and in share
 c
-        m=lenv(fnam)
-        abnfile=fnam(1:m)
+        abnfile=trim(fnam)
 c abnfile
         iexi=.false.
         inquire (file=abnfile(1:m),exist=iexi)
         if (iexi.eqv..false.) then
           abdir='abund/'
-          l=lenv(abdir)
 c look in local abund/
-          write (*,*) abnfile(1:m),' NOT FOUND.'
+          write (*,*) trim(abnfile),' NOT FOUND.'
           write (*,*) ' Looking in abund/...'
-          abnfile=abdir(1:l)//fnam(1:m)
-          n=lenv(abnfile)
+          abnfile=trim(abdir)//trim(fnam)
+          n=len(trim(abnfile))
           inquire (file=abnfile(1:n),exist=iexi)
         endif
         if (iexi.eqv..false.) then
 c look in shared abndir
           write (*,*) abnfile(1:m),' NOT FOUND.'
           abdir='/usr/local/share/mappings/abund/'
-          l=lenv(abdir)
-          write (*,*) ' Looking in ',abdir(1:l),'...'
-          abnfile=abdir(1:l)//fnam(1:m)
-          n=lenv(abnfile)
+          write (*,*) ' Looking in ',trim(abdir),'...'
+          abnfile=trim(abdir)//trim(fnam)
+          n=len(trim(abnfile))
           inquire (file=abnfile(1:n),exist=iexi)
         endif
 c
@@ -285,9 +284,7 @@ c
 c
 c     found the file...
 c
-          m=lenv(abnfile)
-c
-          write (*,*) 'FOUND: ',abnfile(1:m)
+          write (*,*) 'FOUND: ',trim(abnfile)
 c
 c     FORMAT REQUIRED:
 c

@@ -262,6 +262,7 @@ install:
 	cp -r ${EXEDIR}/abund ${INSTALLDATA}/
 	cp -r ${EXEDIR}/prefs ${INSTALLDATA}/
 	cp -r ${EXEDIR}/atmos ${INSTALLDATA}/
+	cp -r ${EXEDIR}/scripts ${INSTALLDATA}/
 	@echo ' Installed ${OUTNAME} into ${INSTALLBIN}/ and ${INSTALLDATA}/'
 #
 installcode:
