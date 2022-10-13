@@ -227,8 +227,21 @@ c
       abundtitle=' Total Abundances :'
    40 call dispabundances (6, zion, abundtitle)
 c
+c    & ' Operations:'/
+c    & '    S  :  Apply overall Scaling factor...'/
+c
+   50 format(//
+     & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
+     & '::::::::::::::::'/
+     & '  Changing the global abundaces '/
+     & ' ::::::::::::::::::::::::::::::::::::::::::::::::',
+     & '::::::::::::::::'/
+     & ' File I/O Abundances:'/
+     & '    Y  :  Select an abundance file'/
+     & '  X,N  :  Exit with no further changes.'/
+     & ' :: ',$)
       write (*,50)
-   50 format(/' Change abundances (y/N) : ',$)
+C  50 format(/' Change abundances (y/N) : ',$)
 c
       read (*,60) ilgg
    60 format(a)
@@ -242,7 +255,7 @@ c     Change abundances....
 c
       ilgg='F'
 c
-c     end of manual input
+c     end of manual input only F file option at present
 c
       if (ilgg.eq.'F') then
 c
@@ -260,24 +273,21 @@ c
         abnfile=trim(fnam)
 c abnfile
         iexi=.false.
-        inquire (file=abnfile(1:m),exist=iexi)
+        inquire (file=abnfile,exist=iexi)
         if (iexi.eqv..false.) then
-          abdir='abund/'
 c look in local abund/
           write (*,*) trim(abnfile),' NOT FOUND.'
-          write (*,*) ' Looking in abund/...'
-          abnfile=trim(abdir)//trim(fnam)
+          write (*,*) ' Looking in abund/ ...'
+          abnfile='abund/'//trim(fnam)
           n=len(trim(abnfile))
-          inquire (file=abnfile(1:n),exist=iexi)
+          inquire (file=abnfile,exist=iexi)
         endif
         if (iexi.eqv..false.) then
 c look in shared abndir
-          write (*,*) abnfile(1:m),' NOT FOUND.'
-          abdir='/usr/local/share/mappings/abund/'
+          write (*,*) trim(abnfile),' NOT FOUND.'
           write (*,*) ' Looking in ',trim(abdir),'...'
           abnfile=trim(abdir)//trim(fnam)
-          n=len(trim(abnfile))
-          inquire (file=abnfile(1:n),exist=iexi)
+          inquire (file=abnfile,exist=iexi)
         endif
 c
         if (iexi) then
