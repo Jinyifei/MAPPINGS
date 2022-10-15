@@ -20,19 +20,56 @@ CODDIR = src
 #
 #-------------------------------
 #
-# install runtime areas, be sure to  match the
-# enviroment variables MAPDATA = INSTALLDATA
-# and MAPBIN in the shell the same as INSTALLBIN .
+# Install runtime areas:
+#
+# MAPPINGS can run in isolation or be incorporated into your shell environment
+# in several ways. The standard way is to use the build area as the source
+# for the libraries data and the binary. Other configurations are possible, see
+# advanced installation options in the documentation.
+#
+# Standard installation uses a shell variable MAPDATA to locate the
+# necessary running files, and MAPBIN is added to the user global
+# path so map can run anywhere.
+#
+# An alias 'map' renames whichever version of MAPPINGS V is being used. and is
+# optional so the direct executable name can be used if desired.
+#
+# If using standar environment variables be sure to edit both alias-bash.sh
+# and alias-tcshrc.csh match the environment variables MAPDATA = INSTALLDATA
+# and MAPBIN to be the same as INSTALLBIN and then copy the contents to of the
+# .sh file to .bashrc (and .zsshrc on macOS 12+) and the contents of
+# alias-tcshrc.csh to .tcshrc in your home area.
+#
+# As no data copying is needed, make install is not needed, simply
+# make -j compile and adjust the login environment variable settings
+# are sufficient.
+#
+# The end of a successful compile process gives the value to use for
+# both MAPDATA and MAPBIN in the shell scripts.
+#
+# Default: home build area lab for binary and standard data and atmospheres
+# relative to Makefile and assumes make compile in the mappings git/zip download.
+#
+INSTALLBASE =$(shell pwd)
+INSTALLDATA =${INSTALLBASE}/lab
+INSTALLBIN  =${INSTALLBASE}/lab
+#
+# Manual Setup: if a make install is necessary, to copy file to the
+# different locations, sudo power may be required, but local user areas are
+# allowed too.
+#
+# MAPDATA and MAPBIN may be the same path or different, but are the same by
+# default.
+#
+# Do not add a trailing / to the path.
+#
+# eg: a sudo is required and MAPBIN and MAPDATA point to different locations
+# similar to a CLOUDY installation. /opt/local is often used as a base
+# on macOS with macports installations.
 #
 #INSTALLBASE = /usr/local
 #INSTALLDATA = ${INSTALLBASE}/share/mappings
 #INSTALLBIN  = ${INSTALLBASE}/bin
-#
-# home area lab
-#
-INSTALLBASE =~
-INSTALLDATA =${INSTALLBASE}/lab
-INSTALLBIN  =${INSTALLBASE}/lab
 #
 #-------------------------------
 #---------- Compilers ----------
@@ -201,17 +238,19 @@ help:
 	@echo MAPPINGS V v5.2.0 make options:
 	@echo ' '
 	@echo "'make help'    to see this menu"
-	@echo "'make compile' to create ${OUTNAME} in ${EXEDIR}/"
-	@echo "'make clean'   to remove built '*.o'"
-	@echo "'make distclean'   to remove built '*.o' and ${OUTNAME}"
+	@echo "'make compile' to create ${OUTNAME} in ${INSTALLBIN}"
+	@echo "'              gives optional ${INSTALLBIN} and ${INSTALLDATA}"
+	@echo "'              to enter into alias-bashrc.sh and alias-tcshrc.csh"
+	@echo "'              and copy their contents into the user startup shell"
+	@echo "'              scritps to run mappings anywhere."
+	@echo "'make clean'   to clean up '*.o' ready to run"
+	@echo "'make distclean'  as clean but also remove ${OUTNAME}"
 	@echo ' '
-	@echo "'make build'   to recreate executable from scratch and clean in ${EXEDIR}/"
-	@echo ' '
+	@echo ' Optional:'
 	@echo "'sudo make install'     to install the built code and data into"
-	@echo "                        ${INSTALLBIN}/ and ${INSTALLDATA}/"
+	@echo "                        ${INSTALLBIN} and ${INSTALLDATA}"
 	@echo "'sudo make installcode' to install the built code only into"
-	@echo "                        ${INSTALLBIN}/"
-	@echo ' '
+	@echo "                        ${INSTALLBIN}"
 	@echo "'make uninstall' remove ${OUTNAME} from ${INSTALLBIN} and ${INSTALLDATA}"
 	@echo ' '
 #
@@ -234,7 +273,10 @@ ${EXEDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo ' Compiling ${OUTNAME} for $(XSYS)'
 	${FC} ${LDR} -o ${EXEDIR}/${OUTNAME} ${OBJ} ${LIB}
 	@echo ' Done.  Compiled Successfully'
-	@echo ' Done.  A local version of the executable ${OUTNAME} can be found in ${EXEDIR}'
+	@echo ' A local version of the executable ${OUTNAME} can be found in ${EXEDIR}'
+	@echo ' Enter ${INSTALLBIN} for MAPBIN and ${INSTALLDATA} for MAPDATA in '
+	@echo ' your .bashrc *and* .tcshrc startup files to finish a standard installation. '
+	@echo ' Edit alias-bash.sh and alias-tcsh.csh and copy to your startup files. '
 #
 #------------------------------------------------------------
 #
