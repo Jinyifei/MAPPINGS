@@ -1,4 +1,6 @@
 #
+SHELL := /bin/bash
+#
 # Make MAPPINGS V
 #
 #    v5.2.0
@@ -47,12 +49,14 @@ CODDIR = src
 # The end of a successful compile process gives the value to use for
 # both MAPDATA and MAPBIN in the shell scripts.
 #
-# Default: home build area lab for binary and standard data and atmospheres
+# Default: mappings build area lab for binary and standard data and atmospheres
 # relative to Makefile and assumes make compile in the mappings git/zip download.
 #
 INSTALLBASE =$(shell pwd)
-INSTALLDATA =${INSTALLBASE}/lab
-INSTALLBIN  =${INSTALLBASE}/lab
+INSTALLDATA ="${INSTALLBASE}/lab"
+INSTALLBIN  ="${INSTALLBASE}/lab"
+#
+# make / safe for sed later
 #
 # Manual Setup: if a make install is necessary, to copy file to the
 # different locations, sudo power may be required, but local user areas are
@@ -67,9 +71,9 @@ INSTALLBIN  =${INSTALLBASE}/lab
 # similar to a CLOUDY installation. /opt/local is often used as a base
 # on macOS with macports installations.
 #
-#INSTALLBASE = /usr/local
-#INSTALLDATA = ${INSTALLBASE}/share/mappings
-#INSTALLBIN  = ${INSTALLBASE}/bin
+#INSTALLBASE = "/usr/local"
+#INSTALLDATA = "${INSTALLBASE}/share/mappings"
+#INSTALLBIN  = "${INSTALLBASE}/bin"
 #
 #-------------------------------
 #---------- Compilers ----------
@@ -225,34 +229,40 @@ OBJ = ${CODDIR}/mappings.o \
 UNAME = $(shell uname)
 #
 ifeq ($(UNAME),Darwin)
-	LIB    = -isysroot`xcrun --show-sdk-path`
+	LIB  = -isysroot`xcrun --show-sdk-path`
 	XSYS = macOS (with xcrun)
 else
-	LIB =
+	LIB  =
 	XSYS = Linux
 endif
-#
+
 help:
 	@cat ${CODDIR}/credits.txt
-	@echo ' '
-	@echo MAPPINGS V v5.2.0 make options:
-	@echo ' '
-	@echo "'make help'    to see this menu"
-	@echo "'make compile' to create ${OUTNAME} in ${INSTALLBIN}"
-	@echo "'              gives optional ${INSTALLBIN} and ${INSTALLDATA}"
-	@echo "'              to enter into alias-bashrc.sh and alias-tcshrc.csh"
-	@echo "'              and copy their contents into the user startup shell"
-	@echo "'              scritps to run mappings anywhere."
-	@echo "'make clean'   to clean up '*.o' ready to run"
+	@echo " "
+	@echo "MAPPINGS V v5.2.0 make options:"
+	@echo " "
+	@echo "'make help'       to see this menu"
+	@echo "'make compile'    to create ${OUTNAME} in ${INSTALLBIN}"
+	@echo "                  gives optional ${INSTALLBIN}"
+	@echo "'make clean'      to clean up '*.o' ready to run"
 	@echo "'make distclean'  as clean but also remove ${OUTNAME}"
-	@echo ' '
-	@echo ' Optional:'
-	@echo "'sudo make install'     to install the built code and data into"
-	@echo "                        ${INSTALLBIN} and ${INSTALLDATA}"
+	@echo " "
+	@echo " Optional:"
+	@echo "'make build'         make compile and clean combined"
+	@echo "'sudo make install'  to install in"
+	@echo "                     ${INSTALLBIN}"
+	@echo "                   & ${INSTALLDATA}"
+	@echo " "
 	@echo "'sudo make installcode' to install the built code only into"
 	@echo "                        ${INSTALLBIN}"
-	@echo "'make uninstall' remove ${OUTNAME} from ${INSTALLBIN} and ${INSTALLDATA}"
-	@echo ' '
+	@echo "'make uninstall' remove installed ${OUTNAME}"
+	@echo " "
+
+#test:
+#  @echo ' ${INSTALLDATA}'
+#  @echo ' export MAPBIN="${INSTALLBIN}"'
+#  @echo ' Copy "for_bashrc.sh" and "for_tcshrc.csh" to your startup files '
+#  @echo ' .bashrc and .tcshrc or their equivalents for a standard install. '
 #
 #-----------------------------------------------------------
 #
@@ -269,14 +279,48 @@ distclean:
 #
 compile: ${EXEDIR}/${OUTNAME}
 #
+# compile and create input for .bashrc and .tcshrc etc
+#
 ${EXEDIR}/${OUTNAME}: ${INCS} ${OBJ}
+	@echo ' #############################################################'
 	@echo ' Compiling ${OUTNAME} for $(XSYS)'
 	${FC} ${LDR} -o ${EXEDIR}/${OUTNAME} ${OBJ} ${LIB}
+	@echo ' #############################################################'
 	@echo ' Done.  Compiled Successfully'
-	@echo ' A local version of the executable ${OUTNAME} can be found in ${EXEDIR}'
-	@echo ' Enter ${INSTALLBIN} for MAPBIN and ${INSTALLDATA} for MAPDATA in '
-	@echo ' your .bashrc *and* .tcshrc startup files to finish a standard installation. '
-	@echo ' Edit alias-bash.sh and alias-tcsh.csh and copy to your startup files. '
+	@echo ' #############################################################'
+	@echo ' A local version of the executable ${OUTNAME} can be found in:'
+	@echo ' ${EXEDIR} . Install startup variables for .bashrc and .tcshrc'
+	@echo ' with the contents of "for_bashrc.sh" and "for_tcshrc.csh", '
+	@echo ' as needed.'
+	@echo ' (macOS users may need to use .zshrc with the bashrc settings)'
+	@echo ' #############################################################'
+	@cat src/src-bashrc.txt > for_bashrc.sh
+	@echo 'export mapbase="${INSTALLBASE}"' >> for_bashrc.sh
+	@echo 'export MAPDATA="$$mapbase/lab"' >> for_bashrc.sh
+	@echo 'export MAPBIN="$$mapbase/lab"' >> for_bashrc.sh
+	@echo '# add bin area to global path:' >> for_bashrc.sh
+	@echo 'export PATH="$$MAPBIN:$$PATH"' >> for_bashrc.sh
+	@echo '#' >> for_tcshrc.sh
+	@echo "# add a generic map alias for every executable version" >> for_bashrc.sh
+	@echo '#' >> for_tcshrc.sh
+	@echo 'alias map=${OUTNAME}' >> for_bashrc.sh
+	@echo '#' >> for_bashrc.sh
+	@echo '########################################################################' >> for_bashrc.sh
+	@cat src/src-tcshrc.txt > for_tcshrc.sh
+	@echo 'set mapbase = "${INSTALLBASE}"' >> for_tcshrc.sh
+	@echo 'setenv MAPDATA "$$mapbase/lab"' >> for_tcshrc.sh
+	@echo 'set mapbin = "$$mapbase/lab"' >> for_tcshrc.sh
+	@echo 'setenv MAPBIN "$$mapbin"' >> for_tcshrc.sh
+	@echo '#' >> for_tcshrc.sh
+	@echo '# add bin area to global path:' >> for_tcshrc.sh
+	@echo '#' >> for_tcshrc.sh
+	@echo 'set path = ($$mapbin $$path)' >> for_tcshrc.sh
+	@echo '#' >> for_tcshrc.sh
+	@echo "# add a generic map alias for every executable version" >> for_tcshrc.sh
+	@echo '#' >> for_tcshrc.sh
+	@echo 'alias map ${OUTNAME}' >> for_tcshrc.sh
+	@echo '#' >> for_tcshrc.sh
+	@echo '########################################################################' >> for_tcshrc.sh
 #
 #------------------------------------------------------------
 #
@@ -285,8 +329,7 @@ build:
 	@make compile
 	@echo 'Removing object files'
 	@rm -f ${OBJ}
-	@echo 'Done.  Compile and Clean Successfully'
-	@echo 'Done.  A local version of the executable ${OUTNAME} can be found in ${EXEDIR}'
+	@echo 'Done.  Compile and Cleaned Successfully'
 #
 #------------------------------------------------------------
 #

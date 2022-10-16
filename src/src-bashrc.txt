@@ -1,0 +1,39 @@
+########################################################################
+#
+# mappings executable paths and alias for constant name in scripts
+# and varying build versions.  MAPPINGS can run with or without
+# environment variables, but this allows for more flexible naming and
+# advanced runtime configurations, see advanced installs in
+# the documentation.
+#
+# Syntax here is for sh, bash and zsh family of shells. Put in your startup
+# for the appropriate shell for both interactive and non-interactive
+# shells, most commonly .bashrc or .zshrc
+#
+########################################################################
+#
+# Syntax for sh, bash and zsh family of shells. Put in your startup
+# for the appropriate shell for both interactive and non-interactive
+# shells most commonly .bashrc or .zshrc
+#
+########################################################################
+#
+# Manual:
+#
+# set general mappings area then specify data/ location & mappings exe
+#
+# globally installed in system base area or other user area:
+# up to user to use sudo make install sudo install options in make
+# or create other locations.
+#
+# mapbase="/usr/local"
+# export MAPDATA="$mapbase/share/mappings/"
+# export MAPBIN="$mapbase/bin"
+#
+# add bin area to global path, same for all
+# export PATH="$MAPBIN:$PATH"
+#
+########################################################################
+#
+# Standard:
+#

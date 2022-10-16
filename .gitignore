@@ -32,3 +32,5 @@ src/workcode/*.[co]
 MAPPINGS.xcodeproj
 *.jar
 map52dev
+for_bashrc.sh
+for_tcshrc.sh
