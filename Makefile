@@ -25,50 +25,45 @@ CODDIR = src
 # Install runtime areas:
 #
 # MAPPINGS can run in isolation or be incorporated into your shell environment
-# in several ways. The standard way is to use the build area as the source
+# in several ways. One way is to use the build area as the source
 # for the libraries data and the binary. Other configurations are possible, see
 # advanced installation options in the documentation.
 #
 # Standard installation uses a shell variable MAPDATA to locate the
 # necessary running files, and MAPBIN is added to the user global
-# path so map can run anywhere.
+# path to the executable so MAPPINGS can run anywhere.
 #
-# An alias 'map' renames whichever version of MAPPINGS V is being used. and is
-# optional so the direct executable name can be used if desired.
+# An alias 'map' is made for whichever version of MAPPINGS V is being used. and is
+# optional, so the direct executable name can still be used if desired.
 #
-# If using standar environment variables be sure to edit both alias-bash.sh
-# and alias-tcshrc.csh match the environment variables MAPDATA = INSTALLDATA
-# and MAPBIN to be the same as INSTALLBIN and then copy the contents to of the
-# .sh file to .bashrc (and .zsshrc on macOS 12+) and the contents of
-# alias-tcshrc.csh to .tcshrc in your home area.
+# If using standard environment variables be sure to edit both the contents of
+# both .bashrc and .tcshrc in your home area using the for_bashrc.sh and
+# for_tcshrc.csh.  If you have newer macOS you may need to put for_bashrc.sh
+# *also* into a .zshrc to all three shells can find the code consistently.
 #
 # As no data copying is needed, make install is not needed, simply
-# make -j compile and adjust the login environment variable settings
-# are sufficient.
+# make -j compile and adjust the login startup files with the for_ files
+# as needed.
 #
 # The end of a successful compile process gives the value to use for
 # both MAPDATA and MAPBIN in the shell scripts.
 #
-# Default: mappings build area lab for binary and standard data and atmospheres
-# relative to Makefile and assumes make compile in the mappings git/zip download.
 #
 INSTALLBASE =$(shell pwd)
 INSTALLDATA ="${INSTALLBASE}/lab"
 INSTALLBIN  ="${INSTALLBASE}/lab"
 #
-# make / safe for sed later
-#
-# Manual Setup: if a make install is necessary, to copy file to the
+# Manual Setup: if a make install is necessary, to copy files to the
 # different locations, sudo power may be required, but local user areas are
 # allowed too.
 #
 # MAPDATA and MAPBIN may be the same path or different, but are the same by
 # default.
 #
-# Do not add a trailing / to the path.
+# Do not add a trailing / to the paths.
 #
 # eg: a sudo is required and MAPBIN and MAPDATA point to different locations
-# similar to a CLOUDY installation. /opt/local is often used as a base
+# similar to a CLOUDY installation. /opt/local is also often used as a base
 # on macOS with macports installations.
 #
 #INSTALLBASE = "/usr/local"
@@ -255,14 +250,9 @@ help:
 	@echo " "
 	@echo "'sudo make installcode' to install the built code only into"
 	@echo "                        ${INSTALLBIN}"
-	@echo "'make uninstall' remove installed ${OUTNAME}"
+	@echo "'make uninstall'     remove installed ${OUTNAME}"
 	@echo " "
 
-#test:
-#  @echo ' ${INSTALLDATA}'
-#  @echo ' export MAPBIN="${INSTALLBIN}"'
-#  @echo ' Copy "for_bashrc.sh" and "for_tcshrc.csh" to your startup files '
-#  @echo ' .bashrc and .tcshrc or their equivalents for a standard install. '
 #
 #-----------------------------------------------------------
 #
@@ -359,6 +349,7 @@ installcode:
 #
 uninstall:
 	rm -f "${INSTALLBIN}/${OUTNAME}"
-	rm -rf "$(INSTALLDATA}"
-	@echo ' Uninstalled "${INSTALLBIN}/${OUTNAME}" and "$(INSTALLDATA}"'
+	@echo ' Uninstalled "${INSTALLBIN}/${OUTNAME}"
+	@echo ' Goto "$(INSTALLDATA}" and remove mappings only
+	@echo ' if it is not the home install area.'
 #
