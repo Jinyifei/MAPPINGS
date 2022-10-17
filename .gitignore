@@ -1,3 +1,4 @@
+.DS_Store
 map51
 map51b
 map51dev
@@ -6,10 +7,7 @@ map52b
 map52x
 map520dev
 map52dev
-.DS_Store
-xcuserdata
-xcshareddata
-project.xcworkspace
+map52rss
 *.ph[4567]
 *.sh[4567]
 *.neq
@@ -26,11 +24,9 @@ lab/map51dev
 lab/map52
 lab/map52b
 lab/map52dev
+lab/map52rss
 00Ignore
 00ignore/
-src/workcode/*.[co]
-MAPPINGS.xcodeproj
 *.jar
-map52dev
 for_bashrc.sh
 for_tcshrc.sh
