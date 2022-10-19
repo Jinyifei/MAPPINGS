@@ -8,7 +8,7 @@ c
 c     1975 Ralph Sutherland, Michael Dopita, Luc Binette,
 c     Ian Evans, Stephen Mettheringham
 c     Brent Groves, David Nicholls,
-c     Jin Yi-Fei, Adam D. Thomas,
+c     Yi-Fei Jin, Adam D. Thomas,
 c
 c     Version: v5.1.21
 c

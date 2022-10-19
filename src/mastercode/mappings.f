@@ -18,7 +18,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Jin Yi-Fei
+c     Adam D. Thomas, Yi-Fei Jin
 c
 c
 c       Version v5.1.21
@@ -28,7 +28,7 @@ c
 c     1975 Ralph Sutherland, Michael Dopita, Luc Binette,
 c     Ian Evans, Stephen Mettheringham
 c     Brent Groves, David Nicholls,
-c     Jin Yi-Fei, Adam D. Thomas,
+c     Yi-Fei Jin, Adam D. Thomas,
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
