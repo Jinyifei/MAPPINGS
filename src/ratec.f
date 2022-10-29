@@ -16,6 +16,23 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine ratec
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4        nz  XXX-meaning
+c! @param [in,out] integer*4         n  XXX-meaning
+c! @param [in,out]   real*8        te  XXX-meaning
+c! @param [in,out]   real*8      rate  XXX-meaning
+c! @param [in,out]   real*8        ey  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine ratec (nz, n, te, rate, ey)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

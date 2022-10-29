@@ -16,6 +16,26 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine newdif
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown       tdw  XXX-meaning
+c! @param [in,out]  Unknown       tup  XXX-meaning
+c! @param [in,out]  Unknown        dh  XXX-meaning
+c! @param [in,out]  Unknown       rad  XXX-meaning
+c! @param [in,out]  Unknown      drdw  XXX-meaning
+c! @param [in,out]  Unknown      dvdw  XXX-meaning
+c! @param [in,out]  Unknown      drup  XXX-meaning
+c! @param [in,out]  Unknown      dvup  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine newdif (tdw, tup, dh, rad, drdw, dvdw, drup, dvup,
      &frdw, jmod)
 c
@@ -949,6 +969,26 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine newdif2
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown       tdw  XXX-meaning
+c! @param [in,out]  Unknown       tup  XXX-meaning
+c! @param [in,out]  Unknown        dh  XXX-meaning
+c! @param [in,out]  Unknown       rad  XXX-meaning
+c! @param [in,out]  Unknown      drdw  XXX-meaning
+c! @param [in,out]  Unknown      dvdw  XXX-meaning
+c! @param [in,out]  Unknown      drup  XXX-meaning
+c! @param [in,out]  Unknown      dvup  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine newdif2 (tdw, tup, dh, rad, drdw, dvdw, drup, dvup,
      &frdw, jmod)
 c

@@ -16,6 +16,19 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine photo7
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine photo7 ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1503,6 +1516,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine compph7
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       dhn  XXX-meaning
+c! @param [in,out]   real*8       fin  XXX-meaning
+c! @param [in,out]   real*8    banfil  XXX-meaning
+c! @param [in,out]   real*8     difma  XXX-meaning
+c! @param [in,out]  Unknown     dtlma  XXX-meaning
+c! @param [in,out]   real*8     dhlma  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine compph7 (dhn, fin, banfil, difma, dtlma, dhlma)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3235,6 +3266,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine p7headers
+c! XXXX - add one line purpose here
+c! @param [in,out] character    banfil  XXX-meaning
+c! @param [in,out] character       dhn  XXX-meaning
+c! @param [in,out]   real*8       fin  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine p7headers (banfil, dhn, fin)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3732,6 +3778,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine p7filenames
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine p7filenames ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3889,6 +3948,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine createp7files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine createp7files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3948,6 +4020,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine appendp7files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine appendp7files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4010,6 +4095,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine closep7files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine closep7files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

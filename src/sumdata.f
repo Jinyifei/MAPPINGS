@@ -16,6 +16,25 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine sumdata
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8      dvol  XXX-meaning
+c! @param [in,out]   real*8        dr  XXX-meaning
+c! @param [in,out]   real*8      rdis  XXX-meaning
+c! @param [in,out]   real*8      imod  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine sumdata (t, de, dh, dvol, dr, rdis, imod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

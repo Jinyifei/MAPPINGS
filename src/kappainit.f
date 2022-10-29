@@ -16,6 +16,19 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine kappainit
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine kappainit ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

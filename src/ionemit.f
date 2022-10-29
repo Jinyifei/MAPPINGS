@@ -16,6 +16,19 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine ionemit
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine ionemit
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -866,6 +879,19 @@ c     Subject a single ion to a temperature and density range,
 c     targeting two lines, and outputting de-excitation information
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+c****************************************************************
+c> @brief The subroutine critdens
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine critdens
 c
 c
@@ -1152,6 +1178,19 @@ c     Subject a single ion to a density and temperature range,
 c     targeting three lines, and outputting de-excitation information
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+c****************************************************************
+c> @brief The subroutine tempratios
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine tempratios
 c
 c

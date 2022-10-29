@@ -16,6 +16,23 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fkappacol(t,i,j,ionidx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8         i  XXX-meaning
+c! @param [in,out] integer*4         j  XXX-meaning
+c! @param [in,out] integer*4    ionidx  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fkappacol(t,i,j,ionidx)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -69,6 +86,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fupsilonij(t,i,j,ionidx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8         i  XXX-meaning
+c! @param [in,out]   real*8         j  XXX-meaning
+c! @param [in,out]   real*8    ionidx  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fupsilonij(t,i,j,ionidx)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -182,6 +216,22 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c glue function for upsilon, if only have transition id:
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+c***************************************************************
+c> @brief The function real*8 function fupsilontr(t,nt,ionidx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        nt  XXX-meaning
+c! @param [in,out] integer*4    ionidx  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fupsilontr(t,nt,ionidx)
 c
       include 'cblocks.inc'
@@ -201,6 +251,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine multilevel
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine multilevel (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -426,6 +491,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function ffeupsilonij(t,i,j,ionidx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8         i  XXX-meaning
+c! @param [in,out]   real*8         j  XXX-meaning
+c! @param [in,out]   real*8    ionidx  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function ffeupsilonij(t,i,j,ionidx)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -537,6 +619,22 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c glue function for upsilon, if only have transition id:
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+c***************************************************************
+c> @brief The function real*8 function ffeupsilontr(t,nt,ionidx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        nt  XXX-meaning
+c! @param [in,out] integer*4    ionidx  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function ffeupsilontr(t,nt,ionidx)
 c
       include 'cblocks.inc'
@@ -556,6 +654,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine multiiron
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine multiiron (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

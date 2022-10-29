@@ -16,6 +16,19 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine photo6
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine photo6 ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1268,6 +1281,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine compph6
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       dhn  XXX-meaning
+c! @param [in,out]   real*8       fin  XXX-meaning
+c! @param [in,out]   real*8    banfil  XXX-meaning
+c! @param [in,out]   real*8     difma  XXX-meaning
+c! @param [in,out]  Unknown     dtlma  XXX-meaning
+c! @param [in,out]   real*8     dhlma  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine compph6 (dhn, fin, banfil, difma, dtlma, dhlma)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2985,6 +3016,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine p6headers
+c! XXXX - add one line purpose here
+c! @param [in,out] character    banfil  XXX-meaning
+c! @param [in,out] character       dhn  XXX-meaning
+c! @param [in,out]   real*8       fin  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine p6headers (banfil, dhn, fin)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3482,6 +3528,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine p6filenames
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine p6filenames ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3647,6 +3706,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine createp6files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine createp6files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3709,6 +3781,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine appendp6files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine appendp6files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3771,6 +3856,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine closep6files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine closep6files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

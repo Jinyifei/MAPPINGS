@@ -16,6 +16,21 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine recom_neii
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine recom_neii (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -95,6 +110,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine recom_cii
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine recom_cii (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -171,6 +201,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine recom_nii
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine recom_nii (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -337,6 +382,21 @@ c      end
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine recom_oi
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine recom_oi (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -425,6 +485,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine recom_oii
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine recom_oii (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
