@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width">
@@ -105,14 +104,12 @@ or on multi-cpu systems a parallel build is faster:
     &gt; make -j build
 
 </code></pre>
-      [wait a while…]
-      Then run interactively in the lab:
+      [wait a while…] Then run interactively in the lab:
       <pre><code>&gt; cd ../lab
 &gt; ./map51
 
 </code></pre>
-      <p>
-      </p>
+      <p> </p>
       <h2>The Local Mappings directory structure</h2>
       (see advanced usage documentation for shared and distributed
       options)
@@ -140,43 +137,32 @@ misc/
       <h2>Key Directories and Files</h2>
       <ul>
         <li> lab/ This is where the models are made and run. The runtime
-          files such
-          as map.prefs are here and the essential data directory with
-          the runtime data
-          files.
-        </li>
+          files such as map.prefs are here and the essential data
+          directory with the runtime data files. </li>
         <li> map51: The executable, also sometimes built with other
-          names
-        </li>
-        <li> map.prefs Essential startup data - must be present.
-        </li>
+          names </li>
+        <li> map.prefs Essential startup data - must be present. </li>
         <li> mapStd.prefs A standard 16 atom startup in case map.prefs
           is lost for any reason, can be copied and renamed map.prefs if
-          needed
-        </li>
+          needed </li>
         <li> mapFull.prefs A full 30 atom startup in case map.prefs is
           lost for any reason, can be copied and renamed map.prefs if
-          needed
-        </li>
+          needed </li>
         <li> data/: Contains the atomic data for MAPPINGS V. Read at
           runtime in mapinit.f. Essential and must be present and
-          complete.
-        </li>
+          complete. </li>
         <li> abund/: A set of useful abundance settings that can be read
-          interactively during a run.
-        </li>
+          interactively during a run. </li>
         <li> atmos/: An optional set of useful radiation source files
-          and stellar atmosphere models. Optional.
-          * scripts/: A collection of useful of UNIX shell and MAPPINGS
-          scripts for testing and running mappings models when not
-          running interactively.
-        </li>
+          and stellar atmosphere models. Optional. * scripts/: A
+          collection of useful of UNIX shell and MAPPINGS scripts for
+          testing and running mappings models when not running
+          interactively. </li>
         <li> src/ Contains the code area and the Makefile(s). There is a
           standard makefile for bash shell and gfortran and alternatives
-          in a subdirectory for other setups for use as templates.
-          All the commonly adjusted user parameters are near the top of
-          the makefile.
-        </li>
+          in a subdirectory for other setups for use as templates. All
+          the commonly adjusted user parameters are near the top of the
+          makefile. </li>
       </ul>
       <h1>Primary Reference Documentation</h1>
       <h2>Sphinx and Cookbooks</h2>
@@ -214,19 +200,30 @@ misc/
             <li>cd docs/sphinx/; make html</li>
           </ul>
         </ul>
+      </ul>
+      <h2>Doxygen<br>
+      </h2>
+      <ul>
+        <ul>
+          <ul>
+          </ul>
+        </ul>
         <li>
           <meta http-equiv="content-type" content="text/html;
             charset=UTF-8">
-          A Doxygen, repository which provides some information about
-          the source code.</li>
+          A<a moz-do-not-send="true" href="doxygen/html/index.html">
+            Doxygen</a>, repository which provides some information
+          about the source code.</li>
       </ul>
       <ul>
         <ul>
           <li>&nbsp;Like the Sphinx repository, this is in an elementary
-            state, since currently the .f files do not have doxygen
-            headers.&nbsp; Nevertheless doxygen will useful to some
-            users, especially as it is possible to generate caller
-            graphs<br>
+            state, and work to improve this is ongoing<br>
+          </li>
+          <li>Like the Sphinx repository, the the doxygen help files
+            themselves are not part of the repository., and must be
+            compiled by the user, and this procedure must be repeated
+            after updates, to keep the doxygen files up to date.<br>
           </li>
           <li>The command to generate the Doxygen reposiory is<br>
           </li>
@@ -240,13 +237,13 @@ misc/
           <li>Of course the assumes that you have doxygen <br>
           </li>
           <ul>
-            <li>The Doxygen home page is <a
+            <li>The home page for the Doxygen S/W&nbsp; is <a
                 href="http://www.doxygen.nl/">here</a>.&nbsp; <br>
             </li>
-            <li>To get the graphs that show which routines call which
-              other routines, you also need to have the dot tool from <a
-                href="http://www.graphviz.org/">Graphviz</a> installed
-              as well.&nbsp; </li>
+            <li>To get the (caller) graphs that show which routines call
+              which other routines, you also need to have the dot tool
+              from <a href="http://www.graphviz.org/">Graphviz</a>
+              installed as well.&nbsp; </li>
           </ul>
         </ul>
       </ul>
