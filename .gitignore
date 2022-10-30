@@ -30,3 +30,11 @@ lab/map52rss
 *.jar
 for_bashrc.sh
 for_tcshrc.sh
+# sphinx stuff
+docs/sphinx/html/
+docs/sphinx/doctrees/
+docs/sphinx/venv/
+# doxygen stuff
+docs/doxygen/html/
+docs/doxygen/latex/
+
