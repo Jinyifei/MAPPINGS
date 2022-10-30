@@ -16,6 +16,21 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mdiag
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4        jl  XXX-meaning
+c! @param [in,out] integer*4      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mdiag (jl, alph, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -112,6 +127,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mdiag3
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4        jl  XXX-meaning
+c! @param [in,out] integer*4      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mdiag3 (jl, alph, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -205,6 +235,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mdiag6
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mdiag6 (alph, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -300,6 +344,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mdiag9
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mdiag9 (alph, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -395,6 +453,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mdiag16
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mdiag16 (alph, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -487,6 +559,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mdiagn
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mdiagn (alph, x, n)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -585,6 +672,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mdiagfe
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mdiagfe (alph, x, n)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -682,6 +784,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine matsolve
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        np  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine matsolve (alph, x, n, np)
       include 'const.inc'
 c
@@ -727,6 +845,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine matsolvemulti
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine matsolvemulti (alph, x, n)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -763,6 +896,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine matsolvefe
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      alph  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine matsolvefe (alph, x, n)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -816,6 +964,23 @@ c     enddo
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine ludcmp
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4         a  XXX-meaning
+c! @param [in,out] integer*4         n  XXX-meaning
+c! @param [in,out] integer*4        np  XXX-meaning
+c! @param [in,out] integer*4      indx  XXX-meaning
+c! @param [in,out] integer*4         d  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine ludcmp (a, n, np, indx, d)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -884,6 +1049,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine lubksb
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out] implicit        np  XXX-meaning
+c! @param [in,out] implicit      indx  XXX-meaning
+c! @param [in,out] integer*4         b  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine lubksb (a, n, np, indx, b)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -920,6 +1102,25 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mprove
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4         a  XXX-meaning
+c! @param [in,out] integer*4      alud  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8        np  XXX-meaning
+c! @param [in,out] implicit      indx  XXX-meaning
+c! @param [in,out] implicit         b  XXX-meaning
+c! @param [in,out] integer*4         x  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mprove (a, alud, n, np, indx, b, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

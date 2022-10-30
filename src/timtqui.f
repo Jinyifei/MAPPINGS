@@ -16,6 +16,23 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine timtqui
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tei  XXX-meaning
+c! @param [in,out]   real*8       tef  XXX-meaning
+c! @param [in,out]   real*8     edens  XXX-meaning
+c! @param [in,out]   real*8     hdens  XXX-meaning
+c! @param [in,out]   real*8     tstep  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine timtqui (tei, tef, edens, hdens, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

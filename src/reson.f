@@ -264,6 +264,23 @@ c     end
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fxr3omgspl(t,y,icol,idx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8         y  XXX-meaning
+c! @param [in,out]   real*8      icol  XXX-meaning
+c! @param [in,out]   real*8       idx  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fxr3omgspl(t,y,icol,idx)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -315,6 +332,24 @@ c      uniform splines for all hhe data
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine solvexr3ionkappa
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8       idx  XXX-meaning
+c! @param [in,out]   real*8       bri  XXX-meaning
+c! @param [in,out]   real*8        ni  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine solvexr3ionkappa (t, de, dh, idx, bri, ni)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -435,6 +470,24 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine solvexr3ion
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8       idx  XXX-meaning
+c! @param [in,out]   real*8       bri  XXX-meaning
+c! @param [in,out]   real*8        ni  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine solvexr3ion (t, de, dh, idx, bri, ni)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -552,6 +605,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine reson3
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine reson3 (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -701,6 +769,23 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fxrlomgspl(t,y,icol,idx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8         y  XXX-meaning
+c! @param [in,out]   real*8      icol  XXX-meaning
+c! @param [in,out]   real*8       idx  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fxrlomgspl(t,y,icol,idx)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -752,6 +837,24 @@ c     endif
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine solvexrlion
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8       idx  XXX-meaning
+c! @param [in,out]   real*8       bri  XXX-meaning
+c! @param [in,out]   real*8        ni  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine solvexrlion (t, de, dh, idx, bri, ni)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -885,6 +988,21 @@ c      note index swap above
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine resonl
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine resonl (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

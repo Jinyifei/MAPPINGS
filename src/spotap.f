@@ -16,6 +16,28 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine spotap
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8       fhi  XXX-meaning
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        yh  XXX-meaning
+c! @param [in,out]   real*8        ph  XXX-meaning
+c! @param [in,out]   real*8       ph2  XXX-meaning
+c! @param [in,out]   real*8       dey  XXX-meaning
+c! @param [in,out]   real*8       dep  XXX-meaning
+c! @param [in,out]   real*8       de2  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine spotap (de, dh, fhi, t, yh, ph, ph2, dey, dep, de2)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -16,6 +16,20 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine spectrum
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4      mode  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine spectrum (lunt, mode)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1280,6 +1294,21 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine spec2
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4      list  XXX-meaning
+c! @param [in,out] character      mode  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine spec2 (lunt, list, mode)
 c
       include 'cblocks.inc'
@@ -1947,6 +1976,21 @@ c
 c
       return
       end
+
+c****************************************************************
+c> @brief The subroutine heapindexsort
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4         n  XXX-meaning
+c! @param [in,out] integer*4        ra  XXX-meaning
+c! @param [in,out]   real*8       idx  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine heapindexsort (n, ra, idx)
 c
 c     heapsort (because of partial ordering already present)
@@ -2006,6 +2050,21 @@ c
 c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+c****************************************************************
+c> @brief The subroutine fieldsummary
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4    screen  XXX-meaning
+c! @param [in,out] integer*4        tp  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine fieldsummary (lunt, screen, tp)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2101,6 +2160,21 @@ c
       return
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+c****************************************************************
+c> @brief The subroutine srcsummary
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4    screen  XXX-meaning
+c! @param [in,out] integer*4        sp  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine srcsummary (lunt, screen, sp)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2192,6 +2266,28 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine speclocal
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4        tl  XXX-meaning
+c! @param [in,out]   real*8        el  XXX-meaning
+c! @param [in,out]   real*8        eg  XXX-meaning
+c! @param [in,out]   real*8        dl  XXX-meaning
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8       fh1  XXX-meaning
+c! @param [in,out]   real*8        di  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine speclocal (lunt, tl, el, eg, dl, t, dh, de, fh1, di,
      &dr, list, mode)
 c
@@ -2762,6 +2858,19 @@ c
 c
       return
       end
+
+c****************************************************************
+c> @brief The subroutine speclocallines
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    fluxes  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine speclocallines (fluxes)
 c
       include 'cblocks.inc'
@@ -3097,6 +3206,20 @@ c
 c
       return
       end
+
+c****************************************************************
+c> @brief The subroutine speclocallineids
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4    lineat  XXX-meaning
+c! @param [in,out] integer*4   lineion  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine speclocallineids (lineat, lineion)
 c
       include 'cblocks.inc'

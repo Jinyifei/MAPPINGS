@@ -16,6 +16,22 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wbal
+c! XXXX - add one line purpose here
+c! @param [in,out] character*    caller  XXX-meaning
+c! @param [in,out] character*       pfx  XXX-meaning
+c! @param [in,out] character        np  XXX-meaning
+c! @param [in,out] character         p  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wbal (caller, pfx, np, p)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -82,6 +98,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wabund
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wabund (lunt)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -143,6 +172,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wionabal
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4        po  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wionabal (lunt, po)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -189,6 +232,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wionabal2
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4        po  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wionabal2 (lunt, po)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -232,6 +289,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wionpop
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4        po  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wionpop (lunt, po)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -277,6 +348,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wmodel
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! @param [in,out] integer*4         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     dstep  XXX-meaning
+c! @param [in,out]   real*8      wmod  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wmodel (lunt, t, de, dh, dstep, wmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -542,6 +631,27 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wemiss2
+c! XXXX - add one line purpose here
+c! @param [in,out] character*    caller  XXX-meaning
+c! @param [in,out] character*       pfx  XXX-meaning
+c! @param [in,out] character        np  XXX-meaning
+c! @param [in,out] character         t  XXX-meaning
+c! @param [in,out] integer*4        de  XXX-meaning
+c! @param [in,out] integer*4        dh  XXX-meaning
+c! @param [in,out]   real*8        dr  XXX-meaning
+c! @param [in,out]   real*8     scale  XXX-meaning
+c! @param [in,out]   real*8        tp  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wemiss2 (caller, pfx, np, t, de, dh, dr, scale, tp)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -623,6 +733,26 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wpsoufile
+c! XXXX - add one line purpose here
+c! @param [in,out] character*    caller  XXX-meaning
+c! @param [in,out] character*     fname  XXX-meaning
+c! @param [in,out] character*      wmod  XXX-meaning
+c! @param [in,out] character*         t  XXX-meaning
+c! @param [in,out] character        de  XXX-meaning
+c! @param [in,out] character        dh  XXX-meaning
+c! @param [in,out]      &tp        dr  XXX-meaning
+c! @param [in,out]      &tp     scale  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wpsoufile (caller, fname, wmod, t, de, dh, dr, scale,
      &tp)
 c
@@ -857,6 +987,28 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wpsou
+c! XXXX - add one line purpose here
+c! @param [in,out] character*    caller  XXX-meaning
+c! @param [in,out] character*       pfx  XXX-meaning
+c! @param [in,out] character*        np  XXX-meaning
+c! @param [in,out] character*      wmod  XXX-meaning
+c! @param [in,out] integer*4         t  XXX-meaning
+c! @param [in,out] integer*4        de  XXX-meaning
+c! @param [in,out] character        dh  XXX-meaning
+c! @param [in,out] character        dr  XXX-meaning
+c! @param [in,out]   real*8     scale  XXX-meaning
+c! @param [in,out]   real*8        tp  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wpsou (caller, pfx, np, wmod, t, de, dh, dr, scale, tp)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -950,6 +1102,26 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wplam4
+c! XXXX - add one line purpose here
+c! @param [in,out] character*    caller  XXX-meaning
+c! @param [in,out] character*       pfx  XXX-meaning
+c! @param [in,out] character*        np  XXX-meaning
+c! @param [in,out] character*         t  XXX-meaning
+c! @param [in,out] integer*4        de  XXX-meaning
+c! @param [in,out] integer*4        dh  XXX-meaning
+c! @param [in,out] character*        dr  XXX-meaning
+c! @param [in,out] character*     scale  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wplam4 (caller, pfx, np, t, de, dh, dr, scale)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1079,6 +1251,24 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wrspec
+c! XXXX - add one line purpose here
+c! @param [in,out] character*    caller  XXX-meaning
+c! @param [in,out] character*       pfx  XXX-meaning
+c! @param [in,out] character        np  XXX-meaning
+c! @param [in,out] character         t  XXX-meaning
+c! @param [in,out] integer*4        de  XXX-meaning
+c! @param [in,out] integer*4        dh  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wrspec (caller, pfx, np, t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1125,6 +1315,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wrsppop
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      lunt  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wrsppop (lunt)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

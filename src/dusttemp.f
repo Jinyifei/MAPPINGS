@@ -16,6 +16,19 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine dustinit
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine dustinit ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -73,6 +86,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine dusttemp
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       t_e  XXX-meaning
+c! @param [in,out]   real*8     hdens  XXX-meaning
+c! @param [in,out]   real*8       n_e  XXX-meaning
+c! @param [in,out]   real*8        dr  XXX-meaning
+c! @param [in,out]   real*8   ircount  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine dusttemp (t_e, hdens, n_e, dr, ircount)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -522,6 +552,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine initgrids
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     dtype  XXX-meaning
+c! @param [in,out] integer*4         v  XXX-meaning
+c! @param [in,out]   real*8   atom_no  XXX-meaning
+c! @param [in,out]   real*8    t_grid  XXX-meaning
+c! @param [in,out]   real*8    t_edge  XXX-meaning
+c! @param [in,out]   real*8    h_grid  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine initgrids (dtype, v, atom_no, t_grid, t_edge, h_grid,
      &hmin, hmax, deltah, nmax, mxbin)
 c
@@ -557,6 +605,22 @@ c  calculate enthalpy for each temperature
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function sil_enth(n,v,t)
+c! XXXX - add one line purpose here
+c! @param [in,out] implicit         n  XXX-meaning
+c! @param [in,out] implicit         v  XXX-meaning
+c! @param [in,out]   real*8         t  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function sil_enth(n,v,t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -601,6 +665,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function gra_enth(n,t)
+c! XXXX - add one line purpose here
+c! @param [in,out] implicit         n  XXX-meaning
+c! @param [in,out] implicit         t  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function gra_enth(n,t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -643,6 +722,21 @@ c      end
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function mbdist(t,e)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8         e  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function mbdist(t,e)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -664,6 +758,24 @@ c      MBdist=2.d0*dsqrt(E/(pi*(rkb*T)**3.d0))*dexp(-E/(rkb*T))
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine transmatrix
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    grarea  XXX-meaning
+c! @param [in,out]   real*8       n_e  XXX-meaning
+c! @param [in,out]   real*8       s_f  XXX-meaning
+c! @param [in,out]   real*8      nmax  XXX-meaning
+c! @param [in,out]   real*8    absmax  XXX-meaning
+c! @param [in,out]   real*8   dabsmax  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine transmatrix (grarea, n_e, s_f, nmax, absmax, dabsmax,
      &t_e)
 c
@@ -814,6 +926,22 @@ c      close(69)
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine probsolve
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  tr_matrix  XXX-meaning
+c! @param [in,out]   real*8    t_prob  XXX-meaning
+c! @param [in,out]   real*8      nmax  XXX-meaning
+c! @param [in,out]   real*8     mxbin  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine probsolve (tr_matrix, t_prob, nmax, mxbin)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

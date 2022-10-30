@@ -16,6 +16,21 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readrebin
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown     fname  XXX-meaning
+c! @param [in,out]  Unknown  coordstype  XXX-meaning
+c! @param [in,out]  Unknown  rebinnedsrc  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readrebin (fname, coordstype, rebinnedsrc)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1718,6 +1733,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readlinrebin
+c! XXXX - add one line purpose here
+c! @param [in,out] character*256     fname  XXX-meaning
+c! @param [in,out] character*256  coordstype  XXX-meaning
+c! @param [in,out] integer*4  rebinnedsrc  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readlinrebin (fname, coordstype, rebinnedsrc)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2091,6 +2121,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine rebin
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       eev  XXX-meaning
+c! @param [in,out]   real*8       hnu  XXX-meaning
+c! @param [in,out]   real*8   nfluxes  XXX-meaning
+c! @param [in,out]   real*8  rebinned  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine rebin (eev, hnu, nfluxes, rebinned)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

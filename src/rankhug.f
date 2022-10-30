@@ -16,6 +16,25 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine rankhug
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tpr  XXX-meaning
+c! @param [in,out]   real*8     delpr  XXX-meaning
+c! @param [in,out]   real*8      dhpr  XXX-meaning
+c! @param [in,out]   real*8       vpr  XXX-meaning
+c! @param [in,out]   real*8      bmag  XXX-meaning
+c! @param [in,out]   real*8        tl  XXX-meaning
+c! @param [in,out]   real*8     tstep  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine rankhug (tpr, delpr, dhpr, vpr, bmag, tl, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -129,6 +148,23 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     double precision function shockcmpf (t, de, dh, v, bm)
+
+c****************************************************************
+c> @brief The subroutine shockcmpf
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8         v  XXX-meaning
+c! @param [in,out]   real*8        bm  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shockcmpf (t, de, dh, v, bm)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -209,6 +245,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine quart
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8        x1  XXX-meaning
+c! @param [in,out]   real*8        x2  XXX-meaning
+c! @param [in,out]   real*8      root  XXX-meaning
+c! @param [in,out]   real*8      rmod  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine quart (a, x1, x2, root, rmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -282,6 +335,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine cubic
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8        x1  XXX-meaning
+c! @param [in,out]   real*8        x2  XXX-meaning
+c! @param [in,out]   real*8        r1  XXX-meaning
+c! @param [in,out]   real*8        r2  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine cubic (a, x1, x2, r1, r2)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -383,6 +453,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function velshock2 (dh, t, bmag, tpo)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8      bmag  XXX-meaning
+c! @param [in,out]   real*8       tpo  XXX-meaning
+c! 
+c! @return
+c!  XXXX This function returns a %s number with is 
+c!  XXXX say explictly what is returned
+c! 
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function velshock2 (dh, t, bmag, tpo)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -463,6 +550,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine velshock
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      dhpr  XXX-meaning
+c! @param [in,out]   real*8      xhpr  XXX-meaning
+c! @param [in,out]   real*8      tepr  XXX-meaning
+c! @param [in,out]   real*8      tepo  XXX-meaning
+c! @param [in,out]   real*8      hmag  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine velshock (dhpr, xhpr, tepr, tepo, hmag)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -591,6 +695,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine roots
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8     ncoef  XXX-meaning
+c! @param [in,out] integer*4      root  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine roots (a, ncoef, root)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -655,6 +774,25 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine isochorflow
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tpr  XXX-meaning
+c! @param [in,out]   real*8     delpr  XXX-meaning
+c! @param [in,out]   real*8      dhpr  XXX-meaning
+c! @param [in,out]   real*8       vpr  XXX-meaning
+c! @param [in,out]   real*8      hmag  XXX-meaning
+c! @param [in,out]   real*8        tl  XXX-meaning
+c! @param [in,out]   real*8     tstep  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine isochorflow (tpr, delpr, dhpr, vpr, hmag, tl, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -701,6 +839,25 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine isobarflow
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tpr  XXX-meaning
+c! @param [in,out]   real*8     delpr  XXX-meaning
+c! @param [in,out]   real*8      dhpr  XXX-meaning
+c! @param [in,out]   real*8       vpr  XXX-meaning
+c! @param [in,out]   real*8      hmag  XXX-meaning
+c! @param [in,out]   real*8        tl  XXX-meaning
+c! @param [in,out]   real*8     tstep  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine isobarflow (tpr, delpr, dhpr, vpr, hmag, tl, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

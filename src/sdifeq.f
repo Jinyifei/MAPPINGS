@@ -16,6 +16,23 @@ c       Version v5.2.0
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine sdifeq
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         b  XXX-meaning
+c! @param [in,out]   real*8         c  XXX-meaning
+c! @param [in,out]   real*8        fr  XXX-meaning
+c! @param [in,out]   real*8     tstep  XXX-meaning
+c! 
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c! 
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine sdifeq (a, b, c, fr, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
