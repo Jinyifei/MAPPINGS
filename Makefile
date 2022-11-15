@@ -8,7 +8,7 @@ SHELL := /bin/bash
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map52rss
+OUTNAME = map52dev
 #
 #
 #-------------------------------
