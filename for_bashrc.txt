@@ -7,11 +7,20 @@
 #
 ########################################################################
 #
-# Syntax for csh, and tcsh family of shells, Put in your startup
+# Syntax for sh, bash and zsh family of shells. Put in your startup
 # for the appropriate shell for both interactive and non-interactive
-# shells most commonly .tcshrc as or .cshrc
+# shells most commonly .bashrc and .zshrc
 #
 ########################################################################
 #
 # MAPPINGS Shell Environment:
 #
+export mapbase="/Users/ralph/mappings520"
+export MAPDATA="$mapbase"
+export MAPBIN="$mapbase/lab"
+# add bin area to global path:
+export PATH="$MAPBIN:$PATH"
+# add a generic map alias for every executable version
+alias map=map52
+#
+########################################################################

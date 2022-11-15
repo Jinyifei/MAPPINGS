@@ -61,6 +61,9 @@ MAPPINGS V Standard Atom Set v5.2.0
  15  Fe    26  55.84500 3.1623E-05  1.000   27
  16  Ni    28  58.69340 1.6596E-06  1.000   29
 %
+% Uncomment 2 lines to optionally set the radiation energy binning file
+% PHOTDAT File
+% PHOTDAT
 % misc data can be stored after this comment
 % Here species that are not often used are
 % Stored. To use them place them above and

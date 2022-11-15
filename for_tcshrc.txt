@@ -15,3 +15,17 @@
 #
 # MAPPINGS Shell Environment:
 #
+set mapbase = "/Users/ralph/mappings520"
+setenv MAPDATA "$mapbase"
+set mapbin = "$mapbase/lab"
+setenv MAPBIN "$mapbin"
+#
+# add bin area to global path:
+#
+set path = ($mapbin $path)
+#
+# add a generic map alias for every executable version
+#
+alias map map52
+#
+########################################################################
