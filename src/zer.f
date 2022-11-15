@@ -2,6 +2,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine zer
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine zer ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -191,6 +204,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine zerbuf
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine zerbuf ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -264,6 +290,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine zeroemiss
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine zeroemiss ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

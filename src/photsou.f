@@ -2,6 +2,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine photsou
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown     model  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine photsou (model)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1256,6 +1269,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine zerofield
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine zerofield (flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1272,6 +1298,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine scalefield
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine scalefield (flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1293,6 +1332,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine normalisefield
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine normalisefield (flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1410,6 +1462,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine blackbody
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine blackbody (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1487,6 +1552,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine powerlaw
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine powerlaw (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1572,6 +1650,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine bremss
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine bremss (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1674,6 +1765,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine interstellar
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine interstellar (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1752,6 +1856,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine jbhagn
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine jbhagn (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1928,6 +2045,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine componentagn
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine componentagn (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2069,6 +2199,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine componentagn2
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine componentagn2 (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2201,6 +2344,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine doneagn
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine doneagn (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2347,6 +2503,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine stellar
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine stellar (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2491,6 +2660,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine atlas
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine atlas (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2728,6 +2910,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine tlusty
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine tlusty (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3044,6 +3239,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine wmbasic
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine wmbasic (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3312,6 +3520,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine cmfgenostars
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine cmfgenostars (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3570,6 +3791,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mocassin18
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mocassin18 (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3719,6 +3953,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine theta1c
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine theta1c (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3860,6 +4107,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine cspn_hni
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine cspn_hni (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4025,6 +4285,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine cspn_hca
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  readflux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine cspn_hca (readflux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4283,6 +4556,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readatlasmodel
+c! XXXX - add one line purpose here
+c! @param [in,out] character       pat  XXX-meaning
+c! @param [in,out] character      iabn  XXX-meaning
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readatlasmodel (pat, iabn, iteff, ig, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4354,6 +4644,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readtlustymodel
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4      iabn  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readtlustymodel (iteff, iabn, ig, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4403,6 +4709,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readcmfgenmodel
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readcmfgenmodel (iteff, ig, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4452,6 +4773,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readt1cmodel
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4        iz  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readt1cmodel (iteff, ig, iz, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4497,6 +4834,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readn18model
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4        iz  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readn18model (iteff, ig, iz, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4542,6 +4895,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readwmbasicmodel
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4      iabn  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readwmbasicmodel (iteff, iabn, ig, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4602,6 +4971,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readcspn_hni
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4      iabn  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readcspn_hni (iteff, iabn, ig, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4651,6 +5036,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readcspn_hca
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     iteff  XXX-meaning
+c! @param [in,out] integer*4      iabn  XXX-meaning
+c! @param [in,out] integer*4        ig  XXX-meaning
+c! @param [in,out] integer*4      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readcspn_hca (iteff, iabn, ig, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4696,6 +5097,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine renormestellar
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        xt  XXX-meaning
+c! @param [in,out]   real*8       src  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine renormestellar (xt, src)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4735,6 +5150,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine intpstellartemp
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       xt0  XXX-meaning
+c! @param [in,out]   real*8       xt1  XXX-meaning
+c! @param [in,out]   real*8        xt  XXX-meaning
+c! @param [in,out]   real*8      src0  XXX-meaning
+c! @param [in,out]   real*8      src1  XXX-meaning
+c! @param [in,out]   real*8       dst  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine intpstellartemp (xt0, xt1, xt, src0, src1, dst)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4781,6 +5214,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine fpol
+c! XXXX - add one line purpose here
+c! @param [in,out] character      kstr  XXX-meaning
+c! @param [in,out] character       tm1  XXX-meaning
+c! @param [in,out]   double         i  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine fpol (kstr, tm1, i)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

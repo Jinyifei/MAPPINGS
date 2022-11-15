@@ -2,6 +2,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function tauline(dismul, tau0)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    dismul  XXX-meaning
+c! @param [in,out]   real*8      tau0  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function tauline(dismul, tau0)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -26,6 +41,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function transferout(dismul, tau)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    dismul  XXX-meaning
+c! @param [in,out]   real*8       tau  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function transferout(dismul, tau)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -52,6 +82,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function localout(dismul, tau)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    dismul  XXX-meaning
+c! @param [in,out]   real*8       tau  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
        real*8 function localout(dismul, tau)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -84,6 +129,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function meanfield(dismul, tau)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    dismul  XXX-meaning
+c! @param [in,out]   real*8       tau  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function meanfield(dismul, tau)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -119,6 +179,27 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fdismul(t,dh,dr,dv,atom,ion,ejk,fab)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8        dr  XXX-meaning
+c! @param [in,out]   real*8        dv  XXX-meaning
+c! @param [in,out]   real*8      atom  XXX-meaning
+c! @param [in,out]   real*8       ion  XXX-meaning
+c! @param [in,out]   real*8       ejk  XXX-meaning
+c! @param [in,out]   real*8       fab  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fdismul(t,dh,dr,dv,atom,ion,ejk,fab)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -215,6 +296,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine emilindismuls
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      telc  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     dremh  XXX-meaning
+c! @param [in,out]   real*8     dvemh  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine emilindismuls (telc, dh, dremh, dvemh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -361,6 +458,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine uplindismuls
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tup  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     druph  XXX-meaning
+c! @param [in,out]   real*8     dvuph  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine uplindismuls (tup, dh, druph, dvuph)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -491,6 +604,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine dwlindismuls
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tdw  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     drdwh  XXX-meaning
+c! @param [in,out]   real*8     dvdwh  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine dwlindismuls (tdw, dh, drdwh, dvdwh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -624,6 +753,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fbowen(t, dv)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        dv  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fbowen(t, dv)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -2,6 +2,25 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine totphot
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown         t  XXX-meaning
+c! @param [in,out]  Unknown        dh  XXX-meaning
+c! @param [in,out]  Unknown       rad  XXX-meaning
+c! @param [in,out]  Unknown        dr  XXX-meaning
+c! @param [in,out]  Unknown        dv  XXX-meaning
+c! @param [in,out]  Unknown        wd  XXX-meaning
+c! @param [in,out]  Unknown      lmod  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine totphot (t, dh, rad, dr, dv, wd, lmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -913,6 +932,25 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine totphot2
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown         t  XXX-meaning
+c! @param [in,out]  Unknown        dh  XXX-meaning
+c! @param [in,out]  Unknown       rad  XXX-meaning
+c! @param [in,out]  Unknown        dr  XXX-meaning
+c! @param [in,out]  Unknown        dv  XXX-meaning
+c! @param [in,out]  Unknown        wd  XXX-meaning
+c! @param [in,out]  Unknown      lmod  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine totphot2 (t, dh, rad, dr, dv, wd, lmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1662,6 +1700,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine sum_diffuse_up_field
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8  sum_field  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine sum_diffuse_up_field (sum_field)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -2,6 +2,23 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine intvec
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    bufpho  XXX-meaning
+c! @param [in,out]   real*8      qahi  XXX-meaning
+c! @param [in,out]   real*8     qahei  XXX-meaning
+c! @param [in,out]   real*8    qaheii  XXX-meaning
+c! @param [in,out]   real*8     qatot  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine intvec (bufpho, qahi, qahei, qaheii, qatot)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -54,6 +71,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine intinu
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    inupho  XXX-meaning
+c! @param [in,out]   real*8      qahi  XXX-meaning
+c! @param [in,out]   real*8     qahei  XXX-meaning
+c! @param [in,out]   real*8    qaheii  XXX-meaning
+c! @param [in,out]   real*8     qatot  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine intinu (inupho, qahi, qahei, qaheii, qatot)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -99,6 +133,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine intjnu
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    inupho  XXX-meaning
+c! @param [in,out]   real*8      qahi  XXX-meaning
+c! @param [in,out]   real*8     qahei  XXX-meaning
+c! @param [in,out]   real*8    qaheii  XXX-meaning
+c! @param [in,out]   real*8     qatot  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine intjnu (inupho, qahi, qahei, qaheii, qatot)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -144,6 +195,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine jnulum
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        sp  XXX-meaning
+c! @param [in,out]   real*8      blum  XXX-meaning
+c! @param [in,out]   real*8      ilum  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine jnulum (sp, blum, ilum)
 c     quicksum 1/4pi Jnu vector
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -171,6 +237,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine inulum
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        sp  XXX-meaning
+c! @param [in,out]   real*8      blum  XXX-meaning
+c! @param [in,out]   real*8      ilum  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine inulum (sp, blum, ilum)
 c     quicksum 1/pi inu vector
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

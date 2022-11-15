@@ -2,6 +2,23 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine absdis
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8      absf  XXX-meaning
+c! @param [in,out]   real*8      drta  XXX-meaning
+c! @param [in,out]   real*8       rad  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine absdis (dh, absf, drta, rad, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -173,6 +190,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine absdis2
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8      absf  XXX-meaning
+c! @param [in,out]   real*8      drta  XXX-meaning
+c! @param [in,out]   real*8       rad  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine absdis2 (dh, absf, drta, rad, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -331,6 +365,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine attsig
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8        dr  XXX-meaning
+c! @param [in,out]   real*8   popcols  XXX-meaning
+c! @param [in,out]   real*8  attenuate  XXX-meaning
+c! @param [in,out]   real*8     sigma  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine attsig (dh, dr, popcols, attenuate, sigma)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -423,6 +474,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine habsfrac
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      absf  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8      drta  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine habsfrac (absf, dh, drta, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -535,6 +602,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine absfrac
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      absf  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8      drta  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine absfrac (absf, dh, drta, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -640,6 +723,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine taudist
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     tauav  XXX-meaning
+c! @param [in,out]   real*8      drta  XXX-meaning
+c! @param [in,out]   real*8       rad  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c! @param [in,out]   real*8      mmod  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine taudist (dh, tauav, drta, rad, popul, mmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

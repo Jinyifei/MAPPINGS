@@ -2,6 +2,27 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine evoltem
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tei  XXX-meaning
+c! @param [in,out]   real*8       tef  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8    prescc  XXX-meaning
+c! @param [in,out]   real*8       tim  XXX-meaning
+c! @param [in,out]   real*8       exl  XXX-meaning
+c! @param [in,out]   real*8       tex  XXX-meaning
+c! @param [in,out]   real*8       lut  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine evoltem (tei, tef, de, dh, prescc, tim, exl, tex, lut)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

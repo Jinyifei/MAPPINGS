@@ -2,6 +2,25 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine ionab
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown      reco  XXX-meaning
+c! @param [in,out]  Unknown      pion  XXX-meaning
+c! @param [in,out]  Unknown    pionau  XXX-meaning
+c! @param [in,out]  Unknown        ab  XXX-meaning
+c! @param [in,out]  Unknown     adndt  XXX-meaning
+c! @param [in,out]  Unknown       nde  XXX-meaning
+c! @param [in,out]  Unknown     tstep  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine ionab (reco, pion, pionau, ab, adndt, nde, tstep)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -2,6 +2,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function casab(nz,line,series)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4        nz  XXX-meaning
+c! @param [in,out] integer*4      line  XXX-meaning
+c! @param [in,out] integer*4    series  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function casab(nz,line,series)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -55,6 +71,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function densnum(dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function densnum(dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -81,6 +111,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function denstot(dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function denstot(dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -105,6 +149,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function dfuint(bet, sa, b1, b2, alo)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       bet  XXX-meaning
+c! @param [in,out]   real*8        sa  XXX-meaning
+c! @param [in,out]   real*8        b1  XXX-meaning
+c! @param [in,out]   real*8        b2  XXX-meaning
+c! @param [in,out]   real*8       alo  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function dfuint(bet, sa, b1, b2, alo)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -181,6 +243,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function vernerph1(e,l,ph1)
+c! XXXX - add one line purpose here
+c! @param [in,out] implicit         e  XXX-meaning
+c! @param [in,out] implicit         l  XXX-meaning
+c! @param [in,out] implicit       ph1  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function vernerph1(e,l,ph1)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -206,6 +284,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function vernerph2(e,ph2)
+c! XXXX - add one line purpose here
+c! @param [in,out] implicit         e  XXX-meaning
+c! @param [in,out] implicit       ph2  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function vernerph2(e,ph2)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -231,6 +324,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function vernerphoto(e,ion)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         e  XXX-meaning
+c! @param [in,out]   real*8       ion  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function vernerphoto(e,ion)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -314,6 +422,20 @@ c     from Abramowitz and Stegun or DMLF in public domain
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fE1(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fE1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -356,6 +478,20 @@ c     A&S Eqn 5.1.56 pg 231
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fexpE1(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fexpE1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -403,6 +539,20 @@ c     A&S Eqn 5.1.56 pg 231
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fcodyE1(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fcodyE1(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -575,6 +725,20 @@ c----------------------------------------------------------------------
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fcodyExpE1(arg)
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown       arg  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fcodyExpE1(arg)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -739,6 +903,21 @@ c----------------------------------------------------------------------
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function farint(sub,x)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       sub  XXX-meaning
+c! @param [in,out] integer*4         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function farint(sub,x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -819,6 +998,21 @@ c     = fexpE1(u)*dexp(-rexp)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fue1(u, rexp)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         u  XXX-meaning
+c! @param [in,out]   real*8      rexp  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fue1(u, rexp)
       implicit none
       real*8 u,rexp,fcodyExpE1
@@ -827,6 +1021,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fautoi(t,atom,ion)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8      atom  XXX-meaning
+c! @param [in,out] integer*4       ion  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fautoi(t,atom,ion)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1000,6 +1210,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function favcha(popul)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function favcha(popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1037,6 +1261,20 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function favcha2(popul)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function favcha2(popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1072,6 +1310,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fbessi(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fbessi(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1150,6 +1402,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fbessk(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fbessk(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1230,6 +1496,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fcietim(dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fcietim(dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1268,6 +1548,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fcolltim(de)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        de  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fcolltim(de)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1308,6 +1602,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fcrit(dloss, zeta)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     dloss  XXX-meaning
+c! @param [in,out]   real*8      zeta  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fcrit(dloss, zeta)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1328,6 +1637,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fdilu(rsou, rad)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      rsou  XXX-meaning
+c! @param [in,out]   real*8       rad  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fdilu(rsou, rad)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1403,6 +1727,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function feldens(dh, popul)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function feldens(dh, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1434,6 +1773,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function felneur(popul, neio)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popul  XXX-meaning
+c! @param [in,out]   real*8      neio  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function felneur(popul, neio)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1473,6 +1827,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fsplint(xa,ya,y2a,n,x)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        xa  XXX-meaning
+c! @param [in,out]   real*8        ya  XXX-meaning
+c! @param [in,out]   real*8       y2a  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fsplint(xa,ya,y2a,n,x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1532,6 +1904,24 @@ c A=1,B=0
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine splint
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        xa  XXX-meaning
+c! @param [in,out]   real*8        ya  XXX-meaning
+c! @param [in,out]   real*8       y2a  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]   real*8         y  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine splint (xa, ya, y2a, n, x, y)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1582,6 +1972,23 @@ c     else if ((a.ge.0.d0).and.(b.ge.0.d0)) then
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine endgrads
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         y  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8       yp1  XXX-meaning
+c! @param [in,out] implicit       ypn  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine endgrads (x, y, n, yp1, ypn)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1602,6 +2009,24 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine spline
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         y  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8       yp1  XXX-meaning
+c! @param [in,out] implicit       ypn  XXX-meaning
+c! @param [in,out] implicit        y2  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine spline (x, y, n, yp1, ypn, y2)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1647,6 +2072,22 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine spline00
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         y  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8        y2  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine spline00 (x, y, n, y2)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1685,6 +2126,27 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine splin2
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       x1a  XXX-meaning
+c! @param [in,out]   real*8       x2a  XXX-meaning
+c! @param [in,out]   real*8        ya  XXX-meaning
+c! @param [in,out]   real*8       y2a  XXX-meaning
+c! @param [in,out]   real*8         m  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8        x1  XXX-meaning
+c! @param [in,out]   real*8        x2  XXX-meaning
+c! @param [in,out] implicit         y  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine splin2 (x1a, x2a, ya, y2a, m, n, x1, x2, y)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1714,6 +2176,22 @@ cU    USES spline,splint
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgaunt(ion, ndel, xsi)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       ion  XXX-meaning
+c! @param [in,out] integer*4      ndel  XXX-meaning
+c! @param [in,out] integer*4       xsi  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgaunt(ion, ndel, xsi)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1785,6 +2263,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fheavyside(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fheavyside(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1805,6 +2297,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgamln(az)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        az  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgamln(az)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1844,6 +2350,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgserr(a, x, gln)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       gln  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgserr(a, x, gln)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1876,6 +2398,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgcff (a, x, gln)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       gln  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgcff (a, x, gln)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1919,6 +2457,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgammln(xx)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        xx  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgammln(xx)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1949,6 +2501,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgamma(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgamma(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1970,6 +2536,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fincgamma(a,x)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fincgamma(a,x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1995,6 +2576,21 @@ c USE THE CONTINUED FRACTION METHOD
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fkenhance(k, x)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         k  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fkenhance(k, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2039,6 +2635,21 @@ c      write(*,*) k,x, min( gam1*rat, 1000.d0)
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fioncha(popul, iord)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popul  XXX-meaning
+c! @param [in,out]   real*8      iord  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fioncha(popul, iord)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2076,6 +2687,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fkramer(ion,atom,t)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       ion  XXX-meaning
+c! @param [in,out] integer*4      atom  XXX-meaning
+c! @param [in,out] integer*4         t  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fkramer(ion,atom,t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2156,6 +2783,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fheirec(ion,atom,t)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       ion  XXX-meaning
+c! @param [in,out] integer*4      atom  XXX-meaning
+c! @param [in,out] integer*4         t  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fheirec(ion,atom,t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2223,6 +2866,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fnoradrec(ion,atom,t)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       ion  XXX-meaning
+c! @param [in,out] integer*4      atom  XXX-meaning
+c! @param [in,out] integer*4         t  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fnoradrec(ion,atom,t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2282,6 +2941,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fmua(de, dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fmua(de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2302,6 +2976,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fpsiy(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fpsiy(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2374,6 +3062,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fphotim()
+c! XXXX - add one line purpose here
+c! @param This function has no parameters, which is surprising
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fphotim()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2414,6 +3116,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fradpress(dr,dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dr  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fradpress(dr,dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2486,6 +3203,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fpressu(t, dh, popul)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fpressu(t, dh, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2516,6 +3249,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fpresse(t, de, dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fpresse(t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2539,6 +3288,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function frectim(t, de, dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function frectim(t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2618,6 +3383,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function frectim2(de)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        de  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function frectim2(de)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2660,6 +3439,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function frectim3(dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function frectim3(dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2811,6 +3604,21 @@ c     end
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function frho(de, dh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function frho(de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2831,6 +3639,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine invrho
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       rho  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8     popul  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine invrho (rho, de, dh, popul)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2856,6 +3680,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fzgas()
+c! XXXX - add one line purpose here
+c! @param This function has no parameters, which is surprising
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fzgas()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2889,6 +3727,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function lambda(t,de,nu)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        nu  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function lambda(t,de,nu)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2934,6 +3788,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fplank(ts, rnuh)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        ts  XXX-meaning
+c! @param [in,out]   real*8      rnuh  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fplank(ts, rnuh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2973,6 +3842,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fnair(lamvac)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    lamvac  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fnair(lamvac)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3089,6 +3972,24 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function qua (x, y, a, b, c)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         y  XXX-meaning
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         b  XXX-meaning
+c! @param [in,out]   real*8         c  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function qua (x, y, a, b, c)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

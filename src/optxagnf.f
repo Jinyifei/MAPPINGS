@@ -2,6 +2,20 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine optxagnf
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     param  XXX-meaning
+c! @param [in,out]   real*8      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine optxagnf (param, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -141,6 +155,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mydiskf
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     param  XXX-meaning
+c! @param [in,out]   real*8     phots  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mydiskf (param, phots)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -381,6 +409,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function mytemp(m0,bhastar,mdot0,rms,r0)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        m0  XXX-meaning
+c! @param [in,out]   real*8   bhastar  XXX-meaning
+c! @param [in,out]   real*8     mdot0  XXX-meaning
+c! @param [in,out]   real*8       rms  XXX-meaning
+c! @param [in,out]   real*8        r0  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function mytemp(m0,bhastar,mdot0,rms,r0)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -418,6 +464,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine donthcomp
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       ear  XXX-meaning
+c! @param [in,out]   real*8        ne  XXX-meaning
+c! @param [in,out] integer*4     param  XXX-meaning
+c! @param [in,out] integer*4    photar  XXX-meaning
+c! @param [in,out]   real*8    photer  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine donthcomp (ear, ne, param, photar, photer)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -521,6 +584,24 @@ c     relativistic corrections. See Lightman & Zdziarski (1987), ApJ
 c     The seed spectrum is blackbody.
 c  version: January 96
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+c****************************************************************
+c> @brief The subroutine thcompton
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    tempbb  XXX-meaning
+c! @param [in,out]   real*8     theta  XXX-meaning
+c! @param [in,out]   real*8     gamma  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]   real*8      jmax  XXX-meaning
+c! @param [in,out]   real*8     sptot  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine thcompton (tempbb, theta, gamma, x, jmax, sptot)
 c
       implicit none
@@ -638,6 +719,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine thermlc
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    tautom  XXX-meaning
+c! @param [in,out]   real*8     theta  XXX-meaning
+c! @param [in,out]   real*8    deltal  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]   real*8      jmax  XXX-meaning
+c! @param [in,out]   real*8    dphesc  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine thermlc (tautom, theta, deltal, x, jmax, dphesc,
      &dphdot, bet, c2)
 c
@@ -720,6 +819,24 @@ c compute new value of dph(x) and new value of dphesc(x)
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine thdscompton
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    tempbb  XXX-meaning
+c! @param [in,out]   real*8     theta  XXX-meaning
+c! @param [in,out]   real*8     gamma  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]   real*8      jmax  XXX-meaning
+c! @param [in,out]   real*8     sptot  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine thdscompton (tempbb, theta, gamma, x, jmax, sptot)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -858,6 +975,23 @@ c      close(33)
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function spp(y,xnonth,nnonth,spnth)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         y  XXX-meaning
+c! @param [in,out]   real*8    xnonth  XXX-meaning
+c! @param [in,out]   real*8    nnonth  XXX-meaning
+c! @param [in,out]   real*8     spnth  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function spp(y,xnonth,nnonth,spnth)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -883,6 +1017,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine xsdskb
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       ear  XXX-meaning
+c! @param [in,out]   real*8        ne  XXX-meaning
+c! @param [in,out] integer*4     param  XXX-meaning
+c! @param [in,out] integer*4       idt  XXX-meaning
+c! @param [in,out]   real*8    photar  XXX-meaning
+c! @param [in,out]   real*8    photer  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine xsdskb (ear, ne, param, idt, photar, photer)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -935,6 +1087,22 @@ c this model has no errors
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mcdspc
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         e  XXX-meaning
+c! @param [in,out]   real*8       tin  XXX-meaning
+c! @param [in,out]   real*8      rin2  XXX-meaning
+c! @param [in,out]   real*8      flux  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mcdspc (e, tin, rin2, flux)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -967,6 +1135,20 @@ c  Flux = photon flux, photons/sec/cm^2/keV
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mcdint
+c! XXXX - add one line purpose here
+c! @param [in,out] parameter        et  XXX-meaning
+c! @param [in,out] parameter     value  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mcdint (et, value)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1036,6 +1218,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine xstitg
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       ear  XXX-meaning
+c! @param [in,out]   real*8      npts  XXX-meaning
+c! @param [in,out] integer*4     param  XXX-meaning
+c! @param [in,out] integer*4    photar  XXX-meaning
+c! @param [in,out]   real*8    photer  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine xstitg (ear, npts, param, photar, photer)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1233,6 +1432,22 @@ c            write(2,*) ens(i),bol7i,bol6,bol6+bol7i
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function yyit2(x,alfa,ro)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx      alfa  XXX-meaning
+c! @param [in,out]   real*8        ro  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function yyit2(x,alfa,ro)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1272,6 +1487,20 @@ c            v = w(i)*DEXP(a2*DLOG(ro*x+z(i))+a3*Dlog(z(i))-db)
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function gamln(az)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        az  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function gamln(az)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1304,6 +1533,21 @@ c      write(*,*) 'gamln : az  z = ',az,z
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function gammi(a,x)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function gammi(a,x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1327,6 +1571,22 @@ c USE THE SERIES REPRESENTATION
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine gserr
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    gamser  XXX-meaning
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]   real*8       gln  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine gserr (gamser, a, x, gln)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1358,6 +1618,22 @@ c      write(*,*) 'gserr: a  x  logx',a,x,log(x)
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine gcff
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8    gammcf  XXX-meaning
+c! @param [in,out]   real*8         a  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]   real*8       gln  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine gcff (gammcf, a, x, gln)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1402,6 +1678,20 @@ c            write(*,*) 'gcff: a1 = ',a1
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function compd0(x)
+c! XXXX - add one line purpose here
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function compd0(x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1426,6 +1716,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function betaint(tau,apprx)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tau  XXX-meaning
+c! @param [in,out]   real*8     apprx  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function betaint(tau,apprx)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1485,6 +1790,24 @@ c      write(*,*) tau1,tau2,b1,b2,b3
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine dinter
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        x0  XXX-meaning
+c! @param [in,out]   real*8        x1  XXX-meaning
+c! @param [in,out]   real*8        x2  XXX-meaning
+c! @param [in,out]   real*8        y0  XXX-meaning
+c! @param [in,out]   real*8        y1  XXX-meaning
+c! @param [in,out]   real*8        y2  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine dinter (x0, x1, x2, y0, y1, y2)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

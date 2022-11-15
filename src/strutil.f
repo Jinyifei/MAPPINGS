@@ -1,19 +1,23 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c     MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c     Creative Commons By Attribution, Share Alike
-c     v4.0 International https://creativecommons.org
-c
-c     1975 Ralph Sutherland, Michael Dopita, Luc Binette,
-c     Ian Evans, Stephen Mettheringham
-c     Brent Groves, David Nicholls,
-c     Yi-Fei Jin, Adam D. Thomas,
-c
-c     Version: v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine newfile
+c! XXXX - add one line purpose here
+c! @param [in,out]  Unknown      pref  XXX-meaning
+c! @param [in,out]  Unknown      suff  XXX-meaning
+c! @param [in,out]  Unknown    filena  XXX-meaning
+c! @param [in,out]  Unknown  strlength  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine newfile (pref, suff, filena, strlength)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -126,6 +130,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function integer*4 function mlen(s)
+c! XXXX - add one line purpose here
+c! @param [in,out] character*         s  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       integer*4 function mlen(s)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -257,6 +275,21 @@ c uppercase
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mytrim
+c! XXXX - add one line purpose here
+c! @param [in,out] character*         s  XXX-meaning
+c! @param [in,out] character*         l  XXX-meaning
+c! @param [in,out] implicit         t  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mytrim (s, l, t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -387,6 +420,21 @@ c uppercase
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine myappend
+c! XXXX - add one line purpose here
+c! @param [in,out] character*         s  XXX-meaning
+c! @param [in,out] character*         a  XXX-meaning
+c! @param [in,out] character*         t  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine myappend (s, a, t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -418,6 +466,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function integer*4 function lenv(s)
+c! XXXX - add one line purpose here
+c! @param [in,out] character*         s  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       integer*4 function lenv(s)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -523,6 +585,20 @@ c uppercase
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine toup
+c! XXXX - add one line purpose here
+c! @param [in,out] character*         s  XXX-meaning
+c! @param [in,out] character*         t  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine toup (s, t)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

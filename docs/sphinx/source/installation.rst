@@ -1,3 +1,5 @@
+Downloading and Installing Mappings
+###################################
 
 Downloading and installing Mappings should be straigtforward.
 

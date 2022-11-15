@@ -3,6 +3,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine mapinit
+c! XXXX - add one line purpose here
+c! @param [in,out]  logical     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine mapinit (error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -941,6 +954,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readiondata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readiondata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1001,6 +1028,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readphiondata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readphiondata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1197,6 +1238,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readcolldata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readcolldata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1349,6 +1404,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readrecomdata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readrecomdata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1484,6 +1553,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readdirecomdata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readdirecomdata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1579,6 +1662,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readhhedata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readhhedata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2337,6 +2434,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readhhecoldata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readhhecoldata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2479,6 +2590,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readphotdat
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readphotdat (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2906,6 +3031,20 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readchx
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readchx (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3017,6 +3156,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readion2
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readion2 (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3291,6 +3444,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readcoll2
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readcoll2 (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3366,6 +3533,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readcont
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readcont (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3745,6 +3926,20 @@ c     end
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readxr3data
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readxr3data (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4088,6 +4283,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readxrldata
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readxrldata (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4402,6 +4611,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fnii(t4,coef)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        t4  XXX-meaning
+c! @param [in,out]   real*8      coef  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fnii(t4,coef)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4430,6 +4654,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function foii(t4,abcd)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        t4  XXX-meaning
+c! @param [in,out]   real*8      abcd  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function foii(t4,abcd)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4450,6 +4689,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fneii(t4,abcdf)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        t4  XXX-meaning
+c! @param [in,out]   real*8     abcdf  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fneii(t4,abcdf)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4471,6 +4725,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readheavyrec
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readheavyrec (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -5350,6 +5618,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine read2level
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine read2level (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -5438,6 +5720,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine read3level
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine read3level (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -5541,6 +5837,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readmultilevel
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readmultilevel (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -6126,6 +6436,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readmultife
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readmultife (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -6635,6 +6959,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readkappadat
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readkappadat (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -6780,6 +7118,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readstardat
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readstardat (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -6848,6 +7200,20 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine readdust
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4      luin  XXX-meaning
+c! @param [in,out] integer*4     error  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine readdust (luin, error)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

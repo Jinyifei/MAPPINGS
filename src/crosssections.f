@@ -2,6 +2,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine crosssections
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       inl  XXX-meaning
+c! @param [in,out] integer*4     tauso  XXX-meaning
+c! @param [in,out]   real*8    sigmat  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine crosssections (inl, tauso, sigmat)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -50,6 +65,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine crosssectionsdust
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       inl  XXX-meaning
+c! @param [in,out] integer*4     tauso  XXX-meaning
+c! @param [in,out]   real*8    sigmat  XXX-meaning
+c! @param [in,out]   real*8  dustsigmat  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine crosssectionsdust (inl, tauso, sigmat, dustsigmat)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

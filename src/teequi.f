@@ -2,6 +2,24 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine teequi
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tei  XXX-meaning
+c! @param [in,out]   real*8       tef  XXX-meaning
+c! @param [in,out]   real*8     edens  XXX-meaning
+c! @param [in,out]   real*8     hdens  XXX-meaning
+c! @param [in,out]   real*8     tstep  XXX-meaning
+c! @param [in,out]   real*8      nmod  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine teequi (tei, tef, edens, hdens, tstep, nmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -190,6 +208,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine teequi2
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       tei  XXX-meaning
+c! @param [in,out]   real*8       tef  XXX-meaning
+c! @param [in,out]   real*8     edens  XXX-meaning
+c! @param [in,out]   real*8     hdens  XXX-meaning
+c! @param [in,out]   real*8     tstep  XXX-meaning
+c! @param [in,out]   real*8      nmod  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine teequi2 (tei, tef, edens, hdens, tstep, nmod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

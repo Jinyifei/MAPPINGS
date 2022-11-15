@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width = device-width">
-      <meta name="format-detection" content="telephone=no">
-       <title>Documentation Center for MAPPINGS V</title>
-      <link rel="stylesheet" href="style.css" />
-<style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width">
+    <meta name="format-detection" content="telephone=no">
+    <title>Documentation Center for MAPPINGS V</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
 
 #heading a:link, #heading  a:visited {
     color: white;
@@ -60,16 +61,20 @@ td.mtitle {
 </style>
   </head>
   <body id="preview">
-      <div id="main" style="display:block;">
-      <img id="logo" src='mv@2x.png' alt="MAPPINGS V"><br>
-       <div style="font-size: 0.9em;">An astrophysical plasma modelling code.</div>
-       <h1 style="font-size: 2.0em;">MAPPINGS&nbsp;V Documentation</h1>
-       <br><strong><a href="https://bitbucket.org/RalphSutherland/mappings">https://bitbucket.org/RalphSutherland/mappings</a></strong> <br>
-       <br><strong><a href="https://mappings.anu.edu.au">https://mappings.anu.edu.au</a></strong> <br>
+    <div id="main" style="display:block;"> <img id="logo"
+        src="mv@2x.png" alt="MAPPINGS V"><br>
+      <div style="font-size: 0.9em;">An astrophysical plasma modelling
+        code.</div>
+      <h1 style="font-size: 2.0em;">MAPPINGS&nbsp;V Documentation</h1>
+      <br>
+      <strong><a href="https://bitbucket.org/RalphSutherland/mappings">https://bitbucket.org/RalphSutherland/mappings</a></strong>
+      <br>
+      <br>
+      <strong><a href="https://mappings.anu.edu.au">https://mappings.anu.edu.au</a></strong>
+      <br>
       <h4><a id="Contact_4"></a>Contact:</h4>
       <pre><code>Ralph.Sutherland@anu.edu.au</code></pre>
-
-<pre><code><strong>     Creative Commons v4.0 International
+      <pre><code><strong>     Creative Commons v4.0 International
      By Attribution, Share Alike
      CC-BY-SA-4.0Intl https://creativecommons.org</strong>
      Science and Development
@@ -78,15 +83,17 @@ td.mtitle {
      Brent Groves, David Nicholls,
      Adam D. Thomas, Yi-Fei Jin, Knox Long
 </code></pre>
-
-<h1>Quickstart Documentation</h1>
-      Documentation for MAPPINGS&nbsp;V is minimal, and is currently being expanded and upgraded.
-      Essential installation information is in the ReadMe files and below. An initial <a href="cookbooks_etc/Mappings_guide.pdf" moz-do-not-send="true">cookbook</a> guide to get a first
-      photoionisation model is provided as the larger documentation is being constructued.<br>
-    </p>
-</code></pre>
-<h2><a id="Quick_Start_Compiling_and_Running_9"></a>Quick Start Compiling and Running:</h2>
-<pre><code>
+      <h1>Quickstart Documentation</h1>
+      Documentation for MAPPINGS&nbsp;V is minimal, and is currently
+      being expanded and upgraded. Essential installation information is
+      in the ReadMe files and below. An initial <a
+        href="cookbooks_etc/Mappings_guide.pdf" moz-do-not-send="true">cookbook</a>
+      guide to get a first photoionisation model is provided as the
+      larger documentation is being constructued.<br>
+      <p></p>
+      <h2><a id="Quick_Start_Compiling_and_Running_9"></a>Quick Start
+        Compiling and Running:</h2>
+      <pre><code>
     (note on some systems use gmake instead of make)
 
     &gt; cd mappings/src
@@ -97,17 +104,16 @@ or on multi-cpu systems a parallel build is faster:
     &gt; make -j build
 
 </code></pre>
-[wait a while…]
-Then run interactively in the lab:
-
-<pre><code>&gt; cd ../lab
+      [wait a while…] Then run interactively in the lab:
+      <pre><code>&gt; cd ../lab
 &gt; ./map51
 
 </code></pre>
-    <p>
-<h2>The Local Mappings directory structure</h2>
-(see advanced usage documentation for shared and distributed options)
-<pre><code>
+      <p> </p>
+      <h2>The Local Mappings directory structure</h2>
+      (see advanced usage documentation for shared and distributed
+      options)
+      <pre><code>
 mappings_V/
 src/
     mastercode/
@@ -128,101 +134,124 @@ misc/
     dered/
     fundamental_constants/
 </code></pre>
-
-<h2>Key Directories and Files</h2>
-<ul>
-
-<li> lab/  This is where the models are made and run.  The runtime files such
-as map.prefs are here and the essential data directory with the runtime data
-files.
-<li> map51: The executable, also sometimes built with other names
-
-<li> map.prefs   Essential startup data - must be present.
-<li> mapStd.prefs  A standard 16 atom startup in case map.prefs is lost for any reason, can be copied and renamed map.prefs if needed
-<li> mapFull.prefs  A full 30 atom startup in case map.prefs is lost for any reason, can be copied and renamed map.prefs if needed
-
-<li> data/: Contains the atomic data for MAPPINGS V. Read at runtime in mapinit.f.  Essential and must be present and complete.
-<li> abund/:  A set of useful abundance settings that can be read interactively during a run.
-<li> atmos/:  An optional set of useful radiation source files and stellar atmosphere models.  Optional.
-* scripts/: A collection of useful of UNIX shell and MAPPINGS scripts for testing and running mappings models when not running interactively.
-
-<li>  src/
- Contains the code area and the Makefile(s).  There is a standard makefile for bash shell
- and gfortran and alternatives in a subdirectory for other setups for use as templates.
-All the commonly adjusted user parameters are near the top of the makefile.
-</code></pre>
-</ul>
-
-<h1>Primary Reference Documentation</h1>
-
-<h2>Sphinx and Cookbooks</h2>
-    <p> Note:&nbsp; Documentation is an ongoing effort, and contributions are welcome. </p>
-    <p> At present the main resources are as follows: </p>
-
-    <ul>
-      <li>An initial getting started tutorial version is
-      <a href="cookbooks_etc/Mappings_guide.pdf" moz-do-not-send="true">cookbook</a>
-        which describes how to install MAPPINGS and run a first
-        photoinisation nebula model.</li>
-      <li> A <a href="sphinx/html/index.html" moz-do-not-send="true">Sphinx</a>
-        repository, which ultimately will be the main documentation for
-        the MAPPINGS codes<br>
-      </li>
+      <h2>Key Directories and Files</h2>
       <ul>
-        <li>This is part of the MAPPINGS&nbsp;V distribution. All of the
-          files are tracked in git </li>
-        <li>(Ultimately we want this avalialble on ReadtheDics)<br>
-        </li>
+        <li> lab/ This is where the models are made and run. The runtime
+          files such as map.prefs are here and the essential data
+          directory with the runtime data files. </li>
+        <li> map51: The executable, also sometimes built with other
+          names </li>
+        <li> map.prefs Essential startup data - must be present. </li>
+        <li> mapStd.prefs A standard 16 atom startup in case map.prefs
+          is lost for any reason, can be copied and renamed map.prefs if
+          needed </li>
+        <li> mapFull.prefs A full 30 atom startup in case map.prefs is
+          lost for any reason, can be copied and renamed map.prefs if
+          needed </li>
+        <li> data/: Contains the atomic data for MAPPINGS V. Read at
+          runtime in mapinit.f. Essential and must be present and
+          complete. </li>
+        <li> abund/: A set of useful abundance settings that can be read
+          interactively during a run. </li>
+        <li> atmos/: An optional set of useful radiation source files
+          and stellar atmosphere models. Optional. * scripts/: A
+          collection of useful of UNIX shell and MAPPINGS scripts for
+          testing and running mappings models when not running
+          interactively. </li>
+        <li> src/ Contains the code area and the Makefile(s). There is a
+          standard makefile for bash shell and gfortran and alternatives
+          in a subdirectory for other setups for use as templates. All
+          the commonly adjusted user parameters are near the top of the
+          makefile. </li>
       </ul>
+      <h1>Primary Reference Documentation</h1>
+      <h2>Sphinx and Cookbooks</h2>
+      <p> Note:&nbsp; Documentation is an ongoing effort, and
+        contributions are welcome. </p>
+      <p> At present the main resources are as follows: </p>
       <ul>
-        <li> This documentation itself needs to be updated when the code
-          changes (obviously)<br>
-        </li>
-        <li> Instructions on how to do the updates are <href="rst
-            meta.html"="">locally is <a
-              href="file:///home/long/Python/docs/sphinx/html/meta.html">here</a>
-            <br>
-          </href="rst"></li>
-        <li> It requires a software package known as <a
-            href="http://www.sphinx-doc.org/en/master/">sphinx</a></li>
-        <li>The command to generate the repository is currently:</li>
-        <ul>
-          <li>cd docs/sphinx/; make html</li>
-        </ul>
-      </ul>
-
-<!--
-Comment out Doxygen until it is implemented
-      <li>Doxygen</li>
-      <ul>
-        <ul>
-          <ul>
-          </ul>
-        </ul>
-        <li>The source code does not currently have Doxygen headers, but
-          a working Doxygen configuration file can be found in the
-          doxygen subdirectory</li>
-        <ul>
-          <ul>
-          </ul>
-        </ul>
-        <li>Assuming you have doxygen and grahphviz installed, one can
-          create caller diagrams for MAPPINGS, by issuing the
-          command&nbsp; doxygen mappings_docs.config</li>
-        <ul>
-          <ul>
-          </ul>
-        </ul>
-        <li>Once you have done this, you can find the starting point to
-          doxygen <a moz-do-not-send="true"
-            href="doxygen/html/index.html">here.</a><br>
+        <li>An initial getting started tutorial version is <a
+            href="cookbooks_etc/Mappings_guide.pdf"
+            moz-do-not-send="true">cookbook</a> which describes how to
+          install MAPPINGS and run a first photoinisation nebula model.</li>
+        <li> A <a href="sphinx/html/index.html" moz-do-not-send="true">Sphinx</a>
+          repository, which ultimately will be the main documentation
+          for the MAPPINGS codes<br>
         </li>
         <ul>
+          <li>This is part of the MAPPINGS&nbsp;V distribution. All of
+            the files are tracked in git </li>
+          <li>(Ultimately we want this avalialble on ReadtheDics)<br>
+          </li>
+        </ul>
+        <ul>
+          <li> This documentation itself needs to be updated when the
+            code changes (obviously)<br>
+          </li>
+          <li> Instructions on how to do the updates are <href="rst
+              meta.html"="">locally is <a
+                href="file:///home/long/Python/docs/sphinx/html/meta.html">here</a>
+              <br>
+            </href="rst></li>
+          <li> It requires a software package known as <a
+              href="http://www.sphinx-doc.org/en/master/">sphinx</a></li>
+          <li>The command to generate the repository is</li>
           <ul>
+            <li>cd docs/sphinx/; make html</li>
           </ul>
         </ul>
       </ul>
- -->
-    </ul>
+      <h2>Doxygen<br>
+      </h2>
+      <ul>
+        <ul>
+          <ul>
+          </ul>
+        </ul>
+        <li>
+          <meta http-equiv="content-type" content="text/html;
+            charset=UTF-8">
+          A<a moz-do-not-send="true" href="doxygen/html/index.html">
+            Doxygen</a>, repository which provides some information
+          about the source code.</li>
+      </ul>
+      <ul>
+        <ul>
+          <li>&nbsp;Like the Sphinx repository, this is in an elementary
+            state, and work to improve this is ongoing<br>
+          </li>
+          <li>Like the Sphinx repository, the the doxygen help files
+            themselves are not part of the repository., and must be
+            compiled by the user, and this procedure must be repeated
+            after updates, to keep the doxygen files up to date.<br>
+          </li>
+          <li>The command to generate the Doxygen reposiory is<br>
+          </li>
+          <ul>
+            <ul>
+              <li>cd docs/doxygen; doxygen python_docs.config</li>
+            </ul>
+          </ul>
+        </ul>
+        <ul>
+          <li>Of course the assumes that you have doxygen <br>
+          </li>
+          <ul>
+            <li>The home page for the Doxygen S/W&nbsp; is <a
+                href="http://www.doxygen.nl/">here</a>.&nbsp; <br>
+            </li>
+            <li>To get the (caller) graphs that show which routines call
+              which other routines, you also need to have the dot tool
+              from <a href="http://www.graphviz.org/">Graphviz</a>
+              installed as well.&nbsp; </li>
+          </ul>
+        </ul>
+      </ul>
+      <br>
+      <ul>
+        <ul>
+        </ul>
+      </ul>
+    </div>
   </body>
 </html>

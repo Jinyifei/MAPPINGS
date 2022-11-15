@@ -2,6 +2,21 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine freefree
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine freefree (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -135,6 +150,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine frefre
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        de  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine frefre (t, de, dh)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -203,6 +233,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgfflin(m,g2,u,il,jl)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4         m  XXX-meaning
+c! @param [in,out] integer*4        g2  XXX-meaning
+c! @param [in,out]   real*8         u  XXX-meaning
+c! @param [in,out]   real*8        il  XXX-meaning
+c! @param [in,out]   real*8        jl  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgfflin(m,g2,u,il,jl)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -256,6 +304,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgfflog(m,g2,u,il,jl)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4         m  XXX-meaning
+c! @param [in,out] integer*4        g2  XXX-meaning
+c! @param [in,out]   real*8         u  XXX-meaning
+c! @param [in,out]   real*8        il  XXX-meaning
+c! @param [in,out]   real*8        jl  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgfflog(m,g2,u,il,jl)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -314,6 +380,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgfflogpoly(m,g2,u,il,jl)
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4         m  XXX-meaning
+c! @param [in,out] integer*4        g2  XXX-meaning
+c! @param [in,out]   real*8         u  XXX-meaning
+c! @param [in,out]   real*8        il  XXX-meaning
+c! @param [in,out]   real*8        jl  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgfflogpoly(m,g2,u,il,jl)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -363,6 +447,24 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine polint
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        xa  XXX-meaning
+c! @param [in,out]   real*8        ya  XXX-meaning
+c! @param [in,out]   real*8         n  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]  integer         y  XXX-meaning
+c! @param [in,out]  integer        dy  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine polint (xa, ya, n, x, y, dy)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -414,6 +516,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fgffspline2(lg2, lu)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       lg2  XXX-meaning
+c! @param [in,out]   real*8        lu  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fgffspline2(lg2, lu)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

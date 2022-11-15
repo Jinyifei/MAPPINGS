@@ -2,6 +2,26 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine preion
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     lterm  XXX-meaning
+c! @param [in,out] integer*4      luop  XXX-meaning
+c! @param [in,out] integer*4     tsmax  XXX-meaning
+c! @param [in,out] integer*4        vs  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8       def  XXX-meaning
+c! @param [in,out]   real*8       tef  XXX-meaning
+c! @param [in,out]   real*8      qtot  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine preion (lterm, luop, tsmax, vs, dh, def, tef, qtot,
      &drta)
 c

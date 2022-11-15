@@ -1,21 +1,20 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c     MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c     https://bitbucket.org/RalphSutherland/mappings
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c     Version v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine shock5
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shock5 ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -91,6 +90,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine shock5setup
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4  iterations  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shock5setup (iterations)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1098,6 +1110,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine shock5headers
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4  iterations  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shock5headers (iterations)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1600,6 +1625,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine shocksummary
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     lunit  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shocksummary (lunit)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1707,6 +1745,19 @@ c
 c
       return
       end
+
+c****************************************************************
+c> @brief The subroutine shock5jump
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shock5jump ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1905,6 +1956,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine shock5check
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4       its  XXX-meaning
+c! @param [in,out] integer*4    maxits  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shock5check (its, maxits)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -1999,6 +2064,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine shock5precursor
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4  iteration  XXX-meaning
+c! @param [in,out] integer*4    maxits  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shock5precursor (iteration, maxits)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2623,6 +2702,26 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine multizone
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4         n  XXX-meaning
+c! @param [in,out] integer*4         x  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       nte  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        ne  XXX-meaning
+c! @param [in,out] integer*4        nh  XXX-meaning
+c! @param [in,out] integer*4     popfr  XXX-meaning
+c! @param [in,out]   real*8  popintfr  XXX-meaning
+c! @param [in,out]   real*8      smod  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine multizone (n, x, nte, ne, nh, popfr, popintfr, smod)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2719,6 +2818,27 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function flocallosses(tm,ne,nh,pp,r,dr,dv,w)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8        tm  XXX-meaning
+c! @param [in,out]   real*8        ne  XXX-meaning
+c! @param [in,out]   real*8        nh  XXX-meaning
+c! @param [in,out]   real*8        pp  XXX-meaning
+c! @param [in,out]   real*8         r  XXX-meaning
+c! @param [in,out]   real*8        dr  XXX-meaning
+c! @param [in,out]   real*8        dv  XXX-meaning
+c! @param [in,out]   real*8         w  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function flocallosses(tm,ne,nh,pp,r,dr,dv,w)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2761,6 +2881,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine compsh5
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4  iteration  XXX-meaning
+c! @param [in,out] integer*4    maxits  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine compsh5 (iteration, maxits)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3796,6 +3930,25 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c***************************************************************
+c> @brief The function real*8 function fdynamictimestep(t,dh,x,vel,p,netloss)
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8         t  XXX-meaning
+c! @param [in,out]   real*8        dh  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c! @param [in,out]   real*8       vel  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         p  XXX-meaning
+c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   netloss  XXX-meaning
+c!
+c! @return
+c!  XXXX This function returns a %s number with is
+c!  XXXX say explictly what is returned
+c!
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       real*8 function fdynamictimestep(t,dh,x,vel,p,netloss)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3842,6 +3995,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine protostate
+c! XXXX - add one line purpose here
+c! @param [in,out] integer*4     lunit  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine protostate (lunit)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -3903,6 +4069,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine shock5filenames
+c! XXXX - add one line purpose here
+c! @param [in,out] character*        px  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine shock5filenames (px)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4155,6 +4334,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine createS5files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine createS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4306,6 +4498,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine closeS5files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine closeS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4374,6 +4579,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine appendS5files
+c! XXXX - add one line purpose here
+c! @param This routine has no parameters
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine appendS5files ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -2,6 +2,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine showpop
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine showpop (popin)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -21,6 +34,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine copypop
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c! @param [in,out]   real*8    popout  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine copypop (popin, popout)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -37,6 +64,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine addpop
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c! @param [in,out]   real*8    popout  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine addpop (popin, popout)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -53,6 +94,19 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine clearpop
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine clearpop (popin)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -69,6 +123,20 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine scalepop
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c! @param [in,out]   real*8         x  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine scalepop (popin, x)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -85,6 +153,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine copysteppop
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8      step  XXX-meaning
+c! @param [in,out]   real*8     popin  XXX-meaning
+c! @param [in,out]   real*8    popout  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine copysteppop (step, popin, popout)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -105,6 +188,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine copypopstep
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c! @param [in,out]   real*8      step  XXX-meaning
+c! @param [in,out]   real*8    popout  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine copypopstep (popin, step, popout)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -121,6 +219,22 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine averinto
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8       wei  XXX-meaning
+c! @param [in,out]   real*8      popw  XXX-meaning
+c! @param [in,out]   real*8     popco  XXX-meaning
+c! @param [in,out]   real*8    popout  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine averinto (wei, popw, popco, popout)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -150,6 +264,23 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine difpop
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c! @param [in,out]   real*8     popfi  XXX-meaning
+c! @param [in,out]   real*8       tre  XXX-meaning
+c! @param [in,out]   real*8       lim  XXX-meaning
+c! @param [in,out]   real*8       dif  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine difpop (popin, popfi, tre, lim, dif)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -207,6 +338,21 @@ c
       end
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief The subroutine difhhe
+c! XXXX - add one line purpose here
+c! @param [in,out]   real*8     popin  XXX-meaning
+c! @param [in,out]   real*8     popfi  XXX-meaning
+c! @param [in,out]   real*8       dif  XXX-meaning
+c!
+c! @return
+c!  XXXX Add one or more lines describing what is updated
+c!
+c! @details
+c!  XXXX Enter details here
+c***************************************************************
+
       subroutine difhhe (popin, popfi, dif)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -44,6 +44,15 @@ c     Ralph.Sutherland@anu.edu.au
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
+
+c****************************************************************
+c> @brief program mappings is the main program
+c! for the astrophysical plasma modelling code known as Mappings
+c! XXX add addtional overview as desirable
+c! @details
+c!  XXXX Enter details here
+c****************************************************************
+
       program mappings
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
