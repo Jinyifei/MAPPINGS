@@ -23,6 +23,8 @@ CODDIR = src
 #-------------------------------
 # Install Areas
 #
+# std home area ~/mappings520 with optional env vars
+#
 INSTALLBASE = $(shell echo ${HOME})/mappings520
 INSTALLDATA ="${INSTALLBASE}"
 INSTALLBIN  ="${INSTALLBASE}/lab"
@@ -469,7 +471,7 @@ install:
 	rm -rf ${INSTALLDATA}/docs/doxygen
 	cp for_tcshrc.txt ${INSTALLBASE}/
 	cp for_bashrc.txt ${INSTALLBASE}/
-	@echo ' Installed ${OUTNAME} into ${INSTALLBIN}s'
+	@echo ' Installed ${OUTNAME} into ${INSTALLBIN}'
 	@echo ' MAPPINGS V Installed into ${INSTALLBASE}'
 	@echo ' Use "for_bashrc.txt" and "for_tcshrc.txt" to edit'
 	@echo ' startup environment, if needed, find in ${INSTALLBASE}.'

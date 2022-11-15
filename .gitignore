@@ -38,3 +38,5 @@ docs/sphinx/venv/
 docs/doxygen/html/
 docs/doxygen/latex/
 
+for_bashrc.txt
+for_tcshrc.txt
