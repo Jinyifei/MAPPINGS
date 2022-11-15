@@ -1,19 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c       Version v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -22,10 +8,10 @@ c> @brief The subroutine optxagnf
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8     param  XXX-meaning
 c! @param [in,out]   real*8      flux  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -175,10 +161,10 @@ c> @brief The subroutine mydiskf
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8     param  XXX-meaning
 c! @param [in,out]   real*8     phots  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -432,11 +418,11 @@ c! @param [in,out]   real*8   bhastar  XXX-meaning
 c! @param [in,out]   real*8     mdot0  XXX-meaning
 c! @param [in,out]   real*8       rms  XXX-meaning
 c! @param [in,out]   real*8        r0  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -487,10 +473,10 @@ c! @param [in,out]   real*8        ne  XXX-meaning
 c! @param [in,out] integer*4     param  XXX-meaning
 c! @param [in,out] integer*4    photar  XXX-meaning
 c! @param [in,out]   real*8    photer  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -608,10 +594,10 @@ c! @param [in,out]   real*8     gamma  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out]   real*8      jmax  XXX-meaning
 c! @param [in,out]   real*8     sptot  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -743,10 +729,10 @@ c! @param [in,out]   real*8    deltal  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out]   real*8      jmax  XXX-meaning
 c! @param [in,out]   real*8    dphesc  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -843,10 +829,10 @@ c! @param [in,out]   real*8     gamma  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out]   real*8      jmax  XXX-meaning
 c! @param [in,out]   real*8     sptot  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -997,11 +983,11 @@ c! @param [in,out]   real*8         y  XXX-meaning
 c! @param [in,out]   real*8    xnonth  XXX-meaning
 c! @param [in,out]   real*8    nnonth  XXX-meaning
 c! @param [in,out]   real*8     spnth  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -1041,10 +1027,10 @@ c! @param [in,out] integer*4     param  XXX-meaning
 c! @param [in,out] integer*4       idt  XXX-meaning
 c! @param [in,out]   real*8    photar  XXX-meaning
 c! @param [in,out]   real*8    photer  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1109,10 +1095,10 @@ c! @param [in,out]   real*8         e  XXX-meaning
 c! @param [in,out]   real*8       tin  XXX-meaning
 c! @param [in,out]   real*8      rin2  XXX-meaning
 c! @param [in,out]   real*8      flux  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1155,10 +1141,10 @@ c> @brief The subroutine mcdint
 c! XXXX - add one line purpose here
 c! @param [in,out] parameter        et  XXX-meaning
 c! @param [in,out] parameter     value  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1241,10 +1227,10 @@ c! @param [in,out]   real*8      npts  XXX-meaning
 c! @param [in,out] integer*4     param  XXX-meaning
 c! @param [in,out] integer*4    photar  XXX-meaning
 c! @param [in,out]   real*8    photer  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1453,11 +1439,11 @@ c! XXXX - add one line purpose here
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx      alfa  XXX-meaning
 c! @param [in,out]   real*8        ro  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -1506,11 +1492,11 @@ c***************************************************************
 c> @brief The function real*8 function gamln(az)
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8        az  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -1553,11 +1539,11 @@ c> @brief The function real*8 function gammi(a,x)
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8         a  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -1593,10 +1579,10 @@ c! @param [in,out]   real*8    gamser  XXX-meaning
 c! @param [in,out]   real*8         a  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out]   real*8       gln  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1640,10 +1626,10 @@ c! @param [in,out]   real*8    gammcf  XXX-meaning
 c! @param [in,out]   real*8         a  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out]   real*8       gln  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1697,11 +1683,11 @@ c***************************************************************
 c> @brief The function real*8 function compd0(x)
 c! XXXX - add one line purpose here
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -1736,11 +1722,11 @@ c> @brief The function real*8 function betaint(tau,apprx)
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8       tau  XXX-meaning
 c! @param [in,out]   real*8     apprx  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -1814,10 +1800,10 @@ c! @param [in,out]   real*8        x2  XXX-meaning
 c! @param [in,out]   real*8        y0  XXX-meaning
 c! @param [in,out]   real*8        y1  XXX-meaning
 c! @param [in,out]   real*8        y2  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************

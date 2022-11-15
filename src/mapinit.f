@@ -1,19 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c       Version v5.2.0
-c
+      include 'credits.txt'
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -22,10 +8,10 @@ c****************************************************************
 c> @brief The subroutine mapinit
 c! XXXX - add one line purpose here
 c! @param [in,out]  logical     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -50,11 +36,13 @@ c
       real*8 en,x,ez,xe,efit,lz,logte
       integer*4 i,ion,j,k,line,luin,atom,ionindex
       integer*4 luop,series,trans,m,nz
-      integer*4 checksum
+      integer*4 checksum,foundidx
 c
       character ibell*4,ilgg*4, ibuf(19)*4
       character env_var*512
       character homedir*512
+      character prefline*256
+      character optname*256
 cc
 cc Test io variables
 c      character sfx*16, fl*128
@@ -80,48 +68,53 @@ c
 c
 c search path for data
 c local area  ./data, etc
+c then ~/mappings520
 c then location given by MAPDATA enviroment variable
 c       replace ~/ with HOME enviroment variable/
 c then /opt/local
 c then /usr/local then
 c surrender.
 c
-        call get_environment_variable('HOME',
-     &                                 env_var,status=check_env)
-        homedir=trim(env_var)
+      call get_environment_variable ('HOME', env_var, status=check_env)
+      homedir=trim(env_var)
 c
       inquire (file='data/ATDAT.txt',exist=iexi)
       if (iexi) then
         datadir='.'
         dtlen=1
-      else if (iexi.eqv..false.) then
-        call get_environment_variable('MAPDATA',
-     &                                 env_var,status=check_env)
-C       write(*,*) ' *** ATOMIC Data from : ',env_var,check_env
+      elseif (iexi.eqv..false.) then
+        datadir=trim(homedir)//'/mappings520'
+        inquire (file=trim(datadir)//'/data/ATDAT.txt',exist=iexi)
+        dtlen=len(trim(datadir))
+      elseif (iexi.eqv..false.) then
+        call get_environment_variable ('MAPDATA', env_var, status=
+     &   check_env)
+c       write(*,*) ' *** ATOMIC Data from : ',env_var,check_env
         datadir=trim(env_var)
-C       write(*,*) ' *** ATOMIC Data from : ',datadir
+c       write(*,*) ' *** ATOMIC Data from : ',datadir
         dtlen=len(trim(datadir))
         if (datadir(1:1).eq.'~') then
-           datadir=trim(homedir)//datadir(2:dtlen)
-           dtlen=len(trim(datadir))
+          datadir=trim(homedir)//datadir(2:dtlen)
+          dtlen=len(trim(datadir))
         endif
         inquire (file=trim(datadir)//'/data/ATDAT.txt',exist=iexi)
-      else if (iexi.eqv..false.) then
+      elseif (iexi.eqv..false.) then
         datadir='/opt/local/share/mappings'
         dtlen=len(trim(datadir))
         inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
-      else if (iexi.eqv..false.) then
+      elseif (iexi.eqv..false.) then
         datadir='/usr/local/share/mappings'
         dtlen=len(trim(datadir))
         inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
-      else if (iexi.eqv..false.) then
-         m=lenv(filename)
-         write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
-         write (*,*) ' MV requires a valid local data/ directory or'
-         write (*,*) ' a valid shared /usr/local/share/mappings/data/'
-         write (*,*) ' or a shared /opt/local/share/mappings/data/'
-         write (*,*) ' directory.  '
-         stop
+      elseif (iexi.eqv..false.) then
+        m=lenv(filename)
+        write (*,*) ' ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
+        write (*,*) ' MV requires a valid local data/ directory or'
+        write (*,*) ' a home area: ',trim(datadir)//'/data',' or'
+        write (*,*) ' a valid shared /usr/local/share/mappings/data/'
+        write (*,*) ' or a shared /opt/local/share/mappings/data/'
+        write (*,*) ' directory.  '
+        stop
       endif
 c
       filename=''
@@ -136,7 +129,7 @@ c
       if ((dtlen.eq.1).and.(datadir(1:dtlen).eq.'.')) then
         write (*,10) 'Local = data'
       else
-        write (*,10) 'Shared = '//datadir(1:dtlen)//'/data'
+        write (*,10) 'Shared = '//trim(datadir)//'/data'
       endif
 c
 c     formats for reading files
@@ -219,6 +212,8 @@ c
       jlin='N'
       jcol='N'
 c
+      photbinfile='PHOTDAT'
+c
       inquire (file='map.prefs',exist=iexi)
       if (iexi) then
         open (luin,file='map.prefs',status='OLD')
@@ -242,7 +237,7 @@ c
         invdion(i)=1.d0/dion(i)
         zmap(k)=j
         mapz(j)=k
-        if (i.ne.j) goto 340
+        if (i.ne.j) goto 380
    60 continue
 c
       do i=1,atypes
@@ -260,7 +255,34 @@ c
         if (j.eq.23) elem_len(i)=1
       enddo
 c
+   70 format(a)
+   80 read (luin,fmt=70,end=100) prefline
+      if (prefline(1:1).eq.'%') goto 80
+c
+      foundidx=index(trim(prefline),'PHOTDAT File')
+      if (foundidx.gt.0) then
+        read (luin,70) optname
+        inquire (file=trim(optname),exist=iexi)
+        if (iexi.eqv..false.) then
+          prefline=trim(datadir)//'/data/'//trim(optname)
+          inquire (file=trim(prefline),exist=iexi)
+          if (iexi.eqv..false.) then
+            write (*,*) ' ERR: eV BINS not found, default to PHOTDAT'
+            photbinfile='PHOTDAT'
+          else
+            photbinfile=trim(optname)
+          endif
+        else
+          photbinfile=trim(optname)
+        endif
+      endif
+c
+   90 read (luin,fmt=70,end=100) optname
+      if (optname(1:1).eq.'%') goto 90
+c
+  100 continue
       close (luin)
+      write (*,*) 'Energy Bins PHOTDAT File v5.2.0 : ',trim(photbinfile)
 c
 c
 c default switch settings
@@ -483,26 +505,26 @@ c
       call readmultife (luin, error)
 c
       if (expertmode.gt.0) then
-   70 format(/
+  110 format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & '  MAPPINGS V : Line Counts by Ion and Element',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-        write (*,70)
-   80 format(/t9,30(2x,a2,1x))
-        write (*,80) (elem(i),i=1,atypes)
-   90 format(' ',a6,30(i5))
+        write (*,110)
+  120 format(/t9,30(2x,a2,1x))
+        write (*,120) (elem(i),i=1,atypes)
+  130 format(' ',a6,30(i5))
         do j=1,mxion
           checksum=0
           do i=1,atypes
             checksum=checksum+nialines(j,i)
           enddo
           if (checksum.gt.0) then
-            write (*,90) rom(j),(nialines(j,i),i=1,atypes)
+            write (*,130) rom(j),(nialines(j,i),i=1,atypes)
           endif
         enddo
-  100 format(
+  140 format(
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-        write (*,100)
+        write (*,140)
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -518,11 +540,11 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-  110 format(/
+  150 format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & '  MAPPINGS V: Data read successfully ',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-      write (*,110)
+      write (*,150)
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Informal Test Area
@@ -535,11 +557,11 @@ c
       enddo
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  120 format(/
+  160 format(/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & '  MAPPINGS V: Begin General Initialisation',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
-      write (*,120)
+      write (*,160)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -577,10 +599,10 @@ c
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             if (i.eq.1) ionstartbin=j
             photbinstart(i)=j
-            goto 130
+            goto 170
           endif
         enddo
-  130   continue
+  170   continue
       enddo
 c
 c      *FIND CORRESPONDING ENERGY BINS IN EPHOT(N) FOR
@@ -594,10 +616,10 @@ c
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             xr3lines_bin(i)=j
             if (j.le.xr3minxbin) xr3minxbin=j
-            goto 140
+            goto 180
           endif
         enddo
-  140   continue
+  180   continue
       enddo
 c
 c
@@ -609,10 +631,10 @@ c
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             xrllines_bin(i)=j
             if (j.le.xrlminxbin) xrlminxbin=j
-            goto 150
+            goto 190
           endif
         enddo
-  150   continue
+  190   continue
       enddo
 c
 c      minxbin=infph-1
@@ -638,10 +660,10 @@ c
           do j=1,infph-1
             if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
               hbin(line,series)=j
-              goto 160
+              goto 200
             endif
           enddo
-  160     continue
+  200     continue
         enddo
       enddo
 c
@@ -654,10 +676,10 @@ c
           do j=1,infph-1
             if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
               hebin(line,series)=j
-              goto 170
+              goto 210
             endif
           enddo
-  170     continue
+  210     continue
         enddo
       enddo
 c
@@ -673,10 +695,10 @@ c
             do j=1,infph-1
               if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
                 xhbin(line,series,atom)=j
-                goto 180
+                goto 220
               endif
             enddo
-  180       continue
+  220       continue
           enddo
         enddo
       enddo
@@ -691,10 +713,10 @@ c             en = 1.985940d-16/f3lam(trans,ion)
           do j=1,infph-1
             if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
               f3bin(trans,ion)=j
-              goto 190
+              goto 230
             endif
           enddo
-  190     continue
+  230     continue
         enddo
       enddo
 c
@@ -707,10 +729,10 @@ c
           do j=1,infph-1
             if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
               fmbin(trans,ionindex)=j
-              goto 200
+              goto 240
             endif
           enddo
-  200     continue
+  240     continue
         enddo
       enddo
 cc
@@ -724,10 +746,10 @@ c
           do j=1,infph-1
             if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
               febin(trans,ionindex)=j
-              goto 210
+              goto 250
             endif
           enddo
-  210     continue
+  250     continue
         enddo
       enddo
 cc
@@ -773,10 +795,10 @@ c
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             heibin(i)=j
-            goto 220
+            goto 260
           endif
         enddo
-  220   continue
+  260   continue
       enddo
 c New HeI lines
       do i=1,nheislines
@@ -785,10 +807,10 @@ c New HeI lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             heisbin(i)=j
-            goto 230
+            goto 270
           endif
         enddo
-  230   continue
+  270   continue
       enddo
       do i=1,nheitlines
         en=(lmev/heitlam(i))
@@ -796,10 +818,10 @@ c New HeI lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             heitbin(i)=j
-            goto 240
+            goto 280
           endif
         enddo
-  240   continue
+  280   continue
       enddo
 c heavy element recomb lines
       do i=1,nrccii
@@ -808,7 +830,7 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rccii_bin(i)=j
-            goto 250
+            goto 290
           endif
         enddo
   250   continue
@@ -938,10 +960,10 @@ c> @brief The subroutine readiondata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1012,10 +1034,10 @@ c> @brief The subroutine readphiondata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1222,10 +1244,10 @@ c> @brief The subroutine readcolldata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1388,10 +1410,10 @@ c> @brief The subroutine readrecomdata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1537,10 +1559,10 @@ c> @brief The subroutine readdirecomdata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1646,10 +1668,10 @@ c> @brief The subroutine readhhedata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -2418,10 +2440,10 @@ c> @brief The subroutine readhhecoldata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -2574,10 +2596,10 @@ c> @brief The subroutine readphotdat
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -3015,10 +3037,10 @@ c> @brief The subroutine readchx
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -3140,10 +3162,10 @@ c> @brief The subroutine readion2
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -3428,10 +3450,10 @@ c> @brief The subroutine readcoll2
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -3517,10 +3539,10 @@ c> @brief The subroutine readcont
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -3910,10 +3932,10 @@ c> @brief The subroutine readxr3data
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -4267,10 +4289,10 @@ c> @brief The subroutine readxrldata
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -4595,11 +4617,11 @@ c> @brief The function real*8 function fnii(t4,coef)
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8        t4  XXX-meaning
 c! @param [in,out]   real*8      coef  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -4638,11 +4660,11 @@ c> @brief The function real*8 function foii(t4,abcd)
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8        t4  XXX-meaning
 c! @param [in,out]   real*8      abcd  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -4673,11 +4695,11 @@ c> @brief The function real*8 function fneii(t4,abcdf)
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8        t4  XXX-meaning
 c! @param [in,out]   real*8     abcdf  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -4709,10 +4731,10 @@ c> @brief The subroutine readheavyrec
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -5602,10 +5624,10 @@ c> @brief The subroutine read2level
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -5704,10 +5726,10 @@ c> @brief The subroutine read3level
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -5821,10 +5843,10 @@ c> @brief The subroutine readmultilevel
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -6420,10 +6442,10 @@ c> @brief The subroutine readmultife
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -6943,10 +6965,10 @@ c> @brief The subroutine readkappadat
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -7102,10 +7124,10 @@ c> @brief The subroutine readstardat
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -7184,10 +7206,10 @@ c> @brief The subroutine readdust
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luin  XXX-meaning
 c! @param [in,out] integer*4     error  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************

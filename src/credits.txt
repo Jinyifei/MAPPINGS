@@ -1,4 +1,3 @@
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     MAPPINGS V.  An Astrophysical Plasma Modelling Code.
 c
@@ -12,6 +11,5 @@ c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Yi-Fei Jin, Knox Long
 c
-c     Version v5.2.0dev
+c     Version v5.2.0
 c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

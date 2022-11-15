@@ -1,19 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c       Version v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -23,10 +9,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      luop  XXX-meaning
 c! @param [in,out] integer*4     zelem  XXX-meaning
 c! @param [in,out]   real*8     title  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -132,10 +118,10 @@ c****************************************************************
 c> @brief The subroutine abecha
 c! XXXX - add one line purpose here
 c! @param This routine has no parameters
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -170,29 +156,12 @@ c
    10 format(19a4)
    20 format(' ',19a4)
 c     read local solar abundance file first
+c     then in data dir/abund determined in mapinit
 c
       iexi=.false.
-      fnam='abund/solar.txt'
-      inquire (file=trim(fnam),exist=iexi)
-      if (iexi) then
-        abdir='abund/'
-      else
-        fnam=trim(datadir)//'/abund/solar.txt'
-        inquire (file=trim(fnam),exist=iexi)
-        if (iexi) then
-          abdir=trim(datadir)//'/abund/'
-        else
-           fnam='/usr/local/share/mappings'//'/abund/solar.txt'
-           inquire (file=trim(fnam),exist=iexi)
-           if (iexi) then
-             abdir='/usr/local/share/mappings/abund/'
-           else
-             abdir='/opt/local/share/mappings/abund/'
-           endif
-        endif
-      endif
+      abdir=trim(datadir)//'/abund'
 c
-      fnam=trim(abdir)//'solar.txt'
+      fnam=trim(abdir)//'/solar.txt'
       m=len(trim(fnam))
       inquire (file=fnam(1:m),exist=iexi)
       if (iexi) then
@@ -269,7 +238,6 @@ c
      & '  X,N  :  Exit with no further changes.'/
      & ' :: ',$)
       write (*,50)
-C  50 format(/' Change abundances (y/N) : ',$)
 c
       read (*,60) ilgg
    60 format(a)
@@ -314,7 +282,7 @@ c look in local abund/
 c look in shared abndir
           write (*,*) trim(abnfile),' NOT FOUND.'
           write (*,*) ' Looking in ',trim(abdir),'...'
-          abnfile=trim(abdir)//trim(fnam)
+          abnfile=trim(abdir)//'/'//trim(fnam)
           inquire (file=abnfile,exist=iexi)
         endif
 c
@@ -340,7 +308,7 @@ c     b) Abundance, if mixed -ve: log abundance by number
 c                            +ve: mean number abundance
 c
           luf=99
-          open (unit=luf,file=abnfile(1:m),status='OLD')
+          open (unit=luf,file=trim(abnfile),status='OLD')
   100     read (unit=luf,fmt=10) (ibuf(j),j=1,19)
           ilgg=ibuf(1)
           if (ilgg(1:1).eq.'%') goto 100
@@ -451,10 +419,10 @@ c****************************************************************
 c> @brief The subroutine deltaabund
 c! XXXX - add one line purpose here
 c! @param This routine has no parameters
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -473,7 +441,7 @@ c
       integer*4 lenv
 c
       character*4 ilgg,ibuf(19)
-      character*256 abdir
+      character*512 abdir
       character*512 fnam
       character*80 numstring
       integer*4 atom,at,luf,i,j,nentries
@@ -528,69 +496,36 @@ c
 c
       if (ilgg.eq.'F') then
 c
-        fnam='abund/solar.txt'
-        m=lenv(fnam)
-        inquire (file=fnam(1:m),exist=iexi)
-        if (iexi) then
-          abdir='abund/'
-        else
-          abdir='/usr/local/share/mappings/abund/'
-        endif
-        l=lenv(abdir)
+         iexi=.false.
+         abdir=trim(datadir)//'/abund'
 c
-c     Read an abundance offsets file
+c     read depletion file
 c
   120   fnam=' '
         write (*,130)
-  130    format(' Enter abundance offsets file name : ',$)
+  130   format(' Enter abundance offsets file name : ',$)
 c
-        read (*,140) fnam
   140   format(a)
-        write (*,*)
-c
-c look locally
-c
-        iexi=.false.
-        m=lenv(fnam)
+        read (*,140) fnam
+        m=len(trim(fnam))
         deltafile=fnam(1:m)
 c deltafile
-        inquire (file=deltafile(1:m),exist=iexi)
-c
-c look locally and in share
-c
-        m=lenv(fnam)
-        abnfile=fnam(1:m)
-c abnfile
-        iexi=.false.
-        inquire (file=abnfile(1:m),exist=iexi)
+        inquire (file=deltafile,exist=iexi)
         if (iexi.eqv..false.) then
-          abdir='abund/'
-          l=lenv(abdir)
-c look in local abund/
-          write (*,*) abnfile(1:m),' NOT FOUND.'
-          write (*,*) ' Looking in abund/...'
-          deltafile=abdir(1:l)//fnam(1:m)
-          n=lenv(deltafile)
-          inquire (file=deltafile(1:n),exist=iexi)
-        endif
-        if (iexi.eqv..false.) then
-c look in shared abndir
-          write (*,*) abnfile(1:m),' NOT FOUND.'
-          abdir='/usr/local/share/mappings/abund/'
-          l=lenv(abdir)
-          write (*,*) ' Looking in ',abdir(1:l),'...'
-          abnfile=abdir(1:l)//fnam(1:m)
-          n=lenv(deltafile)
-          inquire (file=deltafile(1:n),exist=iexi)
+          write (*,*) trim(deltafile),' NOT FOUND.'
+          write (*,*) ' Looking in ',trim(abdir),'...'
+          deltafile=trim(abdir)//'/'//trim(fnam)
+          inquire (file=deltafile,exist=iexi)
         endif
 c
         if (iexi) then
 c
 c     found the file...
 c
-          n=lenv(deltafile)
+c     Read an abundance offsets file
 c
-          write (*,*) 'FOUND: ',deltafile(1:n)
+c
+          write (*,*) 'FOUND: ',trim(deltafile)
 c
 c     FORMAT REQUIRED:
 c
@@ -608,7 +543,7 @@ c     b) Abundance, if mixed -ve: log abundance by number
 c                            +ve: mean number abundance
 c
           luf=99
-          open (unit=luf,file=deltafile(1:n),status='OLD')
+          open (unit=luf,file=trim(deltafile),status='OLD')
   150     read (unit=luf,fmt=10) (ibuf(j),j=1,19)
           ilgg=ibuf(1)
           if (ilgg(1:1).eq.'%') goto 150
@@ -702,10 +637,10 @@ c****************************************************************
 c> @brief The subroutine depcha
 c! XXXX - add one line purpose here
 c! @param This routine has no parameters
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -729,7 +664,7 @@ c
 c
       character*4 ilgg,ibuf(19)
       character*80 numstring
-      character*256 abdir
+      character*512 abdir
       character*512 fnam
 c
       integer*4 lenv
@@ -770,15 +705,7 @@ c
 c
       if (ilgg.eq.'F') then
 c
-        fnam='abund/solar.txt'
-        m=lenv(fnam)
-        inquire (file=fnam(1:m),exist=iexi)
-        if (iexi) then
-          abdir='abund/'
-        else
-          abdir='/usr/local/share/mappings/abund/'
-        endif
-        l=lenv(abdir)
+        abdir=trim(datadir)//'/abund'
 c
 c     read depletion file
 c
@@ -788,29 +715,14 @@ c
 c
   140   format(a)
         read (*,140) fnam
-        m=lenv(fnam)
-        depfile=fnam(1:m)
+        depfile=fnam
 c deltafile
-        inquire (file=depfile(1:m),exist=iexi)
+        inquire (file=trim(depfile),exist=iexi)
         if (iexi.eqv..false.) then
-          abdir='abund/'
-          l=lenv(abdir)
-c look in local abund/
-          write (*,*) abnfile(1:m),' NOT FOUND.'
-          write (*,*) ' Looking in ',abdir(1:l),'...'
-          depfile=abdir(1:l)//fnam(1:m)
-          n=lenv(depfile)
-          inquire (file=depfile(1:n),exist=iexi)
-        endif
-        if (iexi.eqv..false.) then
-c look in shared abndir
-          write (*,*) abnfile(1:m),' NOT FOUND.'
-          abdir='/usr/local/share/mappings/abund/'
-          l=lenv(abdir)
-          write (*,*) ' Looking in ',abdir(1:l),'...'
-          depfile=abdir(1:l)//fnam(1:m)
-          n=lenv(depfile)
-          inquire (file=depfile(1:n),exist=iexi)
+          write (*,*) trim(depfile),' NOT FOUND.'
+          write (*,*) ' Looking in ',trim(abdir),'...'
+          depfile=trim(abdir)//'/'//trim(fnam)
+          inquire (file=depfile,exist=iexi)
         endif
 c
         if (iexi) then
@@ -819,9 +731,7 @@ c     found the file...
 c
 c     FORMAT REQUIRED:
 c
-          n=lenv(depfile)
-c
-          write (*,*) 'FOUND: ',depfile(1:n)
+          write (*,*) 'FOUND: ',trim(depfile)
 c
 c     otherwise, simply:
 c
@@ -835,7 +745,7 @@ c     +ve mean linear scaling factors
 c
 c
           luf=99
-          open (unit=luf,file=depfile(1:n),status='OLD')
+          open (unit=luf,file=depfile,status='OLD')
   150     read (unit=luf,fmt=10) (ibuf(j),j=1,19)
           ilgg=ibuf(1)
           if (ilgg(1:1).eq.'%') goto 150
@@ -915,10 +825,10 @@ c****************************************************************
 c> @brief The subroutine chacha
 c! XXXX - add one line purpose here
 c! @param This routine has no parameters
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1073,10 +983,10 @@ c****************************************************************
 c> @brief The subroutine popcha
 c! XXXX - add one line purpose here
 c! @param [in,out] character     model  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1449,10 +1359,10 @@ c> @brief The subroutine ciepops
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8    teinit  XXX-meaning
 c! @param [in,out]   real*8    dhinit  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************

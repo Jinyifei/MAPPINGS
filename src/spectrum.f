@@ -1,19 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c       Version v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -22,10 +8,10 @@ c> @brief The subroutine spectrum
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      lunt  XXX-meaning
 c! @param [in,out] integer*4      mode  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1301,10 +1287,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      lunt  XXX-meaning
 c! @param [in,out] integer*4      list  XXX-meaning
 c! @param [in,out] character      mode  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1983,10 +1969,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out] integer*4         n  XXX-meaning
 c! @param [in,out] integer*4        ra  XXX-meaning
 c! @param [in,out]   real*8       idx  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -2057,10 +2043,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      lunt  XXX-meaning
 c! @param [in,out] integer*4    screen  XXX-meaning
 c! @param [in,out] integer*4        tp  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -2167,10 +2153,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out] integer*4      lunt  XXX-meaning
 c! @param [in,out] integer*4    screen  XXX-meaning
 c! @param [in,out] integer*4        sp  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -2280,10 +2266,10 @@ c! @param [in,out]   real*8        dh  XXX-meaning
 c! @param [in,out]   real*8        de  XXX-meaning
 c! @param [in,out]   real*8       fh1  XXX-meaning
 c! @param [in,out]   real*8        di  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -2863,10 +2849,10 @@ c****************************************************************
 c> @brief The subroutine speclocallines
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8    fluxes  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -3212,10 +3198,10 @@ c> @brief The subroutine speclocallineids
 c! XXXX - add one line purpose here
 c! @param [in,out] integer*4    lineat  XXX-meaning
 c! @param [in,out] integer*4   lineion  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************

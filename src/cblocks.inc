@@ -1759,6 +1759,7 @@ c
       character jeq*4,iso*4,jcon*4,jpfx*32,jbfx*32
       character runname*512,ionsetup*512,abnfile*512,srcfile*512
       character depfile*512,structfile*512,deltafile*512
+      character photbinfile*512
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2244,7 +2245,7 @@ c
      &                ,jden,jpres,jgeo,jeq,iso,jcon,jtrans
      &                ,jpfx,jthm ,gdist,runname,ionsetup
      &                ,abnfile,srcfile,deltafile
-     &                ,depfile,structfile
+     &                ,depfile,structfile,photbinfile
 c
 c   star blocks
 c

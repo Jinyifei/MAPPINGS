@@ -1,19 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c       Version v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c*******COMPUTES RESONANCE LINE COOLING
 c       NB.  SUBR. HYDRO SHOULD BE CALLED PREVIOUSLY
@@ -272,11 +258,11 @@ c! @param [in,out]   real*8         t  XXX-meaning
 c! @param [in,out]   real*8         y  XXX-meaning
 c! @param [in,out]   real*8      icol  XXX-meaning
 c! @param [in,out]   real*8       idx  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -342,10 +328,10 @@ c! @param [in,out]   real*8        dh  XXX-meaning
 c! @param [in,out]   real*8       idx  XXX-meaning
 c! @param [in,out]   real*8       bri  XXX-meaning
 c! @param [in,out]   real*8        ni  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -480,10 +466,10 @@ c! @param [in,out]   real*8        dh  XXX-meaning
 c! @param [in,out]   real*8       idx  XXX-meaning
 c! @param [in,out]   real*8       bri  XXX-meaning
 c! @param [in,out]   real*8        ni  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -612,10 +598,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out]   real*8         t  XXX-meaning
 c! @param [in,out]   real*8        de  XXX-meaning
 c! @param [in,out]   real*8        dh  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -777,11 +763,11 @@ c! @param [in,out]   real*8         t  XXX-meaning
 c! @param [in,out]   real*8         y  XXX-meaning
 c! @param [in,out]   real*8      icol  XXX-meaning
 c! @param [in,out]   real*8       idx  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -847,10 +833,10 @@ c! @param [in,out]   real*8        dh  XXX-meaning
 c! @param [in,out]   real*8       idx  XXX-meaning
 c! @param [in,out]   real*8       bri  XXX-meaning
 c! @param [in,out]   real*8        ni  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -995,10 +981,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out]   real*8         t  XXX-meaning
 c! @param [in,out]   real*8        de  XXX-meaning
 c! @param [in,out]   real*8        dh  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************

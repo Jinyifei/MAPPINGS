@@ -1,19 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c       Version v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -27,10 +13,10 @@ c! @param [in,out]   real*8       vpr  XXX-meaning
 c! @param [in,out]   real*8      bmag  XXX-meaning
 c! @param [in,out]   real*8        tl  XXX-meaning
 c! @param [in,out]   real*8     tstep  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -157,10 +143,10 @@ c! @param [in,out]   real*8        de  XXX-meaning
 c! @param [in,out]   real*8        dh  XXX-meaning
 c! @param [in,out]   real*8         v  XXX-meaning
 c! @param [in,out]   real*8        bm  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -254,10 +240,10 @@ c! @param [in,out]   real*8        x1  XXX-meaning
 c! @param [in,out]   real*8        x2  XXX-meaning
 c! @param [in,out]   real*8      root  XXX-meaning
 c! @param [in,out]   real*8      rmod  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -344,10 +330,10 @@ c! @param [in,out]   real*8        x1  XXX-meaning
 c! @param [in,out]   real*8        x2  XXX-meaning
 c! @param [in,out]   real*8        r1  XXX-meaning
 c! @param [in,out]   real*8        r2  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -461,11 +447,11 @@ c! @param [in,out]   real*8        dh  XXX-meaning
 c! @param [in,out]   real*8         t  XXX-meaning
 c! @param [in,out]   real*8      bmag  XXX-meaning
 c! @param [in,out]   real*8       tpo  XXX-meaning
-c! 
+c!
 c! @return
-c!  XXXX This function returns a %s number with is 
+c!  XXXX This function returns a %s number with is
 c!  XXXX say explictly what is returned
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c****************************************************************
@@ -559,10 +545,10 @@ c! @param [in,out]   real*8      xhpr  XXX-meaning
 c! @param [in,out]   real*8      tepr  XXX-meaning
 c! @param [in,out]   real*8      tepo  XXX-meaning
 c! @param [in,out]   real*8      hmag  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -702,10 +688,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out]   real*8         a  XXX-meaning
 c! @param [in,out]   real*8     ncoef  XXX-meaning
 c! @param [in,out] integer*4      root  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -785,10 +771,10 @@ c! @param [in,out]   real*8       vpr  XXX-meaning
 c! @param [in,out]   real*8      hmag  XXX-meaning
 c! @param [in,out]   real*8        tl  XXX-meaning
 c! @param [in,out]   real*8     tstep  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -850,10 +836,10 @@ c! @param [in,out]   real*8       vpr  XXX-meaning
 c! @param [in,out]   real*8      hmag  XXX-meaning
 c! @param [in,out]   real*8        tl  XXX-meaning
 c! @param [in,out]   real*8     tstep  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************

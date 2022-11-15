@@ -1,19 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-c
-c
-c       Version v5.2.0
-c
+      include 'credits.txt'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -23,10 +9,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out] integer*4        jl  XXX-meaning
 c! @param [in,out] integer*4      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -134,10 +120,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out] integer*4        jl  XXX-meaning
 c! @param [in,out] integer*4      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -241,10 +227,10 @@ c> @brief The subroutine mdiag6
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -350,10 +336,10 @@ c> @brief The subroutine mdiag9
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -459,10 +445,10 @@ c> @brief The subroutine mdiag16
 c! XXXX - add one line purpose here
 c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -566,10 +552,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -679,10 +665,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -792,10 +778,10 @@ c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx        np  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -852,10 +838,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -903,10 +889,10 @@ c! XXXX - add one line purpose here
 c! @param [in,out]   real*8      alph  XXX-meaning
 c! @param [in,out]   real*8         x  XXX-meaning
 c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         n  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -973,10 +959,10 @@ c! @param [in,out] integer*4         n  XXX-meaning
 c! @param [in,out] integer*4        np  XXX-meaning
 c! @param [in,out] integer*4      indx  XXX-meaning
 c! @param [in,out] integer*4         d  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1058,10 +1044,10 @@ c! @param [in,out]   real*8         n  XXX-meaning
 c! @param [in,out] implicit        np  XXX-meaning
 c! @param [in,out] implicit      indx  XXX-meaning
 c! @param [in,out] integer*4         b  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
@@ -1113,10 +1099,10 @@ c! @param [in,out]   real*8        np  XXX-meaning
 c! @param [in,out] implicit      indx  XXX-meaning
 c! @param [in,out] implicit         b  XXX-meaning
 c! @param [in,out] integer*4         x  XXX-meaning
-c! 
+c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
-c! 
+c!
 c! @details
 c!  XXXX Enter details here
 c***************************************************************
