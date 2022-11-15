@@ -833,7 +833,7 @@ c heavy element recomb lines
             goto 290
           endif
         enddo
-  250   continue
+  290   continue
       enddo
       do i=1,nrcnii
         en=(lmev/rcnii_lam(i))
@@ -841,10 +841,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcnii_bin(i)=j
-            goto 260
+            goto 300
           endif
         enddo
-  260   continue
+  300   continue
       enddo
       do i=1,nrcoi_q
         en=(lmev/rcoi_qlam(i))
@@ -852,10 +852,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcoi_qbin(i)=j
-            goto 270
+            goto 310
           endif
         enddo
-  270   continue
+  310   continue
       enddo
       do i=1,nrcoi_t
         en=(lmev/rcoi_tlam(i))
@@ -863,10 +863,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcoi_tbin(i)=j
-            goto 280
+            goto 320
           endif
         enddo
-  280   continue
+  320   continue
       enddo
       do i=1,nrcoii
         en=(lmev/rcoii_lam(i))
@@ -874,10 +874,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcoii_bin(i)=j
-            goto 290
+            goto 330
           endif
         enddo
-  290   continue
+  330   continue
       enddo
       do i=1,nrcneii
         en=(lmev/rcneii_lam(i))
@@ -885,10 +885,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             rcneii_bin(i)=j
-            goto 300
+            goto 340
           endif
         enddo
-  300   continue
+  340   continue
       enddo
       do i=1,mlines
         en=e12fs(i)/ev
@@ -896,10 +896,10 @@ c heavy element recomb lines
         do j=1,infph-1
           if ((photev(j+1).gt.en).and.(photev(j).le.en)) then
             lcbin(i)=j
-            goto 310
+            goto 350
           endif
         enddo
-  310   continue
+  350   continue
       enddo
 c
 c     npre=0
@@ -938,17 +938,17 @@ c     enddo
 c
 c      *FINDS IONISATIONS CROSS SECTION NUMBER FOR HEII
 c
-      do 320 i=1,ionum
+      do 360 i=1,ionum
         jhe2p=i
-        if ((atpho(i).eq.2).and.(ionpho(i).eq.2)) goto 330
-  320 continue
-  330 continue
+        if ((atpho(i).eq.2).and.(ionpho(i).eq.2)) goto 370
+  360 continue
+  370 continue
 c
-      goto 350
+      goto 390
 c
-  340 error=.true.
+  380 error=.true.
 c
-  350 continue
+  390 continue
 c
       return
       end
