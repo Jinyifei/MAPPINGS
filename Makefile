@@ -9,6 +9,7 @@ SHELL := /bin/bash
 #-------------------------------
 #
 OUTNAME = map52dev
+HOMEAREA= mappings520
 #
 #
 #-------------------------------
@@ -19,27 +20,29 @@ OUTNAME = map52dev
 #
 EXEDIR = lab
 CODDIR = src
+BINDIR = bin
 #
 #-------------------------------
 # Install Areas
 #
 # std home area ~/mappings520 with optional env vars
 #
-INSTALLBASE = $(shell echo ${HOME})/mappings520
-INSTALLDATA ="${INSTALLBASE}"
-INSTALLBIN  ="${INSTALLBASE}/bin"
+INSTALLBASE =$(shell echo ${HOME})
+INSTALLDATA =${INSTALLBASE}/${HOMEAREA}
+INSTALLBIN  =${INSTALLBASE}/${HOMEAREA}/${BINDIR}
 #
 # for using the build area as the shared binary and data location
 #
-# INSTALLBASE = $(shell pwd)
+# HOMEAREA    = $(shell pwd)
+# INSTALLBASE = ${HOMEAREA}
 # INSTALLDATA ="${INSTALLBASE}"
-# INSTALLBIN  ="${INSTALLBASE}/lab"
+# INSTALLBIN  ="${INSTALLBASE}/${BINDIR}"
 #
 # ADVANCED: for using the /usr/local data locations
 #
 # INSTALLBASE = "/usr/local"
 # INSTALLDATA = "${INSTALLBASE}/share/mappings"
-# INSTALLBIN  = "${INSTALLBASE}/bin"
+# INSTALLBIN  = "${INSTALLBASE}/${BINDIR}"
 #
 #-------------------------------
 #
@@ -381,8 +384,12 @@ help:
 #-----------------------------------------------------------
 #
 clean:
+	@echo ' '
+	@echo '#############################################################'
 	@echo ' Removing object files'
 	@rm -f ${OBJ}
+	@echo '#############################################################'
+	@echo ' '
 #
 distclean:
 	@echo ' Removing object files and exe'
@@ -390,18 +397,19 @@ distclean:
 	@rm -f "for_bashrc.txt"
 	@rm -f "for_tcshrc.txt"
 	@rm -f ${EXEDIR}/${OUTNAME}
+	@rm -f ${BINDIR}/${OUTNAME}
 #
 #------------------------------------------------------------
 #
-compile: ${EXEDIR}/${OUTNAME}
+compile: ${BINDIR}/${OUTNAME}
 #
 # compile and create input for .bashrc and .tcshrc etc
 #
-${EXEDIR}/${OUTNAME}: ${INCS} ${OBJ}
+${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' Compiling ${OUTNAME} for $(XSYS)'
-	${FC} ${LDR} -o ${EXEDIR}/${OUTNAME} ${OBJ} ${LIB}
+	${FC} ${LDR} -o ${BINDIR}/${OUTNAME} ${OBJ} ${LIB}
 	@echo '#############################################################'
 	@echo ' '
 	@echo '#############################################################'
@@ -419,7 +427,7 @@ ${EXEDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@cat src/src-bashrc.txt > for_bashrc.txt
 	@echo 'export mapbase="${INSTALLBASE}"' >> for_bashrc.txt
 	@echo 'export MAPDATA="$$mapbase"' >> for_bashrc.txt
-	@echo 'export MAPBIN="$$mapbase/lab"' >> for_bashrc.txt
+	@echo 'export MAPBIN="$$mapbase/${BINDIR}"' >> for_bashrc.txt
 	@echo '# add bin area to global path:' >> for_bashrc.txt
 	@echo 'export PATH="$$MAPBIN:$$PATH"' >> for_bashrc.txt
 	@echo '#' >> for_tcshrc.txt
@@ -431,7 +439,7 @@ ${EXEDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@cat src/src-tcshrc.txt > for_tcshrc.txt
 	@echo 'set mapbase = "${INSTALLBASE}"' >> for_tcshrc.txt
 	@echo 'setenv MAPDATA "$$mapbase"' >> for_tcshrc.txt
-	@echo 'set mapbin = "$$mapbase/lab"' >> for_tcshrc.txt
+	@echo 'set mapbin = "$$mapbase/${BINDIR}"' >> for_tcshrc.txt
 	@echo 'setenv MAPBIN "$$mapbin"' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
 	@echo '# add bin area to global path:' >> for_tcshrc.txt
@@ -451,8 +459,13 @@ build:
 	@make compile
 	@echo 'Cleaning'
 	@make clean
-	@echo 'Compile and Cleaned Successfully...'
-	@echo 'Installing into ' ${INSTALLBASE}
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' Compile and Cleaned Successfully...'
+	@echo '#############################################################'
+	@echo ' '
+	@echo 'Installing into ' ${INSTALLDATA}
+	@echo ' '
 	@make install
 #
 #------------------------------------------------------------
@@ -463,14 +476,14 @@ build:
 install:
 	[ -d ${INSTALLBIN} ] || mkdir -p ${INSTALLBIN}
 	[ -d ${INSTALLDATA} ] || mkdir -p ${INSTALLDATA}
-	[ -d ${INSTALLDATA}/lab ] || mkdir -p ${INSTALLDATA}/lab
-	cp ${EXEDIR}/${OUTNAME} ${INSTALLBIN}/
+	[ -d ${INSTALLDATA}/${EXEDIR} ] || mkdir -p ${INSTALLDATA}/${EXEDIR}
+	cp ${BINDIR}/${OUTNAME} ${INSTALLBIN}/
 #
 	cp ${EXEDIR}/map.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapStd.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapFull.prefs ${INSTALLDATA}/${EXEDIR}/
-	cp -r ${EXEDIR}/scripts ${INSTALLDATA}/${EXEDIR}/
-	rm -rf ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
+	cp -r ${EXEDIR}/scripts ${INSTALLDATA}/${EXEDIR}
+	rm -f ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 	ln -s ${INSTALLBIN}/${OUTNAME} ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 #
 	cp -r ${EXEDIR}/data  ${INSTALLDATA}/
@@ -484,40 +497,45 @@ install:
 	rm -rf ${INSTALLDATA}/docs/doxygen
 	cp for_tcshrc.txt ${INSTALLBASE}/
 	cp for_bashrc.txt ${INSTALLBASE}/
+#
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' '
 	@echo ' Installed ${OUTNAME} into ${INSTALLBIN}'
-	@echo ' Linked ${OUTNAME} into ${INSTALLBASE}/${EXEDIR}'
-	@echo ' MAPPINGS V Installed into ${INSTALLBASE}'
+	@echo ' Linked ${OUTNAME} into ${INSTALLDATA}/${EXEDIR}'
+	@echo ' MAPPINGS V Installed into ${INSTALLDATA}'
 	@echo ' Use "for_bashrc.txt" and "for_tcshrc.txt" to edit'
-	@echo ' startup settings, if needed, located in ${INSTALLBASE}.'
+	@echo ' startup settings, if needed, located in ${INSTALLDATA}.'
 	@echo ' '
 	@echo '#############################################################'
-	@echo ' MAPPINGS V Installed: ${INSTALLBASE}'
+	@echo ' MAPPINGS V Installed: ${INSTALLDATA}'
 	@echo '#############################################################'
 	@echo ' '
 #
 #------------------------------------------------------------
 #
 uninstall:
-	rm -f "${INSTALLBIN}/${OUTNAME}"
-	rm -f "${INSTALLDATA}/data"
-	rm -f "${INSTALLDATA}/abund"
-	rm -f "${INSTALLDATA}/prefs"
-	rm -f "${INSTALLDATA}/atmos"
-	rm -f "${INSTALLDATA}/scripts"
-	rm -f "${INSTALLDATA}/docs"
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
+	@rm -f  ${INSTALLBIN}/${OUTNAME}
+	@rm -rf ${INSTALLDATA}/${BINDIR}
+	@rm -rf ${INSTALLDATA}/data
+	@rm -rf ${INSTALLDATA}/abund
+	@rm -rf ${INSTALLDATA}/prefs
+	@rm -rf ${INSTALLDATA}/atmos
+	@rm -rf ${INSTALLDATA}/scripts
+	@rm -rf ${INSTALLDATA}/misc
+	@rm -rf ${INSTALLDATA}/docs
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' '
-	@echo ' Uninstalled "${INSTALLBIN}/${OUTNAME}"
-	@echo ' Uninstalled "${INSTALLDATA}"
-	@echo ' Goto "$(INSTALLBASE}" and recover user lab/s and'
-	@echo ' files eg custom map.prefs or models if needed'
+	@echo ' Uninstalled ${INSTALLBIN}/${OUTNAME}'
+	@echo ' Uninstalled ${INSTALLDATA}/${EXEDIR}/${OUTNAME}'
+	@echo ' Uninstalled ${INSTALLDATA}'
+	@echo ' Go to ${INSTALLDATA} and recover user eg custom map.prefs'
+	@echo ' or models, if needed'
 	@echo ' '
 	@echo '#############################################################'
-	@echo ' MAPPINGS ${INSTALLBASE} Uninstalled.'
+	@echo ' MAPPINGS ${INSTALLDATA} Uninstalled.'
 	@echo '#############################################################'
 	@echo ' '
 #
