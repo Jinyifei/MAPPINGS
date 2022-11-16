@@ -27,7 +27,7 @@ CODDIR = src
 #
 INSTALLBASE = $(shell echo ${HOME})/mappings520
 INSTALLDATA ="${INSTALLBASE}"
-INSTALLBIN  ="${INSTALLBASE}/lab"
+INSTALLBIN  ="${INSTALLBASE}/bin"
 #
 # for using the build area as the shared binary and data location
 #
@@ -360,10 +360,10 @@ help:
 	@cat ${CODDIR}/credits.txt
 	@echo " "
 	@echo "MAPPINGS V make options:"
-	@echo "-----------------------------------------------------------"
-	@echo " "
+	@echo '-----------------------------------------------------------'
+	@echo ' '
 	@echo "'make, make help'             To see this menu"
-	@echo " "
+	@echo ' '
 	@echo "'make build'      Build and install, and clean."
 	@echo "                  Creates MAPPINGS in ${INSTALLBASE}"
 	@echo "                  and creates optional environment variable "
@@ -371,11 +371,11 @@ help:
 	@echo "'make compile'    to make new '*.o' in the build area only"
 	@echo "'make clean'      to clean up '*.o' files from a compile"
 	@echo "'make distclean'  as clean but also remove ${OUTNAME}"
-	@echo " "
+	@echo ' '
 	@echo "'make install'    install afer manual compile"
 	@echo "'make uninstall'  remove installed ${OUTNAME}"
-	@echo " "
-	@echo "-----------------------------------------------------------"
+	@echo ' '
+	@echo '-----------------------------------------------------------'
 
 #
 #-----------------------------------------------------------
@@ -398,18 +398,24 @@ compile: ${EXEDIR}/${OUTNAME}
 # compile and create input for .bashrc and .tcshrc etc
 #
 ${EXEDIR}/${OUTNAME}: ${INCS} ${OBJ}
-	@echo ' #############################################################'
+	@echo ' '
+	@echo '#############################################################'
 	@echo ' Compiling ${OUTNAME} for $(XSYS)'
 	${FC} ${LDR} -o ${EXEDIR}/${OUTNAME} ${OBJ} ${LIB}
-	@echo ' #############################################################'
-	@echo ' Done.  Compiled Successfully'
-	@echo ' #############################################################'
+	@echo '#############################################################'
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' MAPPINGS ${OUTNAME} Compiled Successfully.'
+	@echo '#############################################################'
+	@echo ' '
+	@echo '#############################################################'
 	@echo ' A local version of the executable ${OUTNAME} can be found in:'
 	@echo ' ${EXEDIR} . Install startup variables for .bashrc and .tcshrc'
 	@echo ' with the contents of "for_bashrc.txt" and "for_tcshrc.txt", '
 	@echo ' as needed.'
 	@echo ' (macOS users may need to use .zshrc with the bashrc settings)'
-	@echo ' #############################################################'
+	@echo '#############################################################'
+	@echo ' '
 	@cat src/src-bashrc.txt > for_bashrc.txt
 	@echo 'export mapbase="${INSTALLBASE}"' >> for_bashrc.txt
 	@echo 'export MAPDATA="$$mapbase"' >> for_bashrc.txt
@@ -457,24 +463,40 @@ build:
 install:
 	[ -d ${INSTALLBIN} ] || mkdir -p ${INSTALLBIN}
 	[ -d ${INSTALLDATA} ] || mkdir -p ${INSTALLDATA}
+	[ -d ${INSTALLDATA}/lab ] || mkdir -p ${INSTALLDATA}/lab
 	cp ${EXEDIR}/${OUTNAME} ${INSTALLBIN}/
-	cp ${EXEDIR}/map.prefs ${INSTALLBIN}/
-	cp ${EXEDIR}/mapStd.prefs ${INSTALLBIN}/
-	cp ${EXEDIR}/mapFull.prefs ${INSTALLBIN}/
-	cp -r ${EXEDIR}/scripts ${INSTALLBIN}/
-	cp -r ${EXEDIR}/data ${INSTALLDATA}/
+#
+	cp ${EXEDIR}/map.prefs ${INSTALLDATA}/${EXEDIR}/
+	cp ${EXEDIR}/mapStd.prefs ${INSTALLDATA}/${EXEDIR}/
+	cp ${EXEDIR}/mapFull.prefs ${INSTALLDATA}/${EXEDIR}/
+	cp -r ${EXEDIR}/scripts ${INSTALLDATA}/${EXEDIR}/
+	rm -rf ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
+	ln -s ${INSTALLBIN}/${OUTNAME} ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
+#
+	cp -r ${EXEDIR}/data  ${INSTALLDATA}/
 	cp -r ${EXEDIR}/abund ${INSTALLDATA}/
 	cp -r ${EXEDIR}/prefs ${INSTALLDATA}/
 	cp -r ${EXEDIR}/atmos ${INSTALLDATA}/
+#
 	cp -r misc ${INSTALLDATA}/
 	cp -r docs ${INSTALLDATA}/
+#
 	rm -rf ${INSTALLDATA}/docs/doxygen
 	cp for_tcshrc.txt ${INSTALLBASE}/
 	cp for_bashrc.txt ${INSTALLBASE}/
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' '
 	@echo ' Installed ${OUTNAME} into ${INSTALLBIN}'
+	@echo ' Linked ${OUTNAME} into ${INSTALLBASE}/${EXEDIR}'
 	@echo ' MAPPINGS V Installed into ${INSTALLBASE}'
 	@echo ' Use "for_bashrc.txt" and "for_tcshrc.txt" to edit'
-	@echo ' startup environment, if needed, find in ${INSTALLBASE}.'
+	@echo ' startup settings, if needed, located in ${INSTALLBASE}.'
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' MAPPINGS V Installed: ${INSTALLBASE}'
+	@echo '#############################################################'
+	@echo ' '
 #
 #------------------------------------------------------------
 #
@@ -486,8 +508,16 @@ uninstall:
 	rm -f "${INSTALLDATA}/atmos"
 	rm -f "${INSTALLDATA}/scripts"
 	rm -f "${INSTALLDATA}/docs"
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' '
 	@echo ' Uninstalled "${INSTALLBIN}/${OUTNAME}"
 	@echo ' Uninstalled "${INSTALLDATA}"
 	@echo ' Goto "$(INSTALLBASE}" and recover user lab/s and'
 	@echo ' files eg custom map.prefs or models if needed'
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' MAPPINGS ${INSTALLBASE} Uninstalled.'
+	@echo '#############################################################'
+	@echo ' '
 #
