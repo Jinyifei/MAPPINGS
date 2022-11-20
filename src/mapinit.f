@@ -42,6 +42,7 @@ c
       character env_var*512
       character homedir*512
       character prefline*256
+      character PREFNAME*256
       character optname*256
 cc
 cc Test io variables
@@ -214,6 +215,16 @@ c
 c
       photbinfile='PHOTDAT'
 c
+      kappa=1.0d99
+      kappaidx=9
+      usekappa=.false.
+      usekappainterp=.false.
+      kappaa=1.d0
+      kappab=0.d0
+c
+      kappamode=0
+      expertmode=0
+c
       inquire (file='map.prefs',exist=iexi)
       if (iexi) then
         open (luin,file='map.prefs',status='OLD')
@@ -258,14 +269,17 @@ c
    70 format(a)
    80 read (luin,fmt=70,end=100) prefline
       if (prefline(1:1).eq.'%') goto 80
+      call toup(trim(prefline), PREFNAME)
 c
-      foundidx=index(trim(prefline),'PHOTDAT File')
+c Look for optional PHOTDAT changing setings
+c
+      foundidx=index(trim(PREFNAME),'PHOTDAT FILE')
       if (foundidx.gt.0) then
         read (luin,70) optname
         inquire (file=trim(optname),exist=iexi)
         if (iexi.eqv..false.) then
-          prefline=trim(datadir)//'/data/'//trim(optname)
-          inquire (file=trim(prefline),exist=iexi)
+          optname=trim(datadir)//'/data/'//trim(optname)
+          inquire (file=trim(optname),exist=iexi)
           if (iexi.eqv..false.) then
             write (*,*) ' ERR: eV BINS not found, default to PHOTDAT'
             photbinfile='PHOTDAT'
@@ -276,6 +290,39 @@ c
           photbinfile=trim(optname)
         endif
       endif
+c
+      foundidx=index(trim(prefline),'KAPPA MODE')
+      if (foundidx.gt.0) then
+        read (luin,*) kappamode
+        if (kappamode.le.0) kappamode=0
+        if (kappamode.gt.1) kappamode=0
+      endif
+c
+c     expert mode triggers many more detailed questions,
+c     useful for testing and program design.  NOT DOCUMENTED
+c     SO THERE.  Contact Ralph Sutherland (Ralph.Sutherland@anu.edu.au)
+c     for details if you are programming and modifying mappings.
+c
+      foundidx=index(trim(prefline),'EXPERT MODE')
+      if (foundidx.gt.0) then
+        read (luin,*) kappamode
+        if (expertmode.le.0) expertmode=0
+        if (expertmode.gt.1) expertmode=0
+      endif
+
+      goto 80
+c
+c
+        read (luin,20) (ibuf(j),j=1,19)
+        write (*,20) (ibuf(j),j=1,19)
+        read (luin,*) expertmode
+        if (expertmode.le.0) expertmode=0
+        if (expertmode.gt.1) expertmode=0
+        write (*,*) '*** expertmode   :',expertmode
+c
+c
+c Look for optional KAPPA changing setings
+c
 c
    90 read (luin,fmt=70,end=100) optname
       if (optname(1:1).eq.'%') goto 90
@@ -308,17 +355,7 @@ c
       turbheatmode=0
       admach=0.0d0
       radpressmode=0
-c
-      kappa=1.0d99
-      kappaidx=9
-      usekappa=.false.
-      usekappainterp=.false.
-      kappaa=1.d0
-      kappab=0.d0
-c
-      kappamode=0
-      expertmode=0
-c
+cc
       filename=datadir(1:dtlen)//'/data/switches.txt'
       inquire (file=filename,exist=iexi)
       if (iexi) then
@@ -431,25 +468,25 @@ c
         if (radpressmode.gt.1) radpressmode=0
         write (*,*) '*** radiation pressure mode :',radpressmode
 c
-        read (luin,20) (ibuf(j),j=1,19)
-        write (*,20) (ibuf(j),j=1,19)
-        read (luin,*) kappamode
-        if (kappamode.le.0) kappamode=0
-        if (kappamode.gt.1) kappamode=0
-        write (*,*) '*** kappa electron mode :',kappamode
-c
-c     expert mode triggers many more detailed questions,
-c     useful for testing and program design.  NOT DOCUMENTED
-c     SO THERE.  Contact Ralph Sutherland (Ralph.Sutherland@anu.edu.au)
-c     for details if you are programming and modifying mappings.
-c
-        read (luin,20) (ibuf(j),j=1,19)
-        write (*,20) (ibuf(j),j=1,19)
-        read (luin,*) expertmode
-        if (expertmode.le.0) expertmode=0
-        if (expertmode.gt.1) expertmode=0
-        write (*,*) '*** expertmode   :',expertmode
-c
+c       read (luin,20) (ibuf(j),j=1,19)
+c       write (*,20) (ibuf(j),j=1,19)
+c       read (luin,*) kappamode
+c       if (kappamode.le.0) kappamode=0
+c       if (kappamode.gt.1) kappamode=0
+c       write (*,*) '*** kappa electron mode :',kappamode
+cc
+cc     expert mode triggers many more detailed questions,
+cc     useful for testing and program design.  not documented
+cc     so there.  contact ralph sutherland (ralph.sutherland@anu.edu.au)
+cc     for details if you are programming and modifying mappings.
+cc
+c       read (luin,20) (ibuf(j),j=1,19)
+c       write (*,20) (ibuf(j),j=1,19)
+c       read (luin,*) expertmode
+c       if (expertmode.le.0) expertmode=0
+c       if (expertmode.gt.1) expertmode=0
+c       write (*,*) '*** expertmode   :',expertmode
+cc
       endif
 c
       close (luin)

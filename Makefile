@@ -8,7 +8,7 @@ SHELL := /bin/bash
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map52dev
+OUTNAME = map52rss
 HOMEAREA= mappings520
 #
 #
@@ -230,7 +230,7 @@ WARN   =
 # Standard no flto, optional flto or debugging LDR commented.
 #
 FC     = gfortran -std=legacy -march=native
-LDR    =  ${WARN} -Ofast -ffpe-summary='none'
+LDR    = ${WARN} -Ofast -ffpe-summary='none'
 #LDR    =  ${WARN} -Ofast -flto=8 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${CODDIR}/
@@ -379,7 +379,6 @@ help:
 	@echo "'make uninstall'  remove installed ${OUTNAME}"
 	@echo ' '
 	@echo '-----------------------------------------------------------'
-
 #
 #-----------------------------------------------------------
 #
@@ -410,6 +409,7 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#############################################################'
 	@echo ' Compiling ${OUTNAME} for $(XSYS)'
 	${FC} ${LDR} -o ${BINDIR}/${OUTNAME} ${OBJ} ${LIB}
+	ln -s ${BINDIR}/${OUTNAME} ${EXEDIR}/${OUTNAME}
 	@echo '#############################################################'
 	@echo ' '
 	@echo '#############################################################'
