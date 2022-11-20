@@ -8,7 +8,7 @@ SHELL := /bin/bash
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map52dev
+OUTNAME = map52
 HOMEAREA= mappings520
 #
 #
@@ -230,7 +230,7 @@ WARN   =
 # Standard no flto, optional flto or debugging LDR commented.
 #
 FC     = gfortran -std=legacy -march=native
-LDR    =  ${WARN} -Ofast -ffpe-summary='none'
+LDR    = ${WARN} -Ofast -ffpe-summary='none'
 #LDR    =  ${WARN} -Ofast -flto=8 -ffpe-summary='none'
 #LDR    = ${WARN} -g -O0 -fbounds-check -ffpe-summary='none'
 OPTS   = -c ${LDR} -I${CODDIR}/
@@ -379,7 +379,6 @@ help:
 	@echo "'make uninstall'  remove installed ${OUTNAME}"
 	@echo ' '
 	@echo '-----------------------------------------------------------'
-
 #
 #-----------------------------------------------------------
 #
@@ -477,7 +476,7 @@ install:
 	[ -d ${INSTALLBIN} ] || mkdir -p ${INSTALLBIN}
 	[ -d ${INSTALLDATA} ] || mkdir -p ${INSTALLDATA}
 	[ -d ${INSTALLDATA}/${EXEDIR} ] || mkdir -p ${INSTALLDATA}/${EXEDIR}
-	cp ${BINDIR}/${OUTNAME} ${INSTALLBIN}/
+	cp ${BINDIR}/${OUTNAME} ${INSTALLBIN}/${OUTNAME}
 #
 	cp ${EXEDIR}/map.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapStd.prefs ${INSTALLDATA}/${EXEDIR}/
@@ -509,6 +508,7 @@ install:
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' MAPPINGS V Installed: ${INSTALLDATA}'
+	@echo ' MAPPINGS V Initial Run Area: ${INSTALLDATA}/${EXEDIR}'
 	@echo '#############################################################'
 	@echo ' '
 #
@@ -516,6 +516,8 @@ install:
 #
 uninstall:
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapFull.prefs
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapStd.prefs
 	@rm -f  ${INSTALLBIN}/${OUTNAME}
 	@rm -rf ${INSTALLDATA}/${BINDIR}
 	@rm -rf ${INSTALLDATA}/data
@@ -531,8 +533,8 @@ uninstall:
 	@echo ' Uninstalled ${INSTALLBIN}/${OUTNAME}'
 	@echo ' Uninstalled ${INSTALLDATA}/${EXEDIR}/${OUTNAME}'
 	@echo ' Uninstalled ${INSTALLDATA}'
-	@echo ' Go to ${INSTALLDATA} and recover user eg custom map.prefs'
-	@echo ' or models, if needed'
+	@echo ' Go to ${INSTALLDATA} to recover user files:'
+	@echo '       eg custom map.prefs or models, if needed'
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' MAPPINGS ${INSTALLDATA} Uninstalled.'

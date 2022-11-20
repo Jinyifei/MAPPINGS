@@ -1,5 +1,5 @@
 #!/bin/bash
-#v1.1.4
+#v1.1.5
 # 3 or 4 args: 'name' alpha n0 [ncpus]
 ########################################################################
 #
@@ -7,6 +7,7 @@
 #
 m_vers="v5.2.0"
 map_exe="map52"
+map_path="~/mappings520/bin"
 #
 ########################################################################
 #
@@ -207,7 +208,7 @@ cd "V"${vName}
         scripts/shocks5_alpha.mv > "shocks5_v${vName}".mv
 # background execution
 #echo "shocks5_v${vName}.mv"
-    sed -e s/MEXE/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
+    sed -e s/MEXE/${map_path}\/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
     chmod +x runmvscript.sh
     (./runmvscript.sh "shocks5_v${vName}".mv )>&/dev/null&
     addPid "shocks5_v${vName}" $!
