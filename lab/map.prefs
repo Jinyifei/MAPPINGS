@@ -67,6 +67,10 @@ MAPPINGS V Standard Atom Set v5.2.0
 %
 % PHOTDAT File
 % PHOTDAT-std.txt
+%
+% Kappa Mode
+% 1
+%
 % misc data can be stored after this comment
 % Here species that are not often used are
 % Stored. To use them place them above and

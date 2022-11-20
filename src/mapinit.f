@@ -273,7 +273,7 @@ c
 c
 c Look for optional PHOTDAT changing setings
 c
-      foundidx=index(trim(PREFNAME),'PHOTDAT FILE')
+      foundidx=index(trim(PREFNAME),'PHOTDAT')
       if (foundidx.gt.0) then
         read (luin,70) optname
         inquire (file=trim(optname),exist=iexi)
@@ -289,47 +289,39 @@ c
         else
           photbinfile=trim(optname)
         endif
+        goto 80
       endif
 c
-      foundidx=index(trim(prefline),'KAPPA MODE')
+c Look for optional KAPPA changing setings
+c
+      foundidx=index(trim(PREFNAME),'KAPPA')
       if (foundidx.gt.0) then
         read (luin,*) kappamode
         if (kappamode.le.0) kappamode=0
         if (kappamode.gt.1) kappamode=0
+        goto 80
       endif
 c
 c     expert mode triggers many more detailed questions,
 c     useful for testing and program design.  NOT DOCUMENTED
-c     SO THERE.  Contact Ralph Sutherland (Ralph.Sutherland@anu.edu.au)
+c     SO THERE.  Contact Ralph Sutherland (ralph@rssnet.dev)
 c     for details if you are programming and modifying mappings.
 c
-      foundidx=index(trim(prefline),'EXPERT MODE')
+      foundidx=index(trim(PREFNAME),'EXPERT')
       if (foundidx.gt.0) then
-        read (luin,*) kappamode
+        read (luin,*) expertmode
         if (expertmode.le.0) expertmode=0
         if (expertmode.gt.1) expertmode=0
+        goto 80
       endif
 
       goto 80
 c
-c
-        read (luin,20) (ibuf(j),j=1,19)
-        write (*,20) (ibuf(j),j=1,19)
-        read (luin,*) expertmode
-        if (expertmode.le.0) expertmode=0
-        if (expertmode.gt.1) expertmode=0
-        write (*,*) '*** expertmode   :',expertmode
-c
-c
-c Look for optional KAPPA changing setings
-c
-c
-   90 read (luin,fmt=70,end=100) optname
-      if (optname(1:1).eq.'%') goto 90
-c
   100 continue
       close (luin)
       write (*,*) 'Energy Bins PHOTDAT File v5.2.0 : ',trim(photbinfile)
+      if (kappamode.gt.0) write (*,*)  '*** Kappa mode  : ENABLED'
+      if (expertmode.gt.0) write (*,*) '*** Expert mode : ENABLED'
 c
 c
 c default switch settings

@@ -1,5 +1,5 @@
 #!/bin/bash
-# v1.0.7 for MV 520 or newer
+# v1.0.8 for MV 520 or newer
 # run inside mappings_V
 # ../atmos must be present
 #   run with one arg - id number/string
@@ -42,15 +42,19 @@ echo "removing priv files"
 rm prepmv.sh
 rm for_bashrc.txt
 rm for_tcshrc.txt
-
 # clean data
 echo "preparing lab"
 cd lab
 rm -rf 00ignore
-rm map52
+rm map52*
 echo "cleaning data"
 cd data
 rm switches.txt
+cd ../
+cd bin
+#clean
+cd bin
+rm map52*
 cd ..
 #
 # and zip it up

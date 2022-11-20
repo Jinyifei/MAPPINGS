@@ -8,7 +8,7 @@ SHELL := /bin/bash
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map52rss
+OUTNAME = map52
 HOMEAREA= mappings520
 #
 #
@@ -409,7 +409,6 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#############################################################'
 	@echo ' Compiling ${OUTNAME} for $(XSYS)'
 	${FC} ${LDR} -o ${BINDIR}/${OUTNAME} ${OBJ} ${LIB}
-	ln -s ${BINDIR}/${OUTNAME} ${EXEDIR}/${OUTNAME}
 	@echo '#############################################################'
 	@echo ' '
 	@echo '#############################################################'
@@ -477,7 +476,7 @@ install:
 	[ -d ${INSTALLBIN} ] || mkdir -p ${INSTALLBIN}
 	[ -d ${INSTALLDATA} ] || mkdir -p ${INSTALLDATA}
 	[ -d ${INSTALLDATA}/${EXEDIR} ] || mkdir -p ${INSTALLDATA}/${EXEDIR}
-	cp ${BINDIR}/${OUTNAME} ${INSTALLBIN}/
+	cp ${BINDIR}/${OUTNAME} ${INSTALLBIN}/${OUTNAME}
 #
 	cp ${EXEDIR}/map.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapStd.prefs ${INSTALLDATA}/${EXEDIR}/
