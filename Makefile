@@ -508,6 +508,7 @@ install:
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' MAPPINGS V Installed: ${INSTALLDATA}'
+	@echo ' MAPPINGS V Initial Run Area: ${INSTALLDATA}/${EXEDIR}'
 	@echo '#############################################################'
 	@echo ' '
 #
@@ -515,6 +516,8 @@ install:
 #
 uninstall:
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapFull.prefs
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapStd.prefs
 	@rm -f  ${INSTALLBIN}/${OUTNAME}
 	@rm -rf ${INSTALLDATA}/${BINDIR}
 	@rm -rf ${INSTALLDATA}/data
@@ -530,8 +533,8 @@ uninstall:
 	@echo ' Uninstalled ${INSTALLBIN}/${OUTNAME}'
 	@echo ' Uninstalled ${INSTALLDATA}/${EXEDIR}/${OUTNAME}'
 	@echo ' Uninstalled ${INSTALLDATA}'
-	@echo ' Go to ${INSTALLDATA} and recover user eg custom map.prefs'
-	@echo ' or models, if needed'
+	@echo ' Go to ${INSTALLDATA} to recover user files:'
+	@echo '       eg custom map.prefs or models, if needed'
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' MAPPINGS ${INSTALLDATA} Uninstalled.'

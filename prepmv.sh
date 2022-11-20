@@ -38,28 +38,29 @@ cd mappings_V-${vers}
 rm -rf .git*
 # clean out optional files not for distrib
 echo "removing priv files"
-
 rm prepmv.sh
 rm for_bashrc.txt
 rm for_tcshrc.txt
-# clean data
+# clean
 echo "preparing lab"
 cd lab
+pwd
 rm -rf 00ignore
-rm map52*
+rm -f map52*
 echo "cleaning data"
 cd data
-rm switches.txt
-cd ../
+pwd
+rm -f switches.txt
+cd ../..
+echo "cleaning bin"
 cd bin
-#clean
-cd bin
-rm map52*
+pwd
+rm  -f map52*
 cd ..
 #
 # and zip it up
 echo "zipping archive"
-cd ../..
+cd ..
 rm mappings_V-${vers}/.DS_Store
 rm mappings_V-${vers}/*/.DS_Store
 rm mappings_V-${vers}/*/*/.DS_Store

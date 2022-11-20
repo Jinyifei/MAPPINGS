@@ -1,5 +1,5 @@
 #!/bin/bash
-# MV v5.2.0 v4 bash looped and slotted PID version
+# MV v5.2.0 v4.01 bash looped and slotted PID version
 #
 ########################################################################
 #
@@ -45,6 +45,7 @@ fi
 #
 m_vers="v5.2.0"
 map_exe="map52"
+map_path="~/mappings520/bin"
 #
 ########################################################################
 #
@@ -298,7 +299,7 @@ sed -e s/LPKVALUE/${pres}/g \
     -e s/DVERSION/${d_vers}/g \
     -e s/DEPLFILE/${depl}/g  scripts/"photAQ-${type}".mv > "photAQ${q1}PK${pres}-${type}".mv
 # background execution
-    sed -e s/MEXE/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
+    sed -e s/MEXE/${map_path}\/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
     chmod +x runmvscript.sh
     (./runmvscript.sh "photAQ"${q1}PK${pres}-${type}.mv)>&/dev/null&
     addPid "${map_exe}_Q${q1}" $!

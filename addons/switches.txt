@@ -27,7 +27,3 @@
 0
 % radiation pressure switch ( default 0 = on, 1 = off )
 0
-% kappa electron mode ( default 0 = off, 1 = on )
-0
-% expertmode switch ( 0 = default)
-0

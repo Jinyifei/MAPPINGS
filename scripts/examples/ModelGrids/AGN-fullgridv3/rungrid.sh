@@ -1,5 +1,5 @@
 #!/bin/bash
-# MV v5.2.0 v3.1.1 v4 bash looped and slotted PID version
+# MV v5.2.0 v3.1.2 v4 bash looped and slotted PID version
 #
 ########################################################################
 #
@@ -45,6 +45,7 @@ fi
 #
 m_vers="v5.2.0"
 map_exe="map52"
+map_path="~/mappings520/bin"
 #
 ########################################################################
 #
@@ -262,7 +263,7 @@ sed -e s/LPKVALUE/${pres}/g \
     -e s/DVERSION/${d_vers}/g \
     -e s/DEPLFILE/${depl}/g  scripts/"photAGN-${geom}".mv > "photAGN${geom}_P${pres}_L${ledd}_${type}".mv
 # background execution
-    sed -e s/MEXE/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
+    sed -e s/MEXE/${map_path}\/${map_exe}/g  runmvtmpl.sh > runmvscript.sh
     chmod +x runmvscript.sh
     (./runmvscript.sh "photAGN${geom}_P${pres}_L${ledd}_${type}".mv)>&/dev/null&
     addPid "${map_exe}_A${u0}" $!
