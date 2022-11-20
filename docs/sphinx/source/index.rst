@@ -86,6 +86,7 @@ Add others
 
    Mappings_guide
    installation
+   installation_new
    running_mapping
    input
    output
