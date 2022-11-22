@@ -35,9 +35,9 @@ docs/sphinx/html/
 docs/sphinx/doctrees/
 docs/sphinx/venv/
 # doxygen stuff
-docs/doxygen/html/
-docs/doxygen/mv_dox_html/
-docs/doxygen/mv_dox_latex/
+mv_dox_html/
+mv_dox_latex/
+dered_html/
 
 for_bashrc.txt
 for_tcshrc.txt

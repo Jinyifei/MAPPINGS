@@ -10,16 +10,24 @@
 static const Real kLambdaHbeta = 4861.333; // NIST ASD Std Air
 
 /*
- ======================================================================
- General Functions, use ID to call selected function.
- Below these is the same API re-written for each reddening function
- so that they all have the same calling format. You can use the general
- or specific API calls as required.
- ======================================================================
- */
+* ======================================================================
+* General Functions, use ID to call selected function.
+* Below these is the same API re-written for each reddening function
+* so that they all have the same calling format. You can use the general
+* or specific API calls as required.
+* ======================================================================
+*/
 
 #pragma mark - GENERIC
 
+/**
+* @brief The function int function red_PrintType(redID)
+* Display reddening chosen on commandline
+* @param [in]   Integer         redID  ID of Reddening Function
+* @return [out]  int            err   always noErr with default CCM89 if fails
+* @details
+* Simple switch to display curve chosen or CCM89 by default.
+*/
 int red_PrintType  (Integer redID ){
 
     int err = noErr;
@@ -58,6 +66,17 @@ int red_PrintType  (Integer redID ){
 }
 
 #pragma mark - Scalar Functions
+
+  //***************************************************************
+  //! @brief The function int function fred_AlAV(redID)
+  //! Std interface to Alambda/AV for all curves
+  //! @param [in]   Real         Rv         Function Rv value
+  //! @param [in]   Real         lambda     Wavelength lambda (A) where it is evaluated
+  //! @param [in]    Integer      id        Reddening Function ID
+  //! @return [out]  Real         AlAV      Al/AV Exctinction ratio to AV in Mag
+  //! @details
+  //!  Std interface to Alambda/AV for all curves given curve if
+  //****************************************************************
 
 Real fred_AlAV   ( Real Rv, Real lambda , Integer id){
 

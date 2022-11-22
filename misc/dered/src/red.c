@@ -2,18 +2,59 @@
 #include "zls.h"
 #include "red_alaws.h"
 
-/*
+/*!
 
  Read a spectrum  redden or de-redden and write to std out.
  Input files can be text or text.gz files
 
   v1.0.8
 
- */
+*/
 
     // Prototypes
 Counter ReadFluxFile(Q1DArr * wave, Q1DArr * flux, char * fileName, Integer nSkip );
 
+/*!
+ Usage
+ @param [in out] void   None
+ @details
+   Useage: red [-r Rv] [-c Cn] [-t typeID] [-s scale ] [-n skip ] flux25file
+
+       Version: 1.0.8
+       Args: optional Rv: AV/E(B-V) > ~2
+                        if -r omitted Rv = 3.1
+
+             optional  Cn: Nebula Reddening Constant
+                        if -c omitted Cn = 1.0
+                        if Cn < 0.0 then deredden
+
+             optional  scale: Flux Scale Factor
+                        if -s omitted scale = 1.0
+
+             optional  typeID: Reddening Function
+                        0: CCM89 Stellar Al/Av (default)
+                        1: B07 Orion modified CMM89
+                        2: F99 Fitzpatrick Al/E(B-V)
+                        3: FM07 Fitzpatrick & Massa E(l-V)/E(B-V)
+                        4: C00 Calzetti Extinction k(l)
+                        5: FD05 Fischera Av=1.0 extinction
+                        6: P70 Piembert Rv5.5 Orion Only
+                        7: VCG04-14 UV ONLY Modified CMM89
+
+             optional  skip: Input header lines to skip,
+                        Defaults to 1 for general texts
+
+   Required: Input file can be text or text.gz file
+               Header lines and then two columns
+               Lambda   Flambda
+
+             Or a simle two column list in any order:
+               Header lines and then two columns
+               LineLambda   FLux
+
+     Output: to stdout: lambda, flux, reddened flux, F(l), ...
+             Suitable as a 7 column csv file
+ */
 void Usage(void){
 
     printf("\n  Useage: red [-r Rv] [-c Cn] [-t typeID] [-s scale ] [-n skip ] flux25file\n\n");
