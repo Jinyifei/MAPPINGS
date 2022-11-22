@@ -3610,7 +3610,7 @@ c 22
 c 23
       fn=' '
       pfx='spec'
-      sfx='ph6'
+      sfx='csv'
       call newfile (pfx, sfx, fn, flen)
       filnd=fn(1:flen)
 c 24
