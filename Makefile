@@ -473,8 +473,7 @@ build:
 # bashrc.sh and .tcshrc  and/or .cshrc or .kshrc
 #
 install:
-	[ -d ${INSTALLBIN} ] || mkdir -p ${INSTALLBIN}
-	[ -d ${INSTALLDATA} ] || mkdir -p ${INSTALLDATA}
+v	[ -d ${INSTALLDATA} ] || mkdir -p ${INSTALLDATA}
 	[ -d ${INSTALLDATA}/${EXEDIR} ] || mkdir -p ${INSTALLDATA}/${EXEDIR}
 	cp ${BINDIR}/${OUTNAME} ${INSTALLBIN}/${OUTNAME}
 #

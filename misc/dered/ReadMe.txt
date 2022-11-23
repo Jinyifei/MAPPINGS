@@ -2,6 +2,7 @@
 RSS 2014
 
 ## command: red
+
 ### redden or de-redden a spectrum or line list in a text file
 
 Doxygen:  <a href="dered_html/index.html"> Doxygen Documentation</a>

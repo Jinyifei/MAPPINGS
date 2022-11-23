@@ -1,5 +1,5 @@
-
 #include "zls.h"
+#include "zlib.h"
 
 /*
  v1.0.2
@@ -129,9 +129,9 @@ int main(int argc, char * argv[]) {
     fwhm = (fwhm<0.0)?0.0:fwhm;
     box = (box<0.0)?0.0:box;
     gSpeconly = (gSpeconly != 1) ? 0: 1;
-    optind=(gSpeconly==1)?optind-=1:optind;
+    optind=(gSpeconly==1)?optind-1:optind; // -s has no arg
 
-    if ( argc == (optind+2) ) {
+    if ( argc > (optind) ) {
 
         Q1DArr waveFlux = NULL;
         Q1DArr fluxFlux = NULL;
@@ -158,10 +158,10 @@ int main(int argc, char * argv[]) {
 
             Counter nSpec = ReadFluxFile(&waveFlux, &fluxFlux, (char *)argv[optind] );
             Counter nSpectrum = nSpec;
+            zls_AkimaSpline zSpline= NULL;
 
             if ( nSpectrum > 4 ){ // worked and got enough points :)
 
-                 zls_AkimaSpline zSpline= NULL;
                  zSpline = zls_AkimaAlloc (nSpec);
                  err = zls_AkimaInit ( zSpline, waveFlux, fluxFlux, nSpec);
 
@@ -176,8 +176,10 @@ int main(int argc, char * argv[]) {
 
                 }
 
-                    // read continuum from 2nd file arg
-                if ( gSpeconly == 0 ) {
+                zls_AkimaFree( zSpline ); zSpline = NULL; nSpec = 0;
+
+   // read continuum from 2nd file arg
+                if ( gSpeconly != 1 ) {
                     nSpec = ReadFluxFile(&waveFlux, &fluxFlux, (char *)argv[optind+1] );
                 } else {
                    zls_NewQuantity1DArr(&cWaveFlux, nSpectrum);
@@ -191,7 +193,6 @@ int main(int argc, char * argv[]) {
 
                 if ( nSpec > 4 ){
 
-                    zls_AkimaSpline zSpline= NULL;
                     zSpline = zls_AkimaAlloc (nSpec);
                     err = zls_AkimaInit ( zSpline, waveFlux, fluxFlux, nSpec);
 
@@ -215,7 +216,7 @@ int main(int argc, char * argv[]) {
                        // Do convolutions here, on fl cn and nz if needed
 
                         if (( resPower > 0.0 ) || ( vSini > 0.0 ) || ( fwhm > 0.0 )|| ( box > 0.0 )) {
-                            err = zls_LogXConvolve( wv, fl, cn, nz, nSpline, resPower, fwhm, vSini, box);
+                            err = zls_WLogXConvolve( wv, fl, cn, nz, nSpline, resPower, fwhm, vSini, box);
                         }
 
                         if (err == noErr ){
@@ -236,13 +237,12 @@ int main(int argc, char * argv[]) {
                         }
                     }
 
-                    zls_AkimaFree(zSpline); zSpline=NULL;
+                    zls_AkimaFree(zSpline); zSpline=NULL; nSpec=0;
 
                   } //( nSpec > 4 on continuum)
 
             } //( nSpec > 4 on fluxes)
 
-            zls_AkimaFree(zSpline); zSpline=NULL;
             zls_DisposeQuantity1DArr(wv);
             zls_DisposeQuantity1DArr(fl);
             zls_DisposeQuantity1DArr(cn);

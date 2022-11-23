@@ -38,6 +38,8 @@ docs/sphinx/venv/
 mv_dox_latex/
 mv_dox_html/
 dered_html
+blur_html
+lines_html
 
 for_bashrc.txt
 for_tcshrc.txt
