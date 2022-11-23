@@ -1,5 +1,5 @@
 # _lines_ - a nebula line list fitting command line utility
-v1.0.4 build 19
+v1.0.4 build 20
 
 Developed by Dr Ralph Sutherland, Mount Stromlo Observatory.
 
@@ -25,9 +25,7 @@ There are no dependencies other than having a unix/linux like environment
 
 # Build
 
-      > make
-      > sudo make install
-      > make clean
+      > make build
 
 ### lines
 

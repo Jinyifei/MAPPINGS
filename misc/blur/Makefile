@@ -1,24 +1,44 @@
 #
-# v1.0.1
+# v1.0.8
 #
-OUTNAME = ./blur
-EXEDIR  = ./
+# for ~/mappings520/bin
 #
-SRCDIR  = src/
-ZLSDIR  = zls/
-ZLIBDIR  = zlib/
+OUTNAME  = blur
+HOMEAREA = mappings520
+BINDIR   = bin
+#-------------------------------
+# Install Areas
+#
+# std home area ~/ expanded with optional env vars
+#
+INSTALLBASE =$(shell echo ${HOME})
+INSTALLBIN  =${INSTALLBASE}/${HOMEAREA}/${BINDIR}
+#
+# ADVANCED: for using the /usr/local data locations
+# requires sudo powers
+#
+# INSTALLBASE = "/usr/local"
+# INSTALLBIN  = "${INSTALLBASE}/${BINDIR}"
+#
+#-------------------------------
+#
+SRCDIR  = ./
+ZLSDIR  = ../zls/
+ZLIBDIR  = ../zlib/
 INCDIRS = -I${SRCDIR} -I${ZLSDIR} -I${ZLIBDIR}
 #
 # GENERIC GCC
 #
 CC     =  gcc
-CFLAGS  = -std=c99 -O3 -funsigned-char -isysroot`xcrun --show-sdk-path`
+CFLAGS  = -std=c99 -O3 -funsigned-char`
 OPTS   = -c -o $*.o -w ${CFLAGS} ${INCDIRS}
-LIB    = -lm -isysroot`xcrun --show-sdk-path`
+LIB    = -lm
 #
 INCS    = ${ZLSDIR}zls.h
-OBJ     = blur.o \
 #
+OBJ     = ${SRCDIR}blur.o
+#
+# basic set
 ZLSOBJ = ${ZLSDIR}zls_arrs.o \
 	${ZLSDIR}zls_qs.o \
 	${ZLSDIR}zls_io.o \
@@ -46,24 +66,73 @@ SRC    = $(OBJ:.o=.c) $(ZLSOBJ:.o=.c) $(ZLIB:.o=.c)
 #
 %.o: %.c ${INCS}
 	${CC} ${OPTS} $*.c
+#-------------------------------
+#---------  Targets  ----------
+#-------------------------------
+#
+UNAME = $(shell uname)
+#
+ifeq ($(UNAME),Darwin)
+	LIB  = -isysroot`xcrun --show-sdk-path`
+	XSYS = macOS (with xcrun)
+else
+	LIB  =
+	XSYS = Linux
+endif
 
-all:${EXEDIR}${OUTNAME}
+compile:${OUTNAME}
 
-${EXEDIR}${OUTNAME}: ${INCS} ${SRC} ${OBJ} ${ZLSOBJ} ${ZLIB}
-	${CC} ${CFLAGS} -o ${EXEDIR}${OUTNAME} ${OBJ} ${ZLSOBJ} ${GSLOBJ} ${ZLIB} ${LIB}
+${OUTNAME}: ${INCS} ${SRC} ${OBJ} ${ZLSOBJ} ${ZLIB}
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' Compiling ${OUTNAME} for $(XSYS)'
+	${CC} ${CFLAGS} -o ${OUTNAME} ${OBJ} ${ZLSOBJ} ${ZLIB} ${LIB}
+	@echo '#############################################################'
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' ${OUTNAME} Compiled Successfully.'
+	@echo '#############################################################'
 
 clean:
+	@echo ' '
+	@echo '#############################################################'
 	@echo ' Removing object files'
 	@rm -f ${OBJ}
 	@rm -f ${ZLSOBJ}
 	@rm -f ${ZLIB}
-	@echo ' Done.'
+	@echo '#############################################################'
+	@echo ' '
+
+distclean:
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' Removing object files'
+	@rm -f ${OBJ}
+	@rm -f ${ZLSOBJ}
+	@rm -f ${ZLIB}
+	@rm -f ${OUTNAME}
+	@echo '#############################################################'
+	@echo ' '
+
+build:
+	@echo 'Building ${OUTNAME} for $(XSYS)'
+	@make compile
+	@echo 'Cleaning'
+	@make clean
+	@echo ' '
+	@echo '#############################################################'
+	@echo ' Compile and Cleaned Successfully...'
+	@echo '#############################################################'
+	@echo ' '
+	@echo 'Installing into ' ${INSTALLBIN}
+	@echo ' '
+	@make install
 
 install:
-	[ -d /usr/local/bin ] || mkdir -p /usr/local/bin
-	cp ${OUTNAME} /usr/local/bin/
-	@echo ' Installed ${OUTNAME} into /usr/local/bin'
+	[ -d ${INSTALLBIN} ] || mkdir -p ${INSTALLBIN}
+	cp ${OUTNAME} ${INSTALLBIN}
+	@echo ' Installed ${OUTNAME} into ${INSTALLBIN}'
 
 uninstall:
-	rm -f /usr/local/bin/${OUTNAME}
-	@echo ' Uninstalled ${OUTNAME} from /usr/local/bin'
+	rm -f  ${INSTALLBIN}/${OUTNAME}
+	@echo ' Uninstalled ${OUTNAME} from ${INSTALLBIN}'
