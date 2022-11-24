@@ -424,7 +424,7 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#############################################################'
 	@echo ' '
 	@cat src/src-bashrc.txt > for_bashrc.txt
-	@echo 'export mapbase="${INSTALLBASE}"' >> for_bashrc.txt
+	@echo 'export mapbase="${INSTALLBASE}/${HOMEAREA}"' >> for_bashrc.txt
 	@echo 'export MAPDATA="$$mapbase"' >> for_bashrc.txt
 	@echo 'export MAPBIN="$$mapbase/${BINDIR}"' >> for_bashrc.txt
 	@echo '# add bin area to global path:' >> for_bashrc.txt
@@ -436,7 +436,7 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#' >> for_bashrc.txt
 	@echo '########################################################################' >> for_bashrc.txt
 	@cat src/src-tcshrc.txt > for_tcshrc.txt
-	@echo 'set mapbase = "${INSTALLBASE}"' >> for_tcshrc.txt
+	@echo 'set mapbase = "${INSTALLBASE}/${HOMEAREA}"' >> for_tcshrc.txt
 	@echo 'setenv MAPDATA "$$mapbase"' >> for_tcshrc.txt
 	@echo 'set mapbin = "$$mapbase/${BINDIR}"' >> for_tcshrc.txt
 	@echo 'setenv MAPBIN "$$mapbin"' >> for_tcshrc.txt
