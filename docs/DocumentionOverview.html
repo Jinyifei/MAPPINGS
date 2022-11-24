@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
+      <meta charset="utf-8" />
     <meta name="viewport" content="width = device-width">
     <meta name="format-detection" content="telephone=no">
     <title>Documentation Center for MAPPINGS V</title>
-    <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="style.css" />
     <style>
 
 #heading a:link, #heading  a:visited {
@@ -110,60 +109,6 @@ or on multi-cpu systems a parallel build is faster:
 
 </code></pre>
       <p> </p>
-      <h2>The Local Mappings directory structure</h2>
-      (see advanced usage documentation for shared and distributed
-      options)
-      <pre><code>
-mappings_V/
-src/
-    mastercode/
-    includes/
-    workcode/
-lab/
-    data/
-    abund/
-    scripts/
-    atmos/ (optional)
-docs/
-    documentation files and support directories
-addons/
-    additional abundance preference files and options (see advanced use sections)
-misc/
-    lines/
-    blur/
-    dered/
-    fundamental_constants/
-</code></pre>
-      <h2>Key Directories and Files</h2>
-      <ul>
-        <li> lab/ This is where the models are made and run. The runtime
-          files such as map.prefs are here and the essential data
-          directory with the runtime data files. </li>
-        <li> map51: The executable, also sometimes built with other
-          names </li>
-        <li> map.prefs Essential startup data - must be present. </li>
-        <li> mapStd.prefs A standard 16 atom startup in case map.prefs
-          is lost for any reason, can be copied and renamed map.prefs if
-          needed </li>
-        <li> mapFull.prefs A full 30 atom startup in case map.prefs is
-          lost for any reason, can be copied and renamed map.prefs if
-          needed </li>
-        <li> data/: Contains the atomic data for MAPPINGS V. Read at
-          runtime in mapinit.f. Essential and must be present and
-          complete. </li>
-        <li> abund/: A set of useful abundance settings that can be read
-          interactively during a run. </li>
-        <li> atmos/: An optional set of useful radiation source files
-          and stellar atmosphere models. Optional. * scripts/: A
-          collection of useful of UNIX shell and MAPPINGS scripts for
-          testing and running mappings models when not running
-          interactively. </li>
-        <li> src/ Contains the code area and the Makefile(s). There is a
-          standard makefile for bash shell and gfortran and alternatives
-          in a subdirectory for other setups for use as templates. All
-          the commonly adjusted user parameters are near the top of the
-          makefile. </li>
-      </ul>
       <h1>Primary Reference Documentation</h1>
       <h2>Sphinx and Cookbooks</h2>
       <p> Note:&nbsp; Documentation is an ongoing effort, and
@@ -248,10 +193,61 @@ misc/
         </ul>
       </ul>
       <br>
+      <h2>The Local Mappings directory structure</h2>
+      (see advanced usage documentation for shared and distributed
+      options)
+      <pre><code>
+mappings_V/
+src/
+    mastercode/
+    includes/
+    workcode/
+lab/
+    data/
+    abund/
+    scripts/
+    atmos/ (optional)
+docs/
+    documentation files and support directories
+addons/
+    additional abundance preference files and options (see advanced use sections)
+misc/
+    lines/
+    blur/
+    dered/
+    fundamental_constants/
+</code></pre>
+      <h2>Key Directories and Files</h2>
       <ul>
-        <ul>
+        <li> lab/ This is where the models are made and run. The runtime
+          files such as map.prefs are here and the essential data
+          directory with the runtime data files. </li>
+        <li> map51: The executable, also sometimes built with other
+          names </li>
+        <li> map.prefs Essential startup data - must be present. </li>
+        <li> mapStd.prefs A standard 16 atom startup in case map.prefs
+          is lost for any reason, can be copied and renamed map.prefs if
+          needed </li>
+        <li> mapFull.prefs A full 30 atom startup in case map.prefs is
+          lost for any reason, can be copied and renamed map.prefs if
+          needed </li>
+        <li> data/: Contains the atomic data for MAPPINGS V. Read at
+          runtime in mapinit.f. Essential and must be present and
+          complete. </li>
+        <li> abund/: A set of useful abundance settings that can be read
+          interactively during a run. </li>
+        <li> atmos/: An optional set of useful radiation source files
+          and stellar atmosphere models. Optional. * scripts/: A
+          collection of useful of UNIX shell and MAPPINGS scripts for
+          testing and running mappings models when not running
+          interactively. </li>
+        <li> src/ Contains the code area and the Makefile(s). There is a
+          standard makefile for bash shell and gfortran and alternatives
+          in a subdirectory for other setups for use as templates. All
+          the commonly adjusted user parameters are near the top of the
+          makefile. </li>
         </ul>
-      </ul>
+
     </div>
   </body>
 </html>
