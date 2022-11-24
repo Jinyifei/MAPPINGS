@@ -8,7 +8,7 @@ SHELL := /bin/bash
 #--- Output (executable) name --
 #-------------------------------
 #
-OUTNAME = map52
+OUTNAME = map52dev
 HOMEAREA= mappings520
 #
 #
