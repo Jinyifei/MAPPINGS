@@ -3,7 +3,7 @@
 # tcsh for timing format and $HOST (instead of $HOSTNAME for bash)
 #
 set d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`
-set mexe="${HOME}/mappings/bin/map52"
+set mexe="${HOME}/mappings520/bin/map52"
 #
 echo " MV 5.2.0 Curve Tests: Clearing Area ..."
 rm -f timing.txt map5output.txt

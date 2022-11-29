@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# v1.0.11
+# v1.0.12
 #
 # use:  ./getgrid.sh V[012]*
 #
@@ -49,5 +49,5 @@ MgI4567[30],\
 #
 for i
 do
-awk -f lines_spec.awk $i/v*_spec0001.csv
+awk -f lines_spec.awk $i/specSHv*0001.csv
 done

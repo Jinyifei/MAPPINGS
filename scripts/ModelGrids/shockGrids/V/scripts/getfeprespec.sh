@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# v1.0.10
+# v1.0.12
 #
 # use:  ./getgrid.sh V[012]*
 #
@@ -53,5 +53,5 @@ FeII9227[42]"
 #
 for i
 do
-awk -f lines_fespec.awk $i/v*_pcspec0001.csv
+awk -f lines_fespec.awk $i/specPCv*0001.csv
 done

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# v1.0.10
+# v1.0.12
 #
 # use:  ./getgrid.sh V[012]*
 #
@@ -49,5 +49,5 @@ MgI4567[30],\
 #
 for i
 do
-awk -f lines_prespec.awk $i/v*_pcspec0001.csv
+awk -f lines_prespec.awk $i/specPCv*0001.csv
 done
