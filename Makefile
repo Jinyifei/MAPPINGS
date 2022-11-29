@@ -430,9 +430,10 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '# add bin area to global path:' >> for_bashrc.txt
 	@echo 'export PATH="$$MAPBIN:$$PATH"' >> for_bashrc.txt
 	@echo '#' >> for_tcshrc.txt
-	@echo "# add a generic map alias for every executable version" >> for_bashrc.txt
+	@echo "# add a generic map alias for every executable and location" >> for_bashrc.txt
 	@echo '#' >> for_tcshrc.txt
-	@echo 'alias map=${OUTNAME}' >> for_bashrc.txt
+	@echo 'alias map52=${OUTNAME}' >> for_bashrc.txt
+	@echo 'alias m52=${MAPDATA}'   >> for_bashrc.txt
 	@echo '#' >> for_bashrc.txt
 	@echo '########################################################################' >> for_bashrc.txt
 	@cat src/src-tcshrc.txt > for_tcshrc.txt
@@ -445,9 +446,10 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#' >> for_tcshrc.txt
 	@echo 'set path = ($$mapbin $$path)' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
-	@echo "# add a generic map alias for every executable version" >> for_tcshrc.txt
+	@echo "# add a generic map alias for every executable and location" >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
 	@echo 'alias map ${OUTNAME}' >> for_tcshrc.txt
+	@echo 'alias m52 ${MAPDATA}' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
 	@echo '########################################################################' >> for_tcshrc.txt
 #
@@ -481,15 +483,17 @@ install:
 	cp ${EXEDIR}/map.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapStd.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapFull.prefs ${INSTALLDATA}/${EXEDIR}/
-	cp -r ${EXEDIR}/scripts ${INSTALLDATA}/${EXEDIR}
+	cp -r ${EXEDIR}/examples ${INSTALLDATA}/${EXEDIR}
 	rm -f ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 	ln -s ${INSTALLBIN}/${OUTNAME} ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 #
-	cp -r ${EXEDIR}/data  ${INSTALLDATA}/
-	cp -r ${EXEDIR}/abund ${INSTALLDATA}/
-	cp -r ${EXEDIR}/prefs ${INSTALLDATA}/
-	cp -r ${EXEDIR}/atmos ${INSTALLDATA}/
+	cp -r ${EXEDIR}/data    ${INSTALLDATA}/
+	cp -r ${EXEDIR}/abund   ${INSTALLDATA}/
+	cp -r ${EXEDIR}/prefs   ${INSTALLDATA}/
+	cp -r ${EXEDIR}/atmos   ${INSTALLDATA}/
 #
+	cp -r scripts ${INSTALLDATA}/
+	cp   scripts/admin/clean.sh ${INSTALLBIN}/
 	cp -r misc ${INSTALLDATA}/
 	cp -r docs ${INSTALLDATA}/
 #
@@ -518,6 +522,10 @@ uninstall:
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapFull.prefs
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapStd.prefs
+	@rm -rf ${INSTALLDATA}/${EXEDIR}/examples/cooling
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/examples/bb100k.sou
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/examples/bb100k.mv
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/examples/bbt.mv
 	@rm -f  ${INSTALLBIN}/${OUTNAME}
 	@rm -rf ${INSTALLDATA}/${BINDIR}
 	@rm -rf ${INSTALLDATA}/data
