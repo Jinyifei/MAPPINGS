@@ -429,11 +429,11 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo 'export MAPBIN="$$mapbase/${BINDIR}"' >> for_bashrc.txt
 	@echo '# add bin area to global path:' >> for_bashrc.txt
 	@echo 'export PATH="$$MAPBIN:$$PATH"' >> for_bashrc.txt
-	@echo '#' >> for_tcshrc.txt
-	@echo "# add a generic map alias for every executable and location" >> for_bashrc.txt
-	@echo '#' >> for_tcshrc.txt
-	@echo 'alias map52=${OUTNAME}' >> for_bashrc.txt
-	@echo 'alias m52=${MAPDATA}'   >> for_bashrc.txt
+	@echo '#' >> for_bashrc.txt
+	@echo '# add a generic map alias for every executable and location' >> for_bashrc.txt
+	@echo '#' >> for_bashrc.txt
+	@echo 'alias map52="$$mapbin/${OUTNAME}"' >> for_bashrc.txt
+	@echo 'alias m52="$$mapbase"'   >> for_bashrc.txt
 	@echo '#' >> for_bashrc.txt
 	@echo '########################################################################' >> for_bashrc.txt
 	@cat src/src-tcshrc.txt > for_tcshrc.txt
@@ -446,10 +446,10 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#' >> for_tcshrc.txt
 	@echo 'set path = ($$mapbin $$path)' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
-	@echo "# add a generic map alias for every executable and location" >> for_tcshrc.txt
+	@echo '# add a generic map alias for every executable and location' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
-	@echo 'alias map ${OUTNAME}' >> for_tcshrc.txt
-	@echo 'alias m52 ${MAPDATA}' >> for_tcshrc.txt
+	@echo 'alias map "$$mapbin/${OUTNAME}"' >> for_tcshrc.txt
+	@echo 'alias m52 "$$mapbase"' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
 	@echo '########################################################################' >> for_tcshrc.txt
 #
@@ -498,8 +498,8 @@ install:
 	cp -r docs ${INSTALLDATA}/
 #
 	rm -rf ${INSTALLDATA}/docs/doxygen
-	cp for_tcshrc.txt ${INSTALLBASE}/
-	cp for_bashrc.txt ${INSTALLBASE}/
+	mv for_tcshrc.txt ${INSTALLDATA}/
+	mv for_bashrc.txt ${INSTALLDATA}/
 #
 	@echo ' '
 	@echo '#############################################################'
