@@ -1,0 +1,51 @@
+%
+%	FORMAT
+%	Title
+%	# entries
+%	Z  Abundance	
+%	.
+%	.
+%	.
+%
+%	Note: negative abundances are logarithmic relative to H = 0.0
+%
+%	Elements not included in the data file ATDAT will not be read
+%
+%	Elements not present in this file will have no effect on the 
+%	default abundances.
+%
+%	The Header lines are not needed but they are useful
+%
+%  From: Grevesse et al 2010, Ap&SS, 328,179G
+% @ARTICLE{2010Ap&SS.328..179G,
+%   author = {{Grevesse}, N. and {Asplund}, M. and {Sauval}, A.~J. and {Scott}, P.},
+%    title = "{The chemical composition of the Sun}",
+%  journal = {\apss},
+% keywords = {Solar abundances},
+%     year = 2010,
+%    month = jul,
+%   volume = 328,
+%    pages = {179-183},
+%      doi = {10.1007/s10509-010-0288-z},
+%   adsurl = {http://adsabs.harvard.edu/abs/2010Ap%26SS.328..179G},
+%  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+%  }
+%
+Solar abundance from Grevesse et al 2010
+16
+ 1   1.00
+ 2  -1.07
+ 6  -3.57
+ 7  -4.17
+ 8  -3.31
+10  -4.07
+11  -5.76
+12  -4.40
+13  -5.55
+14  -4.49
+16  -4.88
+17  -6.50
+18  -5.60
+20  -5.66
+26  -4.50
+28  -5.78

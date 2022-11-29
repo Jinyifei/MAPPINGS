@@ -4,11 +4,10 @@ rm *.sou
 rm *.nfn
 rm *.lam
 rm *.bln
-rm *.lam
 rm *.neq
 rm *.pie
-rm *.sh4
-rm *.sh5
-rm *.ph6
-rm *.ph7
+rm *.emi
+rm *.dat
+rm *.sh[2-7]
+rm *.ph[2-7]
 rm fort.[0-9][0-9]
