@@ -423,7 +423,7 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo ' (macOS users may need to use .zshrc with the bashrc settings)'
 	@echo '#############################################################'
 	@echo ' '
-	@cat src/src-bashrc.txt > for_bashrc.txt
+	@cat src-bashrc.txt > for_bashrc.txt
 	@echo 'export mapbase="${INSTALLBASE}/${HOMEAREA}"' >> for_bashrc.txt
 	@echo 'export MAPDATA="$$mapbase"' >> for_bashrc.txt
 	@echo 'export MAPBIN="$$mapbase/${BINDIR}"' >> for_bashrc.txt
@@ -436,7 +436,7 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo 'alias m52="$$mapbase"'   >> for_bashrc.txt
 	@echo '#' >> for_bashrc.txt
 	@echo '########################################################################' >> for_bashrc.txt
-	@cat src/src-tcshrc.txt > for_tcshrc.txt
+	@cat src-tcshrc.txt > for_tcshrc.txt
 	@echo 'set mapbase = "${INSTALLBASE}/${HOMEAREA}"' >> for_tcshrc.txt
 	@echo 'setenv MAPDATA "$$mapbase"' >> for_tcshrc.txt
 	@echo 'set mapbin = "$$mapbase/${BINDIR}"' >> for_tcshrc.txt

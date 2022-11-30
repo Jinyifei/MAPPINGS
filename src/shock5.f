@@ -1,5 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      include 'credits.txt'
+      include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -2649,7 +2649,6 @@ c
         caller='S5'
         pfx='PCup'//trim(s5pfx)
         np=len(trim(pfx))
-        write(*,*) 'ytest" ', pfx, s5pfx
 c
         wmod='LFLM'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)

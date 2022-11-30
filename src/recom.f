@@ -1,6 +1,6 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-      include 'credits.txt'
+      include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
