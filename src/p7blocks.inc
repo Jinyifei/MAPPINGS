@@ -1,5 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      include 'credits.txt'
+      include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Photo 7 shared Variables - Mostly Files

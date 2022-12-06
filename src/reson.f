@@ -1,5 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      include 'credits.txt'
+      include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c*******COMPUTES RESONANCE LINE COOLING
 c       NB.  SUBR. HYDRO SHOULD BE CALLED PREVIOUSLY
