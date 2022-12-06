@@ -1,5 +1,5 @@
-# DeRed v1.0.8
-RSS 2014
+# Red v1.0.9
+RSS 2022
 
 ## command: red
 
@@ -17,7 +17,7 @@ Reads txt.gz or .txt plain files.
 
 To build the `red` command:
 
-      1) cd dered/
+      1) cd red/
 
       2) make
 
