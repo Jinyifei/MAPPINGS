@@ -87,7 +87,11 @@ c
         datadir=trim(homedir)//'/mappings520'
         inquire (file=trim(datadir)//'/data/ATDAT.txt',exist=iexi)
         dtlen=len(trim(datadir))
-      elseif (iexi.eqv..false.) then
+      endif
+c
+c keep looking if not found
+c
+      if (iexi.eqv..false.) then
         call get_environment_variable ('MAPDATA', env_var, status=
      &   check_env)
 c       write(*,*) ' *** ATOMIC Data from : ',env_var,check_env
@@ -99,17 +103,32 @@ c       write(*,*) ' *** ATOMIC Data from : ',datadir
           dtlen=len(trim(datadir))
         endif
         inquire (file=trim(datadir)//'/data/ATDAT.txt',exist=iexi)
-      elseif (iexi.eqv..false.) then
+      endif
+c
+      if(iexi.eqv..false.) then
+        datadir=trim(homedir)//'/mappings520'
+        inquire (file=trim(datadir)//'/data/ATDAT.txt',exist=iexi)
+        dtlen=len(trim(datadir))
+      endif
+c
+      if (iexi.eqv..false.) then
         datadir='/opt/local/share/mappings'
         dtlen=len(trim(datadir))
         inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
-      elseif (iexi.eqv..false.) then
+      endif
+c
+c last look
+c
+      if (iexi.eqv..false.) then
         datadir='/usr/local/share/mappings'
         dtlen=len(trim(datadir))
         inquire (file=datadir(1:dtlen)//'/data/ATDAT.txt',exist=iexi)
-      elseif (iexi.eqv..false.) then
+      endif
+c
+      if (iexi.eqv..false.) then
         m=lenv(filename)
-        write (*,*) ' ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
+        write (*,*) ' **** ERROR no data in smapinit: ****'
+        write (*,*) ' ',trim(filename),' NOT FOUND.'
         write (*,*) ' MV requires a valid local data/ directory or'
         write (*,*) ' a home area: ',trim(datadir)//'/data',' or'
         write (*,*) ' a valid shared /usr/local/share/mappings/data/'
@@ -225,12 +244,27 @@ c
       kappamode=0
       expertmode=0
 c
-      inquire (file='map.prefs',exist=iexi)
-      if (iexi) then
-        open (luin,file='map.prefs',status='OLD')
-      else
+      iexi=.false.
+      filename='map.prefs'
+      inquire (file=filename,exist=iexi)
+      if (iexi.eqv..false.) then
         filename=trim(datadir)//'/map.prefs'
+        inquire (file=filename,exist=iexi)
+      endif
+      if (iexi.eqv..false.) then
+        filename=trim(datadir)//'/prefs/map.prefs'
+        inquire (file=filename,exist=iexi)
+      endif
+c
+      if (iexi) then
         open (luin,file=filename,status='OLD')
+      else
+        write (*,*) ' **** ERROR No map.prefs found ****'
+        write (*,*) ' ',trim(filename),' NOT FOUND.'
+        write (*,*) ' MV requires a valid local map.prefs or'
+        write (*,*) ' a home area: ',trim(datadir)//'/prefs/map.prefs'
+        write (*,*) ' or : ',trim(datadir)//'/map.prefs'
+        stop
       endif
 c
    50 read (luin,fmt=20) (ibuf(j),j=1,19)
