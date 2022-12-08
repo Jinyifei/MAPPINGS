@@ -23,8 +23,8 @@ docs/sphinx/html/
 docs/sphinx/doctrees/
 docs/sphinx/venv/
 # doxygen stuff
-doxygen_help
-doxygen_help/
+# doxygen_help
+# doxygen_help/
 mv_help_html
 mv_help_html/
 mv_html
