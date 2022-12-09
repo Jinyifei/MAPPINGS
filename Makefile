@@ -385,7 +385,8 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@cat src-bashrc.txt > for_bashrc.txt
 	@echo 'export mapbase="${INSTALLBASE}/${HOMEAREA}"' >> for_bashrc.txt
 	@echo 'export MAPDATA="$$mapbase"' >> for_bashrc.txt
-	@echo 'export MAPBIN="$$mapbase/${BINDIR}"' >> for_bashrc.txt
+	@echo 'export mapbin="$$mapbase/${BINDIR}"' >> for_bashrc.txt
+	@echo 'export MAPBIN="$$mapbin"' >> for_bashrc.txt
 	@echo '# add bin area to global path:' >> for_bashrc.txt
 	@echo 'export PATH="$$MAPBIN:$$PATH"' >> for_bashrc.txt
 	@echo '#' >> for_bashrc.txt
