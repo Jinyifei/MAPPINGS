@@ -2,24 +2,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-<<<<<<< HEAD:src/mastercode/photo6.f
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin
-c
-c
-c       Version v5.2.0
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-=======
 
 c****************************************************************
 c> @brief The subroutine photo6
@@ -33,7 +15,6 @@ c! @details
 c!  XXXX Enter details here
 c***************************************************************
 
->>>>>>> dev:src/photo6.f
       subroutine photo6 ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2382,13 +2363,8 @@ c
       pollfile='balance'
       inquire (file=pollfile,exist=iexi)
       if (((jbal.eq.'Y').and.(m.eq.1)).or.(iexi)) then
-<<<<<<< HEAD:src/mastercode/photo6.f
-        pfx=jbfx//' '
-        np=lenv(pfx)
-=======
         pfx=jbfx
         np=len(trim(pfx))
->>>>>>> dev:src/photo6.f
         call wbal (caller, pfx, np, pop)
       endif
 c
@@ -3659,13 +3635,8 @@ c 27
       fn=' '
       pfx='rates'
       sfx='csv'
-<<<<<<< HEAD:src/mastercode/photo6.f
-      call newfile (pfx, np, sfx, 3, fn)
-      filrt=fn(1:np+8)
-=======
       call newfile (pfx, sfx, fn, flen)
       filrt=fn(1:flen)
->>>>>>> dev:src/photo6.f
 c 28 old allion now ions_
       fn=' '
       pfx='ions_'
@@ -3685,14 +3656,8 @@ c
           pfx=elem(ie)
           pfx=pfx(1:2)//'_ion'
         endif
-<<<<<<< HEAD:src/mastercode/photo6.f
-        np=lenv(pfx)
-        call newfile (pfx, np, sfx, 3, fn)
-        filn(i)=fn(1:np+8)
-=======
         call newfile (pfx, sfx, fn, flen)
         filn(i)=fn(1:flen)
->>>>>>> dev:src/photo6.f
 c
         if (elem_len(ie).eq.1) then
           pfx=elem(ie)
@@ -3714,15 +3679,8 @@ c
         nl=fmnl(idx)
         fn=' '
 c
-<<<<<<< HEAD:src/mastercode/photo6.f
-        pfx(1:32)=' '
-        pfx=elem(at)//rom(io)//'_em'
-        np=lenv(pfx)
-        pfx=pfx(1:np)//'_'//jpfx//' '
-=======
         pfx=elem(at)//rom(io)//'_em'
         pfx=pfx(1:np)//'_'//jpfx
->>>>>>> dev:src/photo6.f
 c
         sfx='csv'
         call newfile (pfx, sfx, fn, flen)

@@ -2,23 +2,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-<<<<<<< HEAD:src/mastercode/strutil.f
-c     MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c     Creative Commons By Attribution, Share Alike
-c     v4.0 International https://creativecommons.org
-c
-c     1975 Ralph Sutherland, Michael Dopita, Luc Binette,
-c     Ian Evans, Stephen Mettheringham
-c     Brent Groves, David Nicholls,
-c     Yi-Fei Jin, Adam D. Thomas,
-c
-c     Version: v5.1.21
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-      subroutine newfile (pref, p, suff, s, filena)
-=======
 
 c****************************************************************
 c> @brief The subroutine newfile
@@ -36,7 +19,6 @@ c!  XXXX Enter details here
 c***************************************************************
 
       subroutine newfile (pref, suff, filena, strlength)
->>>>>>> dev:src/strutil.f
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

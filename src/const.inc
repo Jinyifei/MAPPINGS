@@ -9,17 +9,10 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-<<<<<<< HEAD:src/mastercode/const.inc
-c     Adam D. Thomas, Yi-Fei Jin
-c
-c
-c       Version v5.1.21
-=======
 c     Adam D. Thomas, Yi-Fei Jin, Knox Long
 c
 c
 c       Version v5.2.0
->>>>>>> dev:src/const.inc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

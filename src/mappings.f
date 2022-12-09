@@ -18,11 +18,7 @@ c     CC-BY-SA-4.0Intl https://creativecommons.org
 c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
-<<<<<<< HEAD:src/mastercode/mappings.f
-c     Adam D. Thomas, Yi-Fei Jin
-=======
 c     Adam D. Thomas, Yi-Fei Jin, Knox Long
->>>>>>> dev:src/mappings.f
 c
 c
 c       Version v5.2.0dev

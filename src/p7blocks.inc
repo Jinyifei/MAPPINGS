@@ -1,23 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-<<<<<<< HEAD:src/mastercode/p7blocks.inc
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin
-c
-c
-c       Version v5.1.21
-c
-=======
       include 'credits.inc'
->>>>>>> dev:src/p7blocks.inc
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c     Photo 7 shared Variables - Mostly Files

@@ -1,24 +1,6 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-<<<<<<< HEAD:src/mastercode/recom.f
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin
-c
-c
-c       Version v5.1.21
-c
-=======
       include 'credits.inc'
->>>>>>> dev:src/recom.f
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -66,6 +48,9 @@ c
 c
       integer*4 ion,atom,ir,maxio,chh,isos
       integer*4 rrtype,drtype
+c BD 2015 SIII
+      real*8 arr,brr,crr,tt0,tt1,t0t,t2t,bp
+      real*8 tdr,w,sumw,f1,f2,dri
 c
 c      Old code functions
 c

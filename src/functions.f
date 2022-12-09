@@ -2,24 +2,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-<<<<<<< HEAD:src/mastercode/functions.f
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin
-c
-c
-c       Version v5.1.21
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-=======
 
 c***************************************************************
 c> @brief The function real*8 function casab(nz,line,series)
@@ -36,7 +18,6 @@ c! @details
 c!  XXXX Enter details here
 c****************************************************************
 
->>>>>>> dev:src/functions.f
       real*8 function casab(nz,line,series)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2341,10 +2322,10 @@ c     Complete ln(Gamma) version 1
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       implicit none
-      real*8 z , s, pi
+      real*8 z , a(7) , s, pi
       real*8 a_1, a_2, a_3, a_4, a_5, a_6, a_7
       real*8 az
-c
+      integer i
       parameter(pi=4.d0*datan(1.d0))
       parameter(a_1=1.d0/12.d0)
       parameter(a_2=1.d0/30.d0)

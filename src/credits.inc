@@ -10,9 +10,6 @@ c     1976 -- 2022+ Ralph Sutherland,
 c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Yi-Fei Jin, Knox Long
-<<<<<<< HEAD:credits.txt
-=======
 c
-c     Version v5.2.0dev
->>>>>>> dev:src/credits.inc
+c     Version v5.2.0
 c

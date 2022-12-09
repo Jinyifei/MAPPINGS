@@ -1,23 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-<<<<<<< HEAD:src/mastercode/mapinit.f
-c
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin
-c
-c
-c       Version v5.1.21
-c
-=======
       include 'credits.inc'
->>>>>>> dev:src/mapinit.f
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -110,21 +92,6 @@ c
 c keep looking if not found
 c
       if (iexi.eqv..false.) then
-<<<<<<< HEAD:src/mastercode/mapinit.f
-        datadir='/usr/local/share/mappings/'
-        dtlen=lenv(datadir)
-        filename=datadir(1:dtlen)//'data/ATDAT.txt'
-        inquire (file=filename,exist=iexi)
-        if (iexi.eqv..false.) then
-          m=lenv(filename)
-          write (*,*) 'ERROR in mapinit: ',filename(1:m),' NOT FOUND.'
-          write (*,*) ' MV requires a valid local data/ directory or'
-          write (*,*) ' a valid shared /usr/local/share/mappings/data/'
-          write (*,*) ' or a valid shared /opt/local/share/mappings/data
-     &/'
-          write (*,*) ' directory.  '
-          stop
-=======
         call get_environment_variable ('MAPDATA', env_var, status=
      &   check_env)
 c       write(*,*) ' *** ATOMIC Data from : ',env_var,check_env
@@ -134,7 +101,6 @@ c       write(*,*) ' *** ATOMIC Data from : ',datadir
         if (datadir(1:1).eq.'~') then
           datadir=trim(homedir)//datadir(2:dtlen)
           dtlen=len(trim(datadir))
->>>>>>> dev:src/mapinit.f
         endif
         inquire (file=trim(datadir)//'/data/ATDAT.txt',exist=iexi)
       endif

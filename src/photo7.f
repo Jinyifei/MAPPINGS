@@ -2,24 +2,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-<<<<<<< HEAD:src/mastercode/photo7.f
-c       MAPPINGS V.  An Astrophysical Plasma Modelling Code.
-c
-c
-c     Creative Commons v4.0 International
-c     By Attribution, Share Alike
-c     CC-BY-SA-4.0Intl https://creativecommons.org
-c     1976 -- 2022+ Ralph Sutherland,
-c     Michael Dopita, Luc Binette, Ian Evans,
-c     Brent Groves, David Nicholls,
-c     Adam D. Thomas, Yi-Fei Jin
-c
-c
-c       Version v5.2.0
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-=======
 
 c****************************************************************
 c> @brief The subroutine photo7
@@ -33,7 +15,6 @@ c! @details
 c!  XXXX Enter details here
 c***************************************************************
 
->>>>>>> dev:src/photo7.f
       subroutine photo7 ()
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2631,13 +2612,8 @@ c
       pollfile='balance'
       inquire (file=pollfile,exist=iexi)
       if (((jbal.eq.'Y').and.(m.eq.1)).or.(iexi)) then
-<<<<<<< HEAD:src/mastercode/photo7.f
-        pfx=jbfx//' '
-        np=lenv(pfx)
-=======
         pfx=trim(jbfx)
         np=len(trim(pfx))
->>>>>>> dev:src/photo7.f
         call wbal (caller, pfx, np, pop)
       endif
 c
@@ -2737,10 +2713,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if ((irmode.ne.0).and.iexi) then
           if (irfile.eq.' ') then
-<<<<<<< HEAD:src/mastercode/photo7.f
-            np=6
-=======
->>>>>>> dev:src/photo7.f
             pfx='IRflux'
             sfx='sou'
             call newfile (pfx, sfx, fn, flen)
@@ -2782,10 +2754,6 @@ c
         inquire (file=pollfile,exist=iexi)
         if (iexi) then
           if (chargefile.eq.' ') then
-<<<<<<< HEAD:src/mastercode/photo7.f
-            np=5
-=======
->>>>>>> dev:src/photo7.f
             pfx='grpot'
             sfx='ph6'
             call newfile (pfx, sfx, fn, flen)
@@ -3931,14 +3899,8 @@ c
           pfx=elem(ie)
           pfx=pfx(1:2)//'_ion'
         endif
-<<<<<<< HEAD:src/mastercode/photo7.f
-        np=lenv(pfx)
-        call newfile (pfx, np, sfx, 3, fn)
-        filn(i)=fn(1:np+8)
-=======
         call newfile (pfx, sfx, fn, flen)
         filn(i)=fn(1:flen)
->>>>>>> dev:src/photo7.f
 c
         if (elem_len(ie).eq.1) then
           pfx=elem(ie)
@@ -4142,11 +4104,7 @@ c
       integer*4 i
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-<<<<<<< HEAD:src/mastercode/photo7.f
-c  Close All P6 files If Open ignores closed units
-=======
 c  Close All P7 files If Open ignores closed units
->>>>>>> dev:src/photo7.f
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       logical unitopen

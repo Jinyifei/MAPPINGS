@@ -12,11 +12,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Jin Yie-Fei
 c
 c
-<<<<<<< HEAD:src/mastercode/s5blocks.inc
-c       Version v5.1.21
-=======
 c       Version v5.2.0
->>>>>>> dev:src/s5blocks.inc
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
