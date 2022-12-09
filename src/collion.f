@@ -1,19 +1,41 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      include 'credits.txt'
+      include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-
-c****************************************************************
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c> @brief The subroutine collion
 c! XXXX - add one line purpose here
-c! @param [in,out]   real*8     telec  XXX-meaning
+c! @param [in,out]   real*8     telec  Electron Temperature (K)
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Updates all collision ioisation rates for all ions
 c!
 c! @details
-c!  XXXX Enter details here
-c***************************************************************
+c!    This is a new routine to calculate collisional ionisation
+c!    rates using an algorithm based on Arnaud and Rothenflug 1985
+c!    and Younger 1981,1983.  It uses a five parameter fit to the
+c!    collision crossection and derives an expresion for the integral
+c!    over a maxwellian velocity distrbution in electron energies.
+c!
+c!    Numerical procedures sugested by A&R have been revised,
+c!    and extended to more rigorous precision.
+c!      The exponential integrals
+c!    are evaluated in the function farint.  The basis for the second
+c!    integral comes from Hummer 1983 and earlier references thererin.
+c!    The Hummer expression is replaced when x is small with a
+c!      more accurate convergent series.
+c!
+c!    RSS 7/90
+c!
+c!    added selector for different calculation methods
+c!    so the user can choose by setting the mode in ATDAT
+c!
+c!    RSS 8/90
+c!
+c!    EXPERIMENTAL: added kappa distributon
+c!    rate enhancements shell by shell for
+c!    A&R collmode = 0 or 1 only
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
       subroutine collion (telec)
 c

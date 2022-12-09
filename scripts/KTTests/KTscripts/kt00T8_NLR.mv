@@ -1,0 +1,29 @@
+y     ! change abundances
+KTInputs/kt00NLR.abn
+n     ! no more changes
+n     ! no offsets
+n     ! no dust
+p6
+x     ! default ionisation
+a     ! powerlaw
+-1.3
+1e-18 -1
+1.0e-3
+1.0e5
+8220.053194
+x     ! exit phot source
+p     ! plane parallel
+t     ! outward only
+c     ! const density
+10000
+1
+x     ! no more rescaling fluxes
+0.5
+e     ! equilibrium, dtau steps 0.025
+0.025
+e
+1.0e18
+a           : std end
+a           : std output
+T8 kt2000 NLR alpha -1.3 pp P6 0.025
+x

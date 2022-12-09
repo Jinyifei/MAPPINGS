@@ -1,5 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-      include 'credits.txt'
+      include 'credits.inc'
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
@@ -2449,7 +2449,7 @@ c
 c
    80  format(
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & ' RMS change %: ',1pg11.4,' Iteration: ',i2,/,
+     & ' 0.....................: ',1pg11.4,' Iteration: ',i2,/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
       write (*,80) 100.d0*rmserr,itcount+1
       write (lupt,80) 100.d0*rmserr,itcount+1
@@ -2465,6 +2465,10 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (finalit.le.0) then
+      if (nte(nfs).ge.500.d0) then
+        t0lim=1
+        nfs=nfs+nint(nte(nfs)*0.01d0)+10
+      endif
       n100=nfs
       do i=1,nfs
         if (nte(i).lt.100.d0) then
@@ -2475,10 +2479,6 @@ c
    90 nfs=max(n100,minifsteps)
       if (popfr(nfs,1,1).lt.0.95d0) then
         nfs=nfs+10
-      endif
-      if (nte(nfs).ge.500.d0) then
-        t0lim=1
-        nfs=nfs+nint(nte(nfs)*0.01d0)+10
       endif
       nfs=min0(nfs,mxifsteps)
 c
@@ -2556,9 +2556,13 @@ c
 c
       if (finalit.gt.0) goto 100
 c
-      if ((iabs(nfs0-nfs).gt.10).or.((rmserr.gt.rmslimit)
-     &.and.(itcount.lt.mxpcits).and.(nfs.gt.minifsteps))
-     &.or.(itcount.lt.minpcits).or.((nfs.lt.mxifsteps).and.(t0lim.gt.0))
+      if ((iabs(nfs0-nfs).gt.10)
+     &.or.((rmserr.gt.rmslimit)
+     &     .and.(itcount.lt.mxpcits)
+     &     .and.(nfs.gt.minifsteps))
+     &.or.(itcount.lt.minpcits)
+     &.or.((nfs.lt.mxifsteps).and.(t0lim.gt.0))
+     &.and.(itcount.lt.mxpcits)
      &) goto 50
 c
   100 continue
@@ -2649,7 +2653,6 @@ c
         caller='S5'
         pfx='PCup'//trim(s5pfx)
         np=len(trim(pfx))
-        write(*,*) 'ytest" ', pfx, s5pfx
 c
         wmod='LFLM'
         call wpsou (caller, pfx, np, wmod, t, de, dh, dr, 1.d0, tphot)

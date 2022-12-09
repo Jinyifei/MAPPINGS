@@ -1,0 +1,22 @@
+y  : Change abundances; if yes one will be asked for a new file
+MV52ShockInputs/shockgrid.txt
+N  : Change abundances; if yes one will be asked for a new file
+N  : Change Abundance Offsets, if yes one will be asked for a ne file
+N  : Use dust calculations.  Always no for shocks.
+S5 : It's a shock calculation
+D  : Ionization balance, D for default, C for calculate.  If yes get addtional question
+X  : Ionization sources
+V  : Shock jump parameter (V or T)
+B  : Magetic filed parameter type
+10 : Magnetic field at shock front
+1e3 10.0 100.0  :  preshock T, H den, and shock velocity
+F  : Diffuse field option
+A  : Ending
+3  : No of iterations
+x0100_ : Output prefix
+A  : Output settings
+X   : No more outputs
+A  : Runtime screen display
+v100km/s KL low Te ending and 10micro Gauss fixed at shock front
+E   : Start a new model
+
