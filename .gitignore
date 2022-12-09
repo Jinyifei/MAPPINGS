@@ -13,8 +13,13 @@ lab/map52*
 bin/map51*
 bin/map52*
 bin/lines
+bin/listlines
 bin/red
 bin/blur
+lines
+listlines
+red
+blur
 00Ignore
 00ignore/
 *.jar
