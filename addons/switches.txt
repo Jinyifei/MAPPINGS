@@ -1,4 +1,4 @@
-% *** MAPPINGS V expert switches v5.1.21
+% *** MAPPINGS V expert switches v5.2.0
 % collision mode ( default 0 = Dere, 1 = A&R,2 = old Shull L&M )
 0
 % photoionisation calculations ( default 0 = new Verner Ferland, 1 = old )
@@ -26,8 +26,4 @@
 % turbulent heating switch ( default 0 = off, 1 = on )
 0
 % radiation pressure switch ( default 0 = on, 1 = off )
-0
-% kappa electron mode ( default 0 = off, 1 = on )
-0
-% expertmode switch ( 0 = default)
 0

@@ -50,7 +50,7 @@
 % …
 %
 %
-Oxygen II Recombination Spectrum v5.1.21
+Oxygen II Recombination Spectrum v5.2.0
 OII 5 Multiplet transition v1.0.1
 200
 001 001 24447.235 4089.288 4fG[5]11|2-3d4F9|2

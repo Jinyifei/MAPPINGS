@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+Downloading and Installing Mappings
+###################################
+>>>>>>> dev
 
 Downloading and installing Mappings should be straigtforward.
 

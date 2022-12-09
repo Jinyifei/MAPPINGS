@@ -1,5 +1,5 @@
 %
-%  MAPPINGS V v5.1.21
+%  MAPPINGS V v5.2.0
 %
 %  Collisional excitation of H and He
 %  collisional rates for ground to 25 FS levels up
@@ -24,7 +24,7 @@
 %  11 BT92 spline y values, x = 0-1, scaled by TC
 %  .....
 %
-H/He Collisional Excitation Line Data v5.1.21
+H/He Collisional Excitation Line Data v5.2.0
  002
  001 01 01
  25

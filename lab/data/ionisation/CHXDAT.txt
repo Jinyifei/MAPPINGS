@@ -45,7 +45,7 @@
 % R At Ion Iso n id tlo thi a b c d ∆E4(e4)
 % if ∆E4 <= 0, e4 = 0
 %
-Charge Transfer Data v5.1.21
+Charge Transfer Data v5.2.0
 4
 H I Recombination Reactions, last col is e4
 86

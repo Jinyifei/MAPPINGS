@@ -1,9 +1,0 @@
- Fri 29 Jul 2022 16:25:52 AEST
- menzel.local
- 213.780u 0.211s 3:34.07 99.9%
- Fri 29 Jul 2022 16:29:26 AEST
- menzel.local
- 193.609u 0.387s 3:14.12 99.9%
- Fri 29 Jul 2022 16:32:40 AEST
- menzel.local
- 13.235u 0.091s 0:13.34 99.8%

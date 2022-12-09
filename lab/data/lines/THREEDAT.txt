@@ -30,7 +30,7 @@
 %           RSS v j modified CI 2.7e-9 -> 2.7e-8
 %           RSS made  Eji/k consistent with lam
 %
-Three level proton excitation data v5.1.21
+Three level proton excitation data v5.2.0
 Type 1 finestructure p rates
 21
 01 08 01 05 2.2802E+02 6.310E+01  9.000E-05  1.400E-08  0.00 9.200E-11  0.67 0

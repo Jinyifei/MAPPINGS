@@ -18,7 +18,7 @@
 %
 % UNITS: potentials in eV, A,B,C,D in 10^-14 cm^2 eV^2
 %
-Legacy Collisional Ionisation Data v5.1.21
+Legacy Collisional Ionisation Data v5.2.0
 28
   H iso-electronic sequence
 16 1

@@ -1,5 +1,9 @@
 Mappings Guide
 ##############
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 .. container::
 
 |image|
@@ -212,7 +216,10 @@ at the prompt when you are happy with the settings.
    abund/GC16Grid/GC\_ZO\_M0530.abn
    no    : no more changes
    no    : no offsets
+<<<<<<< HEAD
    no  : Use Kappa electron distributions 
+=======
+>>>>>>> dev
    yes   : include dust
    yes   : change depletions
    abund/unified_depletion/Depln_Fe_1.50.txt\\
@@ -890,6 +897,7 @@ ralph.sutherland@anu.edu.au
 
 
    * `map.prefs`   Essential startup data - must be present.
+<<<<<<< HEAD
    * `mapStd.prefs`  A standard 16 atom startup in case map.prefs is lost for any reason, 
       can be copied and renamed map.prefs if needed
    * `mapFull.prefs`  A full 30 atom startup in case map.prefs is lost for any reason, 
@@ -899,6 +907,17 @@ ralph.sutherland@anu.edu.au
    * `abund/`:  A set of useful abundance settings that can be read interactively 
       during a run.  Optional.
    * `atmos/`:  A set of useful radiation source files and stellar atmosphere models.  
+=======
+   * `mapStd.prefs`  A standard 16 atom startup in case map.prefs is lost for any reason,
+      can be copied and renamed map.prefs if needed
+   * `mapFull.prefs`  A full 30 atom startup in case map.prefs is lost for any reason,
+      can be copied and renamed map.prefs if needed
+   * `data/`: Contains the atomic data for MAPPINGS V. Read at runtime in mapinit.f.
+      Essential and must be present and complete.
+   * `abund/`:  A set of useful abundance settings that can be read interactively
+      during a run.  Optional.
+   * `atmos/`:  A set of useful radiation source files and stellar atmosphere models.
+>>>>>>> dev
       Optional.
    * `scripts/`: A collection of (mostly) useful of UNIX shell and MAPPINGS scripts
 
@@ -909,7 +928,11 @@ ralph.sutherland@anu.edu.au
    simply Makefile and use that.  If using FORTRAN, rename Makefile.for to Makefile.
    All the useful parameters are near the top of the makefile.
 
+<<<<<<< HEAD
    * `Makefile`.   This makefile  controls all the building of MAPPINGS.  
+=======
+   * `Makefile`.   This makefile  controls all the building of MAPPINGS.
+>>>>>>> dev
    It takes one argument to control the operation:
 
                 MAPPINGS V v5.1.x make options:

@@ -1,9 +1,0 @@
- Sun 18 Sep 2022 15:58:18 AEST
- menzel.local
- 173.150u 1.762s 2:55.86 99.4%
- Sun 18 Sep 2022 16:01:14 AEST
- menzel.local
- 378.449u 4.352s 6:34.94 96.9%
- Sun 18 Sep 2022 16:07:49 AEST
- menzel.local
- 14.533u 0.315s 0:15.65 94.8%

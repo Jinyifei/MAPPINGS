@@ -34,7 +34,7 @@
 %	Qabs,Qsca,gcos
 %	spline fit
 %
-Dust data v5.1.21
+Dust data v5.2.0
 PAH ionization potentials
 5
 -2   0.50

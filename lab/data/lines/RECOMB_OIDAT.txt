@@ -39,7 +39,7 @@
 % nentries
 % ID A_A B_A C_A A_B B_B C_B
 %
-Oxygen I Recombination Spectrum v5.1.21
+Oxygen I Recombination Spectrum v5.2.0
 OI Quintet spectrum v1.0.2
 36
 01 01 041 042 18759.6917 5329.096 3p5P-5d5D*

@@ -46,7 +46,7 @@
 %  Asplund et al 2009, Solar Photosphere
 %
 %
- MAPPINGS V Standard Atom Set v5.1.21
+ MAPPINGS V Standard Atom Set v5.2.0
  16
   1  H      1  1.007940 1.0000E+00  1.000    2
   2  He     2  4.002602 8.5114E-02  1.000    3
@@ -64,6 +64,12 @@
  14  Ca    20  40.07800 2.1878E-06  1.000   21
  15  Fe    26  55.84500 3.1623E-05  1.000   27
  16  Ni    28  58.69340 1.6596E-06  1.000   29
+%
+% PHOTDAT File
+% PHOTDAT-std.txt
+%
+% Kappa Mode
+% 1
 %
 % misc data can be stored after this comment
 % Here species that are not often used are

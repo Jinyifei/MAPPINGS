@@ -10,7 +10,7 @@
 % . . .
 % temp (K) ratios for log(rho)= 2,3,4,5,6,7,8,9,10
 %
- He II Line Ratios Case A v5.1.21
+ He II Line Ratios Case A v5.2.0
  90
  02 01 04 03
  12 09

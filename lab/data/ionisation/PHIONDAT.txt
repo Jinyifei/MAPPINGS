@@ -14,7 +14,7 @@
 % Recomputed all stat weight ratios from first principles and corrected
 % many long standing errors for heavier ions.
 %
-Legacy Photoionisation Cross-sections v5.1.21
+Legacy Photoionisation Cross-sections v5.2.0
 310
 11 01 11 5.1390767000000D+00 0.000D+00 1.000D-01 4.800D+00 1.000D+00 2.000000
 13 01 13 5.9857684000000D+00 0.000D+00 3.000D+01 1.000D+00 1.000D+00 6.000000

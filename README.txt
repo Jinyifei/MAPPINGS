@@ -1,4 +1,4 @@
-# MAPPINGS V v5.1.21
+# MAPPINGS V v5.2.0
 
 		Creative Commons v4.0 International
 		By Attribution, Share Alike
@@ -8,7 +8,6 @@
 		Brent Groves, David Nicholls,
 		Adam D. Thomas, Yi-Fei Jin, Knox Long
 
-
 `https://bitbucket.org/RalphSutherland/mappings`
 `https://mappings.anu.edu.au/code`
 
@@ -17,150 +16,90 @@
 	Ralph.Sutherland@anu.edu.au
 
 
-## Quick Start Compiling and Running:
+## Quick Start Compiling Install and Run:
 
-		> cd mappings/src
-		> make build`
+		> cd download or git area...
+		> make build
 
-[wait a while....]
+[wait a while.... ][
+[for a faster build try make -j build if your make supports it]
 
-	> cd ../lab
-	> ./map51
+MAPPINGS is installed by default into the users home area
+~/mappings520
 
-### Installing so map51 can run anywhere:
+To run
 
-	> cd mappings/src
-	> make build
-	> sudo make install
+		> cd ~/mappings520/lab
+		> ./map52
 
-This copies map51 into /usr/local/bin so it can be run
-from any location by all users of the computer.
-It also creates copies of the essential lab directories; data, atmos, and
-abund, into /usr/local/share.
-
-#### When running map51, you can run locally in lab/ (note ./map51)
-
-	> cd ../lab
-	> ./map51
-
-and it will find the local map.prefs, data, abund etc
-old scripts will work as before.
-
-#### With the `/local` installed option you can use any directory
-(note plain map51) ie:
-
-	> cd
-	> mkdir test
-	> cd test
-	> map51
-
-If mappings finds a local data file it will use those,
-otherwise it will fallback to use the shared copy, so you can
-still maintain a custom set of data and abundances etc
-or use the standard shared set.
 
 ## Uninstalling:
 
-To remove the shared installation simply
+To remove the MAPPINGS installation simply and leave user files
 
-	> sudo make uninstall
+		> make uninstall
 .
-To remove the local copy simply delete the `mappings/` directory
+Or to remove totally simply delete the `~/mappings520` directory
 
-## The Mappings directory structure:
+## The Installed MAPPINGS directory structure:
 
-#### mappings_V/
-
-README.txt
-README.md
-credits.txt
-
-src/
-		FORTRAN source code and a standard plus alternative Makefiles
-		for other systems and common compilers for use as templates. The
-		standard Makefile assumes a bash shell gmake compatible make
-		and GCC gfortran 10.x or newer but can work with earlier versions
-		if needed.
-
-		mastercode/
-		includes/
-		workcode/
-
-lab/
-		The directory where the executable is created and run along with
-		test and example control scripts, a large directory of stellar
-		atmosphere libraries atmos/ may be removed if space is a premium
-		and external photoionisation is not needed.
+#### mappings520/
+		lab/
+		lab/scripts/
 
 		data/
+		atmos/
 		abund/
-		scripts/
-		atmos/ (optional)
+		prefs/
+		docs/
+		misc/
 
-docs/
-		documentation files and support directories
-
-addons/
-		additions abundance preference files and options (see advanced use sections)
-
-misc/
-		auxillary programs for modifying and editing model and observed spectra
-		with the current standard CODATA/IAU physico-chemical constants in use
-		lines/
-		blur/
-		dered/
-		fundamental_constants/
-
-
-### Key Directories and Files:
+### Key Installed Directories and Files:
 
 * `lab/`  This is where the executable is made and run.  The runtime files such
-	as map.prefs are here and the essential data directory with the runtime data
-	files.
-* `map51`: The executable.
-
-
+	as map.prefs are here, the user can create and rename new labs and put map.prefs into them and run
+	other models.
+* `map52`: The executable.
 * `map.prefs`   Essential startup data - must be present.
 * `mapStd.prefs`  A standard 16 atom startup in case map.prefs is lost for any reason, can be copied and renamed map.prefs if needed
 * `mapFull.prefs`  A full 30 atom startup in case map.prefs is lost for any reason, can be copied and renamed map.prefs if needed
+* `scripts/`: A collection of (mostly) useful of UNIX shell and MAPPINGS scripts
+
 * `data/`: Contains the atomic data for MAPPINGS V. Read at runtime in mapinit.f.  Essential and must be present and complete.
 * `abund/`:  A set of useful abundance settings that can be read interactively during a run.  Optional.
 * `atmos/`:  A set of useful radiation source files and stellar atmosphere models.  Optional.
-* `scripts/`: A collection of (mostly) useful of UNIX shell and MAPPINGS scripts
+* `docs/`:  Help, source references and cookbook guides
+* `misc/`:  A set of C and other tools for manipilting MAPPINGS output such as reddening
 
-* `src/`
- Contains the code area and the Makefile(s).  There are three makefiles, one
-for a setup with fortran installed, Makefile.for, and one to use if you are running
-f2c and a C compiler, Makefile.f2c.  If using f2c, rename the Makefile.f2c to
-simply Makefile and use that.  If using FORTRAN, rename Makefile.for to Makefile.
-All the useful parameters are near the top of the makefile.
+### Key Build Area Directories and Files:
 
-* `Makefile`.   This makefile  controls all the building of MAPPINGS.  It takes one argument to control the operation:
+The master copies of the data and other directories above plus:
 
-        `MAPPINGS V v5.1.21 make options:
-        `
-        `Type 'make help'    to see this menu
-        `Type 'make build'   to create executable from scratch and clean in ../lab
-        `
-        `Type 'sudo make install'   to install the built code and data into /usr/local
-        `Type 'sudo make installcode' to install the built code only into /usr/local
-        `
-        `Type 'sudo make installopt' to install the built code and data into /opt/local
-        `Type 'sudo make installcodeopt' to install the built code only into /opt/local
-        `
-        `Type 'make prepare' to copy over '*.f' and '*.inc' files
-        `Type 'make compile' to create executable
-        `Type 'make backup'  to backup '*.f' and '*.inc' files
-        `Type 'make clean'   to backup '*.f' and '*.inc', remove '*.o'
-        `Type 'make listing' to create listing of code
-        `
-        `Type 'make uninstall' remove /usr/local/
-        `Type 'make uninstallopt' remove /opt/local/
+* `src/` : Contains the code
 
-* `mastercode/` Contains a master copy of the code - only accessed by the Makefile.
-* `workcode/`   The Makefile copies the .f files here.  These can be edited etc by
-the user.   The Makefile compiles these files to make the executable.
+* `Makefile`   This makefile  controls all the building of MAPPINGS.
+It takes one argument to control the operation: build is the main one.
 
-* `f2c.zip`:  A zip archive of `f2c`, requires only a `C` compiler to make, `gcc` by
-default.  MAPPINGS can be built from scratch by building `f2c`, installing it in
-`/usr/local` and then use the `f2c` and `gcc` Makefile to build MAPPINGS.
+         MAPPINGS V make options:
+         -----------------------------------------------------------
+
+         'make, make help'             To see this menu
+
+         'make build'      Build and install, and clean.
+                           Creates MAPPINGS in /Users/ralph/mappings520
+                           and creates optional environment variable
+                           templates for startup scripts.
+         'make compile'    to make new '*.o' in the build area only
+         'make clean'      to clean up '*.o' files from a compile
+         'make distclean'  as clean but also remove map52rss
+
+         'make install'    install afer manual compile
+         'make uninstall'  remove installed map52rss
+
+         -----------------------------------------------------------
+
+* `lab/`    : master copy has `data/, atmos/, abund/, and scritps/`
+and `map.prefs` masters inside which are installed in the build.
+* `docs/`   : in the build area contains additional developer documentation
+* `misc/`   :  A set of C and other tools for manipilting MAPPINGS output such as reddening
+* `addons/` : Contains alternative Makefiles, alternative pref and runtime options

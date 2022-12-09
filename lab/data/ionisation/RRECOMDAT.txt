@@ -28,7 +28,7 @@
 %     06 6coeffs tt4=sqrt(t/a4) tt5=sqrt(t/a5) tt6=a2+a3*exp(-a6/t)
 %        r=a1/(tt4*(tt4+1.d0)^(1.d0-tt6)*(tt5+1.d0)^(1.d0+tt6))
 %
-Radiative Recombination Coefficients z=1-30 v5.1.21
+Radiative Recombination Coefficients z=1-30 v5.2.0
 465
 01 01 01 04 8.3180D-11 7.4720D-01 2.9650D+00 7.0010D+05 0.0000D+00 0.0000D+00
 02 01 02 06 5.2350D-11 6.9880D-01 8.2900D-02 7.3010D+00 4.4750D+06 1.6820D+05

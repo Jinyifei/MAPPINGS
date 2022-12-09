@@ -9,7 +9,7 @@
 %Ref. "Photoionization and Electron-Ion Recombination of He I",
 %     Sultana N. Nahar, New Astronomy 15, 417-426 (2010)
 %
-Helium recombination data v5.1.21
+Helium recombination data v5.2.0
 Nahar Total and n=1 HeI-recombination
 81
 1.00D+00 -1.0465237995D+01 -1.1320608448D+01

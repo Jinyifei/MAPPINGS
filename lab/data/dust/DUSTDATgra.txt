@@ -11,7 +11,7 @@
 %             # of data
 %   then # lines of  x0  y0  B  C  D
 %
-Dust data v5.1.21
+Dust data v5.2.0
  Graphite
 0081
 

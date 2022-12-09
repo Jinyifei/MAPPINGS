@@ -1,10 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  FORMAT VERSION: 4
 %
-%  MAPPINGS V v5.1.21 CHIANTI8 + NII, OII , OIII, SII and SIII special
+%  MAPPINGS V v5.2.0 CHIANTI8 + NII, OII , OIII, SII and SIII special
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Multi-level Ion Line Data v5.1.21.997
+Multi-level Ion Line Data v5.2.0.997
  174
  001
  06 01

@@ -42,7 +42,7 @@
 % [O]      =  -3.310
 % [Fe]     =  -4.500
 %
- MAPPINGS V Z=1-30 Full Atom Set v5.1.21
+ MAPPINGS V Z=1-30 Full Atom Set v5.2.0
  30
   1  H      1  1.007940 1.0000E+00  1.000   2
   2  He     2  4.002602 8.5114E-02  1.000   3
@@ -75,6 +75,9 @@
  29  Cu    29  63.54600 1.5488E-08  0.010  30
  30  Zn    30  65.38000 3.6308E-08  0.010  31
 %
+% Uncomment 2 lines to optionally set the radiation energy binning file
+% PHOTDAT File
+% PHOTDAT
 % misc data can be stored after this comment
 % Here species that are not often used are
 % Stored. To use them place them above and
