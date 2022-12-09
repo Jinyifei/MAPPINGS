@@ -27,9 +27,42 @@ BINDIR = bin
 #
 # std home area ~/mappings520 with optional env vars
 #
+# set INSTALLBASE to the location for the mappings520 to be
+# located. Here $(shell echo ${HOME}) finds the users home area
+# if it is put into other locations the user may need elevated
+# privelges, eg /usr/local
+#
+# set HOMEAREA to contain the normal mappings install, eg mappings520
+# above, so it is created as ${INSTALLBASE}/${HOMEAREA} eg ~/mappings520
+# in a standard install.
+#
+# INSTALLDATA defauts to  ${INSTALLBASE}/${HOMEAREA} and contains the
+# atomic data, atmospheres and abundance files, usually the std HOMEAREA
+# but can be elsewhere, eg /usr/local/share/mappings520 for special cases
+#
+# INSTALLBIN is the location of the mappings an auxillary executables]
+# and by default is ${INSTALLBASE}/${HOMEAREA}/${BINDIR} or
+# ~/mappings520/bin in standard install.  It may be an independent location
+# if necessary
+#
+# So the standard install create ~/mappings520 containing the MAPPINGS
+# data/ atmos/ abund/ bin/ and additional documentation scripts and an
+# initial are lab/ to run models in.  The paths and aliases for the chosen
+# installation are created automatically for tcsh/csh and bash/zsh shells
+# and can be found initially in ~/mappings520 and the user can edit their
+# startup shell scripts .tcshrc (.cshrc) and .bashrc (.zshrc) so mappings
+# can be run in any location and be able to locate the resources it needs
+# to run.
+#
+# ~/mappings520 is the location for documentation and additional material
+# such as example running scripts and tests.
+#
+#
 INSTALLBASE =$(shell echo ${HOME})
 INSTALLDATA =${INSTALLBASE}/${HOMEAREA}
 INSTALLBIN  =${INSTALLBASE}/${HOMEAREA}/${BINDIR}
+#
+# eg:
 #
 # for using the build area as the shared binary and data location
 #
@@ -47,11 +80,6 @@ INSTALLBIN  =${INSTALLBASE}/${HOMEAREA}/${BINDIR}
 #-------------------------------
 #
 # Install Runtime Locations:
-#
-# MAPPINGS can run largely independently, or be incorporated
-# into your shell environment in several ways. It can run in a
-# standard location or use shell environments, or even aliases
-# to run anywhere.
 #
 # Standard Home Area Installation
 #
@@ -71,16 +99,15 @@ INSTALLBIN  =${INSTALLBASE}/${HOMEAREA}/${BINDIR}
 #
 #       > ./map52
 #
-# If you build a home area then MAPPINGS can also be run in
-# any other new lab area, even outside ~/mappings520 and it
-# knows this standard location to find the data it needs to
-# run, but if you run outside the home area you need to run
-# using the binary location which is ~/mappings520/lab/map52,
-# in some convenient way, see below for more advanced options.
+# If you build a home area and install the shell startup or in
+# and existing user $path location, then MAPPINGS can also be
+# run in any other new area,  even outside ~/mappings520
+#
+# Updates/Uninstall
 #
 # Updates and new make builds will not delete user files but
-# only replace MAPPINGS files if there are small changes.  A
-# new MAPPINGS version number creates a fresh home area called
+# only replace MAPPINGS files if there are  changes or deletions.
+# A new MAPPINGS version number creates a fresh home area called
 # ~/mappingsXXXX where XXXX is the new version number and the
 # user can copy their files to the new build and lab or new
 # labs as needed.
@@ -89,112 +116,31 @@ INSTALLBIN  =${INSTALLBASE}/${HOMEAREA}/${BINDIR}
 # need for different projects. but only the plain lab/ would
 # be updated if a standard script changed for example.
 #
-# It may be useful to add ~/mappingsXXXX/lab to your shell
-# path variables even with a simple install so it is easy to
-# run MAPPINGS in other locations without using
+# It is best  to add ~/mappingsXXXX/lab to your shell
+# path variables but even with a simple install so it is easy to
+# run MAPPINGS in other locations using
 #
-#       >./mappingsXXXX/lab/map52
+#       >./mappingsXXXX/bin/map52
 #
-# but simply
-#
-#       > map52
-#
-# if you create an alias or modify the shell path for the
-# binary.
-#
-# Environment Variable Location Installation
-#
-# You can also build in any location and use environment
-# variables provided to put into your shell startup to locate
-# mappings data and executable wherever it is installed. The
-# default location is to keep the data and binaries in the
-# build area or create a runtime area in any other location,
-# then the user is free to make a lab and run the installed
-# copy anywhere.
-#
-# This is in some ways more flexible but is more complex to
-# set up and assumes the user can edit their shell startup
-# scripts.  If not then consider the standars home are
-# installation above.
-#
-# Shell Environment
-#
-# MAPPINGS can optionally use a shell variable MAPDATA to
-# locate the necessary running files, and MAPBIN is optionally
-# added to the user global path to the executable, eg:
+# and with the standard alias installed simply
 #
 #       > map52
-#
-# An alias 'map' is made for whichever version of MAPPINGS V
-# is being used and is optional to add to the starup scripts
-# for all installs, so the direct executable name/path can
-# still be used if desired but with a simpler name:
-#
-#       > map
-#
-# If using standard environment variables be sure to edit both
-# the contents of both .bashrc and .tcshrc in your home area
-# using the for_bashrc.txt and for_tcshrc.csh created when
-# making mappings.  If you have newer macOS you may need to
-# put for_bashrc.txt *also* into a .zshrc to all three shells
-# can find the code consistently.
-#
-# As user start up scripts can be complex it is up to the user
-# to copy the bashrc template into all bourne like shells
-# (bashc, zsh, .sh)  *and* the tcshrc into all csh like shells
-# (tcsh, csh).  Both are needed as there are a variety of
-# control scripts using different shells.
 #
 # Build and Install Processes Details
 #
 # MAPPINGS is built first in the git/zip download area and you
-# can run a model in the build area lab, but it is safer to
-# run the the standard home area or use the user defined
+# can run a test model in the build area lab, but it is safer to
+# run the in the standard home area or use the user defined
 # installation environment, not the initial build area where
 # git may overwrite files in an update.
 #
-# Once compiled, the working parts are then copied to the home
-# area/s and some advanced or little used files are left in
-# the build area which most users will not need.  Once the
-# home are is built the download or git area can be deleted,
-# or if it is a git clone it will receive automatic updates.
-# Snapshots of updated build areas without the complexities of
-# git for users who simply want to build and run are made for
-# each git update of the public version.
-#
 # The end of a successful compile process gives the values in
 # script shell templates to for user including both MAPDATA
-# and MAPBIN.
+# and MAPBIN in ~/mappings520/ by default.
 #
-# Advanced Installation MAPPINGS
-#
-# If the user has admin powers and is installing in /usr/local
-# or /opt/local in an advanced installation those areas are
-# ususally in the system path varaibles already, but any user
-# with experice to set that up will have no difficulty making
-# the path variable consistent.
-#
-#
-# INSTALLBASE =$(shell pwd)
-# INSTALLDATA ="${INSTALLBASE}/lab"
-# INSTALLBIN  ="${INSTALLBASE}/lab"
-#
-# Manual Setup: if a make install is necessary, to copy files to the
-# different locations, sudo power may be required, but local user areas are
-# allowed too.
-#
-# MAPDATA and MAPBIN may be the same path or different, but are the same by
-# default.
+# Note:
 #
 # Do not add a trailing / to the paths.
-#
-# eg: a sudo is required and MAPBIN and MAPDATA point to different locations
-# similar to a CLOUDY installation. /opt/local is also often used as a base
-# on macOS with macports installations.
-#
-#INSTALLBASE = "/usr/local"
-#INSTALLDATA = "${INSTALLBASE}/share/mappings"
-#INSTALLBIN  = "${INSTALLBASE}/bin"
 #
 #-------------------------------
 #---------- Compilers ----------
@@ -202,32 +148,35 @@ INSTALLBIN  =${INSTALLBASE}/${HOMEAREA}/${BINDIR}
 
 # GCC FORTRAN - gfortran standard default build tested with
 # v11 but should work with v4.5 or newer standard build in
-# 2022 is gfortran v10.x
+# 2022 is gfortran v10.x - 12.x
 #
 # In Linux, use normal repositories on OSX, use
 # MacPorts.org/homebrew to get gcc8 or newer,
 #
-#  GCC FORTRAN v4.9-11.x macOS xcode 11+ -isysroot`xcrun
-#  --show-sdk-path` if -lSyslib is not found gcc10+ flto=n
-#  parallel global obj optimisation, slow but some
-#  performance improvement, set n to ncpus eg flto=8 on an 8
+#  macOS GCC FORTRAN v4.9+ and macOS xcode 11+  and newer requires
+# -isysroot`xcrun --show-sdk-path` to locate the xcode -lSyslib
+#
+#  gcc10+ flto=n allows parallel global obj optimisation, slow but
+#  with some  performance improvement, set n to ncpus eg flto=8 on an 8
 #  core machine.
 #
 # if recursion is ever needed use:
 # -fmax-stack-var-size=7618560
 #
+# Set warning flags if testing new code but off by defauult
+#
 #WARN   = -Wall
 #WARN   = -Wunused-variable -Wconversion -Wmaybe-uninitialized -fbounds-check
 WARN   =
 #
-# plain
+# plain simplest linux build without xcrun
 #
 # FC     = gfortran -std=legacy
 # LDR    = ${WARN} -Ofast -ffpe-summary='none'
 # OPTS   = -c ${LDR} -I${INCDIR}
 # LIB    =
 #
-# Standard no flto, optional flto or debugging LDR commented.
+# Standard, no flto, optional flto or debugging LDR, commented.
 #
 FC     = gfortran -std=legacy -march=native
 LDR    = ${WARN} -Ofast -ffpe-summary='none'
@@ -358,6 +307,9 @@ else
 	LIB  =
 	XSYS = Linux
 endif
+#
+#-------------------------------
+#
 
 help:
 	@cat ${CODDIR}/credits.txt
@@ -378,6 +330,8 @@ help:
 	@echo "'make install'    install afer manual compile"
 	@echo "'make uninstall'  remove installed ${OUTNAME}"
 	@echo ' '
+	@echo "'make aux'        make and install aux programs"
+	@echo ' '
 	@echo '-----------------------------------------------------------'
 #
 #-----------------------------------------------------------
@@ -385,18 +339,20 @@ help:
 clean:
 	@echo ' '
 	@echo '#############################################################'
-	@echo ' Removing object files'
+	@echo ' Removing ${OUTNAME} object files'
 	@rm -f ${OBJ}
+	cd aux; $(MAKE) clean
 	@echo '#############################################################'
 	@echo ' '
 #
 distclean:
-	@echo ' Removing object files and exe'
+	@echo ' Removing ${OUTNAME} object files and exe'
 	@rm -f ${OBJ}
 	@rm -f "for_bashrc.txt"
 	@rm -f "for_tcshrc.txt"
 	@rm -f ${EXEDIR}/${OUTNAME}
 	@rm -f ${BINDIR}/${OUTNAME}
+	cd aux; $(MAKE) distclean
 #
 #------------------------------------------------------------
 #
@@ -414,6 +370,9 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#############################################################'
 	@echo ' MAPPINGS ${OUTNAME} Compiled Successfully.'
 	@echo '#############################################################'
+	@echo ' Compiling Auxillary Programs...'
+	@echo '#############################################################'
+	cd aux; $(MAKE) compile
 	@echo ' '
 	@echo '#############################################################'
 	@echo ' A local version of the executable ${OUTNAME} can be found in:'
@@ -423,19 +382,21 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo ' (macOS users may need to use .zshrc with the bashrc settings)'
 	@echo '#############################################################'
 	@echo ' '
-	@cat src/src-bashrc.txt > for_bashrc.txt
+	@cat src-bashrc.txt > for_bashrc.txt
 	@echo 'export mapbase="${INSTALLBASE}/${HOMEAREA}"' >> for_bashrc.txt
 	@echo 'export MAPDATA="$$mapbase"' >> for_bashrc.txt
-	@echo 'export MAPBIN="$$mapbase/${BINDIR}"' >> for_bashrc.txt
+	@echo 'export mapbin="$$mapbase/${BINDIR}"' >> for_bashrc.txt
+	@echo 'export MAPBIN="$$mapbin"' >> for_bashrc.txt
 	@echo '# add bin area to global path:' >> for_bashrc.txt
 	@echo 'export PATH="$$MAPBIN:$$PATH"' >> for_bashrc.txt
-	@echo '#' >> for_tcshrc.txt
-	@echo "# add a generic map alias for every executable version" >> for_bashrc.txt
-	@echo '#' >> for_tcshrc.txt
-	@echo 'alias map=${OUTNAME}' >> for_bashrc.txt
+	@echo '#' >> for_bashrc.txt
+	@echo '# add a generic map alias for every executable and location' >> for_bashrc.txt
+	@echo '#' >> for_bashrc.txt
+	@echo 'alias map52="$$mapbin/${OUTNAME}"' >> for_bashrc.txt
+	@echo 'alias m52="$$mapbase"'   >> for_bashrc.txt
 	@echo '#' >> for_bashrc.txt
 	@echo '########################################################################' >> for_bashrc.txt
-	@cat src/src-tcshrc.txt > for_tcshrc.txt
+	@cat src-tcshrc.txt > for_tcshrc.txt
 	@echo 'set mapbase = "${INSTALLBASE}/${HOMEAREA}"' >> for_tcshrc.txt
 	@echo 'setenv MAPDATA "$$mapbase"' >> for_tcshrc.txt
 	@echo 'set mapbin = "$$mapbase/${BINDIR}"' >> for_tcshrc.txt
@@ -445,9 +406,10 @@ ${BINDIR}/${OUTNAME}: ${INCS} ${OBJ}
 	@echo '#' >> for_tcshrc.txt
 	@echo 'set path = ($$mapbin $$path)' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
-	@echo "# add a generic map alias for every executable version" >> for_tcshrc.txt
+	@echo '# add a generic map alias for every executable and location' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
-	@echo 'alias map ${OUTNAME}' >> for_tcshrc.txt
+	@echo 'alias map "$$mapbin/${OUTNAME}"' >> for_tcshrc.txt
+	@echo 'alias m52 "$$mapbase"' >> for_tcshrc.txt
 	@echo '#' >> for_tcshrc.txt
 	@echo '########################################################################' >> for_tcshrc.txt
 #
@@ -481,21 +443,24 @@ install:
 	cp ${EXEDIR}/map.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapStd.prefs ${INSTALLDATA}/${EXEDIR}/
 	cp ${EXEDIR}/mapFull.prefs ${INSTALLDATA}/${EXEDIR}/
-	cp -r ${EXEDIR}/scripts ${INSTALLDATA}/${EXEDIR}
+	cp -r ${EXEDIR}/examples ${INSTALLDATA}/${EXEDIR}
 	rm -f ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 	ln -s ${INSTALLBIN}/${OUTNAME} ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 #
-	cp -r ${EXEDIR}/data  ${INSTALLDATA}/
-	cp -r ${EXEDIR}/abund ${INSTALLDATA}/
-	cp -r ${EXEDIR}/prefs ${INSTALLDATA}/
-	cp -r ${EXEDIR}/atmos ${INSTALLDATA}/
+	cp -r ${EXEDIR}/data    ${INSTALLDATA}/
+	cp -r ${EXEDIR}/abund   ${INSTALLDATA}/
+	cp -r ${EXEDIR}/prefs   ${INSTALLDATA}/
+	cp -r ${EXEDIR}/atmos   ${INSTALLDATA}/
 #
-	cp -r misc ${INSTALLDATA}/
+	cp -r scripts ${INSTALLDATA}/
+	cp   scripts/admin/clean.sh ${INSTALLBIN}/
+	cp -r aux ${INSTALLDATA}/
+	cd aux; $(MAKE) install
 	cp -r docs ${INSTALLDATA}/
 #
 	rm -rf ${INSTALLDATA}/docs/doxygen
-	cp for_tcshrc.txt ${INSTALLBASE}/
-	cp for_bashrc.txt ${INSTALLBASE}/
+	mv for_tcshrc.txt ${INSTALLDATA}/
+	mv for_bashrc.txt ${INSTALLDATA}/
 #
 	@echo ' '
 	@echo '#############################################################'
@@ -518,6 +483,10 @@ uninstall:
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/${OUTNAME}
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapFull.prefs
 	@rm -f  ${INSTALLDATA}/${EXEDIR}/mapStd.prefs
+	@rm -rf ${INSTALLDATA}/${EXEDIR}/examples/cooling
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/examples/bb100k.sou
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/examples/bb100k.mv
+	@rm -f  ${INSTALLDATA}/${EXEDIR}/examples/bbt.mv
 	@rm -f  ${INSTALLBIN}/${OUTNAME}
 	@rm -rf ${INSTALLDATA}/${BINDIR}
 	@rm -rf ${INSTALLDATA}/data
@@ -525,7 +494,8 @@ uninstall:
 	@rm -rf ${INSTALLDATA}/prefs
 	@rm -rf ${INSTALLDATA}/atmos
 	@rm -rf ${INSTALLDATA}/scripts
-	@rm -rf ${INSTALLDATA}/misc
+	@rm -rf ${INSTALLDATA}/aux
+	cd aux; $(MAKE) uninstall
 	@rm -rf ${INSTALLDATA}/docs
 	@echo ' '
 	@echo '#############################################################'
@@ -541,3 +511,5 @@ uninstall:
 	@echo '#############################################################'
 	@echo ' '
 #
+aux:
+	cd aux; $(MAKE) all
