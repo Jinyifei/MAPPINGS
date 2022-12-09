@@ -5,7 +5,6 @@
 *.nfn
 *.lam
 *.bln
-*.csv
 *.o
 lab/00ignore/
 lab/00ignore
@@ -13,6 +12,9 @@ lab/map51*
 lab/map52*
 bin/map51*
 bin/map52*
+bin/lines
+bin/red
+bin/blur
 00Ignore
 00ignore/
 *.jar
@@ -21,8 +23,17 @@ docs/sphinx/html/
 docs/sphinx/doctrees/
 docs/sphinx/venv/
 # doxygen stuff
+# doxygen_help
+# doxygen_help/
+mv_help_html
+mv_help_html/
+mv_html
 mv_html/
+mv_latex
 mv_latex/
+red_html
+lines_html
+blur_html
 red_html/
 lines_html/
 blur_html/
