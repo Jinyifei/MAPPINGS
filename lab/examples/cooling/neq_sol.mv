@@ -1,0 +1,16 @@
+y    : yes change asbundances
+solar.txt
+n     : no more changes
+n     : no ooffsets
+n     : no dust
+NC    : NEQ cooling, then specity Temperature, H density, Mach number, Magnetic Alpha
+9.0 -4.0 0.4472 0.0
+z     : zero field
+c     : std ending (T)
+3     : 1000K
+3     : normalize cooling by n^2
+4     : follow 4 atoms
+1 2 6 8
+T9 Mach 0.4472 zf a0 std sol*1.0
+xit
+

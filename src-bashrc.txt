@@ -1,0 +1,17 @@
+########################################################################
+#
+# mappings executable paths and alias for constant name in scripts
+# and varying build versions.  MAPPINGS can run with or without
+# environment variables, but this allows for more flexible naming and
+# advanced runtime configurations
+#
+########################################################################
+#
+# Syntax for sh, bash and zsh family of shells. Put in your startup
+# for the appropriate shell for both interactive and non-interactive
+# shells most commonly .bashrc and .zshrc
+#
+########################################################################
+#
+# MAPPINGS Shell Environment:
+#

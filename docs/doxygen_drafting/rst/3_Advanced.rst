@@ -1,0 +1,169 @@
+3 Advanced Topics
+=================
+
+Kappa electron energy distributions in Mappings
+-----------------------------------------------
+
+Mappings allows the use of non-equilibrium electron energy distributions
+(described by the kappa parameter) in photoionization calculations.
+Conventionally, when modelling emission nebulae we assume that the
+electrons are in thermal equilibrium, with energies described by the
+Maxwell- Boltzmann distribution. However, satellite and space probe
+direct measurements of electron energies in the solar system find
+non-equilibrium energy distributions are the norm. Many of these can be
+described by the “kappa” distribution. Such distributions may also occur
+in nebulae, under similar physical conditions. Kappa distributions for
+the nebular electron energies also provide a simple explanation for a
+long standing problem where measurements of electron temperatures and
+chemical abundances using collisionally excited and optical
+recombination emission lines yield discrepant results. This has been a
+major concern, as measurements of nebular abundances are widely used to
+study galaxy evolution and dynamics. The effect of a kappa distribution
+is to enhance lines at low energies (typical of recombination lines) and
+to enhance lines arising from higher energy levels (eg the 1S0 level of
+[O III] which gives rise to the 4363A line), and to diminish lines
+arising from intermediate energy levels (eg the 1D2 level of [O III]
+which gives rise to the 5007A line). This can affect in different ways,
+for example, the “direct method” temperatures calculated for different
+ionic species (in addition to any intrinsic geometry variation in these
+values). To investigate this, the option to calculate nebular
+photoionization models using kappa electron energy distributions was
+incorporated into Mappings.   See Nicholls et al. (2012, 2013, 2017 and
+references therein) (NASA ADS 2012ApJ…752..148N, 2013ApJS..207…21N, and
+2017mcp..book…633N ) for a thorough discussion, and the Background
+section below for a summary of the arguments. Computing spectra with
+kappa energy distribution electrons
+
+Installation
+~~~~~~~~~~~~
+
+This option is not available by default in the Mappings command
+sequence. It can be activated as a menu item by editing the file
+switches.txt located in the addons directory, and setting the kappa
+option to 1 from the default zero, then copying the edited file into the
+Mappings data directory. Once this is done, the third command option
+after running the Mappings executable will be “Use Kappa electron
+distributions? (y/N)” Answering this as “y” then generates the prompt to
+set the value of kappa. Values between 2 and 1000 are allowed (kappa =
+infinity corresponds to the standard Maxwell-Boltzmann distribution).
+Choose a suitable value – the lower the value, the greater the departure
+of the distribution from the M-B distribution.
+
+The computation then proceeds as for the previous default options.
+
+Background to non-Maxwellian electron energy distributions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It has been accepted since the 1940s that the electrons in HII regions
+and PNe are in thermal equilibrium. Analytical calculations of electron
+velocity distributions in gaseous nebulae were presented by Bohm & Aller
+(1947, ADS 1947ApJ…105..131B). They reported that the velocity
+distribution is “very close to Maxwellian.” Spitzer (1962, Ch. 5, ADS
+1968dms..book…..S) also examined the thermalization process for electron
+energies in plasmas and found that electron energies equilibrate rapidly
+through collisions. This early work has led later authors to assume that
+the electrons in gaseous nebulae are always in thermal equilibrium.
+However, Spitzer’s analysis showed that the equilibration time of an
+energetic electron is proportional to the cube of the velocity, so using
+M-B equilibrium theory, plasmas with very high energy electrons take
+much longer to equilibrate than those excited by normal UV photons from
+stars found in HII regions.
+
+In more recent times, the electron energies in solar system plasmas have
+been measured directly by satellites and space probes, and in most cases
+the electron energies depart substantially from the Maxwellian, and
+resemble a Maxwellian with a high energy power law tail. Vasyliunas
+(1968, ADS 1968JGR….73.2839V) showed that this distribution could be
+well described by what he called the “kappa distribution”. There is also
+evidence from IBEX observations that energetic neutral atoms in the
+interstellar medium, where it interacts with the heliosheath, exhibit
+kappa energy distributions. In solar system plasmas, the kappa
+distribution is more common than the M-B distribution. So we are
+confronted with the fact that despite the early theoretical work
+suggesting that the electrons in such plasmas should be in thermal
+equilibrium, frequently they are not.
+
+The kappa distribution has been shown to arise naturally from “q non-
+extensive statistical mechanics”, in the same way as the M-B
+distribution arises from Boltzmann–Gibbs statistics. The requirement for
+this to occur is that there be macroscopic interactions between forces
+and particles, in addition to the shorter-range Coulombic forces that
+give rise to M-B equilibration. These statistics provide a sound basis
+for the overtly successful use of the kappa distribution in describing
+solar system plasmas.
+
+Kappa distributions appear to arise whenever the plasma is being pumped
+rapidly with high energy non-thermal electrons, so that the system
+cannot relax to a classical M-B distribution. Kappa-like energy
+distributions can also arise as a consequence of normal power-law
+variations of physical parameters such as density, temperature, and
+electric and magnetic fields.
+
+Such conditions may also be present in HII regions and PNe—solar system
+plasma parameters span the many of the conditions found in gaseous
+nebulae, and, as in the solar system, HII region plasmas can be
+magnetically dominated—so it is important to investigate the potential
+effects of non- equilibrium energy distributions in gaseous nebulae.
+
+Non-Maxwellian energies may occur whenever the population of energetic
+electrons is being pumped in a timescale < the normal energy
+redistribution timescale of the electron population. Suitable mechanisms
+include magnetic reconnection followed by the migration of high-energy
+electrons along field lines, the development of inertial Alfvén waves,
+local shocks (driven either by the collision of bulk flows or by
+supersonic turbulence), and, most simply, by the injection of
+high-energy electrons through the photoionization process itself. Normal
+photoionization produces supra-thermal electrons on a timescale similar
+to the recombination timescale. However, energetic electrons can be
+generated by the photoionization of dust, and X-ray ionization can
+produce highly energetic (∼keV) inner-shell (Auger process) electrons.
+These photoionization-based processes are more effective where the
+source of the ionizing photons has a “hard” photon spectrum. Thus, the
+likelihood of the ionized plasma having a kappa electron energy
+distribution would be high in the case of either photoionization by an
+active galactic nucleus, in PNe, where the effective temperature of the
+exciting star can range up to ∼250,000 K, and for high- redshift HII
+regions excited by very low metallicity O-stars.
+
+So we have no shortage of possible energy injection mechanisms capable
+of feeding the energetic population on a timescale which is short
+compared with the collisional re-distribution timescale. The rate of
+equilibration falls rapidly with increasing energy, and we would expect
+there to be a threshold energy above which any non-thermal electrons
+have a long residence time. These can then feed continually down toward
+lower energies through conventional collisional energy redistribution,
+thus maintaining a kappa electron energy distribution.
+
+In addition to the energy injection mechanisms capable of maintaining
+the excitation of supra-thermal distributions, there is evidence that
+the kappa distribution may remain stable against equilibration longer
+than expected through simple collisional thermalization, and that
+distributions with 2.5 > kappa > 1.5 have the capacity, through
+increasing entropy, to move to values of lower kappa i.e., away from
+(M-B) equilibrium. This suggests that where q non-extensive entropy
+conditions operate, the supra-thermal energy distributions produced
+exist in time-invariant “stationary states”. These states have longer
+lifetimes than expected classically. This is consistent with the
+numerous observations in solar system plasmas that kappa electron and
+proton energy distributions are the norm.
+
+For several decades, systematic discrepancies have plagued abundance
+measurements derived from observations of emission lines and emission
+continua in HII regions and PNe. In particular, abundances determined
+from collisionally excited lines (CELs) differ from those determined
+using hydrogen and helium bound–free continuum spectra. Chemical
+abundances determined from the optical recombination lines (ORLs) are
+systematically higher than those determined from CELs, these so- called
+“abundance discrepancy problem”. The kappa electron energy distribution
+provides a simple explanation for why this happens.
+
+It is likely, therefore, that photoionized plasmas in gaseous nebulae
+will show departures from a Maxwell distribution to some degree. The key
+questions are, is this important, and does it produce observable effects
+in the nebular diagnostics which we have relied upon hitherto?
+
+The best way to answer these questions is to model nebulae (HII regions,
+AGNs, PNe and shocks) using kappa-distributed electron energy models to
+compare with observations. For this reason, Mappings has the capability
+to model emission lines and continua using kappa-distributed electron
+energies.

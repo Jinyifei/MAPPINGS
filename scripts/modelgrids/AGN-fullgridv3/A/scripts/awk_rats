@@ -1,0 +1,87 @@
+#
+# for reading v5.0.13 + mappings spec.csv output
+#
+BEGIN{line = 0;
+  halpha   = 0.0;
+  hei5876  = 0.0;
+  nii      = 0.0;
+  nii6584  = 0.0;
+  oi6300   = 0.0;
+  oii      = 0.0;
+  oii3726  = 0.0;
+  oii3729  = 0.0;
+  oiii4363 = 0.0;
+  oiii     = 0.0;
+  oiii5007 = 0.0;
+  neiii    = 0.0;
+  sii      = 0.0;
+  sii6716  = 0.0;
+  sii6731  = 0.0;
+  siii     = 0.0;
+}
+/ Run   :/{
+         rn=$0;
+         n = split($0, a, ",");
+         n = split(a[3], q, "=");
+         lu=q[2];
+         n = split(a[4], p, "=");
+         pres=p[2];
+         abund=a[8];
+         n = split(a[9], k, "=");
+         mass=k[2];
+         ledd=a[10]
+         type=a[11]
+         }
+/  O \,/{n = split($0, oxy, ",");
+         lz=oxy[3];
+         lg=oxy[7];
+}
+/  Fe\,/{n = split($0, fe, ",");
+         lzfe=fe[3];
+         lgfe=fe[7];
+}
+/H-beta  :,/ { n = split($0, a, ","); hbeta = a[4]}
+/3726.032/{n = split($0, a, ","); oii      = a[3]; oii3726 = a[3]}
+/3728.815/{n = split($0, a, ","); oii      = oii  + a[3]; oii3729 = a[3]}
+/3868.764/{n = split($0, a, ","); neiii    = a[3]}
+/3967.471/{n = split($0, a, ","); neiii    = neiii  + a[3]}
+/4363.209/{n = split($0, a, ","); oiii4363 = a[3]}
+/4958.911/{n = split($0, a, ","); oiii    = a[3]}
+/5006.843/{n = split($0, a, ","); oiii    = oiii+a[3]; oiii5007 = a[3]}
+/5875.665/{n = split($0, a, ","); hei5876 = a[3]}
+/6300.304/{n = split($0, a, ","); oi6300  = a[3]}
+/6548.052/{n = split($0, a, ","); nii     = a[3]}
+/6562.819/{n = split($0, a, ","); halpha  = a[3]}
+/6583.454/{n = split($0, a, ","); nii     = nii + a[3]; nii6584 = a[3]}
+/6716.440/{n = split($0, a, ","); sii     = a[3]; sii6716 = a[3]}
+/6730.816/{n = split($0, a, ","); sii     = sii + a[3]; sii6731 = a[3]}
+/9068.620/{n = split($0, a, ","); siii    = a[3]}
+/9530.619/{n = split($0, a, ","); siii    = siii + a[3]}
+END{
+lniiha     = log(nii6584/halpha)*0.4342944819032518;
+lniipha    = log(nii/halpha)*0.4342944819032518;
+lsiipha    = log(sii/halpha)*0.4342944819032518;
+lniioiip   = log(nii6584/oii)*0.4342944819032518;
+lniipoiip  = log(nii/oii)*0.4342944819032518;
+lniisiip   = log(nii6584/sii)*0.4342944819032518;
+lniipsiip  = log(nii/sii)*0.4342944819032518;
+loiiphb    = log(oii)*0.4342944819032518;
+loiiratio  = log(oii3729/oii3726)*0.4342944819032518;
+loiiihb    = log(oiii5007)*0.4342944819032518;
+loiiiphb   = log(oiii)*0.4342944819032518;
+loiiioiip  = log(oiii5007/oii)*0.4342944819032518;
+loiiipoiip = log(oiii/oii)*0.4342944819032518;
+loiiisiip  = log(oiii5007/sii)*0.4342944819032518;
+loiiipsiip = log(oiii/sii)*0.4342944819032518;
+l4363oiii  = log(oiii4363/oiii5007)*0.4342944819032518;
+l4363oiiip = log(oiii4363/oiii)*0.4342944819032518;
+loioiip    = log(oi6300/oii)*0.4342944819032518;
+loiipsiip  = log(oii/sii)*0.4342944819032518;
+lr23       = log(oiii+oii)*0.4342944819032518;
+ls23       = log(siii+sii)*0.4342944819032518;
+lsiiratio  = log(sii6716/sii6731)*0.4342944819032518;
+printf("  %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f, %7.4f\n",
+lu, lz, lg, lzfe, lgfe, pres, lniiha , lniipha , lsiipha , lniioiip , lniipoiip , lniisiip , lniipsiip ,
+loiiphb , loiiihb , loiiiphb , loiiioiip , loiiipoiip, loiiisiip , loiiipsiip, l4363oiii , l4363oiiip,
+loioiip , loiipsiip , lr23 , ls23, lsiiratio, loiiratio);
+}

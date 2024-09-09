@@ -1,0 +1,33 @@
+y
+MV52Inputs/solar2010.abn
+n
+n
+n
+p6
+d
+b
+1.0e5
+0
+12
+1
+x
+s
+l
+t
+36
+c
+1e4
+1
+d
+1e16
+y
+e
+0.025
+b
+1
+0.05
+b
+1 2 6 8
+test PN2 1e5 12 Ryd r0=1e16 kappa inf M5.2
+x
+

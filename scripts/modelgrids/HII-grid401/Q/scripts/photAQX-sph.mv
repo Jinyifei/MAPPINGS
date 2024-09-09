@@ -1,0 +1,227 @@
+yes   : change abund ***************************DUST & ABUNDANCES
+inputs/ABN01
+no    : no more changes
+no    : no offsets
+yes   : include dust
+yes   : change depletions
+inputs/DEPLFILE
+no    : no more changes
+no    : allow grain destruction
+M     : MRN distribution
+yes   : Include PAH molecules?
+0.3   : fraction of Carbon Dust Depletion in PAHs
+Q     : PAH switch on QHDH < Value
+4e2   : PAH switch on Value
+no    : graphite grains to be cospatial with PAHs
+no    : Evaluate dust temperatures and IR flux?
+P6    : Photo. Abs. distance step, full cont ***************************START P6
+D     : Default ionisation values
+H     :   Input SB data
+inputs/SBTYPE__ATMVALUE_TR005_IMFVALUE_SBVERSION.spectrum
+SBSTEP
+e
+5e5
+1.0e22
+13.6
+140.0
+1.00
+X     : eXit with current source
+s     : Spherical Geometry
+L     : Source by Luminosity
+T     : Total or Ionising Luminosity
+40    : bolometric source luminosity (log erg/s)
+B     : isoBaric, (const pressure)
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+q     : Give initial radius in terms of distance or Q(N) (d/q)
+LQVALUE  :   Q at inner radius (< 100 as log)
+y     : Volume integration over the whole sphere? (y/n)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+SPH,zet=0.05,LQ=LQVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,ABTYPE,SF=SBTYPE,_ATMVALUE,_TR005,_IMFVALUE,#SBSTEP,P6,XR,MMVERSION,SSBVERSION,DDVERSION
+R
+yes   : change abund ***************************DUST & ABUNDANCES
+inputs/ABN02
+no    : no more changes
+no    : no offsets
+yes   : include dust
+yes   : change depletions
+inputs/DEPLFILE
+no    : no more changes
+no    : allow grain destruction
+M     : MRN distribution
+yes   : Include PAH molecules?
+0.3   : fraction of Carbon Dust Depletion in PAHs
+Q     : PAH switch on QHDH < Value
+4e2   : PAH switch on Value
+no    : graphite grains to be cospatial with PAHs
+no    : Evaluate dust temperatures and IR flux?
+P6    : Photo. Abs. distance step, full cont ***************************START P6
+D     : Default ionisation values
+H     :   Input SB data
+inputs/SBTYPE__ATMVALUE_TR020_IMFVALUE_SBVERSION.spectrum
+SBSTEP
+e
+5e5
+1.0e22
+13.6
+140.0
+1.00
+X     : eXit with current source
+s     : Spherical Geometry
+L     : Source by Luminosity
+T     : Total or Ionising Luminosity
+40    : bolometric source luminosity (log erg/s)
+B     : isoBaric, (const pressure)
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+q     : Give initial radius in terms of distance or Q(N) (d/q)
+LQVALUE  :   Q at inner radius (< 100 as log)
+y     : Volume integration over the whole sphere? (y/n)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+SPH,zet=0.20,LQ=LQVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,ABTYPE,SF:SBTYPE,_ATMVALUE,_TR020,_IMFVALUE,#SBSTEP,P6,XR,MMVERSION,SSBVERSION,DDVERSION
+R
+yes   : change abund ***************************DUST & ABUNDANCES
+inputs/ABN03
+no    : no more changes
+no    : no offsets
+yes   : include dust
+yes   : change depletions
+inputs/DEPLFILE
+no    : no more changes
+no    : allow grain destruction
+M     : MRN distribution
+yes   : Include PAH molecules?
+0.3   : fraction of Carbon Dust Depletion in PAHs
+Q     : PAH switch on QHDH < Value
+4e2   : PAH switch on Value
+no    : graphite grains to be cospatial with PAHs
+no    : Evaluate dust temperatures and IR flux?
+P6    : Photo. Abs. distance step, full cont ***************************START P6
+D     : Default ionisation values
+H     :   Input SB data
+inputs/SBTYPE__ATMVALUE_TR040_IMFVALUE_SBVERSION.spectrum
+SBSTEP
+e
+5e5
+1.0e22
+13.6
+140.0
+1.00
+X     : eXit with current source
+s     : Spherical Geometry
+L     : Source by Luminosity
+T     : Total or Ionising Luminosity
+40    : bolometric source luminosity (log erg/s)
+B     : isoBaric, (const pressure)
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+q     : Give initial radius in terms of distance or Q(N) (d/q)
+LQVALUE  :   Q at inner radius (< 100 as log)
+y     : Volume integration over the whole sphere? (y/n)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+SPH,zet=0.40,LQ=LQVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,ABTYPE,SF:SBTYPE,_ATMVALUE,_TR040,_IMFVALUE,#SBSTEP,P6,XR,MMVERSION,SSBVERSION,DDVERSION
+R
+yes   : change abund ***************************DUST & ABUNDANCES
+inputs/ABN04
+no    : no more changes
+no    : no offsets
+yes   : include dust
+yes   : change depletions
+inputs/DEPLFILE
+no    : no more changes
+no    : allow grain destruction
+M     : MRN distribution
+yes   : Include PAH molecules?
+0.3   : fraction of Carbon Dust Depletion in PAHs
+Q     : PAH switch on QHDH < Value
+4e2   : PAH switch on Value
+no    : graphite grains to be cospatial with PAHs
+no    : Evaluate dust temperatures and IR flux?
+P6    : Photo. Abs. distance step, full cont ***************************START P6
+D     : Default ionisation values
+H     :   Input SB data
+inputs/SBTYPE__ATMVALUE_TR100_IMFVALUE_SBVERSION.spectrum
+SBSTEP
+e
+5e5
+1.0e22
+13.6
+140.0
+1.00
+X     : eXit with current source
+s     : Spherical Geometry
+L     : Source by Luminosity
+T     : Total or Ionising Luminosity
+40    : bolometric source luminosity (log erg/s)
+B     : isoBaric, (const pressure)
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+q     : Give initial radius in terms of distance or Q(N) (d/q)
+LQVALUE  :   Q at inner radius (< 100 as log)
+y     : Volume integration over the whole sphere? (y/n)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+SPH,zet=1.00,LQ=LQVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,ABTYPE,SF:SBTYPE,_ATMVALUE,_TR100,_IMFVALUE,#SBSTEP,P6,XR,MMVERSION,SSBVERSION,DDVERSION
+R
+yes   : change abund ***************************DUST & ABUNDANCES
+inputs/ABN05
+no    : no more changes
+no    : no offsets
+yes   : include dust
+yes   : change depletions
+inputs/DEPLFILE
+no    : no more changes
+no    : allow grain destruction
+M     : MRN distribution
+yes   : Include PAH molecules?
+0.3   : fraction of Carbon Dust Depletion in PAHs
+Q     : PAH switch on QHDH < Value
+4e2   : PAH switch on Value
+no    : graphite grains to be cospatial with PAHs
+no    : Evaluate dust temperatures and IR flux?
+P6    : Photo. Abs. distance step, full cont ***************************START P6
+D     : Default ionisation values
+H     :   Input SB data
+inputs/SBTYPE__ATMVALUE_TR200_IMFVALUE_SBVERSION.spectrum
+SBSTEP
+e
+5e5
+1.0e22
+13.6
+140.0
+1.00
+X     : eXit with current source
+s     : Spherical Geometry
+L     : Source by Luminosity
+T     : Total or Ionising Luminosity
+40    : bolometric source luminosity (log erg/s)
+B     : isoBaric, (const pressure)
+LPKVALUE :  Pressure regime (p/k, <10 as log)
+4     : log(Initial temperature)
+1     : filling factor (0<f<=1)
+q     : Give initial radius in terms of distance or Q(N) (d/q)
+LQVALUE  :   Q at inner radius (< 100 as log)
+y     : Volume integration over the whole sphere? (y/n)
+E     : Equilibrium ionization balance.
+0.02  : Step value of the photon absorption fraction  *******
+A     : Ionisation bounded, 99% neutral **********
+A     : Standard output (photnxxxx,phapnxxxx)  >Name for run>>>>
+SPH,zet=2.00,LQ=LQVALUE,LPk=LPKVALUE,kap=KAPPAVALUE,ABTYPE,SF:SBTYPE,_ATMVALUE,_TR200,_IMFVALUE,#SBSTEP,P6,XR,MMVERSION,SSBVERSION,DDVERSION
+X
+
+
