@@ -8,14 +8,8 @@
 *.o
 lab/00ignore/
 lab/00ignore
-lab/map51*
 lab/map52*
-bin/map51*
 bin/map52*
-bin/lines
-bin/listlines
-bin/red
-bin/blur
 00Ignore
 00ignore/
 *.jar
@@ -48,6 +42,3 @@ lines_html/
 blur_html/
 #
 prepmv.sh
-blur
-lines
-red
