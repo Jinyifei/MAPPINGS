@@ -8,13 +8,15 @@
 		Brent Groves, David Nicholls,
 		Adam D. Thomas, Yi-Fei Jin, Knox Long
 
+`https://github.com/Jinyifei/MAPPINGS`
 `https://bitbucket.org/RalphSutherland/mappings`
 `https://mappings.anu.edu.au
 
 #### Contact:
 
+	yifei.jin.astro@gmail.com
+	ralph@rssdev.net
 	Ralph.Sutherland@anu.edu.au
-
 
 ## Quick Start Compiling Install and Run:
 
