@@ -8,9 +8,7 @@
 *.o
 lab/00ignore/
 lab/00ignore
-lab/map51*
 lab/map52*
-bin/map51*
 bin/map52*
 bin/lines
 bin/listlines
@@ -48,6 +46,3 @@ lines_html/
 blur_html/
 #
 prepmv.sh
-blur
-lines
-red
