@@ -8,8 +8,8 @@
 		Brent Groves, David Nicholls,
 		Adam D. Thomas, Yi-Fei Jin, Knox Long
 
-`https://bitbucket.org/RalphSutherland/mappings`
-`https://mappings.anu.edu.au`
+This is the public version of Mappings 
+
 
 #### Contact:
 
