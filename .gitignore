@@ -26,9 +26,6 @@ bin/blur
 docs/sphinx/html/
 docs/sphinx/doctrees/
 docs/sphinx/venv/
-# doxygen stuff
-# doxygen_help
-# doxygen_help/
 mv_help_html
 mv_help_html/
 mv_code_html
@@ -48,6 +45,7 @@ lines_html/
 blur_html/
 #
 prepmv.sh
-blur
-lines
-red
+tools/lines/lines
+tools/lines/listlines
+tools/blur/blur
+tools/red/red
