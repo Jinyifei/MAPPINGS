@@ -4,15 +4,18 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
 c****************************************************************
-c> @brief The subroutine shock5
-c! XXXX - add one line purpose here
+c> @brief SHOCK5: Shock model 
+c! Shocks ith steady Rankine-Hugoniot solution and iterative precursors
 c! @param This routine has no parameters
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Creates spectra and model file output
 c!
 c! @details
-c!  XXXX Enter details here
+c!  SHOCK5: Shock model with steady Rankine-Hugoniot solution fo
+c! each step.  Time steps based on fastest atomic, cooling or
+c! photon absorbion timescales.
+c! Full continuum and diffuse field, auto preionisation
 c***************************************************************
 
       subroutine shock5 ()
@@ -93,14 +96,15 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5setup
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4  iterations  XXX-meaning
+c! Run the user initialisation and set global flags
+c! @param [in,out] integer*4  iterations  minimum number of iterations
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Default 3 global iterations, returns user actual choice
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Iterations is an estimate and will often take more. 0 or -ve will
+C! Perform no iterations.
 c***************************************************************
 
       subroutine shock5setup (iterations)
@@ -1113,14 +1117,14 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5headers
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4  iterations  XXX-meaning
+c! Opens and fills the headers of S5 chosen output files
+c! @param [in,out] integer*4  iterations  number of chosen minimum iterations
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Chosen output files have user and model information written
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Files remain close until needed and at the end of the model.
 c***************************************************************
 
       subroutine shock5headers (iterations)
@@ -1628,14 +1632,14 @@ c
 
 c****************************************************************
 c> @brief The subroutine shocksummary
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4     lunit  XXX-meaning
+c! Print summary of shock properties for a given precursor condition
+c! @param [in,out] integer*4     lunit  logical unit to write to, 6 for std out
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Display shock properties for screen and file output, varies as precursor evolves
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Detailed Shock properties given current precursor to file or screen.
 c***************************************************************
 
       subroutine shocksummary (lunit)
@@ -1959,28 +1963,23 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5check
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4       its  XXX-meaning
-c! @param [in,out] integer*4    maxits  XXX-meaning
+c! Check shock structure compared to previous iteration
+c! @param [in] integer*4       its  current iterations so far
+c! @param [in] integer*4    maxits  max its requested - may change
 c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
 c!
 c! @details
-c!  XXXX Enter details here
+c!     Check if the global shock-precursor iterations have converged.
+c!     Compares the current iteration with the previous iteration.
+c!     Saves the current shock state on either side of the shock jump,
+c!    for a future comparison.
 c***************************************************************
-
+C
       subroutine shock5check (its, maxits)
 c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c
-c
-c     Check if the global shock-precursor iterations have converged.
-c     Compares the current iteration with the previous iteration.
-c     Saves the current shock state on either side of the shock jump,
-c     for a future comparison.
-c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
       include 's5blocks.inc'
