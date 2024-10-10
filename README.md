@@ -10,6 +10,8 @@
 
 This is the public version of Mappings 
 
+This is the GitHub mirror to the MAPPINGS source on https://mappings.anu.edu.au
+
 
 #### Contact:
 
