@@ -46,3 +46,8 @@ lines_html/
 blur_html/
 #
 prepmv.sh
+#
+tools/lines/lines
+tools/lines/listlines
+tools/blur/blur
+tools/red/red
