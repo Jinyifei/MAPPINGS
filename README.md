@@ -8,8 +8,10 @@
 		Brent Groves, David Nicholls,
 		Adam D. Thomas, Yi-Fei Jin, Knox Long
 
-`https://bitbucket.org/RalphSutherland/mappings`
-`https://mappings.anu.edu.au`
+This is the public version of Mappings 
+
+This is the GitHub mirror to the MAPPINGS source on https://mappings.anu.edu.au
+
 
 #### Contact:
 
