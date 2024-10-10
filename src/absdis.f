@@ -310,7 +310,7 @@ c
         endif
       enddo
 c
-      plos=plos/qto
+      If (qto.gt.epsilon) plos=plos/qto
 c
       iter=iter+1
       if (plos.gt.epsilon) then
@@ -322,7 +322,7 @@ c
         endif
       endif
 c
-      if (plos.gt.0.d0) drta=drta*absf/plos
+      if (plos.gt.epsilon) drta=drta*absf/plos
 c
 c     correct for geometric changes if necessary in spheres
 c
