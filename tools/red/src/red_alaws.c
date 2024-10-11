@@ -1226,7 +1226,7 @@ int red_Al_RVEBmV_FM07( Real * A_l, Real Rv, Real EBmV, Real * wave, Integer n )
 // static gsl_spline *gFD05Spline = NULL;
 // static gsl_interp_accel *gFD05SplineAcc = NULL;
 
-static zls_AkimaSpline *gFD05Spline = NULL;
+static zls_AkimaSpline gFD05Spline = NULL;
 
 int freeFD05Spline( void );
 int freeFD05Spline( void ){

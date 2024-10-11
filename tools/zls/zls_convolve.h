@@ -20,9 +20,10 @@ enum {
 
     // These are width convolutions, in whichever x space called with. Widths need to
     // be computed in log or linear space as appropriate, usually by a driver routine
-    // rather than calling directly., 
+    // rather than calling directly.,
     // W routines convolve in place
 
+int zls_WLogXConvolve           ( Q1DArr lwv, Q1DArr fl, Q1DArr cn, Q1DArr nz, Counter nSpec, Real resR, Real fwhm, Real vSini , Real box);
 int zls_WRotationalConvolution  ( Q1DArr lwv, Q1DArr fl, Counter n, Real sigma);
 int zls_WGaussianConvolution    ( Q1DArr lwv, Q1DArr fl, Counter n, Real sigma);
 int zls_WBoxcarConvolution      ( Q1DArr lwv, Q1DArr fl, Counter n, Real sigma);

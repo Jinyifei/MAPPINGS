@@ -3,7 +3,8 @@
 #define C_KMS 299792.458
 
 
-int zls_WLogXConvolve(Q1DArr wv, Q1DArr fl, Q1DArr cn, Q1DArr nz, Counter nSpec, Real resR, Real fwhm, Real vSini , Real box){
+int zls_WLogXConvolve(Q1DArr wv, Q1DArr fl, Q1DArr cn, Q1DArr nz, Counter nSpec, Real resR, Real fwhm, Real vSini , Real box)
+{
 
 
     int err = noErr;
@@ -48,7 +49,7 @@ int zls_WLogXConvolve(Q1DArr wv, Q1DArr fl, Q1DArr cn, Q1DArr nz, Counter nSpec,
 
         if ( err == noErr ){
 
-            zls_AkimaSpline *gSpline = NULL;
+            zls_AkimaSpline gSpline = NULL;
             gSpline = zls_AkimaAlloc(nSpec);
 
             err = zls_AkimaInit (gSpline, lwv, fl, nSpec); // log x axis
@@ -144,9 +145,9 @@ int zls_WLogXConvolve(Q1DArr wv, Q1DArr fl, Q1DArr cn, Q1DArr nz, Counter nSpec,
                 if ( err != noErr ) {
                     return err;
                 }
-                
+
             }
-            
+
 
             if ( box > 0.0) {
 
@@ -170,9 +171,9 @@ int zls_WLogXConvolve(Q1DArr wv, Q1DArr fl, Q1DArr cn, Q1DArr nz, Counter nSpec,
                 if ( err != noErr ) {
                     return err;
                 }
-                
+
             }
-            
+
                 // do instrumental resolving power last
 
             if ( resR > 0.0 ){
@@ -204,7 +205,7 @@ int zls_WLogXConvolve(Q1DArr wv, Q1DArr fl, Q1DArr cn, Q1DArr nz, Counter nSpec,
 
             /* Convert back to original sampling */
 
-            zls_AkimaSpline *gReSpline = NULL;
+            zls_AkimaSpline gReSpline;
 
             gReSpline = zls_AkimaAlloc(n5);
 
@@ -403,11 +404,11 @@ int zls_WGaussianConvolution  ( Q1DArr wv, Q1DArr fl, Counter n, Real sigma) {
         // do the convolution
 
     err = zls_WDirectConvolution  ( fl, resp, n, nResp);
-    
+
     zls_DisposeQuantity1DArr(resp);
-    
+
     return err;
-    
+
 }
 
 
@@ -455,11 +456,11 @@ int zls_WBoxcarConvolution  ( Q1DArr wv, Q1DArr fl, Counter n, Real sigma) {
         // do the convolution
 
     err = zls_WDirectConvolution  ( fl, resp, n, nResp);
-    
+
     zls_DisposeQuantity1DArr(resp);
-    
+
     return err;
-    
+
 }
 
 int zls_WDirectConvolution  ( Q1DArr f, Q1DArr resp, Counter n, Counter nResp) {
@@ -496,38 +497,38 @@ int zls_WDirectConvolution  ( Q1DArr f, Q1DArr resp, Counter n, Counter nResp) {
 
             Integer kdx = (jdx + nResp2);
             out[idx] += f[l]*resp[kdx];
-            
+
         }
     }
-    
+
     for ( Integer jdx =-nResp2; jdx <=nResp2; jdx++ ) { // resp loop
         for (Integer idx = nResp2; idx < n-nResp2; idx++ ) { // middle input loop
-            
+
             Integer kdx = (jdx + nResp2);
             out[ idx ] += f[idx+jdx]*resp[kdx];
-            
+
         }
     }
-    
+
     for ( Integer jdx = -nResp2; jdx <= nResp2; jdx++ ) { // resp loop
         for (Integer idx = n-nResp2; idx < n; idx++ ) { // input loop, last half of resp
-            
+
             Integer  l=idx+jdx;
             l = (l >= n)?(2*n-l-2):l; // reflection, jump -1 past last cell
-            
+
             Integer kdx = (jdx + nResp2);
             out[ idx ] += f[l]*resp[kdx];
-            
+
         }
     }
-    
+
     for (Integer idx = 0; idx < n; idx++ )
         f[ idx ] = out[ idx ];
-    
+
     zls_DisposeQuantity1DArr(out); out = NULL;
-    
+
     return err;
-    
+
 }
 
 
@@ -583,7 +584,7 @@ int zls_ResampleXYData( Q1DArr *rx, Q1DArr *ry, Counter *nuni, Q1DArr x, Q1DArr 
     *nuni = nu;
 
     return err;
-    
+
 }
 
 int zls_DesampleYData( Q1DArr *y, Q1DArr x, Counter n, Q1DArr rx, Q1DArr ry, Counter nuni );
@@ -674,12 +675,12 @@ int zls_RotConvolution  ( Q1DArr * cnv, Q1DArr y, Counter n, Real nbins ) {
         }
 
         Real meanG = (gm1 + 4.0*g0 + gp1)/6.0; // 3rd order para quad
-        
+
         resp[ idx + nResp2 ] = meanG;
         respSum += meanG;
-        
+
     }
-    
+
     for (Integer idx = -nResp2; idx <= nResp2; idx++ ){
         resp[ idx + nResp2 ] /= respSum;
     }
@@ -688,9 +689,9 @@ int zls_RotConvolution  ( Q1DArr * cnv, Q1DArr y, Counter n, Real nbins ) {
     err = zls_DirectConvolution  ( cnv, y, resp, n, nResp);
 
     zls_DisposeQuantity1DArr(resp);
-    
+
     return err;
-    
+
 }
 
 int zls_RotXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Real fullWidth) {
@@ -774,9 +775,9 @@ int zls_RotXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Real full
 
         resp[ idx + nResp2 ] = meanG;
         respSum += meanG;
-        
+
     }
-    
+
     for (Integer idx = -nResp2; idx <= nResp2; idx++ ){
         resp[ idx + nResp2 ] /= respSum;
     }
@@ -896,9 +897,9 @@ int zls_RotLogXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Real r
 
         resp[ idx + nResp2 ] = meanG;
         respSum += meanG;
-        
+
     }
-    
+
     for (Integer idx = -nResp2; idx <= nResp2; idx++ ){
         resp[ idx + nResp2 ] /= respSum;
     }
@@ -920,11 +921,11 @@ int zls_RotLogXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Real r
     zls_DisposeQuantity1DArr(rx);
     zls_DisposeQuantity1DArr(ry);
     zls_DisposeQuantity1DArr(resp);
-    
+
     *cnv = oy;
-    
+
     return err;
-    
+
 }
 
 
@@ -979,11 +980,11 @@ int zls_GaussianConvolution  ( Q1DArr * cnv, Q1DArr y, Counter n, Real nbins ) {
         // do the convolution
 
     err = zls_DirectConvolution  ( cnv, y, resp, n, nResp);
-    
+
     zls_DisposeQuantity1DArr(resp);
-    
+
     return err;
-    
+
 }
 
 int zls_GaussianXConvolution  ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Real fullWidth) {
@@ -1066,7 +1067,7 @@ int zls_GaussianXConvolution  ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Rea
     zls_DisposeQuantity1DArr(resp);
 
     *cnv = oy;
-    
+
     return err;
 
 }
@@ -1154,11 +1155,11 @@ int zls_GaussianLogXConvolution  ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, 
     zls_DisposeQuantity1DArr(rx);
     zls_DisposeQuantity1DArr(ry);
     zls_DisposeQuantity1DArr(resp);
-    
+
     *cnv = oy;
-    
+
     return err;
-    
+
 }
 
 int zls_BoxcarConvolution  ( Q1DArr * cnv, Q1DArr y, Counter n, Real nbins ) {
@@ -1192,11 +1193,11 @@ int zls_BoxcarConvolution  ( Q1DArr * cnv, Q1DArr y, Counter n, Real nbins ) {
     // do the convolution
 
     err = zls_DirectConvolution  ( cnv, y, resp, n, nResp);
-    
+
     zls_DisposeQuantity1DArr(resp);
-    
+
     return err;
-    
+
 }
 
 int zls_BoxcarXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Real fullWidth) {
@@ -1341,9 +1342,9 @@ int zls_BoxcarLogXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Rea
     zls_DisposeQuantity1DArr(rx);
     zls_DisposeQuantity1DArr(ry);
     zls_DisposeQuantity1DArr(resp);
-    
+
     *cnv = oy;
-    
+
     return err;
 
 }
@@ -1455,9 +1456,9 @@ int zls_TricarXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Real f
     zls_DisposeQuantity1DArr(rx);
     zls_DisposeQuantity1DArr(ry);
     zls_DisposeQuantity1DArr(resp);
-    
+
     *cnv = oy;
-    
+
     return err;
 
 }
@@ -1538,9 +1539,9 @@ int zls_TricarLogXConvolution ( Q1DArr * cnv, Q1DArr x, Q1DArr y, Counter n, Rea
     zls_DisposeQuantity1DArr(rx);
     zls_DisposeQuantity1DArr(ry);
     zls_DisposeQuantity1DArr(resp);
-    
+
     *cnv = oy;
-    
+
     return err;
 
 }
@@ -1585,39 +1586,39 @@ int zls_DirectConvolution  ( Q1DArr *cnv, Q1DArr f, Q1DArr resp, Counter n, Coun
 
             Integer kdx = (jdx + nResp2);
             c[idx] += f[l]*resp[kdx];
-            
+
         }
     }
-    
+
     for ( Integer jdx =-nResp2; jdx <=nResp2; jdx++ ) { // resp loop
         for (Integer idx = nResp2; idx < n-nResp2; idx++ ) { // middle input loop
-            
+
             Integer kdx = (jdx + nResp2);
             c[ idx ] += f[idx+jdx]*resp[kdx];
-            
+
         }
     }
-    
+
     for ( Integer jdx = -nResp2; jdx <= nResp2; jdx++ ) { // resp loop
         for (Integer idx = n-nResp2; idx < n; idx++ ) { // input loop, last half of resp
-            
+
             Integer  l=idx+jdx;
             l = (l >= n)?(2*n-l-2):l; // reflection, jump -1 past last cell
-            
+
             Integer kdx = (jdx + nResp2);
             c[ idx ] += f[l]*resp[kdx];
-            
+
         }
     }
-    
+
 //    for (Integer idx = 0; idx < n; idx++ )
 //        f[ idx ] = out[ idx ];
-//    
+//
 //    zls_DisposeQuantity1DArr(out); out = NULL;
 
     *cnv = c;
 
     return err;
-    
+
 }
 

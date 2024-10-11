@@ -17,6 +17,8 @@
 #include "zls_fitpoly.h"
 #include "zls_splines.h"
 #include "zls_fft.h"
+#include "zls_convolve.h"
+#include "zls_fft.h"
 #include "zls_io.h"
 
 #endif

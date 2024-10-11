@@ -46,7 +46,7 @@ c       External Functions
 c
       real*8 feldens,fphotim,frectim2,fcolltim,fdilu
 c
-      if (drta.eq.0.d0) drta=1.0d16
+      if (drta.le.epsilon) drta=1.0d16
 c
 c
       call copypop (pop, popt)
@@ -125,18 +125,12 @@ c
         enddo
       endif
 c
-c      write(*,*) 'Total X-section : ',xsect
-c
       do inl=1,infph-1
         wei=xsec(inl)/xsect
         wid=widbinnu(inl)
         phots=(tphot(inl))*wid*wei
-c         write(*,*) inl,phots,qto
-c         write(*,*) tphot(inl),xsec(inl),xsect
         qto=qto+phots
       enddo
-c
-c      write(*,*) 'Weighted total : ',qto
 c
       iter=0
    20 plos=0.d0
@@ -149,7 +143,7 @@ c
       enddo
 c
       iter=iter+1
-      if (plos.gt.0.d0) then
+      if (plos.gt.epsilon) then
         r2=absf/plos
         r3=dabs(1.d0-r2)
 c        write(*,*) 'Change in dr:',r2
@@ -162,7 +156,7 @@ c        write(*,*) 'Change in dr:',r2
         drta=r2
       endif
 c
-      if (plos.gt.0.d0) drta=drta*absf/plos
+      if (plos.gt.epsilon) drta=drta*absf/plos
 c
 c     correct for geometric dilution changes if necessary
 c
@@ -181,10 +175,6 @@ c         write(*,*) 'Geometric Correction:',temp
         write (*,*) 'dr is negative:',drta
         stop
       endif
-c
-c      drta = max(1.0e13, drta)
-c
-c      drta = min(5.0e14,drta)
 c
       return
       end
@@ -223,7 +213,7 @@ c      real*8 g1, g2
 c
       real*8 abio,crosec
 c
-      if (drta.le.0.d0) drta=1.0d16
+      if (drta.le.epsilon) drta=1.0d16
 c
       plos=0.d0
       xsect=0.d0
@@ -245,7 +235,6 @@ c
             if (photxsec(i,inl).gt.epsilon) then
               crosec=photxsec(i,inl)
               sig=(abio*crosec)
-c         sig=(dh*fi)*sig
               xsec(inl)=xsec(inl)+sig
               xsect=xsect+sig
             endif
@@ -310,7 +299,7 @@ c
         endif
       enddo
 c
-      plos=plos/qto
+      if (qto.gt.epsilon) plos=plos/qto
 c
       iter=iter+1
       if (plos.gt.epsilon) then
@@ -322,7 +311,7 @@ c
         endif
       endif
 c
-      if (plos.gt.0.d0) drta=drta*absf/plos
+      if (plos.gt.epsilon) drta=drta*absf/plos
 c
 c     correct for geometric changes if necessary in spheres
 c
@@ -350,8 +339,8 @@ c
           endif
         enddo
 c
-        plos=plos/qto
-        if (plos.gt.0.d0) absf=plos
+        if (qto.gt.epsilon) plos=plos/qto
+        if (plos.gt.epsilon) absf=plos
 c
       endif
 c
