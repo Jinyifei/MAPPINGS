@@ -3,7 +3,7 @@ SHELL := /bin/bash
 #
 # Make MAPPINGS V
 #
-#    v5.2.0
+#    v5.2.1
 #-------------------------------
 #--- Output (executable) name --
 #-------------------------------

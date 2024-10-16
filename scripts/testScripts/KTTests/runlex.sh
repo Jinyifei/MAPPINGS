@@ -1,5 +1,5 @@
 #!/bin/bash
-# v5.2.0 v2.0.3
+# v5.2.1 v2.0.3
 # bash version with function fixes timer in linux vs BSD, tcsh vs bash vs builtin vs /usr/bin
 # uses POSIX /usr/bin/time -p 2>&1  instead of builtin to avoid shell dependence
 #

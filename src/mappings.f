@@ -21,7 +21,7 @@ c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Yi-Fei Jin, Knox Long
 c
 c
-c       Version v5.2.0dev
+c       Version v5.2.1
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -81,7 +81,7 @@ c
       character abundtitle*24
       logical initerr
 c
-      theversion='v5.2.0'
+      theversion='v5.2.1'
    10 format(/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/

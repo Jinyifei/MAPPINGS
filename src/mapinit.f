@@ -360,7 +360,7 @@ c
 c
   100 continue
       close (luin)
-      write (*,*) 'Energy Bins PHOTDAT File v5.2.0 : ',trim(photbinfile)
+      write (*,*) 'Energy Bins PHOTDAT File v5.2.1 : ',trim(photbinfile)
       if (kappamode.gt.0) write (*,*)  '*** Kappa mode  : ENABLED'
       if (expertmode.gt.0) write (*,*) '*** Expert mode : ENABLED'
 c

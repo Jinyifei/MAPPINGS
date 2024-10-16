@@ -1,4 +1,4 @@
-# MAPPINGS V v5.2.0
+# MAPPINGS V v5.2.1
 
 		Creative Commons v4.0 International
 		By Attribution, Share Alike
@@ -8,8 +8,18 @@
 		Brent Groves, David Nicholls,
 		Adam D. Thomas, Yi-Fei Jin, Knox Long
 
+`This is the public version of Mappings`
+
+This is the primary GitHub mirror to the public MAPPINGS source.
+
+See also a git mirror on:
+
 `https://bitbucket.org/RalphSutherland/mappings`
-`https://mappings.anu.edu.au
+
+and simple ZIP file downloads on :
+
+`https://mappings.anu.edu.au`
+
 
 #### Contact:
 
@@ -25,11 +35,11 @@
 [for a faster build try make -j build if your make supports it]
 
 MAPPINGS is installed by default into the users home area
-~/mappings520
+~/mappings521
 
 To run
 
-		> cd ~/mappings520/lab
+		> cd ~/mappings521/lab
 		> ./map52
 
 
@@ -39,11 +49,11 @@ To remove the MAPPINGS installation simply and leave user files
 
 		> make uninstall
 .
-Or to remove totally simply delete the `~/mappings520` directory
+Or to remove totally simply delete the `~/mappings521` directory
 
 ## The Installed MAPPINGS directory structure:
 
-#### mappings520/
+#### mappings521/
 		lab/
 		lab/scripts/
 
@@ -52,7 +62,7 @@ Or to remove totally simply delete the `~/mappings520` directory
 		abund/
 		prefs/
 		docs/
-		aux/
+		misc/
 
 ### Key Installed Directories and Files:
 
@@ -69,7 +79,7 @@ Or to remove totally simply delete the `~/mappings520` directory
 * `abund/`:  A set of useful abundance settings that can be read interactively during a run.  Optional.
 * `atmos/`:  A set of useful radiation source files and stellar atmosphere models.  Optional.
 * `docs/`:  Help, source references and cookbook guides
-* `aux/`:  A set of C and other tools for manipulting MAPPINGS output such as reddening
+* `aux/`:  A set of C and other tools for manipilting MAPPINGS output such as reddening
 
 ### Key Build Area Directories and Files:
 
@@ -86,7 +96,7 @@ It takes one argument to control the operation: build is the main one.
          'make, make help'             To see this menu
 
          'make build'      Build and install, and clean.
-                           Creates MAPPINGS in /Users/ralph/mappings520
+                           Creates MAPPINGS in /Users/ralph/mappings521
                            and creates optional environment variable
                            templates for startup scripts.
          'make compile'    to make new '*.o' in the build area only
@@ -97,3 +107,4 @@ It takes one argument to control the operation: build is the main one.
          'make uninstall'  remove installed map52rss
 
          -----------------------------------------------------------
+
