@@ -35,11 +35,11 @@ and simple ZIP file downloads on :
 [for a faster build try make -j build if your make supports it]
 
 MAPPINGS is installed by default into the users home area
-~/mappings521
+~/mappings520
 
 To run
 
-		> cd ~/mappings521/lab
+		> cd ~/mappings520/lab
 		> ./map52
 
 
@@ -49,11 +49,11 @@ To remove the MAPPINGS installation simply and leave user files
 
 		> make uninstall
 .
-Or to remove totally simply delete the `~/mappings521` directory
+Or to remove totally simply delete the `~/mappings520` directory
 
 ## The Installed MAPPINGS directory structure:
 
-#### mappings521/
+#### mappings520/
 		lab/
 		lab/scripts/
 
@@ -96,7 +96,7 @@ It takes one argument to control the operation: build is the main one.
          'make, make help'             To see this menu
 
          'make build'      Build and install, and clean.
-                           Creates MAPPINGS in /Users/ralph/mappings521
+                           Creates MAPPINGS in /Users/ralph/mappings520
                            and creates optional environment variable
                            templates for startup scripts.
          'make compile'    to make new '*.o' in the build area only
