@@ -8,9 +8,17 @@
 		Brent Groves, David Nicholls,
 		Adam D. Thomas, Yi-Fei Jin, Knox Long
 
-This is the public version of Mappings 
+`This is the public version of Mappings`
 
-This is the GitHub mirror to the MAPPINGS source on https://mappings.anu.edu.au
+This is the primary GitHub mirror to the public MAPPINGS source.
+
+See also a git mirror on:
+
+`https://bitbucket.org/RalphSutherland/mappings`
+
+and simple ZIP file downloads on :
+
+`https://mappings.anu.edu.au`
 
 
 #### Contact:

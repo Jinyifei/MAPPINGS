@@ -30,7 +30,7 @@ INCDIRS = -I${SRCDIR} -I${ZLSDIR} -I${ZLIBDIR}
 # GENERIC GCC
 #
 CC     =  gcc
-CFLAGS = -O3 -funsigned-char
+CFLAGS  = -std=c99 -O3 -funsigned-char
 OPTS   = -c -o $*.o -w ${CFLAGS} ${INCDIRS}
 LIB    = -lm
 #

@@ -4,7 +4,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
 c****************************************************************
-c> @brief SHOCK5: Shock model 
+c> @brief SHOCK5: Shock model
 c! Shocks ith steady Rankine-Hugoniot solution and iterative precursors
 c! @param This routine has no parameters
 c!
@@ -1976,10 +1976,18 @@ c!     Compares the current iteration with the previous iteration.
 c!     Saves the current shock state on either side of the shock jump,
 c!    for a future comparison.
 c***************************************************************
-C
+c
       subroutine shock5check (its, maxits)
 c
-ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c
+c     Check if the global shock-precursor iterations have converged.
+c     Compares the current iteration with the previous iteration.
+c     Saves the current shock state on either side of the shock jump,
+c     for a future comparison.
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       include 'cblocks.inc'
       include 's5blocks.inc'

@@ -156,7 +156,7 @@ c        write(*,*) 'Change in dr:',r2
         drta=r2
       endif
 c
-      if (plos.gt.epsilon) drta=drta*absf/plos
+      drta=drta*absf/(plos+epsilon)
 c
 c     correct for geometric dilution changes if necessary
 c
@@ -299,7 +299,7 @@ c
         endif
       enddo
 c
-      if (qto.gt.epsilon) plos=plos/qto
+      plos=plos/(qto+epsilon)
 c
       iter=iter+1
       if (plos.gt.epsilon) then
@@ -311,7 +311,7 @@ c
         endif
       endif
 c
-      if (plos.gt.epsilon) drta=drta*absf/plos
+      drta=drta*absf/(plos+epsilon)
 c
 c     correct for geometric changes if necessary in spheres
 c
@@ -339,8 +339,8 @@ c
           endif
         enddo
 c
-        if (qto.gt.epsilon) plos=plos/qto
-        if (plos.gt.epsilon) absf=plos
+        plos=plos/(qto+epsilon)
+        absf=(plos+epsilon)
 c
       endif
 c
