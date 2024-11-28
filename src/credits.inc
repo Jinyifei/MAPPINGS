@@ -11,7 +11,7 @@ c     Michael Dopita, Luc Binette, Ian Evans,
 c     Brent Groves, David Nicholls,
 c     Adam D. Thomas, Yi-Fei Jin, Knox Long
 c
-c     Version v5.2.0
+c     Version v5.2.1
 c
 
 

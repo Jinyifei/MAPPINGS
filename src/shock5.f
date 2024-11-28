@@ -4,15 +4,18 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 
 c****************************************************************
-c> @brief The subroutine shock5
-c! XXXX - add one line purpose here
+c> @brief SHOCK5: Shock model
+c! Shocks ith steady Rankine-Hugoniot solution and iterative precursors
 c! @param This routine has no parameters
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Creates spectra and model file output
 c!
 c! @details
-c!  XXXX Enter details here
+c!  SHOCK5: Shock model with steady Rankine-Hugoniot solution fo
+c! each step.  Time steps based on fastest atomic, cooling or
+c! photon absorbion timescales.
+c! Full continuum and diffuse field, auto preionisation
 c***************************************************************
 
       subroutine shock5 ()
@@ -93,14 +96,15 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5setup
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4  iterations  XXX-meaning
+c! Run the user initialisation and set global flags
+c! @param [in,out] integer*4  iterations  minimum number of iterations
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Default 3 global iterations, returns user actual choice
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Iterations is an estimate and will often take more. 0 or -ve will
+C! Perform no iterations.
 c***************************************************************
 
       subroutine shock5setup (iterations)
@@ -1113,14 +1117,14 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5headers
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4  iterations  XXX-meaning
+c! Opens and fills the headers of S5 chosen output files
+c! @param [in,out] integer*4  iterations  number of chosen minimum iterations
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Chosen output files have user and model information written
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Files remain close until needed and at the end of the model.
 c***************************************************************
 
       subroutine shock5headers (iterations)
@@ -1199,7 +1203,7 @@ c  put runname string and master file name in each file created
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-   20 format(//' Run  :',a,/,' File :',a)
+   20 format(//' Run  :,',a,/,' File :,',a)
       write (luop,20) runname,fsm
       write (lusp,20) runname,fsm
       if (ratmod.eq.'Y') write (lurtsh,20) runname,fsm
@@ -1242,26 +1246,27 @@ c
    30 format(//,
      & ' Model Parameters:',/,
      & ' =================',//,
-     & ' Abundances     : ',a128,/,
-     & ' Pre-ionisation : ',a128,/,
-     & ' Photon Source  : ',a128)
-   40 format(/,' Charge Exchange: ',a12,/,
-     & ' Photon Mode    : ',a12,/,
-     & ' Collision calcs: ',a12)
-   50 format(/,' Charge Exchange: ',a12,/,
-     & ' Photon Mode    : ',a12,/,
-     & ' Collision calcs: ',a12,/,
-     & ' Electron Kappa : ',1pg11.4)
-   60 format(//' ',t2,'Jden',t9,'Jgeo',t16,'Jtrans',
-     &            t23,'Jend',t29,'Ielen',t35,
-     & 'Jpoen',t43,'Fren',t51,'Tend',t57,'DIend',t67,
-     & 'TAUen',t77,'Jeq',t84,'Teini')
+     & ' Abundances     :,',a128,/,
+     & ' Pre-ionisation :, ',a128,/,
+     & ' Photon Source  :, ',a128)
+   40 format(/,' Charge Exchange:, ',a12,/,
+     & ' Photon Mode    :, ',a12,/,
+     & ' Collision calcs:, ',a12)
+   50 format(/,' Charge Exchange:, ',a12,/,
+     & ' Photon Mode    :, ',a12,/,
+     & ' Collision calcs:, ',a12,/,
+     & ' Electron Kappa :, ',1pg11.4)
+   60 format(//' ',t2,',Jden,',t9,',Jgeo,',t16,',Jtrans,',
+     &            t23,',Jend,',t29,',Ielen,',t35,
+     & ',Jpoen,',t43,',,Fren,',t51,',Tend,',t57,',DIend,',t67,
+     & ',TAUen,',t77,',Jeq,',t84,',Teini,')
    70 format('  ',4(a4,3x),2(i2,4x),0pf6.4,0pf6.0,
      &           2(1pg10.3),3x,a4,0pf7.1)
    80 format(//' Photon Source'/
      & ' ============='/)
-   90 format(/' MOD',t7,'Temp.',t16,'Alpha',t22,'Turn-on',t30,'Cut-off'
-     &,t38,'Zstar',t47,'FQHI',t56,'FQHEI',t66,'FQHEII')
+   90 format(/' MOD,',t7,',Temp.,',t16,',Alpha,',t22,',Turn-on,',t30,
+     &',Cut-off,'
+     &,t38,',Zstar,',t47,',FQHI,',t56,',FQHEI,',t66,',FQHEII,')
   100 format(' ',a2,1pg10.3,4(0pf7.2),1x,3(1pg10.3))
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       write (luop,30) abnfile,ionsetup,srcfile
@@ -1628,14 +1633,17 @@ c
 
 c****************************************************************
 c> @brief The subroutine shocksummary
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4     lunit  XXX-meaning
+c! Print summary of shock properties for a given precursor condition
+c! @param [in,out] integer*4     lunit  logical unit to write to, 6 for std out
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Display shock properties for screen and file output,
+c! varies as precursor evolves, commas make output compatible with csv
+c! output and doesn't make the screen or other locations any harder to
+c! read.
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Detailed Shock properties given current precursor to file or screen.
 c***************************************************************
 
       subroutine shocksummary (lunit)
@@ -1686,36 +1694,36 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '    Velocity       :',1pg12.5,' km/s',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '    Preshock Mach Number          :',1pg12.5,/,
-     & '    Preshock Alfven Mach Number   :',1pg12.5,/,
-     & '    Preshock Mag Alpha (Pmag/Pgas):',1pg12.5,/,
-     & '    Preshock Gas Eta  (gPgas/Pram):',1pg12.5,/,
-     & '    Preshock Mag Eta  (2Pmag/Pram):',1pg12.5,//,
-     & '    Preshock     T :',1pg12.5,' K',/,
-     & '    Preshock     ne:',1pg12.5,' cm^-3',/,
-     & '    Preshock     nH:',1pg12.5,' cm^-3',/,
-     & '    Preshock     d :',1pg12.5,' g/cm^-3',/,
-     & '    Preshock   Pgas:',1pg12.5,' dyne/cm^2',/,
-     & '    Preshock     mu:',1pg12.5,' a.m.u.',/,
-     & '    Preshock    XHI:',1pg12.5,/,
-     & '    Preshock   XHII:',1pg12.5,/,
-     & '    Preshock   XHeI:',1pg12.5,/,
-     & '    Preshock  XHeII:',1pg12.5,/,
-     & '    Preshock XHeIII:',1pg12.5,/,
-     & '    Preshock     B :',1pg12.5,' microGauss',/,
-     & '    Preshock   Pmag:',1pg12.5,' dyne/cm^2',/,
-     & '    Preshock   Pram:',1pg12.5,' dyne/cm^2',/)
+     & '    Preshock Mach Number          :,',1pg12.5,/,
+     & '    Preshock Alfven Mach Number   :,',1pg12.5,/,
+     & '    Preshock Mag Alpha (Pmag/Pgas):,',1pg12.5,/,
+     & '    Preshock Gas Eta  (gPgas/Pram):,',1pg12.5,/,
+     & '    Preshock Mag Eta  (2Pmag/Pram):,',1pg12.5,//,
+     & '    Preshock     T :,',1pg12.5,', K',/,
+     & '    Preshock     ne:,',1pg12.5,', cm^-3',/,
+     & '    Preshock     nH:,',1pg12.5,', cm^-3',/,
+     & '    Preshock     d :,',1pg12.5,', g/cm^-3',/,
+     & '    Preshock   Pgas:,',1pg12.5,', dyne/cm^2',/,
+     & '    Preshock     mu:,',1pg12.5,', a.m.u.',/,
+     & '    Preshock    XHI:,',1pg12.5,/,
+     & '    Preshock   XHII:,',1pg12.5,/,
+     & '    Preshock   XHeI:,',1pg12.5,/,
+     & '    Preshock  XHeII:,',1pg12.5,/,
+     & '    Preshock XHeIII:,',1pg12.5,/,
+     & '    Preshock     B :,',1pg12.5,', microGauss',/,
+     & '    Preshock   Pmag:,',1pg12.5,', dyne/cm^2',/,
+     & '    Preshock   Pram:,',1pg12.5,', dyne/cm^2',/)
    20   format(
      & '    Postshock Compression Factor   :',1pg12.5,/,
-     & '    Postshock    T :',1pg12.5,' K',/,
-     & '    Postshock    ne:',1pg12.5,' cm^-3',/,
-     & '    Postshock    nH:',1pg12.5,' cm^-3',/,
-     & '    Postshock    v :',1pg12.5,' km/s',/,
-     & '    Postshock    d :',1pg12.5,' g/cm^-3',/,
-     & '    Postshock  Pgas:',1pg12.5,' dyne/cm^2',/,
-     & '    Postshock    B :',1pg12.5,' microGauss',/,
-     & '    Postshock  Pmag:',1pg12.5,' dyne/cm^2',/,
-     & '    Postshock  Pram:',1pg12.5,' dyne/cm^2',/,
+     & '    Postshock    T :,',1pg12.5,', K',/,
+     & '    Postshock    ne:,',1pg12.5,', cm^-3',/,
+     & '    Postshock    nH:,',1pg12.5,', cm^-3',/,
+     & '    Postshock    v :,',1pg12.5,', km/s',/,
+     & '    Postshock    d :,',1pg12.5,', g/cm^-3',/,
+     & '    Postshock  Pgas:,',1pg12.5,', dyne/cm^2',/,
+     & '    Postshock    B :,',1pg12.5,', microGauss',/,
+     & '    Postshock  Pmag:,',1pg12.5,', dyne/cm^2',/,
+     & '    Postshock  Pram:,',1pg12.5,', dyne/cm^2',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
 c
       en=zen*dh0
@@ -1748,14 +1756,17 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5jump
-c! XXXX - add one line purpose here
+c! Calculate the RH shock jump flow variables with 2017 Pressure formulae
 c! @param This routine has no parameters
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  Calculate the RH shock jump flow variables with 2017 Pressure formulae
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Calculate the RH shock jump flow variables with 2017 Pressure formulae
+c! variables vary a little in setup depending on how precursor B field
+c! is defined in S5 block vars 'mtype' and 'stype' for magnetic type
+c! and shock type in terms of temperature or velocity.
 c***************************************************************
 
       subroutine shock5jump ()
@@ -1959,17 +1970,20 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5check
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4       its  XXX-meaning
-c! @param [in,out] integer*4    maxits  XXX-meaning
+c! Check shock structure compared to previous iteration
+c! @param [in] integer*4       its  current iterations so far
+c! @param [in] integer*4    maxits  max its requested - may change
 c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
 c!
 c! @details
-c!  XXXX Enter details here
+c!     Check if the global shock-precursor iterations have converged.
+c!     Compares the current iteration with the previous iteration.
+c!     Saves the current shock state on either side of the shock jump,
+c!    for a future comparison.
 c***************************************************************
-
+c
       subroutine shock5check (its, maxits)
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -4001,14 +4015,17 @@ c
 
 c****************************************************************
 c> @brief The subroutine protostate
-c! XXXX - add one line purpose here
-c! @param [in,out] integer*4     lunit  XXX-meaning
+c! Print the shock properties in terms of the cold protostate.
+c! @param [in,out] integer*4     lunit  output file logical unit
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  adds to file in logical unit
 c!
 c! @details
-c!  XXXX Enter details here
+c!  Protostate before the precursor is cold usually and the shock
+c! paramters appear as the highest Mach numbers and so on.
+c! Once and if heated by a precursor the Mach number etc change for
+c! the same shock.
 c***************************************************************
 
       subroutine protostate (lunit)
@@ -4025,27 +4042,27 @@ c
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
      & '  Shock Proto-State Properties',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '    Velocity       :',1pg12.5,' km/s',/,
+     & '    Velocity       :,',1pg12.5,', km/s',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/,
-     & '    Proto Mach Number          :',1pg12.5,/,
-     & '    Proto Alfven Mach Number   :',1pg12.5,/,
-     & '    Proto Mag Alpha (Pmag/Pgas):',1pg12.5,/,
-     & '    Proto Gas Eta  (gPgas/Pram):',1pg12.5,/,
-     & '    Proto Mag Eta  (2Pmag/Pram):',1pg12.5,//,
-     & '    Proto        T :',1pg12.5,' K',/,
-     & '    Proto        ne:',1pg12.5,' cm^-3',/,
-     & '    Proto        nH:',1pg12.5,' cm^-3',/,
-     & '    Proto        d :',1pg12.5,' g/cm^-3',/,
-     & '    Proto      Pgas:',1pg12.5,' dyne/cm^2',/,
-     & '    Proto        mu:',1pg12.5,' a.m.u.',/,
-     & '    Proto       XHI:',1pg12.5,/,
-     & '    Proto      XHII:',1pg12.5,/,
-     & '    Proto      XHeI:',1pg12.5,/,
-     & '    Proto     XHeII:',1pg12.5,/,
-     & '    Proto    XHeIII:',1pg12.5,/,
-     & '    Proto        B :',1pg12.5,' microGauss',/,
-     & '    Proto      Pmag:',1pg12.5,' dyne/cm^2',/,
-     & '    Proto      Pram:',1pg12.5,' dyne/cm^2',/,
+     & '    Proto Mach Number          :,',1pg12.5,/,
+     & '    Proto Alfven Mach Number   :,',1pg12.5,/,
+     & '    Proto Mag Alpha (Pmag/Pgas):,',1pg12.5,/,
+     & '    Proto Gas Eta  (gPgas/Pram):,',1pg12.5,/,
+     & '    Proto Mag Eta  (2Pmag/Pram):,',1pg12.5,//,
+     & '    Proto        T :,',1pg12.5,', K',/,
+     & '    Proto        ne:,',1pg12.5,', cm^-3',/,
+     & '    Proto        nH:,',1pg12.5,', cm^-3',/,
+     & '    Proto        d :,',1pg12.5,', g/cm^-3',/,
+     & '    Proto      Pgas:,',1pg12.5,', dyne/cm^2',/,
+     & '    Proto        mu:,',1pg12.5,', a.m.u.',/,
+     & '    Proto       XHI:,',1pg12.5,/,
+     & '    Proto      XHII:,',1pg12.5,/,
+     & '    Proto      XHeI:,',1pg12.5,/,
+     & '    Proto     XHeII:,',1pg12.5,/,
+     & '    Proto    XHeIII:,',1pg12.5,/,
+     & '    Proto        B :,',1pg12.5,', microGauss',/,
+     & '    Proto      Pmag:,',1pg12.5,', dyne/cm^2',/,
+     & '    Proto      Pram:,',1pg12.5,', dyne/cm^2',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::',/)
 c
       en=zen*dh_neu
@@ -4075,8 +4092,8 @@ c
 
 c****************************************************************
 c> @brief The subroutine shock5filenames
-c! XXXX - add one line purpose here
-c! @param [in,out] character*        px  XXX-meaning
+c! Creare S5 output files, names and unit numbers, variable.
+c! @param [in,out] character*        px  User file output prefix for some files
 c!
 c! @return
 c!  XXXX Add one or more lines describing what is updated
