@@ -166,7 +166,7 @@ c
         g2=fdilu(rstar,r2)
         temp=dsqrt(1.23456789d0*g2/g1)
         r2=(r2*temp)-rad
-        if (r2.lt.0) r2=drta
+        if (r2.lt.0.d0) r2=drta
         r3=1.d0/r2+1.d0/drta
         drta=1.d0/r3
 c         write(*,*) 'Geometric Correction:',temp
@@ -235,6 +235,7 @@ c
             if (photxsec(i,inl).gt.epsilon) then
               crosec=photxsec(i,inl)
               sig=(abio*crosec)
+c         sig=(dh*fi)*sig
               xsec(inl)=xsec(inl)+sig
               xsect=xsect+sig
             endif

@@ -29,7 +29,7 @@ and simple ZIP file downloads on :
 ## Quick Start Compiling Install and Run:
 
 		> cd download or git area...
-		> make build
+		> make [-j] build
 
 [wait a while.... ][
 [for a faster build try make -j build if your make supports it]

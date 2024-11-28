@@ -1,4 +1,4 @@
-# MAPPINGS V v5.2.0
+# MAPPINGS V v5.2.1
 
 		Creative Commons v4.0 International
 		By Attribution, Share Alike
@@ -29,7 +29,7 @@ and simple ZIP file downloads on :
 ## Quick Start Compiling Install and Run:
 
 		> cd download or git area...
-		> make build
+		> make [-j] build
 
 [wait a while.... ][
 [for a faster build try make -j build if your make supports it]
@@ -79,7 +79,7 @@ Or to remove totally simply delete the `~/mappings520` directory
 * `abund/`:  A set of useful abundance settings that can be read interactively during a run.  Optional.
 * `atmos/`:  A set of useful radiation source files and stellar atmosphere models.  Optional.
 * `docs/`:  Help, source references and cookbook guides
-* `tools/`:  A set of C and other tools for manipilting MAPPINGS output such as reddening
+* `tools/`:  A set of C and other tools for manipulating MAPPINGS output such as reddening
 
 ### Key Build Area Directories and Files:
 
