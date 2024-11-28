@@ -1,4 +1,4 @@
-# MAPPINGS V v5.2.1
+# MAPPINGS V v5.2.0
 
 		Creative Commons v4.0 International
 		By Attribution, Share Alike
@@ -62,7 +62,7 @@ Or to remove totally simply delete the `~/mappings520` directory
 		abund/
 		prefs/
 		docs/
-		misc/
+		tools/
 
 ### Key Installed Directories and Files:
 
@@ -79,7 +79,7 @@ Or to remove totally simply delete the `~/mappings520` directory
 * `abund/`:  A set of useful abundance settings that can be read interactively during a run.  Optional.
 * `atmos/`:  A set of useful radiation source files and stellar atmosphere models.  Optional.
 * `docs/`:  Help, source references and cookbook guides
-* `aux/`:  A set of C and other tools for manipilting MAPPINGS output such as reddening
+* `tools/`:  A set of C and other tools for manipilting MAPPINGS output such as reddening
 
 ### Key Build Area Directories and Files:
 
