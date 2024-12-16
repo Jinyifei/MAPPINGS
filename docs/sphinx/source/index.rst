@@ -12,10 +12,12 @@ Astrophysical equilibrium and time-dependent photoinisation and steady supersoni
 
 *MAPPINGS V* is a photoionisation and shock modelling code written in FORTRAN. It allows the compute nebular emission spectra from the far UV-Xrays (~0.1 Å or 100 keV) to the far IR (>1000 μm or 1e-6 eV).
 
-*MAPPINGS* was originally written by Dopita in 1976 and descrbed in a PhD thesis in 1982 by Binette (ANU) and then by PhD thesis by Sutherland in 1993 (ANU) and a cooling paper in 1993, and Sutherland has curated
-the code since 1989.  The code has evolved since then and useful early references is are `Sutherland and Dopita 1993` and `Dopita and Sutherland (1996) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
+*MAPPINGS* was originally written by Dopita in 1976 and descrbed in a PhD thesis in 1982 by Binette (ANU) and then by PhD thesis by Sutherland in 1993 (ANU) and a cooling paper in 1993, and Sutherland has curated the code since 1989.  
 
-* [Add papers here.]
+Following references should be cited if MAPPINGS is used or modified.
+`Sutherland and Dopita 1993`  
+`Dopita and Sutherland (1996)`
+
 
 *MAPPINGS*
 This code calculates ionisation and emission for continuum and line fluxes of recombination and collisionally excited lines
@@ -93,4 +95,5 @@ Add others
    input
    output
    meta
+   photo
    *
