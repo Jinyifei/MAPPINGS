@@ -235,7 +235,6 @@ c
             if (photxsec(i,inl).gt.epsilon) then
               crosec=photxsec(i,inl)
               sig=(abio*crosec)
-c         sig=(dh*fi)*sig
               xsec(inl)=xsec(inl)+sig
               xsect=xsect+sig
             endif
