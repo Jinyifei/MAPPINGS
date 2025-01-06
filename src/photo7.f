@@ -3767,14 +3767,14 @@ c
 
 c****************************************************************
 c> @brief The subroutine p7filenames
-c! XXXX - add one line purpose here
-c! @param This routine has no parameters
+c! Sets up the output logical units and filenames for current P7 model
+c! @param This routine has no parameters, uses p7blocks.inc
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  From output flags returns logical units and file names in p7blocks
 c!
 c! @details
-c!  XXXX Enter details here
+c! Logical units are not fixed but change on user output choices
 c***************************************************************
 
       subroutine p7filenames ()

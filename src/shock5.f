@@ -3950,20 +3950,21 @@ c
 
 c***************************************************************
 c> @brief The function real*8 function fdynamictimestep(t,dh,x,vel,p,netloss)
-c! XXXX - add one line purpose here
-c! @param [in,out]   real*8         t  XXX-meaning
-c! @param [in,out]   real*8        dh  XXX-meaning
-c! @param [in,out]   real*8         x  XXX-meaning
-c! @param [in,out]   real*8       vel  XXX-meaning
-c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         p  XXX-meaning
-c! @param [in,out] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   netloss  XXX-meaning
+c! The harmonic mean of all the key flow properties to help determine the time step.
+c! @param [in]   real*8         t  XXX-meaning
+c! @param [in]   real*8        dh  XXX-meaning
+c! @param [in]   real*8         x  XXX-meaning
+c! @param [in]   real*8       vel  XXX-meaning
+c! @param [in]   real*8         p  XXX-meaning
+c! @param [in,]   real*8  netloss  XXX-meaning
 c!
 c! @return
-c!  XXXX This function returns a %s number with is
-c!  XXXX say explictly what is returned
+c! Returns real*8 dt timestep as a fracyion of thr harmonic mean of key
+c! timescales from cooling to flow crossing time
 c!
 c! @details
-c!  XXXX Enter details here
+c! Evaluates many rates such as cooling and finds an harmonic meam
+c! timescale to use for the next step, see RSS thesis 1993
 c****************************************************************
 
       real*8 function fdynamictimestep(t,dh,x,vel,p,netloss)
@@ -4022,10 +4023,13 @@ c! @return
 c!  adds to file in logical unit
 c!
 c! @details
-c!  Protostate before the precursor is cold usually and the shock
+c! Protostate before the precursor is cold usually and the shock
 c! paramters appear as the highest Mach numbers and so on.
 c! Once and if heated by a precursor the Mach number etc change for
 c! the same shock.
+c! A model with magnumber or alfvennumber less than one will not
+c! shock. alfvennumber depends on magnetic pressure on the density
+c! and magnumber on the gas thermal pressure on the local density.
 c***************************************************************
 
       subroutine protostate (lunit)
@@ -4093,13 +4097,21 @@ c
 c****************************************************************
 c> @brief The subroutine shock5filenames
 c! Creare S5 output files, names and unit numbers, variable.
-c! @param [in,out] character*        px  User file output prefix for some files
+c! @param [in,out] character*  px User file output prefix for some files
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c!  From output flags returns logical units and file names in p7blocks
 c!
 c! @details
-c!  XXXX Enter details here
+c! Logical units are not fixed but change on user output choices
+c! files are unique to local diectory with a prefixXXXX.suffix
+c! where XXXX is a 4 digit number not used yet in the working
+c! directory.  If an early XXXX file is deleted that file number may
+c! be reused.  The true ID of a file is the internal runname string
+c! in every output of a given model.  To find all files for a given
+c! model use grep to search for the unique runname.
+c! if the user runs each model in a separate directory then XXXX
+c! will be 0001 always.
 c***************************************************************
 
       subroutine shock5filenames (px)
@@ -4357,14 +4369,14 @@ c
 
 c****************************************************************
 c> @brief The subroutine createS5files
-c! XXXX - add one line purpose here
+c! create and open the user selected output files
 c! @param This routine has no parameters
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c! User selected filenames and logical numbers.
 c!
 c! @details
-c!  XXXX Enter details here
+c! Create unique files for user selected model output.
 c***************************************************************
 
       subroutine createS5files ()
@@ -4521,14 +4533,17 @@ c
 
 c****************************************************************
 c> @brief The subroutine closeS5files
-c! XXXX - add one line purpose here
-c! @param This routine has no parameters
+c! Closed the variable set of model files open for the current model
+c!
+c! @param This routine has no parameters, uses vars in s5blocks.inc
 c!
 c! @return
-c!  XXXX Add one or more lines describing what is updated
+c! Closed and flushed model files on disk.
 c!
 c! @details
-c!  XXXX Enter details here
+c! Closes the open model files, with file names and units in s5blocks
+c! Checks if the file is open before close which also flushes the files.
+c!
 c***************************************************************
 
       subroutine closeS5files ()
