@@ -1,5 +1,7 @@
 #!/bin/bash
-# v5.2.1
+# v5.2.1 v2.0.1
+# bash version
+# uses POSIX /usr/bin/time -h 2>&1  instead of builtin to avoid shell dependence
 #
 TIMEFORMAT="%R real %U user %S sys %P cpu%%"
 d=`(date "+%s" | awk '{print substr(sprintf("%X",$0),3,6)}')`

@@ -13,5 +13,3 @@ c     Adam D. Thomas, Yi-Fei Jin, Knox Long
 c
 c     Version v5.2.1
 c
-
-
