@@ -12,7 +12,7 @@ cc    : equilibrium cooling, optically thin
 n     : no element cooling files
 n     : no element ionisation
 n     : no emissivity files. Run name folkows:
-std cc 0.0 solarx2.0 n^2
-x     : exit map51
+std cc 0.0 solar n^2
+x     : exit map52
 
 

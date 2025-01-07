@@ -1,4 +1,5 @@
 %
+%
 %  FORMAT
 %  Title
 %  # entries [type] (I2,x,I2)
@@ -21,9 +22,6 @@
 %
 %  Elements not included in the data file map.prefs will not be read
 %
-%  Elements not present in this file will have no effect on the
-%  default abundances.
-%
 % Asplund M., Grevesse N., Sauval A.J. & Scott P. (2009, ARAA, 47, 481)
 %
 %  @ARTICLE{2009ARA&A..47..481A,
@@ -41,6 +39,18 @@
 %    adsurl = {http://adsabs.harvard.edu/abs/2009ARA%26A..47..481A},
 %   adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 % }
+% [ Metallicity (Zgas):  1.0000    xSolar,    ni/nh:  1.0862     ]
+% [ mu_neu:  1.2584       mu_ion:  .60364      mu_h:  1.3668     ]
+% [ Mass Fractions  X:  .73743     Y:  .24925     Z: 1.33237E-02 ]
+%
+% AGSS 2009 Abundance Scales:
+% [Fe/H]   =   0.000
+% [O/H]    =   0.000
+%
+% Absolute Scales:
+% [O] + 12 =   8.690
+% [O]      =  -3.310
+% [Fe]     =  -4.500
 %
 Solar Abundances Asplund et al 2009
 30  1

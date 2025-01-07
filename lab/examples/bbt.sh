@@ -1,7 +1,7 @@
 #!/bin/bash
 ./map52<<EOF
-no      : change abundance
-no      : change offsets
+no      : no change abundance
+no      : no change offsets
 no      : no dust
 p6      : Photo. Abs. distance step
 D       : Default ionisation values
