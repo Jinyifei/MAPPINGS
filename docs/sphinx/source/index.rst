@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 ############
-*MAPPINGS V*
+MAPPINGS V
 ############
 --------------------------------------------------------------------------------------------------------------
 Astrophysical equilibrium and time-dependent photoinisation and steady supersonic shock spectral emission code
@@ -13,12 +13,10 @@ Astrophysical equilibrium and time-dependent photoinisation and steady supersoni
 *MAPPINGS V* is a photoionisation and shock modelling code written in FORTRAN. It allows the compute nebular emission spectra from the far UV-Xrays (~0.1 Å or 100 keV) to the far IR (>1000 μm or 1e-6 eV).
 The code was originally written by Dopita in 1976 and descrbed in a PhD thesis in 1982 by Binette (ANU) and then by PhD thesis by Sutherland in 1993 (ANU) and a cooling paper in 1993, and Sutherland has curated the code since 1989.  
 
-
-*MAPPINGS*
 This code calculates ionisation and emission for continuum and line fluxes of recombination and collisionally excited lines
 for all elements from hydrogen to zinc, for over 88,000 lines in the current version.
 
-MAPPINGS began in 1976 as a five-level-atom solver and simple shock model. It has gone through major upgrades since then and is currently at version 5.2 with 174 multi-level ions and some up to 900 level level ion models with cascades, charge exchange and other processes and full continuum and diffuse field estimation.  It produces output for nebula structures as well as emission spectra both as line lists and f-lambda and f-nu energy and wavelength files to compare with observations of line fluxes and  entire spectra.
+*MAPPINGS* began in 1976 as a five-level-atom solver and simple shock model. It has gone through major upgrades since then and is currently at version 5.2 with 174 multi-level ions and some up to 900 level level ion models with cascades, charge exchange and other processes and full continuum and diffuse field estimation.  It produces output for nebula structures as well as emission spectra both as line lists and f-lambda and f-nu energy and wavelength files to compare with observations of line fluxes and  entire spectra.
 
 It can be used to model equilibrium and time dependent astrophysical plasmas and emission and is used for atomic diagnostics, cooling, model HII regions, Planetary Nebulae, Nova Shells, AGN emission regions and a wide range of Herbig Haro and fast Shockwaves in the interstellar medium.
 
@@ -44,15 +42,6 @@ If you make use of *MAPPINGS* in your published research we ask that you referen
 `Dopita and Sutherland (1995) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
 
 
--------------
-Documentation
--------------
-
-Various documentation exists:
-
-* A :doc:`Quick Guide <quick>` describing how to install and run Python (in a fairly mechanistic fashion).
-
-For more information on how this page was generated and how to create more extensive code level documentation for *MAPPINGS*, look at the page for :doc:`documentation on the documentation <meta>`.
 
 -------
 Authors
@@ -64,10 +53,8 @@ Ralph S Sutherland
   Research School of Astronomy & Astrophysics
   Australian National University
 
-Add others
 
 
-----------------------------------------
 
 .. toctree::
    :titlesonly:
@@ -76,7 +63,6 @@ Add others
    :caption: Documentation
 
    Mappings_guide
-   installation
    installation_new
    running_mapping
    input

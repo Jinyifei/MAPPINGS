@@ -72,9 +72,9 @@ shock emission lines will be added later.
    .. rubric:: Downloading MAPPINGS
       :name: downloading-mappings
 
-The latest public version of the MAPPINGS source code (5.1.13) is
+The latest public version of the MAPPINGS source code (5.2.0) is
 available from https://mappings.anu.edu.au/code/ Initially, download
-"Everything including stellar/agn atmospheres" (217MB).
+"Everything including stellar/agn atmospheres" (284MB).
 
 .. container::
 

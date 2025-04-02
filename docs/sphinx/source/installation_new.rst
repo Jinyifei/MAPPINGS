@@ -6,7 +6,7 @@ Mappings is written in Fortran and does not require anything but a moderately mo
 of fortran to install.  
 
 The latest versions of Mappings and the primary site for obtaining the source code 
-and associated cata files is on Bitbucket at `<https://bitbucket.org/RalphSutherland/mappings/src/public/>`_
+and associated data files are listed here `<https://mappings.anu.edu.au/code/>`_
 
 Most of the recent develpment has been carried out using gfortran. 
 Most of the developers are currently using MACOs or linux (ubnuntu), and the standard 
