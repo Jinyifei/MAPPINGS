@@ -2,24 +2,25 @@ Getting Started
 ###############
 
 
-Mappings is written in Fortran and does not require anything but a moderately modern version 
+MAPPINGS is written in Fortran and does not require anything but a moderately modern version 
 of fortran to install.  
 
-The latest versions of Mappings and the primary site for obtaining the source code 
+The latest versions of MAPPINGS and the primary site for obtaining the source code 
 and associated data files are listed here `<https://mappings.anu.edu.au/code/>`_
 
 Most of the recent develpment has been carried out using gfortran. 
 Most of the developers are currently using MACOs or linux (ubnuntu), and the standard 
 Makefile is intended to run on either system.  We provide some Makefiles for some other 
-versions of Fortran, as well but these are less well tested with recent versions of Mappings
+versions of Fortran, as well but these are less well tested with recent versions of MAPPINGS
 and if anyone encounters prablems wit installation, please describe your problem on the issues
 page of the repository.
 
 
+-------------
 Installation
-############
+-------------
 
-Mappings and the various routines associated with it are in a self-contained directory structure, which needs
+MAPPINGS and the various routines associated with it are in a self-contained directory structure, which needs
 to be retreived from BitBucket.
 
 .. code :: bash
@@ -34,7 +35,7 @@ Once you have downloaded the repository, you need got to the src directory withi
     $cd mappaings/src
 
 
-and then if you have gfortan on your machine you should be able to compile mappings with the command
+and then if you have gfortan on your machine you should be able to compile MAPPINGS with the command
 
 .. code :: bash
 
@@ -51,20 +52,21 @@ The make build compiles executables and places them in the mappings/bin director
 
 At this point you have two options:
 
-* Set up enviroment variables to point to the local installation of mappings on your computer.  This is the
+* Set up enviroment variables to point to the local installation of MAPPINGS on your computer.  This is the
   preferred option for most users if you are the sole user, but it requires you to add several lines to your profile to
-  access mappings properly.  It has the advantabe that you can easily determine what executable versons of mappings are
+  access MAPPINGS properly.  It has the advantabe that you can easily determine what executable versons of MAPPINGS are
   available.
 
 * Installing the code in a central location for use by you and others on a machine.  This is the apppropriate option 
-  for inatallation for a group of users, where one person is responsible for the mappings coed, but there are a number
+  for inatallation for a group of users, where one person is responsible for the MAPPINGS coed, but there are a number
   of users who should be using the identical version of the code.
 
 
+-------------
 Single  Users
-#############
+-------------
 
-For personal users, the only thing that needs to be done after building mappings as described above is to add the 
+For personal users, the only thing that needs to be done after building MAPPINGS as described above is to add the 
 following lines to one of your profile files (for bash, either .bash_profile or .bashrc, whichever you prefer).    
 
 The commands for bash and it variants are:
@@ -72,7 +74,7 @@ The commands for bash and it variants are:
 .. code :: bash
 
     export MAPPINGS=path/to/mappings/
-    PATH=$PATH:$MAPPINGS/bin/
+    PATH=$PATH:$mappings/bin/
     export PATH
 
 
@@ -82,24 +84,25 @@ for csh, tcsh and other similar shells the commmnad sould be
 
 .. code :: csh
 
-   setenv MAPPINGS path/to/mappings
-   PATH=$PATH:$MAPPINGS/bin/
+   setenv MAPPINGS path/to/MAPPINGS
+   PATH=$PATH:$mappings/bin/
    export PATH
 
 Defining the $MAPPINGS variable is require because is required to locate the data files.
 
-Aside: If you are installing for yourself a version of mappings on a machine where there is also a system installation, 
+Aside: If you are installing for yourself a version of MAPPINGS on a machine where there is also a system installation, 
 you may need to change to order of the PATH search, using by replacing the PATH command above by
 
 .. code :: bash
 
-   $PATH-$MAPPINGS/bin/:$PATH
+   $PATH-$mappings/bin/:$PATH
 
+-------------
 Multiple Users
-##############
+-------------
 
 For multiple users, one does not need to add anything to the profile files.  Instead, the person resposible 
-for installing mappings should the following command from within the src directory
+for installing MAPPINGS should the following command from within the src directory
 
 .. code :: terminal
 
@@ -112,16 +115,17 @@ or depending on the user's privileges
 
    $ sudo make install
 
-This will install mappings in /usr/local
+This will install MAPPINGS in /usr/local
 
 Aside: There are also options to install in /opt/local if that is preferred.  To see these options, we refer the user to the
 Makefile itself.
 
-Updating mappings
-##################
+-------------
+Updating MAPPINGS
+-------------
 
-Assuming you have downloaded mappings as a git archive, updating the stable version of mappings is straightforward.  Simple 
-go to the mappings directory an issue the follwoing command, and then repeat the build process descibed above.
+Assuming you have downloaded MAPPINGS as a git archive, updating the stable version of MAPPINGS is straightforward.  Simple 
+go to the MAPPINGS directory an issue the follwoing command, and then repeat the build process descibed above.
 
 .. code :: bash
 
@@ -131,19 +135,20 @@ Aside: There will be other branches on the BitBucket site, but the public branch
 be the branch that most researchers use.  We may encourage some users to test other branches, but all of these branches are experimental
 and subject to rapid change.
 
-Removing mappings
-#################
+-------------
+Removing MAPPINGS
+-------------
 
-To remove mappings from your system, personal users need only to delete the mappings directory (and if they wish the lines 
+To remove MAPPINGS from your system, personal users need only to delete the MAPPINGS directory (and if they wish the lines 
 added to the setup files (.bash_profile or .bashrc for bash users.
 
-To remove mappings for installations for multiple users, the following command should be issued from the mapings/src dirctor:
+To remove MAPPINGS for installations for multiple users, the following command should be issued from the mapings/src dirctor:
 
 .. code :: terminal
 
    $ [sudo] make uninstall
 
-After this the mappings directory itself can be removed.
+After this the MAPPINGS directory itself can be removed.
 
 
 

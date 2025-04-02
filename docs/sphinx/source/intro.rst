@@ -1,9 +1,5 @@
-Mappings Guide
+Introduction
 ##############
-
-.. container::
-
-|image|
 
 .. container::
 

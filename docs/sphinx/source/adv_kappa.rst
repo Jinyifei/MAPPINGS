@@ -1,4 +1,4 @@
-Kappa electron energy distributions in Mappings
+Electron energy distributions
 ###############
 
 Mappings allows the use of non-eqjuilibrium electron energy distributions (described by the kappa parameter) in photoionization calculations.
@@ -9,8 +9,11 @@ To investigate this, the option to calculate nebular photoionization models usin
 See Nicholls et al. (2012, 2013, 2017 and references therein) (NASA ADS 2012ApJ...752..148N, 2013ApJS..207...21N, and 2017mcp..book...633N ) for a thorough discussion, and the Background section below for a summary of the arguments.
 Computing spectra with kappa energy distribution electrons
 
-Installation
-###############
+
+-------------
+Kappa electron energy distribution in Mappings
+-------------
+
 This option is not available by default in the Mappings command sequence. It can be activated as a menu item by editing the file switches.txt located in the addons directory, and setting the kappa option to 1 from the default zero, then copying the edited file into the Mappings data directory.
 Once this is done, the third command option after running the Mappings executable will be "Use Kappa electron distributions? (y/N)"
 Answering this as "y" then generates the prompt to set the value of kappa. Values between 2 and 1000 are allowed (kappa = infinity corresponds to the standard Maxwell-Boltzmann distribution). Choose a suitable value -- the lower the value, the greater the departure of the distribution from the M-B distribution.
@@ -18,8 +21,9 @@ Answering this as "y" then generates the prompt to set the value of kappa. Value
 The computation then proceeds as for the previous default options.
 
 
+-------------
 Background to non-Maxwellian electron energy distributions
-###############
+-------------
 
 It has been accepted since the 1940s that the electrons in HII regions and PNe are in thermal equilibrium. Analytical calculations of electron velocity distributions in gaseous nebulae were presented by Bohm & Aller (1947, ADS 1947ApJ...105..131B). They reported that the velocity distribution is “very close to Maxwellian.” Spitzer (1962, Ch. 5, ADS 1968dms..book.....S) also examined the thermalization process for electron energies in plasmas and found that electron energies equilibrate rapidly through collisions. This early work has led later authors to assume that the electrons in gaseous nebulae are always in thermal equilibrium. However, Spitzer’s analysis showed that the equilibration time of an energetic electron is proportional to the cube of the velocity, so using M-B equilibrium theory, plasmas with very high energy electrons take much longer to equilibrate than those excited by normal UV photons from stars found in HII regions.
 
