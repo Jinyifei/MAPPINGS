@@ -39,11 +39,9 @@ Issues regarding the code and suggestions for improvement the code regarding the
 References
 -------------
 
-If you make use of MAPPINGS in your published research we ask that you reference the following papers
-
-* `Sutherland and Dopita 1993 <https://ui.adsabs.harvard.edu/abs/1993ApJS...88..253S/abstract>`_  
-
-* `Dopita and Sutherland (1995) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
+| If you make use of MAPPINGS in your published research, we ask that you reference the following papers:
+| `Sutherland and Dopita 1993 <https://ui.adsabs.harvard.edu/abs/1993ApJS...88..253S/abstract>`_  
+| `Dopita and Sutherland (1995) <https://ui.adsabs.harvard.edu/abs/1996ApJS..102..161D/abstract>`_
 
 
 
@@ -70,6 +68,7 @@ The authors of the MAPPINGS code and their institutions are:
    abund
    adv_kappa
    dust
+   ionsrc
    photo
    shock
    

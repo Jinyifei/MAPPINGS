@@ -1,6 +1,7 @@
 Dust
 ################
 
+
 Dust was incorporated in MAPPINGS as two primary types of dust grains: amorphous silicate grains (such as olivine) and amorphous carbon grains. 
 These grains are distributed following a power-law size distribution, specifically the Mathis-Rumpl-Nordsieck (MRN) distribution with an index of -3.5. 
 The grain sizes range from 0.001 to 10 micrometers, divided into 80 logarithmically spaced bins. 
@@ -13,3 +14,8 @@ MAPPINGS accounts for the following key processes involving dust:​
 *Collisional Cooling:* Dust grains can cool the gas through inelastic collisions, where kinetic energy is transferred from the gas particles to the dust grains.​
 
 *Elemental Depletion:* Refractory elements are depleted from the gas phase as they are incorporated into dust grains, affecting the overall gas-phase abundances and the resulting emission spectra.
+
+
+| **Reference** 
+| `Groves, Dopita and Sutherland 2004a <https://ui.adsabs.harvard.edu/abs/2004ApJS..153....9G/abstract>`_ 
+| `Groves, Dopita and Sutherland 2004b <https://ui.adsabs.harvard.edu/abs/2004ApJS..153...75G/abstract>`_ 
