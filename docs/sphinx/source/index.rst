@@ -61,8 +61,6 @@ Documentation
 
 Various documentation exists:
 
-* A :doc:`Quick Guide <quick>` describing how to install and run Python (in a fairly mechanistic fashion).
-
 For more information on how this page was generated and how to create more extensive code level documentation for *MAPPINGS*, look at the page for :doc:`documentation on the documentation <meta>`.
 
 -------
@@ -89,8 +87,17 @@ Add others
    Mappings_guide
    installation
    installation_new
+   repo_structure
    running_mapping
-   input
-   output
+   inputs
+   models
+   popcha
+   photsou
+   outputs
+   code_overview
+   code_photo
+   code_s5
+   code_singlezone
+   code_testatom
    meta
    *

@@ -1,6 +1,10 @@
 Getting Started
 ###############
 
+.. warning::
+
+   This page is incomplete and needs updating and editing before it can be
+   relied upon.
 
 Mappings is written in Fortran and does not require anything but a moderately modern version 
 of fortran to install.  
@@ -17,7 +21,7 @@ page of the repository.
 
 
 Installation
-############
+------------
 
 Mappings and the various routines associated with it are in a self-contained directory structure, which needs
 to be retreived from BitBucket.
@@ -61,8 +65,8 @@ At this point you have two options:
   of users who should be using the identical version of the code.
 
 
-Single  Users
-#############
+Single Users
+------------
 
 For personal users, the only thing that needs to be done after building mappings as described above is to add the 
 following lines to one of your profile files (for bash, either .bash_profile or .bashrc, whichever you prefer).    
@@ -96,19 +100,19 @@ you may need to change to order of the PATH search, using by replacing the PATH 
    $PATH-$MAPPINGS/bin/:$PATH
 
 Multiple Users
-##############
+--------------
 
 For multiple users, one does not need to add anything to the profile files.  Instead, the person resposible 
 for installing mappings should the following command from within the src directory
 
-.. code :: terminal
+.. code :: console
 
    $ make install
 
 
 or depending on the user's privileges
 
-.. code :: terminal
+.. code :: console
 
    $ sudo make install
 
@@ -118,7 +122,7 @@ Aside: There are also options to install in /opt/local if that is preferred.  To
 Makefile itself.
 
 Updating mappings
-##################
+-----------------
 
 Assuming you have downloaded mappings as a git archive, updating the stable version of mappings is straightforward.  Simple 
 go to the mappings directory an issue the follwoing command, and then repeat the build process descibed above.
@@ -132,14 +136,14 @@ be the branch that most researchers use.  We may encourage some users to test ot
 and subject to rapid change.
 
 Removing mappings
-#################
+-----------------
 
 To remove mappings from your system, personal users need only to delete the mappings directory (and if they wish the lines 
 added to the setup files (.bash_profile or .bashrc for bash users.
 
 To remove mappings for installations for multiple users, the following command should be issued from the mapings/src dirctor:
 
-.. code :: terminal
+.. code :: console
 
    $ [sudo] make uninstall
 

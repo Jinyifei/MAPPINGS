@@ -1,13 +1,18 @@
 Downloading and Installing Mappings
 ###################################
 
+.. warning::
+
+   This page is incomplete and needs updating and editing before it can be
+   relied upon.
+
 Downloading and installing Mappings should be straigtforward.
 
 
 .. container::
 
    .. rubric:: Downloading MAPPINGS
-      :name: downloading-mappings
+      :name: inst-downloading-mappings
 
 The latest public version of the MAPPINGS source code (5.1.13) is
 available from https://mappings.anu.edu.au/code/ Initially, download
@@ -16,7 +21,7 @@ available from https://mappings.anu.edu.au/code/ Initially, download
 .. container::
 
    .. rubric:: What to know before you start
-      :name: what-to-know-before-you-start
+      :name: inst-what-to-know-before-you-start
 
 To install and run MAPPINGS, you should be familiar with running
 commands from the terminal. At some point, you may need to edit
@@ -30,7 +35,7 @@ area.
 .. container::
 
    .. rubric:: Installing MAPPINGS
-      :name: installing-mappings
+      :name: inst-installing-mappings
 
 These directions are intended for Mac users but are readily adaptable to
 Linux and other Unix versions. They apply to OSX version 10.9
@@ -89,7 +94,7 @@ install which can be run from any location using the command map51 .
 .. container::
 
    .. rubric:: MAPPINGS data inputs
-      :name: mappings-data-inputs
+      :name: inst-mappings-data-inputs
 
 There are several types data input for MAPPINGS: physical model
 parameters (pressure, density, ionisation parameter etc.), atomic data,

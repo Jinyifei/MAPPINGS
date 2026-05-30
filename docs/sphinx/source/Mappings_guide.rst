@@ -1,9 +1,10 @@
 Mappings Guide
 ##############
 
-.. container::
+.. warning::
 
-|image|
+   This page is incomplete and needs updating and editing before it can be
+   relied upon.
 
 .. container::
 
@@ -930,5 +931,3 @@ ralph.sutherland@anu.edu.au
    default.  MAPPINGS can be built from scratch by building `f2c`, installing it in
    `/usr/local` and then use the `f2c` Makefile to build MAPPINGS.
 
-.. |image| image:: ANUlogo.jpg
-   :width: 4cm
