@@ -18,10 +18,18 @@ and the public simple ZIP file downloads on :
 
 `https://mappings.anu.edu.au`
 
+#### References:
+
+When using this code please cite the following papers:
+    
+	* Sutherland, R., & Dopita, M. A. 1993, ApJS, 88, 253
+	* Sutherland, R., & Dopita, M. A. 2017, ApJS, 229, 34S
 
 #### Contact:
 
-	Ralph.Sutherland@anu.edu.au
+	* Ralph Sutherland: Ralph.Sutherland@anu.edu.au          
+    * Yifei Jin:        yfjsci@gmail.com
+	* Knox Long:        long@stsci.edu
 
 
 ## Quick Start Compiling Install and Run:
