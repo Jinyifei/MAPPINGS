@@ -12,7 +12,9 @@ user is also prompted for an additional string that is embedded in the prefix
 (e.g. ``shck_v100s_0001.sh5``).
 
 The file extensions group files by model type and content as described in the
-sections below.
+sections below.  For what the line-flux and continuum-spectrum numbers in
+these files physically represent (a volume-integrated total vs. a
+radiatively-transferred emergent field), see :doc:`physics_output_spectra`.
 
 .. contents:: Contents
    :local:

@@ -36,6 +36,9 @@ Pages in this section
    * - Shocks vs. photoionisation radiative transfer (shared engine,
        precursor feedback loop, prescribed vs. solved density)
      - :doc:`physics_shocks`
+   * - Output spectra and line fluxes (volume-integrated line totals
+       vs. the transported continuum field)
+     - :doc:`physics_output_spectra`
 
 .. todo :: Add pages covering: heating/cooling and thermal balance
    (``cool.f``, ``coloss.f``, ``cheat.f``); dust physics

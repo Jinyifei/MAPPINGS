@@ -103,5 +103,6 @@ Add others
    physics_ionization
    physics_lines
    physics_shocks
+   physics_output_spectra
    meta
    *
