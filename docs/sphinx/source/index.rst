@@ -105,5 +105,8 @@ Add others
    physics_shocks
    physics_output_spectra
    physics_dust
+   physics_heating_cooling
+   physics_continuum
+   physics_time_integration
    meta
    *

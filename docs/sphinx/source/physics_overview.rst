@@ -42,18 +42,20 @@ Pages in this section
    * - Dust and PAH physics (grain charging/heating, PAH heating,
        grain temperature and IR re-emission, dynamic destruction)
      - :doc:`physics_dust`
+   * - Heating, cooling, and thermal balance (every heating/cooling
+       channel, the equilibrium and time-dependent T solvers)
+     - :doc:`physics_heating_cooling`
+   * - Continuum diffuse-field emission (free-free, free-bound,
+       two-photon)
+     - :doc:`physics_continuum`
+   * - Non-equilibrium time integration (the closed-form/matrix-
+       exponential solvers behind ``timion``)
+     - :doc:`physics_time_integration`
 
-.. todo :: Add pages/sections covering: heating/cooling and thermal
-   balance (``cool.f``, ``coloss.f``, ``cheat.f``, ``pheat.f``,
-   ``compton.f``, ``netgain.f``, ``teequi``/``evoltem.f`` — the biggest
-   remaining gap, and the natural home for ``gheat``/``gcool``/
-   ``paheat`` from :doc:`physics_dust`); the continuum diffuse field
-   emissivities (``freebound.f``, ``freefree.f``, ``twophoton.f``,
-   plus the heavy-element recombination-line emissivities in
-   ``heavyrec.f``/``helioi.f``, which belong in :doc:`physics_lines`);
-   and the non-equilibrium time-integration mechanics (``sdifeq.f``,
-   ``spotap.f``, ``ionab.f``, ``poputil.f``). Non-Maxwellian κ electron
-   distributions are already covered separately in :doc:`adv_kappa`.
+All topics identified in the original physical-processes survey are
+now documented. Non-Maxwellian κ electron distributions are covered
+separately in :doc:`adv_kappa`; smaller open items are tracked as
+``.. todo::`` notes on their respective pages rather than here.
 
 -------------------------------------------------
 How these pages relate to the source

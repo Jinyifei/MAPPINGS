@@ -158,7 +158,33 @@ The actual population solve happens in:
   (``mod='EQUI'``) and finite-age time-dependent integration over a
   step ``tstep``. It calls ``sdifeq``, ``allrates``, ``spotap``,
   ``ionab``, and ``ionsec`` to advance the ionic populations
-  ``pop(6,11)`` and their time derivatives ``dndt``.
+  ``pop(6,11)`` and their time derivatives ``dndt`` — see
+  :doc:`physics_time_integration` for how ``sdifeq``/``ionab``
+  actually solve the time-dependent balance.
+
+-------------------------------------------------
+Radiation pressure
+-------------------------------------------------
+
+Absorbing a photon transfers its momentum to the gas (and to dust, if
+enabled — see :doc:`physics_dust`), not just its energy. ``fradpress``
+in ``functions.f`` computes the radiation-pressure force Φσ/c from the
+same local mean intensity ``tphot`` and opacity ``xsec`` used for
+photoionisation above: for every energy bin, it sums the *absorbed*
+photon energy flux — ``tphot(i) * widbinnu(i) * (1 - exp(-tau))``,
+where ``tau = dr * xsec(i)`` — so only photons actually absorbed in
+the zone contribute; photons that pass through unabsorbed exert no
+force. The gas and dust contributions are computed and added
+separately, since dust opacity (``dustsigmat``, :doc:`physics_dust`)
+and gas photoelectric opacity respond differently to the spectrum.
+
+This force feeds directly into the pressure balance of isobaric
+density-law models (:doc:`code_photo`'s ``B`` density mode): the
+zone-to-zone pressure used to derive density includes this radiation
+pressure term on top of the gas thermal pressure, so a sufficiently
+intense radiation field can measurably raise the pressure (and hence
+lower the density, at fixed P/k) compared to gas pressure alone. A
+``radpressmode`` toggle can disable the term entirely.
 
 -------------------------------------------------
 Data flow summary
@@ -216,6 +242,9 @@ Key routines
    * - ``equion`` / ``iobal``
      - Solve the ionic population balance (equilibrium or
        time-dependent).
+   * - ``fradpress``
+     - Radiation-pressure force from absorbed photon momentum (gas +
+       dust); feeds the isobaric pressure balance.
 
 .. admonition :: Developer Note
 
@@ -225,6 +254,8 @@ Key routines
    recomputed under the correct ``jjmod`` value) or it will silently
    use stale rates after a temperature or radiation-field update.
 
-.. todo :: Document the multi-level statistical-equilibrium solve that
-   consumes these ionic populations to produce line emissivities (see
-   ``multilevel.f``, cross-referenced from :doc:`physics_lines`).
+.. todo :: Document the non-equilibrium time-integration mechanics
+   behind ``iobal``'s finite-age mode (``sdifeq``, ``ionab``) in more
+   depth than the summary here — now largely covered in
+   :doc:`physics_time_integration`; confirm no further detail is
+   needed on this page specifically.

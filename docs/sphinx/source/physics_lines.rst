@@ -53,6 +53,34 @@ cooling) have such small oscillator strengths that they are assumed to
 always escape freely. This is the standard nebular-diagnostics
 assumption.
 
+-----------------------------------------------------------
+Heavy-element and He I recombination lines
+-----------------------------------------------------------
+
+A third category sits alongside the collisionally-excited lines
+above: permitted recombination lines from elements heavier than
+hydrogen and helium (C II, N II, O I, O II, Ne II), computed in
+``heavyrec.f`` (subroutines ``recom_cii``, ``recom_nii``, ``recom_oi``,
+``recom_oii``, ``recom_neii``). Each recombines from the next-higher
+ionisation stage (e.g. C III recombining to produce C II lines) using
+precomputed Case A and Case B emissivity coefficients, spline-
+interpolated in log temperature, with **no escape-probability
+treatment applied** — like the collisionally-excited lines above, they
+are summed straight into the volume-integrated flux totals in
+:doc:`physics_output_spectra`, not passed through
+``transferline.f``. When kappa electron distributions are enabled
+(:doc:`adv_kappa`), the effective temperature used for the
+interpolation is rescaled accordingly.
+
+He I gets its own dedicated treatment in ``helioi.f`` (called from
+``hydro.f``), combining both collisional excitation (using Gaunt
+factors, similar in spirit to the free-free treatment in
+:doc:`physics_continuum`) and recombination contributions for the
+important He I triplet/singlet transitions, rather than reusing the
+simpler Case A/B blend applied to H and He II
+(:doc:`physics_output_spectra`'s description of ``hydro.f``'s
+``hydrobri``).
+
 --------------------------------------------------------------------
 Radiatively trapped lines (resonance and recombination series)
 --------------------------------------------------------------------
@@ -193,6 +221,9 @@ Key routines
      - Multi-level statistical-equilibrium solve for collisionally
        excited (forbidden/semi-forbidden) lines; optically thin, no
        transfer applied.
+   * - ``heavyrec`` / ``helioi``
+     - Heavy-element and He I recombination-line emissivities; also
+       optically thin, no transfer applied.
    * - ``fdismul``
      - Effective optical-depth multiplier for a trapped resonance or
        recombination line (Capriotti 1965 escape probability +
@@ -213,5 +244,5 @@ Key routines
 
 .. todo :: Document how the propagated diffuse field (``dwdif``/
    ``updif``) feeds back into ``phion`` for re-photoionisation of
-   upstream zones, and how the continuum diffuse field (free-free,
-   free-bound, two-photon) shares this same two-stream machinery.
+   upstream zones. The continuum diffuse field (free-free, free-bound,
+   two-photon) is now covered in :doc:`physics_continuum`.
