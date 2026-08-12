@@ -125,14 +125,19 @@ chained.
 Shock Models — S5
 ---------------------------------
 
-The S5 shock solver (``shock5.f``) computes steady-state, magnetised,
-radiative shock waves and their photo-ionised precursors.  When starting a
-shock run the user is asked for a short prefix string (up to 8 characters)
-that is embedded in all output filenames, for example ``v100s``, giving files
-such as ``shck_v100s_0001.sh5``.
+The S5 shock solver (``shock5.f``) computes steady-state, magnetised, radiative shock waves
+and their photo-ionised precursors.  When starting a shock run the user is asked for a short
+prefix string (up to 8 characters) that is embedded in all output filenames, for example
+``v100s``, giving files such as ``shck_v100s_0001.sh5``.
 
-Main Structure Files (``.sh5``)
-=================================
+Most output files share a common plain-text header block containing the MAPPINGS version, run
+name, abundance file, ionisation setup, radiation source, shock parameters, and jump conditions.
+After the header, the format varies by file type as described below.
+
+Always-created files
+======================
+
+Four files are written for every S5 model regardless of which options are selected.
 
 .. list-table::
    :header-rows: 1
@@ -141,48 +146,315 @@ Main Structure Files (``.sh5``)
    * - Filename pattern
      - Contents
    * - ``shck_<pfx>_<N>.sh5``
-     - Main shock zone-by-zone structure: temperature, density, velocity,
-       magnetic field, ionisation state, and cooling as a function of
-       column depth through the post-shock cooling layer.
+     - Main shock cooling-zone structure (see below).
    * - ``prec_<pfx>_<N>.sh5``
-     - Precursor zone structure: the same quantities for the photo-ionised
-       region ahead of the shock front.
-   * - ``ionSH<pfx>_<N>.sh5``
-     - Ion fraction profiles through the shock.
-   * - ``ratSH<pfx>_<N>.sh5``
-     - Reaction and heating/cooling rates through the shock.
-   * - ``ratPC<pfx>_<N>.sh5``
-     - Reaction and heating/cooling rates through the precursor.
-   * - ``dynSH<pfx>_<N>.sh5``
-     - Dynamical flow variables (velocity, pressure, Mach number) through
-       the shock.
+     - Precursor zone structure in the same format (see below).
+   * - ``specSH<pfx>_<N>.csv``
+     - Integrated emission-line spectrum from the shock: wavelength (Å) and
+       flux relative to H\ :math:`\beta`, one line per row.
+   * - ``specPC<pfx>_<N>.csv``
+     - Integrated emission-line spectrum from the precursor, same format.
 
-Spectral and Line Output (``.csv``)
-=====================================
+Structure of ``shck_*.sh5``
+-----------------------------
+
+After the header block the file contains one comma-separated data row per spatial step through
+the post-shock cooling zone.  Negative step indices cover the initial state:
+
+* **step −2** — far-upstream neutral gas (pre-shock boundary condition)
+* **step −1** — pre-shock ionised gas immediately upstream of the shock jump
+* **step 0** — immediately post-shock gas (high-temperature plateau after the jump)
+* **steps 1, 2, …** — the cooling zone, marching downstream from the shock face
+
+The 16 columns in each row are:
 
 .. list-table::
    :header-rows: 1
-   :widths: 38 62
+   :widths: 8 24 68
 
-   * - Filename pattern
-     - Contents
-   * - ``specSH<pfx>_<N>.csv``
-     - Integrated emission spectrum of the shock component.
-   * - ``specPC<pfx>_<N>.csv``
-     - Integrated emission spectrum of the precursor component.
-   * - ``linSH<pfx>_<N>.csv``
-     - Emission line flux table for the shock.
-   * - ``linPC<pfx>_<N>.csv``
-     - Emission line flux table for the precursor.
-   * - ``coolSH<pfx>_<N>.csv``
-     - Normalised cooling function as a function of depth through the shock.
-   * - ``bandSH<pfx>_<N>.csv``
-     - Broadband photometric fluxes for the shock.
-   * - ``elSH<pfx><elem>_<N>.csv``
-     - Per-element emission for the shock, where ``<elem>`` is the element
-       symbol (e.g. ``elSHv100sO_0001.csv`` for oxygen).
-   * - ``elPC<pfx><elem>_<N>.csv``
-     - Per-element emission for the precursor.
+   * - Col
+     - Quantity
+     - Notes
+   * - 1
+     - Step number
+     - Integer; negative values label the pre/jump states listed above
+   * - 2
+     - Distance (cm)
+     - Cumulative distance downstream from the shock face
+   * - 3
+     - Step width dr (cm)
+     -
+   * - 4
+     - Temperature T (K)
+     -
+   * - 5
+     - n\ :sub:`e` (cm\ :sup:`−3`)
+     - Electron density
+   * - 6
+     - n\ :sub:`H` (cm\ :sup:`−3`)
+     - Total hydrogen nuclei
+   * - 7
+     - n\ :sub:`i` (cm\ :sup:`−3`)
+     - Total positive ions
+   * - 8
+     - μ (amu)
+     - Mean molecular weight
+   * - 9
+     - ``timlps`` (s)
+     - Elapsed time since the shock front — the **shock age** at this step
+   * - 10
+     - dt (s)
+     - Time-step width
+   * - 11
+     - Net cooling / n² (erg cm\ :sup:`3` s\ :sup:`−1`)
+     - Normalised net cooling rate; positive = net cooling
+   * - 12
+     - Total cooling (erg cm\ :sup:`−3` s\ :sup:`−1`)
+     -
+   * - 13
+     - d\ :sub:`los` (cm)
+     - Cooling column
+   * - 14
+     - X(H\ :sup:`0`)
+     - Neutral hydrogen fraction n(HI)/n\ :sub:`H`
+   * - 15
+     - X(H\ :sup:`+`)
+     - Ionised hydrogen fraction n(HII)/n\ :sub:`H`
+   * - 16
+     - B (G)
+     - Magnetic field strength
+
+After the per-step rows the file contains three further sections:
+
+* **"Model ended" summary** — the final distance, shock age (``timlps``), and temperature at
+  the point where the model stopped.  This line is also printed to the terminal.
+* **Temperature structural markers** — for each temperature decade from 10\ :sup:`7` K down
+  to 10\ :sup:`2` K that the cooling gas passed through, the file records: the threshold
+  temperature, the elapsed time, distance from the shock face, magnetic field, pressure,
+  mass density, n\ :sub:`H`, and n\ :sub:`e`.  These are also printed to the terminal.
+* **Integrated emission line list** — the complete set of line fluxes relative to H\ :math:`\beta`.
+
+Structure of ``prec_*.sh5``
+-----------------------------
+
+The format is identical to the shock structure file, but the rows record the precursor zone.
+During each convergence iteration the precursor solver also writes a diagnostic grid table
+(step, distance, dx, time, Te, n\ :sub:`e`, n\ :sub:`H`, XHI, XHII, XOI, XOII, XOIII)
+to both this file and to the terminal.
+
+Optional output files
+=======================
+
+Additional files are enabled through the **Output Multi-Option Menu** presented during setup.
+Enter one letter at a time and exit with **X**.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 8 18 38 36
+
+   * - Key
+     - Flag set
+     - Shock file(s) created
+     - Precursor counterpart
+   * - ``B``
+     - ``tsrmod``
+     - ``elSH<pfx><El>_<N>.csv`` — per tracked element (up to 4)
+     - ``elPC<pfx><El>_<N>.csv``
+   * -
+     - ``allmod`` (sub-option of B)
+     - ``ionSH<pfx>_<N>.sh5`` — all ion fractions, all elements
+     - ``ionPC<pfx>_<N>.sh5``
+   * - ``C``
+     - ``dynmod``
+     - ``dynSH<pfx>_<N>.sh5`` — dynamics file (see note below)
+     - none
+   * - ``D``
+     - ``ratmod``
+     - ``ratSH<pfx>_<N>.sh5`` — rates and timescales
+     - ``ratPC<pfx>_<N>.sh5``
+   * - ``H``
+     - ``bandsmod``
+     - ``bandSH<pfx>_<N>.csv`` — X-ray/UV band fluxes
+     - none
+   * - ``K``
+     - ``fclmod``
+     - ``coolSH<pfx>_<N>.csv`` — cooling by element
+     - none
+   * - ``L``
+     - ``jlin``
+     - ``linSH<pfx>_<N>.csv`` — monitored line emissivities
+     - ``linPC<pfx>_<N>.csv``
+   * - ``E``
+     - ``jspec``
+     - Final downstream radiation field (``.lam``, ``.nfn`` via ``wpsou``)
+     - —
+   * - ``F``
+     - ``lmod``
+     - Upstream radiation field at each step (via ``wpsou``)
+     - —
+
+.. note::
+
+   **The menu labels for C and D are swapped relative to their actual effect.**
+   The menu displays "C = All Rates file" and "D = Dynamics file", but the code
+   (``shock5.f`` lines 904–905) sets ``dynmod`` on C and ``ratmod`` on D.  In practice:
+
+   * pressing **C** produces ``dynSH*.sh5`` (the dynamics file)
+   * pressing **D** produces ``ratSH*.sh5`` / ``ratPC*.sh5`` (the rates/timescales file)
+
+Selecting **B** (ion balance files) triggers two follow-up prompts:
+
+1. The number of elements to monitor (1–4), then their atomic numbers Z — e.g. ``4`` then
+   ``1 2 8 16`` for H, He, O, S.
+2. "Record all ions file (Y/N)?" — answering Y additionally creates the wide
+   ``ionSH`` / ``ionPC`` files for all elements.
+
+Format of the optional files
+==============================
+
+``elSH<pfx><El>`` / ``elPC<pfx><El>``  (CSV, option B)
+---------------------------------------------------------
+
+One file per tracked element, named with the element symbol (e.g. ``elSHv100sO_0001.csv``).
+Comma-separated, one row per step.  Columns:
+
+   step, distance (cm), dr (cm), timlps (s), dt (s), T (K),
+   n\ :sub:`e` (cm\ :sup:`−3`), n\ :sub:`H` (cm\ :sup:`−3`),
+   n\ :sub:`i` (cm\ :sup:`−3`),
+   then one column per ion stage of the element (neutral fraction first, then singly
+   ionised, doubly ionised, …).
+
+``ionSH<pfx>`` / ``ionPC<pfx>``  (``.sh5``, sub-option of B)
+--------------------------------------------------------------
+
+Written only when "Record all ions file" is answered Y.  Contains every ion fraction for
+every element in the model at every step.  These are the widest S5 output files.  Per-step
+rows include: step, T, n\ :sub:`e`, n\ :sub:`H`, velocity, density, pressure, distance,
+``timlps``, then all ion fractions.
+
+``dynSH<pfx>``  (``.sh5``, option C)
+--------------------------------------
+
+Not a flat table — each step is a block of five text lines:
+
+1. Step number and solver iteration count
+2. Distance (cm), step width (cm), timlps (s), dt (s)
+3. Pre-shock state: T (K), velocity (cm/s), ρ (g/cm³), pressure (dyne/cm²), B (G),
+   cooling luminosity (erg/cm³/s)
+4. Post-shock state: same quantities after the jump
+5. Internal energy density (erg/cm³), total number density (cm\ :sup:`−3`), sound speed
+   (cm/s), mean molecular weight (g/particle)
+
+``coolSH<pfx>``  (CSV, option K)
+----------------------------------
+
+Cooling by element at each step.  Two header lines name each column and give units.
+Data columns:
+
+   T (K), n\ :sub:`e`, n\ :sub:`H`, n\ :sub:`i`, ρ (g/cm³),
+   X(H\ :sup:`0`), X(H\ :sup:`+`), μ (amu),
+   total cooling L (erg/cm³/s),
+   L normalised by the chosen density product (erg cm³/s),
+   then one column per element giving its normalised cooling contribution,
+   then total electron-impact loss, photoelectric gain, and net loss
+   — all in erg cm³ s\ :sup:`−1`.
+
+The density normalisation (n\ :sub:`e`\·n\ :sub:`H`, n\ :sub:`H`², n\ :sub:`e`\·n\ :sub:`i`,
+etc.) is selected in the setup menu.
+
+``bandSH<pfx>``  (CSV, option H)
+----------------------------------
+
+X-ray and UV cooling-band fluxes at each step.  Columns:
+
+   T, n\ :sub:`e`, n\ :sub:`H`, n\ :sub:`i`, X(H\ :sup:`0`), X(H\ :sup:`+`), μ,
+   total cooling, cooling length Λ, free-free fraction, then five photon-energy bands:
+   0–100 eV, 0.1–0.5 keV, 0.5–1.0 keV, 1.0–2.0 keV, 2.0–10.0 keV, and the total.
+
+``linSH<pfx>`` / ``linPC<pfx>``  (CSV, option L)
+--------------------------------------------------
+
+Comma-separated, one row per step.  Columns: step, distance (cm), distance+dr/2 (cm), dr (cm),
+T (K), n\ :sub:`e`, n\ :sub:`H`, n\ :sub:`e`\+n\ :sub:`i`, then one column per monitored
+line.  Column headers name each line as element symbol + roman numeral ion (e.g. ``O III``);
+a second header row gives the line wavelengths.
+
+``ratSH<pfx>`` / ``ratPC<pfx>``  (``.sh5``, option D)
+--------------------------------------------------------
+
+Ionisation, recombination, and heating/cooling rates with associated timescales for every ion
+at every step.  These are the largest optional output files and can become very large for
+multi-element models.
+
+Convergence diagnostics and standard output
+============================================
+
+The global shock–precursor iteration loop prints diagnostic information to the terminal that
+is **not written to any output file**.  To preserve convergence records, redirect standard
+output to a log file::
+
+    ./map52 < model.mv | tee run.log
+
+**Per-iteration convergence test**
+
+After each shock–precursor iteration, ``shock5check`` prints a table comparing six quantities
+between the current and previous iterations:
+
+.. code-block:: text
+
+   ********************************************************
+    SHOCK 5  Convergence Test, It.: 02 of 03
+    ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+       Psi (Q/v):  1.234e+00   `Psi      :  1.230e+00
+       Compress :  4.000e+00   `Compress :  4.001e+00
+       T_pre    :  8.500e+03   `T_pre    :  8.450e+03
+       T_shock  :  1.200e+06   `T_shock  :  1.198e+06
+       ne_pre   :  2.300e+01   `ne_pre   :  2.295e+01
+       DelH/He  :  0.031%
+       RMS      :  0.008%
+    ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     Result: CONVERGED
+   ********************************************************
+
+The six quantities are the ionisation parameter Ψ (= Q/v), the compression factor, the
+precursor temperature, the post-shock temperature, the precursor electron density, and
+the H/He ion fraction change.  The RMS is the quadrature sum of all six fractional
+differences.  Convergence is declared when RMS < 0.01% (10\ :sup:`−4`).
+
+If convergence is not reached within the requested number of iterations the model runs
+a final output pass anyway.  There is no failure flag written to the output files; the
+only record of non-convergence is the "Result: NOT CONVERGED" message in the terminal output.
+
+**Summary of what is in files versus stdout only**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 52 24 24
+
+   * - Information
+     - In ``shck_*.sh5``
+     - Stdout only
+   * - Per-step structure (T, n\ :sub:`e`, n\ :sub:`H`, B, timlps, …)
+     - Yes
+     - MINI-mode monitor only
+   * - "Model ended" summary (final distance, shock age, T)
+     - Yes
+     - Also printed
+   * - Temperature structural markers
+     - Yes
+     - Also printed
+   * - Integrated emission line list
+     - Yes
+     - Also printed
+   * - Convergence quantities (Ψ, compression, T, n\ :sub:`e`, RMS%)
+     - **No**
+     - **Yes — stdout only**
+   * - CONVERGED / NOT CONVERGED result
+     - **No**
+     - **Yes — stdout only**
+   * - Setup parameters and menu choices
+     - **No**
+     - **Yes — stdout only**
 
 
 ---------------------------------
