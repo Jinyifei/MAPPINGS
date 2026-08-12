@@ -7,7 +7,8 @@ Code Operation: P6 / P7 Photoionisation Models
 This page describes how the P6 and P7 photoionisation models operate
 internally.  For the user-facing inputs and outputs see :doc:`models`
 and :doc:`outputs`.  For the broader code structure see
-:doc:`code_overview`.
+:doc:`code_overview`.  For how the radiative processes used here compare
+to the shock model, see :doc:`physics_shocks`.
 
 P6 and P7 are structurally identical — they share the same setup
 sequence and the same zone-stepping algorithm.  The only differences are:

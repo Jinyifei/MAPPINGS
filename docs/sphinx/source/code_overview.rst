@@ -33,6 +33,11 @@ Two subroutines are shared by most models:
 - :doc:`popcha` — sets the initial ionisation balance of the gas
 - :doc:`photsou` — defines the incident radiation field
 
+The pages below trace *control flow* through each model type. For the
+underlying physical processes (ionisation balance, line radiative
+transfer, ...) organised by topic rather than by call sequence, see
+:doc:`physics_overview`.
+
 -------------------------------------------------
 Photoionisation models
 -------------------------------------------------

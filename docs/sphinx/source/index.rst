@@ -99,5 +99,9 @@ Add others
    code_s5
    code_singlezone
    code_testatom
+   physics_overview
+   physics_ionization
+   physics_lines
+   physics_shocks
    meta
    *

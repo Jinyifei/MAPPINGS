@@ -6,7 +6,9 @@ Code Operation: S5 Shock Model
 
 This page describes how the S5 shock model operates internally.  For the
 user-facing inputs and outputs see :doc:`models` and :doc:`outputs`.  For
-the broader code structure see :doc:`code_overview`.
+the broader code structure see :doc:`code_overview`.  For how the
+radiative processes used here compare to the photoionisation models, see
+:doc:`physics_shocks`.
 
 The S5 model computes a steady-state, plane-parallel, magnetised radiative
 shock wave and its photo-ionised precursor.  The implementation lives in
