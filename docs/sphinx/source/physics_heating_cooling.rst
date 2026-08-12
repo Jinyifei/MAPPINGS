@@ -155,29 +155,90 @@ it actually belongs on for that zone (see Overview).
 Dormant heating/cooling channels
 -------------------------------------------------
 
-.. admonition :: Developer Note
+Three fully-implemented channels are never invoked anywhere in the
+current source (verified by an exhaustive grep for their call sites).
+As with the Bowen-fluorescence and precursor-line-monitor gaps
+documented elsewhere (:doc:`physics_lines`, :doc:`physics_output_spectra`),
+these would need source changes to become active; no run configuration
+currently activates them.
 
-   Three fully-implemented channels are never invoked anywhere in the
-   current source (verified by an exhaustive grep for their call
-   sites):
+Compton heating/cooling
+==========================
 
-   - **Compton heating/cooling** (``compton.f``, following
-     Krolik, McKee & Tarter 1981) — the routine ``compton(t, de)``
-     exists and computes the non-relativistic net Compton heating
-     rate, but is never called from ``cool.f`` or anywhere else.
-   - **Microturbulent dissipation heating** — a complete block of code
-     for this exists in ``cool.f`` itself (gated by
-     ``turbheatmode``), but it is entirely commented out.
-   - **``timtqui.f``** — a complete alternate equilibrium-temperature
-     solver (paired with ``timion`` for time-dependent ionisation)
-     with zero callers anywhere in the source.
+``compton.f`` is complete and self-contained: it implements the
+standard non-relativistic Compton heating/cooling balance following
+**Krolik, McKee & Tarter (1981)**, using the Thomson cross-section
+(σ\ :sub:`T` = 6.6524×10\ :sup:`-25` cm²) and the mean photon energy of
+the local field ``tphot``:
 
-   As with the Bowen-fluorescence and precursor-line-monitor gaps
-   documented elsewhere (:doc:`physics_lines`,
-   :doc:`physics_output_spectra`), these would need source changes —
-   adding call sites, or uncommenting and wiring up the turbulent-
-   heating block — to become active; no run configuration currently
-   activates them.
+.. code-block:: none
+
+   cmplos = (sigma_T * F / (m_e c^2)) * n_e * (4kT - <h*nu>)
+
+(Compton cooling scales with 4kT, Compton heating with the mean photon
+energy; ``cmplos`` is the net of the two.) It even has a built-in
+``expertmode`` diagnostic print. The routine ``compton(t, de)`` is
+simply never called — not from ``cool.f``, not from anywhere else —
+with no gating flag or input mode to check first. It reads as code
+that was disconnected from the call graph at some point, rather than
+a feature deliberately left unfinished.
+
+Microturbulent dissipation heating
+=====================================
+
+This one is more than just inert code — the controlling flag actively
+misleads. ``turbheatmode`` is a real, user-settable expert-mode input
+(read in ``mapinit.f``, clamped to 0 or 1), and ``photo6.f``/``photo7.f``
+do check it — but only to print a status line:
+
+.. code-block:: none
+
+   Micro-Turbulent Dissipation Enabled, Mach = <admach>
+
+The *only* place ``turbheatmode`` drives an actual calculation is a
+commented-out block in ``cool.f``, which would compute a dissipation
+heating rate ``q = 0.5 * rho * v^2 * alpha_cool`` from one of four
+turbulent-dissipation-timescale prescriptions (recombination time,
+collisional-ionisation-equilibrium time, cooling time, or a fixed rate
+``alphaturbfixed``, selected by ``turbheatmode`` = 1–4). So a user can
+enable this at setup, see a confirmation that it is "Enabled", and get
+**no physical effect whatsoever** — the heating term itself is dead.
+Modes 2–4 are additionally unreachable even if the block were
+uncommented, since ``mapinit.f`` clamps any input value above 1 back
+to 0.
+
+``timtqui`` — a distinct regime, not a redundant copy of ``teequi2``
+========================================================================
+
+Unlike the two channels above, ``timtqui.f`` is not simply disconnected
+code — it targets a genuinely different physical question from the
+two active temperature solvers. All three use the same
+arctanh(dlos)=B+A·ln(T) iterative scheme, but differ in what ionisation
+state they hold the trial temperature against:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80
+
+   * - Solver
+     - Question being solved
+   * - ``teequi2`` (active)
+     - What T and ionisation state are mutually consistent *at
+       equilibrium* (calls ``equion`` at each trial T)?
+   * - ``evoltem`` (active)
+     - How do T and ionisation evolve *together, forward in real
+       time* (calls ``timion`` once, over the actual elapsed time)?
+   * - ``timtqui`` (unused)
+     - If ionisation is whatever a fixed elapsed time ``tstep`` of
+       time-dependent evolution produces, what T is thermally
+       self-consistent with *that* — resetting the population to its
+       initial state and re-calling ``timion`` at every trial T?
+
+That third question is a legitimate quasi-equilibrium regime (useful
+when ionisation lags temperature and a self-consistent instantaneous
+temperature is wanted for a partially-relaxed, not fully time-evolved,
+ionisation snapshot) — it just has no caller anywhere in the current
+source.
 
 -------------------------------------------------
 A simplified alternative: parametrised cooling
