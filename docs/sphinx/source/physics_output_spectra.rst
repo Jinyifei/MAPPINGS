@@ -121,6 +121,84 @@ outward-propagating diffuse field at the point the field array was
 captured — unlike the line fluxes, which never pass through that
 zone-to-zone attenuation step at all.
 
+----------------------------------------------------------
+Position-resolved output: the line-monitor feature
+----------------------------------------------------------
+
+The line fluxes described above are cumulative — by the time
+``sumdata`` has summed a zone's contribution into ``fluxX``, the
+per-zone value is gone. Getting line flux **as a function of
+position** requires a separate, opt-in mechanism: the "monitor lines"
+feature.
+
+Enabling it and what gets written
+====================================
+
+At setup this is offered as an additional mode on top of the standard
+run: mode ``J`` in P6 ("Standard + B + monitor up to N lines"), mode
+``L`` in P7 ("Monitor up to N lines"), and mode ``L`` in S5 ("Monitor
+up to N lines — precursor and shocks"). Up to ``mxmonlines`` = 32
+lines can be selected by index.
+
+Once enabled, every zone calls ``speclocallines``, which returns the
+**local** brightness (not the running sum) of each selected line at
+that zone, and writes one row per zone to a dedicated ``lines*.csv``
+file: distance, zone width ``dr``, T, n\ :sub:`e`, n\ :sub:`H`, Hβ,
+then the local emissivity of each monitored line. The file's own
+header is explicit about what it contains:
+
+   *"Line emissivities (erg/cm^3/s/sr) for N lines as a function of
+   distance or radius. Weight by shell volumes x4pi to get
+   luminosities."*
+
+In other words, this file hands you the raw ingredient — local
+emissivity vs. position — and leaves the volume weighting (to get a
+cumulative or partial luminosity curve) to you, rather than doing it
+for you the way ``sumdata`` does for the final total.
+
+Companion monitor outputs
+============================
+
+Three related opt-in outputs give other position-resolved quantities
+by the same mechanism: ``jiem`` (up to 4 monitored multi-level ions,
+full per-transition local brightness — the same ``fmbri`` that feeds
+the CEL flux totals), ``jiel`` (ionisation fraction vs. position for
+chosen elements), and ``jcol`` (column density vs. position).
+
+Shock models: two files, one incomplete
+==========================================
+
+S5 creates two separate monitor files: ``linSH*.csv`` for the
+post-shock cooling zone (position = ``dist(step)``, distance behind
+the shock front) and ``linPC*.csv`` for the precursor.
+
+.. admonition :: Developer Note
+
+   ``linSH*.csv`` is fully functional: the per-step loop in
+   ``compsh5`` calls ``speclocallines`` and writes a complete row
+   every step (``shock5.f`` ~line 3497).
+
+   ``linPC*.csv`` is **not** currently populated. The precursor's
+   zone-stepping routine, ``multizone`` (called from
+   ``shock5precursor``), calls ``sumdata`` to accumulate the
+   integrated precursor spectrum, but at no point calls
+   ``speclocallines`` or writes a data row into ``linPC``'s file unit
+   — only the file header gets written, during setup. This is a real
+   gap traced in the source, not a configuration issue: **selecting
+   the monitor-lines option will not produce position-resolved line
+   data for the precursor, no matter how the model is run.**
+
+   Getting this data would require a source change, not just a
+   different run configuration: adding a ``speclocallines`` call and
+   a formatted write into ``linPC``'s file unit inside ``multizone``'s
+   per-zone loop (``shock5.f``, in the same style as the existing
+   block in ``compsh5`` around line 3497), keyed to that loop's
+   position variable (``x0``) rather than ``dist(step)``. Until that
+   change is made, the only precursor diagnostics available as a
+   function of position are the ones already wired up independently
+   of ``jlin`` — e.g. whatever ``multizone``'s caller writes from
+   ``popfr``/``popintfr`` — not local line emissivities.
+
 -------------------------------------------------
 Verified identical in both model families
 -------------------------------------------------
@@ -240,9 +318,11 @@ Key routines
      - Write the continuum spectrum by unit-converting a snapshot of
        ``tphot`` (and its source/nebula-only/nebula-continuum
        variants). No summation over zones happens here.
+   * - ``speclocallines``
+     - Returns the local (not cumulative) brightness of each
+       user-selected monitored line at the current zone; the source of
+       the position-resolved ``lines*.csv`` / ``linSH*.csv`` output.
 
 .. todo :: Trace the exact normalisation applied at output (per-unit
    area at a reference distance vs. total luminosity vs. relative to
-   Hβ = 100) for each output file type, and document how the
-   precursor and post-shock contributions are combined for the S5
-   line list.
+   Hβ = 100) for each output file type.
