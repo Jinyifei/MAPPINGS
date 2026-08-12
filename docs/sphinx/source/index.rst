@@ -104,5 +104,6 @@ Add others
    physics_lines
    physics_shocks
    physics_output_spectra
+   physics_dust
    meta
    *

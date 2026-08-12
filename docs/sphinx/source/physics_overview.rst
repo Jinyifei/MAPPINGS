@@ -39,11 +39,21 @@ Pages in this section
    * - Output spectra and line fluxes (volume-integrated line totals
        vs. the transported continuum field)
      - :doc:`physics_output_spectra`
+   * - Dust and PAH physics (grain charging/heating, PAH heating,
+       grain temperature and IR re-emission, dynamic destruction)
+     - :doc:`physics_dust`
 
-.. todo :: Add pages covering: heating/cooling and thermal balance
-   (``cool.f``, ``coloss.f``, ``cheat.f``); dust physics
-   (``hgrains.f``, ``hpahs.f``); and the continuum diffuse field
-   (free-free, free-bound, two-photon).
+.. todo :: Add pages/sections covering: heating/cooling and thermal
+   balance (``cool.f``, ``coloss.f``, ``cheat.f``, ``pheat.f``,
+   ``compton.f``, ``netgain.f``, ``teequi``/``evoltem.f`` — the biggest
+   remaining gap, and the natural home for ``gheat``/``gcool``/
+   ``paheat`` from :doc:`physics_dust`); the continuum diffuse field
+   emissivities (``freebound.f``, ``freefree.f``, ``twophoton.f``,
+   plus the heavy-element recombination-line emissivities in
+   ``heavyrec.f``/``helioi.f``, which belong in :doc:`physics_lines`);
+   and the non-equilibrium time-integration mechanics (``sdifeq.f``,
+   ``spotap.f``, ``ionab.f``, ``poputil.f``). Non-Maxwellian κ electron
+   distributions are already covered separately in :doc:`adv_kappa`.
 
 -------------------------------------------------
 How these pages relate to the source

@@ -296,7 +296,8 @@ MAPPINGS displays the current dust status and asks::
     Include dust calculations? (y/N) :
 
 Enter ``Y`` to enable dust.  If dust is enabled, a further sequence of
-prompts follows.
+prompts follows.  See :doc:`physics_dust` for the physical background
+on grain/PAH heating, charging, infrared re-emission, and destruction.
 
 Depletion factors
 =================
