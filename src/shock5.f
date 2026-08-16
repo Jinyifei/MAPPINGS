@@ -901,8 +901,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (ilgg.eq.'A') goto 320
       if (ilgg.eq.'B') tsrmod='Y'
-      if (ilgg.eq.'C') dynmod='Y'
-      if (ilgg.eq.'D') ratmod='Y'
+      if (ilgg.eq.'C') ratmod='Y'
+      if (ilgg.eq.'D') dynmod='Y'
       if (ilgg.eq.'E') jspec='Y'
       if (ilgg.eq.'F') lmod='Y'
       if (ilgg.eq.'H') bandsmod='Y'
@@ -2767,6 +2767,19 @@ c
 c
       real*8 feldens
 c
+      integer*4 i
+      real*8 linfluxes(mxmonlines)
+c
+c Only use part of common block
+      integer*4 luop,lusp,lupt,lupc
+      integer*4 ludy,lucl,lupb,lupf
+      integer*4 lualsh,lurtsh,lulsh,luionsh(mxelem)
+      integer*4 lualpc,lurtpc,lulpc,luionpc(mxelem)
+      common /shock5L/ luop,lusp,lupt,lupc,
+     & ludy,lucl,lupb,lupf,
+     & lualsh,lurtsh,lulsh,luionsh,
+     & lualpc,lurtpc,lulpc,luionpc      
+c
       gdil=0.5d0
       fi=1.d0
 c
@@ -2784,6 +2797,8 @@ c
       irdvol=1.d0
       vunilog=0.d0
       sumhb=0.0d0
+c
+  10  format(1x,i4,',', 11(1pg12.5,', '),31(1pg12.5,', '))
 c
       do idx=1,n-1
 c
@@ -2807,6 +2822,15 @@ c        write(*,'(8(1pg11.4,x))') x0,dx,t,dh,de,hbeta*fpi,hbl,sumhb
         specmode='NEBL'
         call totphot2 (t, dh, x0, dx, 0.d0, gdil, specmode)
         call zetaeff (dh)
+c
+ccccccccccccc
+        if (jlin.eq.'Y') then
+          call speclocallines (linfluxes)
+          write (lulpc,10) idx,x(idx),x(idx)+dx*0.5d0,dx,t,de,
+     &     dh,0.0d0,0.0d0,0.0d0,0.0d0,hydrobri(2,2),(linfluxes(i),i=1,
+     &     njlines)
+        endif
+ccccccccccccc
 c
 c     accumulate spectrum
 c
