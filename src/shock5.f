@@ -901,8 +901,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
       if (ilgg.eq.'A') goto 320
       if (ilgg.eq.'B') tsrmod='Y'
-      if (ilgg.eq.'C') dynmod='Y'
-      if (ilgg.eq.'D') ratmod='Y'
+      if (ilgg.eq.'C') ratmod='Y'
+      if (ilgg.eq.'D') dynmod='Y'
       if (ilgg.eq.'E') jspec='Y'
       if (ilgg.eq.'F') lmod='Y'
       if (ilgg.eq.'H') bandsmod='Y'
