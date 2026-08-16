@@ -1,108 +1,169 @@
-Downloading and Installing Mappings
-###################################
+##################################
+Installing and Building MAPPINGS
+##################################
 
-.. warning::
+This is the single, current source for getting MAPPINGS from a download
+to a running model.  (Earlier versions of this documentation had this
+split across three overlapping and partly stale pages; if you have a
+bookmark to "Getting Started" or "Downloading and Installing Mappings"
+from before, this page replaces both.)
 
-   This page is incomplete and needs updating and editing before it can be
-   relied upon.
+.. contents:: Contents
+   :local:
+   :depth: 1
 
-Downloading and installing Mappings should be straigtforward.
+-------------------------------------------------
+Prerequisites
+-------------------------------------------------
 
+MAPPINGS is Fortran 77 (legacy-mode) plus a handful of C post-processing
+tools, built with a single ``Makefile``. You need:
 
-.. container::
+* **gfortran** — the standard, best-tested compiler. Most development
+  happens on macOS and Linux (Ubuntu); the default ``Makefile`` targets
+  both.
+* On **macOS**: Xcode's command line tools (``xcode-select --install``)
+  so a C/Fortran toolchain and linker are available.
+* A C compiler (``gcc``/``clang``) for the ``tools/`` post-processing
+  utilities — installed alongside gfortran on most systems.
 
-   .. rubric:: Downloading MAPPINGS
-      :name: inst-downloading-mappings
+Compilers other than gfortran (Intel ``ifort``, plain ``gcc``, ``f2c``)
+are supported via alternative makefiles in ``addons/altmakefiles/`` —
+see :doc:`repo_structure` for what is there; this page only covers the
+standard gfortran path.
 
-The latest public version of the MAPPINGS source code (5.1.13) is
-available from https://mappings.anu.edu.au/code/ Initially, download
-"Everything including stellar/agn atmospheres" (217MB).
+-------------------------------------------------
+Getting the code
+-------------------------------------------------
 
-.. container::
+Clone the repository (GitHub mirror, or the Bitbucket/ANU mirrors —
+see the project ``README.md`` for all three)::
 
-   .. rubric:: What to know before you start
-      :name: inst-what-to-know-before-you-start
+    git clone <repository-url>
+    cd mappings
 
-To install and run MAPPINGS, you should be familiar with running
-commands from the terminal. At some point, you may need to edit
-pre-defined command scripts to set input parameters and to point to the
-data directories, depending where the data files are located with
-respect to the working area. The standard work area is the /lab
-directory. Download MV_atmos.zip Stellar atmospheres (192.8MB). Unzip to
-create the atmos directory and move the atmos directory into the lab
-area.
+Atomic data, stellar atmosphere grids, and abundance tables are all
+included in the repository under ``lab/`` — there is no separate data
+archive to fetch and unpack.
 
-.. container::
+-------------------------------------------------
+Building and installing
+-------------------------------------------------
 
-   .. rubric:: Installing MAPPINGS
-      :name: inst-installing-mappings
+From the repository root::
 
-These directions are intended for Mac users but are readily adaptable to
-Linux and other Unix versions. They apply to OSX version 10.9
-(Mavericks) onwards. In what follows, we use the ``Courier`` typeface
-for terminal commands and file names.
+    make build          # or: make -j build   (parallel, faster)
 
-For maximum computational efficiency you will need a FORTRAN compiler.
-MAPPINGS will compile with a variety of FORTRAN compilers, but probably
-the most useful is gfortran. This runs on Linux (various flavours) and
-Mac OSX platforms.
+This compiles the code, builds the C tools in ``tools/``, and installs
+everything into ``~/mappings520`` by default — a self-contained area
+holding the executable, atomic data, abundance/atmosphere files, and an
+initial ``lab/`` working directory. It will not touch or remove any
+model files you already have there from a previous install of the same
+version.
 
-An alternative is to install the f2c application which can be found in
-the /src directory in the MAPPINGS download. This converts the MAPPINGS
-code to compilable C, for compilation using the Apple or other C
-compilers. This results in a somewhat slower compiled application. Also
-note that if you need to compile MAPPINGS this way, you will need to use
-the correct make file (in the /src directory). Rename ``Makefile.f2c``
-to replace the default ``Makefile`` in the /src directory.
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
 
-Before you can run the standard ``Makefile`` on OSX, it is necessary to
-install Apple’s Xcode on the Mac, and the command line tools. These are
-available via the Appstore. This is a large download but is necessary
-for installing appropriate compilers.
+   * - Command
+     - Effect
+   * - ``make build`` / ``make -j build``
+     - Full build: compile, install to ``~/mappings520``, clean up.
+       Use this for a normal install.
+   * - ``make compile``
+     - Compile only, leaving the executable in ``bin/`` without
+       installing.
+   * - ``make install``
+     - Install after a manual ``make compile``.
+   * - ``make clean`` / ``make distclean``
+     - Remove ``.o`` files, or ``.o`` files plus executables.
+   * - ``make uninstall``
+     - Remove the ``~/mappings520`` install (preserves any of your own
+       files placed there).
+   * - ``make tools``
+     - Build and install just the ``blur``/``lines``/``red`` C tools.
 
-To install gfortran on Mac OSX, you will next need to install Macports.
-See https://www.macports.org. When the Macports framework is installed,
-the next step is to install the GNU compiler collection from the command
-line. This is done with the command: ``sudo port install gcc10`` . This
-installs both the GNU C compiler (version 10) and the gfortran compiler
-(version 10).
+To install somewhere other than your home directory (e.g. a shared
+location for multiple users), override ``INSTALLBASE`` — see the
+comments at the top of the root ``Makefile`` for the available
+variables and their effect.
 
-At present we recommend you use the latest gfortran version, currently
-gfortran8. If you are using an older version of Mac OSX (for example,
-10.9 Mavericks, because you have an old Mac computer), gfortran version
-4.9 is the better choice. Also note that in this case you will need a
-legacy Macports install. Refer to the Macports website for details. To
-check the gfortran compiler is installed and available, use the
-following command in the terminal: ``gfortran –version``. If this does
-not confirm the version, you will need to seek assistance.
+-------------------------------------------------
+Shell setup
+-------------------------------------------------
 
-When Xcode, the command line tools, Macports and the GNU compilers are
-installed, unzip the mappings download into a new directory. The
-MAPPINGS makefile is found in the /src directory.
+After a successful build, the repository root contains a generated
+``for_bashrc.txt`` with the environment variables MAPPINGS needs to be
+run from any directory, not just ``~/mappings520/lab``::
 
-Install in the standard way from the /src directory using
-``make install``. Full installation instructions are included in the
-``README.txt`` file. This is a comprehensive description of the
-installation and you should read it carefully before commencing. it is
-included as Appendix 1 in this document.
+    export MAPDATA="$HOME/mappings520"
+    export MAPBIN="$MAPDATA/bin"
+    export PATH="$MAPBIN:$PATH"
+    alias map52="$MAPBIN/map52"
 
-Open the readme file or go to the appendix below and follow the
-instructions. MAPPINGS can be run from the /lab directory, but the best
-approach, as described in the readme file, is to make a universal
-install which can be run from any location using the command map51 .
+Paste (or ``source``) these lines into ``.bashrc``/``.zshrc``. ``MAPDATA``
+is how MAPPINGS locates its atomic data files at runtime if you are not
+running from inside ``~/mappings520/lab``.
 
-.. container::
+-------------------------------------------------
+Running your first model
+-------------------------------------------------
 
-   .. rubric:: MAPPINGS data inputs
-      :name: inst-mappings-data-inputs
+::
 
-There are several types data input for MAPPINGS: physical model
-parameters (pressure, density, ionisation parameter etc.), atomic data,
-dust depletion data, abundance scaling data, standard abundances, and
-excitation spectra.
+    cd ~/mappings520/lab
+    ./map52
 
-The main data are contained in extensive libraries in the
-sub-directories in the /lab directory. The HIIGrid306 directory contains
-additional libraries of abundances and pre-calculated synthetic cluster
-spectra derived from the Starburst99 spectral synthesis code. The input
-data are described in more detail below.
+``map.prefs`` must be present in the working directory — it already is
+in ``lab/``. From here, MAPPINGS walks you through the startup prompts
+documented in :doc:`inputs`, then the model-type menu in :doc:`models`.
+For a complete worked example rather than an abstract prompt list, see
+:doc:`walkthrough_p6` (photoionisation) or :doc:`walkthrough_s5`
+(shock).
+
+-------------------------------------------------
+Directory layout
+-------------------------------------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 75
+
+   * - Path (under ``~/mappings520/``)
+     - Contents
+   * - ``lab/``
+     - Where you run models. Contains ``map52``, ``map.prefs``, and
+       ``examples/``. Copy this directory (or just ``map.prefs``) to
+       create additional independent working areas.
+   * - ``bin/``
+     - The ``map52`` executable and the C post-processing tools.
+   * - ``data/``
+     - Atomic data, read at startup by ``mapinit.f``. Required.
+   * - ``abund/``
+     - Pre-made abundance files, loadable interactively (see
+       :doc:`inputs`).
+   * - ``atmos/``
+     - Stellar atmosphere grids and radiation source files (see
+       :doc:`photsou`).
+   * - ``scripts/``
+     - Utility shell/MAPPINGS scripts, including the regression test
+       suites under ``scripts/testScripts/``.
+   * - ``docs/``
+     - Copies of this documentation and reference material.
+
+-------------------------------------------------
+Updating and uninstalling
+-------------------------------------------------
+
+To update, pull the latest changes and rebuild::
+
+    git pull
+    make build
+
+A new MAPPINGS version number installs into a fresh
+``~/mappingsXXXX`` area rather than overwriting the old one, so you can
+keep working in an older install while testing a new one.
+
+To remove an install, either run ``make uninstall`` from the build
+directory (removes ``~/mappings520`` but leaves any files you added
+there yourself) or simply delete the ``~/mappings520`` directory.

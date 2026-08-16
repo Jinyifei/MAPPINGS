@@ -50,7 +50,9 @@ The user is asked, in order, to:
    density, ionisation fraction, or temperature limit.
 
 Main output files are ``photn<N>.ph6`` and associated ``.csv`` and ``.sou``
-files as described in :doc:`outputs`.
+files as described in :doc:`outputs`.  For a full worked example — an
+actual script, the files it produces, and what is inside them — see
+:doc:`walkthrough_p6`.
 
 P7 — Photoionisation (Experimental)
 =====================================
@@ -112,7 +114,9 @@ The user is asked, in order, to:
    fractions, individual element files, line lists, bands, cooling).
 
 Output files use the ``.sh5`` and ``.csv`` extensions as described in
-:doc:`outputs`.
+:doc:`outputs`.  For a full worked example — an actual script, the files
+it produces, and what is inside them, including position-resolved line
+monitoring — see :doc:`walkthrough_s5`.
 
 
 -------------------------------------------------

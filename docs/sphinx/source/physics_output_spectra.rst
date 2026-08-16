@@ -165,7 +165,7 @@ full per-transition local brightness — the same ``fmbri`` that feeds
 the CEL flux totals), ``jiel`` (ionisation fraction vs. position for
 chosen elements), and ``jcol`` (column density vs. position).
 
-Shock models: two files, one incomplete
+Shock models: two files, both functional
 ==========================================
 
 S5 creates two separate monitor files: ``linSH*.csv`` for the
@@ -178,26 +178,20 @@ the shock front) and ``linPC*.csv`` for the precursor.
    ``compsh5`` calls ``speclocallines`` and writes a complete row
    every step (``shock5.f`` ~line 3497).
 
-   ``linPC*.csv`` is **not** currently populated. The precursor's
+   ``linPC*.csv`` is likewise fully functional: the precursor's
    zone-stepping routine, ``multizone`` (called from
-   ``shock5precursor``), calls ``sumdata`` to accumulate the
-   integrated precursor spectrum, but at no point calls
-   ``speclocallines`` or writes a data row into ``linPC``'s file unit
-   — only the file header gets written, during setup. This is a real
-   gap traced in the source, not a configuration issue: **selecting
-   the monitor-lines option will not produce position-resolved line
-   data for the precursor, no matter how the model is run.**
-
-   Getting this data would require a source change, not just a
-   different run configuration: adding a ``speclocallines`` call and
-   a formatted write into ``linPC``'s file unit inside ``multizone``'s
-   per-zone loop (``shock5.f``, in the same style as the existing
-   block in ``compsh5`` around line 3497), keyed to that loop's
-   position variable (``x0``) rather than ``dist(step)``. Until that
-   change is made, the only precursor diagnostics available as a
-   function of position are the ones already wired up independently
-   of ``jlin`` — e.g. whatever ``multizone``'s caller writes from
-   ``popfr``/``popintfr`` — not local line emissivities.
+   ``shock5precursor``), calls ``speclocallines`` and writes a formatted
+   row into ``linPC``'s file unit inside its per-zone loop, keyed to
+   that loop's own position variable (``x0``), in the same style as the
+   existing block in ``compsh5``. (Older versions of MAPPINGS left this
+   file as a header-only stub, added 2026-08-16.) Verified by running an
+   S5 model with the ``L`` (monitor lines) option and confirming
+   ``linPC*.csv`` contains one populated row per precursor step with
+   sensible, position-varying line fluxes — see :doc:`walkthrough_s5`,
+   "Getting line strength as a function of position", for a worked
+   example. Both files share the same selected-line list, so a line's
+   strength can be traced continuously from the precursor through the
+   shock front and into the cooling zone.
 
 -------------------------------------------------
 Verified identical in both model families

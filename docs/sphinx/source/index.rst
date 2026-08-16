@@ -25,13 +25,13 @@ for all elements from hydrogen to zinc, for over 88,000 lines in the current ver
 
 It can be used to model equilibrium and time dependent astrophysical plasmas and emission and is used for atomic diagnostics, cooling, model HII regions, Planetary Nebulae, Nova Shells, AGN emission regions and a wide range of Herbig Haro and fast Shockwaves in the interstellar medium.
 
-----------------------------------
-Quick Install and Run Instructions
-----------------------------------
+-------------
+Installation
+-------------
 
--------------------------------------
-Advanced Install and Run Instructions
--------------------------------------
+See :doc:`installation` to build MAPPINGS and run your first model, then
+:doc:`walkthrough_p6` or :doc:`walkthrough_s5` for a complete worked
+example of the two main model types.
 
 -------------
 Locations
@@ -84,16 +84,16 @@ Add others
    :hidden:
    :caption: Documentation
 
-   Mappings_guide
    installation
-   installation_new
    repo_structure
-   running_mapping
+   Mappings_guide
    inputs
    models
    popcha
    photsou
    outputs
+   walkthrough_p6
+   walkthrough_s5
    code_overview
    code_photo
    code_s5

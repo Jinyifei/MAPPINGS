@@ -27,7 +27,8 @@ Photoionization Models
 Photoionization models are run by the ``photo6`` (mode 6) and ``photo7``
 (mode 7) solvers and produce files with the extensions ``.ph6`` and ``.ph7``
 respectively, together with a set of ``.csv`` files and optional photon source
-(``.sou``) and spectrum (``.lam``) files.
+(``.sou``) and spectrum (``.lam``) files.  For a worked example tracing one
+concrete run's choices to the files below, see :doc:`walkthrough_p6`.
 
 Main Output Files
 =================
@@ -134,7 +135,8 @@ prefix string (up to 8 characters) that is embedded in all output filenames, for
 
 Most output files share a common plain-text header block containing the MAPPINGS version, run
 name, abundance file, ionisation setup, radiation source, shock parameters, and jump conditions.
-After the header, the format varies by file type as described below.
+After the header, the format varies by file type as described below.  For a worked example
+tracing one concrete run's choices to the files below, see :doc:`walkthrough_s5`.
 
 Always-created files
 ======================
@@ -288,11 +290,12 @@ Enter one letter at a time and exit with **X**.
      - ``linPC<pfx>_<N>.csv``
    * - ``E``
      - ``jspec``
-     - Final downstream radiation field (``.lam``, ``.nfn`` via ``wpsou``)
+     - ``SHdw<pfx>_<N>.lam`` / ``.sou`` — final downstream field (via ``wpsou``)
      - —
    * - ``F``
      - ``lmod``
-     - Upstream radiation field at each step (via ``wpsou``)
+     - Adds ``.nfn`` (ν vs. νF\ :sub:`ν`) alongside every ``.lam``/``.sou``
+       pair below, including the always-written ones
      - —
 
 .. note::
@@ -311,14 +314,28 @@ Selecting **B** (ion balance files) triggers two follow-up prompts:
 2. "Record all ions file (Y/N)?" — answering Y additionally creates the wide
    ``ionSH`` / ``ionPC`` files for all elements.
 
+.. note::
+
+   **``SHup<pfx>_<N>.lam``/``.sou`` and ``PCup<pfx>_<N>.lam``/``.sou`` are
+   written unconditionally** — the upstream radiation field snapshot is not
+   gated by ``E``, ``F``, or any other output-menu option; it is written on
+   every run regardless of which optional output tables are selected. Only
+   the *downstream* field (``SHdw*``) requires ``E``, and only the extra
+   ``.nfn`` detail file for any of the three requires ``F``.
+
 Format of the optional files
 ==============================
 
 ``elSH<pfx><El>`` / ``elPC<pfx><El>``  (CSV, option B)
 ---------------------------------------------------------
 
-One file per tracked element, named with the element symbol (e.g. ``elSHv100sO_0001.csv``).
-Comma-separated, one row per step.  Columns:
+One file per tracked element, named with the element symbol appended directly
+after the prefix (e.g. ``elSHv100s_O0001.csv`` for prefix ``v100s_``).  No
+separator is inserted before the element symbol or before the sequence
+number — any underscore visible in the filename comes from what was typed
+at the "prefix for all output files" prompt, which is why the shock prefix
+is conventionally given with a trailing underscore (e.g. ``v100s_`` rather
+than ``v100s``).  Comma-separated, one row per step.  Columns:
 
    step, distance (cm), dr (cm), timlps (s), dt (s), T (K),
    n\ :sub:`e` (cm\ :sup:`−3`), n\ :sub:`H` (cm\ :sup:`−3`),
@@ -423,9 +440,15 @@ precursor temperature, the post-shock temperature, the precursor electron densit
 the H/He ion fraction change.  The RMS is the quadrature sum of all six fractional
 differences.  Convergence is declared when RMS < 0.01% (10\ :sup:`−4`).
 
-If convergence is not reached within the requested number of iterations the model runs
-a final output pass anyway.  There is no failure flag written to the output files; the
-only record of non-convergence is the "Result: NOT CONVERGED" message in the terminal output.
+If convergence is not reached within the requested number of iterations, MAPPINGS does not
+stop there: each failed check extends the iteration cap by one and tries again, up to a hard
+ceiling of 16 global iterations (``mxshockits`` in ``const.inc``). Whether or not convergence
+was ever reached — even after using all 16 — the loop then always runs one further, final
+output pass. **There is no failure flag written to any output file, no non-zero exit code, and
+no crash** for a run that never converges; the only record is the "Result: NOT CONVERGED"
+message on whichever "SHOCK 5 Convergence Test" block was last printed to the terminal. A run
+finishing cleanly is not the same thing as a run having converged — see :doc:`walkthrough_s5`,
+"Checking for convergence and other failures", for how to verify this in practice.
 
 **Summary of what is in files versus stdout only**
 
@@ -573,6 +596,14 @@ For S5 shock models the user is asked at run time::
 This string (e.g. ``v100s`` for a 100 km/s shock) is embedded in every
 output filename for that model, making it straightforward to run and compare
 grids of models with varying parameters in the same directory.
+
+MAPPINGS does not insert its own separator between the prefix and the
+rest of the filename (element symbol, sequence number, etc.) — it is
+simply concatenated.  By convention the prefix itself is typed with a
+trailing underscore (e.g. ``v100s_``) so that filenames like
+``shck_v100s_0001.sh5`` and ``elSHv100s_O0001.csv`` remain readable; a
+prefix without one produces run-together names such as
+``elSHv100sO0001.csv``.
 
 Chaining models with ``.sou`` files
 =====================================
