@@ -1334,7 +1334,9 @@ c
         enddo
         do i=1,mxmonlines
 c      will allow custom bins later
-          emlindeltas(i)=0.001d0
+c      0.05A: wide enough to match a wavelength typed to 2 decimal
+c      places without conflating closely-spaced doublets
+          emlindeltas(i)=0.05d0
         enddo
         call speclocallineids (emlinlistatom, emlinlistion)
  1080  format(' Found Line: #',i3,' : ', a2,a6,1pg12.5)

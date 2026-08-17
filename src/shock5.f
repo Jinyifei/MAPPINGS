@@ -1054,7 +1054,9 @@ c
         write (*,450)
         read (*,*) (emlinlist(i),i=1,njlines)
         do i=1,mxmonlines
-          emlindeltas(i)=0.001d0
+c     0.05A: wide enough to match a wavelength typed to 2 decimal
+c     places without conflating closely-spaced doublets
+          emlindeltas(i)=0.05d0
         enddo
         call speclocallineids (emlinlistatom, emlinlistion)
   460   format(/' Monitoring :')

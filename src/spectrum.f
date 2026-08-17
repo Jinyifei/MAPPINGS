@@ -3218,6 +3218,7 @@ c
       integer*4 lineat(mxmonlines)
       integer*4 lineion(mxmonlines)
       real*8 delta
+      logical linefound(mxmonlines)
 c
       real*8 linelam(mxspeclines)
       real*8 linespec(mxspeclines)
@@ -3240,6 +3241,7 @@ c
       do i=1,mxmonlines
         lineat(i)=1
         lineion(i)=1
+        linefound(i)=.false.
       enddo
 c
       if (njlines.le.0) return
@@ -3536,9 +3538,23 @@ c
           if (delta.le.emlindeltas(j)) then
             lineat(j)=lineid(lineidx(i),1)
             lineion(j)=lineid(lineidx(i),2)
+            linefound(j)=.true.
 c        write (*,*) i,j,lineid(lineidx(i),1), lineat(j), lineion(j)
           endif
         enddo
+      enddo
+c
+c     A requested monitor-line wavelength that matches nothing in the
+c     line list would otherwise silently report zero flux for the
+c     whole run with no indication anything was wrong.
+c
+      do j=1,njlines
+        if (.not.linefound(j)) then
+          write (*,*) 'ERROR: no line found within',emlindeltas(j),
+     &     'A of the requested monitor wavelength',emlinlist(j),'A.'
+          write (*,*) 'Check the wavelength and try again.'
+          stop
+        endif
       enddo
 c
       return
