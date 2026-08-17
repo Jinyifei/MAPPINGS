@@ -35,29 +35,15 @@ The script
 -------------------------------------------------
 
 Piped to ``map52`` non-interactively (see :doc:`inputs`, "Running from
-a script")::
+a script"). This is a real, tested script — download
+:download:`s5_shock200.mv <../../../lab/examples/s5_shock200.mv>` and
+its abundance file,
+:download:`s5_shock_abund.txt <../../../lab/examples/s5_shock_abund.txt>`,
+and run it as shown below. It also ships with every install, in
+``~/mappings520/lab/examples/``.
 
-    yes    : change abund
-    MV52ShockInputs/solar.txt
-    no     : no more changes
-    no     : offsets?
-    no     : no dust
-    S5     : Shock with auto precursor
-    D      : Default preionisation balance
-    X      : eXit with current source
-    V      : define shock by velocity, iterating on preshock if neeeded
-    A      : Alpha = 1/beta  0 = no field, >> 1 is field dominated
-    1.0
-    1000.0 1.0 200.0  T dh v km/s
-    F      : Diffuse field option
-    A      : Ending
-    3      : No of iterations
-    v200s_
-    A      : Output settings
-    X
-    A      : Runtime screen display
-    a=1 200km/s shock, proto-shock T=1000K, 3 iterations, ending A
-    xit
+.. literalinclude:: ../../../lab/examples/s5_shock200.mv
+   :language: none
 
 Each of these is one instance of the general prompt sequence documented
 in :doc:`popcha` (ionisation balance), :doc:`photsou` (radiation
@@ -91,10 +77,10 @@ A few of these are worth spelling out:
   filenames readable, since MAPPINGS inserts no separator of its own —
   see :doc:`outputs`, "Notes on File Naming".
 
-Run it::
+Run it (from wherever you saved the two downloaded files, or from
+``~/mappings520/lab/examples/`` if using the shipped copy)::
 
-    cd ~/mappings520/lab
-    ./map52 < shock200.mv
+    map52 < s5_shock200.mv
 
 -------------------------------------------------
 Does the starting temperature matter?
@@ -247,30 +233,45 @@ position. For that, add output option ``L`` ("Monitor lines"). Starting
 from the same minimal script, only the output-menu section changes —
 because ``B`` and ``K`` are not selected, none of their follow-up
 prompts (element tracking, cooling normalisation) appear, so the
-sequence is shorter than it would be with those options active::
+sequence is shorter than it would be with those options active.
+Download :download:`s5_shock200_linemonitor.mv
+<../../../lab/examples/s5_shock200_linemonitor.mv>` (uses the same
+abundance file as above) — it differs from the base script only in the
+output-prefix/menu block:
 
-    v200s_
-    L      : Monitor lines
-    X
-    3      : number of lines to track
-    4861.33 6562.82 5006.84
-    A      : Runtime screen display
+.. literalinclude:: ../../../lab/examples/s5_shock200_linemonitor.mv
+   :language: none
+   :lines: 16-21
 
-This produces ``linSHv200s_0001.csv`` (post-shock zone) and
-``linPCv200s_0001.csv`` (precursor zone), one row per step with the
+This produces ``linSHv200sl_0001.csv`` (post-shock zone) and
+``linPCv200sl_0001.csv`` (precursor zone), one row per step with the
 local flux of each selected line::
 
      # [1] <X>, [2] DeltaX, [3] dX, [4] t, ... ,    4861.330[14],    6562.820[15],    5006.840[16],
-        1,  0.0000    ,  2.51473E+16, ...,  1.11924E-26,   0.0000    ,  3.22788E-26,
+        1,  0.0000    ,  1.08851E+12, ...,  1.87252E-23,  5.73073E-23,  4.59017E-24,
 
 Verified end to end for this scenario: 308 rows in
-``linPCv200s_0001.csv``, 559 in ``linSHv200s_0001.csv``, both with
-sensible, position-varying flux values through the precursor and the
-cooling zone. Both files share the same selected-line list and header,
-so a line's strength can be traced continuously from the precursor
-through the shock front and into the cooling zone. See
-:doc:`physics_output_spectra` for the underlying mechanism, including a
-note on when this position-resolved precursor output was added.
+``linPCv200sl_0001.csv``, 527 in ``linSHv200sl_0001.csv``. All three
+monitored lines carry real, sensible, position-varying flux through
+both the precursor and the cooling zone (Hβ and Hα in all 527 shock
+rows; [O III] in 468 of them — zero only where the gas is too hot for
+O⁺⁺ to exist, which is correct physics rather than a matching failure).
+Both files share the same selected-line list and header, so a line's
+strength can be traced continuously from the precursor through the
+shock front and into the cooling zone. See :doc:`physics_output_spectra`
+for the underlying mechanism, including a note on when this
+position-resolved precursor output was added, and the note below on
+the wavelength-matching tolerance this depends on.
+
+.. note::
+
+   Getting a match at all depends on the requested wavelength falling
+   within a tolerance of the line's internally tabulated value —
+   0.05 Å as of this fix; wavelengths typed to the usual 2 decimal
+   places should match correctly, but a request that matches nothing
+   now stops the run with an explicit error rather than silently
+   reporting zero flux. See :doc:`physics_output_spectra` for the
+   history here.
 
 -------------------------------------------------
 Adapting this to your own model

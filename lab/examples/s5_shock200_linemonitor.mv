@@ -1,0 +1,23 @@
+yes    : change abund
+s5_shock_abund.txt
+no     : no more changes
+no     : offsets?
+no     : no dust
+S5     : Shock with auto precursor
+D      : Default preionisation balance
+X      : eXit with current source
+V      : define shock by velocity, iterating on preshock if neeeded
+A      : Alpha = 1/beta  0 = no field, >> 1 is field dominated
+1.0
+1000.0 1.0 200.0  T dh v km/s
+F      : Diffuse field option
+A      : Ending
+3      : No of iterations
+v200sl_
+L      : Monitor lines
+X
+3      : number of lines to track
+4861.33 6562.82 5006.84
+A      : Runtime screen display
+a=1 200km/s shock, proto-shock T=1000K, 3 iterations, ending A, line monitor
+xit

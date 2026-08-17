@@ -34,37 +34,14 @@ The script
 -------------------------------------------------
 
 Piped to ``map52`` non-interactively (see :doc:`inputs`, "Running from a
-script"), one line per prompt::
+script"), one line per prompt. This is a real, tested script — download
+:download:`p6_hii_atlas9.mv <../../../lab/examples/p6_hii_atlas9.mv>`
+and its abundance file, :download:`p6_hii_abund.txt
+<../../../lab/examples/p6_hii_abund.txt>`, and run it as shown below.
+It also ships with every install, in ``~/mappings520/lab/examples/``.
 
-    y                                   : change abundances
-    MV52Inputs/solar2010.abn            : abundance file
-    n                                   : no more abundance changes
-    n                                   : no abundance offsets
-    n                                   : no dust
-    P6                                  : Photoionisation model
-    d                                   : popcha - default ionisation balance
-    c1                                  : photsou - ATLAS9 stellar atmosphere
-    a                                   : abundance pattern - standard solar ratios
-    c                                   : [Fe/H] = +0.0 (solar)
-    b                                   : Log(g) = 4.5
-    45000                               : Teff (K)
-    x                                   : photsou - exit with current source
-    s                                   : spherical geometry
-    p                                   : define source by ionising photon rate
-    5e48                                : ionising photons/s
-    c                                   : isoChoric (constant density)
-    0.9206789764391988                  : hydrogen number density (cm^-3)
-    1                                   : filling factor
-    q                                   : set inner radius via Q(N)
-    7.5                                 : log QHDN at inner radius
-    y                                   : integrate over the whole sphere
-    e                                   : equilibrium ionisation/thermal balance
-    0.025                               : step photon-absorption fraction (dTau)
-    a                                   : radiation bounded, HII < 1%
-    b                                   : standard output + monitor element ionisation
-    1 2 6 8                             : elements to monitor - H, He, C, O
-    t45 ip5e48 n0.92068 nion=1.0 solar q7.5 P6 0.025 M5.2   : model ID string
-    x                                   : exit MAPPINGS
+.. literalinclude:: ../../../lab/examples/p6_hii_atlas9.mv
+   :language: none
 
 Every step above is one instance of the general prompt sequence
 documented in :doc:`inputs` (abundances/dust), :doc:`popcha` (ionisation
@@ -72,10 +49,18 @@ balance), :doc:`photsou` (radiation field), and :doc:`models` (P6
 geometry/density/stopping-condition prompts) — this page just shows the
 concrete answers for this particular model rather than the menu text.
 
-Run it::
+.. note::
 
-    cd ~/mappings520/lab
-    ./map52 < solhii.mv
+   The abundance-file and model-name prompts are read as a whole line,
+   not a free-form value — unlike almost every other prompt in this
+   script, MAPPINGS does **not** ignore trailing text on those two
+   lines, so (unlike the rest of the script) they cannot carry an
+   inline ``: comment`` annotation the way they might elsewhere.
+
+Run it (from wherever you saved the two downloaded files, or from
+``~/mappings520/lab/examples/`` if using the shipped copy)::
+
+    map52 < p6_hii_atlas9.mv
 
 -------------------------------------------------
 What got created

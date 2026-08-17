@@ -408,4 +408,6 @@ plain-text script to the MAPPINGS executable::
 
 Each line in the ``.mv`` file corresponds to one prompt response, in
 order.  Example scripts for common model types are provided in
-``~/mappings520/lab/examples/``.
+``~/mappings520/lab/examples/`` and are also downloadable directly from
+:doc:`walkthrough_p6` and :doc:`walkthrough_s5`, alongside a full
+line-by-line explanation of each one.
