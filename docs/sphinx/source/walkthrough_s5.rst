@@ -21,14 +21,19 @@ worked example and points back to them for the general case.
 The scenario
 -------------------------------------------------
 
-A 200 km/s, α = 1 (equipartition magnetic field) radiative shock into
-solar-abundance gas at n\ :sub:`H` = 1 cm\ :sup:`−3`, with MAPPINGS'
-auto-iterated photo-ionised precursor and the full internal diffuse
-radiation field. The proto-shock gas is started at 1000 K (rather than
-a lower guess), the model runs to a 1%-weighted-ionisation ending
-condition rather than a fixed temperature floor, and only the standard
-output files are requested — a minimal, representative script rather
-than one exercising every optional output table.
+A 200 km/s, unmagnetised (B = 0) radiative shock into solar-abundance
+gas at n\ :sub:`H` = 1 cm\ :sup:`−3`, with MAPPINGS' auto-iterated
+photo-ionised precursor and the full internal diffuse radiation field.
+B = 0 is the more typical choice for a first shock model — it isolates
+the radiative/hydrodynamic physics without also having to pick a
+magnetic field strength or geometry, and is a more natural default than
+parameterising the field via α (magnetic-to-gas pressure ratio) and
+setting α = 1 (equipartition), which is a comparatively specific,
+strongly magnetised case. The proto-shock gas is started at 1000 K
+(rather than a lower guess), the model runs to a 1%-weighted-ionisation
+ending condition rather than a fixed temperature floor, and only the
+standard output files are requested — a minimal, representative script
+rather than one exercising every optional output table.
 
 -------------------------------------------------
 The script
@@ -53,6 +58,11 @@ prompts) — this page just shows concrete answers.
 
 A few of these are worth spelling out:
 
+* ``B`` at "Magnetic field parameterisation" asks for the field strength
+  directly, in μG; ``0`` gives a purely hydrodynamic, unmagnetised
+  shock. See :doc:`models` for the other parameterisations (``A`` for
+  α = P\ :sub:`mag`/P\ :sub:`gas`, ``M`` for Alfvén Mach number, etc.)
+  if you want a magnetised case instead.
 * The velocity/density line (``1000.0 1.0 200.0``) answers "Specify the
   proto-shock conditions: T (K), dh (N), v (km/s)". T ≤ 10 is taken as a
   log, so ``1000.0`` (> 10) is read literally as 1000 K; ``2.0`` would
@@ -87,11 +97,9 @@ Does the starting temperature matter?
 -------------------------------------------------
 
 Starting the proto-shock gas at 1000 K instead of a lower guess (e.g.
-100 K) does converge, and converges to the same physical state: with a
-1000 K start this run's pre-shock temperature settled to 9665.8 K,
-post-shock temperature 567 729 K, compression 3.9306 — matching an
-otherwise-identical run started at 100 K to within numerical noise
-(9605 K / 568 798 K / 3.9362). The precursor solver recomputes the
+100 K) does converge: this run's pre-shock temperature settled to
+9566.6 K, post-shock temperature 568 937 K, compression 3.9370. The
+precursor solver recomputes the
 pre-shock equilibrium state from radiative balance each iteration, so
 the proto-shock guess only affects the very first iteration's starting
 point, not the converged answer.
@@ -149,8 +157,8 @@ Concretely, always check the following before trusting a shock result:
    leaving the original low-numbered ``.sh5``/``.csv`` files short
    (header only, no "Model ended" line) and the real output in
    ``..._0002.*`` instead. This isn't guaranteed to happen on every run
-   that extends — a comparable run in this same session extended from 3
-   to 6 iterations without splitting the file — but it's worth checking
+   that extends — this page's own example run also extended from 3 to
+   6 iterations, without splitting the file — but it's worth checking
    for. The reliable check, independent of the convergence question and
    useful as a general "did this run actually finish" test too, is::
 
@@ -173,13 +181,11 @@ run produced only the always-written files:
 
    * - File
      - Contents
-   * - ``shck_v200s_0002.sh5``
-     - Post-shock cooling-zone structure (see below). ``_0002`` because
-       this run's iteration count was extended — see "Checking for
-       convergence and other failures" above.
-   * - ``prec_v200s_0002.sh5``
+   * - ``shck_v200s_0001.sh5``
+     - Post-shock cooling-zone structure (see below).
+   * - ``prec_v200s_0001.sh5``
      - Precursor-zone structure, same format.
-   * - ``specSHv200s_0002.csv`` / ``specPCv200s_0002.csv``
+   * - ``specSHv200s_0001.csv`` / ``specPCv200s_0001.csv``
      - Integrated line list for the shock / precursor (see below).
    * - ``SHupv200s_0001.lam`` / ``.sou``; ``PCupv200s_0001.lam`` / ``.sou``
      - Upstream radiation field snapshots. Written unconditionally —
@@ -196,32 +202,34 @@ column layout is catalogued in :doc:`outputs` ("Shock Models — S5").
 A peek inside
 -------------------------------------------------
 
-``shck_v200s_0002.sh5`` — after the header, abundance table, and the
-Rankine-Hugoniot jump summary (preshock T = 9665.8 K, postshock T =
-567 729 K, compression factor 3.93), one row per downstream step::
+``shck_v200s_0001.sh5`` — after the header, abundance table, and the
+Rankine-Hugoniot jump summary (preshock T = 9566.6 K, postshock T =
+568 937 K, compression factor 3.937 — close to the strong-shock limit
+of 4 for a purely hydrodynamic, unmagnetised shock, since there is no
+magnetic pressure resisting compression), one row per downstream step::
 
-    487, 1.059309E+18, 3.153909E+15, 474.026, 1.75907, 74.1970, 80.5894,
-    1.23154, 1.332825E+12, 1.170053E+10, 2.403413E-27, 2.617202E-22,
-    3.206194E-02, 0.983858, 1.614224E-02, 1.447985E-04
+    607, 7.568605E+17, 7.556891E+11, 465.576, 93.0247, 6410.99, 6963.32,
+    1.24183, 3.916991E+11, 2.422357E+08, 1.362000E-27, 5.168346E-19,
+    6.997252E-02, 0.989372, 1.062804E-02, 0.00000
 
 Columns are step, distance (cm), dr (cm), T (K), n\ :sub:`e`,
 n\ :sub:`H`, n\ :sub:`i`, μ, elapsed time, dt, normalised net cooling,
 total cooling, d\ :sub:`los`, X(H⁰), X(H⁺), B (G) — the full column
-reference is in :doc:`outputs`. By step 487 the gas has cooled from the
-567 729 K post-shock plateau to ~474 K — well past the 500 K floor used
-in a fixed-temperature-ending run, because the ``A`` ending condition
-(1% weighted ionisation) lets the gas keep cooling until it is almost
-fully recombined (X(H⁺) ≈ 0.016). The full run reached 187 K before
-stopping.
+reference is in :doc:`outputs`. The B column is 0.00000 throughout, as
+expected for this unmagnetised case. By step 607 (of 622) the gas has
+cooled from the 568 937 K post-shock plateau to ~466 K and is almost
+fully recombined (X(H⁺) ≈ 0.011), because the ``A`` ending condition
+(1% weighted ionisation) lets the gas keep cooling well past a fixed
+500 K floor. The full run reached 369.8 K before stopping.
 
-``specSHv200s_0002.csv`` — the integrated shock line list. The high
+``specSHv200s_0001.csv`` — the integrated shock line list. The high
 post-shock temperature reaches ionisation stages a slow shock never
 does — the list opens with O VII X-ray lines rather than He II/Mg II::
 
      Lambda(A),  E (eV) , Flux (HB=1.0), Species  , Kind, Accuracy (1-5)
      =======================================================================
-          17.396,  7.12717E+02,  1.32875E-07, O  VII   , CC  ,    3
-          21.602,  5.73948E+02,  6.37617E-05, O  VII   , CC  ,    3
+          17.396,  7.12717E+02,  1.37964E-07, O  VII   , CC  ,    3
+          21.602,  5.73948E+02,  6.57202E-05, O  VII   , CC  ,    3
 
 -------------------------------------------------
 Getting line strength as a function of position
@@ -243,35 +251,54 @@ output-prefix/menu block:
    :language: none
    :lines: 16-21
 
+The 11 monitored lines here are a fairly typical optical diagnostic
+set: the [O II] 3726/3729 and [S II] 6716/6731 density-sensitive
+doublets, [O III] 5007 and [S III] 9069/9531 (ionisation/excitation),
+[O I] 6300 and [N II] 6583 (low-ionisation), and Hβ/Hα for the Balmer
+decrement — a mix of recombination and collisionally-excited lines
+spanning a wide range of critical densities and excitation
+temperatures, rather than just the three strongest lines in the
+spectrum.
+
 This produces ``linSHv200sl_0001.csv`` (post-shock zone) and
 ``linPCv200sl_0001.csv`` (precursor zone), one row per step with the
 local flux of each selected line::
 
-     # [1] <X>, [2] DeltaX, [3] dX, [4] t, ... ,    4861.330[14],    6562.820[15],    5006.840[16],
-        1,  0.0000    ,  1.08851E+12, ...,  1.87252E-23,  5.73073E-23,  4.59017E-24,
+     # [1] <X>, ... ,    3726.032[14],    3728.815[15],    4861.333[16],    5006.843[17],    6300.304[18],    6562.819[19],    6583.454[20],    6716.440[21],    6730.816[22],    9068.620[23],    9530.619[24],
+        1,  0.0000    , ...,  1.24381E-24,  1.78622E-24,  1.75670E-23,  4.59217E-24,  2.91859E-27,  5.37271E-23,  6.07674E-26,  1.04168E-26,  7.59840E-27,  3.24782E-26,  8.15837E-26,
 
-Verified end to end for this scenario: 308 rows in
-``linPCv200sl_0001.csv``, 527 in ``linSHv200sl_0001.csv``. All three
-monitored lines carry real, sensible, position-varying flux through
-both the precursor and the cooling zone (Hβ and Hα in all 527 shock
-rows; [O III] in 468 of them — zero only where the gas is too hot for
-O⁺⁺ to exist, which is correct physics rather than a matching failure).
+Verified end to end for this scenario: 286 rows in
+``linPCv200sl_0001.csv``, 622 in ``linSHv200sl_0001.csv``, all 11
+species correctly identified (confirmed via the setup-time echo: e.g.
+``O  II  3726.032``, ``S  III  9530.619``, not defaulted or
+misidentified). Every column carries real, position-varying flux
+somewhere in the run; how much of the run depends on the physics, not
+on the matching — Hβ, Hα, and [O I] are nonzero in all 622 shock rows
+(present across the whole temperature range), while lines needing a
+specific, narrower ionisation stage — [O III], the [S II]/[S III]
+doublets, [N II] — are nonzero in roughly 520–605 of the 622 rows,
+zero only where the gas is too hot or too cool for that particular ion
+to exist, which is correct physics rather than a matching failure.
 Both files share the same selected-line list and header, so a line's
 strength can be traced continuously from the precursor through the
 shock front and into the cooling zone. See :doc:`physics_output_spectra`
 for the underlying mechanism, including a note on when this
 position-resolved precursor output was added, and the note below on
-the wavelength-matching tolerance this depends on.
+how precisely a requested wavelength needs to be specified.
 
 .. note::
 
-   Getting a match at all depends on the requested wavelength falling
-   within a tolerance of the line's internally tabulated value.
-   Wavelengths typed to the usual 2 decimal places match correctly; a
-   wavelength that matches nothing stops the run immediately with an
-   explicit error rather than silently reporting zero flux. See
+   The wavelengths above are given to 3–4 decimal places, matching
+   MAPPINGS' own tabulated values — at minimum the same precision
+   :doc:`outputs`' line-list files report wavelengths to. Matching
+   requires this level of precision: a value that misses by more than
+   0.001 Å stops the run immediately with an error listing every real
+   line within 1 Å, so a wrong or imprecise wavelength can be
+   corrected immediately rather than silently producing a zero-flux
+   column. See
    :doc:`physics_output_spectra`, "How a requested wavelength gets
-   matched", for the mechanism and the tolerance value.
+   matched", for why this precision is required and what the error
+   looks like.
 
 -------------------------------------------------
 Adapting this to your own model
@@ -280,9 +307,9 @@ Adapting this to your own model
 * **Proto-shock conditions** (``1000.0 1.0 200.0``) — temperature (K,
   or log if ≤ 10), hydrogen density (cm⁻³, or log if ≤ 0), and velocity
   (km/s if < 1e5, else cm/s), in that order.
-* **Magnetic parameterisation** (``A`` then ``1.0``) — switch to ``B``
-  for a field strength in μG, or ``M``/``C``/``R`` for the other
-  parameterisations (see :doc:`models`).
+* **Magnetic parameterisation** (``B`` then ``0``) — the field strength
+  in μG; switch to ``A`` for α = P\ :sub:`mag`/P\ :sub:`gas`, or
+  ``M``/``C``/``R`` for the other parameterisations (see :doc:`models`).
 * **Ending condition** (``A``) — switch to ``C``/``S`` for a temperature
   floor (with a follow-up value), ``D``/``E`` for a distance/time limit,
   or ``B`` for a specific ion-fraction threshold; see :doc:`code_s5` for

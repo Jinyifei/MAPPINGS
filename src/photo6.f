@@ -1184,9 +1184,12 @@ c
         enddo
         do i=1,mxmonlines
 c     willallowcustombinslater
-c     0.05A: wide enough to match a wavelength typed to 2 decimal
-c     places without conflating closely-spaced doublets
-          emlindeltas(i)=0.05d0
+c     0.001A: comfortably covers the +/-0.0005A rounding from reading
+c     a wavelength off spec2's 3-decimal-place output, while staying
+c     far tighter than any real line-to-line separation encountered in
+c     practice - so a wavelength copied from the line list matches
+c     exactly, with no risk of picking up an unrelated nearby line.
+          emlindeltas(i)=0.001d0
         enddo
         call speclocallineids (emlinlistatom, emlinlistion)
         do i=1,iemn

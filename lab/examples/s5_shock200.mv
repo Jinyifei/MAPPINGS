@@ -7,8 +7,8 @@ S5     : Shock with auto precursor
 D      : Default preionisation balance
 X      : eXit with current source
 V      : define shock by velocity, iterating on preshock if neeeded
-A      : Alpha = 1/beta  0 = no field, >> 1 is field dominated
-1.0
+B      : Specify the magnetic field strength directly
+0      : B = 0 microgauss, unmagnetised shock
 1000.0 1.0 200.0  T dh v km/s
 F      : Diffuse field option
 A      : Ending
@@ -17,5 +17,5 @@ v200s_
 A      : Output settings
 X
 A      : Runtime screen display
-a=1 200km/s shock, proto-shock T=1000K, 3 iterations, ending A
+B=0 200km/s shock, proto-shock T=1000K, 3 iterations, ending A
 xit
