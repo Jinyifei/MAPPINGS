@@ -266,12 +266,12 @@ the wavelength-matching tolerance this depends on.
 .. note::
 
    Getting a match at all depends on the requested wavelength falling
-   within a tolerance of the line's internally tabulated value —
-   0.05 Å as of this fix; wavelengths typed to the usual 2 decimal
-   places should match correctly, but a request that matches nothing
-   now stops the run with an explicit error rather than silently
-   reporting zero flux. See :doc:`physics_output_spectra` for the
-   history here.
+   within a tolerance of the line's internally tabulated value.
+   Wavelengths typed to the usual 2 decimal places match correctly; a
+   wavelength that matches nothing stops the run immediately with an
+   explicit error rather than silently reporting zero flux. See
+   :doc:`physics_output_spectra`, "How a requested wavelength gets
+   matched", for the mechanism and the tolerance value.
 
 -------------------------------------------------
 Adapting this to your own model

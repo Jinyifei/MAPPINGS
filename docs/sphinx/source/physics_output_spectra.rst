@@ -156,6 +156,51 @@ emissivity vs. position — and leaves the volume weighting (to get a
 cumulative or partial luminosity curve) to you, rather than doing it
 for you the way ``sumdata`` does for the final total.
 
+How a requested wavelength gets matched
+==========================================
+
+Selecting a line means typing a wavelength, not picking from a list —
+so every selection has to be resolved against MAPPINGS' internal line
+data. Two subroutines do this, both built the same way: a master list
+of every known line's wavelength, species, and ion is assembled from
+the live atomic-data brightness arrays (H/He recombination series,
+forbidden/semi-forbidden CELs, Fe lines, recombination satellites —
+the same set ``spec2`` draws on for the full line list), sorted by
+wavelength, then searched for the nearest entry to each requested
+value.
+
+* ``speclocallineids`` runs once, immediately after the wavelengths
+  are entered at setup. It resolves each one to an atom/ion pair,
+  purely to print the species label — "H I", "O III", etc. — in the
+  interactive echo and in the monitor file's header row.
+* ``speclocallines`` runs every zone during the actual model, and
+  performs the equivalent match to sum up the local flux that becomes
+  each column's value in ``lines*.csv``/``linSH*.csv``/``linPC*.csv``.
+
+A match requires the requested wavelength to fall within a tolerance
+(``emlindeltas``, currently 0.05 Å, set identically at the point
+wavelengths are entered in ``shock5.f``, ``photo6.f``, and
+``photo7.f``) of the line's internally tabulated, air/vacuum-corrected
+wavelength — comfortably wide enough for a value typed to the usual 2
+decimal places, while still narrow enough not to conflate closely
+spaced doublets such as [O II] 3726/3729.
+
+.. admonition :: Developer Note
+
+   If a requested wavelength matches nothing within tolerance,
+   ``speclocallineids`` stops the program immediately with an explicit
+   error naming the offending wavelength and the tolerance used, before
+   the model runs. This is deliberate: an unmatched line has no
+   internal identity to report, and continuing silently would mean the
+   corresponding monitor-file column reads zero for the entire run with
+   no indication anything was wrong — which is exactly what an earlier,
+   far tighter tolerance (0.001 Å) produced in practice, since a
+   wavelength typed to 2 decimal places routinely missed its own
+   internally tabulated value by more than that. Both the tolerance
+   widening and the fail-fast check were added in response to hitting
+   this directly on a real run — see :doc:`walkthrough_s5`, "Getting
+   line strength as a function of position".
+
 Companion monitor outputs
 ============================
 
@@ -316,6 +361,11 @@ Key routines
      - Returns the local (not cumulative) brightness of each
        user-selected monitored line at the current zone; the source of
        the position-resolved ``lines*.csv`` / ``linSH*.csv`` output.
+   * - ``speclocallineids``
+     - Resolves each monitored wavelength to a species/ion label at
+       setup, using the same nearest-match search as
+       ``speclocallines``; stops the program if a wavelength matches
+       nothing within tolerance.
 
 .. todo :: Trace the exact normalisation applied at output (per-unit
    area at a reference distance vs. total luminosity vs. relative to
