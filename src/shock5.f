@@ -1610,13 +1610,13 @@ c
      &     rom(emlinlistion(itr)),itr=1,njlines)
         endif
   210  format(
-     & ' # [1] <X>, [2] DeltaX, [3] dX, [4] t, [5] dt,  [6] <T>,'
-     & ' [7] <ne>, [8] <nH> , [9]  <nT>, [10] logQH, [11]  logUH,',
-     & ' [12]  logQN, [13]   <HB>,',
+     & ' # [1] step, [2] <X>, [3] Xmid, [4] dX, [5] <T>, [6] <ne>,'
+     & ' [7] <nH>, [8]  <nT>, [9] logQH, [10]  logUH,',
+     & ' [11]  logQN, [12]   <HB>',
      &   16(',',f12.3,'[',i2,']'))
-        write (lulsh,210) (emlinlist(itr),itr+13,itr=1,njlines)
+        write (lulsh,210) (emlinlist(itr),itr+12,itr=1,njlines)
         if (lulpc.gt.0) then
-          write (lulpc,210) (emlinlist(itr),itr+13,itr=1,njlines)
+          write (lulpc,210) (emlinlist(itr),itr+12,itr=1,njlines)
         endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -394,7 +394,8 @@ X-ray and UV cooling-band fluxes at each step.  Columns:
 --------------------------------------------------
 
 Comma-separated, one row per step.  Columns: step, distance (cm), distance+dr/2 (cm), dr (cm),
-T (K), n\ :sub:`e`, n\ :sub:`H`, n\ :sub:`e`\+n\ :sub:`i`, then one column per monitored
+T (K), n\ :sub:`e`, n\ :sub:`H`, n\ :sub:`e`\+n\ :sub:`i`, logQH, logUH, logQN (these three are
+always 0 — not yet computed for S5), H\ :math:`\beta`, then one column per monitored
 line.  Column headers name each line as element symbol + roman numeral ion (e.g. ``O III``);
 a second header row gives the line wavelengths.
 
