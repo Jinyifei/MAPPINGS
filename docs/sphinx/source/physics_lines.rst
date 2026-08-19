@@ -205,7 +205,7 @@ Data flow summary
               (from Lyman-line trapping)
            |
            v
-   Integrated line list + emergent spectrum (.csv, .lam, .nfn, .bln)
+   Integrated line list + emergent spectrum (.csv, .lam, .nfn)
 
 -------------------------------------------------
 Key routines

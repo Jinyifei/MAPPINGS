@@ -328,7 +328,8 @@ Data flow summary
            |
            v
    Assemble integrated spectrum, line list, broadband fluxes
-   Write to .csv, .lam, .nfn, .bln, .sou files
+   Write to .csv, .lam, .nfn, .sou files (plus .bln, the separate
+   ionisation-balance table — see :doc:`outputs`)
 
 -------------------------------------------------
 P6 vs P7 differences

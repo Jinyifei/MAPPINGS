@@ -553,10 +553,6 @@ output options are selected.
 
    * - Extension
      - Contents
-   * - ``.bln``
-     - Blanketed continuum spectrum: the total model continuum including
-       free-free, free-bound, two-photon, and dust emission, without
-       emission lines.
    * - ``.lam``
      - Wavelength versus F\ :math:`\lambda` spectrum in five columns:
        wavelength (Å), total flux, source flux, nebular flux, and nebular
@@ -575,6 +571,15 @@ output options are selected.
    * - ``.txt``
      - Plain-text output from slab geometry models (``slab.f``).
 
+``.bln`` — Ionisation Balance File
+=====================================
+
+Not a continuum or spectrum file despite living alongside them by extension.
+Written unconditionally on the final iteration by ``wbal`` (``src/output.f``)
+for every model type — P6, P7, S5, and the slab geometry models (``slab.f``)
+all call it. Contents: a plain-text table of the final ionisation state, one
+row per ion stage of every element present (atomic number, ion stage, and
+population fraction), preceded by a short header naming the run.
 
 ---------------------------------
 Notes on File Naming

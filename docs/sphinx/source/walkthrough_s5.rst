@@ -191,7 +191,7 @@ run produced only the always-written files:
      - Upstream radiation field snapshots. Written unconditionally —
        not gated by any output-menu option (see :doc:`outputs`).
    * - ``v200s_0001.bln``
-     - Blanketed continuum.
+     - Final ionisation balance table (not a spectrum — see :doc:`outputs`).
 
 No ``elSH``/``elPC`` (needs ``B``), ``bandSH`` (needs ``H``), ``coolSH``
 (needs ``K``), ``linSH``/``linPC`` (needs ``L``), or ``SHdw*`` (needs
