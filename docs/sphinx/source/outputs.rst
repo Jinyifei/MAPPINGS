@@ -71,7 +71,14 @@ selected in the run menu.
    * - Filename pattern
      - Contents
    * - ``spec<N>.csv``
-     - Full emission spectrum as a two-column (wavelength, flux) table.
+     - The full discrete line list (via ``spec2``), one row per computed
+       emission line: wavelength (Å, air), photon energy (eV), flux
+       relative to H\ :math:`\beta` = 1, species (atom + ion stage),
+       line-type code, and an index — six columns, not two. Same format
+       as ``specSH<pfx>``/``specPC<pfx>`` (S5) and ``lines<N>.csv``
+       below; this is a volume-integrated total with no wavelength
+       binning/resolution limit, unlike ``.lam``/``.sou``/``.nfn``
+       (see below).
    * - ``lines<N>.csv``
      - Line flux table listing every computed emission line, its
        identification, and its flux relative to H\ :math:`\beta`.
@@ -80,8 +87,13 @@ selected in the run menu.
    * - ``rates<N>.csv``
      - Reaction rate coefficients and heating/cooling rates by process.
    * - ``flam_<N>.csv``
-     - F\ :math:`\lambda` spectrum: wavelength (Å) versus flux
-       (erg s\ :sup:`−1` cm\ :sup:`−2` Å\ :sup:`−1`).
+     - F\ :math:`\lambda` spectrum (via ``wplam4``) in five columns:
+       wavelength (Å, air), total model flux, source-only flux,
+       nebula-only flux, and nebula continuum-only flux, all in
+       erg s\ :sup:`−1` cm\ :sup:`−2` Å\ :sup:`−1`. Despite "flam" in
+       the name this is on the same fixed, log-uniform wavelength grid
+       as ``.lam`` (see the caveat below) and its "total"/"nebula"
+       columns include emission lines, not just continuum.
    * - ``<X>_ion<N>.csv``
      - Per-element ion fraction profiles, where ``<X>`` is a one- or
        two-character element abbreviation.
@@ -323,6 +335,11 @@ Selecting **B** (ion balance files) triggers two follow-up prompts:
    the *downstream* field (``SHdw*``) requires ``E``, and only the extra
    ``.nfn`` detail file for any of the three requires ``F``.
 
+   For what these ``.lam``/``.sou``/``.nfn`` files actually contain
+   (continuum and lines together, on a fixed-resolution grid) and their
+   limits for observational comparison, see the caveat under
+   "Continuum and Spectrum Files" below.
+
 Format of the optional files
 ==============================
 
@@ -554,22 +571,80 @@ output options are selected.
    * - Extension
      - Contents
    * - ``.lam``
-     - Wavelength versus F\ :math:`\lambda` spectrum in five columns:
-       wavelength (Å), total flux, source flux, nebular flux, and nebular
-       continuum, all in erg s\ :sup:`−1` cm\ :sup:`−2` Å\ :sup:`−1`.
+     - Wavelength (Å, air) versus F\ :math:`\lambda`
+       (erg s\ :sup:`−1` cm\ :sup:`−2` Å\ :sup:`−1`) — two columns.
+       Restricted to 1000–50000 Å, zero-flux bins omitted. **Contains
+       both the continuum and (almost) every emission line**, not
+       continuum alone — see the caveat below.
    * - ``.nfn``
-     - Frequency versus :math:`\nu F_\nu` spectrum
-       (erg s\ :sup:`−1` cm\ :sup:`−2` sr\ :sup:`−1`).
+     - Frequency (Hz) versus :math:`\nu F_\nu`
+       (erg s\ :sup:`−1` cm\ :sup:`−2` sr\ :sup:`−1`) — two columns, full
+       native energy range (no 1000–50000 Å restriction). Same
+       continuum+lines content as ``.lam``, just unrestricted range and
+       different units/axes (note the ``/sr`` here — unlike ``.lam``
+       this is not multiplied by 4π).
    * - ``.emi``
      - Emission spectrum normalised relative to H\ :math:`\beta`.
    * - ``.dat``
      - X-ray band flux data.
    * - ``.sou``
-     - Photon source vector in J\ :math:`_\nu` units (1/4π sr).  Used
-       internally as the radiation field representation and can be fed
-       back as input to a subsequent model to chain calculations.
+     - Photon source vector: photon energy (eV) versus J\ :math:`_\nu`
+       (erg s\ :sup:`−1` cm\ :sup:`−2` Hz\ :sup:`−1` sr\ :sup:`−1`,
+       "1/4π" units) — two columns, whitespace-separated (not comma),
+       full native energy range. The rawest, most complete form of this
+       same continuum+lines field; can be fed back as input to a
+       subsequent model to chain calculations.
    * - ``.txt``
      - Plain-text output from slab geometry models (``slab.f``).
+
+.. admonition:: Caveat — ``.lam``/``.sou``/``.nfn`` are useful for quick
+   characterization, not for direct comparison to observations
+
+   These three files are all views of the same ``tphot`` array (built in
+   ``totphot2``/``newdif2``, see :doc:`physics_output_spectra`), and that
+   array is **not** continuum-only: ``src/localem.f`` injects
+   collisionally-excited/forbidden lines (``fmbri``/``febri``/``f3bri``/
+   ``fsbri``), He I recombination, and dielectronic/RR satellite lines
+   directly into the same per-bin array (``emidif``) as the true
+   continuum, and H/He/X-ray-complex lines get their own additional,
+   more careful zone-to-zone transport on top of that
+   (``src/totphot.f:481-868``). So a ``.lam`` spectrum genuinely shows
+   both continuum and lines together — confirmed by matching peak
+   wavelengths in real output against the standard optical CEL set
+   (Hα, [O III], [O II], [N II], [S II], [O I], [Ne III], [S III], He I,
+   etc.).
+
+   However, the wavelength/energy grid these files are written on
+   (``photev``, loaded once from ``data/PHOTDAT.txt``) is a **fixed,
+   log-uniform grid at a constant resolving power of R ≈ 3500**
+   (Δλ/λ ≈ 2.86×10⁻⁴ everywhere, verified directly from real output).
+   Every line is simply assigned to whichever native bin its rest
+   energy happens to fall in (``mapinit.f``, e.g. ``hbin(line,series)``)
+   — no bin is specially narrowed or inserted for it — and the line's
+   full luminosity is divided by that bin's native width to produce the
+   per-bin flux density. That means:
+
+   - A line's *peak* Flambda/Jν value is not directly comparable between
+     lines at different wavelengths, because it is implicitly divided by
+     a bin width that scales with wavelength (Δλ = λ/3500). To recover
+     an actual, resolution-independent line flux from a peak in these
+     files, multiply by the local bin width: ``flux_line ≈
+     Flambda_peak(λ) × λ/3500``. Verified against the authoritative
+     volume-integrated line list (``specSH*.csv``/``spec<N>.csv``) to
+     under 1% agreement across a 2.7× wavelength range.
+   - Two real lines separated by less than roughly λ/3500 (≈1.3–2.7 Å
+     across the optical) land in the same bin and are indistinguishable.
+   - There is no instrumental-resolution convolution, flux calibration,
+     or continuum-normalization applied — this is the model's own
+     internal radiative-transfer grid, not a synthetic observation.
+
+   **In short**: ``.lam``/``.sou``/``.nfn`` are well suited to a quick
+   look at the overall shape and relative strength of a model's
+   continuum and lines together, but are not a substitute for a properly
+   synthesized, instrument-matched spectrum when comparing to real data
+   — use the volume-integrated line fluxes (``specSH*.csv``/``lines<N>.csv``)
+   for quantitative line-flux work, and see :doc:`physics_output_spectra`
+   for the full mechanism.
 
 ``.bln`` — Ionisation Balance File
 =====================================

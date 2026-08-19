@@ -96,30 +96,88 @@ diffuse-field bookkeeping in :doc:`physics_lines`, which *is* used to
 determine local trapping and feeds back into ionisation/heating, but
 which does not itself feed the flux totals in ``sumdata``).
 
--------------------------------------------------
-Continuum spectrum: the transported diffuse field
--------------------------------------------------
+-------------------------------------------------------
+The transported diffuse field: continuum *and* lines
+-------------------------------------------------------
 
-The continuum spectrum output (``.lam``, ``.csv`` 4-flambda tables) is
-built differently. The writer routines (``wplam4`` for P6/P7,
-``wpsou``/``wpsoufile`` for the shock models — ``wpsou`` calls
+The ``.lam``/``.sou``/``.nfn`` output (and the ``flam_<N>.csv`` 4/5-flambda
+table) is built differently from the volume-integrated line-flux totals
+above. The writer routines (``wplam4`` for P6/P7's ``flam_<N>.csv``,
+``wpsou``/``wpsoufile`` for everything else — ``wpsou`` calls
 ``wpsoufile`` directly, so both ultimately go through the same code)
-take a field array (``tp1``…``tp4``, populated from ``tphot`` and its
+take a field array (``tphot``, or ``tp1``…``tp4`` for its
 source/nebula-only/nebula-continuum variants) and do nothing more than
-a **unit conversion**:
+a **unit conversion** — e.g. for Flambda:
 
 .. code-block:: none
 
-   tp(j) = fpi * scale * bv * tp(j) / clam
+   bv     = cphotev(j) * evplk        ! photon frequency, Hz
+   lambda = 1.0d8*cls / bv            ! wavelength, Angstrom
+   tp(j)  = fpi * scale * bv * tp(j) / lambda
 
 No further summation over zones happens inside the writer. The
 transport already happened earlier, when ``tphot`` was built up
 zone-by-zone by ``totphot2``/``newdif2`` using the real photoelectric
-optical depth (:doc:`physics_lines`). So the continuum spectrum
-genuinely is an emergent, attenuated quantity — a snapshot of the
-outward-propagating diffuse field at the point the field array was
-captured — unlike the line fluxes, which never pass through that
-zone-to-zone attenuation step at all.
+optical depth (:doc:`physics_lines`). So this output genuinely is an
+emergent, attenuated quantity — a snapshot of the outward-propagating
+diffuse field at the point the field array was captured.
+
+.. important::
+
+   Despite the informal shorthand "continuum spectrum" used for these
+   files, ``tphot`` is **not continuum-only**. Its base per-bin term
+   (``emidif`` in ``newdif.f``/``totphot.f``) is filled in
+   ``src/localem.f`` from every collisionally-excited/forbidden-line
+   brightness array (``fmbri``, ``febri``, ``f3bri``, ``fsbri`` — the
+   same arrays ``sumdata.f`` uses for the ordinary line-flux totals),
+   plus He I recombination and several dielectronic/RR satellite-line
+   arrays, each added at its own frequency bin:
+
+   .. code-block:: none
+
+      emidif(j) = emidif(j) + fmbri(trans,ion)/(wid*energ)   ! forbidden/CEL lines
+      emidif(j) = emidif(j) + heibri(i)/(wid*energ)          ! He I recombination
+      ! ... and several more line-brightness arrays, same pattern
+
+   On top of that base term, ``totphot.f`` (lines 481–868) gives
+   hydrogen, helium, and X-ray resonance/satellite-complex lines their
+   own additional, more careful zone-to-zone escape/trapping transport,
+   and adds *that* into ``tphot`` too. So a ``.lam``/``.sou``/``.nfn``
+   spectrum shows continuum and (almost) the full emission-line
+   spectrum together — confirmed empirically by matching peaks in real
+   output against the standard optical line set (Hα, Hβ, [O III],
+   [O II], [N II], [S II], [O I], [Ne III], [S III], He I, etc., all at
+   their correct rest wavelengths).
+
+   **The wavelength grid is fixed and coarse relative to a real
+   spectrograph.** ``photev`` (loaded once from ``data/PHOTDAT.txt``) is
+   log-uniform at a constant resolving power R ≈ 3500
+   (Δλ/λ ≈ 2.86×10⁻⁴, verified directly from output: Δλ = 1.065 Å at
+   3727 Å, 1.876 Å at 6562 Å, 2.723 Å at 9530 Å — all the same ratio).
+   A line is assigned to whichever native bin its rest energy falls
+   into (``mapinit.f``, e.g. ``hbin(line,series)``) with no special
+   narrowing or insertion, and its full luminosity is divided by that
+   bin's width to make the per-bin flux density. Consequently:
+
+   - A peak's height in these files is not directly comparable between
+     lines at different wavelengths — it is implicitly divided by
+     Δλ = λ/3500. Recovering the true, resolution-independent line flux
+     needs ``flux_line ≈ Flambda_peak(λ) × λ/3500``; checked against
+     ``specSH*.csv``'s volume-integrated totals to under 1% agreement
+     for Hα, [O III] 5007, and both [O II] 3726/3729 components.
+   - Two real lines closer together than ≈λ/3500 (1.3–2.7 Å across the
+     optical) merge into one bin and become indistinguishable.
+   - There is no instrumental broadening, flux calibration, or
+     continuum-normalization here — it is the model's own internal
+     radiative-transfer grid, not a synthesized observation.
+
+   **Practical upshot**: ``.lam``/``.sou``/``.nfn`` are good for a quick
+   look at a model's overall continuum-plus-line shape and relative
+   strengths, but are not a substitute for a properly instrument-matched
+   synthetic spectrum when comparing to real data. For quantitative line
+   fluxes, use the volume-integrated totals (``specSH*.csv``/
+   ``specPC*.csv``/``spec<N>.csv``/``lines<N>.csv``) described above
+   instead.
 
 ----------------------------------------------------------
 Position-resolved output: the line-monitor feature
