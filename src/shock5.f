@@ -2035,8 +2035,10 @@ c uses global pop
 c
         call difhhe (pop_pre, pop_pre0, delhhe)
         write (*,10) its,maxits
-        term=2.d0*(cmpf-cmpf0)/(cmpf+cmpf0)
+        term=2.d0*(psi-psi0)/(psi+psi0)
         rmserr=term*term
+        term=2.d0*(cmpf-cmpf0)/(cmpf+cmpf0)
+        rmserr=rmserr+(term*term)
         term=2.d0*(te_pre-te_pre0)/(te_pre+te_pre0)
         rmserr=rmserr+(term*term)
         term=2.d0*(te_pst-te_pst0)/(te_pst+te_pst0)
@@ -2573,7 +2575,14 @@ c
 c
       if (iteration.lt.3) goto 100
 c
-      if (finalit.gt.0) goto 100
+c  Note: the final pass (finalit>0) used to exit here after a single,
+c  un-refined sweep, even though rmslimit is tightened to 5.0d-4 for
+c  this pass above.  That let the final output be written from a
+c  precursor state that had not actually met its own tightened
+c  tolerance, which could make an already-converged model report
+c  NOT CONVERGED on this last check alone (issue #7).  Now it falls
+c  through to the ordinary loop-continuation test below like any other
+c  iteration, so it actually iterates to rmslimit before exiting.
 c
       if ((iabs(nfs0-nfs).gt.10)
      &.or.((rmserr.gt.rmslimit)
@@ -2594,6 +2603,21 @@ c
 c      put final/inner balance into preionisation array
 c
       call copysteppop (1, popfr, pop_pre)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c  Under-relax the new precursor solution toward the previous global
+c  iteration's converged precursor state (pop_pre0/te_pre0/de_pre0, saved
+c  by shock5check).  Without this the shock<->precursor global loop is a
+c  raw fixed-point substitution that can settle into a period-2 limit
+c  cycle instead of converging (issue #7).  A 0.5 blend cancels a
+c  marginal eigenvalue of -1 (an undamped 2-cycle) in a single iteration.
+c
+      if (iteration.gt.1) then
+        te_pre=0.5d0*(te_pre+te_pre0)
+        de_pre=0.5d0*(de_pre+de_pre0)
+        call averinto (0.5d0, pop_pre, pop_pre0, pop_pre)
+      endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3354,6 +3378,21 @@ c     slow start in step^2 for 5 steps : 25*0.04=1.0
       hdt=0.5d0*dt
       drstep=velstep*dt
       dr=drstep
+c
+c  Heartbeat: some parameter combinations (e.g. low nH, fast v_shock)
+c  need thousands of zone steps per global iteration to cool to the
+c  stopping criterion, and the per-zone table above is only printed
+c  when vmod='MINI'.  Without this, a slow-but-working run is
+c  indistinguishable from a hang (issue #7 follow-up).  Printed
+c  unconditionally, throttled to avoid flooding fast-finishing models.
+c
+      if (mod(step,100).eq.1) then
+        write (*,195) iteration,maxits,step,mxnsteps,tstep,rad
+        call flush (6)
+      endif
+  195 format ('  ... SHOCK 5 progress: Global It ',i3,' of ',i3,
+     & ', Zone Step ',i5,' of ',i5,', T=',1pg11.4,' K, Dist=',
+     & 1pg11.4,' cm')
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
