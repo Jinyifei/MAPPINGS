@@ -109,9 +109,15 @@ c
       integer*4 ie,jnorm,converged,useprecfile
       integer*4  count,step,np,finalit
       integer*4  aitninit
+c s5tight: precursor inner-loop tolerance/regrid control (issue #7),
+c set once convergence is first declared and held through the lock-in
+c iterations and the final pass.  Deliberately separate from finalit,
+c which controls compsh5's file writes and must stay true for exactly
+c one call.
+      integer*4  s5tight
 c
       common /shock5I/ ie,jnorm,converged,
-     & count,step,np,finalit,useprecfile,aitninit
+     & count,step,np,finalit,useprecfile,aitninit,s5tight
 c
       common /shock5L/ luop,lusp,lupt,lupc,
      & ludy,lucl,lupb,lupf,

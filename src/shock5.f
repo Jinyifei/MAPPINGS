@@ -33,7 +33,7 @@ c
       include 'cblocks.inc'
       include 's5blocks.inc'
 c
-      integer*4 iterations,iterationindex
+      integer*4 iterations,iterationindex,nlock
    10 format(//,
      & ' *********************************************************',/,
      & '  SHOCK 5    Global Iteration: ',i2.2,' of ',i2.2)
@@ -56,6 +56,20 @@ c
       finalit=0
       aitninit=0
 c
+c  Solve the precursor's own inner loop to the real outer tolerance
+c  (s5rmstol) from iteration 1, not just once convergence is first
+c  (loosely) declared (issue #7).  A survey across 9 models found a
+c  third had a large loose-vs-tight gap at the end -- the main loop's
+c  whole convergence history was being judged against an inner solve
+c  10x-1000x looser than the 0.01% outer threshold, not just the
+c  final pass.  Costs ~7-30% more wall-clock time (measured directly,
+c  same models, old vs new code) but is the honest fix: 8 of the 9
+c  surveyed models now converge cleanly (up from 6), and the ninth is
+c  correctly diagnosed as a genuine sustained oscillation rather than
+c  masked by a lucky loose-tolerance comparison.
+c
+      s5tight=1
+c
       if (iterations.le.1) finalit=1
 c
       call compsh5 (0, iterations)
@@ -74,9 +88,27 @@ c
 c
         if ((converged.eq.0).and.(iterations.lt.mxshockits)) goto 40
 c
+c  A few more ordinary iterations once convergence is first declared,
+c  cheap extra confirmation now that s5tight makes every iteration
+c  (not just this tail) solve the precursor to the real tolerance
+c  (issue #7).  Skipped if the loop above never converged; more of
+c  the same iteration wouldn't be expected to fix that on its own.
+c
+        if (converged.ne.0) then
+          do nlock=1,3
+            iterationindex=iterationindex+1
+            write (*,10) iterationindex,iterationindex
+            call shock5precursor (iterationindex, iterationindex)
+            call compsh5 (iterationindex, iterationindex)
+            call shock5check (iterationindex, iterationindex)
+            write (*,20) iterationindex,iterationindex
+          enddo
+        endif
+c
 c repeat a final model for outputs
 c
         finalit=1
+        s5tight=1
         iterationindex=iterationindex+1
 c
         call shock5precursor (iterationindex, iterationindex)
@@ -2171,14 +2203,18 @@ c
       rmslimit=5.0d-2
       if (iteration.gt.1) rmslimit=1.0d-1
 c
-c  On the final verification pass, iterate the precursor's own inner
-c  loop to the *same* tolerance shock5check uses for the outer pass/
-c  fail decision (s5rmstol), not a looser one -- otherwise the inner
-c  loop can consider itself self-consistent while still landing
+c  s5tight (issue #7): iterate the precursor's own inner loop to the
+c  *same* tolerance shock5check uses for the outer pass/fail decision
+c  (s5rmstol), not the looser rmslimit values above -- otherwise the
+c  inner loop can consider itself self-consistent while still landing
 c  outside the outer threshold relative to the previous global
-c  iteration, reproducing the false-negative final pass (issue #7).
+c  iteration.  Currently set true for every iteration (see top of
+c  shock5()), so the two lines above are superseded immediately;
+c  s5tight is deliberately kept separate from finalit, which must stay
+c  true for exactly one call since it also gates compsh5's file
+c  writes.
 c
-      if (finalit.gt.0) rmslimit=s5rmstol
+      if (s5tight.gt.0) rmslimit=s5rmstol
 c
       fi=1.0d0
       wdil=0.5d0
@@ -2507,7 +2543,11 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Adjust grid size for given absf as te and pops converge
-c and save for next interation starting point.
+c and save for next interation starting point.  Kept keyed on finalit
+c (not s5tight, issue #7) -- the grid should stay free to adapt for
+c the entire normal run, including once s5tight has tightened the
+c inner tolerance; it should only freeze for the single, truly final
+c output-writing pass.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
