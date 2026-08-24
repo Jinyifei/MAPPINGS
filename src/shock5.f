@@ -2062,6 +2062,7 @@ c
      & '    Precursor RMS (Psi,T_pre,ne_pre,DelH/He): ',1pg11.4,'%',/,
      & '    Post-shock RMS (Compress,T_shock)      : ',1pg11.4,'%',/,
      & '    RMS      : ',  1pg11.4,'%',/,
+     & '    Aitken omega (precursor relaxation)     : ',1pg11.4,/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
       converged=0
 c
@@ -2097,7 +2098,7 @@ c
 c
         write (*,40) psi,psi0,cmpf,cmpf0,te_pre,te_pre0,te_pst,te_pst0,
      &   de_pre,de_pre0,delhhe*100.d0,precrms*100.d0,postrms*100.d0,
-     &   rmserr*100.d0
+     &   rmserr*100.d0,aitomega
         if (rmserr.lt.s5rmstol) then
           converged=1
           write (*,20)
@@ -2658,6 +2659,23 @@ c
      &.or.((nfs.lt.mxifsteps).and.(t0lim.gt.0))
      &.and.(itcount.lt.mxpcits)
      &) goto 50
+c
+c  Flag the case where the precursor's own inner zone-stepping loop
+c  exhausted its sweep budget (mxpcits) without reaching its own
+c  self-consistency target (rmslimit) -- previously silent.  With
+c  s5tight now demanding 0.01% self-consistency instead of the old
+c  10%, it's plausible some models can't get there in mxpcits sweeps;
+c  that would look like outer coupling oscillation/slow-convergence
+c  without this, when it's actually the inner solve itself running out
+c  of budget (issue #7 follow-up).
+c
+      if ((rmserr.gt.rmslimit).and.(itcount.ge.mxpcits)) then
+        write (*,95) itcount,iteration,rmserr*100.d0,rmslimit*100.d0
+      endif
+   95 format('  ... PRECURSOR WARNING: inner loop hit its sweep cap (',
+     & i3,' sweeps) at global iteration ',i3,
+     & ' with self-consistency RMS ',1pg11.4,
+     & '% still above its target ',1pg11.4,'%')
 c
   100 continue
 c
