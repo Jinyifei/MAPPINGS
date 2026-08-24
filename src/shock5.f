@@ -2007,6 +2007,7 @@ c
       integer*4 its,maxits
 c
       real*8 delhhe,rmserr,term
+      real*8 t_psi,t_cmp,t_tpre,t_tpst,t_depre,precrms,postrms
 c
    10 format(/,
      & ' ********************************************************',/,
@@ -2025,6 +2026,8 @@ c
      & '    T_shock  : ',  1pg11.4,'  `T_shock  : ',  1pg11.4,/,
      & '    ne_pre   : ',  1pg11.4,'  `ne_pre   : ',  1pg11.4,/,
      & '    DelH/He  : ',  1pg11.4,'%',/,
+     & '    Precursor RMS (Psi,T_pre,ne_pre,DelH/He): ',1pg11.4,'%',/,
+     & '    Post-shock RMS (Compress,T_shock)      : ',1pg11.4,'%',/,
      & '    RMS      : ',  1pg11.4,'%',/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
       converged=0
@@ -2036,20 +2039,33 @@ c
         call difhhe (pop_pre, pop_pre0, delhhe)
         write (*,10) its,maxits
         term=2.d0*(psi-psi0)/(psi+psi0)
-        rmserr=term*term
+        t_psi=term*term
         term=2.d0*(cmpf-cmpf0)/(cmpf+cmpf0)
-        rmserr=rmserr+(term*term)
+        t_cmp=term*term
         term=2.d0*(te_pre-te_pre0)/(te_pre+te_pre0)
-        rmserr=rmserr+(term*term)
+        t_tpre=term*term
         term=2.d0*(te_pst-te_pst0)/(te_pst+te_pst0)
-        rmserr=rmserr+(term*term)
+        t_tpst=term*term
         term=2.d0*(de_pre-de_pre0)/(de_pre+de_pre0)
-        rmserr=rmserr+(term*term)
-        rmserr=rmserr+(delhhe*delhhe)
+        t_depre=term*term
+        rmserr=t_psi+t_cmp+t_tpre+t_tpst+t_depre+(delhhe*delhhe)
         rmserr=dsqrt(rmserr/6.d0)
+c
+c  Diagnostic-only split of the same six terms into a precursor
+c  (pre-shock: Psi, T_pre, ne_pre, DelH/He) sub-residual and a
+c  post-shock (Compress, T_shock) sub-residual, so a failing model's
+c  log shows which side of the shock front the residual actually
+c  comes from (issue #7 follow-up).  Neither sub-value feeds the
+c  convergence decision below -- only the combined rmserr does,
+c  unchanged from before.
+c
+        precrms=dsqrt((t_psi+t_tpre+t_depre+(delhhe*delhhe))/4.d0)
+        postrms=dsqrt((t_cmp+t_tpst)/2.d0)
+c
         write (*,40) psi,psi0,cmpf,cmpf0,te_pre,te_pre0,te_pst,te_pst0,
-     &   de_pre,de_pre0,delhhe*100.d0,rmserr*100.d0
-        if (rmserr.lt.1.d-4) then
+     &   de_pre,de_pre0,delhhe*100.d0,precrms*100.d0,postrms*100.d0,
+     &   rmserr*100.d0
+        if (rmserr.lt.s5rmstol) then
           converged=1
           write (*,20)
         else
@@ -2152,7 +2168,15 @@ c
 c
       rmslimit=5.0d-2
       if (iteration.gt.1) rmslimit=1.0d-1
-      if (finalit.gt.0) rmslimit=5.0d-4
+c
+c  On the final verification pass, iterate the precursor's own inner
+c  loop to the *same* tolerance shock5check uses for the outer pass/
+c  fail decision (s5rmstol), not a looser one -- otherwise the inner
+c  loop can consider itself self-consistent while still landing
+c  outside the outer threshold relative to the previous global
+c  iteration, reproducing the false-negative final pass (issue #7).
+c
+      if (finalit.gt.0) rmslimit=s5rmstol
 c
       fi=1.0d0
       wdil=0.5d0
