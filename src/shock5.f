@@ -54,6 +54,7 @@ c
       iterationindex=0
       converged=0
       finalit=0
+      aitninit=0
 c
       if (iterations.le.1) finalit=1
 c
@@ -2139,6 +2140,7 @@ c
       real*8 rmserr,rmslimit
       real*8 rdvol,irdvol
       real*8 te_0,de_0,dh_0
+      real*8 aitrtenow,aitrdenow,aitdnum,aitdden
 c
 c  functions
 c
@@ -2630,17 +2632,44 @@ c
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
-c  Under-relax the new precursor solution toward the previous global
-c  iteration's converged precursor state (pop_pre0/te_pre0/de_pre0, saved
-c  by shock5check).  Without this the shock<->precursor global loop is a
-c  raw fixed-point substitution that can settle into a period-2 limit
-c  cycle instead of converging (issue #7).  A 0.5 blend cancels a
-c  marginal eigenvalue of -1 (an undamped 2-cycle) in a single iteration.
+c  Aitken Delta^2 dynamic relaxation of the new precursor solution
+c  toward the previous global iteration's state (te_pre0/de_pre0/
+c  pop_pre0, saved by shock5check) -- issue #7.  A raw fixed-point
+c  substitution here can settle into a limit cycle for some shocks
+c  (Psi~0.5-0.8) while a fixed damping factor slows or destabilises
+c  others that were already contracting fine on their own; a single
+c  relaxation constant cannot be right for both.  Aitken relaxation
+c  instead estimates the local behaviour of the precursor<->shock
+c  coupling from the last two raw-vs-accepted residuals and adapts
+c  omega each iteration, the standard fix for exactly this kind of
+c  black-box partitioned coupling (e.g. fluid-structure interaction).
+c  te_pre/de_pre are used as the (normalised, signed) residual proxy
+c  driving omega; pop_pre is blended by the same omega via averinto
+c  to keep the whole precursor state moving together.
 c
       if (iteration.gt.1) then
-        te_pre=0.5d0*(te_pre+te_pre0)
-        de_pre=0.5d0*(de_pre+de_pre0)
-        call averinto (0.5d0, pop_pre, pop_pre0, pop_pre)
+        aitrtenow=2.d0*(te_pre-te_pre0)/(te_pre+te_pre0)
+        aitrdenow=2.d0*(de_pre-de_pre0)/(de_pre+de_pre0)
+        if (aitninit.eq.0) then
+c        no residual history yet -- bootstrap with a plain 0.5 blend
+          aitomega=0.5d0
+          aitninit=1
+        else
+          aitdnum=aitrte*(aitrtenow-aitrte)+aitrde*(aitrdenow-aitrde)
+          aitdden=(aitrtenow-aitrte)**2+(aitrdenow-aitrde)**2
+          if (dabs(aitdden).gt.1.d-30) then
+            aitomega=-aitomega*aitdnum/aitdden
+          endif
+c        clamp: guards against a noisy or near-degenerate estimate
+c        driving the relaxation factor to an unstable extreme
+          aitomega=dmax1(0.05d0,dmin1(1.0d0,aitomega))
+        endif
+        aitrte=aitrtenow
+        aitrde=aitrdenow
+c
+        te_pre=aitomega*te_pre+(1.d0-aitomega)*te_pre0
+        de_pre=aitomega*de_pre+(1.d0-aitomega)*de_pre0
+        call averinto (aitomega, pop_pre, pop_pre0, pop_pre)
       endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

@@ -48,6 +48,12 @@ c Shock state from last iteration for convergence
       real* 8  vs_pre0,vs_pst0,rh_pre0,rh_pst0,pr_pre0,pr_pst0
       real* 8  psi0,cmpf0
       real* 8  bm_pre0,bm_pst0,pop_pre0(mxion,mxelem)
+c Aitken Delta^2 dynamic relaxation bookkeeping for the precursor
+c update (issue #7): residual from the previous application and the
+c relaxation factor it produced, so the next application can adapt
+c omega to the coupling's actual local behaviour instead of using a
+c fixed blend.
+      real* 8  aitrte,aitrde,aitomega
 c Shock proto state
       real* 8  bm_neu,te_neu,de_neu,dh_neu,vs_neu
       real* 8  rh_neu,pr_neu,pop_neu(mxion,mxelem)
@@ -61,7 +67,8 @@ c
      & te_pre0,te_pst0,de_pre0,de_pst0,dh_pre0,dh_pst0,
      & vs_pre0,vs_pst0,rh_pre0,rh_pst0,pr_pre0,pr_pst0,
      & bm_pre0,bm_pst0,pop_pre0,psi0,cmpf0,
-     & te_neu,de_neu,dh_neu,vs_neu,pop_neu,bm_neu,rh_neu,pr_neu
+     & te_neu,de_neu,dh_neu,vs_neu,pop_neu,bm_neu,rh_neu,pr_neu,
+     & aitrte,aitrde,aitomega
 c
       common /shock5R/
      & dr,drdw,drup,dvdw,dvup,frdw,dt,absdr,
@@ -101,9 +108,10 @@ c
 c
       integer*4 ie,jnorm,converged,useprecfile
       integer*4  count,step,np,finalit
+      integer*4  aitninit
 c
       common /shock5I/ ie,jnorm,converged,
-     & count,step,np,finalit,useprecfile
+     & count,step,np,finalit,useprecfile,aitninit
 c
       common /shock5L/ luop,lusp,lupt,lupc,
      & ludy,lucl,lupb,lupf,
