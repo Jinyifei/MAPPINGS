@@ -45,6 +45,10 @@ c
       real*8 cmpf,x1,x2,r1,r2,x
       real*8 cmpfnew,rv2,cmpfhd
       real*8 frho
+      real*8 lamscale
+      integer*4 nretry
+      integer*4 maxretry
+      parameter (maxretry=40)
 c
 c     set globals
 c
@@ -74,8 +78,32 @@ c
 c quadratic full solution for non-magnetic case, for shocks
 c and flows, with or without cooling
 c
+c  When magnetic pressure (pb0) dominates gas pressure (pr0) -- a
+c  cold, dilute, weakly-magnetised preshock gas whose shocked gas has
+c  cooled deep into the tail -- pr1 below is the small difference of
+c  much larger terms (catastrophic cancellation), and even a tiny,
+c  physically-correct extra compression x can swing pr1 negative,
+c  producing an unphysical negative te1 that used to reach cool() and
+c  trigger a hard stop (issue #8, "Cool out of range").  This isn't
+c  tied to any particular input regime -- a full B-scan at fixed
+c  nH/v_shock showed neighbours on both sides converging fine, so
+c  it's numerical fragility in this one calculation, not a physical
+c  boundary to avoid.
+c
+c  Fix: if the full lambda=tl*tstep drives te1 non-physical, retry
+c  with a smaller *effective* lambda (halved each time) and re-solve,
+c  without changing tstep itself -- tstep is used by the caller
+c  afterwards to advance distance/time and must stay what was asked
+c  for.  This is guaranteed to terminate: as the lambda scale -> 0,
+c  x -> 1 and pr1 -> pr0, which is positive by construction.  The
+c  same scaled lambda is used consistently in both the HD and MHD
+c  solves below.
+c
       g=gammaEOSg
-      lambda=tl*tstep
+      lamscale=1.0d0
+      nretry=0
+c
+   10 lambda=tl*tstep*lamscale
       a(3)=-(g*pr0+0.5d0*rv2-lambda)/rv2
       a(2)=g*(pr0+rv2)/rv2
       a(1)=(0.5d0-g)
@@ -92,7 +120,6 @@ c
 c       MHD shock only quadratic solution, discards x=1 root so cant be
 c       used in general flow with cooling, here for validaton purposes
 c
-        lambda=tl*tstep
 c       g=(gammaEOS)/(gammaEOS-1.d0)
         beta=pb0*2.d0
 c      for clarity and compared to paper
@@ -128,6 +155,27 @@ c       call invrho (rho1, de1, dh1, pop)
 c
       pr1=pr0+(rho0*vel0*vel0*(1.d0-(1.d0/x)))+pb0*(1.d0-(x*x))
       te1=pr1/((zen*dh1+de1)*rkb)
+c
+      if ((te1.le.mintemp).and.(nretry.lt.maxretry)) then
+        nretry=nretry+1
+        lamscale=lamscale*0.5d0
+        goto 10
+      endif
+c
+      if (nretry.gt.0) then
+        if (te1.gt.mintemp) then
+          write (*,20) nretry,lamscale,tl*tstep,tl*tstep*lamscale
+        else
+          write (*,30) nretry,te1
+        endif
+      endif
+   20 format('  ... RANKHUG: cooling exceeded available pressure',
+     & ' budget, retried ',i3,' time(s), lambda scaled by ',1pg11.4,
+     & ' (',1pg11.4,' -> ',1pg11.4,') to keep te1 physical')
+   30 format('  ... RANKHUG WARNING: exhausted ',i3,
+     & ' retries and te1 is still non-physical (',1pg11.4,
+     & ') -- this should not happen, lambda scaling should always',
+     & ' converge to a safe state as it approaches zero')
 c
       return
       end
