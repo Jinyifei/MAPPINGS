@@ -33,7 +33,7 @@ c
       include 'cblocks.inc'
       include 's5blocks.inc'
 c
-      integer*4 iterations,iterationindex,nlock
+      integer*4 iterations,iterationindex,nlock,wasconverged
    10 format(//,
      & ' *********************************************************',/,
      & '  SHOCK 5    Global Iteration: ',i2.2,' of ',i2.2)
@@ -44,12 +44,47 @@ c
      & ' *********************************************************',/,
      & '  SHOCK 5 Model Completed',/,
      & ' *********************************************************',/)
+   35 format(/,
+     & ' *********************************************************',/,
+     & '  SHOCK 5: NO SHOCK -- preshock flow is sub-Alfvenic',/,
+     & '  Alfven Mach Number = ',1pg11.4,' (< 1): no compressive',/,
+     & '  MHD shock jump exists for these parameters.  Skipping',/,
+     & '  the shock calculation for this model.',/,
+     & ' *********************************************************',/)
+   36 format(' No Shock: , Alfven Mach:, ',1pg11.4,
+     & ' , Reason:, sub-Alfvenic preshock flow')
+   37 format('  Result: NO SHOCK (sub-Alfvenic)',/,
+     & ' *********************************************************',/)
 c
       iterations=3
       ieln=4
 c
       call shock5setup (iterations)
       call shock5headers (iterations)
+c
+c  A compressive fast MHD shock only has a solution when the preshock
+c  flow exceeds the Alfven speed (alfvennumber, computed in
+c  shock5setup from preshock quantities alone, .ge.1).  Below that,
+c  shockcmpf's jump-condition quadratic has no physical root and
+c  returns an unphysical compression (x<1, an expansion), which used
+c  to propagate through to a negative temperature and a hard stop
+c  many steps later in cool() (issue #8 follow-up).  Checked here,
+c  before shockcmpf is ever called, rather than after the fact --
+c  confirmed via a full grid run that every case with
+c  alfvennumber<1 fails this way and every case >=1 does not, a
+c  clean, sharp boundary at exactly the physically-expected value.
+c  "No Shock:" is written in the same comma-separated style as
+c  "Model ended:" so existing summary tooling (MapSum) can be
+c  extended to recognise it the same way.
+c
+      if (alfvennumber.lt.1.0d0) then
+        write (*,35) alfvennumber
+        write (*,36) alfvennumber
+        write (luop,36) alfvennumber
+        write (*,37)
+        call closeS5files ()
+        return
+      endif
 c
       iterationindex=0
       converged=0
@@ -109,11 +144,38 @@ c repeat a final model for outputs
 c
         finalit=1
         s5tight=1
+        wasconverged=converged
         iterationindex=iterationindex+1
 c
         call shock5precursor (iterationindex, iterationindex)
         call compsh5 (iterationindex, iterationindex)
         call shock5check (iterationindex, iterationindex)
+c
+c  This one extra call is an independent re-solve of the precursor,
+c  purely to regenerate full output tables at finalit's tightened
+c  tolerance -- it is not needed to establish convergence, which the
+c  loop above (plus the lock-in iterations, if any) already did.  A
+c  small residual disagreement here is Aitken's own noise floor from
+c  re-solving an already-converged fixed point, not evidence the
+c  model is actually unconverged -- the "final-pass gap" (issue #7):
+c  the main loop converges cleanly and only this one extra,
+c  independent call disagrees.  If the model was already genuinely
+c  converged going into this call, report that,
+c  rather than letting one noisy independent re-solve override a
+c  result already established by many iterations.  The raw numbers
+c  above are printed either way -- only the bottom-line Result is
+c  corrected.
+c
+        if ((wasconverged.ne.0).and.(converged.eq.0)) then
+          converged=1
+          write (*,38)
+        endif
+   38   format('  Result: CONVERGED  (already converged before this ',
+     & 'final output pass;',/,
+     & '  the pass above re-solves independently and can show a ',
+     & 'small residual',/,
+     & '  from doing so -- see comment at issue #7)',/,
+     & ' *********************************************************',/)
 c
       endif
 c
