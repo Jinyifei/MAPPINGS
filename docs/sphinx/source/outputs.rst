@@ -435,7 +435,7 @@ output to a log file::
 **Per-iteration convergence test**
 
 After each shock–precursor iteration, ``shock5check`` prints a table comparing six quantities
-between the current and previous iterations:
+between the current and previous iterations, plus three further diagnostics:
 
 .. code-block:: text
 
@@ -448,25 +448,62 @@ between the current and previous iterations:
        T_shock  :  1.200e+06   `T_shock  :  1.198e+06
        ne_pre   :  2.300e+01   `ne_pre   :  2.295e+01
        DelH/He  :  0.031%
+       Precursor RMS (Psi,T_pre,ne_pre,DelH/He):  0.010%
+       Post-shock RMS (Compress,T_shock)      :  0.003%
        RMS      :  0.008%
+       Aitken omega (precursor relaxation)     :  0.732
     ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      Result: CONVERGED
    ********************************************************
 
 The six quantities are the ionisation parameter Ψ (= Q/v), the compression factor, the
 precursor temperature, the post-shock temperature, the precursor electron density, and
-the H/He ion fraction change.  The RMS is the quadrature sum of all six fractional
-differences.  Convergence is declared when RMS < 0.01% (10\ :sup:`−4`).
+the H/He ion fraction change.  ``RMS`` is the quadrature sum of all six fractional
+differences; convergence is declared when it is below 0.01% (10\ :sup:`−4`).  The
+**Precursor RMS** and **Post-shock RMS** lines split that same sum into the four
+precursor (pre-shock) terms and the two post-shock terms, so a lingering residual can be
+attributed to one side of the shock front or the other — in practice this is almost
+always the precursor.  **Aitken omega** is the self-tuning relaxation weight blended
+into the precursor state that iteration (see :doc:`code_s5`, "How the precursor↔shock
+loop actually converges"); it is not fixed, and for a model that is oscillating rather
+than converging it is often informative to watch whether omega itself settles down or
+keeps cycling.
 
 If convergence is not reached within the requested number of iterations, MAPPINGS does not
 stop there: each failed check extends the iteration cap by one and tries again, up to a hard
-ceiling of 16 global iterations (``mxshockits`` in ``const.inc``). Whether or not convergence
-was ever reached — even after using all 16 — the loop then always runs one further, final
-output pass. **There is no failure flag written to any output file, no non-zero exit code, and
-no crash** for a run that never converges; the only record is the "Result: NOT CONVERGED"
-message on whichever "SHOCK 5 Convergence Test" block was last printed to the terminal. A run
-finishing cleanly is not the same thing as a run having converged — see :doc:`walkthrough_s5`,
-"Checking for convergence and other failures", for how to verify this in practice.
+ceiling of 20 global iterations (``mxshockits`` in ``const.inc``). Whether or not convergence
+was ever reached — even after using all 20 — the loop then runs a few more ordinary
+iterations followed by one further, final output pass. **There is no failure flag written to
+any output file, no non-zero exit code, and no crash** for a run that never converges; the
+only record is the "Result:" line on whichever "SHOCK 5 Convergence Test" block was last
+printed to the terminal. For a model whose main loop genuinely converges, that last line is
+now reliable — a spurious disagreement on the mandatory final independent re-solve no longer
+overrides an already-established result (it is reported as ``Result: CONVERGED`` with a note
+explaining why, rather than a bare, misleading ``NOT CONVERGED``). A run finishing cleanly is
+still not automatically the same thing as a run having converged, though — see
+:doc:`walkthrough_s5`, "Checking for convergence and other failures", for how to verify this
+in practice.
+
+**No-shock outcome**
+
+Some parameter combinations (preshock flow speed below the local Alfvén speed) have no
+compressive MHD shock solution at all.  MAPPINGS detects this before attempting the shock
+jump and exits that model cleanly rather than crashing; see :doc:`code_s5`, "No shock:
+sub-Alfvénic preshock flow", for the exact output.  No ``.sh5``/``.csv`` structure files are
+written for a no-shock model.
+
+**Progress heartbeat for slow models**
+
+Some parameter combinations (very low preshock density, in particular) need many thousands
+of cooling-zone steps to reach the stopping criterion, which can take a long time even
+though the run is working correctly.  Every 100 zone steps, ``compsh5`` prints a progress
+line to stdout regardless of the runtime display mode chosen at setup::
+
+    ... SHOCK 5 progress: Global It   4 of   4, Zone Step   601 of 4096, T= 3126. K, Dist= 1.3212E+21 cm
+
+This is flushed immediately, so it is visible in real time even when stdout is redirected to
+a file — useful for telling a genuinely slow run apart from one that has actually stopped
+making progress.
 
 **Summary of what is in files versus stdout only**
 
@@ -489,10 +526,17 @@ finishing cleanly is not the same thing as a run having converged — see :doc:`
    * - Integrated emission line list
      - Yes
      - Also printed
-   * - Convergence quantities (Ψ, compression, T, n\ :sub:`e`, RMS%)
+   * - Convergence quantities (Ψ, compression, T, n\ :sub:`e`, RMS%,
+       precursor/post-shock RMS split, Aitken omega)
      - **No**
      - **Yes — stdout only**
-   * - CONVERGED / NOT CONVERGED result
+   * - CONVERGED / NOT CONVERGED / NO SHOCK result
+     - **No**
+     - **Yes — stdout only**
+   * - "No Shock:" summary (Alfvén Mach number)
+     - No file written at all
+     - **Yes — stdout only**
+   * - Zone-step progress heartbeat
      - **No**
      - **Yes — stdout only**
    * - Setup parameters and menu choices

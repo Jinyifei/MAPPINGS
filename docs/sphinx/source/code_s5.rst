@@ -23,18 +23,29 @@ main dispatcher and all supporting subroutines.
 Top-level structure
 -------------------------------------------------
 
-The entry point is ``subroutine shock5()``, which is only ~70 lines.  It
-orchestrates three phases:
+The entry point is ``subroutine shock5()``, ~170 lines.  It orchestrates
+four phases:
 
 1. **Setup** — ``shock5setup`` collects all user input and computes the
    initial Rankine-Hugoniot jump conditions.
-2. **Iteration loop** — alternates between integrating the post-shock
+2. **Sub-Alfvénic check** — before any shock jump is attempted, the
+   preshock Alfvén Mach number (computed in ``shock5setup`` from preshock
+   quantities alone) is checked.  If it is below 1, no compressive fast
+   MHD shock solution exists for these parameters at all, and the model
+   exits cleanly with a "No Shock" message rather than attempting a jump
+   calculation that has no physical root — see :ref:`s5_no_shock` below.
+3. **Iteration loop** — alternates between integrating the post-shock
    cooling zone and recomputing the precursor, repeating until convergence.
-3. **Final output pass** — one last run with the ``finalit`` flag set to
-   write all output files at full detail.
+   See :ref:`s5_convergence` for how the loop actually converges — the
+   iteration count alone is not the whole story.
+4. **Final output pass** — once convergence is declared, a few more
+   ordinary iterations run to let the state settle further, then one
+   last pass with the ``finalit`` flag set writes all output files at
+   full detail.
 
 The default minimum number of global iterations is 3.  The loop
-continues until the convergence flag is set or ``mxshockits`` is reached.
+continues until the convergence flag is set or ``mxshockits`` (20) is
+reached.
 
 -------------------------------------------------
 Phase 1 — Setup (``shock5setup``)
@@ -68,7 +79,48 @@ user interaction and prepares the initial conditions.
    n\ :sub:`1`, v\ :sub:`1`, B\ :sub:`1`) from the pre-shock state.
    This becomes the starting point for the cooling zone integration.
 5. Calls ``shocksummary`` to print the pre- and post-shock state to
-   the terminal and output files.
+   the terminal and output files, including the preshock Alfvén Mach
+   number and the ratio of magnetic to gas pressure.
+
+.. _s5_no_shock:
+
+-------------------------------------------------
+No shock: sub-Alfvénic preshock flow
+-------------------------------------------------
+
+A compressive fast MHD shock only has a solution when the preshock flow
+speed exceeds the Alfvén speed.  ``shock5()`` checks this immediately
+after ``shock5setup`` returns, using the Alfvén Mach number computed
+there from preshock quantities alone — before ``shockcmpf`` (the jump
+solver) is ever called.
+
+If the Alfvén Mach number is below 1, ``shockcmpf``'s jump-condition
+quadratic has no physical root: it returns an unphysical compression
+factor (an *expansion*, not a compression) that would otherwise
+propagate through to a negative temperature and a hard stop deep inside
+the cooling-zone integration, many steps later, in ``cool()``.  Rather
+than let that happen, MAPPINGS detects the condition upfront and exits
+the model cleanly:
+
+.. code-block:: text
+
+   ********************************************************
+    SHOCK 5: NO SHOCK -- preshock flow is sub-Alfvenic
+    Alfven Mach Number =  0.5341     (< 1): no compressive
+    MHD shock jump exists for these parameters.  Skipping
+    the shock calculation for this model.
+   ********************************************************
+
+    No Shock: , Alfven Mach:,  0.5341     , Reason:, sub-Alfvenic preshock flow
+
+    Result: NO SHOCK (sub-Alfvenic)
+
+The ``No Shock:`` line is written in the same comma-separated style as
+``Model ended:`` (see :doc:`outputs`) so it can be parsed the same way,
+and the ``Result:`` line means ``grep "Result:"`` behaves consistently
+across every outcome — ``CONVERGED``, ``NOT CONVERGED``, and
+``NO SHOCK``.  No ``.sh5``/``.csv`` structure files are produced for a
+no-shock model, since no shock structure exists to write.
 
 -------------------------------------------------
 Phase 2a — Cooling zone integration (``compsh5``)
@@ -164,6 +216,13 @@ Key physics routines called each step
    * - ``rankhug``
      - Solves the Rankine-Hugoniot MHD conservation equations in
        differential form; advances T, ρ, v, B given the net cooling rate.
+       When magnetic pressure strongly dominates gas pressure, the
+       pressure-balance step can be numerically ill-conditioned enough
+       that a tiny, physically-correct compression drives the result
+       non-physical; if that happens, ``rankhug`` retries with a
+       reduced effective cooling term (leaving the timestep itself
+       untouched) until the result is physical, printing a notice when
+       it does so.
    * - ``timion``
      - Time-dependent multi-species ionisation balance solver; evolves
        all ion fractions over a timestep at a given temperature and density.
@@ -204,8 +263,52 @@ UV and X-ray radiation escaping forward from the shock.
    ``bm_pre``), which become the new pre-shock boundary condition for
    the next ``compsh5`` call.
 
-The convergence tolerance ``rmslimit`` is set loosely (5%) on early
-iterations and tightened to 0.05% on the final pass.
+.. _s5_convergence:
+
+How the precursor↔shock loop actually converges
+=================================================
+
+The precursor calculation above and the cooling-zone integration
+(``compsh5``) depend on each other: the precursor's radiation field
+comes from the shock's own downstream emission, and the shock's
+preshock boundary condition comes from the precursor's ionisation
+state.  Global iteration alternates between the two until they agree.
+Two things make that agreement reliable rather than a raw
+fixed-point substitution, which for some shocks can settle into a
+non-decaying oscillation instead of converging:
+
+**Consistent precision throughout.**  The precursor's own inner
+zone-stepping loop always solves to the same tolerance
+(``s5rmstol``, 0.01%) that the outer convergence check demands, from
+the very first global iteration — not just on the final pass.  A
+loose inner tolerance held only until the very end can let the outer
+loop believe it has converged when the underlying precursor solve was
+never actually self-consistent to that precision.
+
+**Aitken Δ² dynamic relaxation.**  Rather than accepting each new
+precursor solve outright (which can oscillate) or blending it with a
+fixed, guessed fraction of the previous iteration (which helps some
+shocks and measurably hurts others whose coupling was already
+well-behaved), the relaxation weight applied each iteration is
+computed from how the last two iterations actually moved — the
+standard technique for this kind of black-box partitioned coupling,
+also used for e.g. fluid-structure interaction.  It is printed each
+iteration as ``Aitken omega`` in the convergence-test block below.
+
+Once the loop first reports convergence, a few more ordinary
+iterations run to let the state settle further, then a final pass
+(``finalit=1``) writes all output tables.  That final pass is still
+one *more*, independent re-solve of the precursor, and can show a
+small residual against the immediately-preceding converged state —
+this is the relaxation scheme's own noise floor from re-solving an
+already-converged point, not evidence the model is actually
+unconverged.  If the loop had already genuinely converged before this
+one extra call, ``shock5check`` reports the true prior result rather
+than letting one noisy independent re-solve flip the final line to
+``NOT CONVERGED``.  The raw numbers from that last check are still
+printed either way — only the bottom-line ``Result:`` is corrected. A
+model whose main loop never actually converges is not affected by
+this and still correctly reports ``NOT CONVERGED``.
 
 .. note::
 
@@ -244,13 +347,29 @@ Phase 2c — Convergence check (``shock5check``)
 -------------------------------------------------
 
 After each ``shock5precursor`` + ``compsh5`` pair, ``shock5check``
-computes the RMS fractional change in the radiation field and ionisation
-state relative to the previous iteration.  If the change is within
-``rmslimit`` the flag ``converged`` is set, which exits the iteration
-loop.  Otherwise another iteration begins.
+computes the RMS fractional change, relative to the previous
+iteration, of six quantities: the ionisation parameter Ψ (Q/v), the
+compression factor, the precursor temperature, the post-shock
+temperature, the precursor electron density, and the H/He ion
+fraction change.  If the combined RMS is below ``s5rmstol`` (0.01%)
+the flag ``converged`` is set, which exits the iteration loop.
+Otherwise another iteration begins, up to ``mxshockits`` (20) global
+iterations.
 
-When the loop exits, one final pass runs with ``finalit=1`` so that all
-output tables are written at the tightened tolerance.
+Two further diagnostics are printed alongside the six raw quantities:
+a split of the same six terms into a **precursor** (pre-shock: Ψ,
+T\ :sub:`pre`, n\ :sub:`e,pre`, ΔH/He) sub-RMS and a **post-shock**
+(compression, T\ :sub:`shock`) sub-RMS, showing which side of the
+shock front a lingering residual actually comes from (in practice,
+almost always the precursor); and the Aitken relaxation weight ``ω``
+used that iteration (see :ref:`s5_convergence` above).  A separate
+warning fires if the precursor's own inner zone-stepping loop
+exhausts its sweep budget without reaching its own target — distinct
+from, and diagnosed independently of, the outer convergence check.
+
+When the loop exits, a few more ordinary iterations run (see
+:ref:`s5_convergence`), then one final pass runs with ``finalit=1``
+so that all output tables are written at full detail.
 
 -------------------------------------------------
 Data flow summary
@@ -260,7 +379,13 @@ Data flow summary
 
    proto-shock gas (pop_neu, T, nH, v, B)
            |
-           | shock5setup: shockcmpf (Rankine-Hugoniot jump)
+           | shock5setup: preshock Alfven Mach number
+           v
+   Alfven Mach < 1?  --yes-->  No Shock: exit cleanly (no jump exists)
+           |
+           no
+           v
+           | shockcmpf (Rankine-Hugoniot jump)
            v
    post-shock state (T1, n1, v1, B1)
            |
@@ -278,8 +403,12 @@ Data flow summary
            |
            v
    updated pop_pre → new pre-shock state
+   (Aitken-relaxed toward the previous iteration's state)
            |
-           +----( iterate until converged )----+
+           +----( iterate until converged, s5rmstol throughout )----+
+           |
+           v
+   a few more ordinary iterations to settle further
            |
            v
    final pass (finalit=1) → write all output files

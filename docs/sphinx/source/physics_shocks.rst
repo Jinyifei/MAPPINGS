@@ -77,9 +77,15 @@ recomputed once a zone is finalised.
    new pre-shock boundary condition, and ``compsh5`` runs again.
 4. ``shock5check`` computes the RMS fractional change in the radiation
    field and ionisation state between global iterations; once it falls
-   within ``rmslimit`` (loosened to 5% early on, tightened to 0.05% for
-   the final pass) the loop exits and one last pass runs with
-   ``finalit=1`` to write full output.
+   below 0.01% the loop exits, a few more ordinary iterations run to
+   settle further, and one last pass runs with ``finalit=1`` to write
+   full output. The precursor state fed forward each iteration is
+   blended with the previous iteration's state using a self-tuning
+   relaxation weight (Aitken Δ² dynamic relaxation) rather than being
+   substituted outright — see :doc:`code_s5`, "How the precursor↔shock
+   loop actually converges", for why an undamped substitution can
+   settle into a non-decaying oscillation for some shocks instead of
+   converging.
 
 This two-way coupling — the cooling zone determines the precursor,
 and the precursor's pre-ionised state changes the boundary condition

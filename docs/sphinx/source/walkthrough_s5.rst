@@ -121,11 +121,12 @@ Checking for convergence and other failures
 converged.** MAPPINGS never treats non-convergence as a fatal error: if
 a run isn't converged within the requested number of iterations, it
 silently extends the iteration cap by one and tries again, up to a hard
-ceiling of 16 global iterations (see :doc:`outputs`, "Convergence
-diagnostics and standard output"). Whatever happens, it then runs one
-more pass and writes full output regardless — same exit code, same file
-set, no warning anywhere in the ``.sh5``/``.csv`` files themselves.
-Concretely, always check the following before trusting a shock result:
+ceiling of 20 global iterations (see :doc:`outputs`, "Convergence
+diagnostics and standard output"). Whatever happens, it then runs a few
+more ordinary iterations plus one final pass and writes full output
+regardless — same exit code, same file set, no warning anywhere in the
+``.sh5``/``.csv`` files themselves. Concretely, always check the
+following before trusting a shock result:
 
 1. **Capture stdout.** None of this is recorded in the output files, so
    redirect it when you run the model::
@@ -137,19 +138,32 @@ Concretely, always check the following before trusting a shock result:
 
        grep "Result:" run.log | tail -1
 
-   It must say ``Result: CONVERGED``. If it says ``NOT CONVERGED``, the
-   physical state MAPPINGS wrote out is whatever it reached after
-   exhausting all 16 iterations — treat it as unreliable rather than as
-   a slow-but-valid answer.
+   It should say ``Result: CONVERGED``. This line is reliable for a
+   model whose main loop genuinely converges — the mandatory final
+   independent re-solve no longer overrides an already-established
+   result with a spurious disagreement (see :doc:`code_s5`, "How the
+   precursor↔shock loop actually converges"). If it says
+   ``NOT CONVERGED``, the model genuinely did not settle within the
+   iteration budget, and the physical state MAPPINGS wrote out should
+   be treated as unreliable rather than as a slow-but-valid answer. A
+   result of ``NO SHOCK`` means no compressive shock solution exists
+   for these parameters at all (sub-Alfvénic preshock flow) — this is
+   not a failure, just a model with no shock to compute.
 
 3. **Look at how many iterations it actually took**
-   (``grep "Convergence Test" run.log``). This run converged at 5 of an
-   extended 5 — comfortably under the ceiling. A run that only reaches
-   "CONVERGED" at or near iteration 16 converged in a formal sense but
-   was close to not converging at all; it's worth treating with more
-   suspicion and, if practical, rerunning with a closer initial guess
-   or a less demanding parameter combination to see if it settles
-   faster and to the same answer.
+   (``grep "Convergence Test" run.log``). A run that converges
+   comfortably under the 20-iteration ceiling is on solid ground. A run
+   that only reaches "CONVERGED" at or near iteration 20, or that
+   prints a long, non-decreasing run of ``Aitken omega`` values that
+   never settle down (see :doc:`outputs`), is at or near the edge of
+   what the solver can currently handle — worth treating with more
+   suspicion and, if practical, rerunning with a less demanding
+   parameter combination to see if it settles faster and to the same
+   answer. Watching the per-iteration RMS trend is also informative: a
+   smoothly, monotonically shrinking RMS is a genuinely converging
+   model that just needs more headroom; an RMS that plateaus or bounces
+   between values without shrinking further is a real oscillation that
+   more iterations will not fix.
 
 4. **Confirm you're reading the actual final output file.** When
    MAPPINGS extends the iteration count beyond what you requested, it
