@@ -471,11 +471,10 @@ c maxmimum number of global iterations in S5
 c
 c  Was 16.  Several models converge geometrically (RMS roughly halving
 c  each iteration) but land just above the 0.01% threshold right at the
-c  old cap -- e.g. S050401-S050405 all finished iteration 16 in the
-c  1.08e-2% to 1.29e-2% range, ~1.1-1.3x the threshold, with no sign of
-c  oscillation (issue #7 follow-up).  Raised to give those a little more
-c  room; harmless for genuinely-oscillating models, which just hit the
-c  new cap the same way.
+c  old cap, within a factor of ~1.1-1.3x, with no sign of oscillation
+c  (issue #7).  Raised to give those a little more room; harmless for
+c  genuinely-oscillating models, which just hit the new cap the same
+c  way.
 c
       parameter (mxshockits = 20)
 c
