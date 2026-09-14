@@ -396,7 +396,14 @@ ratio (n\ :sub:`i`/n\ :sub:`H`), and mean molecular weights for neutral
 plasma.
 
 The model-type selection menu then appears.  The available model types are
-described in their own sections of this documentation.
+described in their own sections of this documentation.  In particular,
+each model type prompts separately for its own ending/stopping
+condition later in its setup sequence — this is not part of the
+startup sequence above.  For shock models (S5), see :doc:`code_s5`,
+"Step 6 — Check stopping condition", which also covers the hard zone
+cap, the ``terminate`` poll file, and other conditions that can end a
+run beyond the chosen stopping criterion.  For photoionization models,
+see the equivalent table in :doc:`code_photo`.
 
 Running from a script
 =====================

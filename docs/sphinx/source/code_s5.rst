@@ -178,7 +178,19 @@ Step 5 — Record the step
 Start and end values are averaged to give zone-centred quantities:
 temperature ``te``, electron density ``deel``, hydrogen density ``dhy``,
 magnetic field ``bmg``, flow velocity ``veloc``.  Cumulative distance
-``dist`` and elapsed time ``timlps`` are updated.
+``dist`` and elapsed time ``timlps`` are updated:
+
+- ``dist`` (cm) is the downstream distance of the current zone from the
+  shock front (``dist(1) = 0`` at the front), accumulated by adding
+  each zone's width ``dr`` (``shock5.f:3673``).  This is what the
+  ``D`` ending condition compares against.
+- ``timlps`` (s) is the elapsed **flow time** of the shocked gas
+  parcel since it crossed the front — a Lagrangian clock carried with
+  the gas, derived from the same per-step ``dt`` used to integrate the
+  ionisation and flow equations (``dr = dt * vel1``,
+  ``shock5.f:3379,3674``) — not wall-clock runtime of the MAPPINGS
+  process itself.  This is what the ``E`` ending condition compares
+  against.
 
 Structural markers are recorded at the distances where the temperature
 passes through 10\ :sup:`7`, 10\ :sup:`6`, 10\ :sup:`5`, …, 10\ :sup:`2` K.
@@ -190,19 +202,60 @@ ion fractions, line monitor) that were selected at setup.
 Step 6 — Check stopping condition
 ===================================
 
-The user-chosen stopping criterion is tested:
+This condition (``jend``) and its limit value are chosen by the user
+during setup (see :doc:`models`, S5 step 7, for the input prompts as
+the user sees them).  Each step, the chosen criterion is tested against
+the current zone's state:
 
 - ``A`` — 1% weighted ionisation fraction (default)
 - ``B`` — specific ion fraction below a threshold
 - ``C`` or ``S`` — temperature below a limit (``S`` also requires >95%
   neutral)
-- ``D`` — distance limit reached
-- ``E`` — elapsed time limit reached
+- ``D`` — distance limit ``diend`` (cm downstream of the shock front) reached
+- ``E`` — elapsed flow-time limit ``timend`` (s of Lagrangian post-shock
+  flow time, not wall-clock runtime) reached
 - ``F`` — thermal balance reached
 - ``G`` — heating limit
 
 When the condition is met the loop exits and the emission spectrum,
 line fluxes, and other integrated quantities are assembled and written.
+
+Beyond the user-chosen ``jend`` letter, three further conditions can also
+end the zone loop early, checked every step regardless of which stopping
+criterion was selected:
+
+- **Hard zone cap** — the loop only continues while ``step`` is below
+  ``mxnsteps`` (4096, set in ``const.inc``) and the temperature is above
+  100 K.  Reaching either limit silently ends the model even if the
+  chosen ``jend`` condition was never satisfied; a model that hits this
+  cap has not reached its intended stopping condition and should be
+  treated as incomplete.
+- **``terminate`` poll file** — if a file literally named ``terminate``
+  exists in the run directory when a step completes, the model stops
+  immediately, independent of ``jend``.  This offers a way to abort a
+  long-running shock model in place without killing the process.
+- **First-iteration early exit** (S5 only) — on the *first* precursor
+  iteration, if more than one iteration was requested (``maxits`` > 1),
+  the zone loop stops as soon as ``dlos`` (the thermal-balance residual)
+  drops below 0.5, well short of the requested ``jend`` condition.  This
+  gives ``shock5precursor`` a cheap first-pass structure to seed the
+  precursor calculation; the full ``jend`` condition is honoured on
+  subsequent iterations once the precursor loop is iterating for real.
+
+A consequence for ``D`` and ``E`` specifically: because the hard zone
+cap and 100 K temperature floor are checked in the same statement that
+otherwise allows the loop to continue (``shock4.f:1957``,
+``shock5.f:4037``), setting ``diend``/``timend`` to a value the model
+will never physically reach does not produce an infinite or unbounded
+run.  The model instead terminates on whichever of the two overriding
+conditions is met first — typically the temperature floor, once the
+post-shock gas has radiatively cooled to 100 K, or (for a shock whose
+post-shock gas is held near some higher equilibrium and never cools
+that far) the 4096-zone cap — with ``jend`` itself never having been
+satisfied.  Since this whole zone loop is re-run on every global
+precursor iteration (up to ``mxshockits``, 20), an unreachable
+``diend``/``timend`` multiplies this wasted cost by however many
+iterations the outer loop takes.
 
 Key physics routines called each step
 ======================================

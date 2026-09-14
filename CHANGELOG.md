@@ -42,3 +42,9 @@ The most substantial correctness work in the repository's history: the iterative
 - Fixed a case where the final line of output could misreport a model as unconverged even when it had genuinely converged.
 
 Net effect for a user: shock model runs are now far more likely to converge, no longer hang or crash on certain physically-valid-but-difficult inputs, and the convergence result reported at the end of a run can now actually be trusted. Two known, unusual parameter combinations still don't converge and remain open (tracked in issue #7).
+
+## Ending-condition documentation expanded; a P6/P7 prompt bug found and tracked (September 14, 2026, issue #9)
+
+Documentation for how S5 shock and P6/P7 photoionization models choose when to stop running was significantly expanded in `models.rst`, `code_s5.rst`, and `code_photo.rst`. Previously this information was scattered or missing from the user-facing model-input reference, requiring a trip into the internal "Code Operation" pages to find it. Every ending-condition letter for both model types is now documented where a user actually looks for it, including the exact follow-up prompt text, unit/log conventions, and the always-on safety conditions (hard zone caps, the `terminate` poll file, and P6/P7's automatic recombination floor) that can end a run independently of the chosen condition.
+
+- While auditing P6/P7's `C` (temperature-bounded) ending condition against the source, found that its prompt claims values under 10 are read as `log10(K)` — matching the convention used by S5's equivalent condition and by P6/P7's own `F`/`H` conditions — but no such conversion actually exists in `photo6.f`/`photo7.f`; the value is used directly as Kelvin. A user following the prompt's own stated convention (e.g. entering `4` intending 10,000 K) would silently get a 4 K ending temperature instead. Not yet fixed; tracked in issue #9.
