@@ -3181,11 +3181,17 @@ c
 c
       call heapindexsort (linecount, linelam, lineidx)
 c
+c     At this tolerance there should be exactly one line within range
+c     of each requested wavelength - speclocallineids already verified
+c     that at setup - but take the brightest of any that do match
+c     rather than summing them, as a harmless safety net rather than
+c     the deciding mechanism.
       do i=1,linecount
         do j=1,njlines
           delta=dabs(linelam(lineidx(i))-emlinlist(j))
-          if (delta.le.emlindeltas(j)) then
-            fluxes(j)=fluxes(j)+linespec(lineidx(i))
+          if ((delta.le.emlindeltas(j)).and.
+     &     (linespec(lineidx(i)).gt.fluxes(j))) then
+            fluxes(j)=linespec(lineidx(i))
           endif
         enddo
       enddo
@@ -3218,6 +3224,8 @@ c
       integer*4 lineat(mxmonlines)
       integer*4 lineion(mxmonlines)
       real*8 delta
+      integer*4 matchcount(mxmonlines)
+      integer*4 nnear
 c
       real*8 linelam(mxspeclines)
       real*8 linespec(mxspeclines)
@@ -3240,6 +3248,7 @@ c
       do i=1,mxmonlines
         lineat(i)=1
         lineion(i)=1
+        matchcount(i)=0
       enddo
 c
       if (njlines.le.0) return
@@ -3530,15 +3539,56 @@ c
 c
       call heapindexsort (linecount, linelam, lineidx)
 c
+c     At this tolerance (0.001A, see where emlindeltas is set) there
+c     should be exactly one line within range of each requested
+c     wavelength - real line-to-line separations are much larger than
+c     that in practice - so just record whichever candidates match.
       do i=1,linecount
         do j=1,njlines
           delta=dabs(linelam(lineidx(i))-emlinlist(j))
           if (delta.le.emlindeltas(j)) then
+            matchcount(j)=matchcount(j)+1
             lineat(j)=lineid(lineidx(i),1)
             lineion(j)=lineid(lineidx(i),2)
-c        write (*,*) i,j,lineid(lineidx(i),1), lineat(j), lineion(j)
           endif
         enddo
+      enddo
+c
+c     A requested monitor-line wavelength that matches nothing in the
+c     line list would otherwise silently report zero flux for the
+c     whole run with no indication anything was wrong; one that
+c     matches more than one line is genuinely ambiguous. Both cases
+c     stop the run and print what MAPPINGS actually has nearby, so a
+c     bad wavelength in an input script can be fixed immediately
+c     rather than guessed at.
+c
+      do j=1,njlines
+        if (matchcount(j).ne.1) then
+          if (matchcount(j).eq.0) then
+            write (*,*) 'ERROR: no line found within',emlindeltas(j),
+     &       'A of the requested monitor wavelength',emlinlist(j),'A.'
+          else
+            write (*,*) 'ERROR:',matchcount(j),'lines found within',
+     &       emlindeltas(j),'A of the requested monitor wavelength',
+     &       emlinlist(j),'A - ambiguous.'
+          endif
+          write (*,*) 'Lines within 1.0 A',
+     &     '(species, wavelength A, delta A, local brightness):'
+          nnear=0
+          do i=1,linecount
+            delta=dabs(linelam(lineidx(i))-emlinlist(j))
+            if (delta.le.1.0d0) then
+              write (*,*) '  ',elem(lineid(lineidx(i),1)),
+     &         rom(lineid(lineidx(i),2)),linelam(lineidx(i)),delta,
+     &         linespec(lineidx(i))
+              nnear=nnear+1
+            endif
+          enddo
+          if (nnear.eq.0) write (*,*) '  (none found within 1.0 A',
+     &     'either)'
+          write (*,*) 'Use one of the wavelengths listed above.'
+          stop
+        endif
       enddo
 c
       return

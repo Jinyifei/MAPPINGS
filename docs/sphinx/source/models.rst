@@ -46,11 +46,67 @@ The user is asked, in order, to:
 3. Choose the **geometry** (spherical or plane-parallel).
 4. Set the **density structure** (constant density, constant pressure, or
    a power-law density profile) and the initial density or pressure.
-5. Define the **model stopping condition** — inner and outer radius, column
-   density, ionisation fraction, or temperature limit.
+5. Define the **model stopping condition** — enter one letter. For most
+   letters MAPPINGS immediately asks a follow-up question for the
+   limit value; for ``A`` there is no follow-up and input moves
+   straight on to output file setup:
+
+   .. list-table::
+      :header-rows: 1
+      :widths: 8 40 52
+
+      * - Code
+        - Ends the model when...
+        - What you're asked next
+      * - A
+        - H\ :sup:`+` fraction falls below a threshold (default 1%,
+          shown inline in the menu)
+        - Nothing — goes straight to output file setup.
+      * - B
+        - a specified ion of a specified element falls below a given
+          fraction
+        - ``Applies to element (Atomic number):`` then ``Give the
+          final ionisation fraction of <elem> :``
+      * - C
+        - the temperature falls below a minimum
+        - ``Give the final temperature (<10 as log):`` — **note:**
+          despite the prompt text, values under 10 are *not* actually
+          converted from log\ :sub:`10` in the current code; the
+          number entered is used directly as Kelvin.  Enter the
+          temperature in Kelvin outright (e.g. ``10000``, not ``4``)
+          until this is resolved.
+      * - D
+        - the accumulated optical depth exceeds a threshold
+        - ``Applies to element (Atomic number):`` then ``Give the
+          final optical depth at threshold of <elem>:``
+      * - E
+        - the model reaches a fixed distance from the inner edge
+        - ``Give the distance or radius at which the density
+          drops:`` — enter a value in cm directly if ≥ 1e6; a
+          smaller value is instead read as a fraction of the
+          Strömgren radius.
+      * - F
+        - the column density of a specific atom/ion reaches a limit
+        - ``Give the final column density (<100 as log):`` (values
+          under 100 genuinely are read as log\ :sub:`10` here), then
+          ``Applies to element (Atomic number):`` then ``Applies to
+          ion stage :``
+      * - H
+        - the total hydrogen column density reaches a limit
+        - ``Give the total H column density (<100 as log):`` — same
+          genuine log\ :sub:`10` convention as ``F``.
+
+   A model can also end before any of these letters are satisfied: a
+   hard cap of 4096 zones, a file literally named ``terminate``
+   appearing in the run directory, or the normalised electron density
+   falling to its automatic recombination floor regardless of which
+   letter was chosen.  See :doc:`code_photo`, "Stopping condition",
+   for how all of these are evaluated internally.
 
 Main output files are ``photn<N>.ph6`` and associated ``.csv`` and ``.sou``
-files as described in :doc:`outputs`.
+files as described in :doc:`outputs`.  For a full worked example — an
+actual script, the files it produces, and what is inside them — see
+:doc:`walkthrough_p6`.
 
 P7 — Photoionisation (Experimental)
 =====================================
@@ -107,12 +163,143 @@ The user is asked, in order, to:
 
 5. Specify the **shock velocity** (or temperature if ``T`` was chosen
    above) and **pre-shock hydrogen density**.
-6. Choose the **output file prefix** (up to 8 characters, e.g. ``v100s``).
-7. Select which optional output tables to write (rates, dynamics, ion
-   fractions, individual element files, line lists, bands, cooling).
+6. Choose the **diffuse field mode** — full (``F``) or zeroed (``Z``).
+7. Define the **model ending condition** — enter one letter. For most
+   letters MAPPINGS immediately asks a follow-up question for the
+   limit value; for ``A``, ``F``, and ``G`` there is no follow-up and
+   input moves straight on to step 8 (minimum iterations):
+
+   .. list-table::
+      :header-rows: 1
+      :widths: 8 40 52
+
+      * - Code
+        - Ends the model when...
+        - What you're asked next
+      * - A
+        - the mean weighted ionisation fraction drops below 1%
+          (default)
+        - Nothing — goes straight to step 8.
+      * - B
+        - a specific ion's population fraction drops below a limit
+        - ``Give atom, ion and limit fraction:`` — one line, three
+          numbers: the atom number (periodic order, H=1, He=2, …),
+          the ion stage (1=neutral, 2=singly ionised, …), and the
+          fraction. E.g. ``1 2 0.05`` stops the model when the HII
+          fraction drops below 0.05.
+      * - C
+        - the temperature drops below a limit
+        - ``Give final temperature (K > 10, log <= 10):`` — one
+          number. Entered as-is (Kelvin) if it's above 10; if it's 10
+          or below it's read as log\ :sub:`10`\ (K) and converted
+          automatically (e.g. ``4`` means 10\ :sup:`4` K).
+      * - S
+        - the temperature drops below a limit **and** the gas is
+          >95% neutral
+        - Same ``Give final temperature...`` prompt and K/log
+          convention as ``C``; both the temperature and the 95%
+          neutral condition must hold together.
+      * - D
+        - the cumulative distance downstream of the shock front reaches
+          a limit
+        - ``Give final distance (cm > 100, log<=100):`` — one number.
+          Entered as-is (cm) if above 100; if 100 or below it's read
+          as log\ :sub:`10`\ (cm) and converted (e.g. ``17`` means
+          10\ :sup:`17` cm).
+      * - E
+        - the elapsed post-shock flow time reaches a limit
+        - ``Give time limit (s > 100, log<=100):`` — one number.
+          Entered as-is (seconds of simulated flow time, not
+          wall-clock runtime) if above 100; if 100 or below it's read
+          as log\ :sub:`10`\ (s) and converted (e.g. ``10`` means
+          10\ :sup:`10` s).
+      * - F
+        - heating and cooling come into thermal balance
+        - Nothing — goes straight to step 8.
+      * - G
+        - the net cooling function goes negative
+        - Nothing — goes straight to step 8.
+
+   Whichever letter is chosen, and however its follow-up (if any) is
+   answered, the very next prompt after this step is always step 8,
+   minimum iterations.
+
+   A model can also end before any of these letters are satisfied: a
+   hard cap of 4096 zones (or the temperature dropping below 100 K
+   regardless of ``jend``), or a file literally named ``terminate``
+   appearing in the run directory.  These aren't inputs — nothing
+   prompts for them — but they can end a run early regardless of what
+   was chosen here.  In particular, a ``D`` or ``E`` limit set beyond
+   what the shock will ever physically reach doesn't produce an
+   unbounded run: the model still ends via the zone cap or temperature
+   floor, just without ``jend`` itself ever being satisfied.  See
+   :doc:`code_s5`, "Step 6 — Check stopping condition", for how all of
+   these conditions, letter-based and not, are evaluated internally
+   each zone, and for exactly what ``dist``/``timlps`` measure.
+8. Set the **minimum number of global iterations** for the
+   precursor↔shock convergence loop (``<=1`` means no further
+   iteration; default 3).
+9. Choose the **output file prefix** (up to 8 characters, e.g. ``v100s``).
+10. Work through the **Output Multi-Option Menu** to select optional
+    output files, one letter per line, ending with ``X`` to accept the
+    current selection and move on:
+
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Code
+         - Adds
+       * - A
+         - Standard output only, and resets any options chosen so far
+           (the menu is then shown again)
+       * - B
+         - Ion balance files — prompts for which elements to track
+       * - C
+         - All-rates file
+       * - D
+         - Flow dynamics file
+       * - E
+         - Final downstream radiation field
+       * - F
+         - All upstream radiation fields, at every step
+       * - H
+         - Cooling in X-ray bands
+       * - K
+         - Cooling components by element file
+       * - L
+         - Line monitor — prompts for how many lines (up to the
+           compiled-in maximum) and their wavelengths, then tracks
+           each one's flux at every zone
+       * - R
+         - Reset all options back to standard output
+       * - X
+         - Exit the menu with the currently selected options
+
+11. Choose the **runtime screen display** verbosity:
+
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Code
+         - Meaning
+       * - A
+         - Standard display
+       * - B
+         - Detailed slab display
+       * - C
+         - Full display (slab display plus timescales)
+       * - M
+         - Minimal display (batch mode)
+
+12. Give a **name or code** for this model run — free text, written into
+    the output file headers.
 
 Output files use the ``.sh5`` and ``.csv`` extensions as described in
-:doc:`outputs`.
+:doc:`outputs`.  For a full worked example — an actual script
+(including a ``jend='A'``, line-monitor run), the files it produces,
+and what is inside them — see :doc:`walkthrough_s5`.
 
 
 -------------------------------------------------

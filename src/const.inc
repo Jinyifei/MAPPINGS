@@ -73,6 +73,7 @@ c
       real*8 alphahb
       real*8 alphaheb
       real*8 mintemp
+      real*8 s5rmstol
 c
       integer*4 mxnhlines,mxnhs   ! 15/6
       integer*4 mxnhelines,mxnhes ! 15/6
@@ -468,7 +469,14 @@ c minimum number of precursor zones
 c
 c maxmimum number of global iterations in S5
 c
-      parameter (mxshockits = 16)
+c  Was 16.  Several models converge geometrically (RMS roughly halving
+c  each iteration) but land just above the 0.01% threshold right at the
+c  old cap, within a factor of ~1.1-1.3x, with no sign of oscillation
+c  (issue #7).  Raised to give those a little more room; harmless for
+c  genuinely-oscillating models, which just hit the new cap the same
+c  way.
+c
+      parameter (mxshockits = 20)
 c
 c maxmimum number of precursor iterations in S5
 c
@@ -649,5 +657,13 @@ c H and He effective recomb rate for stromgren approx
       parameter( alphahb  = 2.585d-13)
       parameter( alphaheb = 1.533d-12)
       parameter( mintemp  = 1.0d0    )
+c
+c  S5 global shock<->precursor convergence threshold (issue #7).  Used
+c  both as shock5check's outer pass/fail RMS cutoff and as the target
+c  the precursor's own inner zone-stepping loop iterates to on the
+c  final verification pass -- they must match, or the final pass can
+c  consider itself "converged" internally while still landing outside
+c  the outer threshold relative to the previous global iteration.
+      parameter( s5rmstol = 1.0d-4   )
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

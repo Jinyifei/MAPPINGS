@@ -1,0 +1,21 @@
+yes    : change abund
+s5_shock_abund.txt
+no     : no more changes
+no     : offsets?
+no     : no dust
+S5     : Shock with auto precursor
+D      : Default preionisation balance
+X      : eXit with current source
+V      : define shock by velocity, iterating on preshock if neeeded
+B      : Specify the magnetic field strength directly
+0      : B = 0 microgauss, unmagnetised shock
+1000.0 1.0 200.0  T dh v km/s
+F      : Diffuse field option
+A      : Ending
+3      : No of iterations
+v200s_
+A      : Output settings
+X
+A      : Runtime screen display
+B=0 200km/s shock, proto-shock T=1000K, 3 iterations, ending A
+xit

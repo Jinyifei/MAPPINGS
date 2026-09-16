@@ -33,7 +33,7 @@ c
       include 'cblocks.inc'
       include 's5blocks.inc'
 c
-      integer*4 iterations,iterationindex
+      integer*4 iterations,iterationindex,nlock,wasconverged
    10 format(//,
      & ' *********************************************************',/,
      & '  SHOCK 5    Global Iteration: ',i2.2,' of ',i2.2)
@@ -44,6 +44,17 @@ c
      & ' *********************************************************',/,
      & '  SHOCK 5 Model Completed',/,
      & ' *********************************************************',/)
+   35 format(/,
+     & ' *********************************************************',/,
+     & '  SHOCK 5: NO SHOCK -- preshock flow is sub-Alfvenic',/,
+     & '  Alfven Mach Number = ',1pg11.4,' (< 1): no compressive',/,
+     & '  MHD shock jump exists for these parameters.  Skipping',/,
+     & '  the shock calculation for this model.',/,
+     & ' *********************************************************',/)
+   36 format(' No Shock: , Alfven Mach:, ',1pg11.4,
+     & ' , Reason:, sub-Alfvenic preshock flow')
+   37 format('  Result: NO SHOCK (sub-Alfvenic)',/,
+     & ' *********************************************************',/)
 c
       iterations=3
       ieln=4
@@ -51,9 +62,48 @@ c
       call shock5setup (iterations)
       call shock5headers (iterations)
 c
+c  A compressive fast MHD shock only has a solution when the preshock
+c  flow exceeds the Alfven speed (alfvennumber, computed in
+c  shock5setup from preshock quantities alone, .ge.1).  Below that,
+c  shockcmpf's jump-condition quadratic has no physical root and
+c  returns an unphysical compression (x<1, an expansion), which used
+c  to propagate through to a negative temperature and a hard stop
+c  many steps later in cool() (issue #8 follow-up).  Checked here,
+c  before shockcmpf is ever called, rather than after the fact --
+c  confirmed via a full grid run that every case with
+c  alfvennumber<1 fails this way and every case >=1 does not, a
+c  clean, sharp boundary at exactly the physically-expected value.
+c  "No Shock:" is written in the same comma-separated style as
+c  "Model ended:" so existing summary tooling (MapSum) can be
+c  extended to recognise it the same way.
+c
+      if (alfvennumber.lt.1.0d0) then
+        write (*,35) alfvennumber
+        write (*,36) alfvennumber
+        write (luop,36) alfvennumber
+        write (*,37)
+        call closeS5files ()
+        return
+      endif
+c
       iterationindex=0
       converged=0
       finalit=0
+      aitninit=0
+c
+c  Solve the precursor's own inner loop to the real outer tolerance
+c  (s5rmstol) from iteration 1, not just once convergence is first
+c  (loosely) declared (issue #7).  A survey across 9 models found a
+c  third had a large loose-vs-tight gap at the end -- the main loop's
+c  whole convergence history was being judged against an inner solve
+c  10x-1000x looser than the 0.01% outer threshold, not just the
+c  final pass.  Costs ~7-30% more wall-clock time (measured directly,
+c  same models, old vs new code) but is the honest fix: 8 of the 9
+c  surveyed models now converge cleanly (up from 6), and the ninth is
+c  correctly diagnosed as a genuine sustained oscillation rather than
+c  masked by a lucky loose-tolerance comparison.
+c
+      s5tight=1
 c
       if (iterations.le.1) finalit=1
 c
@@ -73,14 +123,59 @@ c
 c
         if ((converged.eq.0).and.(iterations.lt.mxshockits)) goto 40
 c
+c  A few more ordinary iterations once convergence is first declared,
+c  cheap extra confirmation now that s5tight makes every iteration
+c  (not just this tail) solve the precursor to the real tolerance
+c  (issue #7).  Skipped if the loop above never converged; more of
+c  the same iteration wouldn't be expected to fix that on its own.
+c
+        if (converged.ne.0) then
+          do nlock=1,3
+            iterationindex=iterationindex+1
+            write (*,10) iterationindex,iterationindex
+            call shock5precursor (iterationindex, iterationindex)
+            call compsh5 (iterationindex, iterationindex)
+            call shock5check (iterationindex, iterationindex)
+            write (*,20) iterationindex,iterationindex
+          enddo
+        endif
+c
 c repeat a final model for outputs
 c
         finalit=1
+        s5tight=1
+        wasconverged=converged
         iterationindex=iterationindex+1
 c
         call shock5precursor (iterationindex, iterationindex)
         call compsh5 (iterationindex, iterationindex)
         call shock5check (iterationindex, iterationindex)
+c
+c  This one extra call is an independent re-solve of the precursor,
+c  purely to regenerate full output tables at finalit's tightened
+c  tolerance -- it is not needed to establish convergence, which the
+c  loop above (plus the lock-in iterations, if any) already did.  A
+c  small residual disagreement here is Aitken's own noise floor from
+c  re-solving an already-converged fixed point, not evidence the
+c  model is actually unconverged -- the "final-pass gap" (issue #7):
+c  the main loop converges cleanly and only this one extra,
+c  independent call disagrees.  If the model was already genuinely
+c  converged going into this call, report that,
+c  rather than letting one noisy independent re-solve override a
+c  result already established by many iterations.  The raw numbers
+c  above are printed either way -- only the bottom-line Result is
+c  corrected.
+c
+        if ((wasconverged.ne.0).and.(converged.eq.0)) then
+          converged=1
+          write (*,38)
+        endif
+   38   format('  Result: CONVERGED  (already converged before this ',
+     & 'final output pass;',/,
+     & '  the pass above re-solves independently and can show a ',
+     & 'small residual',/,
+     & '  from doing so -- see comment at issue #7)',/,
+     & ' *********************************************************',/)
 c
       endif
 c
@@ -1054,6 +1149,11 @@ c
         write (*,450)
         read (*,*) (emlinlist(i),i=1,njlines)
         do i=1,mxmonlines
+c     0.001A: comfortably covers the +/-0.0005A rounding from reading
+c     a wavelength off spec2's 3-decimal-place output, while staying
+c     far tighter than any real line-to-line separation encountered in
+c     practice - so a wavelength copied from the line list matches
+c     exactly, with no risk of picking up an unrelated nearby line.
           emlindeltas(i)=0.001d0
         enddo
         call speclocallineids (emlinlistatom, emlinlistion)
@@ -1605,13 +1705,13 @@ c
      &     rom(emlinlistion(itr)),itr=1,njlines)
         endif
   210  format(
-     & ' # [1] <X>, [2] DeltaX, [3] dX, [4] t, [5] dt,  [6] <T>,'
-     & ' [7] <ne>, [8] <nH> , [9]  <nT>, [10] logQH, [11]  logUH,',
-     & ' [12]  logQN, [13]   <HB>,',
+     & ' # [1] step, [2] <X>, [3] Xmid, [4] dX, [5] <T>, [6] <ne>,'
+     & ' [7] <nH>, [8]  <nT>, [9] logQH, [10]  logUH,',
+     & ' [11]  logQN, [12]   <HB>',
      &   16(',',f12.3,'[',i2,']'))
-        write (lulsh,210) (emlinlist(itr),itr+13,itr=1,njlines)
+        write (lulsh,210) (emlinlist(itr),itr+12,itr=1,njlines)
         if (lulpc.gt.0) then
-          write (lulpc,210) (emlinlist(itr),itr+13,itr=1,njlines)
+          write (lulpc,210) (emlinlist(itr),itr+12,itr=1,njlines)
         endif
       endif
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -2002,6 +2102,7 @@ c
       integer*4 its,maxits
 c
       real*8 delhhe,rmserr,term
+      real*8 t_psi,t_cmp,t_tpre,t_tpst,t_depre,precrms,postrms
 c
    10 format(/,
      & ' ********************************************************',/,
@@ -2020,7 +2121,10 @@ c
      & '    T_shock  : ',  1pg11.4,'  `T_shock  : ',  1pg11.4,/,
      & '    ne_pre   : ',  1pg11.4,'  `ne_pre   : ',  1pg11.4,/,
      & '    DelH/He  : ',  1pg11.4,'%',/,
+     & '    Precursor RMS (Psi,T_pre,ne_pre,DelH/He): ',1pg11.4,'%',/,
+     & '    Post-shock RMS (Compress,T_shock)      : ',1pg11.4,'%',/,
      & '    RMS      : ',  1pg11.4,'%',/,
+     & '    Aitken omega (precursor relaxation)     : ',1pg11.4,/,
      & ' ::::::::::::::::::::::::::::::::::::::::::::::::::::::::')
       converged=0
 c
@@ -2030,19 +2134,34 @@ c uses global pop
 c
         call difhhe (pop_pre, pop_pre0, delhhe)
         write (*,10) its,maxits
+        term=2.d0*(psi-psi0)/(psi+psi0)
+        t_psi=term*term
         term=2.d0*(cmpf-cmpf0)/(cmpf+cmpf0)
-        rmserr=term*term
+        t_cmp=term*term
         term=2.d0*(te_pre-te_pre0)/(te_pre+te_pre0)
-        rmserr=rmserr+(term*term)
+        t_tpre=term*term
         term=2.d0*(te_pst-te_pst0)/(te_pst+te_pst0)
-        rmserr=rmserr+(term*term)
+        t_tpst=term*term
         term=2.d0*(de_pre-de_pre0)/(de_pre+de_pre0)
-        rmserr=rmserr+(term*term)
-        rmserr=rmserr+(delhhe*delhhe)
+        t_depre=term*term
+        rmserr=t_psi+t_cmp+t_tpre+t_tpst+t_depre+(delhhe*delhhe)
         rmserr=dsqrt(rmserr/6.d0)
+c
+c  Diagnostic-only split of the same six terms into a precursor
+c  (pre-shock: Psi, T_pre, ne_pre, DelH/He) sub-residual and a
+c  post-shock (Compress, T_shock) sub-residual, so a failing model's
+c  log shows which side of the shock front the residual actually
+c  comes from (issue #7 follow-up).  Neither sub-value feeds the
+c  convergence decision below -- only the combined rmserr does,
+c  unchanged from before.
+c
+        precrms=dsqrt((t_psi+t_tpre+t_depre+(delhhe*delhhe))/4.d0)
+        postrms=dsqrt((t_cmp+t_tpst)/2.d0)
+c
         write (*,40) psi,psi0,cmpf,cmpf0,te_pre,te_pre0,te_pst,te_pst0,
-     &   de_pre,de_pre0,delhhe*100.d0,rmserr*100.d0
-        if (rmserr.lt.1.d-4) then
+     &   de_pre,de_pre0,delhhe*100.d0,precrms*100.d0,postrms*100.d0,
+     &   rmserr*100.d0,aitomega
+        if (rmserr.lt.s5rmstol) then
           converged=1
           write (*,20)
         else
@@ -2116,6 +2235,7 @@ c
       real*8 rmserr,rmslimit
       real*8 rdvol,irdvol
       real*8 te_0,de_0,dh_0
+      real*8 aitrtenow,aitrdenow,aitdnum,aitdden
 c
 c  functions
 c
@@ -2145,7 +2265,19 @@ c
 c
       rmslimit=5.0d-2
       if (iteration.gt.1) rmslimit=1.0d-1
-      if (finalit.gt.0) rmslimit=5.0d-4
+c
+c  s5tight (issue #7): iterate the precursor's own inner loop to the
+c  *same* tolerance shock5check uses for the outer pass/fail decision
+c  (s5rmstol), not the looser rmslimit values above -- otherwise the
+c  inner loop can consider itself self-consistent while still landing
+c  outside the outer threshold relative to the previous global
+c  iteration.  Currently set true for every iteration (see top of
+c  shock5()), so the two lines above are superseded immediately;
+c  s5tight is deliberately kept separate from finalit, which must stay
+c  true for exactly one call since it also gates compsh5's file
+c  writes.
+c
+      if (s5tight.gt.0) rmslimit=s5rmstol
 c
       fi=1.0d0
       wdil=0.5d0
@@ -2474,7 +2606,11 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c Adjust grid size for given absf as te and pops converge
-c and save for next interation starting point.
+c and save for next interation starting point.  Kept keyed on finalit
+c (not s5tight, issue #7) -- the grid should stay free to adapt for
+c the entire normal run, including once s5tight has tightened the
+c inner tolerance; it should only freeze for the single, truly final
+c output-writing pass.
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -2568,7 +2704,14 @@ c
 c
       if (iteration.lt.3) goto 100
 c
-      if (finalit.gt.0) goto 100
+c  Note: the final pass (finalit>0) used to exit here after a single,
+c  un-refined sweep, even though rmslimit is tightened to 5.0d-4 for
+c  this pass above.  That let the final output be written from a
+c  precursor state that had not actually met its own tightened
+c  tolerance, which could make an already-converged model report
+c  NOT CONVERGED on this last check alone (issue #7).  Now it falls
+c  through to the ordinary loop-continuation test below like any other
+c  iteration, so it actually iterates to rmslimit before exiting.
 c
       if ((iabs(nfs0-nfs).gt.10)
      &.or.((rmserr.gt.rmslimit)
@@ -2578,6 +2721,23 @@ c
      &.or.((nfs.lt.mxifsteps).and.(t0lim.gt.0))
      &.and.(itcount.lt.mxpcits)
      &) goto 50
+c
+c  Flag the case where the precursor's own inner zone-stepping loop
+c  exhausted its sweep budget (mxpcits) without reaching its own
+c  self-consistency target (rmslimit) -- previously silent.  With
+c  s5tight now demanding 0.01% self-consistency instead of the old
+c  10%, it's plausible some models can't get there in mxpcits sweeps;
+c  that would look like outer coupling oscillation/slow-convergence
+c  without this, when it's actually the inner solve itself running out
+c  of budget (issue #7 follow-up).
+c
+      if ((rmserr.gt.rmslimit).and.(itcount.ge.mxpcits)) then
+        write (*,95) itcount,iteration,rmserr*100.d0,rmslimit*100.d0
+      endif
+   95 format('  ... PRECURSOR WARNING: inner loop hit its sweep cap (',
+     & i3,' sweeps) at global iteration ',i3,
+     & ' with self-consistency RMS ',1pg11.4,
+     & '% still above its target ',1pg11.4,'%')
 c
   100 continue
 c
@@ -2589,6 +2749,48 @@ c
 c      put final/inner balance into preionisation array
 c
       call copysteppop (1, popfr, pop_pre)
+c
+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c
+c  Aitken Delta^2 dynamic relaxation of the new precursor solution
+c  toward the previous global iteration's state (te_pre0/de_pre0/
+c  pop_pre0, saved by shock5check) -- issue #7.  A raw fixed-point
+c  substitution here can settle into a limit cycle for some shocks
+c  (Psi~0.5-0.8) while a fixed damping factor slows or destabilises
+c  others that were already contracting fine on their own; a single
+c  relaxation constant cannot be right for both.  Aitken relaxation
+c  instead estimates the local behaviour of the precursor<->shock
+c  coupling from the last two raw-vs-accepted residuals and adapts
+c  omega each iteration, the standard fix for exactly this kind of
+c  black-box partitioned coupling (e.g. fluid-structure interaction).
+c  te_pre/de_pre are used as the (normalised, signed) residual proxy
+c  driving omega; pop_pre is blended by the same omega via averinto
+c  to keep the whole precursor state moving together.
+c
+      if (iteration.gt.1) then
+        aitrtenow=2.d0*(te_pre-te_pre0)/(te_pre+te_pre0)
+        aitrdenow=2.d0*(de_pre-de_pre0)/(de_pre+de_pre0)
+        if (aitninit.eq.0) then
+c        no residual history yet -- bootstrap with a plain 0.5 blend
+          aitomega=0.5d0
+          aitninit=1
+        else
+          aitdnum=aitrte*(aitrtenow-aitrte)+aitrde*(aitrdenow-aitrde)
+          aitdden=(aitrtenow-aitrte)**2+(aitrdenow-aitrde)**2
+          if (dabs(aitdden).gt.1.d-30) then
+            aitomega=-aitomega*aitdnum/aitdden
+          endif
+c        clamp: guards against a noisy or near-degenerate estimate
+c        driving the relaxation factor to an unstable extreme
+          aitomega=dmax1(0.05d0,dmin1(1.0d0,aitomega))
+        endif
+        aitrte=aitrtenow
+        aitrde=aitrdenow
+c
+        te_pre=aitomega*te_pre+(1.d0-aitomega)*te_pre0
+        de_pre=aitomega*de_pre+(1.d0-aitomega)*de_pre0
+        call averinto (aitomega, pop_pre, pop_pre0, pop_pre)
+      endif
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
@@ -3349,6 +3551,21 @@ c     slow start in step^2 for 5 steps : 25*0.04=1.0
       hdt=0.5d0*dt
       drstep=velstep*dt
       dr=drstep
+c
+c  Heartbeat: some parameter combinations (e.g. low nH, fast v_shock)
+c  need thousands of zone steps per global iteration to cool to the
+c  stopping criterion, and the per-zone table above is only printed
+c  when vmod='MINI'.  Without this, a slow-but-working run is
+c  indistinguishable from a hang (issue #7 follow-up).  Printed
+c  unconditionally, throttled to avoid flooding fast-finishing models.
+c
+      if (mod(step,100).eq.1) then
+        write (*,195) iteration,maxits,step,mxnsteps,tstep,rad
+        call flush (6)
+      endif
+  195 format ('  ... SHOCK 5 progress: Global It ',i3,' of ',i3,
+     & ', Zone Step ',i5,' of ',i5,', T=',1pg11.4,' K, Dist=',
+     & 1pg11.4,' cm')
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c

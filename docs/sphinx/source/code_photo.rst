@@ -6,8 +6,10 @@ Code Operation: P6 / P7 Photoionisation Models
 
 This page describes how the P6 and P7 photoionisation models operate
 internally.  For the user-facing inputs and outputs see :doc:`models`
-and :doc:`outputs`.  For the broader code structure see
-:doc:`code_overview`.
+and :doc:`outputs`, or :doc:`walkthrough_p6` for a full worked example.
+For the broader code structure see :doc:`code_overview`.  For how the
+radiative processes used here compare to the shock model, see
+:doc:`physics_shocks`.
 
 P6 and P7 are structurally identical — they share the same setup
 sequence and the same zone-stepping algorithm.  The only differences are:
@@ -120,32 +122,94 @@ The setup routine handles all user interaction before calling
    (default 0.025).  Zone widths are chosen adaptively so that the
    radiation field changes by at most this fraction per step.
 
-9. **Stopping condition** — when to terminate the outward march:
+9. **Stopping condition** — when to terminate the outward march.  This
+   step shares one menu across P6, P7 and (with the same letters)
+   ``jend`` in :doc:`code_s5`, though the underlying quantities tested
+   differ between the photoionisation and shock codes.  Two further
+   letters, ``R`` and ``G``, appear in the same menu but are not
+   ending conditions — ``R`` reinitialises the whole model setup and
+   ``G`` resets only the geometry, both letting the user back out of
+   this menu rather than choosing a stopping criterion:
 
    .. list-table::
       :header-rows: 1
-      :widths: 10 90
+      :widths: 8 35 57
 
       * - Code
-        - Condition
+        - Ends the model when...
+        - What you're asked next
       * - A
-        - Radiation bounded: H\ :sup:`+` fraction falls below a
-          threshold (default 1%).
+        - H\ :sup:`+` fraction falls below a threshold (default 1%,
+          shown inline in the menu as the current ``fren``)
+        - Nothing — goes straight to output setup (step 10).
       * - B
-        - Ionisation bounded: a specified ion of a specified element
-          falls below a given fraction.
+        - a specified ion of a specified element falls below a given
+          fraction
+        - ``Applies to element (Atomic number):`` then ``Give the
+          final ionisation fraction of <elem> :`` — two separate
+          prompts, atomic number first.
       * - C
-        - Temperature bounded: T\ :sub:`e` falls below a minimum.
+        - T\ :sub:`e` falls below a minimum
+        - ``Give the final temperature (<10 as log):`` — despite the
+          prompt text, no log\ :sub:`10` conversion is actually
+          applied in the source (``photo6.f``/``photo7.f``); the
+          value is only checked to be ≥ 1 and then used directly as
+          Kelvin.  Entering a value under 10 intending it as a
+          log\ :sub:`10` temperature will set the ending temperature
+          to that literal (very low) Kelvin value instead — this
+          looks like a latent bug against the prompt's own claim, not
+          documented intended behaviour.
       * - D
-        - Optical depth limited: accumulated optical depth exceeds a
-          threshold.
+        - accumulated optical depth exceeds a threshold
+        - ``Applies to element (Atomic number):`` then ``Give the
+          final optical depth at threshold of <elem>:`` — no log
+          conversion; must be a positive number.
       * - E
-        - Density bounded: the model extends to a fixed distance from
-          the inner edge.
+        - the model reaches a fixed distance from the inner edge
+        - ``Give the distance or radius at which the density
+          drops:`` — a value ≥ 1e6 is taken as an absolute distance
+          in cm from the inner edge; a value < 1e6 is instead taken
+          as a **fraction of the Strömgren radius** and scaled
+          accordingly.
       * - F
-        - Column density limit for a specific atom and ion.
+        - the column density of a specific atom and ion reaches a
+          limit
+        - ``Give the final column density (<100 as log):`` (values
+          under 100 genuinely are read as log\ :sub:`10` and
+          converted here, unlike ``C``), then ``Applies to element
+          (Atomic number):`` then ``Applies to ion stage :``.
       * - H
-        - Total hydrogen column density limit.
+        - the total hydrogen column density reaches a limit
+        - ``Give the total H column density (<100 as log):`` — same
+          genuine log\ :sub:`10` conversion as ``F``.
+
+   Whichever letter is chosen, the next prompt after this step (or
+   its follow-up, if any) is always output file setup (step 10).
+
+   Two further conditions can end a model regardless of the chosen
+   letter, tested every step alongside it: a hard cap at zone
+   ``mma = mxnsteps-1`` (the same 4096-zone constant used by S5,
+   ``photo6.f:1401,2873``), and a file literally named ``terminate``
+   in the run directory (``photo6.f:2823-2825``).  A third,
+   letter-independent condition is always checked too: the model ends
+   once the normalised electron density falls to within
+   ``exla`` (5×10⁻⁵, a fixed constant) of its floor
+   (``photo6.f:2820``) — an automatic near-full-recombination safety
+   net with no direct S5 analogue.
+
+   Consequence for ``D``, ``E``, ``F``, and ``H``: the ``exla``
+   recombination floor is checked on every step regardless of
+   ``jend``, and — unlike S5's temperature floor, which some shocks
+   never reach — is very likely to actually be satisfied eventually in
+   a normal photoionised nebula, since it's just a looser version of
+   ``A``'s own 1% ionisation test.  So setting ``tauen``, ``diend``, or
+   ``colend`` beyond what the model ever physically reaches doesn't
+   produce an unbounded run: the model still ends, via ``exla`` (or,
+   failing that, the 4096-zone cap), with the chosen letter's own
+   condition never having been satisfied.  This isn't true for
+   every quantity individually — ``H``'s total H column, for instance,
+   keeps growing with distance into neutral gas rather than
+   saturating — but the loop itself always stops regardless.
 
 10. **Output file prefix and options** — ``p6filenames`` /
     ``p7filenames`` sets up the output file names; ``createp6files`` /
@@ -244,10 +308,40 @@ conditions depend on the solution itself, an inner iteration loop
   enabled, the zone structure (T, n\ :sub:`e`, n\ :sub:`H`, ionisation
   fractions, radiation field) is written to the main output file.
 
+  The quantities the ending conditions compare against are also
+  updated here, and mean different things depending on geometry:
+
+  - ``dis1`` (cm) is what the ``E`` condition tests against
+    ``diend``.  For spherical geometry it's the absolute radius from
+    the source (``rad0`` starts at ``remp`` and accumulates ``dr``
+    each zone, then ``dis1 = rad1``, ``photo6.f:1626-1627,1927-1928``);
+    for plane-parallel geometry it's cumulative depth into the slab,
+    starting at ``remp`` (``photo6.f:1631-1637,1938``).  Either way,
+    ``diend`` is itself offset by ``remp`` at setup
+    (``diend = remp + diend``, ``photo6.f:1049``), so the comparison
+    always means "distance travelled outward from the inner edge",
+    regardless of which geometry sets ``dis1``'s baseline differently.
+  - ``taux`` (dimensionless), what the ``D`` condition tests against
+    ``tauen``, is the optical depth **at the photoionisation threshold
+    energy of the specific ion chosen at setup** —
+    ``taux = sigpho(n) * popint(jpoen,ielen)`` (cross-section in
+    cm² times that ion's integrated column density in cm⁻²,
+    ``photo6.f:2790-2792``) — not a bolometric or line-centre optical
+    depth.
+  - ``popint(jpoen,ielen)`` / ``popinttot`` (cm⁻²), what ``F`` and
+    ``H`` test against ``colend``, are integrated column densities:
+    ``F`` uses a specific element/ion's column (or their sum, if
+    ``jpoen`` was set beyond the element's highest ion stage), ``H``
+    always sums neutral + singly-ionised hydrogen
+    (``popint(1,1)+popint(2,1)``, ``photo6.f:2793-2809``).
+
 **Step 7 — Check the stopping condition.**
-  The stopping criterion chosen at setup is evaluated.  If met, the
-  integration ends.  Otherwise the outer boundary of the current zone
-  becomes the inner boundary of the next and the loop repeats.
+  The stopping criterion chosen at setup is evaluated, along with the
+  hard zone cap, the ``terminate`` poll file, and the ``exla``
+  recombination floor — see the full list under "Stopping condition"
+  in Phase 1 above.  If any is met, the integration ends.  Otherwise
+  the outer boundary of the current zone becomes the inner boundary of
+  the next and the loop repeats.
 
 -------------------------------------------------
 Key physics routines
@@ -326,7 +420,8 @@ Data flow summary
            |
            v
    Assemble integrated spectrum, line list, broadband fluxes
-   Write to .csv, .lam, .nfn, .bln, .sou files
+   Write to .csv, .lam, .nfn, .sou files (plus .bln, the separate
+   ionisation-balance table — see :doc:`outputs`)
 
 -------------------------------------------------
 P6 vs P7 differences

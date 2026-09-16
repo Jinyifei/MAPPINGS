@@ -772,7 +772,7 @@ c
       include 'cblocks.inc'
 c
       real*8 tp(mxinfph),tl(mxinfph),scale,t,de,dh,dr
-      real*8 bv, blum, ilum, widnu, clam, lambda
+      real*8 bv, blum, ilum, widnu, lambda
 c
       integer*4 lunt,i,j,np
 c
@@ -902,14 +902,13 @@ c
         do j=infph,1,-1
 c
           bv=cphotev(j)*evplk
-          clam=1.0d8*cls/(bv*evplk)
+          lambda=1.0d8*cls/bv
           tl(j)=0.d0
-          tl(j)=fpi*(scale*bv*tp(j)/clam)
+          tl(j)=fpi*(scale*bv*tp(j)/lambda)
           if (tl(j).lt.ioepsilon) then
             tl(j)=0.d0
           endif
 c
-          lambda=1.0d8*cls/(cphotev(j)*evplk)
           if (lambda.ge.1000.d0) then
             if (lambda.le.50000.d0) then
               if (tl(j).gt.0.d0) then
@@ -936,7 +935,6 @@ c
         do j=1,infph-1
 c
           bv=cphotev(j)*evplk
-          clam=1.0d8*cls/(bv*evplk)
           tl(j)=0.d0
 c
           if ((tp(j).ge.ioepsilon).and.(dr.gt.0.d0)) then
@@ -1131,7 +1129,7 @@ c
       character sfx*16,fps*128
 c
       real*8 tl(mxinfph)
-      real*8 bv, blum, ilum, widnu, clam, lambda
+      real*8 bv, blum, ilum, widnu, lambda
 c
       integer*4 lunt,i,j,np,flen
       logical iexi
@@ -1198,28 +1196,27 @@ c
        do j=infph,1,-1
 c
          bv=cphotev(j)*evplk
-         clam=1.0d8*cls/(bv*evplk)
-         tp1(j)=fpi*(scale*bv*tp1(j)/clam)
+         lambda=1.0d8*cls/bv
+         tp1(j)=fpi*(scale*bv*tp1(j)/lambda)
          if (tp1(j).lt.ioepsilon) then
            tp1(j)=0.d0
          endif
 c
-         tp2(j)=fpi*(scale*bv*tp2(j)/clam)
+         tp2(j)=fpi*(scale*bv*tp2(j)/lambda)
          if (tp2(j).lt.ioepsilon) then
            tp2(j)=0.d0
          endif
 c
-         tp3(j)=fpi*(scale*bv*tp3(j)/clam)
+         tp3(j)=fpi*(scale*bv*tp3(j)/lambda)
          if (tp3(j).lt.ioepsilon) then
            tp3(j)=0.d0
          endif
 c
-         tp4(j)=fpi*(scale*bv*tp4(j)/clam)
+         tp4(j)=fpi*(scale*bv*tp4(j)/lambda)
          if (tp4(j).lt.ioepsilon) then
            tp4(j)=0.d0
          endif
 c
-         lambda=1.0d8*cls/(cphotev(j)*evplk)
          if (lambda.ge.1000.d0) then
            if (lambda.le.50000.d0) then
              if (tp1(j).gt.0.d0) then
